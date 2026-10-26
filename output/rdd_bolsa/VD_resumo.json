@@ -1,0 +1,3134 @@
+{
+  "etapa": "VD_sensibilidades_ciclo2_quadro_1302",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "ADENDO_52D_POS_RESULTADO",
+  "data_execucao": "2026-10-26",
+  "script": "scripts/rdd_bolsa/48_sensibilidades_ciclo2_quadro_1302.py",
+  "adendo": {
+    "arquivo": "docs/06_execucao/52d_adendo_sensibilidades_ciclo2_quadro_1302.md",
+    "sha256": "154adeac93add55a8ab85134b20dfdaded93c76993d85d5ec33b8e2963cd6376",
+    "commit_de_congelamento": "c87ed75"
+  },
+  "protocolos": {
+    "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+    "docs/06_execucao/52_protocolo_P1_escolha_dap.md": "5eb6e1dc2a04e630a962fd9f7f70c71f3cbb00aa1d0c97a283a73459a292a622",
+    "docs/06_execucao/52b_protocolo_P1h_magnitudes.md": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b",
+    "docs/06_execucao/52c_adendo_vaga_imediata_ciclo2.md": "132f3dcacc07845eeccc2980b2f8955e8a5c21c7fb2e308b1e4e893eef9d48cc"
+  },
+  "conferencias": {
+    "versao_antiga_do_conjunto": {
+      "celulas": 1547,
+      "iguais_ao_quadro_19mar": 1547
+    },
+    "quadro_1302_contra_a36": {
+      "celulas_comparadas": 1547,
+      "celulas_em_so_uma_leitura": 0,
+      "celulas_com_vagas_imediatas_diferentes": 0
+    },
+    "sensibilidade_gravada_igual_a_regra": {
+      "celulas": 2222,
+      "por_ciclo": {
+        "1": 513,
+        "2": 1015,
+        "3": 694
+      },
+      "dif_max_por_coluna": {
+        "vagas_imediatas": 0.0,
+        "log_vagas_imediatas_mais_1": 0.0,
+        "tem_vaga_imediata": 0.0,
+        "bolsa_mil": 0.0,
+        "s_mil": 0.0,
+        "populacao_2022": 0.0
+      },
+      "regra": "subconjunto tem_vaga_imediata == 1 do conjunto principal (script 12)"
+    },
+    "marca_dos_candidatos": {
+      "linhas_ciclo2": 3646,
+      "marca_gravada_igual_ao_quadro_19mar": 3646,
+      "primeiras_opcoes_ciclo2": 2140,
+      "primeiras_opcoes_com_vaga_imediata_19mar": 1798,
+      "primeiras_opcoes_com_vaga_imediata_13fev": 1140,
+      "imputadas": 0
+    }
+  },
+  "correcao": {
+    "conjunto_principal_ciclo2": {
+      "celulas_ciclo2_no_conjunto": 1547,
+      "celulas_sem_linha_no_quadro_1302": 0,
+      "celulas_sem_numero_de_vagas_imediatas_no_quadro_1302": 0,
+      "imputadas": 0,
+      "celulas_com_municipio_diferente_19mar_13fev": 0,
+      "celulas_com_faixa_diferente_19mar_13fev": 0,
+      "vagas_imediatas_total_19mar": 1836.0,
+      "vagas_imediatas_total_13fev": 1206.0,
+      "celulas_com_vaga_imediata_19mar": 1015,
+      "celulas_com_vaga_imediata_13fev": 714,
+      "celulas_de_reserva_em_13fev_com_imediata_em_19mar": 301,
+      "celulas_com_imediata_em_13fev_e_reserva_em_19mar": 0,
+      "celulas_com_vagas_imediatas_diferentes": 301,
+      "concordancia_tem_vaga_imediata": 0.8054298642533937
+    },
+    "conjunto_P1": {
+      "celulas_ciclo2_no_conjunto": 1545,
+      "celulas_sem_linha_no_quadro_1302": 0,
+      "celulas_com_vagas_imediatas_diferentes": 301
+    },
+    "sensibilidade_ciclo2": {
+      "celulas_19mar": 1015,
+      "celulas_13fev": 714,
+      "celulas_em_ambas": 714,
+      "vagas_imediatas_19mar": 1836.0,
+      "vagas_imediatas_13fev": 1206.0
+    },
+    "quadro_antigo": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+    "quadro_corrigido": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx"
+  },
+  "inventario": [
+    {
+      "linha": "E9, conjunto \"só células com vaga imediata\", ciclo 2 e empilhado (doc 42)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "define o conjunto e os candidatos; `log_vagas_imediatas_mais_1` é covariável (`tem_vaga_imediata` é constante e sai)",
+      "neste_adendo": "refeita (VD-1, VD-2)"
+    },
+    {
+      "linha": "E9, mesmo conjunto, ciclos 1 e 3",
+      "usa_tipo_de_vaga_ciclo2": "não",
+      "por_onde": "o tipo de vaga só muda no ciclo 2",
+      "neste_adendo": "não refeita"
+    },
+    {
+      "linha": "P1 M2 (log da distância)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "`tem_vaga_imediata` e `log_vagas_imediatas_mais_1` do M1, ciclos 1–3 empilhados",
+      "neste_adendo": "refeita (VD-3)"
+    },
+    {
+      "linha": "P1 M4 (efeito fixo de UF da vaga)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "idem",
+      "neste_adendo": "refeita (VD-3)"
+    },
+    {
+      "linha": "P1 M6 da nota, do município e do curso",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "idem, mais as interações da bolsa",
+      "neste_adendo": "refeitas (VD-3)"
+    },
+    {
+      "linha": "P1 M7 (logit explodido)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "idem, nos postos 1 e 2",
+      "neste_adendo": "refeita (VD-3)"
+    },
+    {
+      "linha": "P1 M8 (logit misto)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "matriz do M1 e partida no M1",
+      "neste_adendo": "refeita (VD-3)"
+    },
+    {
+      "linha": "P1 M9 (logit aninhado)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "matriz do M1 e partida no M1",
+      "neste_adendo": "refeita (VD-3)"
+    },
+    {
+      "linha": "P1 M3 (origem mais próxima)",
+      "usa_tipo_de_vaga_ciclo2": "—",
+      "por_onde": "não foi estimado no P1 (`NAO_EXECUTADO`)",
+      "neste_adendo": "nada a refazer"
+    },
+    {
+      "linha": "DAP do M1, quatro atributos, delta e bootstrap (doc 57a)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "β e atributos do M1; \"1 vaga imediata\" é a própria covariável",
+      "neste_adendo": "refeita (VD-4)"
+    },
+    {
+      "linha": "DAP do M4 e do M7",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "coeficientes do M4 e do M7",
+      "neste_adendo": "refeitas (VD-4)"
+    },
+    {
+      "linha": "DAP do M5, ciclo 2",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "coeficientes do M5 do ciclo 2",
+      "neste_adendo": "refeita (VD-4)"
+    },
+    {
+      "linha": "DAP do M5, ciclos 1 e 3",
+      "usa_tipo_de_vaga_ciclo2": "não",
+      "por_onde": "ciclos sem mudança",
+      "neste_adendo": "não refeitas"
+    },
+    {
+      "linha": "km equivalentes K5 e K10 (P1h-2, M1; doc 57i)",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "β e distância do M1",
+      "neste_adendo": "refeitas (VD-4)"
+    },
+    {
+      "linha": "D_UF do P1h-3 no M2, no M4 e no M7",
+      "usa_tipo_de_vaga_ciclo2": "sim",
+      "por_onde": "coeficientes dessas variantes",
+      "neste_adendo": "refeitas (VD-4)"
+    },
+    {
+      "linha": "D_UF do P1h-3 no M5",
+      "usa_tipo_de_vaga_ciclo2": "ciclo 2 sim; ciclos 1 e 3 não",
+      "por_onde": "coeficientes do M5 de cada ciclo",
+      "neste_adendo": "recalculadas só para o BKY da família (o ciclo 2 já estava no 52c)"
+    }
+  ],
+  "decisoes": [
+    {
+      "data": "2026-10-26",
+      "item": "Conjunto \"só células com vaga imediata\" com o quadro de 13/02",
+      "situacao": "O §2 manda tirar do quadro de 13/02 a definição do conjunto de escolha \"só células com vaga imediata\", sem dizer como.",
+      "resolucao": "Mesma regra do script 12 (`conjunto_escolha` e `tabela_escolhas`): o conjunto é o subconjunto `tem_vaga_imediata == 1` do conjunto principal, e entram os candidatos com `celula_com_vaga_imediata == 1` (1ª opção em célula com vagas imediatas > 0). No ciclo 2, a regra é aplicada ao conjunto principal corrigido pela função `corrigir` do script 42 e à marca da 1ª opção refeita com as vagas imediatas de 13/02. Antes, o script confere que a mesma regra, aplicada ao quadro de 19/03, reproduz célula a célula o conjunto gravado pelo script 12 e a marca gravada de cada candidato; se não reproduzir, para. Célula escolhida sem linha ou sem número no quadro de 13/02 faz parar: nada é imputado."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Especificação do E9 no VD-1 e no VD-2",
+      "situacao": "No conjunto de sensibilidade, o doc 42 estimou quatro especificações por ciclo; a linha VD-1 é a razão de chances por +R$ 5 mil.",
+      "resolucao": "Só a especificação principal do E9 (logit condicional da 1ª opção, spline linear, bolsa linear), no ciclo 2 (VD-1) e nos ciclos empilhados (VD-2), como o script 42 fez no conjunto principal. O spline quadrático e os degraus por corte no conjunto de sensibilidade não são refeitos; os ciclos 1 e 3 não mudam por construção. Inferência como no doc 42 (cluster por conjunto de escolha). O score bootstrap e os placebos de corte do doc 42 foram usados só no conjunto principal (robustez pós-auditoria), nunca no de sensibilidade, e por isso não entram aqui."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Alcance do VD-3",
+      "situacao": "O §2 pede M2, M4, M6, M7, M8 e M9 \"nos ciclos e no empilhado em que usam o tipo de vaga\".",
+      "resolucao": "No P1 essas variantes só existem empilhadas, e todas usam o tipo de vaga do ciclo 2 (seção 3): M2, M4, M6 da nota, do município e do curso, M7, M8 e M9. O M3 não foi estimado no P1 e continua fora. O M1 e o M5 do ciclo 2 já foram corrigidos pelo adendo 52c; aqui são reestimados só como base da DAP, dos km, do M8 e do M9 e como membros das famílias BKY, e o script confere que saem iguais ao `VC_estimativas.csv` nas duas versões. O M5 dos ciclos 1 e 3 entra só no Wald e no BKY e tem de sair idêntico nas duas versões."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Alcance do VD-4",
+      "situacao": "O §2 diz \"DAP e km equivalentes que dependem de VD-3\", mas os km equivalentes (P1h-2) só existem no M1, e a DAP do M1 e a do M5 também usam o tipo de vaga e não foram refeitas pelo 52c (doc 57p, §7).",
+      "resolucao": "VD-4 = toda linha de DAP e de km que usa o tipo de vaga do ciclo 2 e ainda não tinha versão corrigida: DAP do M1 (delta e bootstrap de pares por conjunto, 999 réplicas, mesma semente do script 25), do M4, do M7 e do M5 do ciclo 2; K5 e K10 (M1); D_UF do P1h-3 no M2, no M4 e no M7. As DAP do M5 nos ciclos 1 e 3 não usam o ciclo 2 e não são refeitas. M8 e M9 não têm DAP nem D_UF nos originais e continuam sem."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "BKY nas secundárias",
+      "situacao": "O §2 pede \"BKY entre as secundárias\" sem listar a família; o script 42 deixou pendentes as famílias BKY dos protocolos de origem, porque parte delas não estava no 52c.",
+      "resolucao": "Refazer as duas famílias exatamente como nos originais, com as linhas corrigidas no lugar das antigas: (a) família secundária do P1 (protocolo 52): β da bolsa no M5 por ciclo, Wald do P1d, interações e Wald do M6 da nota, interação do M6 do município, média da bolsa e desvios no M8; (b) família P1h-3 (protocolo 52b): D_UF, p unilateral, no M2, no M4, no M5 por ciclo e no M7. As linhas do E9 (VD-1, VD-2) ficam sem correção múltipla, como no protocolo 40 (§12) e no script 42. DAP e km continuam descritivos, sem teste, como nos originais. Não se cria família nova."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Tolerância do portão",
+      "situacao": "O §4 pede diferença ≤ 1e−8; os CSV de origem gravam 10 algarismos significativos, e para valores com módulo acima de 1 (DAP, km, Wald, log-verossimilhança) a diferença absoluta de 1e−8 fica abaixo da precisão gravada.",
+      "resolucao": "Diferença absoluta ≤ 1e−8 quando o valor gravado tem módulo ≤ 1, e relativa ≤ 1e−8 quando tem módulo maior; NaN só casa com NaN. Entram todas as linhas VD-5 (coeficientes, os três EP, IC, p, Wald, q BKY, DAP com IC delta e bootstrap, km com Fieller, D_UF). Qualquer falha para a execução antes da versão corrigida, e as saídas calculadas são apagadas."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "M8 e M9",
+      "situacao": "O logit misto e o aninhado têm tetos de avaliações e polimento por Newton no script 25.",
+      "resolucao": "Mesmas funções (`estimar_misto`, `estimar_aninhado`), mesmos tetos, sementes e polimento, partindo do M1 da mesma versão. Se a versão corrigida não convergir, a linha fica NAO_CONVERGIU com o motivo; nada é forçado."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Leitura do §3 por regra",
+      "situacao": "O §3 fixa a leitura do VD-1 e do VD-3, mas não o critério de \"sinal\" e de \"significância\".",
+      "resolucao": "VD-1 'mantém' quando o IC 95% da razão de chances corrigida exclui 1 e o log da razão tem o mesmo sinal do antigo; 'dependia do quadro pós-resultado' quando o IC corrigido contém 1; IC que exclui 1 com sinal oposto não está no §3 e é relatado como 'sinal oposto', sem leitura. VD-3: uma variante muda de sinal quando a estimativa pontual de algum peso da bolsa dela muda de sinal (β da bolsa; média no M8; inclinações e interações no M6); a leitura da H2 lista as que não mudam. Mudança de significância compara, nas duas versões, o mesmo critério: q BKY < 0,05 nas linhas das famílias BKY; IC 95% com cluster por conjunto que exclui 0 (ou 1, na razão de chances) nas demais; p de máxima verossimilhança < 0,05 no M6 do curso (cluster degenerado, como no P1); IC delta (e, no M1, também o do bootstrap) na DAP e nos km."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Razão de chances das variantes",
+      "situacao": "O P1 não gravou razão de chances.",
+      "resolucao": "exp(5·β) com o IC transformado do IC do coeficiente, como no script 42; no M8, com a média da bolsa; no M9, com o β da utilidade do logit aninhado (descritiva)."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Números do doc 57v",
+      "situacao": "O pedido do autor exige números só em blocos gerados.",
+      "resolucao": "Todo número de resultado do 57v vem de `VD_*` por `--atualizar-doc`, entre marcadores `<!-- VD:... -->`; o teste confere o doc contra o gerado e que não há número de resultado fora dos blocos."
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/52d_adendo_sensibilidades_ciclo2_quadro_1302.md",
+      "sha256": "154adeac93add55a8ab85134b20dfdaded93c76993d85d5ec33b8e2963cd6376",
+      "bytes": 3544,
+      "papel": "adendo 52d (especificação, somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§5",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52c_adendo_vaga_imediata_ciclo2.md",
+      "sha256": "132f3dcacc07845eeccc2980b2f8955e8a5c21c7fb2e308b1e4e893eef9d48cc",
+      "bytes": 1871,
+      "papel": "adendo 52c (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§3",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "bytes": 20212,
+      "papel": "protocolo 40 (E9, §12; somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-18",
+      "cobertura": "§12, §14, §15",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52_protocolo_P1_escolha_dap.md",
+      "sha256": "5eb6e1dc2a04e630a962fd9f7f70c71f3cbb00aa1d0c97a283a73459a292a622",
+      "bytes": 17167,
+      "papel": "protocolo 52 (P1; somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52b_protocolo_P1h_magnitudes.md",
+      "sha256": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b",
+      "bytes": 5306,
+      "papel": "protocolo 52b (P1h; somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8",
+      "bytes": 157862,
+      "papel": "quadro do ciclo 2, retificado de 13/02/2026 (vigente na inscrição): versão corrigida",
+      "fonte": "Chamamento SGTES/MS nº 1/2026 (página oficial)",
+      "data_referencia": "2026-02-13",
+      "cobertura": "1547 células CNES × curso",
+      "unidade": "célula",
+      "chaves": "CNES (7 dígitos) × código do curso",
+      "filtros": "coluna TOTAL de vagas imediatas"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "bytes": 153185,
+      "papel": "quadro do ciclo 2, retificado de 19/03/2026: conferência da versão antiga",
+      "fonte": "idem",
+      "data_referencia": "2026-03-19",
+      "cobertura": "1547 células",
+      "unidade": "célula",
+      "chaves": "CNES × curso",
+      "filtros": "coluna TOTAL de vagas imediatas"
+    },
+    {
+      "caminho": "output/auditoria_H1/a36_celulas.csv",
+      "sha256": "9921cf98f32563de9e54c9630831fdf913cd2923944c33044cb8effce1aaf225",
+      "bytes": 974585,
+      "papel": "leitura independente da auditoria 36: conferência do quadro de 13/02",
+      "fonte": "auditoria 36",
+      "data_referencia": "2026-10-26",
+      "cobertura": "células dos ciclos 1–3",
+      "unidade": "célula",
+      "chaves": "cnes, cod_curso",
+      "filtros": "ciclo = 2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_estimativas.csv",
+      "sha256": "517e88d1488568c645b71707b63c5ffed985af53beae84f8f8684a124f604bd0",
+      "bytes": 726232,
+      "papel": "alvo do portão (E9 no conjunto só com vaga imediata)",
+      "fonte": "script 16",
+      "data_referencia": "2026-10-18",
+      "cobertura": "todos os termos",
+      "unidade": "especificação × termo",
+      "chaves": "ciclo, modelo, conjunto, especificacao, termo",
+      "filtros": "condicional, sensibilidade, spline linear, bolsa linear"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_efeitos_marginais.csv",
+      "sha256": "812ac52a25cb2b8685c49f31e0ddbe27d829d5a5f57867e9281183eb57bf809f",
+      "bytes": 178231,
+      "papel": "alvo do portão (razão de chances e Δ prob. do E9)",
+      "fonte": "script 16",
+      "data_referencia": "2026-10-18",
+      "cobertura": "bolsa_mil",
+      "unidade": "especificação × quantidade",
+      "chaves": "ciclo, modelo, conjunto, especificacao, termo, quantidade",
+      "filtros": "idem"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1_estimativas.csv",
+      "sha256": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+      "bytes": 159285,
+      "papel": "alvo do portão (M1, M2, M4, M5, P1d, M6, M7, M8, M9, Holm e BKY)",
+      "fonte": "script 25",
+      "data_referencia": "2026-10-23",
+      "cobertura": "todas as linhas desses modelos",
+      "unidade": "especificação × termo",
+      "chaves": "modelo, ciclo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1_dap.csv",
+      "sha256": "20f31bdab64958aab146809456760b4502a08db335caba674db0f466491dd606",
+      "bytes": 11577,
+      "papel": "alvo do portão (DAP do M1, M4, M7 e M5 ciclo 2)",
+      "fonte": "script 25",
+      "data_referencia": "2026-10-23",
+      "cobertura": "4 atributos",
+      "unidade": "modelo × atributo",
+      "chaves": "modelo, ciclo, atributo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "sha256": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
+      "bytes": 8254,
+      "papel": "alvo do portão (P1h-1, P1h-2, P1h-3)",
+      "fonte": "script 25c",
+      "data_referencia": "2026-10-26",
+      "cobertura": "9 linhas",
+      "unidade": "linha",
+      "chaves": "id_linha, modelo, ciclo, componente",
+      "filtros": "sem as linhas FIG"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VC_estimativas.csv",
+      "sha256": "c32e5ef3ed614861dfd7976c558ebd23eeb076a59a521368385f7ad4ffb2d451",
+      "bytes": 67641,
+      "papel": "conferência do M1 e do M5 (adendo 52c)",
+      "fonte": "script 42",
+      "data_referencia": "2026-10-26",
+      "cobertura": "M1 e M5, duas versões",
+      "unidade": "especificação × termo",
+      "chaves": "versao, chave_modelo, tipo_linha, termo",
+      "filtros": "coeficientes"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/42_escolha_vaga_imediata_c2.py",
+      "sha256": "a4f35ab12a28e4e8cb3f3dbf0a8ec30978317d70ea6af6985bdad44aa2092cb4",
+      "bytes": 69396,
+      "papel": "funções do adendo 52c (importadas sem alteração)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",
+      "sha256": "54b1127cb69c60dec55456dea30ca4395a90ad052ccf5382ac819e7b48756caa",
+      "bytes": 97648,
+      "papel": "funções do E9 (importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/25_escolha_dap.py",
+      "sha256": "39ffe79eed91ece5b5fd8f63588efbc0a231f0226d140ba54953a7921d70d98d",
+      "bytes": 131512,
+      "papel": "funções do P1 (importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/25c_magnitudes_P1h.py",
+      "sha256": "36d1ce034a8777e35a70f8c5cbc92d1141b466989f0351f5cc537f34c9314ff8",
+      "bytes": 52248,
+      "papel": "funções do P1h (importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos (1ª e 2ª opção, marca de vaga imediata)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "resultados da 1ª chamada",
+      "cobertura": "9849 linhas",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "postos 1 e 2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "bytes": 63077,
+      "papel": "conjunto de escolha principal; ciclo 2 com a covariável de 19/03",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "quadros da 1ª chamada",
+      "cobertura": "5134 células com IVS",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "como no E9 e no P1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_sensibilidade_vaga_imediata.parquet",
+      "sha256": "dc807275900e761092aeb260f06872efb2bd342ea5caf1ba08ec296b2ad06808",
+      "bytes": 35693,
+      "papel": "conjunto só com vaga imediata (versão antiga, conferida contra a regra)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "quadros da 1ª chamada",
+      "cobertura": "células com vaga imediata",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "tem_vaga_imediata == 1"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "IVS 2010 oficial (a08)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "município de origem (G1)",
+      "fonte": "portão G1",
+      "data_referencia": "referências 202506, 202510, 202602",
+      "cobertura": "5776 candidatos",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "bytes": 166732,
+      "papel": "conferência das distâncias",
+      "fonte": "portão G1",
+      "data_referencia": "idem",
+      "cobertura": "candidato × opção",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "região de saúde (CIR), só lido",
+      "fonte": "DATASUS/TabNet",
+      "data_referencia": "2026-10-19T10:44:54Z",
+      "cobertura": "5606 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge → co_cir",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json",
+      "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+      "bytes": 1685039,
+      "papel": "centroides municipais do IBGE, só lido",
+      "fonte": "IBGE, API de malhas v3",
+      "data_referencia": "2026-10-19",
+      "cobertura": "5570 municípios",
+      "unidade": "município",
+      "chaves": "id",
+      "filtros": "centroide"
+    }
+  ],
+  "integridade": "nada simulado nem imputado; data/ só lido; IVS do a08 (o arquivo local de IVS da auditoria 16 não é lido); só agregados em output/ (sem nome, CPF, CRM nem pseudônimo de candidato); saídas E9_*, P1_*, P1h_* e VC_* não regravadas",
+  "linguagem": "escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte e o incentivo marginal; θ_UF é preferência revelada, não efeito causal; não é efeito da participação no PMM-E",
+  "tempo_execucao_nao_registrado": "fora do resumo para que duas execuções deem o mesmo hash",
+  "portao": {
+    "status": "PASSOU",
+    "tolerancia": 1e-08,
+    "regra": "versão antiga (tipo de vaga do ciclo 2 pelo quadro de 19/03) reestimada com as funções dos scripts 16, 25 e 25c contra E9_estimativas.csv e E9_efeitos_marginais.csv (E9 no conjunto só com vaga imediata, especificação principal, ciclo 2 e empilhado), P1_estimativas.csv (todas as linhas do M1, M2, M4, M5 por ciclo, Wald do P1d, M6 da nota, do município e do curso, M7, M8 e M9, com p de Holm e q BKY), P1_dap.csv (M1 com bootstrap, M4, M7, M5 do ciclo 2) e P1h_magnitudes.csv (P1h-1, K5, K10 e as seis linhas P1h-3, com q BKY); diferença absoluta ≤ 1e−8 se o valor gravado tem módulo ≤ 1, relativa ≤ 1e−8 se maior (os CSV têm 10 algarismos significativos); NaN só casa com NaN",
+    "linhas": [
+      {
+        "linha": "E9s_2",
+        "linhas_reestimadas": 13,
+        "linhas_gravadas": 13,
+        "todas_casadas": true,
+        "dif_max_coef": 4.932976249705234e-11,
+        "dif_max_ep_cluster_conjunto": 4.9271392521532675e-11,
+        "dif_max_ep_mle": 4.5154741057373826e-11,
+        "dif_max_ep_cluster_candidato": 3.591998920526862e-11,
+        "dif_max_ic95_inf": 3.4986252685238263e-10,
+        "dif_max_ic95_sup": 4.488015514780841e-11,
+        "dif_max_p": 4.2157388691066444e-11,
+        "dif_max_p_t_g_menos_1": 4.501338191076343e-11,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_alternativas": 0.0,
+        "dif_max_log_verossimilhanca": 5.1976248307229016e-11,
+        "dif_max_efeitos_estimativa": 1.057797701431611e-10,
+        "dif_max_efeitos_ep_cluster_conjunto": 4.687755739141153e-11,
+        "dif_max_efeitos_ep_mle": 4.3925307835479543e-11,
+        "dif_max_efeitos_ic95_inf": 7.616280116400946e-11,
+        "dif_max_efeitos_ic95_sup": 4.210891425418778e-10,
+        "passou": true
+      },
+      {
+        "linha": "E9s_emp",
+        "linhas_reestimadas": 13,
+        "linhas_gravadas": 13,
+        "todas_casadas": true,
+        "dif_max_coef": 4.8342552183555654e-11,
+        "dif_max_ep_cluster_conjunto": 4.9437370863714136e-11,
+        "dif_max_ep_mle": 2.2507523622650183e-11,
+        "dif_max_ep_cluster_candidato": 3.1883828910395096e-11,
+        "dif_max_ic95_inf": 4.0934624886346556e-10,
+        "dif_max_ic95_sup": 4.9452053563214804e-11,
+        "dif_max_p": 4.4029557777491846e-11,
+        "dif_max_p_t_g_menos_1": 3.892131061888904e-11,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_alternativas": 0.0,
+        "dif_max_log_verossimilhanca": 1.4894059969242224e-11,
+        "dif_max_efeitos_estimativa": 1.710343089314541e-10,
+        "dif_max_efeitos_ep_cluster_conjunto": 4.2185893667223695e-11,
+        "dif_max_efeitos_ep_mle": 3.4405728266406754e-11,
+        "dif_max_efeitos_ic95_inf": 1.7165721673616425e-10,
+        "dif_max_efeitos_ic95_sup": 2.4754277152711194e-10,
+        "passou": true
+      },
+      {
+        "linha": "P1_M1",
+        "linhas_reestimadas": 18,
+        "linhas_gravadas": 18,
+        "todas_casadas": true,
+        "dif_max_coef": 1.970275375548772e-10,
+        "dif_max_ep_cluster_conjunto": 4.6250975271888706e-11,
+        "dif_max_ep_mle": 3.3080704842092246e-11,
+        "dif_max_ep_cluster_candidato": 4.853943635918512e-11,
+        "dif_max_ic95_inf": 3.6603624285393246e-10,
+        "dif_max_ic95_sup": 3.9660534070287994e-10,
+        "dif_max_p": 3.525651992575263e-11,
+        "dif_max_p_t_g_menos_1": 4.133710040932215e-11,
+        "dif_max_p_mle": 5.877187625458191e-12,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 9.871943281564027e-12,
+        "dif_max_p_holm": 2.9544700019812353e-12,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M2",
+        "linhas_reestimadas": 18,
+        "linhas_gravadas": 18,
+        "todas_casadas": true,
+        "dif_max_coef": 2.876369759045103e-10,
+        "dif_max_ep_cluster_conjunto": 4.340561243765251e-11,
+        "dif_max_ep_mle": 4.20205675810692e-11,
+        "dif_max_ep_cluster_candidato": 3.3869490545512804e-11,
+        "dif_max_ic95_inf": 4.016015324233157e-10,
+        "dif_max_ic95_sup": 2.959484296851207e-10,
+        "dif_max_p": 4.160372046868588e-11,
+        "dif_max_p_t_g_menos_1": 4.26961244137658e-11,
+        "dif_max_p_mle": 3.6675093517679613e-11,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 3.6494752424922596e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M4",
+        "linhas_reestimadas": 40,
+        "linhas_gravadas": 40,
+        "todas_casadas": true,
+        "dif_max_coef": 3.8708626928506954e-10,
+        "dif_max_ep_cluster_conjunto": 4.8413412168102354e-11,
+        "dif_max_ep_mle": 4.635380967954461e-11,
+        "dif_max_ep_cluster_candidato": 4.559741473286749e-11,
+        "dif_max_ic95_inf": 4.2607386959982236e-10,
+        "dif_max_ic95_sup": 2.716119444255089e-10,
+        "dif_max_p": 2.5167312678320286e-11,
+        "dif_max_p_t_g_menos_1": 4.666256270269287e-11,
+        "dif_max_p_mle": 3.906341916604106e-11,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 1.697571435402805e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M5_1",
+        "linhas_reestimadas": 18,
+        "linhas_gravadas": 18,
+        "todas_casadas": true,
+        "dif_max_coef": 3.4739507992550604e-10,
+        "dif_max_ep_cluster_conjunto": 4.6914860885038934e-11,
+        "dif_max_ep_mle": 4.7338633013538356e-11,
+        "dif_max_ep_cluster_candidato": 4.686923071872684e-11,
+        "dif_max_ic95_inf": 1.4938658872268915e-10,
+        "dif_max_ic95_sup": 4.1037589889501364e-10,
+        "dif_max_p": 4.659173047372178e-11,
+        "dif_max_p_t_g_menos_1": 4.5275894144936046e-11,
+        "dif_max_p_mle": 4.322489588481915e-11,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 1.5040175473643627e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M5_2",
+        "linhas_reestimadas": 18,
+        "linhas_gravadas": 18,
+        "todas_casadas": true,
+        "dif_max_coef": 2.2086498497358968e-10,
+        "dif_max_ep_cluster_conjunto": 3.810204929344252e-11,
+        "dif_max_ep_mle": 4.5575349050253067e-11,
+        "dif_max_ep_cluster_candidato": 4.995563684939697e-11,
+        "dif_max_ic95_inf": 4.728006008570948e-10,
+        "dif_max_ic95_sup": 3.562700648634452e-10,
+        "dif_max_p": 3.65232288856987e-11,
+        "dif_max_p_t_g_menos_1": 3.1559477253750856e-11,
+        "dif_max_p_mle": 4.508587947427145e-12,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 1.2799362092268009e-11,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M5_3",
+        "linhas_reestimadas": 18,
+        "linhas_gravadas": 18,
+        "todas_casadas": true,
+        "dif_max_coef": 1.8040261989315404e-10,
+        "dif_max_ep_cluster_conjunto": 4.9317494532630235e-11,
+        "dif_max_ep_mle": 4.1806308415104354e-11,
+        "dif_max_ep_cluster_candidato": 4.39568381693789e-11,
+        "dif_max_ic95_inf": 2.0038135525703934e-10,
+        "dif_max_ic95_sup": 1.0632495258078491e-10,
+        "dif_max_p": 4.19374535098882e-11,
+        "dif_max_p_t_g_menos_1": 4.6497472538931106e-11,
+        "dif_max_p_mle": 3.755318278564346e-11,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 6.23338718176572e-11,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_P1d",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_coef": 0.0,
+        "dif_max_ep_cluster_conjunto": 0.0,
+        "dif_max_ep_mle": 0.0,
+        "dif_max_ep_cluster_candidato": 0.0,
+        "dif_max_ic95_inf": 0.0,
+        "dif_max_ic95_sup": 0.0,
+        "dif_max_p": 1.1694464840950047e-12,
+        "dif_max_p_t_g_menos_1": 0.0,
+        "dif_max_p_mle": 0.0,
+        "dif_max_estatistica_wald": 6.39385102299253e-11,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 0.0,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M6_nota",
+        "linhas_reestimadas": 25,
+        "linhas_gravadas": 25,
+        "todas_casadas": true,
+        "dif_max_coef": 2.282859631662909e-10,
+        "dif_max_ep_cluster_conjunto": 4.921263396795439e-11,
+        "dif_max_ep_mle": 4.402370135103695e-11,
+        "dif_max_ep_cluster_candidato": 4.7311085604739844e-11,
+        "dif_max_ic95_inf": 2.6195414669971204e-10,
+        "dif_max_ic95_sup": 3.0513461150560264e-10,
+        "dif_max_p": 4.3856918097162634e-11,
+        "dif_max_p_t_g_menos_1": 4.6826209576522615e-11,
+        "dif_max_p_mle": 3.497449552192222e-11,
+        "dif_max_estatistica_wald": 4.949343057998899e-11,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 1.833667796003424e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M6_municipio",
+        "linhas_reestimadas": 20,
+        "linhas_gravadas": 20,
+        "todas_casadas": true,
+        "dif_max_coef": 2.868782223934868e-10,
+        "dif_max_ep_cluster_conjunto": 4.488601157426331e-11,
+        "dif_max_ep_mle": 3.711508878012637e-11,
+        "dif_max_ep_cluster_candidato": 4.1479986112591405e-11,
+        "dif_max_ic95_inf": 1.5383950672187204e-10,
+        "dif_max_ic95_sup": 1.0782097813742378e-10,
+        "dif_max_p": 4.1417314022851315e-11,
+        "dif_max_p_t_g_menos_1": 4.966860256416794e-11,
+        "dif_max_p_mle": 7.546518965284577e-12,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 3.6162156329296146e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M6_curso",
+        "linhas_reestimadas": 43,
+        "linhas_gravadas": 43,
+        "todas_casadas": true,
+        "dif_max_coef": 1.588355505427642e-10,
+        "dif_max_ep_cluster_conjunto": 4.9231202448041245e-11,
+        "dif_max_ep_mle": 4.8234916061318245e-11,
+        "dif_max_ep_cluster_candidato": 3.538916382161972e-11,
+        "dif_max_ic95_inf": 2.8540882586733314e-10,
+        "dif_max_ic95_sup": 2.771812172426341e-10,
+        "dif_max_p": 4.909983530865247e-11,
+        "dif_max_p_t_g_menos_1": 4.924749497092762e-11,
+        "dif_max_p_mle": 4.845623902127727e-11,
+        "dif_max_estatistica_wald": 5.435956123723225e-11,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 2.82985189063585e-11,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M7",
+        "linhas_reestimadas": 18,
+        "linhas_gravadas": 18,
+        "todas_casadas": true,
+        "dif_max_coef": 2.0355088167332654e-10,
+        "dif_max_ep_cluster_conjunto": 3.269354231782984e-11,
+        "dif_max_ep_mle": 8.519338012824562e-12,
+        "dif_max_ep_cluster_candidato": 4.246708540378563e-11,
+        "dif_max_ic95_inf": 2.693897013480127e-10,
+        "dif_max_ic95_sup": 1.3987675628256234e-10,
+        "dif_max_p": 3.933536829592299e-11,
+        "dif_max_p_t_g_menos_1": 3.7030739585830474e-11,
+        "dif_max_p_mle": 7.346789843154511e-12,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 1.9690226031166963e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M8",
+        "linhas_reestimadas": 20,
+        "linhas_gravadas": 20,
+        "todas_casadas": true,
+        "dif_max_coef": 4.4772284770608993e-10,
+        "dif_max_ep_cluster_conjunto": 4.890249316602535e-11,
+        "dif_max_ep_mle": 4.887709681433705e-11,
+        "dif_max_ep_cluster_candidato": 4.224370853123105e-11,
+        "dif_max_ic95_inf": 1.5797893947419876e-10,
+        "dif_max_ic95_sup": 2.731052424875495e-10,
+        "dif_max_p": 3.65365515619942e-11,
+        "dif_max_p_t_g_menos_1": 3.700748041346458e-11,
+        "dif_max_p_mle": 2.925737430103936e-11,
+        "dif_max_estatistica_wald": 0.0,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 2.0105749786593392e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1_M9",
+        "linhas_reestimadas": 20,
+        "linhas_gravadas": 20,
+        "todas_casadas": true,
+        "dif_max_coef": 3.012369648688254e-10,
+        "dif_max_ep_cluster_conjunto": 4.793791752444321e-11,
+        "dif_max_ep_mle": 4.080324966793114e-11,
+        "dif_max_ep_cluster_candidato": 4.315603430171677e-11,
+        "dif_max_ic95_inf": 1.6757438100530226e-10,
+        "dif_max_ic95_sup": 2.1805746754403562e-10,
+        "dif_max_p": 3.9950376340414095e-11,
+        "dif_max_p_t_g_menos_1": 2.5938806658132307e-11,
+        "dif_max_p_mle": 4.628175620524644e-11,
+        "dif_max_estatistica_wald": 3.4678080634135205e-11,
+        "dif_max_gl": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "dif_max_g_candidatos": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_n_linhas_candidato_celula": 0.0,
+        "dif_max_n_conjuntos": 0.0,
+        "dif_max_log_verossimilhanca": 2.0957405281952016e-10,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "DAP_M1",
+        "linhas_reestimadas": 4,
+        "linhas_gravadas": 4,
+        "todas_casadas": true,
+        "dif_max_dap": 3.640797032013254e-10,
+        "dif_max_ep_delta": 1.1530998550418434e-10,
+        "dif_max_ic95_delta_inf": 1.478985104340912e-10,
+        "dif_max_ic95_delta_sup": 1.740779183662575e-10,
+        "dif_max_ic95_boot_inf": 1.0001689577276903e-10,
+        "dif_max_ic95_boot_sup": 8.358300553203259e-11,
+        "dif_max_n_boot": 0.0,
+        "dif_max_n_boot_validos": 0.0,
+        "dif_max_fracao_boot_beta_bolsa_nao_positivo": 4.003741782554471e-14,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "DAP_M4",
+        "linhas_reestimadas": 4,
+        "linhas_gravadas": 4,
+        "todas_casadas": true,
+        "dif_max_dap": 1.4744586956923776e-10,
+        "dif_max_ep_delta": 1.3494816933729006e-10,
+        "dif_max_ic95_delta_inf": 3.225247248863595e-10,
+        "dif_max_ic95_delta_sup": 2.1838333990707465e-10,
+        "dif_max_ic95_boot_inf": 0.0,
+        "dif_max_ic95_boot_sup": 0.0,
+        "dif_max_n_boot": 0.0,
+        "dif_max_n_boot_validos": 0.0,
+        "dif_max_fracao_boot_beta_bolsa_nao_positivo": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "DAP_M7",
+        "linhas_reestimadas": 4,
+        "linhas_gravadas": 4,
+        "todas_casadas": true,
+        "dif_max_dap": 1.952917251132021e-10,
+        "dif_max_ep_delta": 1.433054333431846e-10,
+        "dif_max_ic95_delta_inf": 4.2456020698272904e-10,
+        "dif_max_ic95_delta_sup": 1.5261598228767468e-10,
+        "dif_max_ic95_boot_inf": 0.0,
+        "dif_max_ic95_boot_sup": 0.0,
+        "dif_max_n_boot": 0.0,
+        "dif_max_n_boot_validos": 0.0,
+        "dif_max_fracao_boot_beta_bolsa_nao_positivo": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "DAP_M5_2",
+        "linhas_reestimadas": 4,
+        "linhas_gravadas": 4,
+        "todas_casadas": true,
+        "dif_max_dap": 2.0463970511568176e-10,
+        "dif_max_ep_delta": 8.07398052259163e-11,
+        "dif_max_ic95_delta_inf": 1.2414788661481113e-10,
+        "dif_max_ic95_delta_sup": 2.1737784271107794e-10,
+        "dif_max_ic95_boot_inf": 0.0,
+        "dif_max_ic95_boot_sup": 0.0,
+        "dif_max_n_boot": 0.0,
+        "dif_max_n_boot_validos": 0.0,
+        "dif_max_fracao_boot_beta_bolsa_nao_positivo": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-1_M1",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 4.338992030485666e-11,
+        "dif_max_ep_cluster_conjunto": 2.6555396770433504e-11,
+        "dif_max_ep_mle": 3.4968944406799096e-11,
+        "dif_max_ep_cluster_candidato": 3.565878148314994e-11,
+        "dif_max_ic95_inf": 3.0016897006323984e-10,
+        "dif_max_ic95_sup": 1.2380010853575908e-10,
+        "dif_max_li95_unilateral": 1.425933275868428e-10,
+        "dif_max_p_unilateral": 4.39892931727428e-31,
+        "dif_max_p_unilateral_t_g_menos_1": 3.20623869011559e-23,
+        "dif_max_p_unilateral_mle": 1.1620675807260842e-61,
+        "dif_max_p_unilateral_cluster_candidato": 3.93760683990328e-59,
+        "dif_max_ic95_fieller_inf": 0.0,
+        "dif_max_ic95_fieller_sup": 0.0,
+        "dif_max_li95_unilateral_fieller": 0.0,
+        "dif_max_p_holm": 4.39892931727428e-31,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-2a_M1",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 1.7836439592335595e-10,
+        "dif_max_ep_cluster_conjunto": 7.315859951724909e-11,
+        "dif_max_ep_mle": 4.5004585733577504e-11,
+        "dif_max_ep_cluster_candidato": 9.9508693061373e-11,
+        "dif_max_ic95_inf": 1.6119033960340143e-11,
+        "dif_max_ic95_sup": 4.634947596856589e-11,
+        "dif_max_li95_unilateral": 9.030428760173026e-11,
+        "dif_max_p_unilateral": 8.183523303451068e-13,
+        "dif_max_p_unilateral_t_g_menos_1": 2.689570788305673e-12,
+        "dif_max_p_unilateral_mle": 2.870365620535886e-14,
+        "dif_max_p_unilateral_cluster_candidato": 1.297817105519461e-14,
+        "dif_max_ic95_fieller_inf": 5.679565488423616e-11,
+        "dif_max_ic95_fieller_sup": 1.7011153290319603e-10,
+        "dif_max_li95_unilateral_fieller": 7.854102688178231e-12,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-2b_M1",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 1.7836439592335595e-10,
+        "dif_max_ep_cluster_conjunto": 7.315859951724909e-11,
+        "dif_max_ep_mle": 4.5004585733577504e-11,
+        "dif_max_ep_cluster_candidato": 5.1866362495156904e-11,
+        "dif_max_ic95_inf": 9.425536141652473e-11,
+        "dif_max_ic95_sup": 4.634947596856589e-11,
+        "dif_max_li95_unilateral": 9.030428760173026e-11,
+        "dif_max_p_unilateral": 8.183523303451068e-13,
+        "dif_max_p_unilateral_t_g_menos_1": 2.689570788305673e-12,
+        "dif_max_p_unilateral_mle": 2.870365620535886e-14,
+        "dif_max_p_unilateral_cluster_candidato": 1.297817105519461e-14,
+        "dif_max_ic95_fieller_inf": 2.3194873786383593e-10,
+        "dif_max_ic95_fieller_sup": 4.073180311930283e-11,
+        "dif_max_li95_unilateral_fieller": 7.854102688178231e-12,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-3_M2",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 1.5158443360488482e-10,
+        "dif_max_ep_cluster_conjunto": 4.9258874756930027e-11,
+        "dif_max_ep_mle": 1.1198902916120801e-11,
+        "dif_max_ep_cluster_candidato": 4.498040828693206e-12,
+        "dif_max_ic95_inf": 4.987821267121717e-11,
+        "dif_max_ic95_sup": 2.634980913150136e-10,
+        "dif_max_li95_unilateral": 2.389555220361217e-11,
+        "dif_max_p_unilateral": 1.18432359684104e-20,
+        "dif_max_p_unilateral_t_g_menos_1": 1.0671490169771112e-18,
+        "dif_max_p_unilateral_mle": 3.1966546698340453e-28,
+        "dif_max_p_unilateral_cluster_candidato": 4.446574729649606e-27,
+        "dif_max_ic95_fieller_inf": 0.0,
+        "dif_max_ic95_fieller_sup": 0.0,
+        "dif_max_li95_unilateral_fieller": 0.0,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-3_M4",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 2.771193175270335e-10,
+        "dif_max_ep_cluster_conjunto": 2.56189514047378e-11,
+        "dif_max_ep_mle": 4.597194847022479e-11,
+        "dif_max_ep_cluster_candidato": 4.065797698515894e-11,
+        "dif_max_ic95_inf": 2.450589878253001e-10,
+        "dif_max_ic95_sup": 1.2578092647440494e-10,
+        "dif_max_li95_unilateral": 2.1316713556378385e-10,
+        "dif_max_p_unilateral": 1.350507781633026e-24,
+        "dif_max_p_unilateral_t_g_menos_1": 4.2818073830618355e-20,
+        "dif_max_p_unilateral_mle": 9.658569832860167e-47,
+        "dif_max_p_unilateral_cluster_candidato": 3.318142023334605e-43,
+        "dif_max_ic95_fieller_inf": 0.0,
+        "dif_max_ic95_fieller_sup": 0.0,
+        "dif_max_li95_unilateral_fieller": 0.0,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-3_M5_1",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 9.438160460069032e-11,
+        "dif_max_ep_cluster_conjunto": 3.936267978232877e-11,
+        "dif_max_ep_mle": 1.5627943383833554e-11,
+        "dif_max_ep_cluster_candidato": 9.089784480664775e-12,
+        "dif_max_ic95_inf": 2.9664490951238553e-10,
+        "dif_max_ic95_sup": 4.034576490532342e-12,
+        "dif_max_li95_unilateral": 1.8208801381964192e-10,
+        "dif_max_p_unilateral": 2.314880164352919e-17,
+        "dif_max_p_unilateral_t_g_menos_1": 4.354752235896653e-15,
+        "dif_max_p_unilateral_mle": 1.261849282217047e-24,
+        "dif_max_p_unilateral_cluster_candidato": 4.699137127318457e-24,
+        "dif_max_ic95_fieller_inf": 0.0,
+        "dif_max_ic95_fieller_sup": 0.0,
+        "dif_max_li95_unilateral_fieller": 0.0,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-3_M5_2",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 2.7886583596492016e-11,
+        "dif_max_ep_cluster_conjunto": 1.3810286247917247e-11,
+        "dif_max_ep_mle": 3.581895891002773e-11,
+        "dif_max_ep_cluster_candidato": 3.890826549834969e-11,
+        "dif_max_ic95_inf": 2.299394008531408e-11,
+        "dif_max_ic95_sup": 2.132576297018358e-10,
+        "dif_max_li95_unilateral": 2.2771784458086586e-11,
+        "dif_max_p_unilateral": 4.952915044786378e-16,
+        "dif_max_p_unilateral_t_g_menos_1": 1.8606915053870354e-14,
+        "dif_max_p_unilateral_mle": 2.6657549600746423e-20,
+        "dif_max_p_unilateral_cluster_candidato": 3.618526405031596e-19,
+        "dif_max_ic95_fieller_inf": 0.0,
+        "dif_max_ic95_fieller_sup": 0.0,
+        "dif_max_li95_unilateral_fieller": 0.0,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-3_M5_3",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 2.0026957512832858e-10,
+        "dif_max_ep_cluster_conjunto": 1.4867163056209165e-11,
+        "dif_max_ep_mle": 1.633032598036266e-11,
+        "dif_max_ep_cluster_candidato": 2.0902723996130135e-13,
+        "dif_max_ic95_inf": 7.445460736871158e-12,
+        "dif_max_ic95_sup": 1.2249591692023549e-11,
+        "dif_max_li95_unilateral": 9.669042323778106e-11,
+        "dif_max_p_unilateral": 1.262663386671235e-24,
+        "dif_max_p_unilateral_t_g_menos_1": 3.699416397133157e-18,
+        "dif_max_p_unilateral_mle": 3.568805871832952e-44,
+        "dif_max_p_unilateral_cluster_candidato": 4.686587975713088e-42,
+        "dif_max_ic95_fieller_inf": 0.0,
+        "dif_max_ic95_fieller_sup": 0.0,
+        "dif_max_li95_unilateral_fieller": 0.0,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "P1h_P1h-3_M7",
+        "linhas_reestimadas": 1,
+        "linhas_gravadas": 1,
+        "todas_casadas": true,
+        "dif_max_estimativa": 2.3960223157594356e-10,
+        "dif_max_ep_cluster_conjunto": 2.1923851623029122e-11,
+        "dif_max_ep_mle": 2.267047660708954e-12,
+        "dif_max_ep_cluster_candidato": 3.361533273960049e-12,
+        "dif_max_ic95_inf": 1.505443700811479e-10,
+        "dif_max_ic95_sup": 1.0204883924043059e-10,
+        "dif_max_li95_unilateral": 2.3417844781379114e-10,
+        "dif_max_p_unilateral": 2.655533897264652e-31,
+        "dif_max_p_unilateral_t_g_menos_1": 6.765271123175397e-25,
+        "dif_max_p_unilateral_mle": 2.1870033614655207e-109,
+        "dif_max_p_unilateral_cluster_candidato": 4.884495838853169e-86,
+        "dif_max_ic95_fieller_inf": 0.0,
+        "dif_max_ic95_fieller_sup": 0.0,
+        "dif_max_li95_unilateral_fieller": 0.0,
+        "dif_max_p_holm": 0.0,
+        "dif_max_q_bky": 0.0,
+        "dif_max_n_candidatos": 0.0,
+        "dif_max_g_conjuntos": 0.0,
+        "passou": true
+      }
+    ]
+  },
+  "mesma_amostra": {
+    "M5_1_dif_max_coef": 0.0,
+    "M5_3_dif_max_coef": 0.0,
+    "P1_linhas": 277,
+    "E9_sensibilidade": {
+      "antiga_19mar": {
+        "E9s_2": {
+          "n_candidatos": 1798,
+          "n_alternativas": 1015,
+          "n_conjuntos": 16,
+          "omitidas": [
+            "tem_vaga_imediata"
+          ]
+        },
+        "E9s_emp": {
+          "n_candidatos": 3365,
+          "n_alternativas": 2219,
+          "n_conjuntos": 55,
+          "omitidas": [
+            "tem_vaga_imediata"
+          ]
+        }
+      },
+      "corrigida_13fev": {
+        "E9s_2": {
+          "n_candidatos": 1140,
+          "n_alternativas": 714,
+          "n_conjuntos": 16,
+          "omitidas": [
+            "tem_vaga_imediata"
+          ]
+        },
+        "E9s_emp": {
+          "n_candidatos": 2707,
+          "n_alternativas": 1918,
+          "n_conjuntos": 55,
+          "omitidas": [
+            "tem_vaga_imediata"
+          ]
+        }
+      }
+    }
+  },
+  "conferencia_vc": {
+    "antiga_19mar:M1": 0.0,
+    "antiga_19mar:M5_1": 0.0,
+    "antiga_19mar:M5_2": 0.0,
+    "antiga_19mar:M5_3": 0.0,
+    "corrigida_13fev:M1": 0.0,
+    "corrigida_13fev:M5_1": 0.0,
+    "corrigida_13fev:M5_2": 0.0,
+    "corrigida_13fev:M5_3": 0.0
+  },
+  "mudancas": [
+    {
+      "id_vd": "VD-1",
+      "chave_modelo": "E9s_2",
+      "tipo_linha": "razao_chances_por_5mil",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 1.950678058,
+      "estimativa_corrigida": 1.955877818,
+      "criterio": "IC 95% exclui 1",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-2",
+      "chave_modelo": "E9s_emp",
+      "tipo_linha": "razao_chances_por_5mil",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 1.734215572,
+      "estimativa_corrigida": 1.685388656,
+      "criterio": "IC 95% exclui 1",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M2",
+      "tipo_linha": "razao_chances_por_5mil",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 1.278757709,
+      "estimativa_corrigida": 1.281130909,
+      "criterio": "IC 95% exclui 1",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M4",
+      "tipo_linha": "razao_chances_por_5mil",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 1.461857972,
+      "estimativa_corrigida": 1.475607164,
+      "criterio": "IC 95% exclui 1",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M7",
+      "tipo_linha": "razao_chances_por_5mil",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 1.163958058,
+      "estimativa_corrigida": 1.182373954,
+      "criterio": "IC 95% exclui 1",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M8",
+      "tipo_linha": "razao_chances_por_5mil",
+      "termo": "media_bolsa_mil",
+      "estimativa_antiga": 1.283558372,
+      "estimativa_corrigida": 1.301400479,
+      "criterio": "IC 95% exclui 1",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M9",
+      "tipo_linha": "razao_chances_por_5mil",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 1.242640122,
+      "estimativa_corrigida": 1.266948564,
+      "criterio": "IC 95% exclui 1",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|tercil1",
+      "estimativa_antiga": 0.05356193629,
+      "estimativa_corrigida": 0.05639707612,
+      "criterio": "IC 95% exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|tercil2",
+      "estimativa_antiga": 0.01995981659,
+      "estimativa_corrigida": 0.02116834575,
+      "criterio": "IC 95% exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|tercil3",
+      "estimativa_antiga": 0.03362223023,
+      "estimativa_corrigida": 0.03717950049,
+      "criterio": "IC 95% exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|sem_pontuacao",
+      "estimativa_antiga": -0.05067688548,
+      "estimativa_corrigida": -0.04909557595,
+      "criterio": "IC 95% exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_tercil2",
+      "estimativa_antiga": -0.0336021197,
+      "estimativa_corrigida": -0.03522873037,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_tercil3",
+      "estimativa_antiga": -0.01993970605,
+      "estimativa_corrigida": -0.01921757563,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_sem_pontuacao",
+      "estimativa_antiga": -0.1042388218,
+      "estimativa_corrigida": -0.1054926521,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": true
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_nota",
+      "tipo_linha": "wald_igualdade",
+      "termo": "wald_inclinacoes_iguais",
+      "estimativa_antiga": null,
+      "estimativa_corrigida": null,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_municipio",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|fora_do_municipio",
+      "estimativa_antiga": 0.0328905362,
+      "estimativa_corrigida": 0.03671091,
+      "criterio": "IC 95% exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_municipio",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|mesmo_municipio",
+      "estimativa_antiga": 0.09233998477,
+      "estimativa_corrigida": 0.09041430827,
+      "criterio": "IC 95% exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_municipio",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_mesmo_municipio",
+      "estimativa_antiga": 0.05944944857,
+      "estimativa_corrigida": 0.05370339827,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso01",
+      "estimativa_antiga": 0.1441584653,
+      "estimativa_corrigida": 0.1429119563,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso02",
+      "estimativa_antiga": 0.006473549346,
+      "estimativa_corrigida": 0.01513295036,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso06",
+      "estimativa_antiga": -0.07700109063,
+      "estimativa_corrigida": -0.07359905734,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso07",
+      "estimativa_antiga": -0.02035983273,
+      "estimativa_corrigida": -0.01319762635,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso08",
+      "estimativa_antiga": 0.001329059549,
+      "estimativa_corrigida": 0.003398997905,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso09",
+      "estimativa_antiga": 0.06450663743,
+      "estimativa_corrigida": 0.06677731746,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso11",
+      "estimativa_antiga": 0.05041195362,
+      "estimativa_corrigida": 0.04509660415,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso14",
+      "estimativa_antiga": 0.02503968427,
+      "estimativa_corrigida": 0.01962293285,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso15",
+      "estimativa_antiga": 0.05254660611,
+      "estimativa_corrigida": 0.05378351936,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso17",
+      "estimativa_antiga": -0.01310610147,
+      "estimativa_corrigida": -0.01296504199,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso18",
+      "estimativa_antiga": -0.003766617616,
+      "estimativa_corrigida": 0.0003171788826,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": true,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|curso24",
+      "estimativa_antiga": -0.0840001511,
+      "estimativa_corrigida": -0.08079038097,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "inclinacao_do_grupo",
+      "termo": "bolsa_mil|demais_cursos",
+      "estimativa_antiga": 0.009559178737,
+      "estimativa_corrigida": 0.01302244509,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso02",
+      "estimativa_antiga": -0.1376849159,
+      "estimativa_corrigida": -0.127779006,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso06",
+      "estimativa_antiga": -0.2211595559,
+      "estimativa_corrigida": -0.2165110137,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso07",
+      "estimativa_antiga": -0.164518298,
+      "estimativa_corrigida": -0.1561095827,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso08",
+      "estimativa_antiga": -0.1428294057,
+      "estimativa_corrigida": -0.1395129584,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso09",
+      "estimativa_antiga": -0.07965182783,
+      "estimativa_corrigida": -0.07613463887,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso11",
+      "estimativa_antiga": -0.09374651164,
+      "estimativa_corrigida": -0.09781535218,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso14",
+      "estimativa_antiga": -0.119118781,
+      "estimativa_corrigida": -0.1232890235,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso15",
+      "estimativa_antiga": -0.09161185915,
+      "estimativa_corrigida": -0.08912843697,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso17",
+      "estimativa_antiga": -0.1572645667,
+      "estimativa_corrigida": -0.1558769983,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso18",
+      "estimativa_antiga": -0.1479250829,
+      "estimativa_corrigida": -0.1425947774,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_curso24",
+      "estimativa_antiga": -0.2281586164,
+      "estimativa_corrigida": -0.2237023373,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "interacao",
+      "termo": "bolsa_x_demais_cursos",
+      "estimativa_antiga": -0.1345992865,
+      "estimativa_corrigida": -0.1298895112,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M6_curso",
+      "tipo_linha": "wald_igualdade",
+      "termo": "wald_inclinacoes_iguais",
+      "estimativa_antiga": null,
+      "estimativa_corrigida": null,
+      "criterio": "p MV < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M8",
+      "tipo_linha": "coeficiente",
+      "termo": "desvio_bolsa_mil",
+      "estimativa_antiga": 0.1750486707,
+      "estimativa_corrigida": 0.1606969577,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M8",
+      "tipo_linha": "coeficiente",
+      "termo": "desvio_distancia_100km",
+      "estimativa_antiga": 0.7063621189,
+      "estimativa_corrigida": 0.7027709985,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-3",
+      "chave_modelo": "M9",
+      "tipo_linha": "teste_lambda_igual_1",
+      "termo": "lambda_menos_1",
+      "estimativa_antiga": -0.5511675134,
+      "estimativa_corrigida": -0.5009856653,
+      "criterio": "IC 95% exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "apoio",
+      "chave_modelo": "M5_1",
+      "tipo_linha": "coeficiente",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 0.0132349023,
+      "estimativa_corrigida": 0.0132349023,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "apoio",
+      "chave_modelo": "M5_2",
+      "tipo_linha": "coeficiente",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": 0.1063720918,
+      "estimativa_corrigida": 0.1163004465,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "apoio",
+      "chave_modelo": "M5_3",
+      "tipo_linha": "coeficiente",
+      "termo": "bolsa_mil",
+      "estimativa_antiga": -0.0004321367366,
+      "estimativa_corrigida": -0.0004321367366,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "apoio",
+      "chave_modelo": "P1d",
+      "tipo_linha": "wald_igualdade_ciclos",
+      "termo": "wald_bolsa_igual_entre_ciclos",
+      "estimativa_antiga": null,
+      "estimativa_corrigida": null,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M1",
+      "tipo_linha": "dap",
+      "termo": "distancia_100km_a_menos",
+      "estimativa_antiga": 4.465093128,
+      "estimativa_corrigida": 4.208411419,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false,
+      "bootstrap_exclui_0_antiga": false,
+      "bootstrap_exclui_0_corrigida": false,
+      "muda_significancia_bootstrap": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M1",
+      "tipo_linha": "dap",
+      "termo": "mesma_uf",
+      "estimativa_antiga": 56.66518178,
+      "estimativa_corrigida": 52.87953892,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false,
+      "bootstrap_exclui_0_antiga": false,
+      "bootstrap_exclui_0_corrigida": false,
+      "muda_significancia_bootstrap": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M1",
+      "tipo_linha": "dap",
+      "termo": "capital",
+      "estimativa_antiga": -3.66595099,
+      "estimativa_corrigida": -2.537650197,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false,
+      "bootstrap_exclui_0_antiga": false,
+      "bootstrap_exclui_0_corrigida": false,
+      "muda_significancia_bootstrap": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M1",
+      "tipo_linha": "dap",
+      "termo": "vaga_imediata",
+      "estimativa_antiga": 13.3762443,
+      "estimativa_corrigida": 10.66646705,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false,
+      "bootstrap_exclui_0_antiga": false,
+      "bootstrap_exclui_0_corrigida": false,
+      "muda_significancia_bootstrap": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M4",
+      "tipo_linha": "dap",
+      "termo": "distancia_100km_a_menos",
+      "estimativa_antiga": 2.623708576,
+      "estimativa_corrigida": 2.572324145,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M4",
+      "tipo_linha": "dap",
+      "termo": "mesma_uf",
+      "estimativa_antiga": 32.81140018,
+      "estimativa_corrigida": 31.84798811,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M4",
+      "tipo_linha": "dap",
+      "termo": "capital",
+      "estimativa_antiga": -5.240071592,
+      "estimativa_corrigida": -4.547308228,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": true
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M4",
+      "tipo_linha": "dap",
+      "termo": "vaga_imediata",
+      "estimativa_antiga": 8.430996895,
+      "estimativa_corrigida": 7.131059081,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M7",
+      "tipo_linha": "dap",
+      "termo": "distancia_100km_a_menos",
+      "estimativa_antiga": 6.023815029,
+      "estimativa_corrigida": 5.489875853,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M7",
+      "tipo_linha": "dap",
+      "termo": "mesma_uf",
+      "estimativa_antiga": 78.07648601,
+      "estimativa_corrigida": 70.6602687,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M7",
+      "tipo_linha": "dap",
+      "termo": "capital",
+      "estimativa_antiga": -3.465946065,
+      "estimativa_corrigida": -2.444059074,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M7",
+      "tipo_linha": "dap",
+      "termo": "vaga_imediata",
+      "estimativa_antiga": 14.09636625,
+      "estimativa_corrigida": 10.89422397,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M5_2",
+      "tipo_linha": "dap",
+      "termo": "distancia_100km_a_menos",
+      "estimativa_antiga": 1.759043216,
+      "estimativa_corrigida": 1.653277253,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M5_2",
+      "tipo_linha": "dap",
+      "termo": "mesma_uf",
+      "estimativa_antiga": 22.31758755,
+      "estimativa_corrigida": 20.20557234,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M5_2",
+      "tipo_linha": "dap",
+      "termo": "capital",
+      "estimativa_antiga": 2.060409984,
+      "estimativa_corrigida": 2.759158601,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M5_2",
+      "tipo_linha": "dap",
+      "termo": "vaga_imediata",
+      "estimativa_antiga": 10.32556643,
+      "estimativa_corrigida": 6.551738333,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M1",
+      "tipo_linha": "km_equivalentes",
+      "termo": "K5",
+      "estimativa_antiga": 111.9797473,
+      "estimativa_corrigida": 118.8096767,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M1",
+      "tipo_linha": "km_equivalentes",
+      "termo": "K10",
+      "estimativa_antiga": 223.9594946,
+      "estimativa_corrigida": 237.6193534,
+      "criterio": "IC 95% delta exclui 0",
+      "significativa_antiga": false,
+      "significativa_corrigida": false,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M2",
+      "tipo_linha": "D_UF",
+      "termo": "D_UF",
+      "estimativa_antiga": 1.176271719,
+      "estimativa_corrigida": 1.155859685,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M4",
+      "tipo_linha": "D_UF",
+      "termo": "D_UF",
+      "estimativa_antiga": 1.732335186,
+      "estimativa_corrigida": 1.700077345,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "VD-4",
+      "chave_modelo": "M7",
+      "tipo_linha": "D_UF",
+      "termo": "D_UF",
+      "estimativa_antiga": 2.067160415,
+      "estimativa_corrigida": 2.032413114,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "apoio",
+      "chave_modelo": "M5_1",
+      "tipo_linha": "D_UF",
+      "termo": "D_UF",
+      "estimativa_antiga": 2.343017749,
+      "estimativa_corrigida": 2.343017749,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "apoio",
+      "chave_modelo": "M5_2",
+      "tipo_linha": "D_UF",
+      "termo": "D_UF",
+      "estimativa_antiga": 1.310247553,
+      "estimativa_corrigida": 1.18691262,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    },
+    {
+      "id_vd": "apoio",
+      "chave_modelo": "M5_3",
+      "tipo_linha": "D_UF",
+      "termo": "D_UF",
+      "estimativa_antiga": 2.372508452,
+      "estimativa_corrigida": 2.372508452,
+      "criterio": "q BKY < 0,05",
+      "significativa_antiga": true,
+      "significativa_corrigida": true,
+      "muda_sinal": false,
+      "muda_significancia": false
+    }
+  ],
+  "leitura": {
+    "VD1": {
+      "regra": "MANTEM",
+      "ic_antigo_exclui_1": true,
+      "ic_corrigido_exclui_1": true,
+      "mesmo_sinal": true
+    },
+    "VD2": {
+      "ic_antigo_exclui_1": true,
+      "ic_corrigido_exclui_1": true
+    },
+    "VD3": {
+      "variante_muda_sinal": {
+        "M2": false,
+        "M4": false,
+        "M6_nota": false,
+        "M6_municipio": false,
+        "M6_curso": true,
+        "M7": false,
+        "M8": false,
+        "M9": false
+      },
+      "mudam_sinal": [
+        "M6_curso"
+      ],
+      "nao_mudam_sinal_base_da_H2": [
+        "M2",
+        "M4",
+        "M6_nota",
+        "M6_municipio",
+        "M7",
+        "M8",
+        "M9"
+      ]
+    },
+    "linhas_que_mudam_sinal": [
+      "M6_curso:inclinacao_do_grupo:bolsa_mil|curso18"
+    ],
+    "linhas_que_mudam_significancia": [
+      "M6_nota:interacao:bolsa_x_sem_pontuacao",
+      "M4:dap:capital"
+    ]
+  },
+  "diagnosticos": {
+    "antiga_19mar": {
+      "conferencia_distancia": {
+        "escolhas_conferidas": 5421,
+        "diferenca_maxima_km": 0.0
+      },
+      "bootstrap": {
+        "n_boot": 999,
+        "n_validos": 999,
+        "falhas": {},
+        "semente": 20261019,
+        "desenho_comprimido": {
+          "tipos": 2479,
+          "linhas": 361614,
+          "diferenca_maxima_theta_contra_M1": 1.1102230246251565e-15,
+          "regra": "tipo = conjunto × município de origem (linhas idênticas); mesma verossimilhança do desenho por candidato (conferido)"
+        },
+        "fracao_beta_bolsa_nao_positivo": 0.04004004004004004,
+        "beta_bolsa_percentis_2_5_97_5": [
+          -0.004666348511804183,
+          0.08123899797665661
+        ],
+        "por_atributo": {
+          "distancia_100km_a_menos": {
+            "ic95_inf": -20.093222391832235,
+            "ic95_sup": 45.546293863806895,
+            "mediana": 4.321418220551974
+          },
+          "mesma_uf": {
+            "ic95_inf": -251.8280186881929,
+            "ic95_sup": 558.8703854777857,
+            "mediana": 54.81427242527412
+          },
+          "capital": {
+            "ic95_inf": -44.2705591644278,
+            "ic95_sup": 16.298307631237623,
+            "mediana": -3.2479581311142094
+          },
+          "vaga_imediata": {
+            "ic95_inf": -54.71364357791497,
+            "ic95_sup": 126.27289739384663,
+            "mediana": 13.003932171768842
+          }
+        }
+      },
+      "m8": {
+        "modelo": "M8",
+        "termos": [
+          "ivs_inclinacao",
+          "ivs_mudanca_inclinacao_0300",
+          "ivs_mudanca_inclinacao_0400",
+          "tem_vaga_imediata",
+          "log_vagas_imediatas_mais_1",
+          "log_populacao_2022",
+          "macro_centro_oeste",
+          "macro_nordeste",
+          "macro_norte",
+          "macro_sul",
+          "capital",
+          "estrato_interior_remoto",
+          "estrato_metropolitano",
+          "mesma_uf",
+          "mesma_regiao_saude",
+          "mesmo_municipio",
+          "media_bolsa_mil",
+          "desvio_bolsa_mil",
+          "media_distancia_100km",
+          "desvio_distancia_100km"
+        ],
+        "n_sorteios": 500,
+        "semente": 20261019,
+        "max_avaliacoes": 300,
+        "ok": true,
+        "status": "EXECUTADO",
+        "ll": -12657.984222544983,
+        "G_conj": 56,
+        "G_cand": 5421,
+        "avaliacoes": 140,
+        "grad_max": 1.0329552324606084e-08,
+        "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "passos_newton": 1,
+        "autovalor_min_informacao": 13.854455542778597,
+        "iteracoes": 129,
+        "nota": "máxima verossimilhança simulada (Halton embaralhado, um bloco de sorteios por candidato); desvios relatados em valor absoluto (o sinal não é identificado); H0 desvio = 0 fica na fronteira e o p normal é conservador",
+        "ciclo": "empilhado",
+        "amostra": "P1 (G1 com origem)",
+        "n_candidatos": 5421,
+        "n_grupos": 5421,
+        "n_linhas": 932577,
+        "n_conjuntos": 56
+      },
+      "m9": {
+        "modelo": "M9",
+        "termos": [
+          "bolsa_mil",
+          "ivs_inclinacao",
+          "ivs_mudanca_inclinacao_0300",
+          "ivs_mudanca_inclinacao_0400",
+          "tem_vaga_imediata",
+          "log_vagas_imediatas_mais_1",
+          "log_populacao_2022",
+          "macro_centro_oeste",
+          "macro_nordeste",
+          "macro_norte",
+          "macro_sul",
+          "capital",
+          "estrato_interior_remoto",
+          "estrato_metropolitano",
+          "distancia_100km",
+          "mesma_uf",
+          "mesma_regiao_saude",
+          "mesmo_municipio",
+          "lambda"
+        ],
+        "avaliacoes": 184,
+        "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "n_ninhos": 488023,
+        "n_ninhos_unitarios": 298916,
+        "celulas_por_ninho_media": 1.9109283783756092,
+        "passos_newton": 1,
+        "ll": -13500.560007170632,
+        "grad_max": 5.454646179181566e-10,
+        "lambda_no_limite": false,
+        "hessiana_definida": true,
+        "autovalor_min_informacao": 37.725320834875916,
+        "iteracoes": 162,
+        "ok": true,
+        "status": "EXECUTADO",
+        "G_conj": 56,
+        "G_cand": 5421,
+        "lr_contra_M1": 315.2017453890694,
+        "nota": "488023 ninhos (CIR × candidato), 298916 com uma só célula; lambda = 1 é o logit condicional; utilidade na escala do logit (V = x'b)",
+        "ciclo": "empilhado",
+        "amostra": "P1 (G1 com origem)",
+        "n_candidatos": 5421,
+        "n_grupos": 5421,
+        "n_linhas": 932577,
+        "n_conjuntos": 56
+      },
+      "convergencia": {
+        "M1": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M2": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 8,
+          "omitidas": []
+        },
+        "M4": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M5_1": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 11,
+          "omitidas": []
+        },
+        "M5_2": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M5_3": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M6_nota": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M6_municipio": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M6_curso": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M7": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M8": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 129,
+          "omitidas": []
+        },
+        "M9": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 162,
+          "omitidas": []
+        }
+      }
+    },
+    "corrigida_13fev": {
+      "conferencia_distancia": {
+        "escolhas_conferidas": 5421,
+        "diferenca_maxima_km": 0.0
+      },
+      "bootstrap": {
+        "n_boot": 999,
+        "n_validos": 999,
+        "falhas": {},
+        "semente": 20261019,
+        "desenho_comprimido": {
+          "tipos": 2479,
+          "linhas": 361614,
+          "diferenca_maxima_theta_contra_M1": 1.2906342661267445e-15,
+          "regra": "tipo = conjunto × município de origem (linhas idênticas); mesma verossimilhança do desenho por candidato (conferido)"
+        },
+        "fracao_beta_bolsa_nao_positivo": 0.044044044044044044,
+        "beta_bolsa_percentis_2_5_97_5": [
+          -0.005077292788662052,
+          0.08988512710007565
+        ],
+        "por_atributo": {
+          "distancia_100km_a_menos": {
+            "ic95_inf": -22.29873639240381,
+            "ic95_sup": 31.91777239518018,
+            "mediana": 4.023961951832063
+          },
+          "mesma_uf": {
+            "ic95_inf": -273.80686741869846,
+            "ic95_sup": 412.4277535180392,
+            "mediana": 51.05098707443901
+          },
+          "capital": {
+            "ic95_inf": -32.510715165245834,
+            "ic95_sup": 18.767274915602044,
+            "mediana": -2.013937794749825
+          },
+          "vaga_imediata": {
+            "ic95_inf": -57.99773038986436,
+            "ic95_sup": 77.62261113729184,
+            "mediana": 10.205653268499374
+          }
+        }
+      },
+      "m8": {
+        "modelo": "M8",
+        "termos": [
+          "ivs_inclinacao",
+          "ivs_mudanca_inclinacao_0300",
+          "ivs_mudanca_inclinacao_0400",
+          "tem_vaga_imediata",
+          "log_vagas_imediatas_mais_1",
+          "log_populacao_2022",
+          "macro_centro_oeste",
+          "macro_nordeste",
+          "macro_norte",
+          "macro_sul",
+          "capital",
+          "estrato_interior_remoto",
+          "estrato_metropolitano",
+          "mesma_uf",
+          "mesma_regiao_saude",
+          "mesmo_municipio",
+          "media_bolsa_mil",
+          "desvio_bolsa_mil",
+          "media_distancia_100km",
+          "desvio_distancia_100km"
+        ],
+        "n_sorteios": 500,
+        "semente": 20261019,
+        "max_avaliacoes": 300,
+        "ok": true,
+        "status": "EXECUTADO",
+        "ll": -12653.693957801843,
+        "G_conj": 56,
+        "G_cand": 5421,
+        "avaliacoes": 146,
+        "grad_max": 3.3387512199389846e-09,
+        "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "passos_newton": 1,
+        "autovalor_min_informacao": 13.989665872600805,
+        "iteracoes": 132,
+        "nota": "máxima verossimilhança simulada (Halton embaralhado, um bloco de sorteios por candidato); desvios relatados em valor absoluto (o sinal não é identificado); H0 desvio = 0 fica na fronteira e o p normal é conservador",
+        "ciclo": "empilhado",
+        "amostra": "P1 (G1 com origem)",
+        "n_candidatos": 5421,
+        "n_grupos": 5421,
+        "n_linhas": 932577,
+        "n_conjuntos": 56
+      },
+      "m9": {
+        "modelo": "M9",
+        "termos": [
+          "bolsa_mil",
+          "ivs_inclinacao",
+          "ivs_mudanca_inclinacao_0300",
+          "ivs_mudanca_inclinacao_0400",
+          "tem_vaga_imediata",
+          "log_vagas_imediatas_mais_1",
+          "log_populacao_2022",
+          "macro_centro_oeste",
+          "macro_nordeste",
+          "macro_norte",
+          "macro_sul",
+          "capital",
+          "estrato_interior_remoto",
+          "estrato_metropolitano",
+          "distancia_100km",
+          "mesma_uf",
+          "mesma_regiao_saude",
+          "mesmo_municipio",
+          "lambda"
+        ],
+        "avaliacoes": 198,
+        "otimizador": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "n_ninhos": 488023,
+        "n_ninhos_unitarios": 298916,
+        "celulas_por_ninho_media": 1.9109283783756092,
+        "passos_newton": 1,
+        "ll": -13514.688719434087,
+        "grad_max": 4.75063599569836e-10,
+        "lambda_no_limite": false,
+        "hessiana_definida": true,
+        "autovalor_min_informacao": 37.50061952916279,
+        "iteracoes": 176,
+        "ok": true,
+        "status": "EXECUTADO",
+        "G_conj": 56,
+        "G_cand": 5421,
+        "lr_contra_M1": 262.97518288489664,
+        "nota": "488023 ninhos (CIR × candidato), 298916 com uma só célula; lambda = 1 é o logit condicional; utilidade na escala do logit (V = x'b)",
+        "ciclo": "empilhado",
+        "amostra": "P1 (G1 com origem)",
+        "n_candidatos": 5421,
+        "n_grupos": 5421,
+        "n_linhas": 932577,
+        "n_conjuntos": 56
+      },
+      "convergencia": {
+        "M1": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M2": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 8,
+          "omitidas": []
+        },
+        "M4": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M5_1": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 11,
+          "omitidas": []
+        },
+        "M5_2": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M5_3": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M6_nota": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M6_municipio": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M6_curso": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 9,
+          "omitidas": []
+        },
+        "M7": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 10,
+          "omitidas": []
+        },
+        "M8": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 132,
+          "omitidas": []
+        },
+        "M9": {
+          "ok": true,
+          "status": "EXECUTADO",
+          "iteracoes": 176,
+          "omitidas": []
+        }
+      }
+    }
+  },
+  "covariancias": {
+    "antiga_19mar": {
+      "E9s_2": {
+        "termos": [
+          "bolsa_mil"
+        ],
+        "theta": [
+          0.13363540685828312
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0010379055524223503
+          ]
+        ],
+        "g_conjuntos": 16
+      },
+      "E9s_emp": {
+        "termos": [
+          "bolsa_mil"
+        ],
+        "theta": [
+          0.11011103828017747
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0005232403381972436
+          ]
+        ],
+        "g_conjuntos": 55
+      },
+      "M1": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.042395987385265406,
+          -0.18930203190781508,
+          2.4023763319384974
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0005282362192396798,
+            2.4882429061804935e-05,
+            0.0005687695391478733
+          ],
+          [
+            2.4882429061803363e-05,
+            0.00014545263659927087,
+            0.00048768536959997835
+          ],
+          [
+            0.0005687695391478733,
+            0.00048768536959997835,
+            0.004048528202831823
+          ]
+        ],
+        "g_conjuntos": 56
+      },
+      "M2": {
+        "termos": [
+          "bolsa_mil",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.04917781330471139,
+          1.6680498518688094
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.00042762233989361814,
+            0.0005499492787086501
+          ],
+          [
+            0.0005499492787086354,
+            0.003181255117954776
+          ]
+        ],
+        "g_conjuntos": 56
+      },
+      "M4": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.07594164201769853,
+          -0.19924873740797916,
+          2.491751606657049
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0005934981357816618,
+            -7.270225295567891e-06,
+            0.0006029000087030223
+          ],
+          [
+            -7.270225295566709e-06,
+            0.00017178133405621184,
+            0.0004489903206423338
+          ],
+          [
+            0.0006029000087030218,
+            0.0004489903206423322,
+            0.005346163960752143
+          ]
+        ],
+        "g_conjuntos": 56
+      },
+      "M5_2": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.10637209175776867,
+          -0.1871131064091468,
+          2.3739684705411483
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.001128073349548054,
+            -0.0001312816951514553,
+            0.002219361983536068
+          ],
+          [
+            -0.00013128169515145579,
+            0.00027939992822710336,
+            0.0006666994713578487
+          ],
+          [
+            0.0022193619835360365,
+            0.0006666994713578662,
+            0.009467349469708728
+          ]
+        ],
+        "g_conjuntos": 16
+      },
+      "M7": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.030365263202212285,
+          -0.18291472882673765,
+          2.370813047517419
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0005364029392224011,
+            1.8803384324462076e-05,
+            0.0004496403890204941
+          ],
+          [
+            1.8803384324460795e-05,
+            0.00011573773971785073,
+            0.0005243902560014289
+          ],
+          [
+            0.0004496403890204917,
+            0.0005243902560014289,
+            0.004411924278969824
+          ]
+        ],
+        "g_conjuntos": 56
+      }
+    },
+    "corrigida_13fev": {
+      "E9s_2": {
+        "termos": [
+          "bolsa_mil"
+        ],
+        "theta": [
+          0.1341678208903122
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0015829687913952789
+          ]
+        ],
+        "g_conjuntos": 16
+      },
+      "E9s_emp": {
+        "termos": [
+          "bolsa_mil"
+        ],
+        "theta": [
+          0.10439923869026548
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0005099204186855891
+          ]
+        ],
+        "g_conjuntos": 55
+      },
+      "M1": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.04529171466374379,
+          -0.1906061691590418,
+          2.395004988109833
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0006354263243799136,
+            1.392053290261707e-05,
+            0.0006345921964918632
+          ],
+          [
+            1.3920532902617471e-05,
+            0.0001543614501083765,
+            0.000516174281986056
+          ],
+          [
+            0.0006345921964918533,
+            0.0005161742819860549,
+            0.004221798398850628
+          ]
+        ],
+        "g_conjuntos": 56
+      },
+      "M2": {
+        "termos": [
+          "bolsa_mil",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.04954864217126599,
+          1.6513461062839085
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.00045564190267255217,
+            0.0005298962439061674
+          ],
+          [
+            0.0005298962439061631,
+            0.003259957953131633
+          ]
+        ],
+        "g_conjuntos": 56
+      },
+      "M4": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.07781390839073975,
+          -0.20016259537223505,
+          2.478216429122409
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0006956923745565749,
+            -1.074834726935215e-05,
+            0.0006631259554154657
+          ],
+          [
+            -1.0748347269354092e-05,
+            0.00017595072145312296,
+            0.00048544476602092857
+          ],
+          [
+            0.0006631259554154552,
+            0.0004854447660209291,
+            0.005161896915222861
+          ]
+        ],
+        "g_conjuntos": 56
+      },
+      "M5_2": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.11630044649427934,
+          -0.19227688273638668,
+          2.349917084455581
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0017023681514177524,
+            -5.503809954702132e-05,
+            0.0032083971433821204
+          ],
+          [
+            -5.5038099547016535e-05,
+            0.0003506026398225562,
+            0.0010702164777311228
+          ],
+          [
+            0.0032083971433820592,
+            0.0010702164777311202,
+            0.012119192026728842
+          ]
+        ],
+        "g_conjuntos": 16
+      },
+      "M7": {
+        "termos": [
+          "bolsa_mil",
+          "distancia_100km",
+          "mesma_uf"
+        ],
+        "theta": [
+          0.03350484851312251,
+          -0.1839374587993786,
+          2.3674615987371785
+        ],
+        "V_cluster_conjunto": [
+          [
+            0.0006537506034148049,
+            6.2226726059662446e-06,
+            0.0005453860345553705
+          ],
+          [
+            6.222672605966623e-06,
+            0.00012170622591462448,
+            0.0005366997571502789
+          ],
+          [
+            0.0005453860345553968,
+            0.000536699757150277,
+            0.0044574913067014655
+          ]
+        ],
+        "g_conjuntos": 56
+      }
+    }
+  },
+  "inferencia": {
+    "principal": "sanduíche com cluster por conjunto de escolha (curso × ciclo), fator G/(G−1)",
+    "bky": {
+      "P1": "P1 secundária (protocolo 52, §4)",
+      "P1h-3": "P1h-3 (protocolo 52b, §3)"
+    },
+    "sem_correcao_multipla": "VD-1 e VD-2 (E9 exploratório, protocolo 40 §12); DAP e km (descritivos)",
+    "z_bilateral_95": 1.959963984540054
+  },
+  "figura": {
+    "arquivo": "output/rdd_bolsa/VD_figuras/VD_antigo_corrigido.png",
+    "sha256": "a46958e07088a7246bc9c6eb28ed5997bd04f7a4e18d6f9af371f7a378b18318",
+    "titulo": "Com o tipo de vaga da inscrição, a bolsa continua deslocando a 1ª opção no ciclo 2",
+    "como_ler": "Cada linha é uma especificação; o círculo vazado cinza é a versão antiga (tipo de vaga do ciclo 2 pelo quadro de 19/03/2026, refeito depois do resultado preliminar) e o ponto azul é a versão corrigida (quadro de 13/02/2026, vigente na inscrição). As barras são o IC 95% com cluster por conjunto de escolha (curso × ciclo). À esquerda, a razão de chances por +R$ 5 mil de bolsa anunciada, em escala log: acima de 1, a célula com bolsa maior é mais escolhida como 1ª opção; a linha vertical marca 1 (nenhum efeito). As duas primeiras linhas são o E9 no conjunto só com vaga imediata (VD-1 e VD-2); as demais, as variantes do P1 (VD-3; no M8, a média da bolsa; no M9, o peso na escala do logit aninhado). À direita, D_UF = θ_UF − 10·β, o peso de a vaga ficar na UF de origem menos o de toda a amplitude da bolsa (R$ 10 → 20 mil), em log-chance; acima de 0, a origem pesa mais. Tudo é escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte, e a origem é preferência revelada, não efeito causal."
+  },
+  "como_ler": {
+    "VD_antigo_corrigido.png": "Cada linha é uma especificação; o círculo vazado cinza é a versão antiga (tipo de vaga do ciclo 2 pelo quadro de 19/03/2026, refeito depois do resultado preliminar) e o ponto azul é a versão corrigida (quadro de 13/02/2026, vigente na inscrição). As barras são o IC 95% com cluster por conjunto de escolha (curso × ciclo). À esquerda, a razão de chances por +R$ 5 mil de bolsa anunciada, em escala log: acima de 1, a célula com bolsa maior é mais escolhida como 1ª opção; a linha vertical marca 1 (nenhum efeito). As duas primeiras linhas são o E9 no conjunto só com vaga imediata (VD-1 e VD-2); as demais, as variantes do P1 (VD-3; no M8, a média da bolsa; no M9, o peso na escala do logit aninhado). À direita, D_UF = θ_UF − 10·β, o peso de a vaga ficar na UF de origem menos o de toda a amplitude da bolsa (R$ 10 → 20 mil), em log-chance; acima de 0, a origem pesa mais. Tudo é escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte, e a origem é preferência revelada, não efeito causal."
+  },
+  "saidas": {
+    "output/rdd_bolsa/VD_estimativas.csv": "3b512c0849ed9f0ef3a2345cfbc9dd12c7bc88395f60f02ee4250030634b19ef",
+    "output/rdd_bolsa/VD_figuras/VD_antigo_corrigido.png": "a46958e07088a7246bc9c6eb28ed5997bd04f7a4e18d6f9af371f7a378b18318"
+  }
+}

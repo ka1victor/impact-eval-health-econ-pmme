@@ -900,7 +900,7 @@ def conferir_mesma_amostra(va: dict, vc: dict) -> dict:
     out = {}
     a, c = va["p1"], vc["p1"]
     for col in ("modelo", "ciclo", "tipo_linha", "termo", "n_candidatos", "n_linhas_candidato_celula", "n_conjuntos"):
-        if not (a[col].astype(str).to_numpy() == c[col].astype(str).to_numpy()).all():
+        if not (a[col].fillna(-1).astype(str).to_numpy() == c[col].fillna(-1).astype(str).to_numpy()).all():
             raise FalhaValidacao(f"P1: coluna {col} difere entre as versões")
     for k in ("1", "3"):
         m = (a["modelo"] == "M5") & (a["ciclo"].astype(str) == k)
@@ -1020,17 +1020,22 @@ def mudancas(est: pd.DataFrame) -> list[dict]:
     return out
 
 
+def regra_vd1(a: pd.Series, c: pd.Series) -> str:
+    """§3 do adendo: mesmo sinal e IC corrigido que exclui 1 → mantém; IC corrigido que contém 1 → dependia do quadro
+    pós-resultado; IC que exclui 1 do outro lado não está no §3 (só relatado)."""
+    if not _exclui(c, 1.0):
+        return "DEPENDIA_DO_QUADRO_POS_RESULTADO"
+    if _sinal(a["estimativa"], 1.0) == _sinal(c["estimativa"], 1.0):
+        return "MANTEM"
+    return "SINAL_OPOSTO"
+
+
 def leitura(est: pd.DataFrame) -> dict:
     a = _sel(est, ANTIGA, "E9s_2", "razao_chances_por_5mil")
     c = _sel(est, CORRIGIDA, "E9s_2", "razao_chances_por_5mil")
     exc_c = _exclui(c, 1.0)
     mesmo_sinal = _sinal(a["estimativa"], 1.0) == _sinal(c["estimativa"], 1.0)
-    if not exc_c:
-        vd1 = "DEPENDIA_DO_QUADRO_POS_RESULTADO"
-    elif mesmo_sinal:
-        vd1 = "MANTEM"
-    else:
-        vd1 = "SINAL_OPOSTO"
+    vd1 = regra_vd1(a, c)
     mud = mudancas(est)
     var_sinal = {}
     for chave in VD3:
@@ -1107,6 +1112,9 @@ def figura(est: pd.DataFrame, lei: dict) -> dict:
             ax.set_xlim(lo, hi)
         else:
             ax.set_xlim(min(-0.2, float(sub["ic95_inf"].min()) - 0.2), float(sub["ic95_sup"].max()) + 0.7)
+            from matplotlib.ticker import FuncFormatter
+            ax.xaxis.set_major_formatter(FuncFormatter(lambda x, _: _n(x, 1)))
+            ax.set_ylim(-0.6, len(chaves) - 0.4)
         for s in ("top", "right", "left"):
             ax.spines[s].set_visible(False)
         ax.tick_params(axis="y", length=0)
@@ -1122,7 +1130,7 @@ def figura(est: pd.DataFrame, lei: dict) -> dict:
     fig.text(0.012, 0.02, "Escolha da 1ª opção, condicional a se candidatar; IC 95% com cluster por conjunto de escolha "
              "(curso × ciclo). Bolsa: pacote do corte; origem: preferência revelada, não efeito causal.",
              fontsize=9.5, color="#52514e", ha="left", va="bottom")
-    fig.subplots_adjust(left=0.17, right=0.985, top=0.82, bottom=0.15, wspace=0.55)
+    fig.subplots_adjust(left=0.20, right=0.985, top=0.82, bottom=0.15, wspace=0.62)
     fig.savefig(FIG, dpi=150, metadata={"Software": None})
     plt.close(fig)
     return {"arquivo": rel(FIG), "sha256": sha256(FIG), "titulo": titulo_figura(lei), "como_ler": COMO_LER}
@@ -1321,7 +1329,7 @@ def tabela_m6(est: pd.DataFrame) -> str:
 
 def tabela_bky(est: pd.DataFrame) -> str:
     linhas = []
-    fam = est[(est["versao"] == ANTIGA) & (est["familia_bky"] != "")]
+    fam = est[(est["versao"] == ANTIGA) & est["familia_bky"].isin([FAMILIA_P1, FAMILIA_P1H3])]
     for r in fam.itertuples(index=False):
         a = _sel(est, ANTIGA, r.chave_modelo, r.tipo_linha, r.termo)
         c = _sel(est, CORRIGIDA, r.chave_modelo, r.tipo_linha, r.termo)
@@ -1401,7 +1409,7 @@ def tabela_mudancas(resumo: dict) -> str:
                        f"{_n(m['estimativa_antiga'], 3)} → {_n(m['estimativa_corrigida'], 3)}", "; ".join(o_que)])
     n = len(resumo["mudancas"])
     if not linhas:
-        return (f"Das {n} quantidades lidas (seção 5.1 a 5.6), nenhuma muda de sinal nem de significância pelo critério "
+        return (f"Das {n} quantidades lidas (seções 5.1 a 5.6), nenhuma muda de sinal nem de significância pelo critério "
                 "da decisão 8. A lista completa, com o critério de cada linha, está em `mudancas` de `VD_resumo.json`.")
     return "\n".join([
         f"Das {n} quantidades lidas (seções 5.1 a 5.6), só as abaixo mudam de sinal ou de significância pelo critério "
@@ -1467,7 +1475,8 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
                          f"(q BKY {_p(a['q_bky'])} → {_p(c['q_bky'])})" for k, (a, c) in duf.items())
              + f". Um degrau da bolsa equivale a {_n(k5a['estimativa'], 0)} km na antiga e {_n(k5c['estimativa'], 0)} km "
                f"na corrigida (IC delta {_ic(k5c['ic95_inf'], k5c['ic95_sup'], 0)}). "
-             + (f"Mudam de sinal ou de significância {len(mud4)} linhas de DAP, km ou D_UF (seção 5.7)."
+             + ((f"Mudam de sinal ou de significância {len(mud4)} linhas de DAP, km ou D_UF (seção 5.7)."
+                 if len(mud4) > 1 else "Muda de sinal ou de significância uma linha de DAP, km ou D_UF (seção 5.7).")
                 if mud4 else "Nenhuma linha de DAP, km ou D_UF muda de sinal ou de significância (seção 5.7)."))
     t.append("**Em linguagem simples.** A conta foi refeita usando o tipo de vaga que o candidato via na inscrição, e "
              "não o quadro arrumado depois do resultado. A tabela da seção 5.7 lista tudo o que mudou de lado do zero "
