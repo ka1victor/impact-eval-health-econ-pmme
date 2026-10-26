@@ -32,11 +32,25 @@ As correções foram de texto, de conferência e de pipeline:
 
 Um ponto fica para o autor: a fonte do IBGE não foi arquivada.
 
+> **Nota de 26/10/2026: A1 resolvido.** O autor autorizou o download. O script
+> `scripts/aquisicao/a19_arquivar_ibge_capitais_uf.py` baixou de novo, das mesmas URLs do manifesto do 41, o ZIP de
+> Localidades do Brasil 2022 (4.511.488 bytes, `Last-Modified` igual ao de 15:48) e as 6 respostas do SIDRA 4709
+> (de 799 a 2.349 bytes). Os 7 SHA-256 são iguais aos do manifesto `manifesto_ibge_capitais_uf_regiao.json`. Os brutos
+> estão em `data/raw/aquisicao/ibge_capitais_uf/`, um diretório novo, e não em `territorio/`, como sugeria a decisão
+> abaixo: assim nenhum arquivo já existente em `data/` foi tocado. O manifesto de arquivamento é
+> `output/aquisicao/a19_manifesto_arquivamento_ibge_capitais_uf.json`.
+>
+> Sem rede, o modo `--verificar` reconstrói `ibge_capitais_uf_regiao.csv` do bruto arquivado, e o resultado é
+> idêntico byte a byte (SHA-256 `e4c9ffb6…`, o do manifesto). O DBF extraído também tem o SHA-256 registrado. Nada do
+> pipeline mudou: o 41, a cópia, o manifesto do 41 e as saídas `HC_*` ficaram como estavam. Teste:
+> `tests/test_arquivamento_ibge_capitais.py`. Isso fecha também a recomendação A8 da auditoria 40 para esta
+> referência.
+
 ## Achados, por gravidade
 
 ### Médios
 
-**A1. A referência do IBGE não tem a fonte arquivada.** O manifesto `manifesto_ibge_capitais_uf_regiao.json` está
+**A1. A referência do IBGE não tem a fonte arquivada (resolvido em 26/10/2026; ver a nota no veredito).** O manifesto `manifesto_ibge_capitais_uf_regiao.json` está
 completo nos campos. Ele traz:
 - fonte oficial: IBGE, Localidades do Brasil 2022, e SIDRA 4709 para a região de cada UF;
 - URL, data de acesso (26/10/2026) e `Last-Modified`;

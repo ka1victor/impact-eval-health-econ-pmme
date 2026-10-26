@@ -101,6 +101,12 @@ cada UF é igual à dada pelo primeiro dígito do código da UF. Importar o 41 c
 define o caminho do IVS errado mas não o lê; o rastreio de arquivos abertos confirma. Recomendação: quando o 48c for
 auditado, ou antes, mover a aquisição da referência do IBGE para uma etapa de aquisição do pipeline.
 
+> **Nota de 26/10/2026.** A fonte bruta foi arquivada por uma etapa de aquisição própria,
+> `scripts/aquisicao/a19_arquivar_ibge_capitais_uf.py`, em `data/raw/aquisicao/ibge_capitais_uf/`, com os 7 SHA-256
+> iguais aos do manifesto do 41. O modo `--verificar` (padrão, sem rede) reconstrói a cópia byte a byte. Ver a nota
+> no veredito da [auditoria 42](42_auditoria_capitais_uf.md), achado A1. O a19 não entrou no `run_all.py`: o 41 continua
+> lendo a cópia e conferindo o hash, como antes.
+
 **A9. Doc 63 com direção ambígua (corrigido).** "saltam … a capital, o Nordeste e os especialistas no resto da região
 (mais do lado de bolsa maior)" dava a entender "mais capitais" do lado de cima, e é o contrário. O texto foi
 corrigido, com o Centro-Oeste acrescentado à separação.

@@ -1,0 +1,54 @@
+[
+  {
+    "NC": "3",
+    "NN": "Unidade da Federação",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "20539989",
+    "D1C": "31",
+    "D1N": "Minas Gerais",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "3",
+    "NN": "Unidade da Federação",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "3833712",
+    "D1C": "32",
+    "D1N": "Espírito Santo",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "3",
+    "NN": "Unidade da Federação",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "16055174",
+    "D1C": "33",
+    "D1N": "Rio de Janeiro",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "3",
+    "NN": "Unidade da Federação",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "44411238",
+    "D1C": "35",
+    "D1N": "São Paulo",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  }
+]

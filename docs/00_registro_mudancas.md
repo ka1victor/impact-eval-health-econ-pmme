@@ -8,6 +8,28 @@
 
 ---
 
+## 26/10/2026 — Fonte bruta do IBGE das capitais, UF e região arquivada (a19; auditoria 42, A1)
+
+Motivo: o autor autorizou baixar de novo e arquivar a fonte da referência `output/aquisicao/ibge_capitais_uf_regiao.csv`
+que o adendo 48c usa. O 41 tinha lido o ZIP do IBGE e as respostas do SIDRA só em memória (achado A1 da auditoria 42;
+recomendação A8 da auditoria 40). Os 7 brutos baixados têm os SHA-256 do manifesto do 41, e a cópia se reconstrói
+deles byte a byte, sem rede. Nada do pipeline mudou.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `scripts/aquisicao/a19_arquivar_ibge_capitais_uf.py` | etapa de aquisição: `--baixar` (rede, só o que falta) e `--verificar` (padrão, sem rede, não grava) |
+| `data/raw/aquisicao/ibge_capitais_uf/` | diretório novo com o ZIP de Localidades do Brasil 2022 e as 6 respostas do SIDRA 4709 |
+| `output/aquisicao/a19_manifesto_arquivamento_ibge_capitais_uf.json` | manifesto de arquivamento: fonte, URL, data de acesso, cobertura, unidade, chaves, tamanho, SHA-256 e reconstrução |
+| [`../tests/test_arquivamento_ibge_capitais.py`](../tests/test_arquivamento_ibge_capitais.py) | teste do arquivamento (9 testes) |
+
+Notas datadas em [`auditorias/42_auditoria_capitais_uf.md`](auditorias/42_auditoria_capitais_uf.md) (A1 resolvido)
+e em [`auditorias/40_auditoria_controles_localizacao_medicos.md`](auditorias/40_auditoria_controles_localizacao_medicos.md)
+(A8).
+
+---
+
 ## 26/10/2026 — Adendos 48g (heterogeneidade por porte do IED) e 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02)
 
 Motivo: o autor aprovou rodar as pendências da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
