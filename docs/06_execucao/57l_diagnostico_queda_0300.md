@@ -29,7 +29,7 @@
 
 **Leitura pré-registrada.** Pela regra do §3, a explicação principal é acaso mais poucos municípios, e as demais viram descrição; mas, como o teste de acaso não podia reprovar, essa leitura vale como 'acaso não descartado', não como 'acaso demonstrado'.
 
-**Para dizer na banca.** "Em 0,300 o preenchimento cai, mas os dados só descrevem a queda: acima do corte o quadro tinha mais vagas de cursos que preenchem pouco em qualquer lugar, menos células foram escolhidas em 1º lugar e no ciclo 2 vaga de reserva não podia ser preenchida na 1ª chamada. Igualando esses fatores entre os lados, a queda diminui pela metade ou mais em parte das medidas, e acaso não está descartado. Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras."
+**Para dizer na banca.** "Em 0,300 o preenchimento estimado no corte cai, mas os dados só descrevem a queda. No corte, o lado de cima tinha mais células de cursos que preenchem pouco em qualquer lugar e mais células do mesmo curso na mesma UF; menos células desse lado tiveram candidato de 1ª opção (estimativa imprecisa); e no ciclo 2, em que vaga de reserva não podia ser preenchida na 1ª chamada, mais células desse lado eram só de reserva. Igualando esses fatores entre os lados, a queda diminui pela metade ou mais em parte das medidas, nenhum fator nas três. A queda aparece quando a reta de cada lado é levada até o corte (nas médias da janela, 33% das células preenchidas abaixo e 33% acima), e acaso não está descartado. Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras."
 <!-- DQ:resposta_curta:fim -->
 
 ## 2. O que se quer explicar (reprodução de Q1–Q3)
@@ -77,7 +77,7 @@ Conferência: 10 comparações, maior diferença 6,9e−17 (tolerância 1e−9).
 <!-- DQ:da_placebos:fim -->
 
 <!-- DQ:da_ressalva:inicio -->
-**Ressalva (desvio datado, 26/10/2026).** A regra de exclusão deixa só 3 cortes placebo (0,250, 0,350, 0,450). Com 3 placebos o menor p por posto possível é 0,250, maior que 0,10: o critério de apoio é cumprido por construção e não informa se o salto se destaca. O protocolo não muda; a leitura literal é relatada e, ao lado dela, uma grade complementar **fora do protocolo** (rótulo `COMPLEMENTAR_FORA_DO_PROTOCOLO_61`): mesmos cortes de 0,250 a 0,450 a mais de 0,010 dos cortes reais, usando só as observações do mesmo segmento de bolsa do corte falso, como o S-i do protocolo 48 (a janela nunca atravessa 0,300 nem 0,400).
+**Ressalva (desvio datado, 26/10/2026).** A regra de exclusão deixa só 3 cortes placebo (0,250, 0,350, 0,450). Com 3 placebos o menor p por posto possível é 0,250, maior que 0,10: o critério de apoio é cumprido por construção e não informa se o salto se destaca. O protocolo não muda; a leitura literal é relatada e, ao lado dela, uma grade complementar **fora do protocolo** (rótulo `COMPLEMENTAR_FORA_DO_PROTOCOLO_61`): mesmos cortes de 0,250 a 0,450 a mais de 0,010 dos cortes reais, usando só as observações do mesmo segmento de bolsa do corte falso, como o S-i do protocolo 48 (a janela nunca atravessa 0,300 nem 0,400). Nessa grade, cortes falsos vizinhos compartilham quase todos os municípios e, perto dos cortes reais, a janela fica truncada de um lado, enquanto o salto real usa a janela inteira: o p por posto dela é indicativo, não um teste (nota da auditoria 33).
 <!-- DQ:da_ressalva:fim -->
 
 <!-- DQ:da_complementar:inicio -->
@@ -164,6 +164,10 @@ Por ciclo (`*` = IC 95% que exclui zero):
 | 0,400 | (iii) Q2 sem as células só de CR | 88 / 76 | −5,0 p.p. | [−24,3; +14,4] | 0,615 |
 <!-- DQ:db_q3:fim -->
 
+<!-- DQ:db_q3_leitura:inicio -->
+**Leitura do teste (ii) como o protocolo o escreve** (acréscimo da auditoria 33). Em 0,300, do salto sem efeitos fixos (−14,4 p.p.) ao salto com curso × ciclo, tipo de vaga, tipo e gestão do estabelecimento (−6,3 p.p.) sobram 44%: o salto cai pela metade ou mais. A maior parte da redução já vem de curso × ciclo e tipo de vaga (−7,3 p.p.), que o Q3 original fixa; por isso a tabela da §10 compara a composição com o Q3 original (sobram 86%). As duas leituras são descritivas, e o D-b já está entre as explicações que reduzem a queda pela metade (§11); a leitura pré-registrada não muda.
+<!-- DQ:db_q3_leitura:fim -->
+
 ## 5. D-c — funil
 
 Q3 se decompõe em ter candidato de 1ª opção e ser preenchida dado esse candidato (e, sem ele, por candidatos de 2ª opção). Os saltos condicionais comparam subamostras escolhidas depois do anúncio: são descritivos.
@@ -181,7 +185,7 @@ Q3 se decompõe em ter candidato de 1ª opção e ser preenchida dado esse candi
 | 0,400 | P(preenchida) = Q3 | 122 / 145 | 36,8% | −1,3 p.p. | [−14,0; +11,3] | 0,838 | −2,1 p.p. |
 <!-- DQ:dc_funil:fim -->
 
-Decomposição aproximada nos limites de cada lado (sem efeitos fixos, porque efeitos fixos não dão nível; as quatro regressões usam amostras diferentes, daí o resíduo). Regra fixada no script antes de rodar: a queda se concentra numa parte se a maior contribuição, em módulo, for ao menos 2/3 da soma dos módulos.
+Decomposição aproximada nos limites de cada lado (sem efeitos fixos, porque efeitos fixos não dão nível; as quatro regressões usam amostras diferentes, daí o resíduo). Regra do script, não do protocolo (que diz só "a queda se concentra numa das partes"): concentra se a maior contribuição, em módulo, for ao menos 2/3 da soma dos módulos. O histórico do Git não mostra quando ela foi fixada. Em 0,300 a maior parte leva 54% da soma dos módulos; qualquer limiar acima disso dá a mesma leitura (nota da auditoria 33).
 
 <!-- DQ:dc_decomposicao:inicio -->
 | Corte | Parte | Contribuição | nível abaixo → acima | Salto de P(preenchida), sem efeitos fixos |
@@ -265,6 +269,10 @@ Balanço pré-determinado: vínculos CNES pré (202406–202506) das CBO do curs
 | 0,400 | município × ciclo | vínculos pré das CBO-alvo na CIR por 10 mil hab. | 122 / 145 | 12,36 | +3,92 | [−1,00; +8,84] | 0,118 | 1,000 |
 | 0,400 | município (U) | nível REGIC | 587 / 603 | — | +0,05 | [−0,20; +0,30] | 0,700 | 1,000 |
 <!-- DQ:de_balanco:fim -->
+
+<!-- DQ:de_origem:inicio -->
+A origem dos candidatos vem do G1 já gravado, que a mediu no CNES da competência de referência de cada ciclo (ciclo 1: 202506, ciclo 2: 202510, ciclo 3: 202602), não na janela pré 202406–202506 das outras medidas; nenhuma é posterior a 202609. Esta nota é da auditoria 33.
+<!-- DQ:de_origem:fim -->
 
 ## 8. D-f — ciclo 2 e cadastro reserva
 
@@ -375,7 +383,7 @@ Cada linha traz o salto de Q1, Q2 e Q3 depois de fixar o fator, ao lado do salto
 | Situação do §3 | Ocorre? | Leitura |
 |---|---|---|
 | D-a apoia | sim (por construção: 3 placebos) | acaso mais poucos municípios; as outras viram descrição |
-| uma ou mais de D-b a D-f reduzem o salto pela metade ou mais | sim: D-b, D-c, D-d, D-f | explicações candidatas, ditas como descritivas |
+| uma ou mais de D-b a D-f reduzem o salto pela metade ou mais | sim: D-b, D-c, D-d, D-f (só pelo critério do ciclo 2; na §10 não reduz) | explicações candidatas, ditas como descritivas |
 | nada reduz o salto e D-a não apoia | não | não há explicação nos dados disponíveis |
 
 Leitura aplicada: **ACASO_MAIS_POUCOS_MUNICIPIOS**. Como o teste de acaso não podia reprovar, a leitura vale como "acaso não descartado"; as explicações que reduzem a queda pela metade ficam como descrição. D-c: a maior parte é "candidatos"; concentra pela regra de 2/3: não. D-f: o salto do ciclo 2 sem as células só de CR cai pela metade ou mais.
@@ -386,7 +394,7 @@ Leitura aplicada: **ACASO_MAIS_POUCOS_MUNICIPIOS**. Como o teste de acaso não p
 <!-- DQ:figuras:inicio -->
 ![DQ_placebos.png](../../output/rdd_bolsa/DQ_figuras/DQ_placebos.png)
 
-**Como ler:** Cada ponto cinza é o salto medido num corte que não existe (corte falso); quanto mais longe do zero, maior. O losango laranja é o salto no corte real 0,300 e o azul, em 0,400. Se o laranja fica no meio dos cinzas, um salto daquele tamanho é comum; se fica mais longe que todos, é raro.
+**Como ler:** Cada ponto é o salto medido num corte que não existe (corte falso), em erros-padrão (t); quanto mais longe do zero, maior. Os pontos pretos são os 3 cortes falsos do protocolo; os cinza vazados, a grade maior, fora do protocolo. O losango laranja é o salto no corte real 0,300 e o azul, em 0,400. Se o laranja fica no meio dos outros, um salto daquele tamanho é comum; se fica mais longe que todos, é raro. Os cortes falsos vizinhos usam quase os mesmos municípios, então não são sorteios independentes.
 
 *Detalhe técnico:* Estatística t do salto (mesma especificação de Q1, Q2 e Q3: local linear, h = 0,050, kernel triangular, ciclos 1–3 juntos, CR1 por município). Pontos pretos: os 3 cortes placebo do protocolo 61 (0,250; 0,350; 0,450). Pontos cinza vazados: grade complementar fora do protocolo (0,250 a 0,450, passo 0,005, a mais de 0,010 dos cortes reais, só observações do mesmo segmento de bolsa). Linhas tracejadas: |t| = 1,96.
 
@@ -424,7 +432,7 @@ Leitura aplicada: **ACASO_MAIS_POUCOS_MUNICIPIOS**. Como o teste de acaso não p
 - Indices de composicao (curso, tipo, gestao): preenchimento medio da categoria no ciclo entre as celulas com |IVS - corte| >= 0,050 nos dois cortes.
 - Tipo do estabelecimento: cardapio de gestores do ciclo 3 por CNES (unica fonte arquivada); gestao: quadro OFERTA_VAGAS da 1a chamada do ciclo, por CNES.
 - Fixar o fator: covariavel (um coeficiente por ciclo, comum aos dois lados, centrada na media do kernel, como o controle do protocolo 48) ou efeito fixo; razao contra o original na mesma amostra. Fator que retira celulas: razao contra o original. Reduz pela metade = |fixado| <= 0,5 |comparado|, so em 0,300.
-- D-c: decomposicao nos limites sem efeitos fixos (interceptos ponderados pelos pesos omega), aproximada; 'concentra' se a maior contribuicao em modulo for >= 2/3 da soma dos modulos (regra fixada antes de rodar).
+- D-c: decomposicao nos limites sem efeitos fixos (interceptos ponderados pelos pesos omega), aproximada; 'concentra' se a maior contribuicao em modulo for >= 2/3 da soma dos modulos (regra do script, nao do protocolo; o historico nao mostra quando foi fixada, conforme a auditoria 33).
 - D-f: 'some' operacionalizado como o salto do ciclo 2 sem as celulas so de CR caindo pela metade ou mais (o mesmo criterio do §3).
 - BKY entre as linhas tipo_linha = salto de cada explicacao, so do protocolo (a grade complementar fica fora).
 <!-- DQ:decisoes:fim -->

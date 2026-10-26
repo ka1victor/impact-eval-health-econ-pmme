@@ -226,6 +226,40 @@ class TestDoc(unittest.TestCase):
             self.assertIn(f["como_ler"], t)
 
 
+class TestCorrecoesAuditoria33(unittest.TestCase):
+    """Correções de texto da auditoria 33 (docs/auditorias/33_auditoria_diagnostico_queda_0300.md)."""
+
+    @staticmethod
+    def _banca() -> str:
+        t = DOC.read_text(encoding="utf-8")
+        return t.split("**Para dizer na banca.**", 1)[1].split("\n", 1)[0]
+
+    def test_frase_da_banca_fiel_ao_csv(self):
+        b = self._banca()
+        pc = EST[(EST["explicacao"] == "D-c") & (EST["bloco"] == "funil") & (EST["quantidade"] == "P_C")
+                 & (EST["corte"] == "0.300") & (EST["variante"] == "especificacao_Q3")].iloc[0]
+        contem_zero = pc["ic95_inf"] <= 0 <= pc["ic95_sup"]
+        self.assertEqual("estimativa imprecisa" in b, bool(contem_zero))
+        self.assertNotIn("vagas de cursos", b)            # o índice de curso é por célula
+        self.assertIn("estimado no corte", b)
+        self.assertIn("nas médias da janela", b)
+        fb = EST[(EST["tipo_linha"] == "funil_bruto") & (EST["quantidade"] == "preenchida") & (EST["corte"] == "0.300")]
+        ab, ac = (f"{round(100 * float(fb[c].iloc[0]))}%" for c in ("valor_abaixo", "valor_acima"))
+        self.assertIn(f"{ab} das células preenchidas abaixo e {ac} acima", b)
+        self.assertNotIn("a bolsa reduziu", b.lower())
+
+    def test_notas_da_auditoria_no_doc(self):
+        t = DOC.read_text(encoding="utf-8")
+        self.assertIn("Leitura do teste (ii) como o protocolo o escreve", t)
+        self.assertIn("o p por posto dela é indicativo, não um teste", t)
+        self.assertIn("Regra do script, não do protocolo", t)
+        self.assertIn("só pelo critério do ciclo 2", t)
+        g1 = json.loads((OUT / "G1_resumo.json").read_text(encoding="utf-8"))["competencia_referencia"]
+        for k, v in g1.items():
+            self.assertLess(v, "202609")
+            self.assertIn(f"ciclo {k}: {v}", t)
+
+
 class TestSintetico(unittest.TestCase):
     """Casos sintéticos em memória (rotulados "sintético"); nada vai para output/."""
 
