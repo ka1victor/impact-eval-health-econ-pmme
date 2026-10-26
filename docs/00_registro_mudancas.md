@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Auditoria independente do protocolo 59 (P3/P4)
+
+Motivo: auditoria do commit `b71468b` (sensibilidade de Rambachan–Roth e comparação alternativa).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/30_auditoria_P3P4_sensibilidade.md`](auditorias/30_auditoria_P3P4_sensibilidade.md) | ordem do protocolo, recomputação própria (identificados, FLCI, teste LF, P3-CA, Holm), achados e veredito |
+
+---
+
 ## 26/10/2026 — Resultados do protocolo 59 (doc 57h)
 
 Motivo: execução do protocolo 59 (parte A: Rambachan–Roth; parte B: P3-CA e P4-CA) e adendo datado no próprio
