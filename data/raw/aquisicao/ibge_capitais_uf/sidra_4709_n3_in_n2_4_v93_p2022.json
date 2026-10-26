@@ -1,0 +1,41 @@
+[
+  {
+    "NC": "3",
+    "NN": "Unidade da Federação",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "11444380",
+    "D1C": "41",
+    "D1N": "Paraná",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "3",
+    "NN": "Unidade da Federação",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "7610361",
+    "D1C": "42",
+    "D1N": "Santa Catarina",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "3",
+    "NN": "Unidade da Federação",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "10882965",
+    "D1C": "43",
+    "D1N": "Rio Grande do Sul",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  }
+]

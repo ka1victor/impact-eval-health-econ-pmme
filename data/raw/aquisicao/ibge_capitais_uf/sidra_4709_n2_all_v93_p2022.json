@@ -1,0 +1,67 @@
+[
+  {
+    "NC": "2",
+    "NN": "Grande Região",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "17354884",
+    "D1C": "1",
+    "D1N": "Norte",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "2",
+    "NN": "Grande Região",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "54658515",
+    "D1C": "2",
+    "D1N": "Nordeste",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "2",
+    "NN": "Grande Região",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "84840113",
+    "D1C": "3",
+    "D1N": "Sudeste",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "2",
+    "NN": "Grande Região",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "29937706",
+    "D1C": "4",
+    "D1N": "Sul",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  },
+  {
+    "NC": "2",
+    "NN": "Grande Região",
+    "MC": "45",
+    "MN": "Pessoas",
+    "V": "16289538",
+    "D1C": "5",
+    "D1N": "Centro-Oeste",
+    "D2C": "93",
+    "D2N": "População residente",
+    "D3C": "2022",
+    "D3N": "2022"
+  }
+]
