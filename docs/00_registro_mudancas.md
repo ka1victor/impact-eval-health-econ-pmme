@@ -8,6 +8,43 @@
 
 ---
 
+## 26/10/2026 — Auditoria 34: oferta local depois da chegada (H4)
+
+Motivo: auditoria independente da parte B do protocolo 60 (script 37, `OL_*`, doc 57k), sobre o retrato
+`886ac00`. Veredito: aprovado com correções. Nenhum número mudou. As correções de texto, rótulo, figura e teste
+foram feitas no script 37 e no teste, e as saídas foram regeneradas pelo script.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/34_auditoria_oferta_local.md`](auditorias/34_auditoria_oferta_local.md) | recálculo independente de B1–B5 (CS, Wald, Holm, BKY, B3, Rambachan–Roth), fidelidade à parte B do protocolo 60, achados M1–M4, B1 e B2, correções |
+
+---
+
+## 26/10/2026 — Execução do protocolo 60, parte B (oferta local de especialistas depois da chegada, H4)
+
+Motivo: execução da parte B do protocolo 60, com os portões de coerência (coortes do D2 e definições do F3 do
+E7) antes de abrir os resultados. As saídas dos blocos anteriores não foram regravadas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57k_resultados_oferta_local.md`](06_execucao/57k_resultados_oferta_local.md) | resultados da parte B, com blocos gerados pelo script 37 entre marcadores `<!-- OL:... -->`: o que se mede, amostra e coortes, portões, leitura simples pela leitura pré-registrada, tabelas (ATT, Rambachan–Roth, estudo de evento, ligação do B3), figuras com "Como ler", limites e esclarecimentos datados |
+
+Também criados, fora de `docs/`:
+- `scripts/rdd_bolsa/37_oferta_local_chegada.py` (no `run_all.py`, depois do 34);
+- `output/rdd_bolsa/OL_estimativas.csv`, `OL_ligacao_municipio.csv`, `OL_resumo.json` e
+  `OL_figuras/OL_evento_B{1,2,3}.png`, todos `EMPIRICO`;
+- `tests/test_oferta_local_chegada.py` (e a linha dele em `tests/README.md`; o 37 entra na cadeia de
+  `tests/test_pipeline_rdd_bolsa.py`).
+
+O manifesto A6 (`output/tema_trabalho/A6_manifesto_reproducao.json`) foi regenerado pelo gerador para incluir o
+novo passo.
+
+---
+
 ## 26/10/2026 — Banca 2: estrutura obrigatória da versão final
 
 Motivo: decisão do autor sobre a estrutura de toda versão futura do deck da banca 2.

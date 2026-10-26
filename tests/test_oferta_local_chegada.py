@@ -134,7 +134,8 @@ class TestSintetico(unittest.TestCase):
                        {"outcome_id": oid, "medida": "pretendencia_wald", "p_valor": pre_p[oid]},
                        {"outcome_id": oid, "medida": "RM_condicional_ruptura", "valor": rup[oid]},
                        {"outcome_id": oid, "medida": "RM_hibrido_ruptura", "valor": rup[oid]}]
-        return pd.DataFrame(linhas)
+        # Auditoria 34: o esquema completo (colunas e e Mbar vazias), como nas saídas reais.
+        return pd.DataFrame(linhas).reindex(columns=OL.COLUNAS_EST)
 
     def test_leitura_preregistrada(self):
         um = {o: 1.0 for o in OL.IDS}
@@ -292,7 +293,9 @@ class TestSaidasReais(unittest.TestCase):
                                    t[f"horas_subtraidas_{k}"].sum() / t[f"horas_b2_{k}"].sum(), places=12)
         lg = self.resumo["ligacao"]
         self.assertEqual(lg["nao_ligados_nos_tratados"], int(com["n_nao_ligados"].sum()))
-        self.assertTrue(t.loc[t["n_registros_x1_ciclos_1_2"] == 0, "nota"].str.len().gt(0).all())
+        # Auditoria 34: nota toda vazia é lida como float; fillna antes do .str.
+        notas = t.loc[t["n_registros_x1_ciclos_1_2"] == 0, "nota"].fillna("").astype(str)
+        self.assertTrue(notas.str.len().gt(0).all())
 
     def test_hashes(self):
         r = self.resumo
@@ -362,6 +365,48 @@ class TestDoc57k(unittest.TestCase):
             self.assertIn("não dá para falar em aumento", leitura)
         self.assertNotIn("efeito da chegada", leitura)
         self.assertIn("não efeito da bolsa", leitura)
+
+
+class TestCorrecoesAuditoria34(unittest.TestCase):
+    """Correções de texto e figura da auditoria 34 (docs/auditorias/34_auditoria_oferta_local.md)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.est, cls.lig, cls.resumo = ler()
+        cls.leitura = OL.gerar_tabelas_doc(cls.est, cls.lig, cls.resumo)["leitura"]
+
+    def test_leitura_descreve_mudanca_e_nao_nivel(self):
+        self.assertNotIn("ficaram maiores", self.leitura)
+        self.assertNotIn("ficaram menores", self.leitura)
+        self.assertIn("a mudança nas horas SUS desses especialistas (B2)", self.leitura)
+
+    def test_ruptura_zero_por_potencia_explicada(self):
+        c = OL.classificar(self.est)
+        for oid in ("B1", "B2"):
+            g = self.est[self.est["outcome_id"] == oid]
+            pos = g[g["medida"] == "att_pos_medio"].iloc[0]
+            s0 = g[(g["medida"] == "RM_condicional") & (g["Mbar"] == 0.0)].iloc[0]
+            if (pos["ic95_inf"] > 0 or pos["ic95_sup"] < 0) and s0["ic95_inf"] <= 0 <= s0["ic95_sup"]:
+                self.assertIn("pouca potência do teste de Andrews, Roth e Pakes", self.leitura)
+                self.assertEqual(c[oid]["ruptura_min"], 0.0)
+
+    def test_b3_positivo_nao_vira_atracao(self):
+        c = OL.classificar(self.est)["B3"]
+        if c["sobe"] and c["ruptura_min"] < 1:
+            self.assertIn("não é lido como atração de outros especialistas", self.leitura)
+
+    def test_como_ler_cabe_na_figura(self):
+        import textwrap
+        self.assertLessEqual(OL.LARGURA_COMO_LER, 155)
+        for oid in OL.FIGURAS:
+            txt = OL.como_ler(oid)
+            self.assertIn("vinha crescendo antes da chegada", txt)
+            self.assertTrue(all(len(x) <= OL.LARGURA_COMO_LER for x in textwrap.wrap(txt, OL.LARGURA_COMO_LER)))
+
+    def test_portao_com_virgula_decimal(self):
+        texto = DOC.read_text(encoding="utf-8")
+        self.assertNotIn("0.0e+00", texto)
+        self.assertNotIn("coortes d2 refeitas", texto)
 
 
 if __name__ == "__main__":

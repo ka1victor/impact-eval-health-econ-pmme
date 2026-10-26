@@ -527,20 +527,20 @@
     {
       "arquivo": "output/rdd_bolsa/OL_figuras/OL_evento_B1.png",
       "outcome_id": "B1",
-      "sha256": "7632554af652da946e79c4245e755684934d7f9ab769e7b12ac71b95d322a95b",
-      "como_ler": "COMO LER. Cada ponto é quanto a mudança em vínculos de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
+      "sha256": "4abd86812a34dce790f5e49171e0a84e21804a5beb8f7ef9da1fcd78c50fa386",
+      "como_ler": "COMO LER. Cada ponto é quanto a mudança em vínculos de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero; se eles já sobem em direção ao zero, a diferença vinha crescendo antes da chegada, e a do pós não pode ser atribuída a ela. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
     },
     {
       "arquivo": "output/rdd_bolsa/OL_figuras/OL_evento_B2.png",
       "outcome_id": "B2",
-      "sha256": "8cd6f15b7b3d63609c75a1dfc468dc49f1bda31a8301334ecdaf88e2b4a72e58",
-      "como_ler": "COMO LER. Cada ponto é quanto a mudança em horas SUS semanais de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
+      "sha256": "86046934531654844555588bf8c9998384454659f19b4fe474e752685fe24083",
+      "como_ler": "COMO LER. Cada ponto é quanto a mudança em horas SUS semanais de especialistas (CBO-alvo), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero; se eles já sobem em direção ao zero, a diferença vinha crescendo antes da chegada, e a do pós não pode ser atribuída a ela. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
     },
     {
       "arquivo": "output/rdd_bolsa/OL_figuras/OL_evento_B3.png",
       "outcome_id": "B3",
-      "sha256": "caf7916f08af34fa2c1de1d91e72b851ac6d4ee450cfa8fc9288a530524e91fd",
-      "como_ler": "COMO LER. Cada ponto é quanto a mudança em horas SUS semanais dos outros especialistas (sem os do PMM-E), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. Aqui saem as horas dos médicos do PMM-E ligados ao CNES: sobra o que os outros especialistas cadastram. Ponto abaixo de zero no pós seria sinal de que eles perderam horas. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
+      "sha256": "359d67a0db01bb75f30ab61b39f96123f3466b30fd5fd6758780bb49865be469",
+      "como_ler": "COMO LER. Cada ponto é quanto a mudança em horas SUS semanais dos outros especialistas (sem os do PMM-E), desde o mês antes da chegada (−1, zero por construção), foi maior (acima de zero) ou menor (abaixo) nos municípios que receberam o 1º médico do PMM-E do que nos que ainda não tinham recebido. Antes do 0 os pontos deveriam ficar perto de zero; se eles já sobem em direção ao zero, a diferença vinha crescendo antes da chegada, e a do pós não pode ser atribuída a ela. Barra = IC 95% do mês; faixa = banda de 95% para todos os meses juntos. Aqui saem as horas dos médicos do PMM-E ligados ao CNES: sobra o que os outros especialistas cadastram. Ponto abaixo de zero no pós seria sinal de que eles perderam horas. É associação da chegada sob tendências paralelas, não efeito da bolsa; vínculo cadastrado não é presença."
     }
   ],
   "saidas": [
