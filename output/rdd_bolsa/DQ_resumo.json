@@ -421,7 +421,7 @@
     "Indices de composicao (curso, tipo, gestao): preenchimento medio da categoria no ciclo entre as celulas com |IVS - corte| >= 0,050 nos dois cortes.",
     "Tipo do estabelecimento: cardapio de gestores do ciclo 3 por CNES (unica fonte arquivada); gestao: quadro OFERTA_VAGAS da 1a chamada do ciclo, por CNES.",
     "Fixar o fator: covariavel (um coeficiente por ciclo, comum aos dois lados, centrada na media do kernel, como o controle do protocolo 48) ou efeito fixo; razao contra o original na mesma amostra. Fator que retira celulas: razao contra o original. Reduz pela metade = |fixado| <= 0,5 |comparado|, so em 0,300.",
-    "D-c: decomposicao nos limites sem efeitos fixos (interceptos ponderados pelos pesos omega), aproximada; 'concentra' se a maior contribuicao em modulo for >= 2/3 da soma dos modulos (regra fixada antes de rodar).",
+    "D-c: decomposicao nos limites sem efeitos fixos (interceptos ponderados pelos pesos omega), aproximada; 'concentra' se a maior contribuicao em modulo for >= 2/3 da soma dos modulos (regra do script, nao do protocolo; o historico nao mostra quando foi fixada, conforme a auditoria 33).",
     "D-f: 'some' operacionalizado como o salto do ciclo 2 sem as celulas so de CR caindo pela metade ou mais (o mesmo criterio do §3).",
     "BKY entre as linhas tipo_linha = salto de cada explicacao, so do protocolo (a grade complementar fica fora)."
   ],
@@ -704,7 +704,7 @@
     "figuras": [
       {
         "arquivo": "output/rdd_bolsa/DQ_figuras/DQ_placebos.png",
-        "como_ler": "Cada ponto cinza é o salto medido num corte que não existe (corte falso); quanto mais longe do zero, maior. O losango laranja é o salto no corte real 0,300 e o azul, em 0,400. Se o laranja fica no meio dos cinzas, um salto daquele tamanho é comum; se fica mais longe que todos, é raro.",
+        "como_ler": "Cada ponto é o salto medido num corte que não existe (corte falso), em erros-padrão (t); quanto mais longe do zero, maior. Os pontos pretos são os 3 cortes falsos do protocolo; os cinza vazados, a grade maior, fora do protocolo. O losango laranja é o salto no corte real 0,300 e o azul, em 0,400. Se o laranja fica no meio dos outros, um salto daquele tamanho é comum; se fica mais longe que todos, é raro. Os cortes falsos vizinhos usam quase os mesmos municípios, então não são sorteios independentes.",
         "detalhe_tecnico": "Estatística t do salto (mesma especificação de Q1, Q2 e Q3: local linear, h = 0,050, kernel triangular, ciclos 1–3 juntos, CR1 por município). Pontos pretos: os 3 cortes placebo do protocolo 61 (0,250; 0,350; 0,450). Pontos cinza vazados: grade complementar fora do protocolo (0,250 a 0,450, passo 0,005, a mais de 0,010 dos cortes reais, só observações do mesmo segmento de bolsa). Linhas tracejadas: |t| = 1,96.",
         "sha256": "8b874aa098ba06a39bb3cb50acc3ee9b6974a3ded49d8b545e706786017b0074"
       },
