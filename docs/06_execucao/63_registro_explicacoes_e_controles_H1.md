@@ -78,4 +78,6 @@ precisam ser medidos **antes do programa** (até 202506). Situação dos dados:
 - Os itens "adquirir" precisam de script de aquisição com manifesto e hash,
   como os a0x.
 
+**26/10/2026:** o conjunto de localização (capital, macrorregião, log da população) e de médicos na região (médicos e especialistas por 10 mil hab. no município e no resto da região de saúde) foi congelado no adendo [`48d`](48d_adendo_controles_localizacao_e_medicos.md), com pareamento perto do corte. Escola médica, ANS, PIB e receita, homicídios e leitos continuam fora até serem adquiridos.
+
 Este registro é atualizado a cada explicação nova, com data.

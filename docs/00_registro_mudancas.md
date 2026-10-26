@@ -8,6 +8,22 @@
 
 ---
 
+## 26/10/2026 — Adendo 48d: controles de localização e de médicos na região, e pareamento perto do corte
+
+Motivo: o autor pediu "adicionar controle de localização, ou presença de médicos da região" e "fazer pareamento
+também". Congelado antes de rodar: H1 (48b) e oferta local no corte (protocolo 64) com os conjuntos L (capital,
+macrorregião, log da população), M (médicos e especialistas por 10 mil hab. no município e no resto da região de
+saúde, pré-programa) e L+M, à CCFT; balanço de cada variável no corte; pareamento 1:1 perto do corte (Keele,
+Titiunik e Zubizarreta, 2015). Pós-resultado para a H1; pré-resultado para o protocolo 64.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/48d_adendo_controles_localizacao_e_medicos.md`](06_execucao/48d_adendo_controles_localizacao_e_medicos.md) | adendo congelado; resultados irão para o doc 57r |
+
+---
+
 ## 26/10/2026 — Protocolo 64: oferta local de especialistas comparada no corte
 
 Motivo: o autor pediu para comparar a oferta local entre quem recebe e quem não recebe médico usando o lado do corte
