@@ -8,6 +8,23 @@
 
 ---
 
+## 26/10/2026 — Protocolo 62 executado: gradiente do preenchimento dentro das faixas (G-a a G-f, descritivo)
+
+Motivo: execução do protocolo 62 (por que o preenchimento da célula aberta sobe com o IVS dentro das faixas da bolsa).
+Reusa a base e os atributos do diagnóstico 61 importando `carregar()` do script 38, sem alterá-lo. As saídas dos blocos
+anteriores não foram regravadas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57m_gradiente_faixas.md`](06_execucao/57m_gradiente_faixas.md) | resultados do protocolo 62, gerado por `scripts/rdd_bolsa/39_gradiente_faixas.py --atualizar-doc` a partir de `output/rdd_bolsa/GF_*` |
+| `scripts/rdd_bolsa/39_gradiente_faixas.py` | inclinação por faixa (faixa inteira e últimos 0,050), G-a a G-e um a um e juntos, G-f como relato, BKY, tabela "quanto da subida cada fator leva", leitura pré-registrada, figuras e doc 57m; no `run_all.py` depois do 38 |
+| `output/rdd_bolsa/GF_estimativas.csv`, `GF_resumo.json`, `GF_figuras/` | saídas `EMPIRICO`, estatuto `DESCRITIVO_62_POS_RESULTADO` |
+| `tests/test_gradiente_faixas.py` | testes do script 39 e do doc 57m (reestimação independente e casos sintéticos em memória) |
+
+---
+
 ## 26/10/2026 — Protocolo 62 (gradiente do preenchimento dentro das faixas)
 
 Motivo: o autor notou, na figura de dados crus (`output/apresentacao_banca2/exp_rdd_crua.png`), que o preenchimento parece subir com o IVS dentro das faixas de R$ 10 e 15 mil; protocolo descritivo congelado antes de calcular.

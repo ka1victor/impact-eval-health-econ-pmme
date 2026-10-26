@@ -178,6 +178,10 @@ STEPS = [
     # outcomes do 12, o CNES pré (a09), o G1 versionado, a CIR, o REGIC e o cardápio (funções do 29) e as exposições
     # de concorrência do 32.
     ROOT / "scripts" / "rdd_bolsa" / "38_diagnostico_queda_0300.py",
+    # Protocolo 62 (descritivo pós-resultado): por que o preenchimento sobe com o IVS dentro das faixas (G-a a G-f).
+    # Importa carregar() do 38 (base do A3 e atributos) e acrescenta o G-b (origem dos candidatos do G1 versionado,
+    # escolhas e quadro do 12, CIR do 29). Não regrava saídas de outros blocos.
+    ROOT / "scripts" / "rdd_bolsa" / "39_gradiente_faixas.py",
     # Protocolo 60, parte B (pós-resultado): oferta local de especialistas depois da chegada do 1º médico do PMM-E
     # (Callaway-Sant'Anna município × mês). Importa o 22 (que importa o 21 e o 14) e a honestdid_lib; confere as
     # coortes contra K_D2_resumo.json (22) e B1/B2 contra o F3 do E7 (14); lê o a09, o a16, a X1 (17, versionada),

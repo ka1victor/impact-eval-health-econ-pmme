@@ -61,6 +61,7 @@ CADEIA = [
     RDD / "34_sensibilidade_honestdid.py",  # protocolo 59, parte A: só verificar (hashes e doc 57h)
     RDD / "36_equivalencia_H1.py",  # protocolo 60, parte A: TOST a partir de N_ (23) e NA_ (24)
     RDD / "38_diagnostico_queda_0300.py",  # protocolo 61: diagnóstico da queda em 0,300; reproduz N_, NA_ e ND_
+    RDD / "39_gradiente_faixas.py",  # protocolo 62: gradiente dentro das faixas; importa carregar() do 38
     RDD / "37_oferta_local_chegada.py",  # protocolo 60, parte B: importa o 22; lê K_D2, a09, a16 e a X1
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
@@ -219,6 +220,10 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                                                    AQ / "a08_adquirir_ivs_2010_oficial.py",
                                                    RDD / "29_determinantes_abertura.py",
                                                    RDD / "32_realocacao_bolsa.py"],
+            # Protocolo 62: o 39 importa carregar() do 38 (que usa o 24, o 29 e o 32) e lê as escolhas e o quadro do 12.
+            RDD / "39_gradiente_faixas.py": [RDD / "38_diagnostico_queda_0300.py", RDD / "24_abertura_vagas_selecao.py",
+                                             RDD / "12_construir_outcomes_funil.py", RDD / "29_determinantes_abertura.py",
+                                             RDD / "32_realocacao_bolsa.py", AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # Protocolo 60, parte B (37): importa o 22 e confere-se contra K_D2_resumo.json; B1/B2 contra o F3 do E7
             # (14); lê o painel do a09, o a16, a X1 (17, versionada) e os outcomes do 12.
             RDD / "37_oferta_local_chegada.py": [RDD / "22_chegada_pmme_evento.py", RDD / "14_estimar_E7_dird_cnes.py",
