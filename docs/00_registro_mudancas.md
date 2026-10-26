@@ -12,6 +12,10 @@
 
 Motivo: execução do protocolo 61 (por que o preenchimento cai em 0,300), com Q1–Q3 reproduzidos antes de qualquer
 teste.
+## 26/10/2026 — Execução do protocolo 60, parte B (oferta local de especialistas depois da chegada, H4)
+
+Motivo: execução da parte B do protocolo 60, com os portões de coerência (coortes do D2 e definições do F3 do
+E7) antes de abrir os resultados. As saídas dos blocos anteriores não foram regravadas.
 
 ### Criado
 
@@ -75,6 +79,17 @@ gravadas pelos scripts 23 e 24.
 | `scripts/rdd_bolsa/36_equivalencia_H1.py` | TOST, Holm entre as primárias, IC honesto onde gravado, figura e doc 57j; no `run_all.py` depois do 34 |
 | `output/rdd_bolsa/EQ_estimativas.csv`, `EQ_resumo.json`, `EQ_figuras/EQ_tost_ic90.png` | saídas `EMPIRICO`, estatuto `PROTOCOLO_60_POS_RESULTADO` |
 | `tests/test_equivalencia_H1.py` | testes do script 36 e do doc 57j (com caso sintético em memória) |
+| [`06_execucao/57k_resultados_oferta_local.md`](06_execucao/57k_resultados_oferta_local.md) | resultados da parte B, com blocos gerados pelo script 37 entre marcadores `<!-- OL:... -->`: o que se mede, amostra e coortes, portões, leitura simples pela leitura pré-registrada, tabelas (ATT, Rambachan–Roth, estudo de evento, ligação do B3), figuras com "Como ler", limites e esclarecimentos datados |
+
+Também criados, fora de `docs/`:
+- `scripts/rdd_bolsa/37_oferta_local_chegada.py` (no `run_all.py`, depois do 34);
+- `output/rdd_bolsa/OL_estimativas.csv`, `OL_ligacao_municipio.csv`, `OL_resumo.json` e
+  `OL_figuras/OL_evento_B{1,2,3}.png`, todos `EMPIRICO`;
+- `tests/test_oferta_local_chegada.py` (e a linha dele em `tests/README.md`; o 37 entra na cadeia de
+  `tests/test_pipeline_rdd_bolsa.py`).
+
+O manifesto A6 (`output/tema_trabalho/A6_manifesto_reproducao.json`) foi regenerado pelo gerador para incluir o
+novo passo.
 
 ---
 
