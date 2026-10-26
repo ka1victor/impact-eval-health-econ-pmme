@@ -1030,7 +1030,12 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
     # 6. Lacunas (texto fixo, sem número de resultado).
     partes.append("""## 6. Lacunas e próximos passos
 
-Nenhum item abaixo foi executado. Custo e valor são juízos qualitativos desta síntese, para o autor decidir.
+Nenhum item abaixo tinha sido executado em 24/10/2026. Custo e valor são juízos qualitativos desta síntese, para o autor decidir.
+
+**Atualização de 25/10/2026.** Os dois itens do P3 e do P4 (sensibilidade de Rambachan e Roth e outro grupo de
+comparação) rodaram sob o [protocolo 59](59_protocolo_P3P4_sensibilidade_comparacao.md), congelado antes de
+estimar; resultados no [doc 57h](57h_resultados_P3P4_sensibilidade.md). As tabelas e o Holm desta síntese não
+mudam.
 
 | Item | O que resolveria | Custo | Valor | Quem decide |
 |---|---|---|---|---|
