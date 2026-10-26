@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Doc 57v: execução do adendo 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02)
+
+Motivo: execução do adendo 52d (script 48). O doc 57v foi criado primeiro só com o inventário do que usa o tipo de
+vaga do ciclo 2 e as decisões de implementação, commitados antes de qualquer estimativa; os blocos de resultado vêm
+depois, gerados pelo script a partir de `output/rdd_bolsa/VD_*`. Os docs 42, 44, 57, 57a, 57i e 57p não mudam.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57v_sensibilidades_ciclo2_quadro_1302.md`](06_execucao/57v_sensibilidades_ciclo2_quadro_1302.md) | resultados do adendo 52d (VD-1 a VD-5), gerado pelo script 48; auditoria pendente |
+
+---
+
 ## 26/10/2026 — Adendos 48g (heterogeneidade por porte do IED) e 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02)
 
 Motivo: o autor aprovou rodar as pendências da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
