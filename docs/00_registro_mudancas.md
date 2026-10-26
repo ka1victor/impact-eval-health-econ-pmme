@@ -8,6 +8,25 @@
 
 ---
 
+## 26/10/2026 — Adendos 48c e 52c e nota §7 do 48b (achados da auditoria 36)
+
+Motivo: a auditoria 36 mostrou que o tipo de vaga do ciclo 2 vem de um quadro refeito depois do resultado preliminar, e que há capitais concentradas logo abaixo de 0,300; correções e robustez congeladas antes de calcular.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/48c_adendo_capitais_e_UF.md`](06_execucao/48c_adendo_capitais_e_UF.md) | balanço de capital e região no corte; H1 com dummy de capital, efeito fixo de UF e sem capitais |
+| [`06_execucao/52c_adendo_vaga_imediata_ciclo2.md`](06_execucao/52c_adendo_vaga_imediata_ciclo2.md) | E9, P1 e P1h reestimados com o tipo de vaga do ciclo 2 do quadro de 13/02/2026 |
+
+### Alterado
+
+| Arquivo | O que mudou |
+|---|---|
+| [`06_execucao/48b_adendo_H1_vagas_imediatas.md`](06_execucao/48b_adendo_H1_vagas_imediatas.md) | §7: tipo de vaga do ciclo 2 do quadro de 13/02/2026 |
+
+---
+
 ## 26/10/2026 — Auditoria 36: reconstrução independente dos dados da H1 a partir dos arquivos brutos
 
 Motivo: pergunta do autor ("a gente não entendeu errado ou fez alguma besteira com os dados?") sobre a queda em

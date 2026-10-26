@@ -91,3 +91,25 @@ BKY entre as secundárias.
 - O arquivo de IVS errado não é lido.
 - Nenhum CNES ≥ 202609.
 - As saídas dos protocolos 48 e 61 não são regravadas.
+
+## 7. Nota datada de 26/10/2026: o tipo de vaga do ciclo 2 vem do quadro anterior à alocação
+
+A auditoria 36 (`docs/auditorias/36_auditoria_dados_H1.md`) mostrou que o
+quadro do ciclo 2 usado no pipeline (retificado de 19/03/2026) foi refeito
+**depois** do resultado preliminar (10/03/2026). A SGTES converteu 630 vagas de
+reserva em imediatas em 301 células, e 297 delas tinham recebido alocado. Pelo
+quadro vigente na inscrição (retificado de 13/02/2026), 42% dos alocados do
+ciclo 2 estavam em células só de reserva. Logo, a frase da §1 "no ciclo 2,
+nenhuma célula só de reserva teve alocado na 1ª chamada" descreve o quadro
+pós-resultado, não a regra.
+
+**Consequência para este adendo, antes de qualquer resultado dele ter sido
+visto:**
+- no ciclo 2, o tipo de vaga (imediata, mista, só de reserva) e as vagas
+  imediatas usadas na amostra e no controle de HI-1 e HI-2 vêm do **quadro de
+  13/02/2026**;
+- nos ciclos 1 e 3 nada muda.
+
+A comparação entre vagas do mesmo tipo continua sendo a principal. O que muda é
+o tipo ser medido **antes** da alocação, como precisa ser para não condicionar
+no resultado.
