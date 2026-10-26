@@ -8,6 +8,47 @@
 
 ---
 
+## 26/10/2026 — Auditoria 31: P1h (protocolo 52b)
+
+Motivo: auditoria independente da execução do P1h. Veredito: aprovado com correções. Nenhuma estimativa
+mudou; as correções são de título, rótulo e texto da figura e do doc 57i.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/31_auditoria_P1h_magnitudes.md`](auditorias/31_auditoria_P1h_magnitudes.md) | recálculo independente do M1 e das sensibilidades, de D_UF, K5 e K10 (delta e Fieller) e do BKY; fidelidade ao protocolo 52b; linguagem; integridade; correções |
+
+Também, fora de `docs/`:
+- `scripts/rdd_bolsa/25c_magnitudes_P1h.py`: só textos (título, rótulos de lugar, "Como ler", legenda e
+  desvios);
+- saídas regeradas pelo script: `P1h_figuras/P1h_magnitudes.png`, `P1h_magnitudes.csv` (só a coluna
+  `estimando` de três linhas FIG) e `P1h_resumo.json`, além do doc 57i;
+- `tests/test_P1h_magnitudes.py`: classe `TestRecalculoIndependenteAuditoria31`.
+
+---
+
+## 26/10/2026 — Execução do P1h (protocolo 52b): peso da bolsa contra o custo do lugar
+
+Motivo: execução do protocolo 52b (H3 do plano da banca 2), com portão de reprodução do M1 e das
+sensibilidades contra o P1. As saídas do P1 (`P1_*`) não foram regravadas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57i_resultados_P1h_magnitudes.md`](06_execucao/57i_resultados_P1h_magnitudes.md) | resultados do P1h, gerado pelo script entre marcadores `<!-- P1h:... -->`: D_UF = θ_UF − 10·β, km equivalentes à bolsa (delta e Fieller), sensibilidades com BKY, figura com "Como ler" |
+
+Também criados, fora de `docs/`:
+- `scripts/rdd_bolsa/25c_magnitudes_P1h.py` (no `run_all.py`, depois do 25);
+- `output/rdd_bolsa/P1h_magnitudes.csv`, `P1h_resumo.json` e `P1h_figuras/P1h_magnitudes.png`, todos `EMPIRICO`;
+- `tests/test_P1h_magnitudes.py`.
+
+O manifesto A6 (`output/tema_trabalho/A6_manifesto_reproducao.json`) foi regenerado pelo gerador para incluir o
+novo passo.
+
+---
+
 ## 26/10/2026 — Banca 2: parte empírica no arco do plano (H1–H4), figuras com "Como ler" e deck
 
 Motivo: execução do [plano da entrega empírica](07_apresentacoes/banca2/04_plano_entrega_empirica.md)

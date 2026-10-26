@@ -1,0 +1,1250 @@
+{
+  "etapa": "P1h_magnitudes",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_52B_POS_RESULTADO",
+  "data_execucao": "2026-10-26",
+  "script": "scripts/rdd_bolsa/25c_magnitudes_P1h.py",
+  "protocolo": {
+    "arquivo": "docs/06_execucao/52b_protocolo_P1h_magnitudes.md",
+    "sha256": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b"
+  },
+  "portao": {
+    "status": "PASSOU",
+    "tolerancia": 1e-08,
+    "regra": "coeficientes e EP com cluster por conjunto de todos os termos de cada especificação contra P1_estimativas.csv (gravado com 10 algarismos significativos); diferença máxima ≤ 1e−8; os EP de MV e por candidato são registrados, sem entrar no portão",
+    "especificacoes": [
+      {
+        "especificacao": "M1",
+        "modelo_no_csv": "M1",
+        "ciclo": "empilhado",
+        "convergiu": true,
+        "termos_reestimados": 18,
+        "termos_gravados": 18,
+        "mesmos_termos_na_mesma_ordem": true,
+        "dif_max_coef": 2.8934432627636397e-10,
+        "dif_max_ep_cluster_conjunto": 4.6250975271888706e-11,
+        "dif_max_ep_mle_informativo": 3.3080704842092246e-11,
+        "dif_max_ep_cluster_candidato_informativo": 4.853943635918512e-11,
+        "passou": true
+      },
+      {
+        "especificacao": "M2",
+        "modelo_no_csv": "M2",
+        "ciclo": "empilhado",
+        "convergiu": true,
+        "termos_reestimados": 18,
+        "termos_gravados": 18,
+        "mesmos_termos_na_mesma_ordem": true,
+        "dif_max_coef": 4.2301451230741804e-10,
+        "dif_max_ep_cluster_conjunto": 4.340561243765251e-11,
+        "dif_max_ep_mle_informativo": 4.20205675810692e-11,
+        "dif_max_ep_cluster_candidato_informativo": 3.3869490545512804e-11,
+        "passou": true
+      },
+      {
+        "especificacao": "M4",
+        "modelo_no_csv": "M4",
+        "ciclo": "empilhado",
+        "convergiu": true,
+        "termos_reestimados": 40,
+        "termos_gravados": 40,
+        "mesmos_termos_na_mesma_ordem": true,
+        "dif_max_coef": 4.954217036612363e-10,
+        "dif_max_ep_cluster_conjunto": 4.8413412168102354e-11,
+        "dif_max_ep_mle_informativo": 4.635380967954461e-11,
+        "dif_max_ep_cluster_candidato_informativo": 4.559741473286749e-11,
+        "passou": true
+      },
+      {
+        "especificacao": "M5_1",
+        "modelo_no_csv": "M5",
+        "ciclo": "1",
+        "convergiu": true,
+        "termos_reestimados": 18,
+        "termos_gravados": 18,
+        "mesmos_termos_na_mesma_ordem": true,
+        "dif_max_coef": 4.582429991017989e-10,
+        "dif_max_ep_cluster_conjunto": 4.6914860885038934e-11,
+        "dif_max_ep_mle_informativo": 4.7338633013538356e-11,
+        "dif_max_ep_cluster_candidato_informativo": 4.686923071872684e-11,
+        "passou": true
+      },
+      {
+        "especificacao": "M5_2",
+        "modelo_no_csv": "M5",
+        "ciclo": "2",
+        "convergiu": true,
+        "termos_reestimados": 18,
+        "termos_gravados": 18,
+        "mesmos_termos_na_mesma_ordem": true,
+        "dif_max_coef": 4.588516233638984e-10,
+        "dif_max_ep_cluster_conjunto": 3.810204929344252e-11,
+        "dif_max_ep_mle_informativo": 4.5575349050253067e-11,
+        "dif_max_ep_cluster_candidato_informativo": 4.995563684939697e-11,
+        "passou": true
+      },
+      {
+        "especificacao": "M5_3",
+        "modelo_no_csv": "M5",
+        "ciclo": "3",
+        "convergiu": true,
+        "termos_reestimados": 18,
+        "termos_gravados": 18,
+        "mesmos_termos_na_mesma_ordem": true,
+        "dif_max_coef": 2.8025692877520214e-10,
+        "dif_max_ep_cluster_conjunto": 4.9317494532630235e-11,
+        "dif_max_ep_mle_informativo": 4.1806308415104354e-11,
+        "dif_max_ep_cluster_candidato_informativo": 4.39568381693789e-11,
+        "passou": true
+      },
+      {
+        "especificacao": "M7",
+        "modelo_no_csv": "M7",
+        "ciclo": "empilhado",
+        "convergiu": true,
+        "termos_reestimados": 18,
+        "termos_gravados": 18,
+        "mesmos_termos_na_mesma_ordem": true,
+        "dif_max_coef": 4.825810862030266e-10,
+        "dif_max_ep_cluster_conjunto": 3.269354231782984e-11,
+        "dif_max_ep_mle_informativo": 8.519338012824562e-12,
+        "dif_max_ep_cluster_candidato_informativo": 4.246708540378563e-11,
+        "passou": true
+      }
+    ]
+  },
+  "amostra": {
+    "n_candidatos_M1": 5421,
+    "n_conjuntos_M1": 56,
+    "n_linhas_M1": 932577,
+    "n_linhas_M7": 1630577,
+    "n_candidatos_M5": {
+      "1": 915,
+      "2": 2032,
+      "3": 2474
+    },
+    "conferencia_distancia": {
+      "escolhas_conferidas": 5421,
+      "diferenca_maxima_km": 0.0
+    }
+  },
+  "desvios": [
+    {
+      "data": "2026-10-26",
+      "item": "Linhas da figura no CSV",
+      "situacao": "O §5 pede a figura dos pesos na mesma escala, mas o §3 só lista P1h-1 a P1h-3.",
+      "resolucao": "Os seis pesos da figura (5β, 10β, −γ, θ_UF, θ_UF + θ_reg, θ_UF + θ_reg + θ_mun) vão para o CSV com id_linha = FIG e papel descritivo, sem teste nem correção múltipla, para que a figura seja lida de output/ (regra de proveniência)."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "p unilateral das linhas de km",
+      "situacao": "O §3 pede p unilateral em toda linha; para K5 e K10 o protocolo não diz o método.",
+      "resolucao": "p de H0: K ≤ 0 pelo método delta, como o EP e o IC dessas linhas; o Fieller dá o IC 95% e o limite inferior unilateral (conjunto de 90%). Pelo Fieller, H0: K ≤ 0 equivale a H0: β ≤ 0, porque γ < 0. As linhas são descritivas e não substituem o teste bilateral do P1a."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Alcance do portão",
+      "situacao": "O §2 manda conferir 'os coeficientes e os EP com cluster por conjunto'; o §3 aplica o mesmo portão às sensibilidades.",
+      "resolucao": "Todos os termos de cada especificação (M1, M2, M4, M5 por ciclo, M7) entram no portão; os EP de MV e por candidato são registrados sem entrar nele. Qualquer falha para a execução inteira, com o código da primeira especificação que falhou, e nada é calculado."
+    },
+    {
+      "data": "2026-10-26",
+      "item": "Rejeição nas sensibilidades",
+      "situacao": "O §3 manda BKY entre as linhas P1h-3 sem dizer o nível.",
+      "resolucao": "q BKY e a marca 'rejeita a 5%' (q < 0,05) são registrados como leitura de robustez; a única linha com decisão é o P1h-1."
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/52b_protocolo_P1h_magnitudes.md",
+      "sha256": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b",
+      "bytes": 5306,
+      "papel": "protocolo 52b (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1_estimativas.csv",
+      "sha256": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+      "bytes": 159285,
+      "papel": "alvo do portão de reprodução (coeficientes e EP do P1)",
+      "fonte": "script 25 (P1)",
+      "data_referencia": "2026-10-23",
+      "cobertura": "M1, M2, M4, M5 (ciclos 1–3), M7",
+      "unidade": "especificação × termo",
+      "chaves": "modelo, ciclo, tipo_linha, termo",
+      "filtros": "tipo_linha = coeficiente"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/25_escolha_dap.py",
+      "sha256": "39ffe79eed91ece5b5fd8f63588efbc0a231f0226d140ba54953a7921d70d98d",
+      "bytes": 131512,
+      "papel": "funções de amostra, desenho e ajuste (importadas sem alteração)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-23",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos (1ª e 2ª opção)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "resultados da 1ª chamada dos ciclos 1–3",
+      "cobertura": "9849 linhas",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "postos 1 e 2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "bytes": 63077,
+      "papel": "conjunto de escolha principal (E9 §14)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "quadros da 1ª chamada",
+      "cobertura": "5134 células com IVS",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "sem IVS oficial e sem CIR fora (como no P1)"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "IVS 2010 oficial (a08): spline e regra das faixas",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/aquisicao/a03_matriz_regra_tratamento.json",
+      "sha256": "4afe7af6d925b0b67054918ddbece2a7ad87df1b80d5bbb779c6ee8dd7c39583",
+      "bytes": 11686,
+      "papel": "mapa faixa → bolsa",
+      "fonte": "editais (a03)",
+      "data_referencia": "2025–2026",
+      "cobertura": "3 faixas",
+      "unidade": "faixa",
+      "chaves": "faixa",
+      "filtros": "mapeamento_regras_por_edital"
+    },
+    {
+      "caminho": "output/aquisicao/a04_grade_anunciada_2025.csv",
+      "sha256": "3d2542142d97f90632d47e8b0cc9d5d0cb7b934df1d7df47691a421d9bf82112",
+      "bytes": 1595,
+      "papel": "conferência do mapa faixa → bolsa",
+      "fonte": "FAQ 3/2025 (a04)",
+      "data_referencia": "2025",
+      "cobertura": "3 faixas",
+      "unidade": "faixa",
+      "chaves": "faixa_atracao",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d",
+      "bytes": 91512,
+      "papel": "dicionário da tarefa B (hash das tabelas de escolha conferido)",
+      "fonte": "pipeline",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "município de origem dos candidatos (G1)",
+      "fonte": "portão G1",
+      "data_referencia": "referências 202506, 202510, 202602",
+      "cobertura": "5776 candidatos (regra principal)",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "bytes": 166732,
+      "papel": "conferência das distâncias das células escolhidas",
+      "fonte": "portão G1",
+      "data_referencia": "idem",
+      "cobertura": "linhas candidato × opção",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_resumo.json",
+      "sha256": "c8a88d469f818d364fdbe9b8405652987c0b90568af406050f08e8ead06d8529",
+      "bytes": 38802,
+      "papel": "resumo do G1 (lido pela função de carga do script 25)",
+      "fonte": "portão G1",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "região de saúde (CIR) por município (só lido)",
+      "fonte": "DATASUS/TabNet (manifesto da X5)",
+      "data_referencia": "2026-10-19T10:44:54Z",
+      "cobertura": "5606 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge → co_cir",
+      "filtros": "linhas 'Ignorado' fora"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json",
+      "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+      "bytes": 1685039,
+      "papel": "centroides municipais do IBGE (distância, só lido)",
+      "fonte": "IBGE, API de malhas v3",
+      "data_referencia": "2026-10-19",
+      "cobertura": "5570 municípios",
+      "unidade": "município",
+      "chaves": "id (7 dígitos)",
+      "filtros": "centroide"
+    }
+  ],
+  "integridade": "nada simulado, imputado ou digitado como observação; IVS do a08 (o arquivo local de IVS da auditoria 16 não é lido); nenhum mês do CNES é lido; só agregados em output/ (sem nome, CPF, CRM nem pseudônimo de candidato); data/ só lido; saídas P1_* não regravadas",
+  "linguagem": "θ é preferência revelada condicional ao modelo, não efeito causal da geografia; β é o peso da bolsa identificado pelos cortes (pacote do corte); escolha condicional a candidatar-se, dentro das vagas abertas; nada aqui diz se a bolsa 'funciona' ou 'não funciona'",
+  "tempo_execucao_nao_registrado": "o tempo de execução fica fora do resumo para que duas execuções deem o mesmo hash",
+  "beta_M1": {
+    "coef": 0.042395987385265406,
+    "ep_cluster_conjunto": 0.022983390072826067,
+    "ic95_inf": -0.0026506294001090933,
+    "ic95_sup": 0.0874426041706399,
+    "p_bilateral": 0.06509051501704553
+  },
+  "resultado_principal": {
+    "id": "P1h-1",
+    "estimando": "D_UF = θ_UF − 10·β",
+    "modelo": "M1",
+    "estimativa": 1.978416458,
+    "ep_cluster_conjunto": 0.2132996937,
+    "ic95": [
+      1.56035674,
+      2.396476176
+    ],
+    "li95_unilateral": 1.627569683,
+    "p_unilateral": 8.856848117e-21,
+    "p_holm": 8.856848117e-21,
+    "rejeita_h0_5pct": true,
+    "leitura_pre_registrada": "rejeita: a amplitude inteira da bolsa pesa menos que a vaga ficar na UF de origem, condicional a se candidatar e dentro das vagas abertas"
+  },
+  "covariancias": {
+    "M1": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "theta": [
+        0.042395987385265406,
+        -0.18930203190781508,
+        2.4023763319384974,
+        1.6452183202210369,
+        0.7874393087910084
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0005282362192396798,
+          2.4882429061804935e-05,
+          0.0005687695391478733,
+          -0.0015478373629491712,
+          0.0011950620641058899
+        ],
+        [
+          2.4882429061803363e-05,
+          0.00014545263659927087,
+          0.00048768536959997835,
+          0.0008793760552061847,
+          -0.0002774439361492898
+        ],
+        [
+          0.0005687695391478733,
+          0.00048768536959997835,
+          0.004048528202831823,
+          0.0004296729928461771,
+          -0.0005990353134964306
+        ],
+        [
+          -0.0015478373629491957,
+          0.0008793760552061763,
+          0.00042967299284618155,
+          0.03324050974415266,
+          -0.01749810017514599
+        ],
+        [
+          0.001195062064105919,
+          -0.00027744393614928347,
+          -0.0005990353134964399,
+          -0.017498100175145997,
+          0.01871133625544056
+        ]
+      ],
+      "V_mle": [
+        [
+          0.00014381175706621566,
+          1.515891475919168e-06,
+          1.4283614092581965e-05,
+          5.674341279881013e-06,
+          -5.6055164292363105e-06
+        ],
+        [
+          1.5158914759191593e-06,
+          3.9369589968607966e-05,
+          0.0001739777497709718,
+          7.360549512518889e-05,
+          2.067372183438528e-05
+        ],
+        [
+          1.428361409258133e-05,
+          0.00017397774977097167,
+          0.003168428834498966,
+          -0.00042265987575125947,
+          7.014253663441518e-05
+        ],
+        [
+          5.674341279880141e-06,
+          7.360549512518884e-05,
+          -0.00042265987575125974,
+          0.0044373289440089985,
+          -0.0029992970035609473
+        ],
+        [
+          -5.605516429234305e-06,
+          2.067372183438566e-05,
+          7.014253663441436e-05,
+          -0.002999297003560947,
+          0.005305448384716016
+        ]
+      ],
+      "V_cluster_candidato": [
+        [
+          0.000149632813237121,
+          3.080438153511679e-06,
+          3.5944163593272264e-05,
+          -5.376710844488658e-06,
+          9.360152843127347e-08
+        ],
+        [
+          3.0804381535115672e-06,
+          0.00010716379283439624,
+          0.0003814898138879104,
+          0.00024558119175742323,
+          -1.6268185489352577e-05
+        ],
+        [
+          3.594416359327074e-05,
+          0.0003814898138879098,
+          0.00400281452856223,
+          0.00013550585527775548,
+          6.979515734111964e-05
+        ],
+        [
+          -5.376710844490784e-06,
+          0.000245581191757423,
+          0.00013550585527775558,
+          0.005135885749634359,
+          -0.003222443230872339
+        ],
+        [
+          9.360152843558374e-08,
+          -1.6268185489351168e-05,
+          6.979515734111929e-05,
+          -0.003222443230872338,
+          0.005821807609965291
+        ]
+      ],
+      "g_conjuntos": 56,
+      "g_candidatos": 5421
+    },
+    "M2": {
+      "termos": [
+        "bolsa_mil",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "theta": [
+        0.04917781330471139,
+        1.6680498518688094,
+        -0.27540554150724517,
+        -4.416348063193796
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.00042762233989361814,
+          0.0005499492787086501,
+          -0.001102967938003365,
+          0.002403720497558711
+        ],
+        [
+          0.0005499492787086354,
+          0.003181255117954776,
+          0.00043088737580951504,
+          0.00591315516392835
+        ],
+        [
+          -0.0011029679380034115,
+          0.0004308873758094894,
+          0.029491231593046598,
+          0.0001252799263240928
+        ],
+        [
+          0.0024037204975586217,
+          0.005913155163928317,
+          0.00012527992632416565,
+          0.0576354288704454
+        ]
+      ],
+      "V_mle": [
+        [
+          0.00014869079446084999,
+          4.152457868757159e-06,
+          1.9933535201004724e-05,
+          -2.8716770260847324e-05
+        ],
+        [
+          4.152457868753287e-06,
+          0.0035402841172122524,
+          0.00029122459826109195,
+          0.0028410034570271136
+        ],
+        [
+          1.9933535200993123e-05,
+          0.00029122459826108984,
+          0.006158932630076976,
+          0.00033696862255841
+        ],
+        [
+          -2.871677026085972e-05,
+          0.0028410034570271023,
+          0.0003369686225584048,
+          0.014902015757373904
+        ]
+      ],
+      "V_cluster_candidato": [
+        [
+          0.00015387206107527545,
+          7.024914848198347e-06,
+          1.1557438243361227e-05,
+          -0.00010705826268731642
+        ],
+        [
+          7.024914848188301e-06,
+          0.004075646488917333,
+          0.0006614978993398927,
+          0.003566454285665891
+        ],
+        [
+          1.1557438243332377e-05,
+          0.000661497899339886,
+          0.008304467019585194,
+          0.0019334843676466322
+        ],
+        [
+          -0.00010705826268735023,
+          0.0035664542856658626,
+          0.0019334843676466079,
+          0.019182653288906077
+        ]
+      ],
+      "g_conjuntos": 56,
+      "g_candidatos": 5421
+    },
+    "M4": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "theta": [
+        0.07594164201769853,
+        -0.19924873740797916,
+        2.491751606657049,
+        1.5742990228948432,
+        0.8094086224051315
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0005934981357816618,
+          -7.270225295567891e-06,
+          0.0006029000087030223,
+          -0.0017142160360740584,
+          0.0011644624341302205
+        ],
+        [
+          -7.270225295566709e-06,
+          0.00017178133405621184,
+          0.0004489903206423338,
+          0.0008300295547576581,
+          -0.00024346522812202762
+        ],
+        [
+          0.0006029000087030218,
+          0.0004489903206423322,
+          0.005346163960752143,
+          -0.001191604121476165,
+          -0.0007933981807374734
+        ],
+        [
+          -0.0017142160360740478,
+          0.0008300295547576668,
+          -0.0011916041214761481,
+          0.03162658351710012,
+          -0.017984313612738667
+        ],
+        [
+          0.0011644624341302086,
+          -0.00024346522812203827,
+          -0.0007933981807374931,
+          -0.017984313612738674,
+          0.02099754199478949
+        ]
+      ],
+      "V_mle": [
+        [
+          0.00016320281152742557,
+          5.948656504247868e-07,
+          1.517190514574381e-05,
+          2.9695683404478833e-06,
+          -4.769745299529139e-06
+        ],
+        [
+          5.948656504248924e-07,
+          4.6511286643266044e-05,
+          0.00017087780053521404,
+          9.106753897869822e-05,
+          2.68842057220351e-05
+        ],
+        [
+          1.5171905145743611e-05,
+          0.00017087780053521396,
+          0.003375995183336892,
+          -0.0004391145350733986,
+          6.844828159174555e-05
+        ],
+        [
+          2.9695683404480913e-06,
+          9.106753897869834e-05,
+          -0.00043911453507339824,
+          0.004513064914542211,
+          -0.0030113591590798547
+        ],
+        [
+          -4.76974529952918e-06,
+          2.6884205722034767e-05,
+          6.844828159174483e-05,
+          -0.003011359159079855,
+          0.0053739572153140925
+        ]
+      ],
+      "V_cluster_candidato": [
+        [
+          0.00016821136511625733,
+          -1.3680271848047893e-07,
+          2.122162848927112e-05,
+          -1.0778053567244728e-05,
+          -4.081241242800594e-06
+        ],
+        [
+          -1.3680271847999279e-07,
+          0.0001378864964837328,
+          0.0003777087240221912,
+          0.0003066736366756141,
+          1.2803549848336293e-05
+        ],
+        [
+          2.122162848927112e-05,
+          0.0003777087240221908,
+          0.004424479136441442,
+          0.00010908078807294407,
+          4.7889190692166595e-05
+        ],
+        [
+          -1.0778053567243673e-05,
+          0.0003066736366756147,
+          0.00010908078807294567,
+          0.005240953627940638,
+          -0.0031618137481773533
+        ],
+        [
+          -4.081241242801087e-06,
+          1.280354984833487e-05,
+          4.7889190692163796e-05,
+          -0.0031618137481773554,
+          0.005903447481911993
+        ]
+      ],
+      "g_conjuntos": 56,
+      "g_candidatos": 5421
+    },
+    "M5_1": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "theta": [
+        0.013234902301411654,
+        -0.22732203134683646,
+        2.475366772235254,
+        2.1603368959586042,
+        0.6926799016039481
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0019416686621334257,
+          0.0005705834977475973,
+          0.0005063262677039055,
+          -4.318703226839182e-06,
+          -0.002759276075866836
+        ],
+        [
+          0.0005705834977475834,
+          0.0014821844506033629,
+          0.004525360998540541,
+          0.0021898598599670444,
+          -0.002703484631425843
+        ],
+        [
+          0.0005063262677038819,
+          0.00452536099854054,
+          0.025015432380965968,
+          0.007698673199388629,
+          -0.011027848734742367
+        ],
+        [
+          -4.318703226986898e-06,
+          0.0021898598599670114,
+          0.007698673199388622,
+          0.08326098155024393,
+          -0.04373411180267216
+        ],
+        [
+          -0.002759276075866674,
+          -0.002703484631425819,
+          -0.011027848734742319,
+          -0.04373411180267235,
+          0.1714941958369326
+        ]
+      ],
+      "V_mle": [
+        [
+          0.0008588167711016348,
+          2.4688486578975447e-05,
+          4.6561642364237665e-05,
+          -0.0002088991483663355,
+          0.0001396597242958931
+        ],
+        [
+          2.4688486578974366e-05,
+          0.00020987659839471107,
+          0.0008922657430433012,
+          0.00038010078698620626,
+          0.0001496699279939149
+        ],
+        [
+          4.656164236424084e-05,
+          0.0008922657430433004,
+          0.01633555851650749,
+          -0.0011256408958602384,
+          0.0003697185044734055
+        ],
+        [
+          -0.00020889914836637216,
+          0.0003801007869862053,
+          -0.0011256408958602345,
+          0.062215480126569446,
+          -0.047220600907649145
+        ],
+        [
+          0.0001396597242959291,
+          0.00014966992799391607,
+          0.0003697185044734086,
+          -0.04722060090764916,
+          0.09684252370248339
+        ]
+      ],
+      "V_cluster_candidato": [
+        [
+          0.0008256314309706632,
+          0.00010689325914647259,
+          0.00015682323884021754,
+          5.255641012892223e-05,
+          0.00012180986240082627
+        ],
+        [
+          0.00010689325914646679,
+          0.0007562105410247058,
+          0.0023458371539954647,
+          0.0016233438183234179,
+          -0.0002733463499538393
+        ],
+        [
+          0.0001568232388402158,
+          0.002345837153995462,
+          0.020405578477832056,
+          0.003591833016469133,
+          0.0009520726937294161
+        ],
+        [
+          5.255641012884534e-05,
+          0.0016233438183234123,
+          0.0035918330164691416,
+          0.06331334884278984,
+          -0.046508720582681934
+        ],
+        [
+          0.00012180986240090171,
+          -0.00027334634995383197,
+          0.0009520726937294233,
+          -0.04650872058268195,
+          0.1288591087367167
+        ]
+      ],
+      "g_conjuntos": 16,
+      "g_candidatos": 915
+    },
+    "M5_2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "theta": [
+        0.10637209175776867,
+        -0.1871131064091468,
+        2.3739684705411483,
+        1.4583897476778929,
+        0.9787479204355581
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.001128073349548054,
+          -0.0001312816951514553,
+          0.002219361983536068,
+          -0.0031932253388326716,
+          0.0010003194905598587
+        ],
+        [
+          -0.00013128169515145579,
+          0.00027939992822710336,
+          0.0006666994713578487,
+          0.0007531512510358216,
+          -0.0004774947937656775
+        ],
+        [
+          0.0022193619835360365,
+          0.0006666994713578662,
+          0.009467349469708728,
+          -0.007762560075261493,
+          0.003021498246447816
+        ],
+        [
+          -0.0031932253388326573,
+          0.0007531512510358047,
+          -0.00776256007526165,
+          0.029476646200310486,
+          -0.030634093332081933
+        ],
+        [
+          0.001000319490559892,
+          -0.0004774947937656692,
+          0.0030214982464479,
+          -0.03063409333208195,
+          0.046776622051592366
+        ]
+      ],
+      "V_mle": [
+        [
+          0.0004000606624343178,
+          -1.7301102924198126e-06,
+          -1.2775451765486357e-05,
+          -2.4382913094346174e-06,
+          3.576558947040475e-05
+        ],
+        [
+          -1.7301102924196553e-06,
+          0.00011130319832558796,
+          0.0005024424951115143,
+          0.00019089001926291327,
+          5.1242667639358446e-05
+        ],
+        [
+          -1.2775451765483537e-05,
+          0.0005024424951115144,
+          0.008773475384092443,
+          -0.0011688824163509672,
+          0.00027529871482180135
+        ],
+        [
+          -2.438291309434652e-06,
+          0.00019089001926291332,
+          -0.0011688824163509652,
+          0.010954629456535706,
+          -0.008214793288463204
+        ],
+        [
+          3.576558947040589e-05,
+          5.1242667639359455e-05,
+          0.0002752987148218145,
+          -0.008214793288463203,
+          0.013858020195715613
+        ]
+      ],
+      "V_cluster_candidato": [
+        [
+          0.00043194915700874145,
+          -5.60784828645865e-06,
+          7.986064172222462e-05,
+          -0.00014028645973677436,
+          9.395050230499266e-05
+        ],
+        [
+          -5.607848286458137e-06,
+          0.0003050311064503519,
+          0.0010601697588341209,
+          0.0006243010740747102,
+          -2.178434026378806e-05
+        ],
+        [
+          7.986064172223192e-05,
+          0.0010601697588341218,
+          0.010892907347702636,
+          -1.653096337122953e-05,
+          0.00019725280349555088
+        ],
+        [
+          -0.00014028645973677455,
+          0.0006243010740747105,
+          -1.6530963371230224e-05,
+          0.012151001548977764,
+          -0.008593055953545484
+        ],
+        [
+          9.395050230499559e-05,
+          -2.178434026378488e-05,
+          0.000197252803495582,
+          -0.00859305595354547,
+          0.015109785437396443
+        ]
+      ],
+      "g_conjuntos": 16,
+      "g_candidatos": 2032
+    },
+    "M5_3": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "theta": [
+        -0.0004321367365578132,
+        -0.17045076741378615,
+        2.368187085109563,
+        1.968785077719743,
+        0.6713816451428435
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0011255815880606489,
+          0.00016202791801700126,
+          0.0010350397532446327,
+          0.00291673587872635,
+          0.0019085723484678742
+        ],
+        [
+          0.00016202791801699795,
+          0.0002073406575023928,
+          0.0009773904044042918,
+          0.0022749630755056894,
+          -0.0007076806726804899
+        ],
+        [
+          0.001035039753244608,
+          0.0009773904044042903,
+          0.009038551497785902,
+          0.012214205514532204,
+          -0.004573458733451066
+        ],
+        [
+          0.002916735878726279,
+          0.002274963075505686,
+          0.01221420551453218,
+          0.055233570953213296,
+          -0.01798690695732385
+        ],
+        [
+          0.0019085723484679172,
+          -0.000707680672680483,
+          -0.004573458733451025,
+          -0.017986906957323814,
+          0.023226786135565627
+        ]
+      ],
+      "V_mle": [
+        [
+          0.00032067051329473127,
+          3.433721100697508e-06,
+          7.442211228364732e-05,
+          1.4056020841041445e-05,
+          -5.447461057159246e-05
+        ],
+        [
+          3.4337211006970926e-06,
+          8.491277734043184e-05,
+          0.00037410583361549674,
+          0.00017374880854532392,
+          5.4557471310224226e-05
+        ],
+        [
+          7.44221122836466e-05,
+          0.00037410583361549647,
+          0.007242412331037952,
+          -0.0011452352974836446,
+          0.00014253568305354854
+        ],
+        [
+          1.4056020841038026e-05,
+          0.00017374880854532378,
+          -0.0011452352974836476,
+          0.010227451712187169,
+          -0.005852461556645347
+        ],
+        [
+          -5.447461057158769e-05,
+          5.4557471310224355e-05,
+          0.00014253568305355282,
+          -0.0058524615566453485,
+          0.01050931498566275
+        ]
+      ],
+      "V_cluster_candidato": [
+        [
+          0.0003340751721112953,
+          1.332086552859517e-06,
+          0.00010726280390529539,
+          5.2497626821697895e-05,
+          -7.854025995024947e-05
+        ],
+        [
+          1.3320865528574708e-06,
+          0.0001905165943548444,
+          0.0007688687511724258,
+          0.0005240613957592452,
+          -5.230449878095624e-05
+        ],
+        [
+          0.00010726280390529084,
+          0.0007688687511724253,
+          0.009310690492957246,
+          0.0004883161181734928,
+          0.00019852217376526945
+        ],
+        [
+          5.2497626821686396e-05,
+          0.000524061395759245,
+          0.0004883161181734859,
+          0.012717016666434327,
+          -0.006699814310410628
+        ],
+        [
+          -7.854025995023917e-05,
+          -5.2304498780956004e-05,
+          0.00019852217376527866,
+          -0.006699814310410629,
+          0.011593416032904584
+        ]
+      ],
+      "g_conjuntos": 24,
+      "g_candidatos": 2474
+    },
+    "M7": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "theta": [
+        0.030365263202212285,
+        -0.18291472882673765,
+        2.370813047517419,
+        1.7501277788460015,
+        0.5499025023867576
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0005364029392224011,
+          1.8803384324462076e-05,
+          0.0004496403890204941,
+          -0.0016688409872216206,
+          0.0015970979132548465
+        ],
+        [
+          1.8803384324460795e-05,
+          0.00011573773971785073,
+          0.0005243902560014289,
+          0.0006938545707216019,
+          -0.00013462726593081132
+        ],
+        [
+          0.0004496403890204917,
+          0.0005243902560014289,
+          0.004411924278969824,
+          0.0013249189742379475,
+          -0.0011950252482680708
+        ],
+        [
+          -0.0016688409872217004,
+          0.0006938545707216051,
+          0.0013249189742379327,
+          0.02427556314618863,
+          -0.010643894947692495
+        ],
+        [
+          0.0015970979132549227,
+          -0.00013462726593081324,
+          -0.0011950252482680443,
+          -0.010643894947692528,
+          0.014504384011472617
+        ]
+      ],
+      "V_mle": [
+        [
+          7.972028840834627e-05,
+          6.16129887543607e-07,
+          5.528473850989355e-06,
+          5.304564222121704e-06,
+          -7.401779567043125e-06
+        ],
+        [
+          6.161298875435417e-07,
+          2.0128471462210795e-05,
+          8.964195620724208e-05,
+          3.8407943197886324e-05,
+          1.0360565188339329e-05
+        ],
+        [
+          5.528473850989053e-06,
+          8.964195620724211e-05,
+          0.0016918348036512037,
+          -0.00025045203568814446,
+          1.3366805700707945e-05
+        ],
+        [
+          5.304564222121674e-06,
+          3.8407943197886385e-05,
+          -0.00025045203568814425,
+          0.0025350189134654626,
+          -0.0016906798333456978
+        ],
+        [
+          -7.40177956704168e-06,
+          1.0360565188339195e-05,
+          1.3366805700707725e-05,
+          -0.0016906798333456955,
+          0.003050999758158991
+        ]
+      ],
+      "V_cluster_candidato": [
+        [
+          9.836665136619671e-05,
+          1.5027917172356257e-06,
+          2.6054555263887267e-05,
+          -1.760515394966367e-05,
+          8.98179643294907e-06
+        ],
+        [
+          1.5027917172350476e-06,
+          8.549934586007618e-05,
+          0.00030085049193202454,
+          0.00018653239978624864,
+          -2.0015999039153566e-05
+        ],
+        [
+          2.6054555263885305e-05,
+          0.00030085049193202476,
+          0.00321677193996294,
+          6.945252396343973e-05,
+          2.855731095285994e-07
+        ],
+        [
+          -1.7605153949665067e-05,
+          0.0001865323997862493,
+          6.945252396344064e-05,
+          0.003964767537503205,
+          -0.0022955494078878546
+        ],
+        [
+          8.981796432952776e-06,
+          -2.0015999039154403e-05,
+          2.855731095283365e-07,
+          -0.0022955494078878507,
+          0.004253496366972304
+        ]
+      ],
+      "g_conjuntos": 56,
+      "g_candidatos": 5421
+    }
+  },
+  "inferencia": {
+    "principal": "sanduíche com cluster por conjunto de escolha (curso × ciclo), fator G/(G−1)",
+    "adicionais": [
+      "máxima verossimilhança",
+      "cluster por candidato",
+      "p unilateral pela t com G − 1 gl"
+    ],
+    "z_bilateral_95": 1.959963984540054,
+    "z_unilateral_95": 1.6448536269514722,
+    "holm": "só P1h-1, família de um teste",
+    "bky": "só entre as linhas P1h-3 (p unilateral)",
+    "km": "delta (EP, IC, p) e Fieller (IC 95% e limite unilateral pelo conjunto de 90%)"
+  },
+  "figura": {
+    "arquivo": "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png",
+    "sha256": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12",
+    "como_ler": "Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar comparam com uma vaga em outra UF, à mesma distância, e cada uma é uma categoria: mesma UF fora da região de saúde de origem; mesma região fora do município; mesmo município. São preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). O peso da distância depende da unidade escolhida (100 km).",
+    "titulo": "No modelo de escolha, a vaga estar na UF de origem pesa mais\nque toda a amplitude da bolsa (R$ 10 → 20 mil)",
+    "descricao": "pesos na utilidade, na mesma escala, de um degrau e da amplitude da bolsa, 100 km a menos, mesma UF, mesma região e mesmo município (M1, IC 95% cluster por conjunto)"
+  },
+  "como_ler": {
+    "P1h_magnitudes.png": "Cada ponto é o peso de um atributo da vaga na utilidade da escolha da 1ª opção, no modelo principal (M1, ciclos 1–3), em log-chance; a barra é o IC 95% com cluster por conjunto de escolha. Todos os pesos estão na mesma escala: um peso de 1 multiplica por e ≈ 2,7 a razão entre a probabilidade de escolher a vaga e a de escolher qualquer outra do conjunto, mantido o resto. As linhas de lugar comparam com uma vaga em outra UF, à mesma distância, e cada uma é uma categoria: mesma UF fora da região de saúde de origem; mesma região fora do município; mesmo município. São preferência revelada condicional ao modelo, não efeito causal da geografia; as da bolsa são identificadas pelos cortes de IVS (pacote do corte). O peso da distância depende da unidade escolhida (100 km)."
+  },
+  "saidas": {
+    "output/rdd_bolsa/P1h_magnitudes.csv": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
+    "output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png": "61bcc1b8f3c1d7f1ee831c136f24804619ead0e7ad95bab9174484f3ba07ce12"
+  }
+}
