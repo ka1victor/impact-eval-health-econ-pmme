@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Protocolo 60 (equivalência em H1 e oferta local depois da chegada)
+
+Motivo: perguntas do autor ("dá para dizer que não mudou nada?"; "aumentaram as horas, mas não os especialistas no município?"), congelado antes de calcular.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/60_protocolo_equivalencia_e_oferta_local.md`](06_execucao/60_protocolo_equivalencia_e_oferta_local.md) | parte A: TOST de A3 e N1 com margens do protocolo 40; parte B: Callaway–Sant'Anna município × mês da chegada sobre vínculos e horas das CBO-alvo, com o teste de deslocamento dos outros especialistas |
+
+---
+
 ## 26/10/2026 — Banca 2: deck num arquivo só
 
 Motivo: pedido do autor ("por que tu não coloca tudo junto num só?"). O entregável passa a ser um único
