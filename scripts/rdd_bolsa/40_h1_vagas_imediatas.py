@@ -1469,7 +1469,9 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         f"de vaga pelo quadro de 13/02/2026); SHA-256 do adendo com a §7 `{resumo['adendo']['sha256']}`, conferido pelo "
         "script.<br>\n"
         "> **Estatuto:** `ADENDO_48B_POS_RESULTADO`. Pós-resultado: as medidas que misturam vaga imediata e cadastro "
-        "reserva já tinham sido vistas (docs 49, 49b e 57l). Toda linha de `HI_estimativas.csv` tem "
+        "reserva já tinham sido vistas (docs 49, 49b e 57l). Antes da nota §7, o script chegou a rodar uma vez com o "
+        "quadro de 19/03 no ciclo 2, e quem o executou viu essa versão de HI-1 e HI-2 (seção 6, \"Tipo de vaga do "
+        "ciclo 2\"); ela é a sensibilidade SENS-19MAR. Toda linha de `HI_estimativas.csv` tem "
         "`natureza_dos_dados = EMPIRICO`.<br>\n"
         "> **Script:** `scripts/rdd_bolsa/40_h1_vagas_imediatas.py` (estimadores de `rdd_lib.py` e funções dos scripts "
         "23 e 36).<br>\n"
@@ -1561,9 +1563,13 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
     s.append("## 6. Limites")
     lim = [
         "**Pós-resultado.** O adendo foi escrito depois de ver que as medidas com reserva caíam em 0,300 e as "
-        "restritas a vagas imediatas não; é uma correção de definição justificada pela regra de uso da reserva, não "
-        "uma primeira olhada. A especificação foi congelada antes destas contas, mas a escolha de olhar só vagas "
-        "imediatas não é cega ao resultado.",
+        "restritas a vagas imediatas não; é uma correção de definição, não uma primeira olhada. A especificação foi "
+        "congelada antes destas contas, mas a escolha de olhar só vagas imediatas não é cega ao resultado. A "
+        "justificativa do §1 do adendo (no ciclo 2, nenhuma célula só de reserva teve alocado) descrevia o quadro "
+        "refeito depois do resultado: pela auditoria 36, os editais permitem preencher a reserva na 1ª chamada, e pôr "
+        "essas células no denominador não é erro de regra. O que sustenta comparar só vagas imediatas é a célula só "
+        "de reserva se preencher por outro mecanismo (remanejamento e priorização da SGTES), não uma regra que impeça "
+        "preenchê-la.",
         "**Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa anunciada e outras regras federais (auditoria 18). Nada "
         "aqui isola o incentivo de R$ 5 mil, a participação no PMM-E ou o Agora Tem Especialistas.",
         "**Definição de \"preenchida\" por ciclo.** " + dic["texto_doc"],
@@ -1575,7 +1581,9 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         "**Regra da reserva nos editais.** " + ed["texto_doc"],
         "**Controle de HI-2.** As vagas imediatas são definidas pelo gestor e pela SGTES e podem ter respondido ao "
         "corte (doc 49, §4); com controle, HI-2 compara municípios com as mesmas vagas imediatas, e só é causal se "
-        "essa oferta não carregar seleção. A HI-s3 relata a forma sem controle.",
+        "essa oferta não carregar seleção. A HI-s3 relata a forma sem controle. A própria amostra (células com vaga "
+        "imediata) depende da mesma decisão: se o tipo de vaga responde ao corte, a amostra é selecionada pelo "
+        "tratamento. O adendo 48f, congelado depois destas contas, mede essa seleção.",
         "**Precisão.** Poucos municípios ficam perto de cada corte e a estimativa é no corte (diagnóstico 61): os "
         "IC são largos, e não detectar diferença não é mostrar que ela é zero (ver o MDE e o TOST).",
     ]
