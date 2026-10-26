@@ -81,6 +81,7 @@
     ".venv/bin/python scripts/rdd_bolsa/37_oferta_local_chegada.py",
     ".venv/bin/python scripts/rdd_bolsa/43_oferta_local_corte.py",
     ".venv/bin/python scripts/rdd_bolsa/44_controles_localizacao_medicos.py",
+    ".venv/bin/python scripts/rdd_bolsa/45_pareamento_regra_literal.py",
     ".venv/bin/python scripts/rdd_bolsa/15_sintese_E8.py",
     ".venv/bin/python scripts/rdd_bolsa/09b_conferir_sinal.py",
     ".venv/bin/python scripts/rdd_bolsa/09_gerar_relatorio_pdf.py",

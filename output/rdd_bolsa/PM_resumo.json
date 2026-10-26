@@ -82,7 +82,7 @@
   },
   {
    "arquivo": "output/rdd_bolsa/CL_resumo.json",
-   "sha256": "c969a32a758f8f20c7ef0a41f296a04cf3c5232c01faa39e40679f3165a92ce6"
+   "sha256": "8566a5c3eaff42b253521b8e258f81c07c62fe08c527ffa8b5f20081cdf6ccec"
   },
   {
    "arquivo": "docs/06_execucao/48d_adendo_controles_localizacao_e_medicos.md",
@@ -142,7 +142,7 @@
   },
   {
    "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
-   "sha256": "7e5082e3ef4bc660428d092e50bf66c94d711f9d8f18c629e142fc0379754aba"
+   "sha256": "bc2f455f871d184c63a1f22c02867ceb492453363e7c3d55883ec98c4826aa0a"
   }
  ],
  "saidas_protegidas_sha256": {
@@ -152,19 +152,19 @@
   "output/rdd_bolsa/CL_figuras/CL_balanco_pareamento.png": "5f7d873d978127a68b3e52473715c4f747932011372cfadf536d560f5bcf26a9",
   "output/rdd_bolsa/CL_figuras/CL_escore.png": "f7cee5d9ffcfb9f356b4beff2b5c9062d59ae330b4ced340c26f818b5c5c90eb",
   "output/rdd_bolsa/CL_figuras/CL_principal.png": "5916f217b8102c5db2d3bddc7d8669621a50ac77a3d6e64309ed6aac33296d49",
-  "output/rdd_bolsa/CL_resumo.json": "c969a32a758f8f20c7ef0a41f296a04cf3c5232c01faa39e40679f3165a92ce6",
+  "output/rdd_bolsa/CL_resumo.json": "8566a5c3eaff42b253521b8e258f81c07c62fe08c527ffa8b5f20081cdf6ccec",
   "output/rdd_bolsa/HI_estimativas.csv": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76",
   "output/rdd_bolsa/HI_figuras/HI_antiga_vs_imediatas.png": "272db318e50f7728ae935d6713b1f640f7516f0d46e7d228e9b342c1d748f63a",
   "output/rdd_bolsa/HI_figuras/HI_por_ciclo.png": "0811f11fa70e5a1f96fd2f3aa52a31439be5bcc0ad35941a6bbfb4d23c936e00",
   "output/rdd_bolsa/HI_figuras/HI_principal.png": "e946d3f79e3a6f5acd638f69e8a9420dd952e15baddccb31519af79e6a04b276",
   "output/rdd_bolsa/HI_figuras/HI_scatter_imediatas.png": "f29f2fd418a7e27de21c46777cfa930714802bab02be3070db749eb4105ecd9f",
   "output/rdd_bolsa/HI_resumo.json": "ac65a2a8b1d4058d3550f8d1f53643306f615bb80484232164efe07396a8b6d6",
-  "output/rdd_bolsa/OC_estimativas.csv": "7e5082e3ef4bc660428d092e50bf66c94d711f9d8f18c629e142fc0379754aba",
+  "output/rdd_bolsa/OC_estimativas.csv": "bc2f455f871d184c63a1f22c02867ceb492453363e7c3d55883ec98c4826aa0a",
   "output/rdd_bolsa/OC_estudo_evento.csv": "eb61ee2e13cb5809274ece26efdbd3a02127d84b05c4e0d3c44c9fe7cc902bcf",
   "output/rdd_bolsa/OC_figuras/OC_evento.png": "2a0d5e571e333cbacc63e4cc4d2b944f016e369d4e2bad0d5bce270991ac3d5e",
   "output/rdd_bolsa/OC_figuras/OC_primeiro_estagio.png": "9c3a2153fa54f0bd9b84b1a1e67420c8fc337fc78cbc2d073dbf596d9b43a791",
   "output/rdd_bolsa/OC_figuras/OC_salto.png": "12de66bb8629061c67ad2ec4b2c15265cea26e6e61eef9ee8e0298044676547c",
-  "output/rdd_bolsa/OC_resumo.json": "de8282875434590001394142b232afbb837cc9dd7b9c4f3c6465b6cda0022931"
+  "output/rdd_bolsa/OC_resumo.json": "3ed8e65532ed6f2ab5cc0e5a4993d3d3c31cc346b01a063bfc3d011b3b5f1643"
  },
  "covariaveis": {
   "referencia_ibge": {
