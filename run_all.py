@@ -217,6 +217,10 @@ STEPS = [
     # de Lee com IC de Imbens–Manski por bootstrap de municípios). Portões contra HI_ (40) e o D-b de DQ_ (38) antes
     # de qualquer conta; confere as linhas de S = 1 contra o CL-0 de CL_ (44); importa o 24, o 40 e o 44.
     ROOT / "scripts" / "rdd_bolsa" / "46_selecao_tipo_vaga.py",
+    # Adendo 48g (pós-resultado): heterogeneidade do salto pelo porte em que o estrato do IED muda no corte (τ₁ =
+    # salto onde muda − onde não muda) na H1 (HI-1, HI-2) e na oferta local (ΔB1, ΔB2, ΔB5). G lido do a10 (JSON e
+    # CSV). Importa o 40, o 43 e o 44 (referência do IBGE); portão contra HI_ (40) e OC_ (43) antes de qualquer conta.
+    ROOT / "scripts" / "rdd_bolsa" / "47_heterogeneidade_porte_ied.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.

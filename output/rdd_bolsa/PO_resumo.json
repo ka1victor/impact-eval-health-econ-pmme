@@ -1,0 +1,733 @@
+{
+  "etapa": "Adendo 48g: heterogeneidade do salto pelo porte em que o estrato do IED muda (PO-1 a PO-5)",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "ADENDO_48G_POS_RESULTADO",
+  "data_execucao": "2026-10-26",
+  "script": "scripts/rdd_bolsa/47_heterogeneidade_porte_ied.py",
+  "adendo": {
+    "arquivo": "docs/06_execucao/48g_adendo_heterogeneidade_porte_ied.md",
+    "sha256": "5a77d7645a73a06a6a70ec51e49de54b014c12c844f39c3ccfc5d9f2515559ea",
+    "commit_congelamento": "c87ed75",
+    "commit_decisoes_57u": "808db3a"
+  },
+  "contraste": "pacote do corte: em 0,300 a bolsa anunciada sobe de R$ 10 mil para R$ 15 mil e em 0,400 de R$ 15 mil para R$ 20 mil, e outras regras federais mudam nos mesmos cortes (auditoria 18); tau1 compara o salto entre portes em que o estrato do IED muda e portes em que nao muda: heterogeneidade descritiva por uma condicao pre-tratamento (porte), nao efeito do IED nem da bolsa isolada",
+  "parametros": {
+    "cortes_mil": [
+      300,
+      400
+    ],
+    "h": 0.05,
+    "kernel": "triangular",
+    "min_municipios_grupo_lado": 10,
+    "ciclos_h1": [
+      1,
+      2,
+      3
+    ],
+    "quadro_ciclo2": "13/02/2026 (adendo 48b, nota 7)",
+    "limite_cnes_exclusivo": "202609",
+    "maior_competencia_cnes_lida": "202608",
+    "holm": "tau1 de HI-1 e HI-2 x dois cortes (4)",
+    "bky": "tau1 de dB1 e dB2 (PO-2) e dB5 (PO-3) x dois cortes (6)",
+    "familia_tamanho_fixo": "linha sem estimativa entra com p = 1 so no calculo"
+  },
+  "regra_g": {
+    "json": "output/aquisicao/a10_diagnostico_cortes_normas.json",
+    "sha256_json": "21c6773ce2b0362663c93412767bdbee2bc6fc016da37b9f19779e795e406e79",
+    "csv": "output/aquisicao/a10_ied_aps_2024_municipio.csv",
+    "sha256_csv": "2bd4aec48a14e610a13d6bc1bece7c7be6a0abbd31eca2cb9281f733964af887",
+    "portes": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rotulos_porte": {
+      "1": "1-Até 20mil hab.",
+      "2": "2-Acima de 20mil até 50mil hab.",
+      "3": "3-Acima de 50mil até 100mil hab.",
+      "4": "4-Acima de 100mil hab."
+    },
+    "faixas_por_codigo": {
+      "1": [
+        0.501,
+        0.784
+      ],
+      "2": [
+        0.401,
+        0.5
+      ],
+      "3": [
+        0.301,
+        0.4
+      ],
+      "4": [
+        0.201,
+        0.3
+      ],
+      "5": [
+        0.09,
+        0.2
+      ]
+    },
+    "estrato": {
+      "1|1": 1,
+      "1|2": 1,
+      "1|3": 2,
+      "1|4": 3,
+      "2|1": 2,
+      "2|2": 2,
+      "2|3": 3,
+      "2|4": 3,
+      "3|1": 3,
+      "3|2": 3,
+      "3|3": 3,
+      "3|4": 4,
+      "4|1": 3,
+      "4|2": 4,
+      "4|3": 4,
+      "4|4": 4,
+      "5|1": 4,
+      "5|2": 4,
+      "5|3": 4,
+      "5|4": 4
+    },
+    "cortes": {
+      "0.300": {
+        "codigo_ivs_abaixo": 4,
+        "codigo_ivs_acima": 3,
+        "por_porte": {
+          "1": {
+            "estrato_abaixo": 3,
+            "estrato_acima": 3,
+            "G": 0
+          },
+          "2": {
+            "estrato_abaixo": 4,
+            "estrato_acima": 3,
+            "G": 1
+          },
+          "3": {
+            "estrato_abaixo": 4,
+            "estrato_acima": 3,
+            "G": 1
+          },
+          "4": {
+            "estrato_abaixo": 4,
+            "estrato_acima": 4,
+            "G": 0
+          }
+        },
+        "portes_G1": [
+          2,
+          3
+        ],
+        "portes_G0": [
+          1,
+          4
+        ]
+      },
+      "0.400": {
+        "codigo_ivs_abaixo": 3,
+        "codigo_ivs_acima": 2,
+        "por_porte": {
+          "1": {
+            "estrato_abaixo": 3,
+            "estrato_acima": 2,
+            "G": 1
+          },
+          "2": {
+            "estrato_abaixo": 3,
+            "estrato_acima": 2,
+            "G": 1
+          },
+          "3": {
+            "estrato_abaixo": 3,
+            "estrato_acima": 3,
+            "G": 0
+          },
+          "4": {
+            "estrato_abaixo": 4,
+            "estrato_acima": 3,
+            "G": 1
+          }
+        },
+        "portes_G1": [
+          1,
+          2,
+          4
+        ],
+        "portes_G0": [
+          3
+        ]
+      }
+    }
+  },
+  "portao": {
+    "linhas": [
+      {
+        "linha": "HI-1 0,300",
+        "como": "est_celula do 40",
+        "tau_ref": -0.0367840865161759,
+        "tau": -0.0367840865161759,
+        "ep_ref": 0.0896913588814426,
+        "ep": 0.08969135888144267,
+        "dif_tau": 0.0,
+        "dif_ep": 6.938893903907228e-17,
+        "n_abaixo_acima": [
+          95,
+          72
+        ],
+        "aprovado": true
+      },
+      {
+        "linha": "HI-1 0,300",
+        "como": "estimador do 47 sem divisao",
+        "tau_ref": -0.0367840865161759,
+        "tau": -0.0367840865161759,
+        "ep_ref": 0.0896913588814426,
+        "ep": 0.08969135888144267,
+        "dif_tau": 0.0,
+        "dif_ep": 6.938893903907228e-17,
+        "n_abaixo_acima": [
+          95,
+          72
+        ],
+        "aprovado": true
+      },
+      {
+        "linha": "HI-2 0,300",
+        "como": "est_municipio do 40",
+        "tau_ref": -1.1263257568590284,
+        "tau": -1.1263257568590284,
+        "ep_ref": 0.5240743686156416,
+        "ep": 0.5240743686156416,
+        "dif_tau": 0.0,
+        "dif_ep": 0.0,
+        "n_abaixo_acima": [
+          95,
+          72
+        ],
+        "aprovado": true
+      },
+      {
+        "linha": "HI-2 0,300",
+        "como": "estimador do 47 sem divisao",
+        "tau_ref": -1.1263257568590284,
+        "tau": -1.1263257568590284,
+        "ep_ref": 0.5240743686156416,
+        "ep": 0.5240743686156416,
+        "dif_tau": 0.0,
+        "dif_ep": 0.0,
+        "n_abaixo_acima": [
+          95,
+          72
+        ],
+        "aprovado": true
+      },
+      {
+        "linha": "OC-A1 0,300",
+        "como": "rd_dird_delta (como o 43)",
+        "tau_ref": -0.2290951288957239,
+        "tau": -0.22909512889572392,
+        "ep_ref": 0.6521613748698466,
+        "ep": 0.6521613748698466,
+        "dif_tau": 2.7755575615628914e-17,
+        "dif_ep": 0.0,
+        "n_abaixo_acima": [
+          144,
+          119
+        ],
+        "aprovado": true
+      },
+      {
+        "linha": "OC-A1 0,300",
+        "como": "estimador do 47 sem divisao",
+        "tau_ref": -0.2290951288957239,
+        "tau": -0.22909512889572525,
+        "ep_ref": 0.6521613748698466,
+        "ep": 0.6521613748698459,
+        "dif_tau": 1.3600232051658168e-15,
+        "dif_ep": 6.661338147750939e-16,
+        "n_abaixo_acima": [
+          144,
+          119
+        ],
+        "aprovado": true
+      }
+    ],
+    "tolerancia": 1e-08,
+    "max_abs_dif": 1.3600232051658168e-15,
+    "g_lido_do_a10": {
+      "fonte": "output/aquisicao/a10_diagnostico_cortes_normas.json",
+      "estrato_do_csv_igual_a_regra": true,
+      "codigo_do_anexo_vi_na_janela": {
+        "0.300": {
+          "municipios_na_janela": 265,
+          "conferidos": 265,
+          "divergentes": 0
+        },
+        "0.400": {
+          "municipios_na_janela": 267,
+          "conferidos": 267,
+          "divergentes": 0
+        }
+      }
+    },
+    "aprovado": true
+  },
+  "amostra": {
+    "janela": {
+      "HI-1|0.300": {
+        "G0_abaixo": {
+          "municipios": 50,
+          "linhas": 330
+        },
+        "G0_acima": {
+          "municipios": 42,
+          "linhas": 211
+        },
+        "G1_abaixo": {
+          "municipios": 45,
+          "linhas": 162
+        },
+        "G1_acima": {
+          "municipios": 30,
+          "linhas": 100
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "HI-2|0.300": {
+        "G0_abaixo": {
+          "municipios": 50,
+          "linhas": 80
+        },
+        "G0_acima": {
+          "municipios": 42,
+          "linhas": 68
+        },
+        "G1_abaixo": {
+          "municipios": 45,
+          "linhas": 61
+        },
+        "G1_acima": {
+          "municipios": 30,
+          "linhas": 48
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "B1|0.300": {
+        "G0_abaixo": {
+          "municipios": 73,
+          "linhas": 73
+        },
+        "G0_acima": {
+          "municipios": 72,
+          "linhas": 72
+        },
+        "G1_abaixo": {
+          "municipios": 71,
+          "linhas": 71
+        },
+        "G1_acima": {
+          "municipios": 47,
+          "linhas": 47
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "B2|0.300": {
+        "G0_abaixo": {
+          "municipios": 70,
+          "linhas": 70
+        },
+        "G0_acima": {
+          "municipios": 72,
+          "linhas": 72
+        },
+        "G1_abaixo": {
+          "municipios": 71,
+          "linhas": 71
+        },
+        "G1_acima": {
+          "municipios": 47,
+          "linhas": 47
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "B5|0.300": {
+        "G0_abaixo": {
+          "municipios": 73,
+          "linhas": 73
+        },
+        "G0_acima": {
+          "municipios": 72,
+          "linhas": 72
+        },
+        "G1_abaixo": {
+          "municipios": 71,
+          "linhas": 71
+        },
+        "G1_acima": {
+          "municipios": 47,
+          "linhas": 47
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "HI-1|0.400": {
+        "G0_abaixo": {
+          "municipios": 18,
+          "linhas": 85
+        },
+        "G0_acima": {
+          "municipios": 15,
+          "linhas": 39
+        },
+        "G1_abaixo": {
+          "municipios": 65,
+          "linhas": 230
+        },
+        "G1_acima": {
+          "municipios": 54,
+          "linhas": 131
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "HI-2|0.400": {
+        "G0_abaixo": {
+          "municipios": 18,
+          "linhas": 37
+        },
+        "G0_acima": {
+          "municipios": 15,
+          "linhas": 25
+        },
+        "G1_abaixo": {
+          "municipios": 65,
+          "linhas": 93
+        },
+        "G1_acima": {
+          "municipios": 54,
+          "linhas": 72
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "B1|0.400": {
+        "G0_abaixo": {
+          "municipios": 22,
+          "linhas": 22
+        },
+        "G0_acima": {
+          "municipios": 22,
+          "linhas": 22
+        },
+        "G1_abaixo": {
+          "municipios": 100,
+          "linhas": 100
+        },
+        "G1_acima": {
+          "municipios": 123,
+          "linhas": 123
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "B2|0.400": {
+        "G0_abaixo": {
+          "municipios": 22,
+          "linhas": 22
+        },
+        "G0_acima": {
+          "municipios": 22,
+          "linhas": 22
+        },
+        "G1_abaixo": {
+          "municipios": 100,
+          "linhas": 100
+        },
+        "G1_acima": {
+          "municipios": 123,
+          "linhas": 123
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      },
+      "B5|0.400": {
+        "G0_abaixo": {
+          "municipios": 22,
+          "linhas": 22
+        },
+        "G0_acima": {
+          "municipios": 22,
+          "linhas": 22
+        },
+        "G1_abaixo": {
+          "municipios": 100,
+          "linhas": 100
+        },
+        "G1_acima": {
+          "municipios": 123,
+          "linhas": 123
+        },
+        "linhas_sem_porte": 0,
+        "municipios_sem_porte_na_janela": 0
+      }
+    },
+    "V_municipios": 1037,
+    "sem_estimativa": []
+  },
+  "referencias": {
+    "hi_leitura_primaria": "IC_CONVENCIONAL_EXCLUI_ZERO_SEM_HOLM",
+    "hi_linhas_ic_convencional_sem_zero": [
+      "HI-2 em 0,300"
+    ],
+    "oc_leitura": {
+      "primarias": {
+        "B1|0.300": {
+          "tau": -0.22909512889572392,
+          "contem_zero": true,
+          "p_holm": 1.0,
+          "rejeita_holm": false
+        },
+        "B1|0.400": {
+          "tau": -0.45582848688580146,
+          "contem_zero": true,
+          "p_holm": 1.0,
+          "rejeita_holm": false
+        },
+        "B2|0.300": {
+          "tau": -6.1469603322175885,
+          "contem_zero": true,
+          "p_holm": 1.0,
+          "rejeita_holm": false
+        },
+        "B2|0.400": {
+          "tau": -6.090510361967086,
+          "contem_zero": true,
+          "p_holm": 1.0,
+          "rejeita_holm": false
+        }
+      },
+      "placebo_rejeita": {
+        "0.300": false,
+        "0.400": false
+      },
+      "pre_plano": {
+        "B1|0.300": true,
+        "B2|0.300": true,
+        "B3|0.300": true,
+        "B1|0.400": true,
+        "B2|0.400": true,
+        "B3|0.400": true
+      },
+      "f_robusto": {
+        "0.300": 0.15258803223314923,
+        "0.400": 0.04916950761343235
+      },
+      "fraco": {
+        "0.300": true,
+        "0.400": true
+      },
+      "d": {
+        "B1|0.300": {
+          "contem_zero": true
+        },
+        "B2|0.300": {
+          "contem_zero": true
+        },
+        "B3|0.300": {
+          "contem_zero": true
+        },
+        "B1|0.400": {
+          "contem_zero": true
+        },
+        "B2|0.400": {
+          "contem_zero": true
+        },
+        "B3|0.400": {
+          "contem_zero": true
+        }
+      },
+      "e": {
+        "0.300": false,
+        "0.400": false
+      },
+      "a3_deslocamento_cortes": [],
+      "caso_primarias": "nulo",
+      "rejeitam_holm": [],
+      "v_selecionada": false
+    }
+  },
+  "entradas": [
+    {
+      "arquivo": "output/aquisicao/a10_ied_aps_2024_municipio.csv",
+      "sha256": "2bd4aec48a14e610a13d6bc1bece7c7be6a0abbd31eca2cb9281f733964af887"
+    },
+    {
+      "arquivo": "output/aquisicao/a10_diagnostico_cortes_normas.json",
+      "sha256": "21c6773ce2b0362663c93412767bdbee2bc6fc016da37b9f19779e795e406e79"
+    },
+    {
+      "arquivo": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc"
+    },
+    {
+      "arquivo": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "sha256": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/HI_resumo.json",
+      "sha256": "ac65a2a8b1d4058d3550f8d1f53643306f615bb80484232164efe07396a8b6d6"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
+      "sha256": "bc2f455f871d184c63a1f22c02867ceb492453363e7c3d55883ec98c4826aa0a"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/OC_resumo.json",
+      "sha256": "3ed8e65532ed6f2ab5cc0e5a4993d3d3c31cc346b01a063bfc3d011b3b5f1643"
+    },
+    {
+      "arquivo": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd"
+    },
+    {
+      "arquivo": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/OL_resumo.json",
+      "sha256": "04497d9e0bac6f918ba3255f1dc4255d7138ecc13a5edeef9e1e006c5712068c"
+    },
+    {
+      "arquivo": "output/aquisicao/ibge_capitais_uf_regiao.csv",
+      "sha256": "e4c9ffb63c0eb14b4ddaae64550639d620e0cdd8caef7c793b2ee280963d1bd9"
+    },
+    {
+      "arquivo": "docs/06_execucao/48g_adendo_heterogeneidade_porte_ied.md",
+      "sha256": "5a77d7645a73a06a6a70ec51e49de54b014c12c844f39c3ccfc5d9f2515559ea"
+    }
+  ],
+  "integridade": {
+    "ivs": "IVS 2010 oficial (a08), pelas funcoes dos scripts 40 e 43; o arquivo local de IVS da auditoria 16 nao e lido",
+    "cnes": "painel a09 so com competencias < 202609 (conferido)",
+    "imputacao": "nada imputado, simulado ou adquirido",
+    "saidas_nao_regravadas": [
+      "HI_*",
+      "OC_*",
+      "CL_*",
+      "PM_*"
+    ],
+    "dados_pessoais": "nenhum identificador pessoal (unidades: celula e municipio)"
+  },
+  "saidas": {
+    "estimativas": "output/rdd_bolsa/PO_estimativas.csv",
+    "contagens": "output/rdd_bolsa/PO_contagens.csv",
+    "resumo": "output/rdd_bolsa/PO_resumo.json",
+    "figuras": "output/rdd_bolsa/PO_figuras",
+    "doc": "docs/06_execucao/57u_resultados_heterogeneidade_porte.md"
+  },
+  "contagens": {
+    "linhas": 30,
+    "por_status": {
+      "EXECUTADO": 30
+    },
+    "por_id_po": {
+      "PO-1": 4,
+      "PO-2": 4,
+      "PO-3": 2,
+      "PO-4": 20
+    }
+  },
+  "linguagem": "pacote do corte; heterogeneidade descritiva; 'nao se detecta' nao e 'zero'",
+  "leitura": {
+    "po1": {
+      "codigo": "TAU1_TODOS_CONTEM_ZERO",
+      "linhas_sem_estimativa": [],
+      "linhas_que_rejeitam_depois_do_holm": [],
+      "linhas_concentradas_onde_muda": [],
+      "linhas_com_ic_convencional_sem_zero": [],
+      "regra": "TAU1_TODOS_CONTEM_ZERO se as 4 tau1 da PO-1 tem IC 95% com zero; TAU1_REJEITA_HOLM_CONCENTRADO se alguma tau1 tem p Holm < 0,05 e, nela, o IC de tau0 + tau1 exclui zero e o de tau0 contem zero; TAU1_REJEITA_HOLM_SEM_CONCENTRACAO se rejeita depois do Holm sem essa concentracao; TAU1_IC_EXCLUI_ZERO_SEM_HOLM se algum IC convencional de tau1 exclui zero e nenhum p Holm < 0,05"
+    },
+    "po3": {
+      "0.300": {
+        "codigo": "SEM_INDICIO",
+        "q_bky_tau1": 1.0,
+        "tau1_q_abaixo_de_0_05": false
+      },
+      "0.400": {
+        "codigo": "SEM_INDICIO",
+        "q_bky_tau1": 1.0,
+        "tau1_q_abaixo_de_0_05": false
+      }
+    },
+    "potencia": {
+      "grupos_lado_com_menos_de_10": [],
+      "menor_grupo_lado": {
+        "outcome": "HI-1",
+        "corte": "0.400",
+        "G": 0,
+        "lado": "acima",
+        "n_municipios": 15
+      }
+    }
+  },
+  "primarias": {
+    "HI-1 0.300": {
+      "tau": 0.1253731368303146,
+      "ep": 0.16156981638799847,
+      "ic95_inf": -0.1912978842789118,
+      "ic95_sup": 0.442044157939541,
+      "p_valor": 0.4377674068975054,
+      "p_holm": 0.8755348137950107
+    },
+    "HI-2 0.300": {
+      "tau": 1.6651111080194538,
+      "ep": 0.9866567178112274,
+      "ic95_inf": -0.2687005239950513,
+      "ic95_sup": 3.598922740033959,
+      "p_valor": 0.09148234844293227,
+      "p_holm": 0.36592939377172906
+    },
+    "HI-1 0.400": {
+      "tau": -0.3105910974437478,
+      "ep": 0.20785140532018115,
+      "ic95_inf": -0.7179723660073398,
+      "ic95_sup": 0.09679017111984423,
+      "p_valor": 0.13509880578224173,
+      "p_holm": 0.40529641734672517
+    },
+    "HI-2 0.400": {
+      "tau": -0.6113101744297853,
+      "ep": 0.8257144678797746,
+      "ic95_inf": -2.229680792987799,
+      "ic95_sup": 1.0070604441282283,
+      "p_valor": 0.459093182732061,
+      "p_holm": 0.8755348137950107
+    }
+  },
+  "figura": {
+    "arquivo": "output/rdd_bolsa/PO_figuras/PO_salto_por_grupo.png",
+    "sha256": "f5a91f2efb5add3079f430e99d5106634a01b9f1cdcae99c55836699fa2a141e",
+    "como_ler": "Como ler: cada painel é um outcome; em cada corte há três linhas. \"Não muda\" é o salto no corte (lado de bolsa maior menos lado de bolsa menor) nos portes em que o estrato do IED fica igual dos dois lados; \"muda\" é o salto nos portes em que, acima do corte, o estrato passa a um degrau de repasse maior; \"diferença\" é muda menos não muda (τ₁). Ponto = estimativa; barra = IC 95%. Azul: o IC exclui zero; cinza: contém zero. Barra que cruza a linha do zero quer dizer que não se detecta diferença, não que ela seja zero. Os grupos diferem também em tamanho, capital e região: é heterogeneidade descritiva do pacote do corte, não o efeito do IED.",
+    "fonte": "Fonte: outcomes do 12 (H1, ciclos 1–3; ciclo 2 pelo quadro de 13/02/2026), CNES nacional a09 (ΔB, 2024-06 a 2026-08), IVS 2010 oficial (a08), Portaria 3.493/2024 Anexo VI (a10). EMPIRICO · scripts/rdd_bolsa/47_heterogeneidade_porte_ied.py"
+  }
+}
