@@ -68,35 +68,53 @@ parâmetro que ela usa e H1 como teste de consistência. Motivos:
 A alternativa (manter H1 como central e relatar o nulo) continua válida e usa o
 mesmo material. Ela só muda a ordem dos slides.
 
-## 4. Metodologia: o modelo da banca 1 vira a equação estimada
+## 4. Metodologia econométrica e hipóteses de identificação
 
-Um slide resolve o bloco de metodologia e o de hipóteses de identificação:
+> **Definição do autor (26/10/2026):** o bloco "Metodologia" da banca é a
+> **metodologia econométrica**: estimadores, unidade, amostra, inferência e
+> hipóteses de identificação. A ponte entre o modelo teórico e a equação
+> estimada fica no fim do bloco de hipótese (um slide), e as equações do
+> modelo vão para o apêndice (ver
+> [banca final](../banca_final/01_diagrama_teoria_mudanca.md)).
+
+### 4.1 Um estimador por hipótese
+
+| Hipótese | Estimador | Unidade e amostra | Especificação principal | Inferência |
+|---|---|---|---|---|
+| H1 (preenchimento) | RDD *sharp* local linear nos cortes 0,300 e 0,400 do IVS 2010 oficial | célula aberta (A3); município (N); ciclos 1–3 | kernel triangular, h = 0,050, uma reta de cada lado por ciclo × corte e salto comum (cortes e ciclos empilhados); efeitos fixos de curso × ciclo e de tipo de vaga | CR1 por município; IC honesto (Armstrong–Kolesár) como sensibilidade; Holm nas primárias e BKY nas secundárias |
+| H2 e H3 (escolha e incentivo limitado) | logit condicional (McFadden) da 1ª opção do candidato entre as células do conjunto de escolha | candidato × célula do mesmo curso e ciclo, ciclos 1–3, origem ligada ao CNES (G1) | bolsa linear em R$ mil; IVS em spline com nós em 0,300 e 0,400; distância origem–vaga, mesma UF, mesma região, mesmo município, porte, capital, vaga imediata | sanduíche com cluster por conjunto de escolha; H3 como combinação linear com a covariância conjunta (protocolo 52b) |
+| H4 (capacidade líquida) | estudo de evento escalonado (Callaway–Sant'Anna) no médico; comparação local na nota de corte (P6 e 57h parte B) | médico × mês, ciclos 1–2; candidato perto da nota de corte | controles ainda não tratados, base g − 1; efeito fixo de célula na comparação local | bootstrap multiplicador por médico; permutação dentro da célula; Rambachan–Roth para violações de tendência |
+
+### 4.2 Hipóteses de identificação e como foram testadas
+
+| Hipótese | Vale para | Teste ou argumento | Onde |
+|---|---|---|---|
+| regra *sharp*: a faixa é função determinística do IVS | H1, H2, H3 | IVS oficial reproduz a faixa em todos os municípios dos três ciclos | auditoria 16 |
+| sem manipulação da running variable | H1, H2, H3 | IVS medido em 2010, anos antes do programa; teste de densidade | E1 |
+| continuidade dos potenciais no corte | H1 | balanço de covariáveis pré-determinadas; placebos de outcome e de corte | docs 37, 41, 49 |
+| dado o IVS contínuo, só a bolsa salta | H2, H3 | spline com nós nos cortes; placebos de corte; spline cúbico | E9, 57a |
+| independência de alternativas irrelevantes dentro do conjunto | H2, H3 | logit aninhado por região e logit misto como robustez | 57a (M8, M9) |
+| tendências paralelas entre coortes de entrada | H4 | teste conjunto do pré; Rambachan–Roth | 57d, 57h |
+| alocação quase aleatória perto da nota de corte | H4 (P6) | balanço em r; desempate por regra fixa declarado | 57f |
+
+**Ameaça comum aos cortes:** as co-políticas nos mesmos cortes
+([auditoria 18](../../auditorias/18_politicas_nos_mesmos_cortes_ivs.md)).
+Por isso o contraste é sempre chamado de "pacote do corte". Na DiRD, só a parte
+fixa no tempo dessas políticas sai.
+
+### 4.3 Ponte do modelo para a equação (fim do bloco de hipótese)
 
 ```
-Banca 1 (Moehling):  V_rm = Σ_t δ^t [ E(w_m | B_m) / p_m − c_rm ]
-                                  │                 │       │
-Estimado (P1, M1):   U_rm = β·B_m + f(IVS_m) − γ·dist_rm + θ·mesma_UF_rm + λ·X_m + ε_rm
+Modelo (Moehling):  V_rm = Σ_t δ^t [ E(w_m | B_m) / p_m − c_rm ]
+Estimado (M1):      U_rm = β·B_m + f(IVS_m) − γ·dist_rm + θ·mesma_UF_rm + λ·X_m + ε_rm
 ```
 
-- β é a utilidade marginal da bolsa (o 1/p do modelo).
-- γ e θ são o custo geográfico de Redding e Rossi-Hansberg (deslocamento,
-  distância da origem).
-- f(IVS) é uma spline contínua que absorve tudo o que varia suave com a
-  vulnerabilidade: custo laboral (Choné e Ma), amenidades e preços.
-- ε tipo valor extremo leva ao logit condicional, e a agregação de Burdett,
-  Shi e Wright leva de π a Pr(Y = 1).
-
-**Hipótese de identificação:** dado o IVS contínuo, só a bolsa salta em 0,300 e
-0,400. A mesma hipótese sustenta a RDD de H1. Os testes que a apoiam já
-existem:
-- regra sharp, 100% reproduzida;
-- densidade sem manipulação (E1);
-- balanço das covariáveis;
-- placebos de corte (E9).
-
-**Ameaça principal:** as co-políticas nos mesmos cortes
-([auditoria 18](../../auditorias/18_politicas_nos_mesmos_cortes_ivs.md)). Por
-isso o contraste é sempre chamado de "pacote do corte".
+- β é a utilidade marginal da bolsa, o 1/p do modelo.
+- γ e θ são o custo geográfico de Redding e Rossi-Hansberg.
+- f(IVS) absorve o que varia suave com a vulnerabilidade: custo laboral
+  (Choné e Ma), amenidades e preços.
+- ε tipo valor extremo dá o logit condicional. A agregação de Burdett, Shi e
+  Wright leva de π a Pr(Y = 1).
 
 ## 5. Resultados: o que mostrar e em que ordem
 
@@ -130,7 +148,7 @@ isso o contraste é sempre chamado de "pacote do corte".
 
 | # | Tarefa | Como | Regra |
 |---|---|---|---|
-| 1 | **H3 formal: comparação de magnitudes no M1.** Testar se o efeito de toda a amplitude da bolsa (10·β) é menor que o de a vaga ficar na UF de origem (θ), e expressar a amplitude da bolsa em km equivalentes, com IC | adendo datado ao protocolo 52, congelado **antes** de calcular; o script lê a matriz de covariância do M1 já estimado, sem reestimar nada | pós-resultado, rotulado; a matriz de covariância precisa estar gravada ou ser regravada pelo script 25 |
+| 1 | **H3 formal: comparação de magnitudes no M1.** Testar se o efeito de toda a amplitude da bolsa (10·β) é menor que o de a vaga ficar na UF de origem (θ), e expressar a amplitude da bolsa em km equivalentes, com IC | protocolo [52b](../../06_execucao/52b_protocolo_P1h_magnitudes.md), congelado em 26/10/2026 antes de calcular; o script 25c reestima o M1 só para obter a covariância conjunta, com portão de reprodução contra o CSV do P1 | pós-resultado, rotulado; auditoria independente antes de entrar em slide |
 | 2 | Figura do item 3 da seção 5 e tabela de descritivas | `scripts/apresentacao/gerar_figuras_banca2.py`, lendo de `output/` | número do slide sai de `output/` e é conferido por teste |
 | 3 | Atualizar a figura da cadeia com P1, P4 e P6 | mesmo script | idem |
 | 4 | Reescrever `01_roteiro_narrativo.md` e `02_conteudo_slides.md` da banca 2 no arco das seções 3–5 | depois da decisão do autor | o deck é derivado; divergência é erro do deck |
@@ -170,3 +188,12 @@ blocos 57a–57h e a síntese 57 (scripts 33–35). Para não haver retrabalho:
 | Hipótese central | H3 (incentivo limitado) com H2 e H1 na cadeia; ou H1 com o nulo | H3 |
 | Rodar o teste formal de H3 (6.1, item 1) | sim, como adendo datado ao protocolo 52; não, e mostrar só os coeficientes | sim |
 | Quem apresenta em 28/10 e quem em 04/11 | depende da escala da banca | — |
+
+## 9. Registro de decisões
+
+| Data | Decisão | Quem |
+|---|---|---|
+| 26/10/2026 | o bloco "Metodologia" é a metodologia econométrica (§4) | autor |
+| 26/10/2026 | fazer o necessário para deixar a entrega pronta; com isso, roda o teste formal de H3 (protocolo 52b) e o arco segue a recomendação da §3, com H1 apresentada como teste da cadeia | autor delegou; a hipótese central continua revisável por ele |
+| 26/10/2026 | diagrama causal e equações no apêndice ficam para a banca final ([`banca_final/`](../banca_final/README.md)) | autor |
+| 26/10/2026 | o Vinicius faz os dois slides que usam os resultados do modelo; o conteúdo daqui serve de fonte para eles | grupo |

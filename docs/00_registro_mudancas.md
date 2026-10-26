@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Protocolo 52b (P1h: peso da bolsa contra o custo do lugar)
+
+Motivo: teste formal da H3 do plano da banca 2, congelado antes de calcular.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/52b_protocolo_P1h_magnitudes.md`](06_execucao/52b_protocolo_P1h_magnitudes.md) | protocolo pós-resultado do P1h: D_UF = θ_UF − 10·β (primária), km equivalentes à bolsa, sensibilidades |
+
+---
+
 ## 26/10/2026 — Plano da entrega empírica da banca 2
 
 Motivo: revisão, a pedido do autor, do que falta para a banca 2 (28/10 e 04/11) à luz do deck atual do grupo e da síntese 57.
