@@ -994,7 +994,7 @@ e grava em `output/apresentacao_banca2/`:
 | `deck_banca2.pptx` | **registro** desde 26/10/2026 (só o curto é usado; doc 06): na ordem do doc 02, prévios do grupo com as correções, parte empírica, Q&A e apêndice; só é refeito com `--completo` |
 | `manifesto_deck_banca2.json` | entradas (deck do grupo, doc 02, registro, figuras) e saídas com SHA-256; ordem dos slides; classificação de cada slide do grupo; correções aplicadas |
 | `qa_render/` | imagens de conferência dos slides novos, do corpo e do apêndice (LibreOffice, com a Montserrat instalada), e `grade_empirica.png`, a grade de miniaturas da parte empírica |
-| `deck_banca2_curto.pptx` e `.pdf` | o deck usado (modo padrão do gerador), na ordem do doc 04 e na estrutura obrigatória do doc 06: Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez, Discussão; no máximo 30 palavras visíveis por slide; rodapé com as oito seções; o PDF é renderizado pelo LibreOffice |
+| `deck_banca2_curto.pptx` e `.pdf` | o deck usado (modo padrão do gerador), na ordem do doc 04 e na estrutura obrigatória do doc 06: Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez, Discussão; no máximo 14 slides (decisão do autor de 26/10/2026) e 30 palavras visíveis por slide; rodapé com as oito seções; o PDF é renderizado pelo LibreOffice. Desde a redução a 14 slides, o curto usa só as figuras `G1`, `G13`, `G22`, `G26` e as do adendo 48b (`HI_scatter_imediatas.png`, `HI_principal.png`); as demais figuras do curto (`G19`–`G21`, `G23`–`G25`, `P1h_magnitudes.png`, `h2_escolha.png`) continuam geradas e registradas, mas não entram no deck |
 | `manifesto_deck_banca2_curto.json` | entradas e saídas do deck curto com SHA-256, a ordem dos slides, a seção e as palavras visíveis de cada um |
 | `qa_render/curto_slideNN.png` e `qa_render/grade_curto.png` | uma imagem por slide do deck curto (do PDF) e a grade de miniaturas |
 
@@ -1025,9 +1025,10 @@ estável, e duas execuções dão o mesmo SHA-256.
    a conferência desses está na auditoria 18 e no doc 20 da seção 03.
 5. **Figura do failure mode.** Congelada (ver `G8`); não entra no deck.
 6. **H1 principal do adendo 48b.** As saídas `HI_*` (script do adendo, doc
-   57n) ainda não existem: o slide principal da H1 no curto está marcado
-   "aguardando 48b", e o scatter da análise descritiva usa todas as células
-   abertas até chegar a figura só com células de vaga imediata.
+   57n) existem, mas ainda estão em auditoria (auditoria 38): no curto, a
+   cautela do slide de resultados e as linhas de fontes dizem "em auditoria",
+   e os códigos `HI*` levam "EM AUDITORIA" no campo `auditoria`. O scatter da
+   análise descritiva já é o só com células de vaga imediata.
 7. **Doc 57m auditado.** Os códigos `GF_*` levam a auditoria 37 (aprovado com
    correções de texto) na descrição e no campo `auditoria`.
 8. **Auditoria 36.** Os códigos `A36_*` são o diagnóstico pós-resultado da
@@ -1036,6 +1037,9 @@ estável, e duas execuções dão o mesmo SHA-256.
    saídas padronizadas, a fonte do slide muda. A explicação pelo cadastro
    reserva do ciclo 2 saiu do deck curto; os códigos `DQ_SOCR_*` continuam no
    registro só porque o deck completo (registro) os cita.
+9. **H3 no município (protocolo 60, parte B; doc 57k; `OL_*`).** Ainda em
+   auditoria e sem códigos no registro: no curto entra só como frase, sem
+   número na tela nem nas notas.
 
 ## 7. Reprodução
 

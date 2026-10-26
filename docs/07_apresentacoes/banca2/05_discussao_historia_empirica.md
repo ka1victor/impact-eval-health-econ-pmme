@@ -51,6 +51,7 @@
 | 26/10/2026 | explicação da queda em 0,300 passo a passo, em Robustez: antes e depois do controle; a estimativa no corte; as vagas do lado de cima eram diferentes; o que dá para afirmar. Na Discussão, uma linha simples |
 | 26/10/2026 | scatter IVS × preenchimento com as retas, em Análise descritiva; H1 por ciclo, em Robustez |
 | 26/10/2026 | **H1 principal = adendo 48b** (só vagas imediatas: HI-1 e HI-2 por corte, com Holm); medidas antigas viram especificações secundárias |
+| 26/10/2026 | **no máximo 14 slides** ("esses últimos decks tão muito grandes. pode deixar mais curtos mesmo, só com os principais slides, idealmente <15 slides"); o passo a passo da queda em 0,300 e o TOST em slide próprio saem, e o essencial vai para as notas ([06](06_estrutura_obrigatoria_versao_final.md), §2) |
 
 ## 2. Perguntas e respostas
 
@@ -382,10 +383,10 @@ apêndice no PDF. O que sai do deck continua nos docs. Em execução.
 | Item | Estado |
 |---|---|
 | Protocolo 60, parte B (oferta local e deslocamento) | estimando; depois, auditoria |
-| Deck curto na estrutura obrigatória (doc 06), H1 central, numeração nova, até 30 palavras por slide | feito em 26/10/2026; falta a H1 principal do adendo 48b (slide "aguardando 48b") e a troca do scatter pela versão só com vagas imediatas |
+| Deck curto na estrutura obrigatória (doc 06), H1 central, numeração nova, até 30 palavras por slide | feito em 26/10/2026, com a H1 principal do adendo 48b (em auditoria) e o scatter só com vagas imediatas; reduzido a 14 slides no mesmo dia |
 | Slides da história (seção 3) | depois da parte B auditada |
 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta; precisa de protocolo próprio |
-| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | auditado (auditoria 33, aprovado com correções de texto); no curto, passo a passo em quatro slides de Robustez |
+| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | auditado (auditoria 33, aprovado com correções de texto); no curto de 14 slides, o slide das capitais em Robustez e uma frase por explicação na Discussão (o passo a passo foi para as notas) |
 | Robustez das explicações da queda (seção 2.11) | a fazer; adendo datado ao protocolo 61 antes de rodar |
 | Slides de especificação por estimador e da cronologia dos ciclos | feitos: fichas no completo; no curto, até 4 linhas com a equação em palavras no centro e o resto nas notas |
 | Subida dentro das faixas (protocolo 62, doc 57m) | auditada (auditoria 37, aprovado com correções de texto) |
@@ -417,8 +418,8 @@ parada antes dos retratos WIP.
 
 | # | Item | Estado | Próximo passo |
 |---|---|---|---|
-| 11 | Nível 2 da H3 (oferta local, doc 57k) fora do deck curto | falta | gráfico de B1–B5 com B3 em destaque na Robustez da H3; frase na Discussão (seção 2.13) |
-| 12 | Deixar explícito no slide da H3 que o +6,6 h é do próprio médico, não do município | falta | ajustar título ou "Como ler" |
+| 11 | Nível 2 da H3 (oferta local, doc 57k) fora do deck curto | **frase feita** (26/10/2026): linha "H3 · município" no slide de planos B da Discussão, sem número na tela (57k em auditoria) | o gráfico de B1–B5 com B3 em destaque não cabe no teto de 14 slides; decidir com o autor depois da auditoria do 57k |
+| 12 | Deixar explícito no slide da H3 que o +6,6 h é do próprio médico, não do município | **feito** (26/10/2026): "+6,6 h/sem do próprio médico" no slide de planos B | — |
 
 **Documentos com texto errado a corrigir**
 
@@ -428,13 +429,13 @@ parada antes dos retratos WIP.
 | 14 | doc 06, seção 3 | — | já corrigido pelo agente do deck (H1 central) |
 | 15 | doc 04, §3 e §8 | recomendação antiga "H3" (hoje H2) como central | mantida como registro da proposta; a decisão do autor (H1) entra no §9 do doc 04 |
 
-**Deck curto (WIP no branch; rascunho de 26 slides)**
+**Deck curto (rascunho de 26 slides reduzido a 14 em 26/10/2026)**
 
 | # | Item | Estado |
 |---|---|---|
-| 16 | Revisar o WIP inteiro: ~30 palavras por slide, H1 agrupada, H2/H3 renumeradas, efeitos por corte | rascunho existe; não revisado |
-| 17 | Slide 11 ("H2 e H3: como estimamos") pouco informativo; slides 2 e 25–26 ainda com espaço vazio | a enxugar ou fundir |
-| 18 | Incluir a seção 2.12 (tipo de vaga) em uma frase na Identificação ou Robustez da H1 | falta |
+| 16 | Revisar o WIP inteiro: ~30 palavras por slide, H1 agrupada, H2/H3 renumeradas, efeitos por corte | **feito** (26/10/2026): 14 slides, no máximo 30 palavras cada, H1 agrupada, H2/H3 em cinza, efeitos por corte; PDF renderizado e conferido slide a slide |
+| 17 | Slide 11 ("H2 e H3: como estimamos") pouco informativo; slides 2 e 25–26 ainda com espaço vazio | **feito** (26/10/2026): o slide 11 virou duas linhas cinzentas na especificação da H1; capa e secundárias fundidas; as colunas de texto ao lado das figuras e os slides de texto ocupam a área |
+| 18 | Incluir a seção 2.12 (tipo de vaga) em uma frase na Identificação ou Robustez da H1 | **feito** (26/10/2026): linha "Tipo de vaga (MS) exógeno · não testado" na tabela da Identificação, com o detalhe nas notas |
 | 19 | Quando sair a auditoria 38 e o 48c, trocar "em auditoria" e atualizar o slide de capitais com `HC_*` | depende de 1 e 2 |
 
 **Infraestrutura**
