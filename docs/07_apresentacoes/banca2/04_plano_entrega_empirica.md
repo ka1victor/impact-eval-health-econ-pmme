@@ -148,7 +148,7 @@ Estimado (M1):      U_rm = β·B_m + f(IVS_m) − γ·dist_rm + θ·mesma_UF_rm 
 
 | # | Tarefa | Como | Regra |
 |---|---|---|---|
-| 1 | **H3 formal: comparação de magnitudes no M1.** Testar se o efeito de toda a amplitude da bolsa (10·β) é menor que o de a vaga ficar na UF de origem (θ), e expressar a amplitude da bolsa em km equivalentes, com IC | protocolo [52b](../../06_execucao/52b_protocolo_P1h_magnitudes.md), congelado em 26/10/2026 antes de calcular; o script 25c reestima o M1 só para obter a covariância conjunta, com portão de reprodução contra o CSV do P1 | pós-resultado, rotulado; auditoria independente antes de entrar em slide |
+| 1 | **H3 formal: comparação de magnitudes no M1.** Testar se o efeito de toda a amplitude da bolsa (10·β) é menor que o de a vaga ficar na UF de origem (θ), e expressar a amplitude da bolsa em km equivalentes, com IC | protocolo [52b](../../06_execucao/52b_protocolo_P1h_magnitudes.md), congelado em 26/10/2026 antes de calcular; o script 25c reestima o M1 só para obter a covariância conjunta, com portão de reprodução contra o CSV do P1 | pós-resultado, rotulado; **feito**: [57i](../../06_execucao/57i_resultados_P1h_magnitudes.md), auditado ([auditoria 31](../../auditorias/31_auditoria_P1h_magnitudes.md), aprovado com correções de rótulo) |
 | 2 | Figura do item 3 da seção 5 e tabela de descritivas | `scripts/apresentacao/gerar_figuras_banca2.py`, lendo de `output/` | número do slide sai de `output/` e é conferido por teste |
 | 3 | Atualizar a figura da cadeia com P1, P4 e P6 | mesmo script | idem |
 | 4 | Reescrever `01_roteiro_narrativo.md` e `02_conteudo_slides.md` da banca 2 no arco das seções 3–5 | depois da decisão do autor | o deck é derivado; divergência é erro do deck |
