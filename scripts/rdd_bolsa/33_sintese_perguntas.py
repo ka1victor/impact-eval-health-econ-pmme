@@ -108,7 +108,7 @@ ENTRADAS = [
     (RE, "realocação (protocolo 58): principal, Holm e MDE"),
     (RR, "realocação: leitura pré-registrada"),
     (CENR, "T1.6: status da validação de base (só o status; nenhum número simulado é copiado)"),
-    (CENV, "T1.6: linhas da validação de base (só o veredito por linha)"),
+    (CENV, "T1.6: linhas da validação de base (só o veredito por linha; B0 igual ao G2 principal)"),
 ]
 
 ESTATUTOS_ESPERADOS = {P1R: "PROTOCOLO_52_POS_RESULTADO", P4R: "EXPLORATORIO_P4", P5R: "PROTOCOLO_55_DESCRITIVO",
@@ -574,16 +574,15 @@ def checar_afirmacoes(v: dict, fh: list[dict]) -> dict:
     for r_, lim in (("R_P1", LIMIAR_R_P1 * 100), ("R_P2", LIMIAR_R_P2)):
         exigir(documento(RR)["leitura"][r_]["classe"] == "INCONCLUSIVO", f"{r_}: leitura deixou de ser inconclusiva")
         exigir(_contem_zero(v, f"{r_}_lo", f"{r_}_hi") and v[f"{r_}_mde"]["v"] > lim, f"{r_}: regra do inconclusivo")
-    # T1.6: falha de validação.
+    # T1.6: revalidação de 25/10/2026 (adendo §8 do protocolo 52) passou; os cenários são simulação e ficam só no doc 57b.
+    # Nenhum número simulado é copiado para esta síntese empírica.
     cen = documento(CENR)
-    exigir(cen.get("status") == "FALHA_VALIDACAO_BASE" and cen["validacao_base"]["passou"] is False,
-           "T1.6: status diferente de FALHA_VALIDACAO_BASE")
+    exigir(cen["validacao_base"]["passou"] is True and cen.get("natureza_dos_dados") == "CENARIO_CONTRAFACTUAL",
+           "T1.6: validação de base não passou ou natureza diferente de CENARIO_CONTRAFACTUAL")
     cv = tabela(CENV)
-    falhas = cv[cv["passa"] != "True"]
-    exigir(len(falhas) >= 1, "T1.6: nenhuma linha reprovada na validação")
-    a["t16_falhas"] = [f"ciclo {r['ciclo']}, {r['faixa'].lower()}" for _, r in falhas.iterrows()]
+    exigir((cv["passa"] == "True").all(), "T1.6: linha reprovada na validação")
     a["t16_linhas"] = int(len(cv))
-    a["t16_status"] = cen["status"]
+    a["t16_status"] = "VALIDACAO_BASE_PASSOU"
     return a
 
 
@@ -668,7 +667,7 @@ FORCA_ATT = "ATT sob tendências paralelas com pré falhando"
 FORCA_EXPL = "exploratório"
 FORCA_DESC = "descritivo"
 FORCA_INC = "inconclusivo"
-FORCA_FALHA = "falha de validação"
+FORCA_FALHA = "cenário (simulação)"   # nome histórico da constante; o T1.6 passou a validação em 25/10/2026
 
 # Contrastes (categorias fixas).
 C_MARG = "incentivo marginal"
@@ -723,7 +722,7 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
         f"chances por +R$ 5 mil {n(v['m1_rc'], 2, False)} {ic(v['m1_rc_lo'], v['m1_rc_hi'], 2, False)}); o sinal que "
         f"resiste a vários testes continua só no ciclo 2 (E9: {n(v['e9c2_rc'], 2, False)} "
         f"{ic(v['e9c2_rc_lo'], v['e9c2_rc_hi'], 2, False)}), e escolha entre vagas não é preenchimento. A realocação "
-        "entre concorrentes é inconclusiva, e os cenários do T1.6 não existem, porque a validação de base falhou.\n\n"
+        "entre concorrentes é inconclusiva, os cenários do T1.6 são simulação (validação de base aprovada na revalidação) e ficam só no documento dos cenários, sem entrar nesta síntese empírica.\n\n"
         "Produção, horas e vínculos depois da chegada do especialista (P3 D2, P3x e P4) aparecem como associações "
         "sob tendências paralelas, com o pré falhando em parte das linhas; nos cortes (P3 D1), nada se distingue de "
         "zero. A abertura de vagas (P5) é descrita, não explicada: o IVS contínuo não se distingue de zero no pedido "
@@ -816,8 +815,10 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
        "simulação com o M1 e o mecanismo de alocação do G2",
        "candidato × célula, 1ª chamada dos ciclos 1–3",
        C_PAC,
-       f"validação de base reprovada ({'; '.join(af['t16_falhas'])}); cenários não calculados",
-       FORCA_FALHA, "[57b](57b_cenarios_P1_bolsa.md); sem auditoria própria (a execução parou na validação)")
+       "validação de base aprovada em todas as linhas (revalidação com o desempate do adendo; a primeira tentativa "
+       "falhou e está registrada no documento dos cenários); os números dos cenários são simulação e não são "
+       "copiados para esta síntese",
+       FORCA_FALHA, "[57b](57b_cenarios_P1_bolsa.md); sem auditoria própria")
 
     cab = ("| Pergunta | Estimando | Desenho | Unidade | Contraste identificado | Resultado principal [IC 95%] | "
            "Força da evidência | Doc e auditoria |\n|---|---|---|---|---|---|---|---|")
@@ -828,7 +829,7 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
         "## 2. Tabela por pergunta\n\n"
         "**Como ler.** \"Contraste identificado\" diz o que a comparação mede no melhor caso. \"Força da evidência\" "
         "usa seis categorias fixas: causal-limpo; ATT sob tendências paralelas com pré falhando; exploratório; "
-        "descritivo; inconclusivo; falha de validação. Nenhuma linha está hoje na primeira. \"Inconclusivo\" quer "
+        "descritivo; inconclusivo; cenário (simulação). Nenhuma linha está hoje na primeira. \"Inconclusivo\" quer "
         "dizer que o desenho identifica o contraste, mas o IC contém zero: não é evidência de ausência.\n\n"
         + bloco("perguntas", cab + "\n" + corpo))
 
@@ -934,10 +935,11 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
             f"- R-P2, candidatos de 1ª opção: {n(v['R_P2_c5'], 3)} {ic(v['R_P2_lo'], v['R_P2_hi'], 3)}; MDE "
             f"{n(v['R_P2_mde'], 3, False)}, acima do limiar do protocolo: inconclusivo.", "",
             "**T1.6 (cenários)**", "",
-            f"- Status `{af['t16_status']}`: a reconstrução sem mudança de bolsa não reproduziu as vagas publicadas "
-            f"dentro da tolerância em todas as réplicas ({'; '.join(af['t16_falhas'])}). Os cenários não foram "
-            "calculados; não há resposta simulada à pergunta do total de vagas.",
-            "- Mesmo validado, o modelo de escolha não responderia à margem extensiva: no logit condicional só "
+            "- A primeira validação de base falhou (desempate por sorteio); depois do adendo datado com o desempate pela "
+            "classificação publicada nos pares observados, a reconstrução sem mudança de bolsa reproduziu as vagas "
+            "publicadas dentro da tolerância em todas as réplicas. Os cenários foram simulados e estão no documento "
+            "dos cenários, rotulados como simulação; nenhum número simulado entra nesta síntese empírica.",
+            "- O modelo de escolha não responderia à margem extensiva: no logit condicional só "
             "diferenças de utilidade entre vagas contam, então somar o mesmo valor à bolsa de todas as vagas não "
             "muda nenhuma escolha com o grupo de candidatos fixo. Um aumento uniforme só poderia mover quem entra "
             "no programa, e isso o modelo não vê."]
@@ -1006,10 +1008,10 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
         "horizonte longo; desfechos de saúde por residência depois da maturidade do ciclo 3.",
         rotulo_forca="não medido")
     elo("Custos e bem-estar", [FORCA_FALHA],
-        "Nada foi estimado. O custo por candidato ou vaga adicional dependia dos cenários do T1.6, que não foram "
-        "calculados porque a validação de base falhou.",
-        "decisão do autor sobre a revalidação do T1.6; folha de pagamento (pedido externo); gasto do bolso não tem fonte "
-        "municipal.", rotulo_forca="não estimado (o T1.6, que daria o custo, é falha de validação)")
+        "Nada foi estimado de forma empírica. O custo da bolsa por vaga preenchida no T1.6 é aritmética simples sobre "
+        "uma simulação, e não é custo observado.",
+        "folha de pagamento (pedido externo); gasto do bolso não tem fonte municipal.",
+        rotulo_forca="não estimado (o custo do T1.6 é aritmética sobre simulação)")
     elo("Equidade e spillovers", [FORCA_ATT, FORCA_INC, FORCA_DESC],
         f"Nos outros municípios da região de saúde, a produção K1 difere {n(v['x125_att'], 2)} "
         f"{ic(v['x125_lo'], v['x125_hi'], 2)} depois da chegada, com o pré falhando (p {p(v['x125_pre'])}): não separa "
@@ -1028,13 +1030,18 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
     # 6. Lacunas (texto fixo, sem número de resultado).
     partes.append("""## 6. Lacunas e próximos passos
 
-Nenhum item abaixo foi executado. Custo e valor são juízos qualitativos desta síntese, para o autor decidir.
+Nenhum item abaixo tinha sido executado em 24/10/2026. Custo e valor são juízos qualitativos desta síntese, para o autor decidir.
+
+**Atualização de 25/10/2026.** Os dois itens do P3 e do P4 (sensibilidade de Rambachan e Roth e outro grupo de
+comparação) rodaram sob o [protocolo 59](59_protocolo_P3P4_sensibilidade_comparacao.md), congelado antes de
+estimar; resultados no [doc 57h](57h_resultados_P3P4_sensibilidade.md). As tabelas e o Holm desta síntese não
+mudam.
 
 | Item | O que resolveria | Custo | Valor | Quem decide |
 |---|---|---|---|---|
 | Pedido do universo de inscritos e do conjunto de escolha efetivo (pedido 2 em [`pedidos_dados/`](../pedidos_dados/README.md)) | a margem extensiva: se a bolsa traz candidatos novos ou só reordena quem já se candidatou; é a única forma de responder à atração no sentido de Dal Bó, Finan e Rossi | baixo para o projeto (ofício já redigido), alto em prazo (depende do Ministério) | alto: a pergunta central fica sem resposta sem ele | autor (envio do pedido) |
 | Ciclo 3 em 202703 (seis meses só com a competência publicada, completa e madura) | replicação fora da amostra do sinal de escolha do ciclo 2; oferta líquida município–mês; mais células para o preenchimento | baixo (plano prospectivo congelado) | alto: é o único teste novo sem pedido externo | calendário (maturidade dos dados) |
-| Revalidação do T1.6 (uma das quatro opções do [doc 57b](57b_cenarios_P1_bolsa.md), §4, por adendo datado que registre a falha já vista) | o cenário de quantas vagas a mais com +R$ 5 mil, com vagas e candidatos fixos | médio (nova execução e auditoria) | médio: mesmo validado, o modelo não vê a margem extensiva e herda o IC largo do M1 | autor (pendente) |
+| Auditoria independente dos cenários do T1.6 (revalidados em 25/10/2026, [doc 57b](57b_cenarios_P1_bolsa.md)) | se os cenários, agora com a validação de base aprovada, foram calculados como o protocolo diz | baixo a médio | médio: o modelo só redistribui entre células (candidatos e vagas fixos), não vê a margem extensiva e herda o IC largo do M1 | autor (pendente) |
 | P3 e P4 com pré-tendências falhando: sensibilidade de Rambachan e Roth (HonestDiD) | quanto da diferença do pós sobrevive a violações de tendências paralelas do tamanho das vistas no pré (magnitude relativa M̄ ou suavidade) | baixo a médio (pós-resultado, rotulado como sensibilidade) | médio: diz se as associações de horas e produção são frágeis, sem criar identificação | autor (protocolo antes de rodar) |
 | P3 e P4: outro grupo de comparação | células pedidas e não priorizadas (P5) ou candidatos não alocados por pouco (P6) como comparação da chegada e da trajetória; coortes do ciclo 3 como ainda não tratadas depois de 202703 | médio (protocolo novo, congelado antes de abrir) | médio a alto: a comparação pela priorização ou pela nota é menos dependente da escolha do candidato | autor (protocolo antes de rodar) |
 | Folha de pagamento mensal (pedido 3) | se o anunciado é o recebido; presença efetiva em vez de vínculo cadastrado | baixo para o projeto, alto em prazo | médio | autor (envio do pedido) |

@@ -1,0 +1,230 @@
+{
+  "etapa": "H_sensibilidade_rambachan_roth",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_59_POS_RESULTADO",
+  "rotulo": "SENSIBILIDADE",
+  "gerador": "scripts/rdd_bolsa/34_sensibilidade_honestdid.py",
+  "data_execucao": "2026-10-25",
+  "protocolo": {
+    "texto": "docs/06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md",
+    "sha256_texto": "5a2ceafd84512cc7b5e91dec295705269c99221767030bacdfbe33e440c99cb5",
+    "secao": "§2"
+  },
+  "metodo": {
+    "RM": "teste condicional ARP (Andrews, Roth e Pakes, 2023), união dos poliedros, envelope",
+    "RM_hibrido": "híbrido condicional–LF de ARP, κ = α/10, 1.000 simulações (adendo de 25/10/2026; linhas principais e CA)",
+    "SD": "FLCI (Armstrong e Kolesár, 2018)",
+    "alpha": 0.05,
+    "grade_RM": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "grade_SD_em_u": [
+      0.0,
+      0.05,
+      0.1,
+      0.25,
+      0.5,
+      1.0
+    ],
+    "ruptura": {
+      "RM": [
+        0,
+        4.0,
+        0.01
+      ],
+      "SD_em_u": [
+        0,
+        4.0,
+        0.01
+      ]
+    },
+    "covariancia": "analítica das funções de influência (P3: cluster município; P4: médico; CA: script 35)",
+    "biblioteca": "scripts/rdd_bolsa/honestdid_lib.py",
+    "referencia": "Rambachan, A.; Roth, J. (2023). A more credible approach to parallel trends. Review of Economic Studies 90(5)."
+  },
+  "conferencias": {
+    "P3": {
+      "H-P3-K_esp": {
+        "dif_max_theta": 1.7763568394002505e-15,
+        "dif_max_ep_analitico": 7.105427357601002e-15,
+        "n_clusters": 398
+      },
+      "H-P3-K2r": {
+        "dif_max_theta": 1.1102230246251565e-16,
+        "dif_max_ep_analitico": 1.1102230246251565e-16,
+        "n_clusters": 598
+      },
+      "H-P3-K2r_tot": {
+        "dif_max_theta": 4.440892098500626e-16,
+        "dif_max_ep_analitico": 6.661338147750939e-16,
+        "n_clusters": 598
+      },
+      "H-P3-K1_reg": {
+        "dif_max_theta": 7.105427357601002e-15,
+        "dif_max_ep_analitico": 7.105427357601002e-15,
+        "n_clusters": 598
+      },
+      "H-P3-K2_reg": {
+        "dif_max_theta": 2.220446049250313e-16,
+        "dif_max_ep_analitico": 1.1102230246251565e-16,
+        "n_clusters": 598
+      }
+    },
+    "P4": {
+      "H-P4-horas_totais": {
+        "dif_max_theta": 4.941762554722118e-10,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_sus": {
+        "dif_max_theta": 4.813935916558876e-10,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_nao_sus": {
+        "dif_max_theta": 4.486552795945897e-11,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_amb": {
+        "dif_max_theta": 4.735722924920083e-10,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_hosp": {
+        "dif_max_theta": 4.810414289124765e-10,
+        "n_medicos": 1865
+      },
+      "H-P4-n_vinculos": {
+        "dif_max_theta": 3.891642563758069e-11,
+        "n_medicos": 1865
+      },
+      "H-P4-n_estabelecimentos": {
+        "dif_max_theta": 3.994204966772941e-11,
+        "n_medicos": 1865
+      },
+      "H-P4-n_municipios": {
+        "dif_max_theta": 4.93968199677397e-11,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_estab_posto": {
+        "dif_max_theta": 4.395035446691509e-09,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_mun_posto": {
+        "dif_max_theta": 3.832354877886246e-09,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_fora_mun_posto": {
+        "dif_max_theta": 3.9447867195008257e-10,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_publico": {
+        "dif_max_theta": 2.9905677934038977e-10,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_privado_com_fins": {
+        "dif_max_theta": 4.875488901490144e-11,
+        "n_medicos": 1865
+      },
+      "H-P4-horas_privado_sem_fins": {
+        "dif_max_theta": 4.5889003708055043e-10,
+        "n_medicos": 1865
+      }
+    }
+  },
+  "linhas": 23,
+  "saidas": {
+    "output/rdd_bolsa/H_estimativas.csv": "6ffd2298f2b2a738ce9aebe8b4d56ca3204e794ecc570de17c856c69e384bf25",
+    "output/rdd_bolsa/H_coeficientes.csv": "8a9c035154ecf30a8aabfcac59c983213c853333041a5a28d49371f7154a29da"
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/H_figuras/H_rm.png",
+      "sha256": "b15faee9999654b86ed8a75efd88fefbac5062ce8100370d0f93b8ff539e401d"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/H_figuras/H_sd.png",
+      "sha256": "3e19fcd4a1f36f124f651a9965a97a4dd4b14fab29f7d9f64bb666a1d3498f80"
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md",
+      "sha256": "5a2ceafd84512cc7b5e91dec295705269c99221767030bacdfbe33e440c99cb5",
+      "papel": "protocolo congelado"
+    },
+    {
+      "caminho": "output/rdd_bolsa/K_X_estudo_evento.csv",
+      "sha256": "2944844b85e56bbe6c806b5b2ea085d6aa48c92e1aaaad885c1718cbfadbe5ce",
+      "papel": "conferência dos θ(e) do P3 (doc 57c)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P4_estimativas.csv",
+      "sha256": "93f3e35bb21baced3051a5c359ab469da12c8385251cc68158a271d85f4ea741",
+      "papel": "conferência dos θ(e) do P4 (doc 57d)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/CA_estimativas.csv",
+      "sha256": "f962551b196129cfaa98dd6fa33f0f259d0e8aa77f8526c663eca8e0d3ce8173",
+      "papel": "primárias da parte B"
+    },
+    {
+      "caminho": "output/rdd_bolsa/CA_estudo_evento.csv",
+      "sha256": "1837cd6356cfb596ad7ef2df2bbb243ce3f16d5de28f5a977c669636012bdb86",
+      "papel": "θ(e) da parte B"
+    },
+    {
+      "caminho": "output/rdd_bolsa/CA_covariancia.csv",
+      "sha256": "3f9559711dfcd0c623a68c839222e3e157dc371ec5c8e61a60ad327ced363981",
+      "papel": "covariância da parte B"
+    },
+    {
+      "caminho": "output/aquisicao/sia_forma_curso/painel_sia_municipio_mes_forma_curso.parquet",
+      "sha256": "370a49fe3ba03c425754d224e4e318a97f465ebf5e1cee2b6f89d61535cbc1e2",
+      "papel": "K_esp (a17)"
+    },
+    {
+      "caminho": "output/aquisicao/sih_residencia/painel_sih_residencia_municipio_mes_grupo.parquet",
+      "sha256": "49cda43c0b350d767b2bba465fec98e8c4566c75ad592602f425754760616b26",
+      "papel": "K2r, K2r_tot (a15)"
+    },
+    {
+      "caminho": "output/aquisicao/sia/painel_sia_municipio_mes_subgrupo_cbo.parquet",
+      "sha256": "2f0c8353deb58eeb95b30a35a7a36bbf752b8ca90b4c26395735ea6450d3eb0e",
+      "papel": "K1_reg (a12)"
+    },
+    {
+      "caminho": "output/aquisicao/sih/painel_sih_municipio_mes_grupo.parquet",
+      "sha256": "3428600a111838d7f730d30b7474b86294f36a28a76576309ab87fc937f0b6b6",
+      "papel": "K2_reg (a13)"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_profissional/painel_vinculo_mes.parquet",
+      "sha256": "1760fbc496da008d574e0c9ea196144e320337f83e3568ba363980b0ca279132",
+      "papel": "P4 (a16)"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "papel": "universo U"
+    }
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-25",
+      "tipo": "adendo",
+      "item": "híbrido condicional–LF (parte A)",
+      "descricao": "o teste condicional puro congelado no §2.4 fica muito conservador quando outro momento está perto de ativo (caso sintético em tests/test_honestdid.py; IC em M̄ = 0 mais largo que em M̄ = 0,25 na primeira linha real). O condicional continua em todas as linhas; o híbrido de ARP (padrão do HonestDiD) é acrescentado nas linhas principais e no CA. Adendo datado no protocolo 59."
+    },
+    {
+      "data": "2026-10-25",
+      "tipo": "esclarecimento",
+      "item": "covariância",
+      "descricao": "Σ analítica das funções de influência; o EP analítico recalculado bate com a coluna ep_analitico do K_X_estudo_evento.csv (diferença ≤ 1e−6) e os θ(e) com o versionado (≤ 1e−8)."
+    }
+  ],
+  "integridade": "não muda estimativa pontual; nenhum dado novo; o arquivo local de IVS não é lido"
+}

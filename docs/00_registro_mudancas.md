@@ -8,6 +8,73 @@
 
 ---
 
+## 26/10/2026 — Auditoria independente do protocolo 59 (P3/P4)
+
+Motivo: auditoria do commit `b71468b` (sensibilidade de Rambachan–Roth e comparação alternativa).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/30_auditoria_P3P4_sensibilidade.md`](auditorias/30_auditoria_P3P4_sensibilidade.md) | ordem do protocolo, recomputação própria (identificados, FLCI, teste LF, P3-CA, Holm), achados e veredito |
+
+---
+
+## 26/10/2026 — Resultados do protocolo 59 (doc 57h)
+
+Motivo: execução do protocolo 59 (parte A: Rambachan–Roth; parte B: P3-CA e P4-CA) e adendo datado no próprio
+protocolo (híbrido condicional–LF de ARP acrescentado ao teste condicional congelado).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57h_resultados_P3P4_sensibilidade.md`](06_execucao/57h_resultados_P3P4_sensibilidade.md) | resultados gerados inteiros pelo script 34 a partir de `output/rdd_bolsa/H_*` e `CA_*` |
+
+### Alterado
+
+| Arquivo | O que mudou |
+|---|---|
+| [`06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md`](06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md) | adendo datado no fim (híbrido; o texto congelado não muda) |
+| [`06_execucao/57_sintese_perguntas_reformuladas.md`](06_execucao/57_sintese_perguntas_reformuladas.md) | §6: nota de atualização apontando para o doc 57h (regerado pelo script 33) |
+| [`06_execucao/38_estado_e_pendencias_rdd_bolsa.md`](06_execucao/38_estado_e_pendencias_rdd_bolsa.md) | estado de 26/10/2026 e linha do protocolo 59 |
+
+Mudanças fora de `docs/`:
+- `scripts/rdd_bolsa/honestdid_lib.py`, `34_sensibilidade_honestdid.py`, `35_comparacao_alternativa_P3P4.py`;
+  saídas `output/rdd_bolsa/H_*` e `CA_*` (`EMPIRICO`);
+- testes `tests/test_honestdid.py` e `tests/test_comparacao_alternativa_P3P4.py`; `run_all.py` (34 e 35 em
+  `--etapa verificar`), `tests/test_pipeline_rdd_bolsa.py`, manifesto A6 regerado; READMEs de `scripts/` e `tests/`.
+
+---
+
+## 25/10/2026 — Protocolo 59: sensibilidade de Rambachan–Roth e comparação alternativa do P3/P4
+
+Motivo: os dois itens do doc 57, §6, sobre o P3 e o P4 com pré-tendências falhando. O protocolo é congelado e
+commitado sozinho, antes de qualquer estimativa nova.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md`](06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md) | protocolo: lista fechada de estudos de evento, restrições Δ^RM e Δ^SD, alvos, FLCI e teste condicional ARP próprios em scipy; P3-CA (chegada contra pares pedidos e não priorizados no ciclo 3) e P4-CA (alocado contra não alocado perto do corte, em diferenças); Holm nas 4 primárias; viabilidade conferida só com desenho |
+
+---
+
+## 25/10/2026 — Auditoria 29: revalidação do T1.6
+
+Motivo: auditoria independente da revalidação do T1.6 (adendo §8 do protocolo 52). Arquivo novo:
+`docs/auditorias/29_auditoria_T16_revalidacao.md`. Nenhum arquivo movido, fundido ou removido.
+
+## 25/10/2026 — T1.6: revalidação com o desempate do adendo §8 (agente E-P1d)
+
+Motivo: o autor escolheu a opção 1 do doc 57b, §4 (desempate pela classificação publicada nos pares observados e
+sorteio só nos pares novos). Nenhum arquivo de documentação criado, movido ou removido; o doc 57b passa a ser gerado
+com a falha de 24/10 preservada como histórico (seção 9). Arquivos novos em `output/cenarios/` (gerados por
+`scripts/rdd_bolsa/25b_cenarios_bolsa.py`, todos `CENARIO_CONTRAFACTUAL`): `P1_cenarios_tabela.csv`,
+`P1_cenarios_replicas.parquet`, `P1_cenarios_fluxos.csv`, `P1_figuras/` e
+`P1_cenarios_validacao_base_falha_2026-10-24.csv` (saída preservada da 1ª validação). O doc 57 (síntese) e o 38
+apontam para o resultado; o doc 57 ganhou a categoria de força "cenário (simulação)" no lugar de "falha de validação".
+
 ## 24/10/2026 — Síntese das perguntas reformuladas (onda 5 do doc 51)
 
 Motivo: síntese de P1, P2 (A3 e N), P3 (D1, D2 e P3x), P4, P5, P6, realocação e T1.6, com Holm e BKY refeitos

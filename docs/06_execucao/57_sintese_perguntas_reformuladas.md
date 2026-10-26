@@ -14,14 +14,14 @@ Todo resultado mede, no máximo, o **pacote do corte** (a bolsa anunciada +R$ 5 
 <!-- S57:resposta_curta:inicio -->
 Nenhuma pergunta tem hoje evidência causal limpa de mudança no resultado medido. Nas cinco famílias de primárias com Holm definidas nos protocolos (40, 47, 48, 52 e 58), nenhuma linha rejeita zero; na família do relato do P6, só as 2 linhas do Y1 rejeitam, e o Y1 é quase mecânico (ser alocado cria o vínculo cadastrado no município da vaga).
 
-**Pergunta central do autor: os R$ 5 mil a mais aumentam a atração ou o preenchimento?** Como pacote do corte, não se detecta aumento em nenhuma das duas margens, e os dados só descartam aumentos grandes em parte. Na célula aberta, com ciclos e cortes empilhados, o salto da probabilidade de preenchimento é −4,9 p.p. [−12,9; +3,2]: o maior aumento compatível com os dados é +3,2 p.p., e o desenho só detectaria com 80% de poder um salto de 11,5 p.p. Por corte, o limite superior é +1,7 p.p. em 0,300 e +11,3 p.p. em 0,400. Na atração, a probabilidade de a célula ter candidato de 1ª opção salta −7,1 p.p. [−19,6; +5,4]. Na escolha entre vagas já abertas, o coeficiente principal do P1 (M1) não se distingue de zero (razão de chances por +R$ 5 mil 1,24 [0,99; 1,55]); o sinal que resiste a vários testes continua só no ciclo 2 (E9: 1,95 [1,48; 2,57]), e escolha entre vagas não é preenchimento. A realocação entre concorrentes é inconclusiva, e os cenários do T1.6 não existem, porque a validação de base falhou.
+**Pergunta central do autor: os R$ 5 mil a mais aumentam a atração ou o preenchimento?** Como pacote do corte, não se detecta aumento em nenhuma das duas margens, e os dados só descartam aumentos grandes em parte. Na célula aberta, com ciclos e cortes empilhados, o salto da probabilidade de preenchimento é −4,9 p.p. [−12,9; +3,2]: o maior aumento compatível com os dados é +3,2 p.p., e o desenho só detectaria com 80% de poder um salto de 11,5 p.p. Por corte, o limite superior é +1,7 p.p. em 0,300 e +11,3 p.p. em 0,400. Na atração, a probabilidade de a célula ter candidato de 1ª opção salta −7,1 p.p. [−19,6; +5,4]. Na escolha entre vagas já abertas, o coeficiente principal do P1 (M1) não se distingue de zero (razão de chances por +R$ 5 mil 1,24 [0,99; 1,55]); o sinal que resiste a vários testes continua só no ciclo 2 (E9: 1,95 [1,48; 2,57]), e escolha entre vagas não é preenchimento. A realocação entre concorrentes é inconclusiva, os cenários do T1.6 são simulação (validação de base aprovada na revalidação) e ficam só no documento dos cenários, sem entrar nesta síntese empírica.
 
 Produção, horas e vínculos depois da chegada do especialista (P3 D2, P3x e P4) aparecem como associações sob tendências paralelas, com o pré falhando em parte das linhas; nos cortes (P3 D1), nada se distingue de zero. A abertura de vagas (P5) é descrita, não explicada: o IVS contínuo não se distingue de zero no pedido nem na priorização.
 <!-- S57:resposta_curta:fim -->
 
 ## 2. Tabela por pergunta
 
-**Como ler.** "Contraste identificado" diz o que a comparação mede no melhor caso. "Força da evidência" usa seis categorias fixas: causal-limpo; ATT sob tendências paralelas com pré falhando; exploratório; descritivo; inconclusivo; falha de validação. Nenhuma linha está hoje na primeira. "Inconclusivo" quer dizer que o desenho identifica o contraste, mas o IC contém zero: não é evidência de ausência.
+**Como ler.** "Contraste identificado" diz o que a comparação mede no melhor caso. "Força da evidência" usa seis categorias fixas: causal-limpo; ATT sob tendências paralelas com pré falhando; exploratório; descritivo; inconclusivo; cenário (simulação). Nenhuma linha está hoje na primeira. "Inconclusivo" quer dizer que o desenho identifica o contraste, mas o IC contém zero: não é evidência de ausência.
 
 <!-- S57:perguntas:inicio -->
 | Pergunta | Estimando | Desenho | Unidade | Contraste identificado | Resultado principal [IC 95%] | Força da evidência | Doc e auditoria |
@@ -34,7 +34,7 @@ Produção, horas e vínculos depois da chegada do especialista (P3 D2, P3x e P4
 | P5 — onde o Ministério abre vagas | associação de características pré-determinadas com o pedido do gestor e a priorização da SGTES | logit descritivo com efeito fixo de curso (T5.1); RDD nos cortes do pedido e da priorização (T5.2) | célula do cardápio do ciclo 3; município nos ciclos 1–2 | descritivo | IVS contínuo no pedido: −1,8 p.p. por DP [−5,7; +2,1]; na priorização: +0,1 [−3,4; +3,5]; célula pedida no corte (T5.2a, empilhado): +14,7 p.p. [+1,8; +27,6], q BKY 0,602 | descritivo | [57e](57e_resultados_P5_abertura.md); [aud. 23](../auditorias/23_auditoria_P5_abertura.md) |
 | P6 — alocado por pouco contra não alocado por pouco | diferença na trajetória cadastrada no CNES entre candidatos logo acima e logo abaixo da nota de corte da 1ª opção | comparação local na nota de corte com efeito fixo de célula; p por permutação; desempate por regra fixa, não sorteio | candidato de ampla concorrência, ciclos 1 e 2 | ser alocado | Y1 (vínculo no município da vaga, média): +0,405 [+0,210; +0,600], p de Holm 0,010 (quase mecânico); Y3 (horas totais, média): +15,5 [+0,6; +30,4], p de Holm 0,384 | exploratório | [57f](57f_resultados_P6_mecanismo.md); [aud. 27](../auditorias/27_auditoria_P6_mecanismo.md) |
 | Realocação — a bolsa das concorrentes desloca candidatos | mudança no preenchimento e nos candidatos de 1ª opção da célula quando a bolsa média das concorrentes do mesmo curso e ciclo na região de saúde sobe | regressão na célula com o IVS próprio e o das concorrentes em spline contínua; cluster por região de saúde | célula aberta, ciclos 1–3 | pacote do corte | R-P1 por +R$ 5 mil: −4,9 p.p. [−14,3; +4,6], p de Holm 0,624, MDE 13,5 p.p.; R-P2: −0,075 [−0,553; +0,404], p de Holm 0,760 | inconclusivo | [57g](57g_resultados_realocacao.md); [aud. 28](../auditorias/28_auditoria_realocacao.md) |
-| T1.6 — cenários de bolsa com o modelo de escolha | vagas preenchidas na 1ª chamada sob grades de bolsa alternativas, com candidatos e vagas fixos (cenário, não observação) | simulação com o M1 e o mecanismo de alocação do G2 | candidato × célula, 1ª chamada dos ciclos 1–3 | pacote do corte | validação de base reprovada (ciclo 1, faixa 3); cenários não calculados | falha de validação | [57b](57b_cenarios_P1_bolsa.md); sem auditoria própria (a execução parou na validação) |
+| T1.6 — cenários de bolsa com o modelo de escolha | vagas preenchidas na 1ª chamada sob grades de bolsa alternativas, com candidatos e vagas fixos (cenário, não observação) | simulação com o M1 e o mecanismo de alocação do G2 | candidato × célula, 1ª chamada dos ciclos 1–3 | pacote do corte | validação de base aprovada em todas as linhas (revalidação com o desempate do adendo; a primeira tentativa falhou e está registrada no documento dos cenários); os números dos cenários são simulação e não são copiados para esta síntese | cenário (simulação) | [57b](57b_cenarios_P1_bolsa.md); sem auditoria própria |
 <!-- S57:perguntas:fim -->
 
 ## 3. Holm nas primárias e BKY nas secundárias
@@ -177,8 +177,8 @@ Candidatos de 1ª opção por célula (E6, F1.1, ciclos e cortes empilhados): +0
 
 **T1.6 (cenários)**
 
-- Status `FALHA_VALIDACAO_BASE`: a reconstrução sem mudança de bolsa não reproduziu as vagas publicadas dentro da tolerância em todas as réplicas (ciclo 1, faixa 3). Os cenários não foram calculados; não há resposta simulada à pergunta do total de vagas.
-- Mesmo validado, o modelo de escolha não responderia à margem extensiva: no logit condicional só diferenças de utilidade entre vagas contam, então somar o mesmo valor à bolsa de todas as vagas não muda nenhuma escolha com o grupo de candidatos fixo. Um aumento uniforme só poderia mover quem entra no programa, e isso o modelo não vê.
+- A primeira validação de base falhou (desempate por sorteio); depois do adendo datado com o desempate pela classificação publicada nos pares observados, a reconstrução sem mudança de bolsa reproduziu as vagas publicadas dentro da tolerância em todas as réplicas. Os cenários foram simulados e estão no documento dos cenários, rotulados como simulação; nenhum número simulado entra nesta síntese empírica.
+- O modelo de escolha não responderia à margem extensiva: no logit condicional só diferenças de utilidade entre vagas contam, então somar o mesmo valor à bolsa de todas as vagas não muda nenhuma escolha com o grupo de candidatos fixo. Um aumento uniforme só poderia mover quem entra no programa, e isso o modelo não vê.
 <!-- S57:pergunta_central:fim -->
 
 ## 5. Leitura em linguagem simples, pela cadeia
@@ -196,20 +196,25 @@ A ordem é a do `CLAUDE.md`: implementação → força de trabalho → capacida
 
 **Saúde.** Nada foi medido. As internações dos residentes aproximam o uso, não o estado de saúde. *Força:* não medido. *O que falta:* horizonte longo; desfechos de saúde por residência depois da maturidade do ciclo 3.
 
-**Custos e bem-estar.** Nada foi estimado. O custo por candidato ou vaga adicional dependia dos cenários do T1.6, que não foram calculados porque a validação de base falhou. *Força:* não estimado (o T1.6, que daria o custo, é falha de validação). *O que falta:* decisão do autor sobre a revalidação do T1.6; folha de pagamento (pedido externo); gasto do bolso não tem fonte municipal.
+**Custos e bem-estar.** Nada foi estimado de forma empírica. O custo da bolsa por vaga preenchida no T1.6 é aritmética simples sobre uma simulação, e não é custo observado. *Força:* não estimado (o custo do T1.6 é aritmética sobre simulação). *O que falta:* folha de pagamento (pedido externo); gasto do bolso não tem fonte municipal.
 
 **Equidade e spillovers.** Nos outros municípios da região de saúde, a produção K1 difere +16,23 [+0,81; +31,66] depois da chegada, com o pré falhando (p 0,005): não separa atendimento de referência de deslocamento. A realocação entre concorrentes é inconclusiva (−4,9 p.p. [−14,3; +4,6]). Entre os médicos que mudaram, as horas cadastradas na origem variam −4,1 h/sem [−5,4; −2,7] (descritivo, sem comparação). *Força:* ATT sob tendências paralelas com pré falhando, inconclusivo, descritivo. *O que falta:* o universo de inscritos (para ver quem deixa de se candidatar onde); o ciclo 3 para replicar fora da amostra que gerou a hipótese.
 <!-- S57:cadeia:fim -->
 
 ## 6. Lacunas e próximos passos
 
-Nenhum item abaixo foi executado. Custo e valor são juízos qualitativos desta síntese, para o autor decidir.
+Nenhum item abaixo tinha sido executado em 24/10/2026. Custo e valor são juízos qualitativos desta síntese, para o autor decidir.
+
+**Atualização de 25/10/2026.** Os dois itens do P3 e do P4 (sensibilidade de Rambachan e Roth e outro grupo de
+comparação) rodaram sob o [protocolo 59](59_protocolo_P3P4_sensibilidade_comparacao.md), congelado antes de
+estimar; resultados no [doc 57h](57h_resultados_P3P4_sensibilidade.md). As tabelas e o Holm desta síntese não
+mudam.
 
 | Item | O que resolveria | Custo | Valor | Quem decide |
 |---|---|---|---|---|
 | Pedido do universo de inscritos e do conjunto de escolha efetivo (pedido 2 em [`pedidos_dados/`](../pedidos_dados/README.md)) | a margem extensiva: se a bolsa traz candidatos novos ou só reordena quem já se candidatou; é a única forma de responder à atração no sentido de Dal Bó, Finan e Rossi | baixo para o projeto (ofício já redigido), alto em prazo (depende do Ministério) | alto: a pergunta central fica sem resposta sem ele | autor (envio do pedido) |
 | Ciclo 3 em 202703 (seis meses só com a competência publicada, completa e madura) | replicação fora da amostra do sinal de escolha do ciclo 2; oferta líquida município–mês; mais células para o preenchimento | baixo (plano prospectivo congelado) | alto: é o único teste novo sem pedido externo | calendário (maturidade dos dados) |
-| Revalidação do T1.6 (uma das quatro opções do [doc 57b](57b_cenarios_P1_bolsa.md), §4, por adendo datado que registre a falha já vista) | o cenário de quantas vagas a mais com +R$ 5 mil, com vagas e candidatos fixos | médio (nova execução e auditoria) | médio: mesmo validado, o modelo não vê a margem extensiva e herda o IC largo do M1 | autor (pendente) |
+| Auditoria independente dos cenários do T1.6 (revalidados em 25/10/2026, [doc 57b](57b_cenarios_P1_bolsa.md)) | se os cenários, agora com a validação de base aprovada, foram calculados como o protocolo diz | baixo a médio | médio: o modelo só redistribui entre células (candidatos e vagas fixos), não vê a margem extensiva e herda o IC largo do M1 | autor (pendente) |
 | P3 e P4 com pré-tendências falhando: sensibilidade de Rambachan e Roth (HonestDiD) | quanto da diferença do pós sobrevive a violações de tendências paralelas do tamanho das vistas no pré (magnitude relativa M̄ ou suavidade) | baixo a médio (pós-resultado, rotulado como sensibilidade) | médio: diz se as associações de horas e produção são frágeis, sem criar identificação | autor (protocolo antes de rodar) |
 | P3 e P4: outro grupo de comparação | células pedidas e não priorizadas (P5) ou candidatos não alocados por pouco (P6) como comparação da chegada e da trajetória; coortes do ciclo 3 como ainda não tratadas depois de 202703 | médio (protocolo novo, congelado antes de abrir) | médio a alto: a comparação pela priorização ou pela nota é menos dependente da escolha do candidato | autor (protocolo antes de rodar) |
 | Folha de pagamento mensal (pedido 3) | se o anunciado é o recebido; presença efetiva em vez de vínculo cadastrado | baixo para o projeto, alto em prazo | médio | autor (envio do pedido) |
@@ -263,8 +268,8 @@ reescritos; os pedidos externos e o ciclo 3 seguem como estão.
 | `output/rdd_bolsa/P6_resumo.json` | `87be1e524c9eecdb…` | P6: estatuto |
 | `output/rdd_bolsa/R_estimativas.csv` | `9612da8684affe2d…` | realocação (protocolo 58): principal, Holm e MDE |
 | `output/rdd_bolsa/R_resumo.json` | `b7bce621da60772c…` | realocação: leitura pré-registrada |
-| `output/cenarios/P1_cenarios_resumo.json` | `301c4489e20df782…` | T1.6: status da validação de base (só o status; nenhum número simulado é copiado) |
-| `output/cenarios/P1_cenarios_validacao_base.csv` | `41960b0c7f1b8aea…` | T1.6: linhas da validação de base (só o veredito por linha) |
+| `output/cenarios/P1_cenarios_resumo.json` | `444a4bf36df2cf07…` | T1.6: status da validação de base (só o status; nenhum número simulado é copiado) |
+| `output/cenarios/P1_cenarios_validacao_base.csv` | `ec6e0749dd309da5…` | T1.6: linhas da validação de base (só o veredito por linha; B0 igual ao G2 principal) |
 <!-- S57:entradas:fim -->
 
 ## 9. Reprodução

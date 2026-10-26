@@ -18,7 +18,9 @@ Desenho (fixado no adendo §7 do protocolo 52 antes de simular)
    cenário, U' = U + β·Δbolsa e a nova lista são as L melhores células (L = tamanho observado). Sem mudança, a
    lista reproduz a observada por construção (conferido em toda réplica).
 3. Mecanismo: `alocar` do G2 (aceitação adiada, prioridade da 1ª opção, nota, cotas na ordem do edital),
-   capacidade efetiva (`divisao_cr`), desempate por sorteio por candidato fixo na réplica e comum aos cenários.
+   capacidade efetiva (`divisao_cr`). Desempate (adendo §8 do protocolo 52, 25/10/2026): classificação publicada
+   nos pares candidato × célula observados; sorteio por candidato (fixo na réplica, comum aos cenários) só nos
+   pares novos, posicionado entre os observados empatados.
 4. Validação de base: o cenário sem mudança precisa reproduzir as vagas preenchidas publicadas na 1ª chamada,
    por ciclo e faixa, com |B0 − observado| ≤ max(3; 2%) em todas as réplicas; senão, FALHA_VALIDACAO_BASE e os
    cenários não são calculados.
@@ -82,6 +84,7 @@ OUT_TABELA = OUT / "P1_cenarios_tabela.csv"
 OUT_REPLICAS = OUT / "P1_cenarios_replicas.parquet"
 OUT_FLUXOS = OUT / "P1_cenarios_fluxos.csv"
 OUT_VALIDACAO = OUT / "P1_cenarios_validacao_base.csv"
+OUT_VALIDACAO_FALHA_1 = OUT / "P1_cenarios_validacao_base_falha_2026-10-24.csv"   # execução de 24/10 (desempate antigo), preservada
 DIR_FIG = OUT / "P1_figuras"
 FIG_TOTAL = DIR_FIG / "P1_cenarios_total_e_mudancas.png"
 FIG_FAIXAS = DIR_FIG / "P1_cenarios_por_faixa.png"
@@ -90,7 +93,7 @@ FIG_FAIXAS = DIR_FIG / "P1_cenarios_por_faixa.png"
 # Parâmetros do adendo §7 (nenhum é dado)
 # ---------------------------------------------------------------------------
 
-DATA_EXECUCAO = "2026-10-24"
+DATA_EXECUCAO = "2026-10-25"
 NATUREZA = "CENARIO_CONTRAFACTUAL"
 ESTATUTO = "ADENDO_52_T16_CENARIOS"
 R_REPLICAS = 200
@@ -144,13 +147,21 @@ COMO_LER = {
 }
 
 
-NOTA_PROCESSO = (
+NOTA_PROCESSO_24 = (
     "Antes da execução com R = 200, o script foi rodado três vezes com R = 2 para depurar o código (24/10/2026, "
     "depois do commit do adendo). A 1ª parou numa conferência interna (instabilidade numérica no S4, corrigida "
     "no sorteio condicional); a 2ª parou num erro do código das figuras; a 3ª passou a validação de base com 2 "
     "réplicas e calculou os cenários, e o agente viu esses números de 2 réplicas. A execução com R = 200 falhou "
     "na validação de base. Depois disso só mudaram o texto do doc e a limpeza das saídas de cenário da depuração "
     "(apagadas); nada mudou no modelo, no mecanismo, na tolerância ou no desempate.")
+NOTA_PROCESSO = (
+    "Revalidação de 25/10/2026, depois do commit do adendo §8 (protocolo 52) e da escolha do autor pela opção 1. "
+    "A falha de 24/10 já era conhecida (seção 9). Antes da execução com R = 200 houve uma depuração com R = 2 "
+    "(opção `--depurar`, que só roda a validação de base e não grava nada); ela passou a validação e não calculou "
+    "cenários, então nenhum número de cenário foi visto antes da execução com R = 200. A única mudança de "
+    "código no cálculo foi o desempate (adendo §8); o doc passou a incluir a falha de 24/10 como histórico "
+    "(seção 9), a partir da saída preservada. Modelo, mecanismo, tolerância, regra de validação, R e semente não "
+    "mudaram.")
 
 
 class FalhaValidacao(RuntimeError):
@@ -311,13 +322,39 @@ def listas_das_unidades(U: dict, a1: np.ndarray, a2: np.ndarray) -> dict:
     return out
 
 
-def montar_entrada_mecanismo(fixos: pd.DataFrame, resp: pd.DataFrame, listas: dict, cel_chave: list) -> pd.DataFrame:
+def referencia_desempate(eleg: pd.DataFrame) -> dict:
+    """Referência da regra de desempate do adendo §8 (protocolo 52): classificação publicada por par observado
+    e, por (célula, pontuação), o intervalo [mín., máx.] das classificações publicadas (posiciona os pares novos)."""
+    obs = {(r.id_candidato, r.celula): r.classificacao_publicada for r in eleg.itertuples(index=False)}
+    cl = eleg.dropna(subset=["classificacao_publicada"])
+    g = cl.groupby(["celula", "pontuacao"])["classificacao_publicada"].agg(["min", "max"])
+    return {"obs": obs, "intervalo": {k: (float(v["min"]), float(v["max"])) for k, v in g.iterrows()}}
+
+
+def desempate_par(ref: dict, ident: str, celula: tuple, pontuacao: float, u: float) -> float:
+    """Par observado: classificação publicada (ausente = +∞, como no G2). Par novo: sorteio u posicionado entre os
+    observados empatados na célula (u puro se não há)."""
+    if (ident, celula) in ref["obs"]:
+        c = ref["obs"][(ident, celula)]
+        return float(c) if not np.isnan(c) else np.inf
+    iv = ref["intervalo"].get((celula, pontuacao))
+    if iv is None:
+        return float(u)
+    return iv[0] - 0.5 + u * (iv[1] - iv[0] + 1.0)
+
+
+def montar_entrada_mecanismo(fixos: pd.DataFrame, resp: pd.DataFrame, listas: dict, cel_chave: list,
+                             ref: dict | None = None, u: dict | None = None) -> pd.DataFrame:
     """Linhas candidato × opção para o `alocar` do G2: fixos (lista observada) + respondentes (lista nova).
+
+    Com `ref` e `u` (adendo §8), a coluna `classificacao_publicada` das linhas dos respondentes traz o desempate
+    da regra nova (classificação publicada nos pares observados, sorteio posicionado nos pares novos) e o `alocar`
+    é chamado com o desempate padrão. Sem `ref`, a coluna fica vazia (regra antiga, sorteio por candidato).
 
     `resp`: um respondente por linha (ciclo, id_candidato, pontuacao, tipo_inscricao, L, obs1, obs2), em que
     obs1/obs2 são as células observadas (tuplas) usadas quando a posição não é modelada.
     """
-    ids, cels, ranks, pts, tps = [], [], [], [], []
+    ids, cels, ranks, pts, tps, cls = [], [], [], [], [], []
     for r in resp.itertuples(index=False):
         d = listas.get((r.ciclo, r.id_candidato), {})
         lista = []
@@ -331,8 +368,9 @@ def montar_entrada_mecanismo(fixos: pd.DataFrame, resp: pd.DataFrame, listas: di
             ranks.append(o)
             pts.append(r.pontuacao)
             tps.append(r.tipo_inscricao)
+            cls.append(np.nan if ref is None else desempate_par(ref, r.id_candidato, c, r.pontuacao, u[r.id_candidato]))
     novo = pd.DataFrame({"id_candidato": ids, "celula": cels, "opcao_rank": ranks, "pontuacao": pts,
-                         "tipo_inscricao": tps, "classificacao_publicada": np.nan})
+                         "tipo_inscricao": tps, "classificacao_publicada": cls})
     return pd.concat([fixos, novo], ignore_index=True)
 
 
@@ -552,7 +590,7 @@ def preparar_m8(M: dict) -> dict:
 # Execução
 # ---------------------------------------------------------------------------
 
-def rodar(M: dict, log=print) -> dict:
+def rodar(M: dict, log=print, so_validacao: bool = False) -> dict:
     checar_faixa_de_bolsa()
     U, A = M["U"], M["A"]
     n_l, n_u = len(A), len(U["starts"])
@@ -563,6 +601,7 @@ def rodar(M: dict, log=print) -> dict:
     delta = {c: np.array([CENARIOS[c][f] - BOLSA_OBS[f] for f in faixa_linha]) for c in CENARIOS}
     resp_por_ciclo = {k: M["resp"][M["resp"]["ciclo"] == k] for k in CICLOS}
     ids_ciclo = {k: sorted(set(M["mercado"][k]["eleg"]["id_candidato"])) for k in CICLOS}
+    refs = {k: referencia_desempate(M["mercado"][k]["eleg"]) for k in CICLOS}
     m8 = preparar_m8(M)
     log(f"S4 pronto: ESS mediano {m8['ess_mediana']:.1f} de {K_M8}")
     # Cholesky de V_cluster (S3).
@@ -583,8 +622,8 @@ def rodar(M: dict, log=print) -> dict:
         b0_r = {}
         for k in CICLOS:
             mk = M["mercado"][k]
-            entrada = montar_entrada_mecanismo(M["fixos"][k], resp_por_ciclo[k], {}, M["cel_chave"])
-            sim = G2M.alocar(entrada, mk["cap"], mk["ch"]["ordem_edital"], desempate="sorteio", sorteio=u[k])
+            entrada = montar_entrada_mecanismo(M["fixos"][k], resp_por_ciclo[k], {}, M["cel_chave"], refs[k], u[k])
+            sim = G2M.alocar(entrada, mk["cap"], mk["ch"]["ordem_edital"])
             b0_r[k] = (sim, entrada)
         b0.append(b0_r)
     obs_cont, g2_cont = {}, {}
@@ -619,7 +658,7 @@ def rodar(M: dict, log=print) -> dict:
     log(f"validação de base: {'PASSOU' if passou else 'FALHOU'}")
     out = {"validacao": validacao, "passou": passou, "conservacao_b0": conserv_b0, "m8": m8,
            "obs_cont": obs_cont}
-    if not passou:
+    if not passou or so_validacao:
         return out
 
     reg, fluxos = [], {}
@@ -658,9 +697,9 @@ def rodar(M: dict, log=print) -> dict:
                 bolsa_c = CENARIOS[c]
                 for k in CICLOS:
                     mk = M["mercado"][k]
-                    entrada = montar_entrada_mecanismo(M["fixos"][k], resp_por_ciclo[k], listas, M["cel_chave"])
-                    sim = G2M.alocar(entrada, mk["cap"], mk["ch"]["ordem_edital"], desempate="sorteio",
-                                     sorteio=sorteios[r][k])
+                    entrada = montar_entrada_mecanismo(M["fixos"][k], resp_por_ciclo[k], listas, M["cel_chave"],
+                                                       refs[k], sorteios[r][k])
+                    sim = G2M.alocar(entrada, mk["cap"], mk["ch"]["ordem_edital"])
                     cc = conferir_conservacao(sim, entrada, mk["cap"])
                     conserv["celulas_acima_da_capacidade"] += cc["celulas_acima_da_capacidade"]
                     conserv["alocados_fora_da_lista"] += cc["alocados_fora_da_lista"]
@@ -885,7 +924,9 @@ def leitura(t: pd.DataFrame) -> str:
         txt = (f"- **{c}** ({DESCRICAO_CENARIO[c]}): em média {_n(m['media'], 1)} médicos terminam numa vaga "
                f"diferente; {_n(ps, 1)} vagas passam a ser preenchidas e {_n(dx, 1)} deixam de ser. O total "
                f"preenchido muda {_n(p['media'], 1, True)} (faixa S3 {_faixa(s['p2_5'], s['p97_5'])})")
-        if zero:
+        if zero and min(abs(s["p2_5"]), abs(s["p97_5"])) < 0.05:
+            txt += ", e a faixa toca o zero (um dos limites arredonda para 0,0)."
+        elif zero:
             txt += ", e a faixa contém zero."
         else:
             txt += ", e a faixa não contém zero."
@@ -904,6 +945,60 @@ def leitura(t: pd.DataFrame) -> str:
     return "\n".join(partes)
 
 
+def secao_historico_24(n: int) -> list[str]:
+    """Falha de 24/10/2026 (desempate por sorteio em todos os pares), preservada como registro."""
+    val = pd.read_csv(OUT_VALIDACAO_FALHA_1, dtype={"ciclo": str})
+    falhas = val[~val["passa"].astype(bool)]
+    lista = "; ".join(f"ciclo {r.ciclo}, {'total' if r.faixa == 'total' else ROTULO_FAIXA.get(r.faixa, r.faixa)}: "
+                      f"observado {r.observado}, B0 entre {r.b0_minimo} e {r.b0_maximo} (média "
+                      f"{_n(r.b0_media, 1)}), desvio máximo {r.desvio_maximo} > tolerância {_n(r.tolerancia, 2)}"
+                      for r in falhas.itertuples(index=False))
+    return [
+        f"## {n}. Histórico: falha da validação de 24/10/2026 (registro preservado)",
+        "",
+        "Execução anterior, com o desempate por sorteio por candidato em todos os pares (adendo §7.3). "
+        "Saída preservada em `output/cenarios/P1_cenarios_validacao_base_falha_2026-10-24.csv`. Mesma regra e "
+        "tolerância; a única mudança depois foi o desempate (adendo §8).",
+        "",
+        tabela_validacao(val),
+        "",
+        "**Resultado da validação de 24/10/2026: FALHOU.**",
+        "",
+        f"### {n}.1 Falha da validação de base",
+        "",
+        f"`FALHA_VALIDACAO_BASE`. Onde falhou: {lista}.",
+        "",
+        "Conforme o adendo, nada foi calibrado e **os cenários não foram calculados**: não há resposta "
+        "simulada à pergunta do autor nesta execução. Não há arquivo de réplicas, tabela, fluxos nem figura "
+        "de cenário em `output/cenarios/`.",
+        "",
+        "**O que a falha mostra.** O mecanismo foi conferido: com o mesmo desempate, a alocação montada pelo "
+        "script é idêntica à do `alocar` do G2 sobre as linhas publicadas. A diferença vem do desempate por "
+        "sorteio por candidato, fixado no adendo porque a classificação publicada não existe para pares "
+        "candidato × célula novos. Com a classificação publicada (coluna do G2 principal), a reconstrução fica a "
+        f"no máximo {int((val['g2_principal_classificacao_publicada'] - val['observado']).abs().max())} vaga(s) "
+        "do observado em cada linha da tabela. Onde há empate de nota no corte da célula (G2, seção 4), o "
+        "sorteio troca quem fica, e o perdedor pode ocupar ou não a vaga da 2ª opção; isso desloca vagas entre "
+        "faixas em parte das réplicas.",
+        "",
+        "**Decisões em aberto, do autor (nenhuma foi executada em 24/10):**",
+        "1. aceitar um desempate que use a classificação publicada nos pares observados e o sorteio só nos pares "
+        "novos, com nova validação (**escolhida pelo autor em 25/10/2026; adendo §8**);",
+        "2. trocar a regra \"em todas as réplicas\" por uma regra sobre a média ou sobre um percentil das "
+        "réplicas;",
+        "3. rodar só os ciclos 2 e 3, que passaram;",
+        "4. manter a falha como resultado: com o desempate do edital fora dos dados, o mecanismo não é "
+        "reproduzido com a precisão exigida em todas as réplicas.",
+        "",
+        "Qualquer uma delas exige um adendo datado antes de rodar, que registre que esta falha já foi vista.",
+        "",
+        f"### {n}.2 Nota de processo de 24/10/2026",
+        "",
+        NOTA_PROCESSO_24,
+        "",
+    ]
+
+
 def gerar_doc(resumo: dict, val: pd.DataFrame, t: pd.DataFrame | None, fl: pd.DataFrame | None) -> str:
     cont = resumo["contagens"]
     linhas_cont = [[f"ciclo {k}", str(v["candidatos_elegiveis"]), str(v["respondem_ao_cenario"]),
@@ -919,7 +1014,8 @@ def gerar_doc(resumo: dict, val: pd.DataFrame, t: pd.DataFrame | None, fl: pd.Da
         f"> **Gerado por** `scripts/rdd_bolsa/25b_cenarios_bolsa.py` a partir de `output/cenarios/P1_*`; não editar "
         "à mão (o teste `tests/test_cenarios_bolsa.py` confere que este arquivo é igual ao gerado).<br>",
         "> **Protocolo:** [adendo §7 do protocolo 52](52_protocolo_P1_escolha_dap.md#7-adendo-de-24102026-t16-cenários), "
-        "congelado em 24/10/2026 antes de simular. Modelo de escolha: [doc 57a](57a_resultados_P1_escolha.md) "
+        "congelado em 24/10/2026 antes de simular, e [adendo §8](52_protocolo_P1_escolha_dap.md#8-adendo-de-25102026-t16-nova-regra-de-desempate-e-revalidação) "
+        "(25/10/2026), que só troca a regra de desempate depois da falha de 24/10 (seção 9). Modelo de escolha: [doc 57a](57a_resultados_P1_escolha.md) "
         "(M1), auditado na auditoria 26. Mecanismo: [portão G2](../auditorias/G2_viabilidade_mecanismo.md).",
         "",
         "## 1. A pergunta e o que a simulação faz",
@@ -962,8 +1058,10 @@ def gerar_doc(resumo: dict, val: pd.DataFrame, t: pd.DataFrame | None, fl: pd.Da
         "",
         "O cenário sem mudança (B0) precisa reproduzir as vagas preenchidas publicadas na 1ª chamada, por ciclo e "
         "faixa, com |B0 − observado| ≤ max(3; 2% do observado) em todas as réplicas (fixado antes de simular). A "
-        "coluna do G2 principal usa a classificação publicada como desempate; o B0 usa o sorteio por candidato do "
-        "adendo, porque a classificação não existe para pares candidato × célula novos.",
+        "coluna do G2 principal usa a classificação publicada como desempate. Desde o adendo §8, o B0 usa a mesma "
+        "classificação nos pares observados e o sorteio só nos pares novos; como no B0 todos os pares são "
+        "observados, o B0 coincide com a coluna do G2 principal em todas as réplicas (a validação testa o "
+        "mecanismo, não o sorteio).",
         "",
         tabela_validacao(val),
         "",
@@ -977,39 +1075,19 @@ def gerar_doc(resumo: dict, val: pd.DataFrame, t: pd.DataFrame | None, fl: pd.Da
                           f"{_n(r.b0_media, 1)}), desvio máximo {r.desvio_maximo} > tolerância {_n(r.tolerancia, 2)}"
                           for r in falhas.itertuples(index=False))
         partes += [
-            "## 4. Falha da validação de base",
+            "## 4. Falha da validação de base (revalidação de 25/10/2026)",
             "",
             f"`FALHA_VALIDACAO_BASE`. Onde falhou: {lista}.",
             "",
-            "Conforme o adendo, nada foi calibrado e **os cenários não foram calculados**: não há resposta "
-            "simulada à pergunta do autor nesta execução. Não há arquivo de réplicas, tabela, fluxos nem figura "
-            "de cenário em `output/cenarios/`.",
-            "",
-            "**O que a falha mostra.** O mecanismo foi conferido: com o mesmo desempate, a alocação montada pelo "
-            "script é idêntica à do `alocar` do G2 sobre as linhas publicadas. A diferença vem do desempate por "
-            "sorteio por candidato, fixado no adendo porque a classificação publicada não existe para pares "
-            "candidato × célula novos. Com a classificação publicada (coluna do G2 principal), a reconstrução fica a "
-            f"no máximo {int((val['g2_principal_classificacao_publicada'] - val['observado']).abs().max())} vaga(s) "
-            "do observado em cada linha da tabela. Onde há empate de nota no corte da célula (G2, seção 4), o "
-            "sorteio troca quem fica, e o perdedor pode ocupar ou não a vaga da 2ª opção; isso desloca vagas entre "
-            "faixas em parte das réplicas.",
-            "",
-            "**Decisões em aberto, do autor (nenhuma foi executada):**",
-            "1. aceitar um desempate que use a classificação publicada nos pares observados e o sorteio só nos pares "
-            "novos, com nova validação;",
-            "2. trocar a regra \"em todas as réplicas\" por uma regra sobre a média ou sobre um percentil das "
-            "réplicas;",
-            "3. rodar só os ciclos 2 e 3, que passaram;",
-            "4. manter a falha como resultado: com o desempate do edital fora dos dados, o mecanismo não é "
-            "reproduzido com a precisão exigida em todas as réplicas.",
-            "",
-            "Qualquer uma delas exige um adendo datado antes de rodar, que registre que esta falha já foi vista.",
+            "Conforme o adendo §8.3, nada foi calibrado e **os cenários não foram calculados**: o resultado fica "
+            "registrado como falha e só o autor decide o passo seguinte, em novo adendo. Não há arquivo de "
+            "réplicas, tabela, fluxos nem figura de cenário em `output/cenarios/`.",
             "",
             "## 5. Nota de processo",
             "",
             resumo["nota_processo"],
             "",
-        ]
+        ] + secao_historico_24(9)
         return "\n".join(partes) + "\n"
     cons = resumo["conservacao"]
     partes += [
@@ -1073,14 +1151,25 @@ def gerar_doc(resumo: dict, val: pd.DataFrame, t: pd.DataFrame | None, fl: pd.Da
         "- **Modelo de escolha.** O peso da bolsa é o do M1, cujo IC 95% contém zero; IIA dentro do curso; o "
         "candidato vê todas as células do curso. A ordem entre opções de cursos diferentes fica a observada.",
         "- **Quem não responde.** Candidatos sem origem ligada no G1 mantêm a lista observada (seção 2).",
-        "- **Desempate.** Sorteio por candidato no lugar da regra do edital (UF e idade), que não é pública.",
+        "- **Desempate.** Classificação publicada nos pares candidato × célula observados; nos pares novos, sorteio por "
+        "candidato posicionado entre os observados empatados (adendo §8), no lugar da regra do edital (UF e "
+        "idade), que não é pública. Em células com muitos empates de nota no corte, o resultado para pares novos "
+        "depende desse sorteio.",
         "- **Só a 1ª chamada.** Sem 2ª chamada, desistência, homologação; o custo é só bolsa × alocados.",
+        "- **Só redistribuição.** Com candidatos e vagas fixos, um aumento uniforme da bolsa não muda nenhuma "
+        "escolha no logit condicional (só a diferença de bolsa entre as células do conjunto entra na utilidade): "
+        "C2 e C4 dão o mesmo resultado. Os efeitos dos cenários vêm só da redistribuição de candidatos entre "
+        "células e faixas, e a variação do total vem de candidatos que saem de células disputadas para células "
+        "com vaga sobrando. Não é atração de médicos novos.",
+        "- **Incerteza herdada do M1.** O IC 95% do β_bolsa contém zero; com β no limite inferior (S1) o efeito "
+        "no total é nulo, e a faixa S3 (principal) contém ou toca o zero em C1, C2 e C4 para o total. Os números são "
+        "condicionais ao modelo; leia a faixa, não o ponto.",
         "",
         "## 8. Nota de processo",
         "",
         resumo["nota_processo"],
         "",
-    ]
+    ] + secao_historico_24(9)
     return "\n".join(partes) + "\n"
 
 
@@ -1102,6 +1191,8 @@ def leitura_geral(t: pd.DataFrame) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--depurar", type=int, metavar="R",
+                    help="depuração: roda a validação de base com R réplicas e imprime o resultado; não grava nada")
     ap.add_argument("--atualizar-doc", action="store_true", help="só regrava o doc 57b a partir das saídas")
     args = ap.parse_args(argv)
     if args.atualizar_doc:
@@ -1114,6 +1205,13 @@ def main(argv: list[str] | None = None) -> int:
 
     checar_faixa_de_bolsa()
     M = carregar()
+    if args.depurar:
+        global R_REPLICAS
+        R_REPLICAS = args.depurar
+        res = rodar(M, log, so_validacao=True)
+        print(res["validacao"].to_string(index=False))
+        log(f"depuração R={args.depurar}: validação {'PASSOU' if res['passou'] else 'FALHOU'}; nada gravado")
+        return 0
     res = rodar(M, log)
     OUT.mkdir(parents=True, exist_ok=True)
     val = res["validacao"]

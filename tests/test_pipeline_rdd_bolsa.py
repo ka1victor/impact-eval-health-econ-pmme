@@ -56,6 +56,8 @@ CADEIA = [
     RDD / "21_producao_dird.py",  # família K, D1 (protocolo 47): lê a12, a13, a14, a09 e funções do 14 e do 23
     RDD / "22_chegada_pmme_evento.py",  # família K, D2: lê as séries do 21
     RDD / "27_producao_extensoes.py",  # P3, adendo §12: importa o 21 e o 22; lê a12b, a13b, a15, a17 e K_D1/K_D2
+    RDD / "35_comparacao_alternativa_P3P4.py",  # protocolo 59, parte B: só verificar (cache privado)
+    RDD / "34_sensibilidade_honestdid.py",  # protocolo 59, parte A: só verificar (hashes e doc 57h)
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
     RDD / "09_gerar_relatorio_pdf.py",  # lê E1 a E9 e a síntese E8
@@ -193,6 +195,13 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             # só as saídas do 30.
             RDD / "30_mecanismo_alocacao.py": [A16],
             RDD / "31_rd_mecanismo.py": [RDD / "30_mecanismo_alocacao.py"],
+            # Protocolo 59: o 35 lê o 12.2 (27), a adesão (12) e as saídas do P6 (30); o 34 confere-se contra o 27, o
+            # 28 e lê as saídas do 35.
+            RDD / "35_comparacao_alternativa_P3P4.py": [RDD / "27_producao_extensoes.py",
+                                                       RDD / "12_construir_outcomes_funil.py",
+                                                       RDD / "30_mecanismo_alocacao.py"],
+            RDD / "34_sensibilidade_honestdid.py": [RDD / "27_producao_extensoes.py", RDD / "28_trajetoria_medicos.py",
+                                                   RDD / "35_comparacao_alternativa_P3P4.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
@@ -307,7 +316,12 @@ class TestCadeiaRddBolsa(unittest.TestCase):
         self.assertEqual(RA.ARGUMENTOS[RDD / "07_estimar_E3_rdd_completa.py"], ["--escore", ESCORE_COMPLETO])
         self.assertEqual(set(RA.ARGUMENTOS), {RDD / "07_estimar_E3_rdd_completa.py", A09,
                                               AQ / "a12_adquirir_sia_tabnet.py", AQ / "a13_adquirir_sih_tabnet.py", A14,
-                                              A15, A16, A12B, A13B, A17, P6_PASSO0})
+                                              A15, A16, A12B, A13B, A17, P6_PASSO0,
+                                              RDD / "35_comparacao_alternativa_P3P4.py",
+                                              RDD / "34_sensibilidade_honestdid.py"})
+        # Protocolo 59: o 35 exige o cache privado e o 34 leva cerca de uma hora; o run_all só confere.
+        for script in (RDD / "35_comparacao_alternativa_P3P4.py", RDD / "34_sensibilidade_honestdid.py"):
+            self.assertEqual(RA.ARGUMENTOS[script], ["--etapa", "verificar"], script.name)
         # P6, passo 0: a amostra vem do cache privado; o run_all só confere sem rede.
         self.assertEqual(RA.ARGUMENTOS[P6_PASSO0], ["--etapa", "verificar"])
         # a16 (portão G5): como o a09, o run_all só confere sem rede.

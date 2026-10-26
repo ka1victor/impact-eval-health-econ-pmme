@@ -71,6 +71,14 @@ Síntese das perguntas reformuladas (onda 5 do `docs/06_execucao/51`), fora do
 (tabela por pergunta, Holm e BKY refeitos dos p gravados, limite superior e MDE,
 pergunta central; gera `docs/06_execucao/57` inteiro e `output/rdd_bolsa/S57_*`).
 
+Protocolo 59 (`docs/06_execucao/59`, pós-resultado): `scripts/rdd_bolsa/35_comparacao_alternativa_P3P4.py`
+(parte B: P3-CA, chegada contra pares que pediram o curso no ciclo 3 e não foram priorizados; P4-CA, alocado
+contra não alocado perto da nota de corte, em diferenças, com o painel mensal dos candidatos refeito em memória do
+cache privado do a16 e do G1; `--etapa estimar` exige o cache) e `34_sensibilidade_honestdid.py` (parte A:
+Rambachan–Roth com Δ^RM pelo teste condicional de ARP e pelo híbrido condicional–LF, Δ^SD pelo FLCI, implementação
+própria em `honestdid_lib.py`; gera `docs/06_execucao/57h` inteiro). No `run_all.py` os dois rodam em
+`--etapa verificar` (conferem hashes e o doc, sem recalcular).
+
 Saíram do pipeline em 18/10/2026, sem apagar os scripts: `scripts/rdd_bolsa/01_*`,
 `01b_*`, `02_*` e `03_*`. Eles usavam `data/ivs_ipea_2010_municipios.csv`, que não
 é o IVS do município (`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`),
