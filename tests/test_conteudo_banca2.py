@@ -120,7 +120,8 @@ def formatar(valor, formato: str) -> str:
 
 NUM = re.compile(r"(?<![\w.,/])[−+-]?(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+(?:,\d+)?)(?!\w)")
 PERMITIDOS = {"0,300", "0,400", "0,3", "0,4", "0,301", "0,050", "0,030", "0,080", "0,05", "1,96", "0,001", "0,010",
-              "1", "2", "3", "5", "10", "15", "20", "+10", "+25", "25", "95", "90", "80"}
+              "1", "2", "3", "5", "10", "15", "20", "+10", "+25", "25", "95", "90", "80",
+              "0,100"}  # 0,100: unidade da inclinação do protocolo 62 (doc 03, §3)
 MAX_SLIDE = 70  # números de slide (deck do grupo, até 36; deck proposto, até 64) nos quadros do doc 02
 
 
@@ -277,6 +278,9 @@ def _resolver_bruto(sel: dict, brutos: dict, calculados: dict):
     if "razao" in sel:
         a, b = sel["razao"]
         return float(brutos[a]) / float(brutos[b])
+    if "diferenca" in sel:
+        a, b = sel["diferenca"]
+        return float(brutos[a]) - float(brutos[b])
     if "calculado" in sel:
         return calculados[sel["calculado"]]
     raise AssertionError(sel)
@@ -696,11 +700,15 @@ class TestOutrosDocs(unittest.TestCase):
 # --------------------------------------------------------------------------
 
 RESUMO_DA_ETAPA = {"DQ_figuras": "output/rdd_bolsa/DQ_resumo.json",
+                   "GF_figuras": "output/rdd_bolsa/GF_resumo.json",
+                   "HI_figuras": "output/rdd_bolsa/HI_resumo.json",
                    "E6_figuras": "output/rdd_bolsa/E6_resumo.json",
                    "E7_figuras": "output/rdd_bolsa/E7_resumo.json",
                    "E9_figuras": "output/rdd_bolsa/E9_resumo.json",
                    "P1h_figuras": "output/rdd_bolsa/P1h_resumo.json"}
 SCRIPT_DA_ETAPA = {"DQ_figuras": "scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
+                   "GF_figuras": "scripts/rdd_bolsa/39_gradiente_faixas.py",
+                   "HI_figuras": "scripts/rdd_bolsa/40_h1_vagas_imediatas.py",
                    "E6_figuras": "scripts/rdd_bolsa/13_estimar_E6_funil.py",
                    "E7_figuras": "scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
                    "E9_figuras": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",
@@ -1073,11 +1081,11 @@ class TestDeck(unittest.TestCase):
         self.assertIn("Adições ao modelo do slide 19", tudo)
 
     def test_manifesto_do_deck(self) -> None:
+        """Desde 26/10/2026 o deck completo é só registro (doc 06): não é regerado quando o registro de números ou o
+        doc 02 ganham uma nota. Confere o próprio deck contra o manifesto e cada figura embutida contra o hash que o
+        manifesto gravou; os hashes das entradas são os da data em que o registro foi gerado."""
         for e in self.manifesto["saidas"]:
             self.assertEqual(sha256(ROOT / e["caminho"]), e["sha256"], e["caminho"])
-        for e in self.manifesto["entradas"]:
-            if e["caminho"].startswith(("docs/", "output/")):
-                self.assertEqual(sha256(ROOT / e["caminho"]), e["sha256"], e["caminho"])
         with zipfile.ZipFile(DECK) as z:
             for e in self.manifesto["entradas"]:
                 if e.get("no_pacote"):

@@ -25,18 +25,23 @@ nada é lido de `data/`.
 
 Determinístico: XML montado por funções puras, zip com data fixa (a do gerador da banca final) e ordem estável.
 
-Modo `--curto` (pedido do autor de 26/10/2026: "só do 14 em diante, e MUITO menor, focado nas discussões que
-tivemos aqui, sem colocar um monte de texto, sem colocar o diagrama causal da teoria no meio"): lê
+Modo padrão, o deck curto (decisão do autor de 26/10/2026: "só as versões curtas são usadas"; a estrutura
+obrigatória está no doc 06; no máximo cerca de 30 palavras visíveis por slide). O deck completo só é regerado com
+`--completo` e fica como registro, sem atualização. Pedido original do curto: "só do 14 em diante, e MUITO menor,
+focado nas discussões que tivemos aqui, sem colocar um monte de texto, sem colocar o diagrama causal da teoria no
+meio". O modo curto lê
 `docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md` e grava `deck_banca2_curto.pptx`, o PDF dele (pelo
 LibreOffice, se houver) e `manifesto_deck_banca2_curto.json`. Usa o deck do grupo só como template (mestre,
-layout e rodapé): nenhum slide do grupo, nenhuma divisória, nenhum diagrama e nenhum apêndice. Cada slide tem
-título-afirmação, a figura (ou a tabela) grande e no máximo duas linhas curtas, contando a cautela; o resto vai
-para as notas. O script para se uma linha não couber numa linha só ou se um slide passar do limite de linhas.
+layout; o rodapé passa a listar as oito seções da estrutura obrigatória): nenhum slide do grupo, nenhuma
+divisória, nenhum diagrama e nenhum apêndice. Cada slide tem título-afirmação, a figura (ou a tabela) grande e
+poucas linhas curtas; o resto vai para as notas. O script para se as seções fugirem da estrutura obrigatória, se
+um slide passar de 30 palavras visíveis (fora título, figura e fontes), se uma linha não couber ou se um slide
+passar do limite de linhas.
 
 Uso:
 
-    PMME_DECK_GRUPO="<caminho do deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py
-    PMME_DECK_GRUPO="<caminho do deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py --curto
+    PMME_DECK_GRUPO="<caminho do deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py        # curto
+    PMME_DECK_GRUPO="<caminho do deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py --completo  # registro
 """
 
 from __future__ import annotations
@@ -979,7 +984,16 @@ MAX_LINHAS_TEXTO = 4        # itens por slide só de texto, contando a cautela
 MAX_TITULO_CURTO = 58       # caracteres: o título não pode encostar no logotipo do template
 FRACAO_MIN_FIGURA = 0.72    # com as linhas embaixo, a figura tem de ocupar ao menos esta fração da largura
 W_COLUNA_MIN = 3.4          # pol.: coluna de texto ao lado da figura
-LAYOUTS_CURTOS = ("curto_figura", "curto_tabela", "curto_texto", "curto_ficha", "curto_capa")
+LAYOUTS_CURTOS = ("curto_figura", "curto_tabela", "curto_texto", "curto_ficha", "curto_capa", "curto_hipotese",
+                  "curto_espec")
+# Estrutura obrigatória da versão final (doc 06, decisão do autor de 26/10/2026): as seções do doc 04, nesta ordem
+SECOES_CURTO = ("Hipótese", "Dados", "Análise descritiva", "Metodologia", "Identificação", "Resultados", "Robustez",
+                "Discussão")
+MAX_PALAVRAS = 30           # palavras visíveis por slide, fora o título, a figura e a linha de fontes (doc 06, §2)
+MAX_LINHAS_ESPEC = 4        # linhas curtas por slide de especificação: equação, outcome, amostra ou comparação, cuidado
+CINZA_FUNDO, CINZA_LINHA, CINZA_TEXTO, CINZA_ROTULO = "F2F2F0", "C9C9C4", "8A8A85", "A3A39E"
+PLANO_B = "plano B"          # marca das hipóteses secundárias (H2 e H3): rótulo e título em cinza
+COR_TITULO_PLANO_B = "C4CCC6"  # título cinza-claro sobre a faixa verde do template
 
 
 def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
@@ -988,11 +1002,34 @@ def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
 
 
 def limite_linhas(sl: dict) -> int:
-    """No máximo duas linhas, contando a cautela (quatro nos slides só de texto); o doc 04 pode pedir outro limite
-    num slide com `<!-- linhas: N -->` (pedidos do autor: o slide da queda em 0,300 e a H3)."""
+    """No máximo duas linhas, contando a cautela (quatro nos slides só de texto e nas especificações); o doc 04 pode
+    pedir outro limite num slide com `<!-- linhas: N -->`."""
     if sl["max_linhas"]:
         return sl["max_linhas"]
-    return MAX_LINHAS_TEXTO if sl["layout"] in ("curto_texto", "curto_capa") else MAX_LINHAS_FIGURA
+    if sl["layout"] == "curto_espec":
+        return MAX_LINHAS_ESPEC
+    return MAX_LINHAS_TEXTO if sl["layout"] in ("curto_texto", "curto_capa", "curto_hipotese") else MAX_LINHAS_FIGURA
+
+
+def palavras(txt: str) -> int:
+    """Palavras visíveis de um texto: tokens com letra ou algarismo (setas, "·", "=", "×" e "+" soltos não contam)."""
+    return sum(1 for w in texto_puro(txt).replace("**", "").split() if re.search(r"[0-9A-Za-zÀ-ÿ]", w))
+
+
+def palavras_visiveis(sl: dict) -> int:
+    """Palavras na tela, fora o título, a figura e a linha de fontes: linhas, cautela, selo e células da tabela."""
+    n = sum(palavras(t) for t, _ in linhas_curtas(sl)) + (palavras(sl["selo"]) if sl["selo"] else 0)
+    return n + sum(palavras(c) for linha in sl["tabela"] for c in linha)
+
+
+def conferir_estrutura(slides: list[dict]) -> None:
+    """As seções do doc 04 são as da estrutura obrigatória (doc 06), nesta ordem, cada uma uma vez."""
+    vistas: list[str] = []
+    for sl in slides:
+        if not vistas or vistas[-1] != sl["secao"]:
+            vistas.append(sl["secao"])
+    if tuple(vistas) != SECOES_CURTO:
+        raise SystemExit(f"ERRO: seções do deck curto fora da estrutura obrigatória (doc 06): {vistas}")
 
 
 def cabe_numa_linha(txt: str) -> bool:
@@ -1008,10 +1045,18 @@ def conferir_curto(sl: dict) -> None:
         raise SystemExit(f"ERRO: título com {len(sl['titulo'])} caracteres (máximo {MAX_TITULO_CURTO}): {sl['titulo']!r}")
     if sl["explica"] or sl["blocos"] or sl["paragrafos"] or sl["colunas"] or sl["cadeia"] or sl["codigo"]:
         raise SystemExit(f"ERRO: o deck curto não leva blocos de texto ({sl['titulo']!r})")
+    if palavras_visiveis(sl) > MAX_PALAVRAS:
+        raise SystemExit(f"ERRO: {palavras_visiveis(sl)} palavras visíveis em {sl['titulo']!r}; o teto é {MAX_PALAVRAS}")
     if lay == "curto_ficha":  # ficha de especificação (pedido do autor): só a tabela, sem limite de linhas
         if not sl["tabela"] or sl["marcadores"] or sl["imagem"] is not None:
             raise SystemExit(f"ERRO: a ficha {sl['titulo']!r} leva só a tabela (e, se houver, a cautela)")
         return
+    if lay == "curto_espec" and (not sl["marcadores"] or re.match(r"\*\*", sl["marcadores"][0])
+                                 or not all(re.match(r"\*\*", m) for m in sl["marcadores"][1:])):
+        raise SystemExit(f"ERRO: a especificação {sl['titulo']!r} abre com a equação (sem rótulo) e segue com linhas "
+                         "rotuladas")
+    if lay == "curto_hipotese" and sum("central" in m.split("**")[1] for m in sl["marcadores"]) != 1:
+        raise SystemExit(f"ERRO: o slide de hipóteses {sl['titulo']!r} tem de ter uma, e só uma, hipótese central")
     n = len(linhas_curtas(sl))
     if n > limite_linhas(sl):
         raise SystemExit(f"ERRO: {n} linhas em {sl['titulo']!r}; o limite é {limite_linhas(sl)}")
@@ -1025,14 +1070,24 @@ def conferir_curto(sl: dict) -> None:
                 raise SystemExit(f"ERRO: a linha {texto_puro(txt)!r} de {sl['titulo']!r} não cabe numa linha só")
 
 
-def _linha_curta(s: Slide, txt: str, cautela: bool, y: float) -> None:
+def _linha_curta(s: Slide, txt: str, cautela: bool, y: float, h: float = H_LINHA_CURTA) -> None:
     if cautela:
-        s.forma("Cautela", X0, y, X1 - X0, H_LINHA_CURTA, adj=12000, fill=CLARO2, anchor="ctr",
+        s.forma("Cautela", X0, y, X1 - X0, h, adj=12000, fill=CLARO2, anchor="ctr",
                 ins=(0.18, 0.02, 0.18, 0.02),
-                paras=[para(runs_md(txt.replace("**", ""), SZ_LINHA_CURTA, VERDE_ESCURO, negrito=True), "l")])
+                paras=[para(runs_md(txt.replace("**", ""), SZ_LINHA_CURTA, VERDE_ESCURO, negrito=True), "l",
+                            linha=100)])
     else:
-        s.forma("Linha", X0, y, X1 - X0, H_LINHA_CURTA, geom="rect", anchor="ctr", ins=(0.18, 0.02, 0.18, 0.02),
-                paras=[para(runs_md(txt, SZ_LINHA_CURTA, TEXTO, cor_neg=VERDE_ESCURO), "l")])
+        s.forma("Linha", X0, y, X1 - X0, h, geom="rect", anchor="ctr", ins=(0.18, 0.02, 0.18, 0.02),
+                paras=[para(runs_md(txt, SZ_LINHA_CURTA, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=100)])
+
+
+H_LINHA_DUPLA = 0.8         # pol.: linha curta que quebra em duas, sob uma figura larga
+
+
+def _altura_linha_baixo(txt: str) -> float | None:
+    """Altura da linha sob a figura: uma ou duas linhas de texto; None se pedir mais de duas."""
+    n = linhas_necessarias(texto_puro(txt).replace("**", ""), SZ_LINHA_CURTA, X1 - X0 - 0.5, fator=0.54)
+    return H_LINHA_CURTA if n == 1 else (H_LINHA_DUPLA if n == 2 else None)
 
 
 def _altura_item_lado(txt: str, w: float) -> float:
@@ -1050,11 +1105,14 @@ def plano_curto_figura(sl: dict) -> dict:
         a = im.size[0] / im.size[1]
     h_selo = (H_SELO + 0.18) if sl["selo"] else 0.0
     n = len(linhas)
-    y_lin = Y_FONTES - 0.08 - n * H_LINHA_CURTA - max(n - 1, 0) * 0.06
-    h_area = y_lin - 0.14 - Y0 - h_selo
-    w_baixo = min(W, h_area * a)
-    if all(cabe_numa_linha(t) for t, _ in linhas) and w_baixo >= FRACAO_MIN_FIGURA * W:
-        return dict(modo="baixo", y_lin=y_lin, w=w_baixo, h=w_baixo / a)
+    alturas = [_altura_linha_baixo(t) for t, _ in linhas]
+    if None not in alturas:
+        # embaixo: a figura larga ocupa a largura e as linhas (até duas de texto cada) ficam sob ela
+        y_lin = Y_FONTES - 0.08 - sum(alturas) - max(n - 1, 0) * 0.06
+        h_area = y_lin - 0.14 - Y0 - h_selo
+        w_baixo = min(W, h_area * a)
+        if w_baixo >= FRACAO_MIN_FIGURA * W:
+            return dict(modo="baixo", y_lin=y_lin, w=w_baixo, h=w_baixo / a, alturas=alturas)
     # ao lado: os itens numa coluna à direita; a cautela (e o selo) sob a figura, na largura dela
     h_tot = Y_FONTES - 0.1 - Y0
     itens = [t for t, c in linhas if not c]
@@ -1115,21 +1173,77 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
         for (rotulo, corpo), h_item in zip(partes, alturas):
             h_item += extra
             w_r = w_rot if rotulo else 0.0
+            b_ = PLANO_B in rotulo  # plano B (decisão do autor de 26/10/2026): em cinza, visivelmente secundário
             if rotulo:
-                s.forma("Rótulo", X0, y, w_r, h_item, adj=10000, fill=VERDE_ESCURO, anchor="ctr",
+                s.forma("Rótulo plano B" if b_ else "Rótulo", X0, y, w_r, h_item, adj=10000,
+                        fill=CINZA_ROTULO if b_ else VERDE_ESCURO, anchor="ctr",
                         paras=[para([run(rotulo, sz, BRANCO, b=True)], "ctr")])
-            s.forma("Item", X0 + w_r + 0.15, y, W - w_r - 0.15, h_item, adj=6000, fill="F4F8F5", line=VERDE,
+            s.forma("Item plano B" if b_ else "Item", X0 + w_r + 0.15, y, W - w_r - 0.15, h_item, adj=6000,
+                    fill=CINZA_FUNDO if b_ else "F4F8F5", line=CINZA_LINHA if b_ else VERDE,
                     line_w=1.0, anchor="ctr", ins=(0.25, 0.04, 0.25, 0.04),
-                    paras=[para(runs_md(corpo, sz, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=102)])
+                    paras=[para(runs_md(corpo, sz, CINZA_TEXTO if b_ else TEXTO,
+                                        cor_neg=CINZA_TEXTO if b_ else VERDE_ESCURO), "l", linha=102)])
             y += h_item + gap
     elif lay == "curto_capa":
-        # capa curta (pedido do autor): só o título e uma linha, grande, no meio do slide
-        if len(itens := [t for t, c in linhas if not c]) != 1 or sl["cautela"]:
-            raise SystemExit(f"ERRO: a capa {sl['titulo']!r} leva uma linha só")
-        h = 2.2
-        y = Y0 + (Y_FONTES - Y0 - h) / 2
-        s.forma("Capa", X0 + 0.6, y, W - 1.2, h, adj=8000, fill=VERDE_ESCURO, anchor="ctr",
-                ins=(0.4, 0.1, 0.4, 0.1), paras=[para(runs_md(itens[0], 30, BRANCO, cor_neg="DDEFE0"), "ctr")])
+        # capa curta e frase de destaque (pedidos do autor): uma linha grande no meio do slide e, se houver, a cautela
+        if len(itens := [t for t, c in linhas if not c]) != 1:
+            raise SystemExit(f"ERRO: a frase {sl['titulo']!r} leva uma linha só")
+        y_fim = Y_FONTES - 0.1
+        if sl["cautela"]:
+            y_c = y_fim - H_LINHA_CURTA
+            _linha_curta(s, sl["cautela"], True, y_c)
+            y_fim = y_c - 0.3
+        h = 2.6
+        y = Y0 + (y_fim - Y0 - h) / 2
+        s.forma("Frase", X0 + 0.4, y, W - 0.8, h, adj=8000, fill=VERDE_ESCURO, anchor="ctr",
+                ins=(0.45, 0.1, 0.45, 0.1), paras=[para(runs_md(itens[0], 30, BRANCO, cor_neg="DDEFE0"), "ctr")])
+    elif lay == "curto_hipotese":
+        # hipóteses (doc 06): a central em destaque, em cima e maior; as de plano B em cinza, visivelmente secundárias
+        itens = [t for t, c in linhas if not c]
+        caut = [t for t, c in linhas if c]
+        y_fim = Y_FONTES - 0.1
+        if caut:
+            y_c = y_fim - H_LINHA_CURTA
+            _linha_curta(s, caut[0], True, y_c)
+            y_fim = y_c - 0.25
+        partes = [re.match(r"\*\*(.+?)\*\*\s*(.*)", it).groups() for it in itens]
+        central = [p for p in partes if "central" in p[0]]
+        planos = [p for p in partes if "central" not in p[0]]
+        gap, w_rot = 0.25, 2.9
+        h_c = (y_fim - Y0 - gap * len(planos)) * 0.5
+        h_b = (y_fim - Y0 - h_c - gap * len(planos)) / max(len(planos), 1)
+        y = Y0
+        for (rot, corpo), h_i, eh_central in [(central[0], h_c, True)] + [(p, h_b, False) for p in planos]:
+            sz = 28 if eh_central else 20
+            s.forma("Rótulo central" if eh_central else "Rótulo plano B", X0, y, w_rot, h_i, adj=10000,
+                    fill=VERDE_ESCURO if eh_central else CINZA_ROTULO, anchor="ctr",
+                    paras=[para([run(rot, sz, BRANCO, b=True)], "ctr")])
+            s.forma("Hipótese central" if eh_central else "Hipótese plano B", X0 + w_rot + 0.15, y,
+                    W - w_rot - 0.15, h_i, adj=6000, fill="F4F8F5" if eh_central else CINZA_FUNDO,
+                    line=VERDE if eh_central else CINZA_LINHA, line_w=2.0 if eh_central else 1.0, anchor="ctr",
+                    ins=(0.3, 0.04, 0.3, 0.04),
+                    paras=[para(runs_md(corpo, sz, TEXTO if eh_central else CINZA_TEXTO,
+                                        cor_neg=VERDE_ESCURO if eh_central else CINZA_TEXTO, negrito=eh_central),
+                                "l", linha=102)])
+            y += h_i + gap
+    elif lay == "curto_espec":
+        # especificação (pedido do autor: "texto demais"): a equação em palavras numa linha grande, no centro, e
+        # embaixo as linhas curtas rotuladas (outcome, amostra ou comparação, cuidado); o resto vai para as notas
+        eq, rotuladas = linhas[0][0], [re.match(r"\*\*(.+?)\*\*\s*(.*)", t_).groups() for t_, _ in linhas[1:]]
+        y_fim = Y_FONTES - 0.1
+        h_eq = 1.75
+        s.forma("Equação em palavras", X0, Y0 + 0.05, W, h_eq, adj=8000, fill=VERDE_ESCURO, anchor="ctr",
+                ins=(0.4, 0.08, 0.4, 0.08), paras=[para(runs_md(eq, 28, BRANCO, cor_neg="DDEFE0"), "ctr")])
+        gap, w_rot, sz = 0.2, 2.4, 20.0
+        y = Y0 + 0.05 + h_eq + 0.3
+        h_i = (y_fim - y - gap * (len(rotuladas) - 1)) / len(rotuladas)
+        for rot, corpo in rotuladas:
+            s.forma("Rótulo", X0, y, w_rot, h_i, adj=10000, fill=VERDE_ESCURO, anchor="ctr",
+                    paras=[para([run(rot, sz, BRANCO, b=True)], "ctr")])
+            s.forma("Item", X0 + w_rot + 0.15, y, W - w_rot - 0.15, h_i, adj=6000, fill="F4F8F5", line=VERDE,
+                    line_w=1.0, anchor="ctr", ins=(0.25, 0.04, 0.25, 0.04),
+                    paras=[para(runs_md(corpo, sz, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=102)])
+            y += h_i + gap
     elif lay == "curto_ficha":
         y_fim = Y_FONTES - 0.1
         if sl["cautela"]:
@@ -1141,8 +1255,10 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
     elif lay == "curto_figura":
         p = plano_curto_figura(sl)
         if p["modo"] == "baixo":
-            for k, (txt, caut) in enumerate(linhas):
-                _linha_curta(s, txt, caut, p["y_lin"] + k * (H_LINHA_CURTA + 0.06))
+            y_l = p["y_lin"]
+            for (txt, caut), h_l in zip(linhas, p["alturas"]):
+                _linha_curta(s, txt, caut, y_l, h_l)
+                y_l += h_l + 0.06
             y_fim = p["y_lin"] - 0.14
             h_bloco = p["h"] + ((H_SELO + 0.18) if sl["selo"] else 0.0)
             y_img = Y0 + (y_fim - Y0 - h_bloco) / 2
@@ -1178,13 +1294,34 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
         for k, (txt, caut) in enumerate(linhas):
             _linha_curta(s, txt, caut, y_lin + k * (H_LINHA_CURTA + 0.06))
         y_fim = y_lin - 0.14
-        larg = larguras_colunas(sl["tabela"], W, 18)
-        h_nat, _ = altura_tabela(sl["tabela"], larg, 18)
-        tabela(s, sl["tabela"], X0, Y0 + 0.05, W, min(y_fim - Y0 - 0.05, h_nat * 1.35), sz_max=18,
-               sz_min=SZ_TAB_CORPO, onde=sl["titulo"])
+        # poucas palavras (pedido do autor): letra grande e a tabela ocupando a área, sem faixa vazia embaixo
+        tabela(s, sl["tabela"], X0, Y0 + 0.05, W, y_fim - Y0 - 0.05, sz_max=24, sz_min=SZ_TAB_CORPO,
+               onde=sl["titulo"])
     if sl["fontes"]:
         linha_fontes(s, sl["fontes"])
-    return xml_slide(sl["titulo"], _nav(sl), s.partes)
+    return xml_slide_curto(sl["titulo"], sl["secao"], s.partes)
+
+
+def xml_slide_curto(titulo: str, secao: str, partes: list[str]) -> str:
+    """O slide do template, com a navegação do rodapé trocada pelas oito seções da estrutura obrigatória (doc 06) e
+    a seção do slide em negrito."""
+    x = xml_slide(titulo, "", partes)
+    if PLANO_B in titulo:  # plano B: o título fica cinza, visivelmente secundário (decisão do autor de 26/10/2026)
+        k = x.index('name="Título"')
+        x = x[:k] + x[k:].replace('<a:srgbClr val="FFFFFF"/>', f'<a:srgbClr val="{COR_TITULO_PLANO_B}"/>', 1)
+    m = re.search(r'(<p:sp><p:nvSpPr><p:cNvPr id="4" name="Navegação do rodapé"/>.*?<a:p>)(.*?)(</a:p>)', x, flags=re.S)
+    runs = []
+    for k, sec in enumerate(SECOES_CURTO):
+        sep = "  |  " if k < len(SECOES_CURTO) - 1 else ""
+        if sec == secao:
+            runs.append(f'<a:r><a:rPr lang="pt-BR" sz="1000" b="1" dirty="0"><a:solidFill><a:srgbClr val="114719"/>'
+                        f'</a:solidFill><a:latin typeface="{FONTE}"/></a:rPr><a:t>{escape(sec)}</a:t></a:r>'
+                        f'<a:r><a:rPr lang="pt-BR" sz="1000" dirty="0"><a:latin typeface="{FONTE}"/></a:rPr>'
+                        f'<a:t xml:space="preserve">{sep}</a:t></a:r>')
+        else:
+            runs.append(f'<a:r><a:rPr lang="pt-BR" sz="1000" dirty="0"><a:latin typeface="{FONTE}"/></a:rPr>'
+                        f'<a:t xml:space="preserve">{escape(sec)}{sep}</a:t></a:r>')
+    return x[:m.start(2)] + "".join(runs) + x[m.end(2):]
 
 
 def construir_curto(deck: Path, saida: Path) -> dict:
@@ -1192,6 +1329,7 @@ def construir_curto(deck: Path, saida: Path) -> dict:
     slides_doc = ler_slides(DOC_CURTO)
     if any(sl["apendice"] for sl in slides_doc):
         raise SystemExit("ERRO: o deck curto não tem apêndice")
+    conferir_estrutura(slides_doc)
     for sl in slides_doc:
         conferir_curto(sl)
     pk = Pacote(deck)
@@ -1247,7 +1385,7 @@ def construir_curto(deck: Path, saida: Path) -> dict:
                         f'<Override PartName="/ppt/notesSlides/notesSlide{nn}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml"/></Types>')
         itens.append((str(prox_id + k), rid))
         lista.append(dict(posicao=k + 1, titulo=sl["titulo"], secao=sl["secao"], layout=sl["layout"],
-                          linhas=[texto_puro(t) for t, _ in linhas_curtas(sl)],
+                          linhas=[texto_puro(t) for t, _ in linhas_curtas(sl)], palavras=palavras_visiveis(sl),
                           figura=sl["imagem"].relative_to(ROOT).as_posix() if sl["imagem"] else None))
     nova = "<p:sldIdLst>" + "".join(f'<p:sldId id="{i}" r:id="{r}"/>' for i, r in itens) + "</p:sldIdLst>"
     pres = re.sub(r"<p:sldIdLst>.*?</p:sldIdLst>", lambda _m: nova, pres, count=1, flags=re.S)
@@ -1290,11 +1428,14 @@ def converter_pdf(pptx: Path, destino: Path) -> bool:
 def escrever_manifesto_curto(deck: Path, saida: Path, resumo: dict, com_pdf: bool) -> None:
     man = {
         "natureza_dos_dados": "EMPIRICO",
-        "script": "scripts/apresentacao/gerar_deck_banca2.py --curto",
-        "pedido": "autor, 26/10/2026: só do 14 em diante, muito menor, sem o diagrama causal da teoria no meio",
-        "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; no máximo "
-                 f"{MAX_LINHAS_FIGURA} linhas curtas por slide de figura ou tabela e {MAX_LINHAS_TEXTO} por slide "
-                 "só de texto, contando a cautela; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
+        "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)",
+        "pedido": "autor, 26/10/2026: só a parte empírica, muito menor, sem o diagrama causal da teoria; estrutura "
+                  "obrigatória da versão final (doc 06); no máximo cerca de 30 palavras por slide",
+        "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na "
+                 f"ordem {' → '.join(SECOES_CURTO)}; no máximo {MAX_PALAVRAS} palavras visíveis por slide, fora o "
+                 "título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
+        "numeracao_das_hipoteses": "a partir de 26/10/2026: H1 preenchimento; H2 bolsa × origem (antes H3); H3 "
+                                   "oferta (antes H4)",
         "conteudo_canonico": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
         "entradas": [
             {"caminho": "deck do grupo (fora do repositório; não é alterado)", "nome": deck.name,
@@ -1507,13 +1648,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--deck", type=Path, default=os.environ.get("PMME_DECK_GRUPO"),
                     help="deck do grupo (.pptx); só leitura. Padrão: variável de ambiente PMME_DECK_GRUPO")
     ap.add_argument("--curto", action="store_true",
-                    help="gera o deck curto (doc 04) em vez do deck completo")
-    ap.add_argument("--sem-pdf", action="store_true", help="com --curto: não converte o deck curto em PDF")
+                    help="gera o deck curto (doc 04); é o padrão desde 26/10/2026 e fica só por compatibilidade")
+    ap.add_argument("--completo", action="store_true",
+                    help="regera o deck completo (doc 02), que desde 26/10/2026 é só registro e não é mais usado")
+    ap.add_argument("--sem-pdf", action="store_true", help="não converte o deck curto em PDF")
     a = ap.parse_args(argv)
     if not a.deck:
         ap.error("informe --deck ou a variável de ambiente PMME_DECK_GRUPO")
+    if a.curto and a.completo:
+        ap.error("--curto e --completo são excludentes")
     deck = Path(a.deck)
-    if a.curto:
+    if not a.completo:
         resumo = construir_curto(deck, SAIDA)
         com_pdf = not a.sem_pdf and converter_pdf(SAIDA / ARQ_CURTO, SAIDA / ARQ_CURTO_PDF)
         escrever_manifesto_curto(deck, SAIDA, resumo, com_pdf)

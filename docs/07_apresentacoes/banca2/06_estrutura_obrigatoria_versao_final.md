@@ -7,6 +7,13 @@
 > (`scripts/apresentacao/gerar_deck_banca2.py`), não à mão.<br>
 > **Estatuto:** regra de apresentação. Não muda protocolo nem resultado.
 
+> [!NOTE]
+> **Numeração da apresentação a partir de 26/10/2026:** H1 preenchimento; H2
+> bolsa × origem (antes H3); H3 oferta (antes H4). A H2 antiga (escolha por
+> ciclo) saiu como hipótese própria e virou especificação secundária da H2. Os
+> nomes dos documentos de análise (P1h, P4, protocolos) e dos códigos do
+> registro de números não mudam.
+
 ## 1. As seções, nesta ordem
 
 | # | Seção | O que entra | O que não entra |
@@ -31,17 +38,34 @@ continuam, desde que caibam nesta estrutura:
 - especificação em linguagem simples;
 - números só de `output/`, com cautelas obrigatórias;
 - **só o deck curto** (`output/apresentacao_banca2/deck_banca2_curto.pptx`
-  e `.pdf`). O completo não é mais gerado nem atualizado.
+  e `.pdf`). O completo não é mais gerado nem atualizado; o gerador só o
+  refaz com `--completo`.
+- **no máximo cerca de 30 palavras visíveis por slide** (pedido do autor de
+  26/10/2026: "slides 4, 7 etc. têm texto demais"), fora o título, a figura e
+  a linha de fontes. Conta como palavra todo trecho com letra ou algarismo;
+  o teto aplicado pelo gerador e pelo teste é 30;
+- **especificação em até 4 linhas curtas**, em frases telegráficas: a equação
+  em palavras numa linha grande no centro e, embaixo, outcome, amostra ou
+  comparação e cuidado. Erro-padrão, o que é comum e o que é por ciclo,
+  sensibilidades e detalhes de amostra vão para as notas do apresentador;
+- nos demais slides, o detalhe também vai para as notas; a cautela
+  obrigatória continua na tela, curta.
 
-## 3. Como o conteúdo atual se encaixa (proposta, a validar)
+## 3. Como o conteúdo atual se encaixa (versão de 26/10/2026, a validar)
 
-| Seção | Conteúdo que já existe |
+Numeração nova (H1 preenchimento; H2 bolsa × origem; H3 oferta). O conteúdo
+canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_curto.md).
+
+| Seção | Conteúdo |
 |---|---|
-| Hipótese | candidata a central: H3 (a bolsa pesa pouco perto da origem do médico, "incentivo limitado"). Em cinza, como plano B: H1 (preenchimento), H2 (escolha) e H4 (oferta). A escolha final é do autor, depois da validação dos professores |
-| Dados | tabela de fontes; cronologia dos três ciclos; variáveis principais (faixa da bolsa, IVS 2010 oficial, vagas, alocados, escolhas, origem do candidato, horas no CNES) e secundárias (composição das vagas, concorrência, região, porte) |
-| Análise descritiva | os três ciclos em números; IVS × faixa; distribuição do IVS; dados crus em volta dos cortes; 1ª opção em relação à origem; subida do preenchimento dentro das faixas (doc 57m) |
-| Metodologia | slides de especificação de cada estimador |
-| Identificação | premissas e testes (regra *sharp*, densidade, balanço, placebos, pacote do corte e auditorias 18 e 35, tendências paralelas) |
-| Resultados | gráfico principal da hipótese central e de cada plano B |
-| Robustez | antes e depois do controle; especificações do logit; TOST; Rambachan–Roth; diagnóstico da queda em 0,300 (doc 57l) |
-| Discussão | incentivo limitado; por que a bolsa mexe na escolha e não no preenchimento; substituição na oferta |
+| Hipótese | candidata central, em destaque: **H1** (preenchimento). Em cinza, como plano B: H2 (a bolsa pesa pouco perto da origem do médico, "incentivo limitado"; antes H3) e H3 (oferta; antes H4). Decisão do autor de 26/10/2026; a escolha final vem depois da validação dos professores |
+| Dados | variáveis principais e secundárias, com fonte e unidade (detalhe de período e cobertura nas notas) |
+| Análise descritiva | os três ciclos em números; IVS × faixa; da H1: dados crus em volta dos cortes (scatter IVS × preenchimento com as retas) e subida do preenchimento dentro das faixas (doc 57m, auditoria 37) |
+| Metodologia | H1 do adendo 48b (só vagas imediatas) em até 4 linhas, com a equação no centro; H2 e H3, plano B, num slide só |
+| Identificação | da H1: regra *sharp*, densidade, balanço e placebos, com a ressalva das capitais em 0,300 (auditoria 36); o pacote do corte (auditorias 18 e 35); tendências paralelas da H3 (plano B) numa linha |
+| Resultados | H1 principal do adendo 48b (HI-1 e HI-2 por corte; "aguardando 48b" até as saídas existirem); depois H2 (P1h) e H3 (P4), plano B |
+| Robustez | o bloco da H1, junto: medidas antigas (A3, N1); antes e depois do controle; por ciclo; a queda em 0,300 em três ideias (dados crus iguais; a reta levada até o corte, puxada por capitais e Nordeste; controlando a capital ou só com vagas imediatas, a queda encolhe); o que dá para afirmar (TOST). Depois H2 por ciclo e H3 na nota de corte, plano B |
+| Discussão | a partir da H1: o sinal negativo em uma linha simples; por que não sobe: incentivo limitado (H2) e substituição na oferta (H3) |
+
+Dentro de cada seção, os slides da mesma hipótese ficam juntos, em sequência (H1, depois H2, depois H3); o título
+leva a hipótese ("H1 · …"), e os de plano B levam "plano B", em cinza.
