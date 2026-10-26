@@ -97,6 +97,14 @@ ARQ_VM = T23.ARQ_VM
 N_EST = OUT / "N_estimativas.csv"
 
 DATA_EXECUCAO = "2026-10-21"
+# Correção de 26/10/2026 (auditoria 36; adendo 48b, §7): o zero de alocados nas células só de reserva do ciclo 2
+# vale para o quadro de 19/03/2026, refeito depois do resultado preliminar; não é a regra do ciclo. Texto, sem número
+# de resultado.
+NOTA_A36_C2 = ("no quadro de 19/03/2026, usado aqui, que foi refeito depois do resultado preliminar e converteu em "
+               "imediatas vagas de reserva onde houve alocado; pelo quadro de 13/02/2026, vigente na inscrição, havia "
+               "alocados do ciclo 2 em células só de reserva (correção de 26/10/2026: "
+               "[auditoria 36](../auditorias/36_auditoria_dados_H1.md); "
+               "[adendo 48b, §7](48b_adendo_H1_vagas_imediatas.md))")
 ESTATUTO = "DIAGNOSTICO_FORA_PROTOCOLO_48"
 NATUREZA = "EMPIRICO"
 CORTES = L.CORTES_MIL                 # (300, 400)
@@ -2315,8 +2323,8 @@ def secao_adendo2(est: pd.DataFrame, resumo: dict) -> str:
         f"{_f(100 * frac_c2, 0, False)} % do salto com os ciclos juntos ({_f(contr[2]['contribuicao'], 1, pct=True)} de "
         f"{_f(base['tau'], 1, pct=True)} p.p.); o ciclo 3 contribui {_f(contr[3]['contribuicao'], 1, pct=True)} e o "
         f"ciclo 1, {_f(contr[1]['contribuicao'], 1, pct=True)}. "
-        f"No ciclo 2, a parte de cadastro reserva sobe no corte ({lin(fcr_c2)} p.p.), e nenhuma vaga de célula só de "
-        f"reserva foi preenchida na 1ª chamada desse ciclo ({_f(al_cr_c2, 0, False)} alocados): ali, mais reserva no "
+        f"No ciclo 2, a parte de cadastro reserva sobe no corte ({lin(fcr_c2)} p.p.), e as células só de reserva têm "
+        f"{_f(al_cr_c2, 0, False)} alocados na 1ª chamada {NOTA_A36_C2}: com esse quadro, mais reserva no "
         f"denominador baixa a taxa por vaga oferecida, e contando só as vagas imediatas a queda do ciclo 2 fica em "
         f"{lin(vi_c2)} p.p. Nos ciclos juntos isso não basta, porque no ciclo 3 a taxa só com vagas imediatas também "
         f"cai ({lin(vi_c3)} p.p., IC largo). "

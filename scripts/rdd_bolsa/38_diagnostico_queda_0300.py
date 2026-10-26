@@ -120,6 +120,21 @@ COMP_PRE = ("202406", "202506")
 LIMITE_CNES = "202609"
 POR_HAB = 1e4
 LIMIAR_METADE = 0.5
+# Correção de 26/10/2026 (auditoria 36; adendo 48b, §7): o quadro do ciclo 2 usado aqui (retificado de 19/03/2026)
+# foi refeito depois do resultado preliminar. A frase de que, no ciclo 2, a vaga de reserva não podia ser preenchida
+# na 1ª chamada descreve esse quadro, não a regra; pelo quadro de 13/02/2026, vigente na inscrição, havia alocados em
+# células só de reserva. Texto, sem número de resultado.
+REF_A36 = ("[auditoria 36](../auditorias/36_auditoria_dados_H1.md); "
+           "[adendo 48b, §7](48b_adendo_H1_vagas_imediatas.md)")
+QUADRO_C2_POS = "quadro de 19/03/2026, refeito depois do resultado preliminar"
+NOTA_A36_BANCA = (f"*Correção de 26/10/2026 ({REF_A36}).* A versão anterior desta frase dizia que, no ciclo 2, a vaga "
+                  "de reserva não podia ser preenchida na 1ª chamada. Isso descreve o quadro de 19/03/2026, refeito "
+                  "depois do resultado preliminar; pelo quadro de 13/02/2026, vigente na inscrição, havia alocados do "
+                  "ciclo 2 em células só de reserva.")
+NOTA_A36_DF = (f"**Correção de 26/10/2026 ({REF_A36}).** Isso não mostra que a reserva não podia ser preenchida na 1ª "
+               "chamada, como dizia a versão anterior deste parágrafo. O quadro de 19/03/2026 foi refeito depois do "
+               "resultado preliminar e converteu em imediatas vagas de reserva onde houve alocado; pelo quadro de "
+               "13/02/2026, vigente na inscrição, havia alocados do ciclo 2 em células só de reserva.")
 Q = ("Q1", "Q2", "Q3")
 DESC_Q = {
     "Q1": "N1 com o controle das vagas oferecidas (S-a), ciclos 1-3 juntos",
@@ -1702,8 +1717,8 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
                f"(IC {_icm('so_cr', fun['P_C'])}), e a de ser preenchida quando tem esse candidato muda "
                f"{_fm('so_cr', fun['P_F_dado_C']['tau'])} (IC {_icm('so_cr', fun['P_F_dado_C'])}). "
              + f"No ciclo 2, a queda da taxa vai de {_pp(d2['tau_q2_ciclo2_todas'])} p.p. para "
-               f"{_pp(d2['tau_q2_ciclo2_sem_so_cr'])} p.p. sem as células só de CR, que nesse ciclo não foram preenchidas "
-               "na 1ª chamada. "
+               f"{_pp(d2['tau_q2_ciclo2_sem_so_cr'])} p.p. sem as células só de CR do {QUADRO_C2_POS}, que não "
+               f"registra alocado nelas (correção de 26/10/2026: {REF_A36}). "
              + ("Igualar um fator entre os lados reduz a queda em 0,300 pela metade ou mais em: " + "; ".join(frases) + "."
                 if frases else "Nenhum fator, igualado entre os lados, reduz a queda pela metade."))
     de = _sel(est, explicacao="D-e", bloco="balanco", corte=RC[300])
@@ -1746,9 +1761,9 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
         itens.append("menos células desse lado tiveram candidato de 1ª opção"
                      + ("" if _excl(fun["P_C"]) else " (estimativa imprecisa)"))
     if d2["apoia"]:
-        itens.append("no ciclo 2, em que vaga de reserva não podia ser preenchida na 1ª chamada, mais células desse lado "
-                     "eram só de reserva" if (_excl(cr_c2) and float(cr_c2["tau"]) > 0) else
-                     "no ciclo 2 vaga de reserva não podia ser preenchida na 1ª chamada")
+        itens.append(f"no ciclo 2, mais células desse lado eram só de reserva no {QUADRO_C2_POS}"
+                     if (_excl(cr_c2) and float(cr_c2["tau"]) > 0) else
+                     f"no ciclo 2 a queda diminui sem as células só de reserva do {QUADRO_C2_POS}")
     descr = ("; ".join(itens[:-1]) + "; e " + itens[-1]) if len(itens) > 1 else (itens[0] if itens else "")
     acaso = ("acaso não está descartado" if lt["leitura_principal"] == "ACASO_MAIS_POUCOS_MUNICIPIOS" or
              any(comp[k]["p_posto"] > 0.10 for k in Q) else "a queda é maior que a dos cortes falsos")
@@ -1766,6 +1781,8 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
         frase = ("Em 0,300 o preenchimento estimado no corte cai, e os dados disponíveis não explicam por quê. "
                  + reta + "Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras.")
     p.append(f"**Para dizer na banca.** \"{frase}\"")
+    if d2["apoia"]:
+        p.append(NOTA_A36_BANCA)
     return "\n\n".join(p)
 
 
@@ -2106,8 +2123,9 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
                                     + (f" (`{nota['arquivo']}`, aba `{nota['aba']}`, linha {nota['linha']}): "
                                        f"“{nota['texto']}”" if nota else ": não encontrada")
                                     + ". Ela diz que o cadastro reserva não tem vaga imediata e só recebe vaga “em "
-                                    "chamadas futuras”, o que bate com os dados: nenhuma célula só de CR do ciclo 2 foi "
-                                    "preenchida na 1ª chamada (doc 49, §2). Nos ciclos 1 e 3, os editais preveem "
+                                    "chamadas futuras”. No quadro de 19/03/2026, usado no pipeline, nenhuma célula só de "
+                                    "CR do ciclo 2 tem alocado na 1ª chamada (doc 49, §2). " + NOTA_A36_DF
+                                    + " Nos ciclos 1 e 3, os editais preveem "
                                     "remanejamento para o cadastro reserva (doc 49, §2, itens 4.1.3.4 e 5.7)."))
     partes.append("## 9. D-g — outras políticas em 0,300\n\n"
                   "Sem teste causal possível. Placebo de balanço com dados pré (202406–202506) e a lista da auditoria "

@@ -286,21 +286,62 @@ class TestSaidasReais(unittest.TestCase):
                          sorted({"OC-A3": 2, "OC-A4": 2, "OC-A5": 2, "OC-B0": 2, "OC-B1": 2, "OC-B2": 2, "OC-B3": 2,
                                  "OC-B4": 2, "OC-B5": 2, "OC-D": 6}.items()))
         np.testing.assert_allclose(holm["p_holm"], L.holm(holm["p_valor"].to_numpy()), atol=1e-12)
-        np.testing.assert_allclose(bky["q_bky"], L.qvalores_bky(bky["p_valor"].to_numpy()), atol=1e-12)
+        np.testing.assert_allclose(bky["q_bky"], L.qvalores_bky(OC.p_familia(bky).to_numpy()), atol=1e-12)
+        self.assertTrue(np.isfinite(OC.p_familia(bky).to_numpy()).all())
         self.assertTrue(e.loc[e["familia_multipla"] != "holm", "p_holm"].isna().all())
         self.assertTrue(e.loc[e["familia_multipla"] != "bky", "q_bky"].isna().all())
 
     def test_fuzzy_coerente_com_a_forma_reduzida(self):
         e = self.est
         for _, r in e[e["especificacao"].str.startswith("fuzzy")].iterrows():
-            self.assertAlmostEqual(r["tau"], r["tau_forma_reduzida"] / r["tau_primeiro_estagio"], places=10)
-            if np.isfinite(r["ar_ic_inf"]):
+            if r["f_robusto"] >= OC.F_FRACO:
+                self.assertAlmostEqual(r["tau"], r["tau_forma_reduzida"] / r["tau_primeiro_estagio"], places=10)
+                self.assertAlmostEqual(r["p_valor"], r["ar_p_beta0"], places=12)
+            if np.isfinite(r["ar_ic_inf"]) and np.isfinite(r["ar_ic_sup"]):
                 self.assertLessEqual(r["ar_ic_inf"], r["ar_ic_sup"])
             if r["populacao"] == "V" and r["especificacao"] == "fuzzy_D1":
                 a = e[(e["parte"] == "A") & (e["populacao"] == "V") & (e["outcome_id"] == r["outcome_id"])
                       & (e["corte"] == r["corte"]) & (e["especificacao"] == "principal")].iloc[0]
                 self.assertAlmostEqual(r["tau_forma_reduzida"], a["tau"], places=10)
-                self.assertAlmostEqual(r["p_valor"], a["p_valor"], places=10)
+                self.assertAlmostEqual(r["ar_p_beta0"], a["p_valor"], places=10)
+
+    def test_fuzzy_vazio_quando_instrumento_fraco(self):
+        """Auditoria 39, achado B1 (correção de formato pedida pelo autor em 26/10/2026): com F robusto < 10, a
+        linha fuzzy não grava razão, EP, IC convencional nem p; leva a nota `instrumento_fraco_F<10`; o IC de AR
+        ilimitado sai como `ar_ilimitado = True`, sem a borda da grade nos limites."""
+        f = self.est[self.est["especificacao"].str.startswith("fuzzy")]
+        fracos = f[~(f["f_robusto"] >= OC.F_FRACO)]
+        self.assertGreater(len(fracos), 0)
+        for _, r in fracos.iterrows():
+            chave = (r["outcome_id"], r["populacao"], r["corte"], r["especificacao"])
+            for c in ("tau", "ep", "ic95_inf", "ic95_sup", "p_valor"):
+                self.assertTrue(pd.isna(r[c]), (c, chave))
+            self.assertTrue(r["nota"].startswith(OC.NOTA_FRACO), chave)
+            self.assertTrue(np.isfinite(r["ar_p_beta0"]), chave)
+            self.assertTrue(np.isfinite(r["tau_forma_reduzida"]) and np.isfinite(r["tau_primeiro_estagio"]), chave)
+        for _, r in f.iterrows():
+            chave = (r["outcome_id"], r["populacao"], r["corte"], r["especificacao"])
+            if str(r["ar_ilimitado"]) == "True":
+                self.assertTrue(pd.isna(r["ar_ic_inf"]) and pd.isna(r["ar_ic_sup"]), chave)
+            if str(r["ar_aberto_inf"]) == "True":
+                self.assertTrue(pd.isna(r["ar_ic_inf"]), chave)
+            if str(r["ar_aberto_sup"]) == "True":
+                self.assertTrue(pd.isna(r["ar_ic_sup"]), chave)
+        nao_fuzzy = self.est[~self.est["especificacao"].str.startswith("fuzzy")]
+        self.assertTrue(nao_fuzzy[["ar_ilimitado", "ar_p_beta0"]].isna().all().all())
+
+    def test_ar_para_csv(self):
+        base = {"ar_ic_inf": -5.0, "ar_ic_sup": 5.0, "ar_n_intervalos": 1, "nota_ar": "x"}
+        r = OC.ar_para_csv({**base, "ar_aberto_inf": True, "ar_aberto_sup": True})
+        self.assertTrue(r["ar_ilimitado"])
+        self.assertTrue(np.isnan(r["ar_ic_inf"]) and np.isnan(r["ar_ic_sup"]))
+        r = OC.ar_para_csv({**base, "ar_aberto_inf": False, "ar_aberto_sup": True})
+        self.assertFalse(r["ar_ilimitado"])
+        self.assertEqual(r["ar_ic_inf"], -5.0)
+        self.assertTrue(np.isnan(r["ar_ic_sup"]))
+        r = OC.ar_para_csv({**base, "ar_aberto_inf": False, "ar_aberto_sup": False})
+        self.assertFalse(r["ar_ilimitado"])
+        self.assertEqual((r["ar_ic_inf"], r["ar_ic_sup"]), (-5.0, 5.0))
 
     def test_ar_ilimitado_quando_f_abaixo_do_critico(self):
         """Auditoria 39: com F robusto (t² do primeiro estágio na mesma amostra) abaixo de z², o coeficiente de β²
