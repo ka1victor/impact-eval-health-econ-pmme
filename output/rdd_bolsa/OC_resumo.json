@@ -579,7 +579,7 @@
   "saidas": [
     {
       "arquivo": "output/rdd_bolsa/OC_estimativas.csv",
-      "sha256": "7e5082e3ef4bc660428d092e50bf66c94d711f9d8f18c629e142fc0379754aba"
+      "sha256": "bc2f455f871d184c63a1f22c02867ceb492453363e7c3d55883ec98c4826aa0a"
     },
     {
       "arquivo": "output/rdd_bolsa/OC_estudo_evento.csv",

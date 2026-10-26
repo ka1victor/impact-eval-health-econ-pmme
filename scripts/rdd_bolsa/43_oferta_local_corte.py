@@ -265,7 +265,7 @@ COLUNAS_EST = ["natureza_dos_dados", "estatuto", "parte", "id_oc", "outcome_id",
                "populacao", "corte", "especificacao", "h", "n_abaixo", "n_acima", "n_obs", "n_fora_sem_dado", "tau",
                "ep", "ic95_inf", "ic95_sup", "p_valor", "gl", "f_robusto", "tau_forma_reduzida",
                "tau_primeiro_estagio", "ar_ic_inf", "ar_ic_sup", "ar_aberto_inf", "ar_aberto_sup", "ar_n_intervalos",
-               "ar_grade_L", "ar_grade_n", "M", "vies_max", "n_tratados", "familia_multipla", "p_holm", "q_bky",
+               "ar_ilimitado", "ar_p_beta0", "ar_grade_L", "ar_grade_n", "M", "vies_max", "n_tratados", "familia_multipla", "p_holm", "q_bky",
                "unidade", "contraste", "nota"]
 
 COLUNAS_EVENTO = ["natureza_dos_dados", "estatuto", "outcome_id", "populacao", "corte", "competencia", "janela",
@@ -353,6 +353,28 @@ def anderson_rubin(s: np.ndarray, dy: np.ndarray, d: np.ndarray, corte: int, h_m
         nota.append(f"conjunto aceito com {len(runs)} intervalos na grade; relatada a envoltória")
     out.update({"ar_ic_inf": float(lo), "ar_ic_sup": float(hi), "ar_n_intervalos": int(len(runs)),
                 "ar_aberto_inf": aberto_inf, "ar_aberto_sup": aberto_sup, "nota_ar": "; ".join(nota)})
+    return out
+
+
+NOTA_FRACO = "instrumento_fraco_F<10"
+
+
+def ar_para_csv(ar: dict) -> dict:
+    """Forma do IC de AR no CSV (auditoria 39, achado B1): o lado aberto não grava a borda da grade como limite.
+    Aberto dos dois lados num só intervalo = reta inteira na grade: `ar_ilimitado = True` e os dois limites vazios."""
+    out = dict(ar)
+    ab_inf, ab_sup = bool(ar.get("ar_aberto_inf")), bool(ar.get("ar_aberto_sup"))
+    out["ar_ilimitado"] = bool(ab_inf and ab_sup and ar.get("ar_n_intervalos") == 1)
+    if ab_inf:
+        out["ar_ic_inf"] = np.nan
+    if ab_sup:
+        out["ar_ic_sup"] = np.nan
+    if out["ar_ilimitado"]:
+        out["nota_ar"] = ("ar_ilimitado = True: o conjunto de AR aceita todo β da grade (reta inteira); ar_ic_inf e "
+                          "ar_ic_sup vazios, a borda da grade (ar_grade_L) não é limite do IC")
+    elif ab_inf or ab_sup:
+        out["nota_ar"] = ((ar.get("nota_ar") or "") + "; o limite do lado aberto fica vazio (a borda da grade não é "
+                          "limite do IC)").lstrip("; ")
     return out
 
 
@@ -499,21 +521,26 @@ def parte_b(dados: dict, bases_V: dict, bases_U: dict) -> tuple[list[dict], dict
                     raise FalhaValidacao("AR em β = 0 difere do p da forma reduzida na mesma amostra")
                 razao = rf["tau"] / fsr["tau"] if np.isfinite(fsr["tau"]) and fsr["tau"] != 0 else np.nan
                 fraco = not (fsr["f_robusto"] >= F_FRACO)
+                ar_csv = ar_para_csv(ar)
                 nota = "; ".join(t for t in (
-                    "instrumento fraco (F robusto < 10): razão sem estimativa pontual utilizável; só o IC de AR"
-                    if fraco else "", ar.get("nota_ar", ""),
-                    "p = p de Anderson-Rubin em β = 0 (= p da forma reduzida na mesma amostra)") if t)
+                    f"{NOTA_FRACO}: tau, ep, IC convencional e p vazios (razão sem estimativa pontual utilizável); "
+                    "só o IC de AR" if fraco else "", ar_csv["nota_ar"],
+                    "p de Anderson-Rubin em β = 0 (= p da forma reduzida na mesma amostra) em ar_p_beta0; é o p que "
+                    "entra no BKY") if t)
+                # Auditoria 39, achado B1 (correção de formato pedida pelo autor em 26/10/2026): com instrumento
+                # fraco a linha não grava ponto, EP, IC convencional nem p; o p de AR em β = 0 fica em ar_p_beta0.
+                res_b = {"n_abaixo": rf["n_abaixo"], "n_acima": rf["n_acima"], "n_obs": rf["n_obs"], "nota": nota}
+                if not fraco:
+                    res_b.update({"tau": razao, "p_valor": ar["p_beta0"]})
                 ln = linha("B", f"OC-B{oid[1]}", oid, pn, corte, f"fuzzy_{dn}",
                            papel="secundaria" if principal else "sensibilidade", desc=SPEC[oid]["desc"],
                            unidade=f"{SPEC[oid]['unidade']} por município que recebe médico" if dn == "D1" else
                            f"{SPEC[oid]['unidade']} por médico do PMM-E por 10 mil hab.",
-                           contraste=CONTRASTE_B,
-                           res={"tau": razao, "p_valor": ar["p_beta0"], "n_abaixo": rf["n_abaixo"],
-                                "n_acima": rf["n_acima"], "n_obs": rf["n_obs"], "nota": nota},
+                           contraste=CONTRASTE_B, res=res_b,
                            f_robusto=fsr["f_robusto"], tau_forma_reduzida=rf["tau"], tau_primeiro_estagio=fsr["tau"],
-                           n_fora_sem_dado=int((~ok & (np.abs(s - corte) < H)).sum()),
-                           **{k: ar[k] for k in ("ar_ic_inf", "ar_ic_sup", "ar_aberto_inf", "ar_aberto_sup",
-                                                 "ar_n_intervalos", "ar_grade_L", "ar_grade_n")})
+                           n_fora_sem_dado=int((~ok & (np.abs(s - corte) < H)).sum()), ar_p_beta0=ar["p_beta0"],
+                           **{k: ar_csv[k] for k in ("ar_ic_inf", "ar_ic_sup", "ar_aberto_inf", "ar_aberto_sup",
+                                                     "ar_n_intervalos", "ar_ilimitado", "ar_grade_L", "ar_grade_n")})
                 if principal:
                     ln["familia_multipla"] = "bky"
                 linhas.append(ln)
@@ -624,13 +651,21 @@ def parte_e(dados: dict) -> tuple[list[dict], dict]:
     return linhas, {"U_com_celula": int(cel.sum()), "U": int(len(U))}
 
 
+def p_familia(est: pd.DataFrame) -> pd.Series:
+    """p que entra em Holm/BKY: `p_valor`; nas linhas fuzzy (D10), o p de AR em β = 0 (`ar_p_beta0`), que fica fora
+    de `p_valor` quando o instrumento é fraco (auditoria 39, B1). A família e os p usados não mudam."""
+    fuzzy = est["especificacao"].astype(str).str.startswith("fuzzy")
+    return est["p_valor"].where(~fuzzy, est["ar_p_beta0"]).astype(float)
+
+
 def aplicar_multiplos(est: pd.DataFrame) -> pd.DataFrame:
     est = est.copy()
     est["p_holm"] = np.nan
     est["q_bky"] = np.nan
+    p_fam = p_familia(est)
     for fam, col, fn in (("holm", "p_holm", L.holm), ("bky", "q_bky", L.qvalores_bky)):
         m = est["familia_multipla"] == fam
-        est.loc[m, col] = fn(est.loc[m, "p_valor"].to_numpy(float))
+        est.loc[m, col] = fn(p_fam[m].to_numpy(float))
     return est
 
 
@@ -729,12 +764,12 @@ def _verdade(v) -> bool:
 
 
 def _ar_txt(r) -> str:
-    if not np.isfinite(r["ar_ic_inf"]):
+    if not (r["ar_n_intervalos"] >= 1):
         return "vazio na grade"
-    if _verdade(r["ar_aberto_inf"]) and _verdade(r["ar_aberto_sup"]) and r["ar_n_intervalos"] == 1:
+    if _verdade(r["ar_ilimitado"]):
         return f"ilimitado (aceita todo β da grade, ±{_n(r['ar_grade_L'], 2, False)})"
-    lo = f"{_n(r['ar_ic_inf'])} (aberto)" if _verdade(r["ar_aberto_inf"]) else _n(r["ar_ic_inf"])
-    hi = f"{_n(r['ar_ic_sup'])} (aberto)" if _verdade(r["ar_aberto_sup"]) else _n(r["ar_ic_sup"])
+    lo = "−∞ (aberto)" if _verdade(r["ar_aberto_inf"]) else _n(r["ar_ic_inf"])
+    hi = "+∞ (aberto)" if _verdade(r["ar_aberto_sup"]) else _n(r["ar_ic_sup"])
     extra = f", {int(r['ar_n_intervalos'])} intervalos" if r["ar_n_intervalos"] > 1 else ""
     return f"[{lo}; {hi}]{extra}"
 
@@ -936,14 +971,18 @@ def gerar_tabelas_doc(est: pd.DataFrame, ev: pd.DataFrame, resumo: dict) -> dict
                 razao = "— (fraco)" if fraco else _n(r["tau"])
                 linhas.append(f"| {r['id_oc']} | {oid} | {dn} / {pn} | {_corte_txt(k)} | {_n(r['f_robusto'], 1, False)} | "
                               f"{_n(r['tau_forma_reduzida'])} | {_n(r['tau_primeiro_estagio'], 3)} | {razao} | "
-                              f"{_ar_txt(r)} | {_p(r['p_valor'])} | {_p(r['q_bky'])} |")
+                              f"{_ar_txt(r)} | {_p(r['ar_p_beta0'])} | {_p(r['q_bky'])} |")
     g = resumo["parametros"]["anderson_rubin"]
     t["fuzzy"] = "\n".join(linhas) + (
         f"\n\nRazão = forma reduzida ÷ primeiro estágio, na amostra com ΔY observado. Com F robusto < 10 a razão não "
-        f"tem ponto utilizável e a tabela mostra só o IC. IC de Anderson–Rubin: β aceito se o p da RDD de ΔY − β·D é "
+        f"tem ponto utilizável: a tabela mostra só o IC, e no CSV a linha leva a nota `{NOTA_FRACO}`, com `tau`, "
+        f"`ep`, IC convencional e `p_valor` vazios. IC de Anderson–Rubin: β aceito se o p da RDD de ΔY − β·D é "
         f"≥ 0,05; grade de {g['n_pontos']} pontos em [−L; L], L = {_n(g['fator_L'], 0, False)} × o maior |ΔY| na "
-        f"janela, fronteiras refinadas por bisseção ({g['bissecao']} passos); '(aberto)' = o conjunto toca a borda da "
-        "grade e o limite mostrado é a borda, não um limite do IC. Só D1 em V entra no BKY.")
+        f"janela, fronteiras refinadas por bisseção ({g['bissecao']} passos). 'Ilimitado' = o conjunto aceita todo β "
+        "da grade (reta inteira); no CSV, `ar_ilimitado = True` e `ar_ic_inf`/`ar_ic_sup` vazios, porque a borda da "
+        "grade não é limite do IC. '(aberto)' = o conjunto toca a borda daquele lado. p (β = 0) = p de "
+        "Anderson–Rubin em β = 0 (coluna `ar_p_beta0`), igual ao p da forma reduzida na mesma amostra. Só D1 em V "
+        "entra no BKY.")
     linhas = ["| Outcome | Corte | Wald do pré (gl) | p | Municípios com todos os meses | Fora por falta de mês |",
               "|---|---|---|---|---|---|"]
     for oid in OUTCOMES_EVENTO:

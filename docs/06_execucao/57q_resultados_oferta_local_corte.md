@@ -6,7 +6,7 @@
 > **Saídas:** `output/rdd_bolsa/OC_estimativas.csv`, `OC_estudo_evento.csv`, `OC_resumo.json` e `OC_figuras/`; toda linha tem `natureza_dos_dados = EMPIRICO`.<br>
 > **Testes:** `tests/test_oferta_local_corte.py`.<br>
 > **Estatuto:** `PROTOCOLO_64_POS_RESULTADO`. O lado do corte de IVS decide a bolsa e também outras regras federais (auditoria 18): o contraste é o **pacote do corte**.<br>
-> **Auditoria:** [auditoria 39](../auditorias/39_auditoria_oferta_local_corte.md), aprovado com correções de texto; nenhum número mudou.
+> **Auditoria:** [auditoria 39](../auditorias/39_auditoria_oferta_local_corte.md), aprovado com correções de texto; nenhum número mudou. Em 26/10/2026, correção de formato das linhas *fuzzy* do CSV, pedida pelo autor (seção 8).
 
 Os blocos entre marcadores `<!-- OC:... -->` são gerados pelo script 43 a partir de `output/`
 (`python3 scripts/rdd_bolsa/43_oferta_local_corte.py --atualizar-doc`). Não edite esses blocos à mão. Fora
@@ -192,9 +192,13 @@ D1 em pontos percentuais (fração de municípios que receberam médico); D2 em 
 Como ler "ilimitado": com primeiro estágio tão fraco, o conjunto de Anderson–Rubin não é só "toda a grade". A
 auditoria 39 resolveu a inversão de forma exata (a estatística é razão de duas quadráticas em β) e, nas dez
 linhas com D1 em V, o conjunto é a **reta inteira**: nenhum valor de β é rejeitado. A borda ±L da tabela é só o
-tamanho da grade, não um limite do IC. Em `OC_estimativas.csv`, a coluna `tau` das linhas `fuzzy_*` guarda a
-conta forma reduzida ÷ primeiro estágio, e `ar_ic_inf`/`ar_ic_sup` guardam a borda da grade (com
-`ar_aberto_* = True`). Nenhum dos dois é estimativa para relatar: não vão para o deck (protocolo 64, §4).
+tamanho da grade, não um limite do IC. Em `OC_estimativas.csv`, as linhas `fuzzy_*` com F robusto < 10 (todas
+as 30) levam a nota `instrumento_fraco_F<10` e têm `tau`, `ep`, IC convencional e `p_valor` vazios: com
+instrumento fraco, a razão forma reduzida ÷ primeiro estágio não é estimativa. O IC de Anderson–Rubin aparece
+como `ar_ilimitado = True`, com `ar_ic_inf`/`ar_ic_sup` vazios; a borda da grade fica só em `ar_grade_L`. O p de
+Anderson–Rubin em β = 0, que entra no BKY, está em `ar_p_beta0`. Só a forma reduzida (`tau_forma_reduzida`) e o
+primeiro estágio são números para relatar (protocolo 64, §4). Até 26/10/2026, o CSV gravava a razão em `tau` e a
+borda da grade em `ar_ic_*` (seção 8).
 
 <!-- OC:fuzzy:inicio -->
 | Id | Outcome | Variável / pop. | Corte | F robusto | Forma reduzida | Primeiro estágio | Razão | IC de Anderson–Rubin | p (β = 0) | q BKY |
@@ -230,7 +234,7 @@ conta forma reduzida ÷ primeiro estágio, e `ar_ic_inf`/`ar_ic_sup` guardam a b
 | OC-B5 | B5 | D2 / V | 0,300 | 0,1 | +0,21 | −0,101 | — (fraco) | ilimitado (aceita todo β da grade, ±70,92) | 0,844 | — |
 | OC-B5 | B5 | D2 / V | 0,400 | 0,7 | −1,09 | −1,048 | — (fraco) | ilimitado (aceita todo β da grade, ±34,09) | 0,188 | — |
 
-Razão = forma reduzida ÷ primeiro estágio, na amostra com ΔY observado. Com F robusto < 10 a razão não tem ponto utilizável e a tabela mostra só o IC. IC de Anderson–Rubin: β aceito se o p da RDD de ΔY − β·D é ≥ 0,05; grade de 4001 pontos em [−L; L], L = 2 × o maior |ΔY| na janela, fronteiras refinadas por bisseção (60 passos); '(aberto)' = o conjunto toca a borda da grade e o limite mostrado é a borda, não um limite do IC. Só D1 em V entra no BKY.
+Razão = forma reduzida ÷ primeiro estágio, na amostra com ΔY observado. Com F robusto < 10 a razão não tem ponto utilizável: a tabela mostra só o IC, e no CSV a linha leva a nota `instrumento_fraco_F<10`, com `tau`, `ep`, IC convencional e `p_valor` vazios. IC de Anderson–Rubin: β aceito se o p da RDD de ΔY − β·D é ≥ 0,05; grade de 4001 pontos em [−L; L], L = 2 × o maior |ΔY| na janela, fronteiras refinadas por bisseção (60 passos). 'Ilimitado' = o conjunto aceita todo β da grade (reta inteira); no CSV, `ar_ilimitado = True` e `ar_ic_inf`/`ar_ic_sup` vazios, porque a borda da grade não é limite do IC. '(aberto)' = o conjunto toca a borda daquele lado. p (β = 0) = p de Anderson–Rubin em β = 0 (coluna `ar_p_beta0`), igual ao p da forma reduzida na mesma amostra. Só D1 em V entra no BKY.
 <!-- OC:fuzzy:fim -->
 
 ### 5.5 Parte C: estudo de evento no corte (OC-C)
@@ -353,6 +357,15 @@ célula nos ciclos 1 ou 2 têm D1 = 1". Os tratados de U fora de V são mais que
 ciclo 3, há municípios da lista nominal sem célula em nenhum ciclo do quadro (`outcomes_V_municipio`). O código já
 dá D1 = 1 a **todos** os tratados de U (`OC_resumo.json`, `primeiro_estagio`), que é a definição do protocolo
 (§2). Só o texto da D5 estava incompleto; nenhum número muda.
+
+**Correção de formato pedida pelo autor (26/10/2026), a partir da auditoria 39 (achado B1).** Antes, as linhas
+`fuzzy_*` de `OC_estimativas.csv` gravavam em `tau` a razão forma reduzida ÷ primeiro estágio e em
+`ar_ic_inf`/`ar_ic_sup` a borda da grade, mesmo com instrumento fraco. Agora o script 43 deixa `tau`, `ep`, IC
+convencional e `p_valor` vazios quando o F robusto do primeiro estágio na mesma amostra é < 10, marca a linha com
+a nota `instrumento_fraco_F<10` e grava o IC de Anderson–Rubin ilimitado como `ar_ilimitado = True`, com os
+limites vazios. O p de Anderson–Rubin em β = 0 passa para a coluna nova `ar_p_beta0`, e Holm e BKY o usam como
+antes. Especificação, amostra, famílias e as demais 132 linhas do CSV não mudaram; os q de BKY, as tabelas e a
+leitura também não. O esquema ganhou duas colunas (`ar_ilimitado`, `ar_p_beta0`).
 
 <!-- OC:desvios:inicio -->
 Nenhum desvio registrado na execução.
