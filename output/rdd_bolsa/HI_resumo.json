@@ -1,0 +1,660 @@
+{
+  "etapa": "Adendo 48b: H1 so com vagas imediatas (HI-1, HI-2, HI-s1 a HI-s8)",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "ADENDO_48B_POS_RESULTADO",
+  "data_execucao": "2026-10-26",
+  "script": "scripts/rdd_bolsa/40_h1_vagas_imediatas.py",
+  "adendo": {
+    "arquivo": "docs/06_execucao/48b_adendo_H1_vagas_imediatas.md",
+    "sha256": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64",
+    "commit_congelamento": "666aee1",
+    "sha256_original": "383768d27bf87fc76b3ae1f5d518c318f7d7668360a28cf758a4e0e4a0b0efed",
+    "commit_nota_7": "4326241",
+    "sha256_com_nota_7": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64"
+  },
+  "quadro_ciclo2": {
+    "principal": "quadro do ciclo 2 retificado de 13/02/2026, vigente na inscricao (principal; adendo 48b §7)",
+    "sensibilidade_nao_usar": "quadro do ciclo 2 retificado de 19/03/2026, refeito depois do resultado preliminar (pipeline; tipo de vaga pos-resultado, nao usar)",
+    "auditoria_36": "docs/auditorias/36_auditoria_dados_H1.md",
+    "conferencia": {
+      "arquivo": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8",
+      "leitura": "scripts/auditoria_H1/a36_leitura.py (ler_quadro)",
+      "celulas": 1547,
+      "vagas_imediatas_13fev": 1206.0,
+      "vagas_cr_13fev": 1686.0,
+      "vagas_imediatas_19mar": 1836.0,
+      "vagas_cr_19mar": 1053.0,
+      "celulas_com_total_diferente": 2,
+      "celulas_so_cr_13fev": 833,
+      "celulas_so_cr_13fev_com_imediata_19mar": 301,
+      "dessas_com_alocado": 297,
+      "vagas_convertidas_cr_em_imediatas": 630.0
+    },
+    "contagem_celulas_19mar": {
+      "celulas_no_quadro": 1547,
+      "celulas_sem_ivs_oficial_fora_da_rdd": 0,
+      "celulas_so_imed": 1014,
+      "vagas_imediatas_so_imed": 1833.0,
+      "vagas_cr_so_imed": 0.0,
+      "alocados_ch1_so_imed": 1056.0,
+      "celulas_mista": 1,
+      "vagas_imediatas_mista": 3.0,
+      "vagas_cr_mista": 1.0,
+      "alocados_ch1_mista": 1.0,
+      "celulas_so_cr": 532,
+      "vagas_imediatas_so_cr": 0.0,
+      "vagas_cr_so_cr": 1052.0,
+      "alocados_ch1_so_cr": 0.0,
+      "celulas_na_amostra_hi": 1015,
+      "celulas_so_cr_fora_da_amostra_hi": 532,
+      "f13_ausente_na_amostra_hi": 0
+    },
+    "contagem_municipios_19mar": {
+      "municipios_no_quadro_com_ivs_oficial": 454,
+      "municipios_sem_ivs_oficial_fora_da_rdd": 0,
+      "municipios_com_vaga_imediata_na_amostra_hi2": 392,
+      "municipios_so_cadastro_reserva_fora_da_hi2": 62,
+      "municipios_com_celula_pura_hi_s4": 392,
+      "municipios_com_celula_so_cr_hi_s6": 238
+    }
+  },
+  "exposicao_previa_deste_script": "Antes da nota §7 chegar, este script ja tinha sido rodado uma vez com o tipo de vaga do ciclo 2 pelo quadro de 19/03/2026 (o do pipeline), e o autor do script viu HI-1 e HI-2 dessa versao (todas com IC 95% que contem zero). A nota §7 foi escrita pelo coordenador a partir da auditoria 36, sem esses resultados. Essa versao e a sensibilidade SENS-19MAR ('tipo de vaga pos-resultado (nao usar)').",
+  "contraste": "pacote do corte: em 0,300 a bolsa anunciada sobe de R$ 10 mil para R$ 15 mil e em 0,400 de R$ 15 mil para R$ 20 mil, mas outras regras federais mudam nos mesmos cortes (auditoria 18); nao e efeito da participacao no PMM-E nem do Agora Tem Especialistas",
+  "salto": "lado com bolsa maior (IVS acima do corte) menos lado com bolsa menor; o corte fica no lado de baixo",
+  "especificacao_comum": "local linear, kernel triangular, h = 0,050; cada corte separado; ciclos 1-3 empilhados com intercepto e inclinacoes por ciclo x lado; CR1 por municipio",
+  "entradas": [
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/outcomes_G3_municipio.parquet",
+      "sha256": "b2133fbd60b3189f162ebe35b6e3650eb1d97fda0a5e267b965802e684866948"
+    },
+    {
+      "arquivo": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/outcomes/dicionario_outcomes_funil.json",
+      "sha256": "912b80994f9fbefc3bbe1f5f978de16771a6c064f0044960887366a91bb88e8d"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/NA_estimativas.csv",
+      "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/N_resumo.json",
+      "sha256": "31443e65a829ba90662a488178d32f57d5371887126161a74f1f10b5333c9038"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/ND_estimativas.csv",
+      "sha256": "0b78d4469229be4f42d275c626ba1782d01be74a985e862097cf0f7556837146"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/ND_resumo.json",
+      "sha256": "ffb51d49cce02753e16c99477ae438229f203d186f8f10181d03e69f5f050f1a"
+    },
+    {
+      "arquivo": "docs/06_execucao/48b_adendo_H1_vagas_imediatas.md",
+      "sha256": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64"
+    },
+    {
+      "arquivo": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8"
+    },
+    {
+      "arquivo": "docs/auditorias/36_auditoria_dados_H1.md",
+      "sha256": "8c676a0620ac457159c081f4f7934d4713f912236202ce21fcac96ec6110335b"
+    }
+  ],
+  "reproducao": {
+    "tolerancia_relativa": 1e-09,
+    "linhas": [
+      {
+        "linha": "A3_PREENCHIDA 0.300",
+        "tau": -0.08394018208934817,
+        "ep": 0.05161710148120507,
+        "p_valor": 0.10390525536753181,
+        "ic95_inf": -0.18510784197885918,
+        "ic95_sup": 0.017227477800162844,
+        "n_abaixo": 145,
+        "n_acima": 120,
+        "n_obs": 2115,
+        "max_abs_dif": 6.938893903907228e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/NA_estimativas.csv",
+        "media_abaixo": 0.33305084745762714,
+        "corte": "0.300",
+        "id": "A3"
+      },
+      {
+        "linha": "N1 S-a 0.300",
+        "tau": -1.4474679045007928,
+        "ep": 0.6251951978329521,
+        "p_valor": 0.020600590923158347,
+        "ic95_inf": -2.672827975560773,
+        "ic95_sup": -0.22210783344081264,
+        "n_abaixo": 145,
+        "n_acima": 120,
+        "n_obs": 441,
+        "max_abs_dif": 4.85722573273506e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/N_estimativas.csv",
+        "media_abaixo": 2.3224489795918366,
+        "corte": "0.300",
+        "id": "N1"
+      },
+      {
+        "linha": "49b §14 TAXA_SO_IMED 0.300",
+        "tau": -0.1649544702763328,
+        "ep": 0.10484461176565069,
+        "p_valor": 0.11564397751105125,
+        "ic95_inf": -0.3704461333100926,
+        "ic95_sup": 0.040537192757426954,
+        "n_abaixo": 94,
+        "n_acima": 77,
+        "n_obs": 262,
+        "max_abs_dif": 8.326672684688674e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/ND_estimativas.csv",
+        "corte": "0.300",
+        "id": "TAXA_SO_IMED"
+      },
+      {
+        "linha": "49b §14 TAXA_SO_CR 0.300",
+        "tau": -0.05355044781712426,
+        "ep": 0.035957031130112074,
+        "p_valor": 0.1364110130962436,
+        "ic95_inf": -0.12402493382312949,
+        "ic95_sup": 0.01692403818888097,
+        "n_abaixo": 130,
+        "n_acima": 102,
+        "n_obs": 351,
+        "max_abs_dif": 7.632783294297951e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/ND_estimativas.csv",
+        "corte": "0.300",
+        "id": "TAXA_SO_CR"
+      },
+      {
+        "linha": "49b §14 TAXA_VI 0.300",
+        "tau": -0.19209139071466463,
+        "ep": 0.12180871722999292,
+        "p_valor": 0.11479733164627925,
+        "ic95_inf": -0.4308320894884743,
+        "ic95_sup": 0.04664930805914502,
+        "n_abaixo": 98,
+        "n_acima": 79,
+        "n_obs": 276,
+        "max_abs_dif": 5.551115123125783e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/ND_estimativas.csv",
+        "corte": "0.300",
+        "id": "TAXA_VI"
+      },
+      {
+        "linha": "A3_PREENCHIDA 0.400",
+        "tau": -0.013182831124327443,
+        "ep": 0.06456073754704063,
+        "p_valor": 0.8382029180318054,
+        "ic95_inf": -0.13971955153186988,
+        "ic95_sup": 0.11335388928321499,
+        "n_abaixo": 122,
+        "n_acima": 145,
+        "n_obs": 1243,
+        "max_abs_dif": 4.336808689942018e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/NA_estimativas.csv",
+        "media_abaixo": 0.36787564766839376,
+        "corte": "0.400",
+        "id": "A3"
+      },
+      {
+        "linha": "N1 S-a 0.400",
+        "tau": -0.142050222180193,
+        "ep": 0.3466668498604394,
+        "p_valor": 0.6819819822382106,
+        "ic95_inf": -0.8215047625406084,
+        "ic95_sup": 0.5374043181802224,
+        "n_abaixo": 122,
+        "n_acima": 145,
+        "n_obs": 415,
+        "max_abs_dif": 0.0,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/N_estimativas.csv",
+        "media_abaixo": 1.9556650246305418,
+        "corte": "0.400",
+        "id": "N1"
+      },
+      {
+        "linha": "49b §14 TAXA_SO_IMED 0.400",
+        "tau": -0.020898074057033256,
+        "ep": 0.105694699288794,
+        "p_valor": 0.8432632665065487,
+        "ic95_inf": -0.22805587801986077,
+        "ic95_sup": 0.18625972990579426,
+        "n_abaixo": 82,
+        "n_acima": 76,
+        "n_obs": 236,
+        "max_abs_dif": 5.551115123125783e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/ND_estimativas.csv",
+        "corte": "0.400",
+        "id": "TAXA_SO_IMED"
+      },
+      {
+        "linha": "49b §14 TAXA_SO_CR 0.400",
+        "tau": 0.02181513752058989,
+        "ep": 0.0369373783291516,
+        "p_valor": 0.5547898822978083,
+        "ic95_inf": -0.05058079368787753,
+        "ic95_sup": 0.09421106872905731,
+        "n_abaixo": 103,
+        "n_acima": 124,
+        "n_obs": 308,
+        "max_abs_dif": 9.020562075079397e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/ND_estimativas.csv",
+        "corte": "0.400",
+        "id": "TAXA_SO_CR"
+      },
+      {
+        "linha": "49b §14 TAXA_VI 0.400",
+        "tau": 0.010241050947910058,
+        "ep": 0.13805585883149443,
+        "p_valor": 0.9408667715710196,
+        "ic95_inf": -0.26034346021656496,
+        "ic95_sup": 0.2808255621123851,
+        "n_abaixo": 88,
+        "n_acima": 76,
+        "n_obs": 247,
+        "max_abs_dif": 5.724587470723463e-17,
+        "reproduz": true,
+        "fonte": "output/rdd_bolsa/ND_estimativas.csv",
+        "corte": "0.400",
+        "id": "TAXA_VI"
+      }
+    ],
+    "celulas_por_tipo_49b": {
+      "fonte": "output/rdd_bolsa/ND_resumo.json",
+      "reproduz": true,
+      "soma_abs_dif": 0.0
+    },
+    "hi_s2_literal_igual_hi1": true,
+    "f13_difere_de_hi1": {
+      "V1": 2,
+      "V2": 0,
+      "V3": 0
+    },
+    "max_abs_dif": 9.020562075079397e-17,
+    "reproduz": true
+  },
+  "amostra": {
+    "celulas": {
+      "V1": {
+        "celulas_no_quadro": 1295,
+        "celulas_sem_ivs_oficial_fora_da_rdd": 0,
+        "celulas_so_imed": 503,
+        "vagas_imediatas_so_imed": 668.0,
+        "vagas_cr_so_imed": 0.0,
+        "alocados_ch1_so_imed": 253.0,
+        "celulas_mista": 10,
+        "vagas_imediatas_mista": 10.0,
+        "vagas_cr_mista": 11.0,
+        "alocados_ch1_mista": 4.0,
+        "celulas_so_cr": 782,
+        "vagas_imediatas_so_cr": 0.0,
+        "vagas_cr_so_cr": 1134.0,
+        "alocados_ch1_so_cr": 211.0,
+        "celulas_na_amostra_hi": 513,
+        "celulas_so_cr_fora_da_amostra_hi": 782,
+        "f13_ausente_na_amostra_hi": 0
+      },
+      "V2": {
+        "celulas_no_quadro": 1547,
+        "celulas_sem_ivs_oficial_fora_da_rdd": 0,
+        "celulas_so_imed": 712,
+        "vagas_imediatas_so_imed": 1202.0,
+        "vagas_cr_so_imed": 0.0,
+        "alocados_ch1_so_imed": 615.0,
+        "celulas_mista": 2,
+        "vagas_imediatas_mista": 4.0,
+        "vagas_cr_mista": 3.0,
+        "alocados_ch1_mista": 0.0,
+        "celulas_so_cr": 833,
+        "vagas_imediatas_so_cr": 0.0,
+        "vagas_cr_so_cr": 1683.0,
+        "alocados_ch1_so_cr": 442.0,
+        "celulas_na_amostra_hi": 714,
+        "celulas_so_cr_fora_da_amostra_hi": 833,
+        "f13_ausente_na_amostra_hi": 0
+      },
+      "V3": {
+        "celulas_no_quadro": 2293,
+        "celulas_sem_ivs_oficial_fora_da_rdd": 1,
+        "celulas_so_imed": 449,
+        "vagas_imediatas_so_imed": 882.0,
+        "vagas_cr_so_imed": 0.0,
+        "alocados_ch1_so_imed": 395.0,
+        "celulas_mista": 245,
+        "vagas_imediatas_mista": 250.0,
+        "vagas_cr_mista": 450.0,
+        "alocados_ch1_mista": 178.0,
+        "celulas_so_cr": 1598,
+        "vagas_imediatas_so_cr": 0.0,
+        "vagas_cr_so_cr": 3548.0,
+        "alocados_ch1_so_cr": 131.0,
+        "celulas_na_amostra_hi": 694,
+        "celulas_so_cr_fora_da_amostra_hi": 1598,
+        "f13_ausente_na_amostra_hi": 0
+      }
+    },
+    "municipios": {
+      "V1": {
+        "municipios_no_quadro_com_ivs_oficial": 368,
+        "municipios_sem_ivs_oficial_fora_da_rdd": 0,
+        "municipios_com_vaga_imediata_na_amostra_hi2": 215,
+        "municipios_so_cadastro_reserva_fora_da_hi2": 153,
+        "municipios_com_celula_pura_hi_s4": 214,
+        "municipios_com_celula_so_cr_hi_s6": 306
+      },
+      "V2": {
+        "municipios_no_quadro_com_ivs_oficial": 454,
+        "municipios_sem_ivs_oficial_fora_da_rdd": 0,
+        "municipios_com_vaga_imediata_na_amostra_hi2": 328,
+        "municipios_so_cadastro_reserva_fora_da_hi2": 126,
+        "municipios_com_celula_pura_hi_s4": 328,
+        "municipios_com_celula_so_cr_hi_s6": 287
+      },
+      "V3": {
+        "municipios_no_quadro_com_ivs_oficial": 747,
+        "municipios_sem_ivs_oficial_fora_da_rdd": 1,
+        "municipios_com_vaga_imediata_na_amostra_hi2": 307,
+        "municipios_so_cadastro_reserva_fora_da_hi2": 440,
+        "municipios_com_celula_pura_hi_s4": 257,
+        "municipios_com_celula_so_cr_hi_s6": 653
+      }
+    },
+    "janela": {
+      "0.300": {
+        "celulas_na_janela": 2115,
+        "celulas_hi1_abaixo": 492,
+        "celulas_hi1_acima": 311,
+        "celulas_so_cr_fora_abaixo": 688,
+        "celulas_so_cr_fora_acima": 624,
+        "linhas_municipio_ciclo_na_janela": 441,
+        "municipio_ciclo_so_cr_fora_abaixo": 104,
+        "municipio_ciclo_so_cr_fora_acima": 80
+      },
+      "0.400": {
+        "celulas_na_janela": 1243,
+        "celulas_hi1_abaixo": 315,
+        "celulas_hi1_acima": 170,
+        "celulas_so_cr_fora_abaixo": 457,
+        "celulas_so_cr_fora_acima": 301,
+        "linhas_municipio_ciclo_na_janela": 415,
+        "municipio_ciclo_so_cr_fora_abaixo": 73,
+        "municipio_ciclo_so_cr_fora_acima": 115
+      }
+    }
+  },
+  "holm": {
+    "linhas": [
+      "HI-1|HI-1|1+2+3|0.300|principal|h=0.050|c2=13fev",
+      "HI-2|HI-2|1+2+3|0.300|principal|h=0.050|c2=13fev",
+      "HI-1|HI-1|1+2+3|0.400|principal|h=0.050|c2=13fev",
+      "HI-2|HI-2|1+2+3|0.400|principal|h=0.050|c2=13fev"
+    ],
+    "p": [
+      0.681719014643227,
+      0.03162079853114324,
+      0.8345083447315715,
+      0.7134064508732791
+    ],
+    "p_holm": [
+      1.0,
+      0.12648319412457296,
+      1.0,
+      1.0
+    ]
+  },
+  "bky": {
+    "n": 34,
+    "linhas": [
+      "HI-s8|HI-1|1+2+3|0.300|h=0.030|h=0.030|c2=13fev",
+      "HI-s8|HI-2|1+2+3|0.300|h=0.030|h=0.030|c2=13fev",
+      "HI-s8|HI-1|1+2+3|0.300|h=0.080|h=0.080|c2=13fev",
+      "HI-s8|HI-2|1+2+3|0.300|h=0.080|h=0.080|c2=13fev",
+      "HI-s1|HI-1|1|0.300|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-2|1|0.300|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-1|2|0.300|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-2|2|0.300|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-1|3|0.300|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-2|3|0.300|por_ciclo|h=0.050|c2=13fev",
+      "HI-s2|HI-1_F13|1+2+3|0.300|definicao_F1.3|h=0.050|c2=13fev",
+      "HI-s3|HI-2|1+2+3|0.300|sem_controle|h=0.050|c2=13fev",
+      "HI-s4|HI-1_PURA|1+2+3|0.300|so_celulas_puras|h=0.050|c2=13fev",
+      "HI-s4|HI-2_PURA|1+2+3|0.300|so_celulas_puras|h=0.050|c2=13fev",
+      "HI-s5|F14_TODAS|1+2|0.300|ate_2a_chamada_todas_as_celulas|h=0.050|c2=13fev",
+      "HI-s6|CR_CELULA|1+2+3|0.300|so_cadastro_reserva|h=0.050|c2=13fev",
+      "HI-s6|CR_MUN|1+2+3|0.300|so_cadastro_reserva|h=0.050|c2=13fev",
+      "HI-s8|HI-1|1+2+3|0.400|h=0.030|h=0.030|c2=13fev",
+      "HI-s8|HI-2|1+2+3|0.400|h=0.030|h=0.030|c2=13fev",
+      "HI-s8|HI-1|1+2+3|0.400|h=0.080|h=0.080|c2=13fev",
+      "HI-s8|HI-2|1+2+3|0.400|h=0.080|h=0.080|c2=13fev",
+      "HI-s1|HI-1|1|0.400|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-2|1|0.400|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-1|2|0.400|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-2|2|0.400|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-1|3|0.400|por_ciclo|h=0.050|c2=13fev",
+      "HI-s1|HI-2|3|0.400|por_ciclo|h=0.050|c2=13fev",
+      "HI-s2|HI-1_F13|1+2+3|0.400|definicao_F1.3|h=0.050|c2=13fev",
+      "HI-s3|HI-2|1+2+3|0.400|sem_controle|h=0.050|c2=13fev",
+      "HI-s4|HI-1_PURA|1+2+3|0.400|so_celulas_puras|h=0.050|c2=13fev",
+      "HI-s4|HI-2_PURA|1+2+3|0.400|so_celulas_puras|h=0.050|c2=13fev",
+      "HI-s5|F14_TODAS|1+2|0.400|ate_2a_chamada_todas_as_celulas|h=0.050|c2=13fev",
+      "HI-s6|CR_CELULA|1+2+3|0.400|so_cadastro_reserva|h=0.050|c2=13fev",
+      "HI-s6|CR_MUN|1+2+3|0.400|so_cadastro_reserva|h=0.050|c2=13fev"
+    ],
+    "fora": "HI-s2 literal (repete HI-1), IC honesto (HI-s8) e TOST (HI-s7)"
+  },
+  "leitura_primaria": {
+    "codigo": "IC_CONVENCIONAL_EXCLUI_ZERO_SEM_HOLM",
+    "todas_ic_contem_zero": false,
+    "linhas_que_rejeitam_depois_do_holm": [],
+    "linhas_com_ic_convencional_sem_zero": [
+      "HI-2 em 0,300"
+    ]
+  },
+  "leitura_hi_s6": {
+    "codigo": "NAO_SE_MOSTRA_CONCENTRADA",
+    "regra": "HI-s6 (celula) em 0,300 com IC 95% sem zero e salto negativo, e HI-1 em 0,300 com IC com zero",
+    "regra_doc": "a diferença se mostra concentrada nas células só de reserva se, em 0,300 (onde as medidas antigas caíam), a HI-s6 por célula tiver IC 95% que exclui zero, com salto negativo, e HI-1 tiver IC que contém zero."
+  },
+  "decisoes": {
+    "definicao_preenchida": {
+      "texto": "O adendo descreve HI-1 com 'a definicao de preenchida de cada ciclo, igual a do A3' e HI-s2 com 'uma definicao unica (>= 1 alocado na 1a chamada)'. Na base, a definicao do A3 (A3_PREENCHIDA do script 24) ja e n_alocados_ch1 >= 1 em todos os ciclos; o que muda por ciclo e a fonte do 'alocado' (ciclo 1: confirmacao de local na alocacao sub judice; ciclos 2-3: SITUACAO ALOCADO). HI-1 segue o A3, como manda o adendo, para que a comparacao com a medida antiga mude so a amostra. A forma literal da HI-s2 coincide com HI-1 (conferido celula a celula); por isso a HI-s2 relata a outra definicao que a base tem, a F1.3 do protocolo 40 (ciclo 1: confirmacao ou homologacao; ciclos 2-3: >= 1 alocado).",
+      "texto_doc": "O adendo descreve HI-1 com \"a definição de preenchida de cada ciclo, igual à do A3\" e a HI-s2 com \"uma definição única (≥ 1 alocado na 1ª chamada)\". Na base, a definição do A3 já é `n_alocados_ch1 >= 1` em todos os ciclos; o que muda por ciclo é a fonte do \"alocado\". HI-1 segue o A3, para que a comparação com a medida antiga mude só a amostra. A forma literal da HI-s2 repete HI-1 (conferido célula a célula; linha `definicao_literal_alocado`, fora do BKY); por isso a HI-s2 relata também a outra definição da base, a F1.3 do protocolo 40 (ciclo 1: confirmação ou homologação)."
+    },
+    "celulas_mistas": {
+      "texto": "a base nao registra em que tipo de vaga (imediata ou cadastro reserva) cada alocado entrou: nas celulas mistas contam todos os alocados da celula (HI-1 e HI-2), e o controle de HI-2 sao as vagas imediatas dessas celulas; um alocado de celula mista que tenha ocupado vaga de cadastro reserva conta como preenchimento de vaga imediata",
+      "texto_doc": "A base não registra em que tipo de vaga cada alocado entrou. Nas células mistas contam todos os alocados da célula (HI-1 e HI-2), e o controle de HI-2 são as vagas imediatas dessas células: um alocado de célula mista que tenha ocupado vaga de cadastro reserva conta como preenchimento de vaga imediata. A HI-s4 (só células puras) mostra o resultado sem as mistas."
+    },
+    "erro_padrao_por_ciclo": "HI-s1 da HI-2 (um ciclo, uma linha por municipio): EP HC1, igual ao CR1 por municipio nesse caso (fator n/(n-k) nos dois)",
+    "hi_s5": "F1.4 do protocolo 40 (f1_4_preenchida_ate_ch2), ciclos 1 e 2, todas as celulas, EF de curso x ciclo, como HI-1",
+    "hi_s6": "descritivo: celulas so de CR (EF de curso x ciclo) e alocados nelas por municipio (controle = vagas de CR dessas celulas, coeficiente por ciclo)",
+    "tost": "funcao tost do script 36; margem de HI-2 = 25% da media abaixo do corte da propria linha"
+  },
+  "definicoes_da_base": {
+    "colunas": {
+      "n_alocados_ch1": "alocados na 1a chamada (ciclo 1: confirmações na alocação sub judice; ciclos 2-3: SITUAÇÃO ALOCADO)",
+      "f1_3_preenchida_ch1": "F1.3 na célula: ciclo 1 = Y1 do E3/E4; ciclos 2-3 = ≥1 alocado na 1a chamada",
+      "f1_4_preenchida_ate_ch2": "F1.4 na célula: ciclo 1 = Y2 do E4; ciclo 2 = F1.3 ou ≥1 alocado na 2a chamada; ciclo 3 NaN"
+    },
+    "texto_doc": "No dicionário dos outcomes (`dicionario_outcomes_funil.json`): `n_alocados_ch1` = alocados na 1a chamada (ciclo 1: confirmações na alocação sub judice; ciclos 2-3: SITUAÇÃO ALOCADO); `f1_3_preenchida_ch1` = F1.3 na célula: ciclo 1 = Y1 do E3/E4; ciclos 2-3 = ≥1 alocado na 1a chamada; `f1_4_preenchida_ate_ch2` = F1.4 na célula: ciclo 1 = Y2 do E4; ciclo 2 = F1.3 ou ≥1 alocado na 2a chamada; ciclo 3 NaN. HI-1 usa `n_alocados_ch1 >= 1` (a definição do A3); a HI-s2 relata a F1.3 e a HI-s5 a F1.4. \"Alocado\" não é a mesma operação administrativa nos três ciclos, e o empilhamento usa intercepto e efeitos fixos por ciclo, não uma definição idêntica."
+  },
+  "regra_reserva_editais": {
+    "auditoria_36": "docs/auditorias/36_auditoria_dados_H1.md",
+    "itens_arquivados": [
+      {
+        "edital": "Edital de Chamamento Publico SGTES/MS no 3/2025 (DOU), ciclo 1",
+        "item": "4.1.3.3",
+        "trecho": "O candidato poderá escolher, dentre suas opções, município com vaga para preenchimento imediato e município que esteja em cadastro de reserva.",
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf"
+      },
+      {
+        "edital": "Edital de Chamamento Publico SGTES/MS no 3/2025 (DOU), ciclo 1",
+        "item": "4.1.3.4",
+        "trecho": "Considera-se em cadastro de reserva o município que, na oferta inicial, não tinha vaga imediata, mas que poderá recebê-la por remanejamento",
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf"
+      },
+      {
+        "edital": "Edital de Chamamento Publico SGTES/MS no 3/2025 (DOU), ciclo 1",
+        "item": "5.7",
+        "trecho": "as vagas remanescentes poderão ser redistribuídas para municípios com cadastro de reserva e que tenham candidatos na lista de espera",
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf"
+      },
+      {
+        "edital": "Edital SGTES/MS no 28/2026, ciclo 3",
+        "item": "4.1.3.4",
+        "trecho": "A disponibilização de vaga para esses municípios poderá ocorrer por remanejamento de vagas não ocupadas",
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html"
+      },
+      {
+        "edital": "Edital SGTES/MS no 28/2026, ciclo 3",
+        "item": "5.7",
+        "trecho": "as vagas remanescentes poderão ser redistribuídas para municípios com cadastro de reserva e que tenham candidatos na lista de espera",
+        "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html"
+      }
+    ],
+    "fonte": "output/rdd_bolsa/N_resumo.json (verificacao_cadastro_reserva.editais)",
+    "texto_doc": "A auditoria 36 (`docs/auditorias/36_auditoria_dados_H1.md`, seção 3, item 2) conclui que os editais dos ciclos 1 e 3 permitem preencher a reserva na 1ª chamada (itens 4.1.3.3, 4.1.3.4 e 5.7, tabela abaixo) e que, no ciclo 2, sem o texto do edital no repositório, a reserva foi preenchida na 1ª chamada pela conversão registrada no quadro de 19/03/2026 (por isso o tipo de vaga do ciclo 2 vem do quadro de 13/02). A célula só de reserva se preenche por remanejamento e pela priorização da SGTES (item 5.7), mecanismo diferente do da vaga imediata. Pela especificação do adendo, a comparação continua sendo entre vagas do mesmo tipo."
+  },
+  "contagens": {
+    "linhas": 68,
+    "por_status": {
+      "EXECUTADO": 68
+    },
+    "por_linha": {
+      "HI-1": 2,
+      "HI-2": 2,
+      "HI-s1": 12,
+      "HI-s2": 4,
+      "HI-s3": 2,
+      "HI-s4": 4,
+      "HI-s5": 2,
+      "HI-s6": 4,
+      "HI-s7": 8,
+      "HI-s8": 20,
+      "SENS-19MAR": 8
+    }
+  },
+  "integridade": {
+    "ivs": "IVS 2010 oficial (a08); o arquivo local de IVS da auditoria 16 nao e lido",
+    "cnes": "nenhum CNES lido",
+    "imputacao": "nada imputado nem simulado",
+    "saidas_nao_regravadas": [
+      "N_*",
+      "NA_*",
+      "ND_*",
+      "DQ_*"
+    ],
+    "dados_pessoais": "nenhum identificador pessoal (unidades: celula e municipio)"
+  },
+  "saidas": {
+    "estimativas": "output/rdd_bolsa/HI_estimativas.csv",
+    "resumo": "output/rdd_bolsa/HI_resumo.json",
+    "figuras": "output/rdd_bolsa/HI_figuras",
+    "doc": "docs/06_execucao/57n_resultados_H1_vagas_imediatas.md"
+  },
+  "linguagem": "pacote do corte; 'nao se detecta' nao e 'zero'; nada de 'a bolsa reduz'",
+  "frase_banca": "Comparando só vagas imediatas, nenhuma das quatro linhas primárias rejeita zero depois do Holm. A chance de a célula com vaga imediata ser preenchida não se distingue de zero (0,300: −3,7 p.p. [−21,3; +13,9]; 0,400: −2,3 p.p. [−24,0; +19,4]). O IC convencional exclui zero só em HI-2 em 0,300: −1,13 [−2,15; −0,10], p Holm 0,126: do lado de bolsa maior há menos médicos alocados por município, comparando municípios com as mesmas vagas imediatas, mas o sinal não sobrevive à correção para quatro testes. Em 0,400, HI-2 fica em −0,16 [−0,99; +0,68]. Tudo se refere ao pacote do corte, não à bolsa isolada.",
+  "exposicao_doc": "Exposição: antes de a nota §7 chegar, este script já tinha sido rodado uma vez com o quadro de 19/03 no ciclo 2, e o autor do script viu essa versão de HI-1 e HI-2; a nota §7 foi escrita a partir da auditoria 36, sem esses números. A versão com 19/03 é a da sensibilidade.",
+  "primarias": {
+    "HI-1 0.300": {
+      "tau": -0.0367840865161759,
+      "ep": 0.08969135888144267,
+      "ic95_inf": -0.21257591964826023,
+      "ic95_sup": 0.13900774661590842,
+      "p_valor": 0.681719014643227,
+      "p_holm": 1.0,
+      "media_abaixo": 0.5609756097560976,
+      "ic_honesto_inf": -9.29997639475902,
+      "ic_honesto_sup": 9.226408221726667
+    },
+    "HI-2 0.300": {
+      "tau": -1.1263257568590284,
+      "ep": 0.5240743686156416,
+      "ic95_inf": -2.1534926445662546,
+      "ic95_sup": -0.09915886915180239,
+      "p_valor": 0.03162079853114324,
+      "p_holm": 0.12648319412457296,
+      "media_abaixo": 2.773049645390071,
+      "ic_honesto_inf": -39.01712732718611,
+      "ic_honesto_sup": 36.7644758134681
+    },
+    "HI-1 0.400": {
+      "tau": -0.023119649555122468,
+      "ep": 0.11066109982339023,
+      "ic95_inf": -0.24001141969855905,
+      "ic95_sup": 0.1937721205883141,
+      "p_valor": 0.8345083447315715,
+      "p_holm": 1.0,
+      "media_abaixo": 0.5904761904761905,
+      "ic_honesto_inf": -7.587440566326038,
+      "ic_honesto_sup": 7.541201267215792
+    },
+    "HI-2 0.400": {
+      "tau": -0.156707347012577,
+      "ep": 0.4266641770339417,
+      "ic95_inf": -0.9929537674925244,
+      "ic95_sup": 0.6795390734673705,
+      "p_valor": 0.7134064508732791,
+      "p_holm": 1.0,
+      "media_abaixo": 2.0076923076923077,
+      "ic_honesto_inf": -31.048267899542275,
+      "ic_honesto_sup": 30.73485320551712
+    }
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/HI_figuras/HI_principal.png",
+      "como_ler": "Como ler: cada ponto é o salto no corte (lado de bolsa maior menos lado de bolsa menor) e a barra é o IC 95%. Em cima, a chance de uma célula com vaga imediata ser preenchida na 1ª chamada; embaixo, os médicos alocados nessas células por município, comparando municípios com o mesmo número de vagas imediatas. Azul: o IC exclui zero; cinza: contém zero. Barra que cruza a linha do zero quer dizer que não se detecta diferença, não que ela seja zero. Pacote do corte, não só a bolsa.",
+      "fonte": "HI_estimativas.csv: HI-1 e HI-2, variante principal"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/HI_figuras/HI_scatter_imediatas.png",
+      "como_ler": "Como ler: só células com vaga imediata. Cada ponto é a fração de células preenchidas na 1ª chamada numa faixa de IVS de 0,010 (tamanho = número de células); cada linha é a reta local de um lado (kernel triangular, h = 0,050); a distância entre as retas no corte é o salto cru. Azul: bolsa menor; laranja: bolsa maior; tracejada: o corte. Dados crus, ciclos 1–3 juntos, sem efeitos fixos. A HI-1 do subtítulo compara células do mesmo curso e ciclo, com uma reta por ciclo; por isso pode diferir, até no sinal, da distância crua.",
+      "distancia_retas_cruas_fracao": {
+        "0.300": -0.15596638536432855,
+        "0.400": 0.11303623253347596
+      },
+      "nota": "retas cruas: ciclos juntos, sem EF, kernel triangular h = 0,050, sem EP (so ilustracao)",
+      "fonte": "outcomes_V_celula.parquet (celulas so imediatas + mistas, ciclos 1-3) e HI-1 de HI_estimativas.csv"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/HI_figuras/HI_antiga_vs_imediatas.png",
+      "como_ler": "Como ler: em cada corte, a linha cinza é a medida antiga, que mistura vagas imediatas e de cadastro reserva (A3: todas as células abertas; N1: controle por vagas imediatas + reserva), e a azul é a mesma pergunta só com vagas imediatas (HI-1 e HI-2; no ciclo 2, tipo de vaga pelo quadro de 13/02/2026, anterior às escolhas). Ponto = salto no corte; barra = IC 95%. Mostra quanto do sinal antigo vinha de comparar vagas de tipos diferentes.",
+      "fonte": "medida antiga: reproducao de NA_estimativas.csv (A3) e N_estimativas.csv (N1 S-a) em HI_resumo.json; so imediatas: HI_estimativas.csv"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/HI_figuras/HI_por_ciclo.png",
+      "como_ler": "Como ler: HI-1 e HI-2 estimadas em cada ciclo separado (HI-s1), por corte, e a linha empilhada (ciclos 1–3) como referência. Ponto = salto no corte; barra = IC 95%; azul: IC exclui zero; cinza: contém zero. Cada ciclo tem poucos municípios perto do corte, e os IC são largos.",
+      "fonte": "HI_estimativas.csv: HI-s1 (por ciclo) e HI-1/HI-2 principais"
+    }
+  ]
+}
