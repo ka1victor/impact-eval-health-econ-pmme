@@ -4,11 +4,14 @@
   "estatuto": "PROTOCOLO_59_POS_RESULTADO",
   "rotulo": "SENSIBILIDADE",
   "gerador": "scripts/rdd_bolsa/34_sensibilidade_honestdid.py",
-  "data_execucao": "2026-10-25",
+  "data_execucao": "2026-10-26",
   "protocolo": {
     "texto": "docs/06_execucao/59_protocolo_P3P4_sensibilidade_comparacao.md",
     "sha256_texto": "5a2ceafd84512cc7b5e91dec295705269c99221767030bacdfbe33e440c99cb5",
-    "secao": "§2"
+    "secao": "§2",
+    "sha256_texto_congelado": "f039e3f573e8acd504a7b2e9a6371428439a09ae05218d244956c2e434b8d4ed",
+    "commit_congelamento": "1cc4d68",
+    "nota_hash": "sha256_texto é o arquivo atual, já com o adendo datado; sha256_texto_congelado é o texto do commit de congelamento"
   },
   "metodo": {
     "RM": "teste condicional ARP (Andrews, Roth e Pakes, 2023), união dos poliedros, envelope",
