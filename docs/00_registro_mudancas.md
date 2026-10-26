@@ -8,6 +8,23 @@
 
 ---
 
+## 26/10/2026 — Auditoria 37: gradiente do preenchimento dentro das faixas (protocolo 62), aprovado com correções
+
+Motivo: auditoria independente do script 39, das saídas `GF_*`, do doc 57m e dos testes. Recálculo próprio das 75
+inclinações, do BKY e das médias, todos iguais ao gravado; leave-one-out por município na janela de R$ 10 mil e
+comparação com a reta da RDD em 0,300. Nenhum número de `GF_estimativas.csv` nem figura mudou. Correções de texto
+feitas pelo script 39: frase "Para dizer na banca" e parágrafo da janela (subida imprecisa, quanto a UF e os
+candidatos por perto levam, 563 das 641 células do Norte e Nordeste da faixa na janela, "mesmas células, não a
+mesma reta"), rótulo do balanço fora do protocolo e rótulos da tabela da leitura.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/37_auditoria_gradiente_faixas.md`](auditorias/37_auditoria_gradiente_faixas.md) | auditoria do protocolo 62: recálculo contra o gravado, leave-one-out da janela, ligação com a RDD em 0,300, fidelidade e escolhas do agente, achados (1 média, 5 baixas), frase da banca validada, veredito |
+
+---
+
 ## 26/10/2026 — Adendo 48b: H1 só com vagas imediatas (nova principal)
 
 Motivo: decisão do autor de comparar só vagas do mesmo tipo (vaga imediata) e usar essa especificação como principal da H1 na apresentação; congelado antes de calcular.

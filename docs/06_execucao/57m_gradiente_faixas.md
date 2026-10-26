@@ -16,15 +16,15 @@
 ## 1. Resposta curta
 
 <!-- GF:resposta_curta:inicio -->
-**Faixa de R$ 10 mil (IVS até 0,300).** A fração de células abertas preenchidas na 1ª chamada sobe +11,9 p.p. a cada 0,100 de IVS (IC 95% [+6,0; +17,7]; 2392 células). Quase toda essa subida anda junto com a **região**: comparando só células da mesma UF, sobram +1,3 p.p. (89% da subida some); só com a macrorregião, sobram +3,3 p.p. Na faixa, o Nordeste é a região que mais preenche (43% das células, contra 20% a 28% nas outras) e a de IVS médio mais alto (0,280, contra no máximo 0,256 nas outras); são 483 células em só 22 municípios. Cada 0,100 de IVS a mais vem com +49 p.p. a mais de células no Norte ou no Nordeste. Com todos os fatores juntos, sobram +0,5 p.p.
+**Faixa de R$ 10 mil (IVS até 0,300).** A fração de células abertas preenchidas na 1ª chamada sobe +11,9 p.p. a cada 0,100 de IVS (IC 95% [+6,0; +17,7]; 2392 células). Quase toda essa subida anda junto com a **região**: comparando só células da mesma UF, sobram +1,3 p.p. (89% da subida some); só com a macrorregião, sobram +3,3 p.p. Na faixa, o Nordeste é a região que mais preenche (43% das células, contra 20% a 28% nas outras) e a de IVS médio mais alto (0,280, contra no máximo 0,256 nas outras); são 483 células em só 22 municípios. Cada 0,100 de IVS a mais vem com +49 p.p. a mais de células no Norte ou no Nordeste (balanço, fora do protocolo). Com todos os fatores juntos, sobram +0,5 p.p. A região e o trecho perto do corte são quase as mesmas células: das 641 células do Norte e do Nordeste na faixa, 563 estão nos últimos 0,050 antes de 0,300.
 
-**Perto do corte de 0,300 (IVS de 0,251 a 0,300)** a subida é mais forte: +36,1 p.p. por 0,100 (IC 95% [+7,4; +64,7]). Ali nenhum fator a reduz pela metade; com todos juntos ainda sobram +26,1 p.p. (28% levados). Esse trecho não se explica com os dados disponíveis. É o mesmo trecho que a RDD usa do lado de baixo de 0,300: quanto mais íngreme ele é, mais alto fica o ponto de partida do lado de R$ 10 mil no corte.
+**Perto do corte de 0,300 (IVS de 0,251 a 0,300)** a subida é mais forte e imprecisa: +36,1 p.p. por 0,100 (IC 95% [+7,4; +64,7]; 1180 células em 145 municípios). Ali nenhum fator sozinho a reduz pela metade: comparando só células da mesma UF, sobram +21,6 p.p. (IC 95% [−2,2; +45,4]; 40% levados); com os candidatos por perto, 44% levados; com todos juntos ainda sobram +26,1 p.p. (28% levados). Pela regra do §3, esse trecho não se explica com os dados disponíveis. São as mesmas células que a RDD usa do lado de baixo de 0,300, mas não a mesma reta: a RDD pondera pelo kernel triangular, ajusta uma reta por ciclo e tem efeitos fixos de curso × ciclo e tipo de vaga (a auditoria 37 compara as duas). Quanto mais íngreme é a reta desse trecho, mais alto fica o ponto de partida do lado de R$ 10 mil no corte.
 
 **Faixa de R$ 15 mil (0,301 a 0,400).** A subida é menor e incerta: +7,0 p.p. por 0,100 (IC 95% [−3,2; +17,2], que inclui zero); nos últimos 0,050, +10,7 p.p. (IC 95% [−20,9; +42,3]). Fatores que a reduzem pela metade: na faixa inteira, G-a (região), G-c (composição das vagas); nos últimos 0,050, G-a (região), G-c (composição das vagas).
 
 **Faixa de R$ 20 mil (acima de 0,400).** Não há subida: o preenchimento cai 12,2 p.p. a cada 0,100 de IVS (IC 95% [−15,9; −8,6]).
 
-**Para dizer na banca:** "Dentro da faixa de R$ 10 mil, onde a bolsa é a mesma, os municípios mais vulneráveis preenchem mais vagas. Isso anda junto com a região: os de IVS mais alto da faixa estão mais no Nordeste, onde as vagas preenchem mais, e comparando municípios da mesma UF a subida quase some. Só nos últimos 0,050 antes de 0,300 sobra uma subida forte que nenhum dado nosso acompanha. Na faixa de R$ 15 mil a subida é pequena e incerta; na de R$ 20 mil o preenchimento cai. É descrição: mostra com o que a subida anda junto, não por quê."
+**Para dizer na banca** (revista pela auditoria 37): "Dentro da faixa de R$ 10 mil, onde a bolsa é a mesma, as células abertas dos municípios mais vulneráveis são preenchidas com mais frequência. Na faixa inteira, isso anda junto com a região: os de IVS mais alto da faixa estão mais no Nordeste, onde as células preenchem mais, e comparando municípios da mesma UF a subida quase some. Mas as células do Norte e do Nordeste da faixa estão quase todas (563 de 641) nos últimos 0,050 antes de 0,300, e ali sobra uma subida forte e imprecisa (+36,1 p.p. por 0,100, IC 95% [+7,4; +64,7]) que nenhum fator sozinho reduz pela metade: comparando dentro da mesma UF, sai 40% dela; com os candidatos por perto, 44%. Na faixa de R$ 15 mil a subida é pequena e incerta; na de R$ 20 mil o preenchimento cai. É descrição: mostra com o que a subida anda junto, não por quê."
 <!-- GF:resposta_curta:fim -->
 
 ## 2. O que se mede
@@ -84,7 +84,7 @@ Efeito fixo de macrorregião e, depois, de UF: a inclinação passa a comparar s
 | R$ 20 mil | Sudeste | 120 | 38 | 0,439 | 25,8 |
 <!-- GF:a_regiao:fim -->
 
-O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (descritivo, fora do BKY):
+O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (balanço fora do protocolo 62; descritivo, fora do BKY e fora da leitura do §3):
 
 <!-- GF:a_balanco:inicio -->
 | Faixa | IVS | Fator | Média na amostra | Variação do fator por 0,100 de IVS | IC 95% | Células sem o fator |
@@ -124,7 +124,7 @@ Para cada célula: candidatos do mesmo curso e ciclo cuja origem (município pri
 **Leitura (variante principal: os dois).** R$ 10 mil, faixa inteira: de +12,0 para +6,8 p.p. (44% da subida); R$ 10 mil, últimos 0,050 antes do corte: de +35,6 para +19,9 p.p. (44% da subida); R$ 15 mil, faixa inteira: de +7,0 para +5,7 p.p. (19% da subida); R$ 15 mil, últimos 0,050 antes do corte: de +10,7 para +9,3 p.p. (14% da subida).
 <!-- GF:b_leitura:fim -->
 
-O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (descritivo, fora do BKY):
+O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (balanço fora do protocolo 62; descritivo, fora do BKY e fora da leitura do §3):
 
 <!-- GF:b_balanco:inicio -->
 | Faixa | IVS | Fator | Média na amostra | Variação do fator por 0,100 de IVS | IC 95% | Células sem o fator |
@@ -174,7 +174,7 @@ Efeito fixo de curso × ciclo; indicador de célula só de cadastro reserva; tip
 **Leitura (variante principal: os três).** R$ 10 mil, faixa inteira: de +10,9 para +6,9 p.p. (37% da subida); R$ 10 mil, últimos 0,050 antes do corte: de +36,9 para +32,4 p.p. (12% da subida); R$ 15 mil, faixa inteira: de +6,8 para −0,3 p.p. (105% da subida, reduz pela metade); R$ 15 mil, últimos 0,050 antes do corte: de +13,5 para +2,8 p.p. (79% da subida, reduz pela metade).
 <!-- GF:c_leitura:fim -->
 
-O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (descritivo, fora do BKY):
+O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (balanço fora do protocolo 62; descritivo, fora do BKY e fora da leitura do §3):
 
 <!-- GF:c_balanco:inicio -->
 | Faixa | IVS | Fator | Média na amostra | Variação do fator por 0,100 de IVS | IC 95% | Células sem o fator |
@@ -224,7 +224,7 @@ Log da população do Censo 2022 e nível REGIC 2018 (1 metrópole … 5 centro 
 **Leitura (variante principal: os dois).** R$ 10 mil, faixa inteira: de +11,9 para +8,9 p.p. (25% da subida); R$ 10 mil, últimos 0,050 antes do corte: de +36,1 para +31,9 p.p. (12% da subida); R$ 15 mil, faixa inteira: de +7,0 para +11,6 p.p. (−66% da subida); R$ 15 mil, últimos 0,050 antes do corte: de +10,7 para +11,3 p.p. (−6% da subida).
 <!-- GF:d_leitura:fim -->
 
-O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (descritivo, fora do BKY):
+O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (balanço fora do protocolo 62; descritivo, fora do BKY e fora da leitura do §3):
 
 <!-- GF:d_balanco:inicio -->
 | Faixa | IVS | Fator | Média na amostra | Variação do fator por 0,100 de IVS | IC 95% | Células sem o fator |
@@ -259,7 +259,7 @@ Número de outras células do mesmo curso e ciclo na mesma região de saúde (ex
 **Leitura (variante principal: células do mesmo curso na região).** R$ 10 mil, faixa inteira: de +12,0 para +12,7 p.p. (−6% da subida); R$ 10 mil, últimos 0,050 antes do corte: de +35,6 para +40,2 p.p. (−13% da subida); R$ 15 mil, faixa inteira: de +7,0 para +6,1 p.p. (13% da subida); R$ 15 mil, últimos 0,050 antes do corte: de +10,7 para +13,9 p.p. (−30% da subida).
 <!-- GF:e_leitura:fim -->
 
-O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (descritivo, fora do BKY):
+O próprio fator anda junto com o IVS dentro da faixa? Mesmo modelo, com o fator no lugar do preenchimento (balanço fora do protocolo 62; descritivo, fora do BKY e fora da leitura do §3):
 
 <!-- GF:e_balanco:inicio -->
 | Faixa | IVS | Fator | Média na amostra | Variação do fator por 0,100 de IVS | IC 95% | Células sem o fator |
@@ -314,10 +314,10 @@ Regra: um fator que reduz a inclinação pela metade ou mais descreve a subida (
 <!-- GF:leitura:inicio -->
 | Faixa | Trecho | Subida original [IC 95%] | Fatores que reduzem pela metade | Todos juntos levam | Leitura (§3) |
 |---|---|---|---|---|---|
-| R$ 10 mil | faixa inteira | +11,9 [+6,0; +17,7] | G-a (macrorregiao), G-a (uf) | 96% | **o fator descreve a subida (associação)** |
+| R$ 10 mil | faixa inteira | +11,9 [+6,0; +17,7] | G-a (macrorregião), G-a (UF) | 96% | **o fator descreve a subida (associação)** |
 | R$ 10 mil | últimos 0,050 antes do corte | +36,1 [+7,4; +64,7] | nenhum | 28% | **a subida não se explica com os dados disponíveis** |
-| R$ 15 mil | faixa inteira | +7,0 [−3,2; +17,2] | G-a (macrorregiao), G-a (uf), G-c (so_cr), G-c (todos) | 172% | **o fator descreve a subida (associação)** |
-| R$ 15 mil | últimos 0,050 antes do corte | +10,7 [−20,9; +42,3] | G-a (uf), G-c (curso_x_ciclo), G-c (so_cr), G-c (todos) | 107% | **o fator descreve a subida (associação)** |
+| R$ 15 mil | faixa inteira | +7,0 [−3,2; +17,2] | G-a (macrorregião), G-a (UF), G-c (só cadastro reserva), G-c (os três) | 172% | **o fator descreve a subida (associação)** |
+| R$ 15 mil | últimos 0,050 antes do corte | +10,7 [−20,9; +42,3] | G-a (UF), G-c (curso × ciclo), G-c (só cadastro reserva), G-c (os três) | 107% | **o fator descreve a subida (associação)** |
 | R$ 20 mil | faixa inteira | −12,2 [−15,9; −8,6] | nenhum | — | **não há subida (a inclinação é negativa)** |
 | R$ 20 mil | últimos 0,050 antes do corte | — | — | — | não se aplica |
 <!-- GF:leitura:fim -->
@@ -370,6 +370,7 @@ Regra: um fator que reduz a inclinação pela metade ou mais descreve a subida (
 - BKY entre todas as inclinacoes do preenchimento (originais e depois de cada fator); balancos e medias nao entram.
 - Balanco (fora do protocolo, descritivo): cada fator continuo ou indicador no lugar do preenchimento, mesmo modelo, para mostrar se o proprio fator anda junto com o IVS dentro da faixa.
 - G-f: relato. A pesquisa documental do mesmo dia roda em paralelo; o script procura docs/auditorias/35_* na execucao e registra o que achou no resumo.
+- Auditoria 37 (26/10/2026, so texto): a frase da banca e o paragrafo da janela de R$ 10 mil passam a dizer que a subida da janela e imprecisa, quanto a mesma UF e os candidatos por perto levam (abaixo da metade, mas nao zero) e quantas celulas do Norte e do Nordeste da faixa estao na janela (lido das linhas regiao e do balanco); 'mesmas celulas que a RDD usa do lado de baixo, nao a mesma reta'; 'celulas preenchidas', nao 'vagas'. Nenhum numero de GF_estimativas.csv mudou.
 <!-- GF:decisoes:fim -->
 
 <!-- GF:validacoes:inicio -->
