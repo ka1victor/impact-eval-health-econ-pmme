@@ -9,7 +9,8 @@
 > [auditoria 40](../auditorias/40_auditoria_controles_localizacao_medicos.md) já tinham sido vistos, inclusive o PSM em
 > 0,300 refeito pela auditoria com o lado menor procurando par. Toda linha de `PM_estimativas.csv`, `PM_balanco.csv` e
 > `PM_excluidos.csv` tem `natureza_dos_dados = EMPIRICO`.<br>
-> **Auditoria:** pendente.<br>
+> **Auditoria:** [auditoria 43](../auditorias/43_auditoria_pareamento_regra_literal.md), aprovado com correções de
+> texto; nenhuma estimativa mudou.<br>
 > **Script:** `scripts/rdd_bolsa/45_pareamento_regra_literal.py` (importa o script 44; não o reescreve). **Saídas:**
 > `output/rdd_bolsa/PM_estimativas.csv`, `PM_balanco.csv`, `PM_excluidos.csv`, `PM_resumo.json`, `PM_figuras/`.
 > **Testes:** `tests/test_pareamento_regra_literal.py`.<br>
@@ -140,7 +141,7 @@ conta nova do adendo. A composição das janelas por região e capital já era c
 
 **Quem saiu pela regra 2 (janela de 0,050):** Em 0,300, na H1, ninguém; na oferta local, ninguém. Em 0,400, na H1, 19 linhas município × ciclo (19 de 132 abaixo, 14%; 0 de 98 acima, 0%): capitais, região Centro-Oeste, região Sul; na oferta local, 5 municípios (5 de 125 abaixo, 4%; 0 de 146 acima, 0%): capitais, região Sul. A lista com nomes está na seção 2.
 
-**Parte comparável:** em nenhum corte a regra 2 tirou mais de 25% de um lado. Mesmo assim, a comparação vale só para as unidades que ficaram (quem saiu está na seção 2).
+**Parte comparável:** em nenhum corte a regra 2 tirou mais de 25% de um lado. Mesmo assim, a comparação vale só para as unidades que ficaram: em 0,300, a regra 2 não tirou ninguém; em 0,400, na H1, só municípios que não são capitais, fora do Centro-Oeste e do Sul; na oferta local, só municípios que não são capitais, fora do Sul. Dentro delas, quem ficou fora do suporte comum também não entra (seção 4).
 
 **O ponto depende da regra de pareamento:** a regra gulosa (PM-3) e a literal dão sinais opostos, com os dois IC contendo zero, em fração de células preenchidas (município × ciclo) em 0,300 (gulosa −0,6 p.p., literal +4,7 p.p.); ΔB1 vínculos de especialistas em 0,300 (gulosa −0,09, literal +0,06); ΔB2 horas SUS de especialistas em 0,300 (gulosa −0,71, literal +2,00). Nessas linhas, ler só o intervalo, não o ponto.
 
@@ -399,9 +400,9 @@ As regras estão na seção 0 (decisões 20 a 24). O código as aplica; nada aqu
 
 <!-- PM:limites:inicio -->
 - **Pós-resultado.** Os resultados do 48d e a auditoria 40 (inclusive o PSM em 0,300 refeito com o lado menor procurando par) já tinham sido vistos quando o 48e foi congelado. As regras foram fixadas antes destas contas, mas a pergunta não é cega ao resultado.
-- **Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa e outras regras federais (auditoria 18). O pareamento não isola o incentivo de R$ 5 mil.
+- **Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa e outras regras federais (auditoria 18). Nenhum dos desenhos, nem a RDD nem o pareamento, remove esse pacote: o pareamento também não isola o incentivo de R$ 5 mil.
 - **A regra 2 muda quem é comparado.** Onde ela tira unidades, a comparação vale só para quem ficou (por exemplo, municípios que não são capitais e de regiões presentes dos dois lados), não para toda a janela.
-- **O que o pareamento supõe.** Que, perto do corte e com o mesmo L+M, estar de um lado ou do outro é como sorteado. Não usa a reta da RDD.
+- **O que o pareamento supõe.** Randomização local condicional: que, perto do corte e com o mesmo L+M, estar de um lado ou do outro é como sorteado. O IVS não entra no escore, então a suposição inclui que a diferença de IVS entre os lados, dentro da janela, não pesa no outcome. Não usa a reta da RDD; a RDD supõe continuidade.
 - **O ponto depende da ordem.** Com poucas unidades, a ordem em que se procura par muda quem forma par e a estimativa pontual; por isso a regra gulosa (PM-3) é relatada ao lado.
 - **Poucos municípios e o mesmo município em ciclos diferentes.** O estimando é a média nos pares formados, e na H1 um município pode estar em pares de ciclos diferentes; a permutação trata os pares como independentes.
 - **Mahalanobis com *caliper* apertado.** O *caliper* do 48d deixa quase nenhum par (auditoria 40, achado 10); a PM-6 herda isso.

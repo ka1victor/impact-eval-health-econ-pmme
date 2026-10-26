@@ -660,6 +660,37 @@ def _saida_txt(resumo: dict, corte: str) -> str:
     return "; ".join(partes)
 
 
+def _restricao(cats: list[dict]) -> str:
+    """Quem fica depois da regra 2, em palavras (auditoria 43)."""
+    nomes = [c["categoria"] for c in cats]
+    out = []
+    if "capital" in nomes:
+        out.append("que não são capitais")
+    if "nao capital" in nomes:
+        out.append("que são capitais")
+    regs = [n.replace("regiao[", "").rstrip("]") for n in nomes if n.startswith("regiao[")]
+    if regs:
+        txt = f"do {regs[-1]}" if len(regs) == 1 else ", ".join(f"do {r}" for r in regs[:-1]) + f" e do {regs[-1]}"
+        out.append("fora " + txt)
+    return ", ".join(out)
+
+
+def _restricoes_txt(resumo: dict) -> str:
+    """Por corte e amostra (janela de 0,050): a quem a comparação se aplica depois da regra 2 (auditoria 43)."""
+    frases = []
+    for c in CORTES:
+        ct = ROT_CORTE[c]
+        por = [(parte, _am(resumo, parte, ct, JANELA_PAR / 1000)["categorias_um_lado"])
+               for parte in ("H1", "oferta_local")]
+        if not any(cats for _, cats in por):
+            frases.append(f"em {TXT_CORTE[c]}, a regra 2 não tirou ninguém")
+            continue
+        frases.append(f"em {TXT_CORTE[c]}, " + "; ".join(
+            f"na {NOME_PARTE[parte]}, só municípios {_restricao(cats)}" if cats else
+            f"na {NOME_PARTE[parte]}, todos" for parte, cats in por))
+    return "; ".join(frases)
+
+
 def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
     le = resumo["leitura"]
     partes = []
@@ -699,7 +730,8 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
             for x in le["parte_comparavel"]) + ".")
     else:
         partes.append("**Parte comparável:** em nenhum corte a regra 2 tirou mais de 25% de um lado. Mesmo assim, a "
-                      "comparação vale só para as unidades que ficaram (quem saiu está na seção 2).")
+                      "comparação vale só para as unidades que ficaram: " + _restricoes_txt(resumo) + ". Dentro "
+                      "delas, quem ficou fora do suporte comum também não entra (seção 4).")
     dif = []
     for c in CORTES:
         ct = ROT_CORTE[c]
@@ -730,12 +762,14 @@ def gerar_blocos(est: pd.DataFrame, bal: pd.DataFrame, exc: pd.DataFrame, resumo
         "**Pós-resultado.** Os resultados do 48d e a auditoria 40 (inclusive o PSM em 0,300 refeito com o lado menor "
         "procurando par) já tinham sido vistos quando o 48e foi congelado. As regras foram fixadas antes destas contas, "
         "mas a pergunta não é cega ao resultado.",
-        "**Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa e outras regras federais (auditoria 18). O pareamento não "
-        "isola o incentivo de R$ 5 mil.",
+        "**Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa e outras regras federais (auditoria 18). Nenhum dos "
+        "desenhos, nem a RDD nem o pareamento, remove esse pacote: o pareamento também não isola o incentivo de "
+        "R$ 5 mil.",
         "**A regra 2 muda quem é comparado.** Onde ela tira unidades, a comparação vale só para quem ficou (por exemplo, "
         "municípios que não são capitais e de regiões presentes dos dois lados), não para toda a janela.",
-        "**O que o pareamento supõe.** Que, perto do corte e com o mesmo L+M, estar de um lado ou do outro é como "
-        "sorteado. Não usa a reta da RDD.",
+        "**O que o pareamento supõe.** Randomização local condicional: que, perto do corte e com o mesmo L+M, estar de "
+        "um lado ou do outro é como sorteado. O IVS não entra no escore, então a suposição inclui que a diferença de "
+        "IVS entre os lados, dentro da janela, não pesa no outcome. Não usa a reta da RDD; a RDD supõe continuidade.",
         "**O ponto depende da ordem.** Com poucas unidades, a ordem em que se procura par muda quem forma par e a "
         "estimativa pontual; por isso a regra gulosa (PM-3) é relatada ao lado.",
         "**Poucos municípios e o mesmo município em ciclos diferentes.** O estimando é a média nos pares formados, e na "

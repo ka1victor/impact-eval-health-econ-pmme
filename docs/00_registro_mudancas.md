@@ -8,6 +8,22 @@
 
 ---
 
+## 26/10/2026 — Auditoria 43: adendo 48e (pareamento pela regra literal e PSM em 0,400), aprovado com correções
+
+Motivo: auditoria independente do adendo 48e (script 45, `PM_*`, doc 57s). O recálculo próprio, sem importar os
+scripts 44 e 45 nem a `rdd_lib`, reproduz o portão do 48d (86 e 88 pares) e todas as linhas de PM-1 a PM-7 e PM-F, com
+diferença máxima de 6e−10. Os pares e a lista de quem saiu pela regra 2 são idênticos. Nenhuma decisão da seção 0
+mudou o adendo. As correções foram só de texto nos blocos gerados do 57s: a quem vale a comparação em 0,400, a
+randomização local condicional e o pacote do corte. Nenhum número mudou, e `PM_*` ficaram iguais byte a byte.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/43_auditoria_pareamento_regra_literal.md`](auditorias/43_auditoria_pareamento_regra_literal.md) | auditoria do adendo 48e: veredito, achados, recálculo, fidelidade, portão e integridade |
+
+---
+
 ## 26/10/2026 — Doc 57t: resultados do adendo 48f (seleção pelo tipo de vaga na H1)
 
 Motivo: execução do adendo congelado 48f (tipo de vaga como outcome da RDD, balanço dos controles L e M na amostra
