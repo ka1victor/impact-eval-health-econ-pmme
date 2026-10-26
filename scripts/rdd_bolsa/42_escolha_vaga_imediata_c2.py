@@ -695,7 +695,8 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
                  f"nas duas versões. Com distância e origem (P1 M5, ciclo 2): de {_n(m5a['estimativa'], 2)} "
                  f"{_ic(m5a['ic95_inf'], m5a['ic95_sup'], 2)} para {_n(m5c['estimativa'], 2)} "
                  f"{_ic(m5c['ic95_inf'], m5c['ic95_sup'], 2)}. O E9 continua secundário e exploratório, sem Holm, e as "
-                 "fragilidades do doc 42 (só o ciclo 2; spline cúbico) não são reavaliadas aqui.")
+                 "fragilidades do doc 42 (só o ciclo 2; spline cúbico) continuam; o score bootstrap para poucos clusters e "
+                 "os placebos de corte do doc 42 não são refeitos com a covariável corrigida.")
     else:
         t.append(f"**\"Sinal do ciclo 2\" (E9): a leitura muda.** {frase_e9}: o IC {exc[lei[a]['E9_ciclo2_ic_exclui_1']]} "
                  f"na versão antiga e {exc[lei[c]['E9_ciclo2_ic_exclui_1']]} na corrigida. Pelo adendo 52c, §2, vale a "
@@ -953,11 +954,12 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict) -> str:
         "o conjunto de escolha supõe que o candidato viu todas as células do curso; IIA do logit condicional.",
         "- **Pacote do corte.** O peso da bolsa é identificado pelos saltos nos cortes de IVS (0,300 e 0,400), com o IVS "
         "em spline contínua; em 0,300 e 0,400 mudam também outras regras federais (auditoria 18) e há desequilíbrio de "
-        "capitais em 0,300 (auditoria 36, seção 7). Não é efeito da participação no PMM-E.",
+        "capitais em 0,300 (auditoria 36, seção 3, item 7). Não é efeito da participação no PMM-E.",
         "- **Origem não é causal.** θ_UF é preferência revelada condicional ao modelo; a origem é o município do vínculo "
         "médico no CNES, não a residência.",
-        "- **Poucos conjuntos.** 16 a 24 conjuntos (curso × ciclo) por ciclo e 56 nos ciclos empilhados; o EP com "
-        "cluster por conjunto é impreciso, e o p pela t com G − 1 gl está no CSV.",
+        "- **Poucos conjuntos.** O cluster é o conjunto de escolha (curso × ciclo), e são poucos por ciclo (o número "
+        "de cada especificação está na coluna `g_conjuntos` de `VC_estimativas.csv`); o EP com cluster por conjunto é "
+        "impreciso, e o p pela t com G − 1 gl está no CSV.",
     ]
     return "\n".join(Lh) + "\n"
 

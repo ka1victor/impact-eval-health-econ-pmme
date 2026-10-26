@@ -409,6 +409,7 @@ auditoria independente:
 | C | Item 3: razão *fuzzy* do protocolo 64 | deixar `tau` e os limites de Anderson–Rubin vazios em `OC_estimativas.csv` quando o F robusto do primeiro estágio for < 10, com a nota "instrumento fraco"; ajustar teste e doc 57q; é mudança de formato de saída, não de especificação | **a fazer** |
 | D | Item 5: seleção pelo tipo de vaga | adendo novo à H1: limites de Lee por corte; "ter vaga imediata" como outcome da RDD; balanço dos controles L e M dentro da amostra só de vagas imediatas (§2.12) | **a fazer** |
 | — | Item 4: heterogeneidade por porte | sem recomendação; **continua aguardando decisão do autor** | aberto |
+| — | Auditoria 41 (adendo 52c), achado 1: as sensibilidades da escolha no ciclo 2 (conjunto "só células com vaga imediata" do E9, M2, M4, M6–M9 e DAP) ainda usam o quadro de 19/03/2026, refeito depois do resultado | refazer com o quadro de 13/02 exige adendo; recomendação: refazer ao menos o conjunto "só vaga imediata" do E9, que sustenta a robustez do ciclo 2 no doc 44 | **aguarda decisão do autor** |
 
 ## 3. A história, na ordem dos slides (depois da validação)
 

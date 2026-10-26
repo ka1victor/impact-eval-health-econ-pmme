@@ -8,6 +8,23 @@
 
 ---
 
+## 26/10/2026 — Auditoria 41: adendo 52c (tipo de vaga do ciclo 2 antes da alocação), aprovado com correções de texto
+
+Motivo: auditoria independente do script 42, das saídas `VC_*`, do doc 57p e dos testes. Recalculei com código próprio
+a leitura dos quadros do ciclo 2, o E9 do ciclo 2 e o empilhado, o M1, o M5 do ciclo 2 e o D_UF. Tudo bateu com o
+gravado (dif. ≤ 5e−9), e o portão da versão antiga passou. Nenhuma estimativa mudou. Correções de texto no 57p, pelo
+script 42: a resposta agora diz que o score bootstrap e os placebos do doc 42 não foram refeitos; a §7 deixou de trazer
+números escritos à mão; a referência à auditoria 36 foi corrigida. Fica para o autor: o conjunto de sensibilidade do
+E9 ainda usa o quadro de 19/03.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/41_auditoria_escolha_vaga_imediata_c2.md`](auditorias/41_auditoria_escolha_vaga_imediata_c2.md) | auditoria do adendo 52c: veredito, achados por gravidade, recálculo independente e verificações de integridade |
+
+---
+
 ## 26/10/2026 — Adendos 48e (pareamento pela regra literal e PSM em 0,400) e 48f (seleção pelo tipo de vaga)
 
 Motivo: o autor aprovou as recomendações 1, 2 e 5 da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.
