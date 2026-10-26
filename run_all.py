@@ -209,6 +209,10 @@ STEPS = [
     # e de médicos na região (CCFT) e pareamento (PSM principal, nota §3.2; Mahalanobis e IPW). Portões contra
     # HI_estimativas (40) e OC_estimativas (43) antes de qualquer conta; importa o 19 (CIR), 23, 37, 40, 41 e 43.
     ROOT / "scripts" / "rdd_bolsa" / "44_controles_localizacao_medicos.py",
+    # Adendo 48e (pós-resultado): pareamento pela regra literal do 48d (o lado com menos unidades procura par) e
+    # PSM em 0,400 sem as categorias de região ou capital de um lado só. Importa o 44 sem reescrevê-lo; portão
+    # contra o PS-1 e o PS-2 de CL_estimativas (44) antes de qualquer conta; não regrava CL_, HI_ nem OC_.
+    ROOT / "scripts" / "rdd_bolsa" / "45_pareamento_regra_literal.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.

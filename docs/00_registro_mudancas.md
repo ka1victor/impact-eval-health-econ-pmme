@@ -8,6 +8,20 @@
 
 ---
 
+## 26/10/2026 — Doc 57s: resultados do adendo 48e (pareamento pela regra literal e PSM em 0,400)
+
+Motivo: execução do adendo 48e. As decisões de implementação do 57s (seção 0) foram registradas e versionadas antes
+de qualquer estimativa; os resultados entram depois, em blocos gerados pelo script 45
+(`scripts/rdd_bolsa/45_pareamento_regra_literal.py`, saídas `output/rdd_bolsa/PM_*`).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57s_resultados_pareamento_regra_literal.md`](06_execucao/57s_resultados_pareamento_regra_literal.md) | resultados do adendo 48e: portão, quem saiu pela regra 2, pares, balanço, PM-1 a PM-7, leitura do §3 e limites; auditoria pendente |
+
+---
+
 ## 26/10/2026 — Adendo 48c completado (testes, pipeline) e auditoria 42, aprovado com correções
 
 Motivo: o 48c tinha entrado como WIP, sem testes e sem auditoria. Agora o 41 tem testes próprios e entra no
