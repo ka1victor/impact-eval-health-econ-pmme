@@ -8,6 +8,25 @@
 
 ---
 
+## 26/10/2026 — Adendo 48c completado (testes, pipeline) e auditoria 42, aprovado com correções
+
+Motivo: o 48c tinha entrado como WIP, sem testes e sem auditoria. Agora o 41 tem testes próprios e entra no
+`run_all.py`, antes do 44. A auditoria 42 refez de forma independente o C-1, a base e C-2 a C-4 nos dois cortes e uma
+linha do C-5. Tudo bate até 7e−14, e nenhuma estimativa mudou. Correções só de texto no 57o: o que quer dizer "e não
+com a bolsa", o p de Holm do 48b e a explicação do salto do Nordeste. A conferência contra o 48b deixou de estar
+pendente. Fica para o autor: a fonte do IBGE (capitais e regiões) não foi arquivada em `data/raw/`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/42_auditoria_capitais_uf.md`](auditorias/42_auditoria_capitais_uf.md) | auditoria do adendo 48c: veredito, achados por gravidade e o que foi recalculado |
+| `tests/test_h1_capitais_uf.py` | testes do script 41 e do doc 57o |
+| `scripts/auditoria_H1/a42_auditoria_capitais_uf.py` | recálculo independente da auditoria 42 (não importa o 41 nem a `rdd_lib`) |
+| `output/auditoria_H1/a42_recalculo.csv`, `a42_resumo.json` | saídas do recálculo, com a diferença contra `HC_estimativas.csv` |
+
+---
+
 ## 26/10/2026 — Adendos 48e (pareamento pela regra literal e PSM em 0,400) e 48f (seleção pelo tipo de vaga)
 
 Motivo: o autor aprovou as recomendações 1, 2 e 5 da §2.16 de `07_apresentacoes/banca2/05_discussao_historia_empirica.md`.

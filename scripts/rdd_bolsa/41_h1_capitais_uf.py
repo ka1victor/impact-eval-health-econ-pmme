@@ -638,6 +638,7 @@ def conferir_hi(est: pd.DataFrame) -> dict:
             meu = _um(est, bloco="base", medida=med, corte=cs)
             linhas.append({"medida": med, "corte": cs, "aqui_tau": float(meu["tau"]), "HI_tau": float(g["tau"].iloc[0]),
                            "aqui_ep": float(meu["ep"]), "HI_ep": float(g["ep"].iloc[0]),
+                           "HI_p_holm": float(g["p_holm"].iloc[0]) if "p_holm" in g.columns else float("nan"),
                            "dif_tau": abs(float(meu["tau"]) - float(g["tau"].iloc[0])),
                            "dif_ep": abs(float(meu["ep"]) - float(g["ep"].iloc[0]))})
     if any(x["dif_tau"] > TOL or x["dif_ep"] > TOL for x in linhas):
@@ -732,19 +733,27 @@ def capitais_na_janela(mun: pd.DataFrame, cel: pd.DataFrame) -> list[dict]:
     return sorted(out, key=lambda x: (x["corte"], x["ivs"]))
 
 
+JANELA_ESTREITA_MIL = 10   # 0,010, como as janelas do pipeline; só para ler o C-1 (auditoria 42, achado 3)
+
+
 def composicao_janela(cel: pd.DataFrame, mun: pd.DataFrame) -> list[dict]:
-    """Médias cruas na janela de 0,050 (sem reta), por lado: só descritivo, para ler o C-1."""
+    """Médias cruas por lado (sem reta), na janela de 0,050 e na de 0,010: só descritivo, para ler o C-1."""
     out = []
-    for corte in CORTES:
-        for nome_am in ("H1", "quadro"):
-            for un in ("municipio", "celula"):
-                d = amostra(cel, mun, nome_am, un)
-                d = d[(d["s"] - corte).abs() < H_MIL]
-                for lado, dd in (("abaixo", d[d["s"] <= corte]), ("acima", d[d["s"] > corte])):
-                    out.append({"corte": f"{corte / 1000:.3f}", "amostra": nome_am, "unidade_analise": un, "lado": lado,
-                                "linhas": int(len(dd)), "municipios": int(dd["co_ibge"].nunique()),
-                                "frac_capital": float(dd["capital"].mean()), "frac_nordeste": float(dd["nordeste"].mean()),
-                                "frac_norte": float(dd["norte"].mean())})
+    for jan in (H_MIL, JANELA_ESTREITA_MIL):
+        for corte in CORTES:
+            for nome_am in ("H1", "quadro"):
+                for un in ("municipio", "celula"):
+                    d = amostra(cel, mun, nome_am, un)
+                    d = d[(d["s"] - corte).abs() < jan]
+                    for lado, dd in (("abaixo", d[d["s"] <= corte]), ("acima", d[d["s"] > corte])):
+                        out.append({"janela_mil": int(jan), "corte": f"{corte / 1000:.3f}", "amostra": nome_am,
+                                    "unidade_analise": un, "lado": lado,
+                                    "linhas": int(len(dd)), "municipios": int(dd["co_ibge"].nunique()),
+                                    "frac_capital": float(dd["capital"].mean()),
+                                    "frac_nordeste": float(dd["nordeste"].mean()),
+                                    "frac_norte": float(dd["norte"].mean()),
+                                    "nordeste_capital": int(((dd["nordeste"] == 1) & (dd["capital"] == 1)).sum()),
+                                    "nordeste_total": int((dd["nordeste"] == 1).sum())})
     return out
 
 
@@ -1031,12 +1040,17 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
     lado_perto = ("todas abaixo" if perto and all(c["distancia_mil"] <= 0 for c in perto) else
                   ("todas acima" if perto and all(c["distancia_mil"] > 0 for c in perto) else "dos dois lados"))
     comp = pd.DataFrame(resumo["composicao_janela"])
-    cj = comp[(comp["corte"] == "0.300") & (comp["amostra"] == "H1") & (comp["unidade_analise"] == "municipio")]
+    cj = comp[(comp["corte"] == "0.300") & (comp["amostra"] == "H1") & (comp["unidade_analise"] == "municipio")
+              & (comp["janela_mil"] == H_MIL)]
     cj_ab, cj_ac = cj[cj["lado"] == "abaixo"].iloc[0], cj[cj["lado"] == "acima"].iloc[0]
+    ce = comp[(comp["corte"] == "0.300") & (comp["amostra"] == "H1") & (comp["unidade_analise"] == "municipio")
+              & (comp["janela_mil"] == JANELA_ESTREITA_MIL)]
+    ce_ab, ce_ac = ce[ce["lado"] == "abaixo"].iloc[0], ce[ce["lado"] == "acima"].iloc[0]
     linhas = []
     if l3["leitura"] == "ANDA_JUNTO_COM_CAPITAIS_OU_REGIAO":
         linhas.append(f"**Sim, pela leitura pré-registrada:** {LEITURA_SIM}. É robustez pós-resultado, com poucos "
-                      "municípios perto do corte.")
+                      "municípios perto do corte. Na regra, \"e não com a bolsa\" quer dizer que o corte não separa a "
+                      "bolsa da composição de capitais; não quer dizer que a bolsa não tenha efeito.")
     else:
         linhas.append(f"**Pela leitura pré-registrada, em 0,300: {LEITURA_NAO}** ({l3['motivo']}).")
     linhas.append("")
@@ -1053,10 +1067,17 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
         if rm["ic_contem_zero"]:
             reg.append(f"{nome}: o salto no corte tem IC que contém zero ({_v(rm)} p.p. por município, IC {_ic(rm)})")
         else:
-            reg.append(f"{nome}: {_diferenca_txt(rm, 'municípios do ' + nome)}, embora na janela inteira de 0,050 "
-                       f"sejam {_num(cj_ab['frac_' + v] * 100, 0, False)}% abaixo e "
-                       f"{_num(cj_ac['frac_' + v] * 100, 0, False)}% acima (sem reta). A reta local pesa os municípios "
-                       "colados no corte, e logo abaixo estão capitais do Nordeste")
+            txt = (f"{nome}: {_diferenca_txt(rm, 'municípios do ' + nome)}, embora na janela inteira de 0,050 "
+                   f"sejam {_num(cj_ab['frac_' + v] * 100, 0, False)}% abaixo e "
+                   f"{_num(cj_ac['frac_' + v] * 100, 0, False)}% acima (sem reta). A reta local pesa os municípios "
+                   f"colados no corte: a menos de 0,010, são {_num(ce_ab['frac_' + v] * 100, 0, False)}% abaixo "
+                   f"({int(ce_ab['linhas'])} municípios × ciclo) e {_num(ce_ac['frac_' + v] * 100, 0, False)}% acima "
+                   f"({int(ce_ac['linhas'])})")
+            if v == "nordeste":
+                txt += (f"; dos {int(ce_ab['nordeste_total'])} municípios × ciclo do Nordeste logo abaixo, "
+                        f"{int(ce_ab['nordeste_capital'])} são capital, então o desbalanceamento de região não se "
+                        "resume às capitais")
+            reg.append(txt)
     linhas.append("- **Região.** " + "; ".join(reg) + ".")
     for m in MEDIDAS_H1:
         r0 = b[(m, "sem_ajuste")]
@@ -1066,6 +1087,17 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
     linhas.append("")
     linhas.append("**Para dizer na banca:** " + frase_banca(est, resumo))
     return "\n".join(linhas)
+
+
+def _holm_48b(resumo: dict, medidas: list[str], cs: str) -> str:
+    """p de Holm das primárias do 48b (gravado em HI_estimativas.csv), quando a conferência contra o HI_ foi feita."""
+    hi = resumo.get("conferencias", {}).get("HI", {})
+    if hi.get("status") != "CONFERIDO":
+        return ""
+    ps = [x.get("HI_p_holm") for x in hi["linhas"] if x["medida"] in medidas and x["corte"] == cs]
+    if not ps or any(p is None or not math.isfinite(float(p)) for p in ps):
+        return ""
+    return ", ".join(_p(p) for p in ps)
 
 
 def frase_banca(est: pd.DataFrame, resumo: dict) -> str:
@@ -1082,11 +1114,14 @@ def frase_banca(est: pd.DataFrame, resumo: dict) -> str:
             f"{m}, {_num(l3['por_medida'][m]['tau_sem_ajuste'] * (100 if m == 'HI-1' else 1), 1 if m == 'HI-1' else 2)}"
             f" {'p.p.' if m == 'HI-1' else 'médico por município'}" for m in a_levar)
         sem_queda = [m for m in MEDIDAS_H1 if m not in a_levar]
-        return (base + f"A única queda das vagas imediatas que se distinguia de zero ({quedas}) deixa de se distinguir "
-                "quando se compara capital com capital, municípios da mesma UF, ou quando se tiram as capitais"
+        holm = _holm_48b(resumo, a_levar, "0.300")
+        return (base + f"A única queda das vagas imediatas que se distinguia de zero sem correção ({quedas}"
+                + (f"; no 48b, depois do Holm, ela já não rejeitava zero: p de Holm {holm}" if holm else "")
+                + ") deixa de se distinguir quando se compara capital com capital, municípios da mesma UF, ou quando "
+                "se tiram as capitais"
                 + (f"; a {' e a '.join(sem_queda)} já não se distinguia de zero" if sem_queda else "")
-                + ". A queda anda junto com essas poucas capitais grandes, e não com a bolsa. É robustez "
-                "pós-resultado, com poucos municípios perto do corte.")
+                + ". A queda anda junto com essas poucas capitais grandes: o corte não separa a bolsa delas. Isso não "
+                "mostra que a bolsa não tenha efeito. É robustez pós-resultado, com poucos municípios perto do corte.")
     if not a_levar:
         return (base + "Comparando vagas do mesmo tipo, já não se detecta queda em 0,300, com ou sem esses ajustes; "
                 "o desbalanceamento de capitais fica registrado como limite da RDD nesse corte.")
@@ -1119,8 +1154,9 @@ def tabela_capitais(resumo: dict) -> str:
                  "Células (3 ciclos)", "Células com vaga imediata", "Peso do kernel"], linhas)
 
 
-def tabela_composicao(resumo: dict) -> str:
+def tabela_composicao(resumo: dict, jan: int = H_MIL) -> str:
     comp = pd.DataFrame(resumo["composicao_janela"])
+    comp = comp[comp["janela_mil"] == jan]
     linhas = []
     for cs in ("0.300", "0.400"):
         for am in ("H1", "quadro"):
@@ -1248,6 +1284,26 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
             limite_balanco.append(f"- **Balanço de capital em {_corte_txt(cs)}: violado.** A fração de capitais salta "
                                   f"no corte ({len(ruins)} das 4 linhas de capital do C-1 com IC que exclui zero). "
                                   f"Pelo 48c, isso é registrado como **limite da RDD em {_corte_txt(cs)}**.")
+    # Auditoria 42, achado 2: a regra do §2 é binária no IC; dizer quanto do ponto cada ajuste leva.
+    for cs, l in resumo["leitura"].items():
+        for m in l["linhas_H1_com_queda_a_levar"]:
+            b = _um(est, bloco="base", medida=m, corte=cs)
+            pb = float(b["p_valor"])
+            partes_aj, fica = [], []
+            for aj in ("capital", "uf", "sem_capitais"):
+                r = _um(est, bloco=BLOCO_AJ[aj], medida=m, corte=cs)
+                frac = float(r["tau"]) / float(b["tau"])
+                partes_aj.append(f"{ROT_AJ_CURTO[aj]} {_v(r)} {_ic(r)}, "
+                                 f"{_num(100 * frac, 0, False)}% do ponto sem ajuste")
+                if frac > 0.5:
+                    fica.append({"capital": "a dummy de capital", "uf": "o efeito fixo de UF",
+                                 "sem_capitais": "a amostra sem capitais"}[aj])
+            limite_balanco.append(
+                f"- **A regra do §2 olha só o IC.** Em {_corte_txt(cs)}, a {m} sem ajuste é {_v(b)} {_ic(b)}, com "
+                f"p = {_p(pb)}: um IC que exclui zero por pouco passa a conter zero com qualquer perda de precisão "
+                f"ou recuo do ponto. Com os ajustes: " + "; ".join(partes_aj) + ". Perder a significância não é o "
+                "mesmo que o salto ir a zero"
+                + (f"; com {' e com '.join(fica)}, mais da metade do ponto continua lá." if fica else "."))
     partes = [f"""# 57o. H1 com capitais e UF no corte 0,300 (adendo 48c, robustez pós-resultado)
 
 > **Data:** {d[8:]}/{d[5:7]}/{d[:4]}.<br>
@@ -1255,6 +1311,7 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
 > `adendo` de `HC_resumo.json`). Especificação principal da H1: [`48b`](48b_adendo_H1_vagas_imediatas.md) (com a §7:
 > no ciclo 2, tipo de vaga do quadro de 13/02/2026).<br>
 > **Origem:** a [auditoria 36](../auditorias/36_auditoria_dados_H1.md) viu capitais concentradas logo abaixo de 0,300.<br>
+> **Auditoria:** [42](../auditorias/42_auditoria_capitais_uf.md) (recálculo independente; correções só de texto).<br>
 > **Estatuto:** `{ESTATUTO}`. Robustez **pós-resultado**; não muda a especificação principal. O contraste é o pacote
 > do corte (incentivo marginal anunciado e outras regras no mesmo corte), nunca a participação no PMM-E nem o Agora
 > Tem Especialistas. Toda linha de `HC_estimativas.csv` tem `natureza_dos_dados = EMPIRICO`.<br>
@@ -1288,7 +1345,10 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
                   + _bloco("capitais", tabela_capitais(resumo))
                   + "\n\nSalto no corte (local linear, sem controle):\n\n" + _bloco("balanco", tabela_balanco(est))
                   + "\n\nMédias cruas na janela de 0,050, sem reta (só para ler o salto):\n\n"
-                  + _bloco("composicao", tabela_composicao(resumo)))
+                  + _bloco("composicao", tabela_composicao(resumo))
+                  + "\n\nMédias cruas na janela de 0,010, sem reta (os municípios que mais pesam na reta local; "
+                    "acrescentada pela auditoria 42):\n\n"
+                  + _bloco("composicao_estreita", tabela_composicao(resumo, JANELA_ESTREITA_MIL)))
     partes.append("## 4. C-2 a C-4 — H1 com dummy de capital, efeito fixo de UF e sem capitais\n\n"
                   "\"Base\" é a H1 do 48b sem controle extra, refeita aqui com a mesma base e o mesmo estimador. HI-1 em "
                   "p.p.; HI-2 em médicos alocados por município. O coeficiente de capital é a diferença média entre "

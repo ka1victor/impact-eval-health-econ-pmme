@@ -189,6 +189,12 @@ STEPS = [
     # (N_, 23) e o 49b §14 (ND_, 23b, saída versionada, fora do run_all) e para se não baterem; no ciclo 2, tipo de
     # vaga pelo quadro de 13/02/2026 (nota §7), lido com scripts/auditoria_H1/a36_leitura.py; importa o 23 e o 36.
     ROOT / "scripts" / "rdd_bolsa" / "40_h1_vagas_imediatas.py",
+    # Adendo 48c (robustez pós-resultado; auditoria 42): H1 com dummy de capital, efeito fixo de UF e sem capitais, e
+    # balanço de capital e região no corte. Monta a base com scripts/auditoria_H1/a36_reconstruir_H1.py e a confere
+    # contra output/auditoria_H1/a36_*; portões contra HI_ (40), NA_ (24) e N_ (23). Lê a referência do IBGE já
+    # gravada (output/aquisicao/ibge_capitais_uf_regiao.csv, SHA-256 do manifesto), sem rede. Vem antes do 44, que
+    # importa dele a leitura dessa referência.
+    ROOT / "scripts" / "rdd_bolsa" / "41_h1_capitais_uf.py",
     # Protocolo 60, parte B (pós-resultado): oferta local de especialistas depois da chegada do 1º médico do PMM-E
     # (Callaway-Sant'Anna município × mês). Importa o 22 (que importa o 21 e o 14) e a honestdid_lib; confere as
     # coortes contra K_D2_resumo.json (22) e B1/B2 contra o F3 do E7 (14); lê o a09, o a16, a X1 (17, versionada),

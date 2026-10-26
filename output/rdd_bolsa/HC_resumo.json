@@ -691,6 +691,7 @@
   ],
   "composicao_janela": [
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "H1",
       "unidade_analise": "municipio",
@@ -699,9 +700,12 @@
       "municipios": 95,
       "frac_capital": 0.1702127659574468,
       "frac_nordeste": 0.2624113475177305,
-      "frac_norte": 0.11347517730496454
+      "frac_norte": 0.11347517730496454,
+      "nordeste_capital": 8,
+      "nordeste_total": 37
     },
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "H1",
       "unidade_analise": "municipio",
@@ -710,9 +714,12 @@
       "municipios": 72,
       "frac_capital": 0.11206896551724138,
       "frac_nordeste": 0.3879310344827586,
-      "frac_norte": 0.14655172413793102
+      "frac_norte": 0.14655172413793102,
+      "nordeste_capital": 3,
+      "nordeste_total": 45
     },
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "H1",
       "unidade_analise": "celula",
@@ -721,9 +728,12 @@
       "municipios": 95,
       "frac_capital": 0.30691056910569103,
       "frac_nordeste": 0.44308943089430897,
-      "frac_norte": 0.11585365853658537
+      "frac_norte": 0.11585365853658537,
+      "nordeste_capital": 50,
+      "nordeste_total": 218
     },
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "H1",
       "unidade_analise": "celula",
@@ -732,9 +742,12 @@
       "municipios": 72,
       "frac_capital": 0.28938906752411575,
       "frac_nordeste": 0.4662379421221865,
-      "frac_norte": 0.19935691318327975
+      "frac_norte": 0.19935691318327975,
+      "nordeste_capital": 36,
+      "nordeste_total": 145
     },
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "quadro",
       "unidade_analise": "municipio",
@@ -743,9 +756,12 @@
       "municipios": 145,
       "frac_capital": 0.12244897959183673,
       "frac_nordeste": 0.19591836734693877,
-      "frac_norte": 0.10204081632653061
+      "frac_norte": 0.10204081632653061,
+      "nordeste_capital": 10,
+      "nordeste_total": 48
     },
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "quadro",
       "unidade_analise": "municipio",
@@ -754,9 +770,12 @@
       "municipios": 120,
       "frac_capital": 0.07653061224489796,
       "frac_nordeste": 0.32653061224489793,
-      "frac_norte": 0.11734693877551021
+      "frac_norte": 0.11734693877551021,
+      "nordeste_capital": 4,
+      "nordeste_total": 64
     },
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "quadro",
       "unidade_analise": "celula",
@@ -765,9 +784,12 @@
       "municipios": 145,
       "frac_capital": 0.33220338983050846,
       "frac_nordeste": 0.3923728813559322,
-      "frac_norte": 0.0847457627118644
+      "frac_norte": 0.0847457627118644,
+      "nordeste_capital": 166,
+      "nordeste_total": 463
     },
     {
+      "janela_mil": 50,
       "corte": "0.300",
       "amostra": "quadro",
       "unidade_analise": "celula",
@@ -776,9 +798,12 @@
       "municipios": 120,
       "frac_capital": 0.2962566844919786,
       "frac_nordeste": 0.46844919786096256,
-      "frac_norte": 0.1625668449197861
+      "frac_norte": 0.1625668449197861,
+      "nordeste_capital": 144,
+      "nordeste_total": 438
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "H1",
       "unidade_analise": "municipio",
@@ -787,9 +812,12 @@
       "municipios": 83,
       "frac_capital": 0.06923076923076923,
       "frac_nordeste": 0.6076923076923076,
-      "frac_norte": 0.19230769230769232
+      "frac_norte": 0.19230769230769232,
+      "nordeste_capital": 6,
+      "nordeste_total": 79
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "H1",
       "unidade_analise": "municipio",
@@ -798,9 +826,12 @@
       "municipios": 69,
       "frac_capital": 0.0,
       "frac_nordeste": 0.6804123711340206,
-      "frac_norte": 0.14432989690721648
+      "frac_norte": 0.14432989690721648,
+      "nordeste_capital": 0,
+      "nordeste_total": 66
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "H1",
       "unidade_analise": "celula",
@@ -809,9 +840,12 @@
       "municipios": 83,
       "frac_capital": 0.15873015873015872,
       "frac_nordeste": 0.6095238095238096,
-      "frac_norte": 0.2
+      "frac_norte": 0.2,
+      "nordeste_capital": 28,
+      "nordeste_total": 192
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "H1",
       "unidade_analise": "celula",
@@ -820,9 +854,12 @@
       "municipios": 69,
       "frac_capital": 0.0,
       "frac_nordeste": 0.6058823529411764,
-      "frac_norte": 0.16470588235294117
+      "frac_norte": 0.16470588235294117,
+      "nordeste_capital": 0,
+      "nordeste_total": 103
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "quadro",
       "unidade_analise": "municipio",
@@ -831,9 +868,12 @@
       "municipios": 122,
       "frac_capital": 0.04433497536945813,
       "frac_nordeste": 0.5911330049261084,
-      "frac_norte": 0.16748768472906403
+      "frac_norte": 0.16748768472906403,
+      "nordeste_capital": 6,
+      "nordeste_total": 120
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "quadro",
       "unidade_analise": "municipio",
@@ -842,9 +882,12 @@
       "municipios": 145,
       "frac_capital": 0.0,
       "frac_nordeste": 0.7028301886792453,
-      "frac_norte": 0.11320754716981132
+      "frac_norte": 0.11320754716981132,
+      "nordeste_capital": 0,
+      "nordeste_total": 149
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "quadro",
       "unidade_analise": "celula",
@@ -853,9 +896,12 @@
       "municipios": 122,
       "frac_capital": 0.19170984455958548,
       "frac_nordeste": 0.6722797927461139,
-      "frac_norte": 0.16580310880829016
+      "frac_norte": 0.16580310880829016,
+      "nordeste_capital": 111,
+      "nordeste_total": 519
     },
     {
+      "janela_mil": 50,
       "corte": "0.400",
       "amostra": "quadro",
       "unidade_analise": "celula",
@@ -864,7 +910,233 @@
       "municipios": 145,
       "frac_capital": 0.0,
       "frac_nordeste": 0.6666666666666666,
-      "frac_norte": 0.1337579617834395
+      "frac_norte": 0.1337579617834395,
+      "nordeste_capital": 0,
+      "nordeste_total": 314
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 20,
+      "municipios": 12,
+      "frac_capital": 0.3,
+      "frac_nordeste": 0.6,
+      "frac_norte": 0.0,
+      "nordeste_capital": 2,
+      "nordeste_total": 12
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 21,
+      "municipios": 13,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.19047619047619047,
+      "frac_norte": 0.14285714285714285,
+      "nordeste_capital": 0,
+      "nordeste_total": 4
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 74,
+      "municipios": 12,
+      "frac_capital": 0.4864864864864865,
+      "frac_nordeste": 0.5135135135135135,
+      "frac_norte": 0.0,
+      "nordeste_capital": 4,
+      "nordeste_total": 38
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 40,
+      "municipios": 13,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.175,
+      "frac_norte": 0.1,
+      "nordeste_capital": 0,
+      "nordeste_total": 7
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 41,
+      "municipios": 27,
+      "frac_capital": 0.17073170731707318,
+      "frac_nordeste": 0.3902439024390244,
+      "frac_norte": 0.04878048780487805,
+      "nordeste_capital": 2,
+      "nordeste_total": 16
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 34,
+      "municipios": 23,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.14705882352941177,
+      "frac_norte": 0.08823529411764706,
+      "nordeste_capital": 0,
+      "nordeste_total": 5
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 183,
+      "municipios": 27,
+      "frac_capital": 0.5300546448087432,
+      "frac_nordeste": 0.4918032786885246,
+      "frac_norte": 0.01092896174863388,
+      "nordeste_capital": 34,
+      "nordeste_total": 90
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.300",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 132,
+      "municipios": 23,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.15151515151515152,
+      "frac_norte": 0.06060606060606061,
+      "nordeste_capital": 0,
+      "nordeste_total": 20
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 31,
+      "municipios": 17,
+      "frac_capital": 0.0967741935483871,
+      "frac_nordeste": 0.5483870967741935,
+      "frac_norte": 0.25806451612903225,
+      "nordeste_capital": 3,
+      "nordeste_total": 17
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 23,
+      "municipios": 15,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.6521739130434783,
+      "frac_norte": 0.21739130434782608,
+      "nordeste_capital": 0,
+      "nordeste_total": 15
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 87,
+      "municipios": 17,
+      "frac_capital": 0.14942528735632185,
+      "frac_nordeste": 0.5517241379310345,
+      "frac_norte": 0.14942528735632185,
+      "nordeste_capital": 13,
+      "nordeste_total": 48
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "H1",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 45,
+      "municipios": 15,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.4666666666666667,
+      "frac_norte": 0.3111111111111111,
+      "nordeste_capital": 0,
+      "nordeste_total": 21
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "abaixo",
+      "linhas": 51,
+      "municipios": 29,
+      "frac_capital": 0.058823529411764705,
+      "frac_nordeste": 0.6274509803921569,
+      "frac_norte": 0.17647058823529413,
+      "nordeste_capital": 3,
+      "nordeste_total": 32
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "municipio",
+      "lado": "acima",
+      "linhas": 48,
+      "municipios": 28,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.6458333333333334,
+      "frac_norte": 0.16666666666666666,
+      "nordeste_capital": 0,
+      "nordeste_total": 31
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "abaixo",
+      "linhas": 209,
+      "municipios": 29,
+      "frac_capital": 0.3492822966507177,
+      "frac_nordeste": 0.7177033492822966,
+      "frac_norte": 0.10047846889952153,
+      "nordeste_capital": 73,
+      "nordeste_total": 150
+    },
+    {
+      "janela_mil": 10,
+      "corte": "0.400",
+      "amostra": "quadro",
+      "unidade_analise": "celula",
+      "lado": "acima",
+      "linhas": 122,
+      "municipios": 28,
+      "frac_capital": 0.0,
+      "frac_nordeste": 0.5573770491803278,
+      "frac_norte": 0.2540983606557377,
+      "nordeste_capital": 0,
+      "nordeste_total": 68
     }
   ],
   "referencia_ibge": {
@@ -1401,9 +1673,56 @@
       }
     ],
     "HI": {
-      "status": "PENDENTE",
+      "status": "CONFERIDO",
       "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
-      "motivo": "HI_estimativas.csv (script 40) não estava no branch nesta execução"
+      "sha256": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76",
+      "tolerancia": 1e-08,
+      "linhas": [
+        {
+          "medida": "HI-1",
+          "corte": "0.300",
+          "aqui_tau": -0.03678408651620541,
+          "HI_tau": -0.0367840865161759,
+          "aqui_ep": 0.08969135888143963,
+          "HI_ep": 0.08969135888144267,
+          "HI_p_holm": 1.0,
+          "dif_tau": 2.951111577331744e-14,
+          "dif_ep": 3.039235529911366e-15
+        },
+        {
+          "medida": "HI-2",
+          "corte": "0.300",
+          "aqui_tau": -1.126325756859003,
+          "HI_tau": -1.1263257568590284,
+          "aqui_ep": 0.5240743686156395,
+          "HI_ep": 0.5240743686156416,
+          "HI_p_holm": 0.12648319412457296,
+          "dif_tau": 2.531308496145357e-14,
+          "dif_ep": 2.1094237467877974e-15
+        },
+        {
+          "medida": "HI-1",
+          "corte": "0.400",
+          "aqui_tau": -0.023119649555094268,
+          "HI_tau": -0.023119649555122468,
+          "aqui_ep": 0.11066109982338818,
+          "HI_ep": 0.11066109982339023,
+          "HI_p_holm": 1.0,
+          "dif_tau": 2.8199664825478976e-14,
+          "dif_ep": 2.0539125955565396e-15
+        },
+        {
+          "medida": "HI-2",
+          "corte": "0.400",
+          "aqui_tau": -0.15670734701256545,
+          "HI_tau": -0.156707347012577,
+          "aqui_ep": 0.42666417703394155,
+          "HI_ep": 0.4266641770339417,
+          "HI_p_holm": 1.0,
+          "dif_tau": 1.1546319456101628e-14,
+          "dif_ep": 1.6653345369377348e-16
+        }
+      ]
     }
   },
   "decisoes": [
@@ -1739,6 +2058,18 @@
       "unidade": "linha do quadro/resultado",
       "chaves": "CNES x curso",
       "filtros": "sem colunas pessoais"
+    },
+    {
+      "caminho": "output/rdd_bolsa/HI_estimativas.csv",
+      "sha256": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76",
+      "bytes": 61172,
+      "papel": "conferencia de HI-1 e HI-2 (script 40)",
+      "fonte": "pipeline",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "estimativa",
+      "chaves": "-",
+      "filtros": "principal, c2 = 13fev"
     }
   ],
   "validacoes": {
