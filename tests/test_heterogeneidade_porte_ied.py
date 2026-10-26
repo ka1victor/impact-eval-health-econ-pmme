@@ -326,7 +326,7 @@ class TestDoc(unittest.TestCase):
 
     def test_cabecalho_e_decisoes_antes(self):
         self.assertIn("ADENDO_48G_POS_RESULTADO", self.txt)
-        self.assertIn("**Auditoria:** pendente", self.txt)
+        self.assertIn("**Auditoria:** [auditoria 45]", self.txt)
         i_dec = self.txt.index("## 0. Decisões de implementação")
         i_res = self.txt.index("<!-- PO:resposta_curta:inicio -->")
         self.assertLess(i_dec, i_res)

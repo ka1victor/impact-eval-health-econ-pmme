@@ -684,6 +684,28 @@ def _pct(x) -> str:
     return "—" if not np.isfinite(float(x)) else T40.fpp(x, 0, False) + " %"
 
 
+def _portes_de(ps) -> str:
+    ps = [str(x) for x in ps]
+    if len(ps) == 1:
+        return f"do porte {ps[0]}"
+    return "dos portes " + ", ".join(ps[:-1]) + " e " + ps[-1]
+
+
+def _composicao_g(co: pd.DataFrame, resumo: dict, c: int) -> str:
+    """Quem está em cada grupo na janela (população H1 do balanço, seção 7): portes, capitais e Nordeste (auditoria
+    45, A1 e A3). Só lê o que o balanço gravou."""
+    b = co[(co["tipo"] == "balanco") & (co["populacao"].str.startswith("H1")) & (co["corte"] == ROT_CORTE[c])]
+    v = {(int(r["G"]), r["lado"]): r for _, r in b.iterrows()}
+    rc = resumo["regra_g"]["cortes"][ROT_CORTE[c]]
+
+    def par(g, col):
+        return f"{_pct(v[(g, 'abaixo')][col])} e {_pct(v[(g, 'acima')][col])}"
+    return (f"em {TXT_CORTE[c]}, o grupo em que o estrato não muda é formado pelos municípios "
+            f"{_portes_de(rc['portes_G0'])}, com {par(0, 'frac_capital')} de capitais e {par(0, 'frac_Nordeste')} no "
+            f"Nordeste (abaixo e acima do corte), contra {par(1, 'frac_capital')} de capitais e "
+            f"{par(1, 'frac_Nordeste')} no Nordeste onde o estrato muda (seção 7)")
+
+
 # ---------------------------------------------------------------------------
 # 8. Blocos do doc 57u
 # ---------------------------------------------------------------------------
@@ -698,7 +720,9 @@ TXT_PO1 = {
     "TAU1_TODOS_CONTEM_ZERO": (
         "**Não se detecta que o salto da H1 dependa de o estrato do IED mudar** (leitura pré-registrada do primeiro "
         "caso): nas quatro linhas da PO-1 o IC 95% da diferença τ₁ contém zero. Pelo adendo, o IED não explica o sinal "
-        "da H1, com pouca potência: os grupos são pequenos (contagens na seção 3)."),
+        "da H1, com pouca potência: os grupos são pequenos (contagens na seção 3). Com IC de τ₁ tão largos, \"não "
+        "explica\" quer dizer que os dados não mostram que o IED explique o salto; não quer dizer que o canal do IED "
+        "esteja descartado."),
     "TAU1_REJEITA_HOLM_CONCENTRADO": (
         "**O sinal da H1 anda junto com o canal do IED** (leitura pré-registrada do segundo caso): a diferença τ₁ "
         "rejeita zero depois do Holm, com o salto concentrado onde o estrato muda. Reforça que o corte mede um pacote."),
@@ -712,7 +736,7 @@ TXT_PO1 = {
 }
 
 
-def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
+def resposta_curta(est: pd.DataFrame, co: pd.DataFrame, resumo: dict) -> str:
     le = resumo["leitura"]
     p = [TXT_PO1[le["po1"]["codigo"]]]
     if le["po1"]["linhas_com_ic_convencional_sem_zero"] and le["po1"]["codigo"] == "TAU1_IC_EXCLUI_ZERO_SEM_HOLM":
@@ -744,9 +768,25 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
         if not (_executada(m) and _executada(n)):
             continue
         onde = [g for g, r in (("onde o estrato não muda", n), ("onde o estrato muda", m)) if not _contem_zero(r)]
-        p.append(f"Na linha da H1 com IC convencional sem zero no 57n ({rot}), o IC 95% exclui zero "
-                 + (" e ".join(onde) if onde else "em nenhum dos dois grupos")
-                 + f" (não muda: {fv(n)} {fic(n)}; muda: {fv(m)} {fic(m)}). Descritivo: a PO-4 fica fora do Holm.")
+        t1 = _linha(est, oid, c, "tau1_diferenca")
+        dif = ("a diferença entre os grupos nessa linha (τ₁) não se distingue de zero" if _contem_zero(t1) else
+               "a diferença entre os grupos nessa linha (τ₁) tem IC 95% sem zero") + (
+            f" (p {fp(t1['p_valor'])}, p Holm {fp(t1['p_holm'])})")
+        txt = (f"Na linha da H1 com IC convencional sem zero no 57n ({rot}), o IC 95% exclui zero "
+               + (" e ".join(onde) if onde else "em nenhum dos dois grupos")
+               + f" (não muda: {fv(n)} {fic(n)}; muda: {fv(m)} {fic(m)}).")
+        if onde:
+            txt += (" Isso é descritivo e não mostra que o salto da H1 venha de um grupo e não do outro: a PO-4 fica "
+                    f"fora do Holm; {dif}; e {_composicao_g(co, resumo, c)}. A comparação entre grupos mistura o "
+                    "canal do IED com porte, capital e região.")
+        else:
+            txt += f" Descritivo: a PO-4 fica fora do Holm; {dif}."
+        p.append(txt)
+    po4 = [r for _, r in est[est["termo"] != "tau1_diferenca"].iterrows() if _executada(r)]
+    k4 = sum(not _contem_zero(r) for r in po4)
+    if po4:
+        p.append(f"Na PO-4 inteira, {k4} de {len(po4)} intervalos " + ("exclui" if k4 == 1 else "excluem")
+                 + " zero; a 5%, cerca de um intervalo em vinte excluiria zero só por acaso, mesmo sem salto nenhum.")
     frases = []
     for c in CORTES:
         x = le["po3"][ROT_CORTE[c]]
@@ -914,11 +954,14 @@ def figura_txt(resumo: dict) -> str:
     return f"![PO_salto_por_grupo](../../{f['arquivo']})\n\n**{f['como_ler']}**"
 
 
-def limites_txt(resumo: dict) -> str:
+def limites_txt(co: pd.DataFrame, resumo: dict) -> str:
+    comp = "; ".join(_composicao_g(co, resumo, c) for c in CORTES)
     lim = [
         "**Descritivo, não causal do IED.** O porte é anterior ao tratamento, mas os portes em que o estrato muda "
         "diferem dos outros em tamanho, capital e região (seção 7) e em outras regras que dependem do porte. A "
         "diferença τ₁ mistura o canal do IED com tudo o que difere entre esses municípios perto do corte.",
+        "**Os grupos não são os mesmos nos dois cortes.** " + comp[0].upper() + comp[1:] + ". A τ₁ de um corte e a "
+        "do outro não comparam o mesmo tipo de município.",
         "**Pacote do corte.** Em 0,300 e 0,400 mudam a bolsa anunciada e outras regras federais (auditoria 18). Mesmo "
         "onde o estrato não muda, o salto é de um pacote, não da bolsa isolada; nada aqui isola o incentivo de "
         "R$ 5 mil, a participação no PMM-E ou o Agora Tem Especialistas.",
@@ -939,7 +982,7 @@ def limites_txt(resumo: dict) -> str:
 
 def gerar_blocos(est: pd.DataFrame, co: pd.DataFrame, resumo: dict) -> dict[str, str]:
     return {
-        "resposta_curta": resposta_curta(est, resumo),
+        "resposta_curta": resposta_curta(est, co, resumo),
         "portao": tab_portao(resumo),
         "regra_g": tab_regra(resumo),
         "contagens": tab_contagens(co, resumo),
@@ -951,7 +994,7 @@ def gerar_blocos(est: pd.DataFrame, co: pd.DataFrame, resumo: dict) -> dict[str,
         "balanco": tab_balanco(co),
         "leitura": leitura_txt(resumo),
         "figura": figura_txt(resumo),
-        "limites": limites_txt(resumo),
+        "limites": limites_txt(co, resumo),
     }
 
 
@@ -1047,8 +1090,11 @@ def gerar_figura(est: pd.DataFrame, destino: Path) -> None:
 # ---------------------------------------------------------------------------
 
 def entradas() -> list[dict]:
+    # Auditoria 45 (A5): também as lidas pelos construtores importados (rastreio de arquivos abertos na execução):
+    # U e G3 (E6.chaves_populacoes), lista nominal e lista de ativos (V do 43), manifesto da referência do IBGE.
     arqs = [A10_CSV, A10_JSON, A08, T40.ARQ_VC, T40.ARQ_VM, T40.ARQ_C2_13FEV, HI_EST, HI_RES, OC_EST, OC_RES,
-            T43.OL.PAINEL, T43.OL.POP22, T43.OL_RESUMO, T44.REF_IBGE, ADENDO]
+            T43.OL.PAINEL, T43.OL.POP22, T43.OL_RESUMO, T44.REF_IBGE, ADENDO, T40.ARQ_U, T40.E6.ARQ_G3,
+            T43.D2M.NOMINAL, T43.OL.ATIVOS_ZIP, T44.REF_MANIF]
     return [{"arquivo": rotulo(p), "sha256": sha256(p)} for p in arqs]
 
 

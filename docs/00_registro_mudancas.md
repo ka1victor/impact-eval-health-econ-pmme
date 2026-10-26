@@ -8,6 +8,26 @@
 
 ---
 
+## 26/10/2026 — Auditoria 45: adendo 48g (heterogeneidade do salto pelo porte do IED), aprovado com correções
+
+Motivo: auditoria independente da execução do adendo 48g (script 47, saídas `PO_*`, doc 57u). O recálculo próprio,
+sem importar 47, 40, 43, 44 nem a `rdd_lib`, bate com o gravado (30 linhas até 2,3e−13). Nenhuma estimativa mudou:
+`PO_estimativas.csv`, `PO_contagens.csv` e `PO_salto_por_grupo.png` ficaram iguais byte a byte. As correções foram
+de texto, nos blocos gerados do 57u:
+- peso do destaque da HI-2 em 0,300 por grupo (τ₁ sem zero rejeitado, multiplicidade da PO-4, composição dos grupos);
+- "o IED não explica" lido como "os dados não mostram que explique";
+- novo item nos limites: os grupos não são os mesmos nos dois cortes.
+
+Houve também uma correção de proveniência: cinco entradas ganharam hash em `PO_resumo.json`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/45_auditoria_heterogeneidade_porte.md`](auditorias/45_auditoria_heterogeneidade_porte.md) | auditoria do adendo 48g: veredito, achados A1–A7, recálculo independente |
+
+---
+
 ## 26/10/2026 — Doc 57u: resultados do adendo 48g (heterogeneidade do salto pelo porte em que o estrato do IED muda)
 
 Motivo: execução do adendo 48g. O doc 57u nasce com o cabeçalho e as decisões de implementação, registradas em
