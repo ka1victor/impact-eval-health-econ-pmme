@@ -119,9 +119,9 @@ def formatar(valor, formato: str) -> str:
 # --------------------------------------------------------------------------
 
 NUM = re.compile(r"(?<![\w.,/])[−+-]?(?:\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+(?:,\d+)?)(?!\w)")
-PERMITIDOS = {"0,300", "0,400", "0,3", "0,4", "0,301", "0,050", "0,030", "0,080", "0,05", "1,96", "0,001",
+PERMITIDOS = {"0,300", "0,400", "0,3", "0,4", "0,301", "0,050", "0,030", "0,080", "0,05", "1,96", "0,001", "0,010",
               "1", "2", "3", "5", "10", "15", "20", "+10", "+25", "25", "95", "90", "80"}
-MAX_SLIDE = 60  # números de slide (deck do grupo, até 36; deck proposto, até 53) nos quadros do doc 02
+MAX_SLIDE = 70  # números de slide (deck do grupo, até 36; deck proposto, até 64) nos quadros do doc 02
 
 
 def limpar(texto: str) -> str:
@@ -301,9 +301,25 @@ def _descritivas_independentes() -> dict[str, float]:
             out[f"C{c}_PRE2_PCT"] = g["f1_4_preenchida_ate_ch2"].sum() / len(g)
         for k in ("F1", "F2", "F3"):
             out[f"C{c}_{k}"] = g.loc[faixa == k, "co_ibge"].nunique()
+    out.update(_escolha_independente())
     out["IVS_MUN"] = pd.read_csv(ROOT / "output/aquisicao/a08_ivs_2010_oficial_municipio.csv")["ivs"].notna().sum()
     out["POP_MUN"] = len(pd.read_csv(ROOT / "output/aquisicao/populacao_censo2022_municipios.csv", dtype=str))
     return {k: float(v) for k, v in out.items()}
+
+
+def _escolha_independente() -> dict[str, float]:
+    """Recontagem independente da exploratória da escolha: 1ª opção com distância à origem (G1, CPF e nome)."""
+    d = pd.read_parquet(ROOT / "output/rdd_bolsa/G1_distancias_opcoes.parquet")
+    o = pd.read_parquet(ROOT / "output/rdd_bolsa/G1_candidatos_origem.parquet")
+    o = o.loc[o["regra_ligacao"] == "g1_cpf_nome", ["ciclo", "id_candidato", "co_ibge_origem"]]
+    r = d[(d["opcao_rank"] == 1) & d["dist_km_origem_principal"].notna()].merge(o, on=["ciclo", "id_candidato"])
+    mal = pd.read_parquet(ROOT / "output/aquisicao/malha_municipios_regioes_saude.parquet")
+    reg = dict(zip(mal["co_ibge_6d"].astype(str), mal["sg_uf"] + "|" + mal["no_regiao_saude"]))
+    ori, opc = r["co_ibge_origem"].astype(str), r["co_ibge_opcao"].astype(str)
+    return {"ESC_N": len(r), "ESC_UF": (ori.str[:2] == opc.str[:2]).mean(),
+            "ESC_REG": (ori.map(reg) == opc.map(reg)).mean(), "ESC_MUN": (ori == opc).mean(),
+            "ESC_DIST_P50": r["dist_km_origem_principal"].median(),
+            "ESC_DIST_P75": r["dist_km_origem_principal"].quantile(0.75)}
 
 
 def _lado_errado(coluna_ivs: str, arquivo: str, chave: str) -> int:
@@ -410,7 +426,7 @@ class TestSlides(unittest.TestCase):
     def test_contagem(self) -> None:
         t = DOC02.read_text(encoding="utf-8")
         deck = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
-        self.assertEqual(len(re.findall(r"(?m)^## ", deck)), 18)
+        self.assertEqual(len(re.findall(r"(?m)^## ", deck)), 22)
         apend = t[t.index("<!-- apendice:inicio -->"):t.index("<!-- apendice:fim -->")]
         self.assertEqual(len(re.findall(r"(?m)^## ", apend)), 11)
         self.assertTrue(all(h.startswith("## Apêndice:") for h in re.findall(r"(?m)^## .*$", apend)))
@@ -418,11 +434,20 @@ class TestSlides(unittest.TestCase):
     def test_secoes_na_ordem_da_banca(self) -> None:
         t = DOC02.read_text(encoding="utf-8")
         deck = t[t.index("<!-- deck:inicio -->"):t.index("<!-- deck:fim -->")]
-        self.assertEqual(re.findall(r"(?m)^# (.+)$", deck), ["Prévios do grupo", "Hipótese", "Base de Dados", "Metodologia",
-                                                             "Resultados", "Robustez e discussão"])
-        # a regra sharp é evidência de identificação: fica na Metodologia
-        met = deck[deck.index("# Metodologia"):deck.index("# Resultados")]
-        self.assertIn("## A bolsa é função exata do IVS: a regra é sharp", met)
+        self.assertEqual(re.findall(r"(?m)^# (.+)$", deck), ["Prévios do grupo", "Hipótese", "Base de Dados",
+                                                             "Análise exploratória", "Metodologia", "Resultados",
+                                                             "Robustez e discussão"])
+        # bloco exploratório (pedido do autor de 26/10/2026), entre a Base de Dados e a Metodologia: IVS × faixa,
+        # distribuição do IVS com o E1, gráfico cru da RDD e a escolha em relação à origem
+        exp = deck[deck.index("# Análise exploratória"):deck.index("# Metodologia")]
+        for titulo, fig in (("## A bolsa é função exata do IVS: a regra é sharp", "regra_bolsa_ivs_oficial.png"),
+                            ("## Ciclo 1: os municípios com vaga não se acumulam nos cortes", "exp_densidade_ivs.png"),
+                            ("## Nos dados crus, o lado de bolsa maior não preenche mais", "exp_rdd_crua.png"),
+                            ("## A 1ª opção fica perto de onde o médico já trabalhava", "exp_escolha_origem.png")):
+            self.assertIn(titulo, exp)
+            self.assertIn(fig, exp)
+        for cod in ("E1_300_HOLM", "E1_400_HOLM", "ESC_UF", "ESC_REG", "ESC_MUN", "ESC_DIST_P50"):
+            self.assertIn(f"`{cod}`", exp)
 
     def test_h1_por_corte_sem_empilhado_no_corpo(self) -> None:
         """Decisão do autor (26/10/2026): na H1, só os cortes separados no corpo; o empilhado, no apêndice, rotulado."""
@@ -447,17 +472,25 @@ class TestSlides(unittest.TestCase):
 
     def test_especificacoes_por_estimador(self) -> None:
         """Pedido do autor (26/10/2026): cada estimador tem a sua especificação explicada na metodologia."""
-        campos = {"Outcome", "Amostra", "Equação em palavras", "Erro-padrão", "Leitura", "Cuidado", "Sensibilidades"}
+        campos = ["Outcome", "Amostra", "Equação em palavras", "Comum e por ciclo", "Erro-padrão", "Leitura",
+                  "Cuidado", "Sensibilidades"]
         fichas = [s for s in self.slides if s["titulo"].startswith("## Especificação")]
-        self.assertEqual(len(fichas), 4)
+        self.assertEqual([f["titulo"][3:].split(":")[0] for f in fichas],
+                         ["Especificação da H1", "Especificação da H2 e da H3", "Especificação da H4",
+                          "Especificação do TOST"])
         for f in fichas:
             linhas = [ln.split("|")[1].strip() for ln in f["texto"].splitlines() if ln.startswith("| ") and "---" not in ln]
-            achados = " ".join(linhas)
-            for c in ("Equação em palavras", "Erro-padrão" if "TOST" not in f["titulo"] else "Testes", "Leitura",
-                      "Cuidado" if "H4" not in f["titulo"] else "Pré", "Sensibilidades"):
-                self.assertIn(c, achados, (f["titulo"], c))
+            esperado = campos[:6] + (["É causal?"] if "H3" in f["titulo"] else []) + campos[6:]
+            self.assertEqual(linhas[1:], esperado, f["titulo"])
+        h1 = next(f for f in fichas if "H1" in f["titulo"])["texto"]
+        for trecho in ("vagas preenchidas = intercepto do ciclo + salto × (lado de bolsa maior) + reta de cada lado do "
+                       "corte, por ciclo + coeficiente do ciclo × vagas oferecidas", "kernel triangular, h = 0,050",
+                       "só municípios com vaga", "salto comum aos ciclos", "agrupado por município",
+                       "sem controle = efeito total", "com controle = preenchimento dado o número de vagas",
+                       "total = via oferta + com controle", "as vagas oferecidas podem responder ao corte",
+                       "coeficiente único das vagas; inclinação por lado; IC honesto"):
+            self.assertIn(trecho, h1, trecho)
         self.assertIn("## Apêndice: especificações formais de cada estimador", DOC02.read_text(encoding="utf-8"))
-        self.assertIn('<!-- reservado: slide "Por que o preenchimento cai em 0,300"', DOC02.read_text(encoding="utf-8"))
 
     def test_h2_por_ciclo_e_h3_explica_causalidade(self) -> None:
         h2 = next(s for s in self.slides if s["titulo"].startswith("## H2"))
@@ -488,8 +521,17 @@ class TestSlides(unittest.TestCase):
             self.assertAlmostEqual(sa, float(num[f"N1_{c}_TAU"]["valor_bruto"]), places=9)
         s = next(x for x in self.slides if x["titulo"].startswith("## O controle muda a leitura"))
         t = DOC02.read_text(encoding="utf-8")
-        self.assertLess(t.index(s["titulo"]), t.index('<!-- reservado: slide "Por que o preenchimento cai em 0,300"'))
         self.assertGreater(t.index(s["titulo"]), t.index("## H1:"))
+        # logo depois, o slide da queda em 0,300 (diagnóstico 61), com o selo de preliminar
+        titulos = [x["titulo"] for x in self.slides]
+        k = titulos.index(s["titulo"])
+        self.assertEqual(titulos[k + 1], "## Por que o preenchimento cai em 0,300")
+        dq = self.slides[k + 1]["texto"]
+        self.assertIn("<!-- selo: PRELIMINAR: diagnóstico em auditoria -->", dq)
+        self.assertIn("output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png", dq)
+        for frase in ("**Sem a reta:**", "**O que acompanha a queda:**", "acaso não está descartado",
+                      "nada mostra que a bolsa reduz o preenchimento", "pacote do corte"):
+            self.assertIn(frase, dq, frase)
 
     def test_corpo_sintetizado(self) -> None:
         """Na parte empírica (antes do apêndice): no máximo 3 marcadores (por coluna) e uma frase de cautela."""
@@ -644,11 +686,13 @@ class TestOutrosDocs(unittest.TestCase):
 # 4. Figuras e integridade
 # --------------------------------------------------------------------------
 
-RESUMO_DA_ETAPA = {"E6_figuras": "output/rdd_bolsa/E6_resumo.json",
+RESUMO_DA_ETAPA = {"DQ_figuras": "output/rdd_bolsa/DQ_resumo.json",
+                   "E6_figuras": "output/rdd_bolsa/E6_resumo.json",
                    "E7_figuras": "output/rdd_bolsa/E7_resumo.json",
                    "E9_figuras": "output/rdd_bolsa/E9_resumo.json",
                    "P1h_figuras": "output/rdd_bolsa/P1h_resumo.json"}
-SCRIPT_DA_ETAPA = {"E6_figuras": "scripts/rdd_bolsa/13_estimar_E6_funil.py",
+SCRIPT_DA_ETAPA = {"DQ_figuras": "scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
+                   "E6_figuras": "scripts/rdd_bolsa/13_estimar_E6_funil.py",
                    "E7_figuras": "scripts/rdd_bolsa/14_estimar_E7_dird_cnes.py",
                    "E9_figuras": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",
                    "P1h_figuras": "scripts/rdd_bolsa/25c_magnitudes_P1h.py"}
@@ -747,6 +791,23 @@ class TestIntegridade(unittest.TestCase):
         self.assertEqual(max(est, key=est.get), ("M5", "3"))
         rob = next(s for s in slides() if s["titulo"].startswith("## Apêndice: robustez"))
         self.assertIn(f"de {num['H3_S_M2']['valor']} a {num['H3_S_M5C3']['valor']}", rob["texto"])
+
+    def test_diagnostico_61_preliminar(self) -> None:
+        """O diagnóstico 61 (doc 57l) está em auditoria: todo código DQ_ é marcado como preliminar no registro e no
+        doc 03, a figura do slide tem o hash gravado em DQ_resumo.json e o deck leva o selo."""
+        numeros = json.loads(NUMEROS.read_text(encoding="utf-8"))["numeros"]
+        dq = {c: e for c, e in numeros.items() if c.startswith("DQ_")}
+        self.assertGreaterEqual(len(dq), 20)
+        doc03 = blocos_do_doc03()
+        for c, e in dq.items():
+            self.assertIn("em auditoria", e.get("preliminar", ""), c)
+            self.assertTrue(e["descricao"].startswith("PRELIMINAR"), c)
+            self.assertIn(e["arquivo"], ("output/rdd_bolsa/DQ_estimativas.csv", "output/rdd_bolsa/DQ_resumo.json"), c)
+            self.assertIn(c, doc03)
+        res = json.loads((ROOT / "output/rdd_bolsa/DQ_resumo.json").read_text(encoding="utf-8"))
+        fig = "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png"
+        self.assertEqual({f["arquivo"]: f["sha256"] for f in res["saidas"]["figuras"]}[fig], sha256(ROOT / fig))
+        self.assertIn("PRELIMINAR", DOC03.read_text(encoding="utf-8"))
 
     def test_regra_desenhada_pela_funcao_do_relatorio(self) -> None:
         texto = SCRIPT.read_text(encoding="utf-8")
@@ -896,6 +957,16 @@ class TestDeck(unittest.TestCase):
         fig = [e for e in self.manifesto["ordem_do_deck_proposto"] if e.get("titulo", "").startswith("H3")]
         self.assertEqual([e["figura"] for e in fig], ["output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png"])
 
+    def test_selo_preliminar_e_traducao_da_h3_no_deck(self) -> None:
+        """O slide da queda em 0,300 leva o selo bem visível; a H3 traduz o 0,21 em chance (pedidos do autor)."""
+        dq = [t for _, ti, t in self.novos if ti.startswith("Por que o preenchimento cai em 0,300")]
+        self.assertEqual(len(dq), 1)
+        self.assertIn("PRELIMINAR: diagnóstico em auditoria", dq[0])
+        v = self.numeros["numeros"]
+        h3 = next(t for _, ti, t in self.novos if ti.startswith("H3")).replace(" ", " ")
+        self.assertIn(f"{v['H3_5B']['valor']} ≈ chance cerca de {v['M1_RC_PCT']['valor']}% maior de a vaga ser a 1ª "
+                      "opção, sem distinção de zero; não é efeito no preenchimento", h3)
+
     def test_deck_proposto_ordem_e_correcoes(self) -> None:
         titulos = [t for _, t, _ in self.deck]
         self.assertEqual(len(self.deck), 36 - 5 + len(self.doc))
@@ -935,7 +1006,7 @@ class TestDeck(unittest.TestCase):
         self.assertEqual([e["caminho"] for e in self.manifesto["saidas"]], ["output/apresentacao_banca2/deck_banca2.pptx"])
 
     def test_resultados_abrem_pela_cadeia(self) -> None:
-        titulos = [t for _, t, _ in self.novos if not t.startswith("O controle muda")]
+        titulos = [t for _, t, _ in self.novos if not t.startswith(("O controle muda", "Por que o preenchimento"))]
         i = titulos.index("Na cadeia, só a escolha e o registro do médico se movem")
         self.assertEqual([t[:3] for t in titulos[i + 1:i + 5]], ["H1:", "H2:", "H3:", "H4:"])
         self.assertTrue(titulos[i + 5].startswith("Robustez"))
@@ -958,7 +1029,7 @@ class TestDeck(unittest.TestCase):
                 self.assertGreaterEqual(min(tamanhos), 1200, titulo)
                 for tab in re.findall(r"<a:tbl>.*?</a:tbl>", x, flags=re.S):
                     self.assertGreaterEqual(min(int(v) for v in re.findall(r' sz="(\d+)"', tab)), 1400, titulo)
-                if not titulo.startswith(("Os três ciclos", "Discussão", "Especificação", "H3:")):
+                if not titulo.startswith(("Os três ciclos", "Discussão", "Especificação", "H3:", "Por que o preenchimento")):
                     self.assertTrue(sl["explica"], f"sem 'O que isso quer dizer': {titulo}")
                     self.assertIn("O que isso quer dizer", texto, titulo)
 

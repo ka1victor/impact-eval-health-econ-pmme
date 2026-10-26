@@ -4373,6 +4373,234 @@
       "formato": "d4s",
       "descricao": "M7: IC superior"
     },
+    "P1G_300_PREV": {
+      "valor": "+0,20",
+      "valor_bruto": 0.2022388386,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "M1_previsto",
+          "ciclo": "1+2+3",
+          "amostra": "P1 (G1 com origem)",
+          "termo": "corte_300"
+        },
+        "coluna": "coef"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,300, ciclos 1–3: salto previsto pelo M1, só a bolsa muda (candidatos de 1ª opção por célula)"
+    },
+    "P1G_300_PREV_INF": {
+      "valor": "−0,01",
+      "valor_bruto": -0.006463133213,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "M1_previsto",
+          "ciclo": "1+2+3",
+          "amostra": "P1 (G1 com origem)",
+          "termo": "corte_300"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,300, ciclos 1–3: salto previsto pelo M1, só a bolsa muda, IC 95% inferior (candidatos de 1ª opção por célula)"
+    },
+    "P1G_300_PREV_SUP": {
+      "valor": "+0,41",
+      "valor_bruto": 0.4109408105,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "M1_previsto",
+          "ciclo": "1+2+3",
+          "amostra": "P1 (G1 com origem)",
+          "termo": "corte_300"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,300, ciclos 1–3: salto previsto pelo M1, só a bolsa muda, IC 95% superior (candidatos de 1ª opção por célula)"
+    },
+    "P1G_300_OBS": {
+      "valor": "−0,66",
+      "valor_bruto": -0.6578760922,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "RDD_celula",
+          "ciclo": "1+2+3",
+          "amostra": "candidatos da amostra P1",
+          "termo": "corte_300"
+        },
+        "coluna": "coef"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,300, ciclos 1–3: salto observado na RDD por célula (candidatos de 1ª opção por célula)"
+    },
+    "P1G_300_OBS_INF": {
+      "valor": "−1,36",
+      "valor_bruto": -1.362468068,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "RDD_celula",
+          "ciclo": "1+2+3",
+          "amostra": "candidatos da amostra P1",
+          "termo": "corte_300"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,300, ciclos 1–3: salto observado na RDD por célula, IC 95% inferior (candidatos de 1ª opção por célula)"
+    },
+    "P1G_300_OBS_SUP": {
+      "valor": "+0,05",
+      "valor_bruto": 0.04671588323,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "RDD_celula",
+          "ciclo": "1+2+3",
+          "amostra": "candidatos da amostra P1",
+          "termo": "corte_300"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,300, ciclos 1–3: salto observado na RDD por célula, IC 95% superior (candidatos de 1ª opção por célula)"
+    },
+    "P1G_400_PREV": {
+      "valor": "+0,24",
+      "valor_bruto": 0.2428062528,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "M1_previsto",
+          "ciclo": "1+2+3",
+          "amostra": "P1 (G1 com origem)",
+          "termo": "corte_400"
+        },
+        "coluna": "coef"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,400, ciclos 1–3: salto previsto pelo M1, só a bolsa muda (candidatos de 1ª opção por célula)"
+    },
+    "P1G_400_PREV_INF": {
+      "valor": "−0,03",
+      "valor_bruto": -0.030195998,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "M1_previsto",
+          "ciclo": "1+2+3",
+          "amostra": "P1 (G1 com origem)",
+          "termo": "corte_400"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,400, ciclos 1–3: salto previsto pelo M1, só a bolsa muda, IC 95% inferior (candidatos de 1ª opção por célula)"
+    },
+    "P1G_400_PREV_SUP": {
+      "valor": "+0,52",
+      "valor_bruto": 0.5158085037,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "M1_previsto",
+          "ciclo": "1+2+3",
+          "amostra": "P1 (G1 com origem)",
+          "termo": "corte_400"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,400, ciclos 1–3: salto previsto pelo M1, só a bolsa muda, IC 95% superior (candidatos de 1ª opção por célula)"
+    },
+    "P1G_400_OBS": {
+      "valor": "−0,19",
+      "valor_bruto": -0.1937529113,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "RDD_celula",
+          "ciclo": "1+2+3",
+          "amostra": "candidatos da amostra P1",
+          "termo": "corte_400"
+        },
+        "coluna": "coef"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,400, ciclos 1–3: salto observado na RDD por célula (candidatos de 1ª opção por célula)"
+    },
+    "P1G_400_OBS_INF": {
+      "valor": "−1,09",
+      "valor_bruto": -1.086489128,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "RDD_celula",
+          "ciclo": "1+2+3",
+          "amostra": "candidatos da amostra P1",
+          "termo": "corte_400"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,400, ciclos 1–3: salto observado na RDD por célula, IC 95% inferior (candidatos de 1ª opção por célula)"
+    },
+    "P1G_400_OBS_SUP": {
+      "valor": "+0,70",
+      "valor_bruto": 0.6989833051,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/P1_estimativas.csv",
+        "filtro": {
+          "estimando": "P1g",
+          "modelo": "RDD_celula",
+          "ciclo": "1+2+3",
+          "amostra": "candidatos da amostra P1",
+          "termo": "corte_400"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "P1g, corte 0,400, ciclos 1–3: salto observado na RDD por célula, IC 95% superior (candidatos de 1ª opção por célula)"
+    },
     "H3_ESTATUTO": {
       "valor": "PROTOCOLO_52B_POS_RESULTADO",
       "valor_bruto": "PROTOCOLO_52B_POS_RESULTADO",
@@ -8377,6 +8605,529 @@
       },
       "formato": "p3",
       "descricao": "E1, ciclo 1, corte 0.400: p de Holm do teste de densidade (Poisson local)"
+    },
+    "DQ_ESTATUTO": {
+      "valor": "DIAGNOSTICO_61_POS_RESULTADO",
+      "valor_bruto": "DIAGNOSTICO_61_POS_RESULTADO",
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/DQ_resumo.json",
+        "caminho": [
+          "estatuto"
+        ]
+      },
+      "formato": "txt",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): estatuto do bloco",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FUN_PRE_ABX": {
+      "valor": "33,3",
+      "valor_bruto": 0.33305084745762714,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|funil_bruto|funil_bruto|preenchida|V1+V2+V3 (celulas)|1+2+3|0.300|media_simples_janela|preenchida|"
+        },
+        "coluna": "valor_abaixo"
+      },
+      "formato": "pct1",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): fração das células da janela de 0,300 preenchidas na 1ª chamada, abaixo do corte, sem reta (funil bruto)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FUN_PRE_ACI": {
+      "valor": "33,5",
+      "valor_bruto": 0.33475935828877007,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|funil_bruto|funil_bruto|preenchida|V1+V2+V3 (celulas)|1+2+3|0.300|media_simples_janela|preenchida|"
+        },
+        "coluna": "valor_acima"
+      },
+      "formato": "pct1",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): fração das células da janela de 0,300 preenchidas na 1ª chamada, acima do corte, sem reta (funil bruto)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_SOCR_TAU": {
+      "valor": "+15,4",
+      "valor_bruto": 15.367996483087643,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|so_cr|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na parte das células só de cadastro reserva (p.p.)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_SOCR_INF": {
+      "valor": "+2,1",
+      "valor_bruto": 2.095702851115508,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|so_cr|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na parte das células só de cadastro reserva (p.p.), IC 95% inferior",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_SOCR_SUP": {
+      "valor": "+28,6",
+      "valor_bruto": 28.640290115059774,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|so_cr|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na parte das células só de cadastro reserva (p.p.), IC 95% superior",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_CURSO_TAU": {
+      "valor": "−4,5",
+      "valor_bruto": -4.544307611358844,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|idx_curso|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_CURSO_INF": {
+      "valor": "−7,1",
+      "valor_bruto": -7.076302084708895,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|idx_curso|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.), IC 95% inferior",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_CURSO_SUP": {
+      "valor": "−2,0",
+      "valor_bruto": -2.012313138008794,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|composicao|salto|idx_curso|V1+V2+V3 (celulas)|1+2+3|0.300|celula|ciclos_juntos|"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto no índice de curso (preenchimento do curso fora da janela, p.p.), IC 95% superior",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_CAND1_TAU": {
+      "valor": "−10,8",
+      "valor_bruto": -10.754623952563014,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|funil|salto|P_C|V1+V2+V3 (celulas)|1+2+3|0.300|celula|especificacao_Q3|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_CAND1_INF": {
+      "valor": "−28,2",
+      "valor_bruto": -28.187223457456973,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|funil|salto|P_C|V1+V2+V3 (celulas)|1+2+3|0.300|celula|especificacao_Q3|"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.), IC 95% inferior",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_CAND1_SUP": {
+      "valor": "+6,7",
+      "valor_bruto": 6.6779755523309445,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|funil|salto|P_C|V1+V2+V3 (celulas)|1+2+3|0.300|celula|especificacao_Q3|"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300: salto na chance de a célula ter candidato de 1ª opção (especificação de Q3, p.p.), IC 95% superior",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_COMP_Q2": {
+      "valor": "−5,1",
+      "valor_bruto": -5.078915770263059,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|fixar_fator|fixado|Q2|V1+V2+V3|1+2+3|0.300|fixar_fator|composicao|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a composição das vagas: salto depois de igualar (p.p.)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_COMP_Q2_PCT": {
+      "valor": "32",
+      "valor_bruto": 32.457230256732736,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|fixar_fator|fixado|Q2|V1+V2+V3|1+2+3|0.300|fixar_fator|composicao|"
+        },
+        "coluna": "razao_fixado_original",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a composição das vagas: quanto sobra do salto comparado (%)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_SEMCR_Q3": {
+      "valor": "−3,4",
+      "valor_bruto": -3.364823870772736,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|fixar_fator|fixado|Q3|V1+V2+V3|1+2+3|0.300|fixar_fator|sem_celulas_so_cr|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando sem as células só de cadastro reserva: salto depois de igualar (p.p.)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_SEMCR_Q3_PCT": {
+      "valor": "40",
+      "valor_bruto": 40.0859729752686,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-b|fixar_fator|fixado|Q3|V1+V2+V3|1+2+3|0.300|fixar_fator|sem_celulas_so_cr|"
+        },
+        "coluna": "razao_fixado_original",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando sem as células só de cadastro reserva: quanto sobra do salto comparado (%)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_FUNIL_Q1": {
+      "valor": "−0,49",
+      "valor_bruto": -0.4886972574663009,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|fixar_fator|fixado|Q1|V1+V2+V3|1+2+3|0.300|fixar_fator|funil|"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1, igualando quem teve candidato de 1ª opção: salto depois de igualar",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_FUNIL_Q1_PCT": {
+      "valor": "34",
+      "valor_bruto": 33.76221717571308,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|fixar_fator|fixado|Q1|V1+V2+V3|1+2+3|0.300|fixar_fator|funil|"
+        },
+        "coluna": "razao_fixado_original",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1, igualando quem teve candidato de 1ª opção: quanto sobra do salto comparado (%)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_FUNIL_Q3": {
+      "valor": "−3,4",
+      "valor_bruto": -3.4470867052606993,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|fixar_fator|fixado|Q3|V1+V2+V3|1+2+3|0.300|fixar_fator|funil|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando quem teve candidato de 1ª opção: salto depois de igualar (p.p.)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_FUNIL_Q3_PCT": {
+      "valor": "41",
+      "valor_bruto": 41.06599032143542,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-c|fixar_fator|fixado|Q3|V1+V2+V3|1+2+3|0.300|fixar_fator|funil|"
+        },
+        "coluna": "razao_fixado_original",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q3, igualando quem teve candidato de 1ª opção: quanto sobra do salto comparado (%)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_CONC_Q2": {
+      "valor": "−4,3",
+      "valor_bruto": -4.283702437276171,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-d|fixar_fator|fixado|Q2|V1+V2+V3|1+2+3|0.300|fixar_fator|concorrencia|"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a concorrência: salto depois de igualar (p.p.)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_FIX_CONC_Q2_PCT": {
+      "valor": "27",
+      "valor_bruto": 26.87661619174081,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-d|fixar_fator|fixado|Q2|V1+V2+V3|1+2+3|0.300|fixar_fator|concorrencia|"
+        },
+        "coluna": "razao_fixado_original",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d0",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2, igualando a concorrência: quanto sobra do salto comparado (%)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_PPOSTO_Q1": {
+      "valor": "0,250",
+      "valor_bruto": 0.25,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-a|placebo|resumo_placebo|Q1||1+2+3|0.300|||"
+        },
+        "coluna": "p_posto"
+      },
+      "formato": "p3",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1: p por posto entre os 3 cortes placebo do protocolo (menor possível = 0,250)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_PPOSTO_Q2": {
+      "valor": "0,250",
+      "valor_bruto": 0.25,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-a|placebo|resumo_placebo|Q2||1+2+3|0.300|||"
+        },
+        "coluna": "p_posto"
+      },
+      "formato": "p3",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2: p por posto entre os 3 cortes placebo do protocolo (menor possível = 0,250)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_PCOMP_Q1": {
+      "valor": "0,031",
+      "valor_bruto": 0.03125,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-a|placebo_complementar|resumo_placebo|Q1||1+2+3|0.300|||"
+        },
+        "coluna": "p_posto"
+      },
+      "formato": "p3",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q1: p por posto na grade complementar, fora do protocolo (31 cortes falsos)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
+    },
+    "DQ_PCOMP_Q2": {
+      "valor": "0,031",
+      "valor_bruto": 0.03125,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/DQ_estimativas.csv",
+        "filtro": {
+          "id_linha": "D-a|placebo_complementar|resumo_placebo|Q2||1+2+3|0.300|||"
+        },
+        "coluna": "p_posto"
+      },
+      "formato": "p3",
+      "descricao": "PRELIMINAR (diagnóstico 61, doc 57l, em auditoria): 0,300, Q2: p por posto na grade complementar, fora do protocolo (31 cortes falsos)",
+      "preliminar": "diagnóstico 61 (doc 57l), em auditoria"
     },
     "D_POP_MUN": {
       "valor": "5.570",

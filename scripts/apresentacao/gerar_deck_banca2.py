@@ -141,13 +141,18 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
         elif ln.startswith("## "):
             atual = dict(secao=secao, titulo=ln[3:].strip(), rastreio="", layout="", imagem=None, alt="",
                          tabela=[], marcadores=[], paragrafos=[], codigo=[], cadeia="", cautela="", fontes="",
-                         notas="", colunas=[], explica="", blocos=[], apendice=secao == "Apêndice")
+                         notas="", colunas=[], explica="", blocos=[], apendice=secao == "Apêndice", selo="",
+                         max_linhas=None)
             slides.append(atual)
         elif atual is not None and ln.startswith("### "):
             atual["colunas"].append({"titulo": ln[4:].strip(), "itens": []})
         elif atual is not None:
             if re.fullmatch(r"`[^`]+`", ln.strip()) and not atual["rastreio"]:
                 atual["rastreio"] = ln.strip().strip("`")
+            elif m := re.match(r"<!-- selo: (.+?) -->", ln.strip()):
+                atual["selo"] = m.group(1).strip()
+            elif m := re.match(r"<!-- linhas: (\d+) -->", ln.strip()):
+                atual["max_linhas"] = int(m.group(1))
             elif m := re.match(r"<!-- layout: (\w+)(?: ([\d.]+))? -->", ln.strip()):
                 atual["layout"] = m.group(1)
                 atual["largura_fig"] = float(m.group(2)) if m.group(2) else None
@@ -239,6 +244,7 @@ def ler_classificacao(doc: Path = DOC02) -> dict[int, dict]:
 def runs_md(txt: str, sz: float, cor: str = TEXTO, negrito: bool = False, cor_neg: str | None = None) -> list[str]:
     out = []
     txt = txt.replace("R$ ", "R$ ")  # "R$" não se separa do valor na quebra de linha
+    txt = re.sub(r"(\d) mil\b", "\\1\u00a0mil", txt)  # nem o valor do "mil"
     for t, b, it in _inline(txt):
         out.append(run(t, sz, cor_neg if (b and cor_neg) else cor, b=b or negrito, i=it))
     return out
@@ -299,6 +305,16 @@ def caixa_explica(s: Slide, txt: str, x: float, y: float, w: float, h: float, sz
             ins=(0.18, 0.12, 0.18, 0.08),
             paras=[para([run("O que isso quer dizer", sz, VERDE, b=True)], depois=4),
                    para(runs_md(txt, sz, TEXTO, cor_neg=VERDE_ESCURO), linha=104)])
+
+
+COR_SELO = "B3261E"  # vermelho do selo PRELIMINAR
+H_SELO = 0.62
+
+
+def caixa_selo(s: Slide, txt: str, x: float, y: float, w: float, h: float = H_SELO, sz: float = 20.0) -> None:
+    """Selo bem visível (por exemplo, "PRELIMINAR: diagnóstico em auditoria"): faixa vermelha, letra branca."""
+    s.forma("Selo", x, y, w, h, adj=18000, fill=COR_SELO, anchor="ctr", ins=(0.15, 0.03, 0.15, 0.03),
+            paras=[para([run(txt, sz, BRANCO, b=True)], "ctr")])
 
 
 def linha_fontes(s: Slide, txt: str) -> None:
@@ -487,13 +503,17 @@ def montar(sl: dict, rid_img: str | None) -> str:
         painel(s, sem_tab, X0 + w_tab + 0.3, Y0, W - w_tab - 0.3, y_fim)
     elif lay == "figura_painel":
         w_fig_max = sl.get("largura_fig") or 8.6
-        w, h = encaixar(sl["imagem"], w_fig_max, y_fim - Y0)
+        h_selo = (H_SELO + 0.2) if sl["selo"] else 0.0
+        w, h = encaixar(sl["imagem"], w_fig_max, y_fim - Y0 - h_selo)
         imagem(s, rid_img, X0, Y0, w, h, sl["alt"])
+        if sl["selo"]:
+            caixa_selo(s, sl["selo"], X0, Y0 + h + 0.2, w)
         x_p = X0 + w + 0.3
-        sobra = y_fim - (Y0 + h) - 0.2
+        sobra = y_fim - (Y0 + h + h_selo) - 0.2
         explica_embaixo = bool(sl["explica"]) and sobra >= altura_explica(sl["explica"], w)
         if explica_embaixo:
-            caixa_explica(s, sl["explica"], X0, Y0 + h + 0.2, w, y_fim - (Y0 + h + 0.2))
+            y_e = Y0 + h + h_selo + 0.2
+            caixa_explica(s, sl["explica"], X0, y_e, w, y_fim - y_e)
         painel(s, sl, x_p, Y0, X1 - x_p, y_fim, com_explica=not explica_embaixo, sz_tab_min=sz_tab_min)
     elif lay == "figura_larga":
         # figura na largura toda, em cima; embaixo, os marcadores e o bloco "O que isso quer dizer"
@@ -545,6 +565,8 @@ def montar(sl: dict, rid_img: str | None) -> str:
         montar_duas_colunas(s, sl, y_fim)
     else:
         raise SystemExit(f"ERRO: layout desconhecido {lay!r} em {sl['titulo']!r}")
+    if sl["selo"] and lay != "figura_painel":
+        raise SystemExit(f"ERRO: selo só no layout figura_painel ({sl['titulo']!r})")
     if sl["fontes"]:
         linha_fontes(s, sl["fontes"])
     return xml_slide(sl["titulo"], _nav(sl), s.partes)
@@ -947,11 +969,17 @@ def numerar(xml: str, pos: int) -> tuple[str, int]:
 # --------------------------------------------------------------------------------------------------
 
 SZ_LINHA_CURTA = 18.0       # pt das linhas curtas sob a figura
+SZ_LADO = 16.0              # pt das linhas na coluna ao lado da figura
 SZ_ITEM_TEXTO = 24.0        # pt dos itens dos slides só de texto (hipóteses, conclusão)
+SZ_ITEM_MULTI = 20.0        # pt dos itens que pedem mais de uma linha (antes e depois de um resultado)
+MAX_LINHAS_ITEM = 3         # linhas por item nesses slides
 H_LINHA_CURTA = 0.46        # pol.
 MAX_LINHAS_FIGURA = 2       # linhas curtas por slide de figura ou tabela, contando a cautela
 MAX_LINHAS_TEXTO = 4        # itens por slide só de texto, contando a cautela
-LAYOUTS_CURTOS = ("curto_figura", "curto_tabela", "curto_texto")
+MAX_TITULO_CURTO = 58       # caracteres: o título não pode encostar no logotipo do template
+FRACAO_MIN_FIGURA = 0.72    # com as linhas embaixo, a figura tem de ocupar ao menos esta fração da largura
+W_COLUNA_MIN = 3.4          # pol.: coluna de texto ao lado da figura
+LAYOUTS_CURTOS = ("curto_figura", "curto_tabela", "curto_texto", "curto_ficha", "curto_capa")
 
 
 def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
@@ -959,24 +987,41 @@ def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
     return [(m, False) for m in sl["marcadores"]] + ([(sl["cautela"], True)] if sl["cautela"] else [])
 
 
+def limite_linhas(sl: dict) -> int:
+    """No máximo duas linhas, contando a cautela (quatro nos slides só de texto); o doc 04 pode pedir outro limite
+    num slide com `<!-- linhas: N -->` (pedidos do autor: o slide da queda em 0,300 e a H3)."""
+    if sl["max_linhas"]:
+        return sl["max_linhas"]
+    return MAX_LINHAS_TEXTO if sl["layout"] in ("curto_texto", "curto_capa") else MAX_LINHAS_FIGURA
+
+
+def cabe_numa_linha(txt: str) -> bool:
+    return linhas_necessarias(texto_puro(txt), SZ_LINHA_CURTA, X1 - X0 - 0.5, fator=0.54) <= 1
+
+
 def conferir_curto(sl: dict) -> None:
-    """Para se o slide fugir do formato curto: layout, número de linhas, linha que quebra, blocos longos."""
+    """Para se o slide fugir do formato curto: layout, número de linhas, linha que quebra, blocos longos, título."""
     lay = sl["layout"]
     if lay not in LAYOUTS_CURTOS:
         raise SystemExit(f"ERRO: layout {lay!r} fora do deck curto em {sl['titulo']!r}")
+    if len(sl["titulo"]) > MAX_TITULO_CURTO:
+        raise SystemExit(f"ERRO: título com {len(sl['titulo'])} caracteres (máximo {MAX_TITULO_CURTO}): {sl['titulo']!r}")
     if sl["explica"] or sl["blocos"] or sl["paragrafos"] or sl["colunas"] or sl["cadeia"] or sl["codigo"]:
         raise SystemExit(f"ERRO: o deck curto não leva blocos de texto ({sl['titulo']!r})")
+    if lay == "curto_ficha":  # ficha de especificação (pedido do autor): só a tabela, sem limite de linhas
+        if not sl["tabela"] or sl["marcadores"] or sl["imagem"] is not None:
+            raise SystemExit(f"ERRO: a ficha {sl['titulo']!r} leva só a tabela (e, se houver, a cautela)")
+        return
     n = len(linhas_curtas(sl))
-    limite = MAX_LINHAS_TEXTO if lay == "curto_texto" else MAX_LINHAS_FIGURA
-    if n > limite:
-        raise SystemExit(f"ERRO: {n} linhas em {sl['titulo']!r}; o limite é {limite}")
+    if n > limite_linhas(sl):
+        raise SystemExit(f"ERRO: {n} linhas em {sl['titulo']!r}; o limite é {limite_linhas(sl)}")
     if lay == "curto_figura" and sl["imagem"] is None:
         raise SystemExit(f"ERRO: slide de figura sem figura: {sl['titulo']!r}")
     if lay == "curto_tabela" and not sl["tabela"]:
         raise SystemExit(f"ERRO: slide de tabela sem tabela: {sl['titulo']!r}")
-    if lay != "curto_texto":
+    if lay == "curto_tabela":
         for txt, _ in linhas_curtas(sl):
-            if linhas_necessarias(texto_puro(txt), SZ_LINHA_CURTA, X1 - X0 - 0.5, fator=0.54) > 1:
+            if not cabe_numa_linha(txt):
                 raise SystemExit(f"ERRO: a linha {texto_puro(txt)!r} de {sl['titulo']!r} não cabe numa linha só")
 
 
@@ -988,6 +1033,37 @@ def _linha_curta(s: Slide, txt: str, cautela: bool, y: float) -> None:
     else:
         s.forma("Linha", X0, y, X1 - X0, H_LINHA_CURTA, geom="rect", anchor="ctr", ins=(0.18, 0.02, 0.18, 0.02),
                 paras=[para(runs_md(txt, SZ_LINHA_CURTA, TEXTO, cor_neg=VERDE_ESCURO), "l")])
+
+
+def _altura_item_lado(txt: str, w: float) -> float:
+    return altura_texto(txt.replace("**", ""), SZ_LADO, w - 0.4) * 1.06 + 0.26
+
+
+def plano_curto_figura(sl: dict) -> dict:
+    """Decide onde vão as linhas do slide de figura. Embaixo, cada uma numa linha só, se a figura ainda ocupar a
+    largura; senão (figura alta, ou linha que não cabe numa linha só), numa coluna ao lado da figura, para não
+    deixar faixas vazias dos lados (pedido do autor: nenhum espaço vazio grande). O selo, se houver, fica sob a
+    figura. Para se nada couber."""
+    W = X1 - X0
+    linhas = linhas_curtas(sl)
+    with Image.open(sl["imagem"]) as im:
+        a = im.size[0] / im.size[1]
+    h_selo = (H_SELO + 0.18) if sl["selo"] else 0.0
+    n = len(linhas)
+    y_lin = Y_FONTES - 0.08 - n * H_LINHA_CURTA - max(n - 1, 0) * 0.06
+    h_area = y_lin - 0.14 - Y0 - h_selo
+    w_baixo = min(W, h_area * a)
+    if all(cabe_numa_linha(t) for t, _ in linhas) and w_baixo >= FRACAO_MIN_FIGURA * W:
+        return dict(modo="baixo", y_lin=y_lin, w=w_baixo, h=w_baixo / a)
+    h_tot = Y_FONTES - 0.1 - Y0
+    w_fig = min(W - W_COLUNA_MIN - 0.3, (h_tot - h_selo) * a)
+    while w_fig > 4.0:
+        w_col = W - w_fig - 0.3
+        h_txt = sum(_altura_item_lado(t, w_col) for t, _ in linhas) + 0.18 * max(n - 1, 0)
+        if h_txt <= h_tot:
+            return dict(modo="lado", w=w_fig, h=w_fig / a, w_col=w_col, h_txt=h_txt, h_tot=h_tot, h_selo=h_selo)
+        w_fig -= 0.1
+    raise SystemExit(f"ERRO: as linhas de {sl['titulo']!r} não cabem ao lado da figura")
 
 
 def montar_curto(sl: dict, rid_img: str | None) -> str:
@@ -1005,37 +1081,100 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
             _linha_curta(s, caut[0], True, y_c)
             y_fim = y_c - 0.25
         gap = 0.22
-        h_item = min(1.05, (y_fim - Y0 - 0.1 - gap * (len(itens) - 1)) / len(itens))
-        y = Y0 + 0.1
-        rotulos = [re.match(r"\*\*(.+?)\*\*", it).group(1) for it in itens if re.match(r"\*\*(.+?)\*\*", it)]
-        w_rot_max = max([len(r) * 0.6 * SZ_ITEM_TEXTO / 72 + 0.5 for r in rotulos] + [1.2]) if rotulos else 0.0
+        partes = []
         for it in itens:
             m = re.match(r"\*\*(.+?)\*\*\s*(.*)", it)
-            rotulo, corpo = (m.group(1), m.group(2)) if m else ("", it)
-            w_rot = w_rot_max if rotulo else 0.0
+            partes.append((m.group(1), m.group(2)) if m else ("", it))
+        rotulos = [r for r, _ in partes if r]
+
+        def larg_rotulo(sz: float) -> float:
+            return max([len(r) * 0.6 * sz / 72 + 0.5 for r in rotulos] + [1.2]) if rotulos else 0.0
+
+        sz = SZ_ITEM_TEXTO
+        w_rot = larg_rotulo(sz)
+        n_lin = [linhas_necessarias(texto_puro(c), sz, W - w_rot - 0.65, fator=0.54) for _, c in partes]
+        if max(n_lin) > 1:
+            # antes/depois de um resultado (pedido do autor): até 3 linhas por item, em letra menor
+            sz = SZ_ITEM_MULTI
+            w_rot = larg_rotulo(sz)
+            n_lin = [linhas_necessarias(texto_puro(c), sz, W - w_rot - 0.65, fator=0.54) for _, c in partes]
+            if max(n_lin) > MAX_LINHAS_ITEM:
+                raise SystemExit(f"ERRO: item de {sl['titulo']!r} com mais de {MAX_LINHAS_ITEM} linhas")
+        alturas = [max(1.05, k * sz * 1.3 / 72 + 0.34) for k in n_lin]
+        disp = y_fim - Y0 - 0.1 - gap * (len(itens) - 1)
+        if sum(alturas) > disp + 1e-6:
+            raise SystemExit(f"ERRO: os itens de {sl['titulo']!r} não cabem ({sum(alturas) - disp:.2f} pol. a mais)")
+        extra = min(0.45, (disp - sum(alturas)) / len(itens))
+        y = Y0 + 0.1
+        for (rotulo, corpo), h_item in zip(partes, alturas):
+            h_item += extra
+            w_r = w_rot if rotulo else 0.0
             if rotulo:
-                s.forma("Rótulo", X0, y, w_rot, h_item, adj=10000, fill=VERDE_ESCURO, anchor="ctr",
-                        paras=[para([run(rotulo, SZ_ITEM_TEXTO, BRANCO, b=True)], "ctr")])
-            s.forma("Item", X0 + w_rot + 0.15, y, W - w_rot - 0.15, h_item, adj=6000, fill="F4F8F5", line=VERDE,
+                s.forma("Rótulo", X0, y, w_r, h_item, adj=10000, fill=VERDE_ESCURO, anchor="ctr",
+                        paras=[para([run(rotulo, sz, BRANCO, b=True)], "ctr")])
+            s.forma("Item", X0 + w_r + 0.15, y, W - w_r - 0.15, h_item, adj=6000, fill="F4F8F5", line=VERDE,
                     line_w=1.0, anchor="ctr", ins=(0.25, 0.04, 0.25, 0.04),
-                    paras=[para(runs_md(corpo, SZ_ITEM_TEXTO, TEXTO, cor_neg=VERDE_ESCURO), "l")])
-            if linhas_necessarias(texto_puro(corpo), SZ_ITEM_TEXTO, W - w_rot - 0.65, fator=0.54) > 1:
-                raise SystemExit(f"ERRO: o item {texto_puro(corpo)!r} de {sl['titulo']!r} não cabe numa linha só")
+                    paras=[para(runs_md(corpo, sz, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=102)])
             y += h_item + gap
+    elif lay == "curto_capa":
+        # capa curta (pedido do autor): só o título e uma linha, grande, no meio do slide
+        if len(itens := [t for t, c in linhas if not c]) != 1 or sl["cautela"]:
+            raise SystemExit(f"ERRO: a capa {sl['titulo']!r} leva uma linha só")
+        h = 2.2
+        y = Y0 + (Y_FONTES - Y0 - h) / 2
+        s.forma("Capa", X0 + 0.6, y, W - 1.2, h, adj=8000, fill=VERDE_ESCURO, anchor="ctr",
+                ins=(0.4, 0.1, 0.4, 0.1), paras=[para(runs_md(itens[0], 30, BRANCO, cor_neg="DDEFE0"), "ctr")])
+    elif lay == "curto_ficha":
+        y_fim = Y_FONTES - 0.1
+        if sl["cautela"]:
+            y_c = y_fim - H_LINHA_CURTA
+            _linha_curta(s, sl["cautela"], True, y_c)
+            y_fim = y_c - 0.14
+        tabela(s, sl["tabela"], X0, Y0 + 0.02, W, y_fim - Y0 - 0.02, sz_max=18, sz_min=SZ_TAB_CORPO,
+               onde=sl["titulo"])
+    elif lay == "curto_figura":
+        p = plano_curto_figura(sl)
+        if p["modo"] == "baixo":
+            for k, (txt, caut) in enumerate(linhas):
+                _linha_curta(s, txt, caut, p["y_lin"] + k * (H_LINHA_CURTA + 0.06))
+            y_fim = p["y_lin"] - 0.14
+            h_bloco = p["h"] + ((H_SELO + 0.18) if sl["selo"] else 0.0)
+            y_img = Y0 + (y_fim - Y0 - h_bloco) / 2
+            x_img = X0 + (W - p["w"]) / 2
+            imagem(s, rid_img, x_img, y_img, p["w"], p["h"], sl["alt"])
+            if sl["selo"]:
+                caixa_selo(s, sl["selo"], x_img, y_img + p["h"] + 0.18, p["w"])
+        else:
+            h_bloco = p["h"] + p["h_selo"]
+            y_img = Y0 + max(0.0, (p["h_tot"] - h_bloco) / 2)
+            imagem(s, rid_img, X0, y_img, p["w"], p["h"], sl["alt"])
+            if sl["selo"]:
+                caixa_selo(s, sl["selo"], X0, y_img + p["h"] + 0.18, p["w"])
+            x_c, w_c = X0 + p["w"] + 0.3, p["w_col"]
+            folga = (p["h_tot"] - p["h_txt"]) / max(len(linhas), 1)
+            y = Y0
+            for txt, caut in linhas:
+                h_it = _altura_item_lado(txt, w_c) + min(folga, 0.6)
+                if caut:
+                    s.forma("Cautela", x_c, y, w_c, h_it, adj=8000, fill=CLARO2, anchor="ctr",
+                            ins=(0.2, 0.06, 0.2, 0.06),
+                            paras=[para(runs_md(txt.replace("**", ""), SZ_LADO, VERDE_ESCURO, negrito=True), "l",
+                                        linha=100)])
+                else:
+                    s.forma("Linha", x_c, y, w_c, h_it, adj=6000, fill="F4F8F5", line=VERDE, line_w=1.0,
+                            anchor="ctr", ins=(0.2, 0.06, 0.2, 0.06),
+                            paras=[para(runs_md(txt, SZ_LADO, TEXTO, cor_neg=VERDE_ESCURO), "l", linha=100)])
+                y += h_it + 0.18
     else:
         n = len(linhas)
         y_lin = Y_FONTES - 0.08 - n * H_LINHA_CURTA - max(n - 1, 0) * 0.06
         for k, (txt, caut) in enumerate(linhas):
             _linha_curta(s, txt, caut, y_lin + k * (H_LINHA_CURTA + 0.06))
         y_fim = y_lin - 0.14
-        if lay == "curto_figura":
-            w, h = encaixar(sl["imagem"], W, y_fim - Y0)
-            imagem(s, rid_img, X0 + (W - w) / 2, Y0 + (y_fim - Y0 - h) / 2, w, h, sl["alt"])
-        else:
-            larg = larguras_colunas(sl["tabela"], W, 18)
-            h_nat, _ = altura_tabela(sl["tabela"], larg, 18)
-            tabela(s, sl["tabela"], X0, Y0 + 0.05, W, min(y_fim - Y0 - 0.05, h_nat * 1.35), sz_max=18,
-                   sz_min=SZ_TAB_CORPO, onde=sl["titulo"])
+        larg = larguras_colunas(sl["tabela"], W, 18)
+        h_nat, _ = altura_tabela(sl["tabela"], larg, 18)
+        tabela(s, sl["tabela"], X0, Y0 + 0.05, W, min(y_fim - Y0 - 0.05, h_nat * 1.35), sz_max=18,
+               sz_min=SZ_TAB_CORPO, onde=sl["titulo"])
     if sl["fontes"]:
         linha_fontes(s, sl["fontes"])
     return xml_slide(sl["titulo"], _nav(sl), s.partes)

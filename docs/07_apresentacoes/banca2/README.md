@@ -41,7 +41,8 @@ valendo para o E9, o E7 e a literatura de magnitude.
 |---|---|
 | [Plano da entrega empírica](04_plano_entrega_empirica.md) | o que falta por bloco da banca, erros do deck, hipóteses pela cadeia do modelo, metodologia econométrica e o registro de decisões |
 | [Roteiro narrativo](01_roteiro_narrativo.md) | o arco, a lógica de cada bloco e as frases que não podem mudar |
-| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** — slides novos com título, figura, tabela, números, cautela e notas; o quadro de correções do deck do grupo |
+| [Conteúdo da apresentação](02_conteudo_slides.md) | **a fonte de verdade** do deck completo — slides novos com título, figura, tabela, números, cautela e notas; o quadro de correções do deck do grupo |
+| [Conteúdo do deck curto](04_conteudo_deck_curto.md) | a fonte de verdade do deck curto: cada resultado com a hipótese e a ficha antes e a leitura depois |
 | [Discussão da história empírica](05_discussao_historia_empirica.md) | perguntas do autor sobre a parte empírica, respostas, decisões de apresentação e a ordem da história nos slides |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | cada figura → arquivo, script e natureza; cada número → arquivo, seletor e formato, num bloco gerado pelo script |
 | [Relatório de validação para os professores](../../../output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.pdf) | relatório curto (derivado) com o desenho, os diagnósticos e os resultados de 19/10; não é o deck |
@@ -61,6 +62,12 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | 26/10/2026 | "Não mostre o empilhado; mostre os efeitos separados para cada corte": na H1, no corpo, 0,300 e 0,400 separados, com o TOST do protocolo 60 (doc 57j, auditoria 32); o empilhado só no apêndice, rotulado "só referência" | autor |
 | 26/10/2026 | um arquivo só (`deck_banca2.pptx`); resultados abrem pela cadeia-síntese, e H1–H4 aprofundam cada linha; bloco "O que isso quer dizer" nos slides de hipótese, metodologia, resultados e robustez; conteúdo ocupando a área útil (corpo ≥ 16 pt, tabelas ≥ 14 pt, figuras no tamanho do slide) | autor |
 
+| 26/10/2026 | especificação de cada estimador nos slides, numa ficha com os mesmos campos (outcome, amostra, equação em palavras, comum e por ciclo, erro-padrão, leitura, cuidado, sensibilidades); no curto, recortes dessas fichas, com o mesmo texto | autor |
+| 26/10/2026 | slide "Por que o preenchimento cai em 0,300" logo depois de "antes e depois do controle", nos dois decks, com o selo "PRELIMINAR: diagnóstico em auditoria" (protocolo 61, doc 57l) | autor |
+| 26/10/2026 | N1 sem controle ("efeito total: abrir vagas + preenchê-las") e com controle ("preenchimento dado o número de vagas") em dois gráficos separados, na mesma escala; a H3 traduz o 0,21 em chance (cerca de 24% maior), sem distinção de zero e sem ser efeito no preenchimento | autor |
+| 26/10/2026 | bloco exploratório no completo, entre Base de Dados e Metodologia: IVS × faixa, distribuição do IVS com o E1, RDD crua e escolha × origem | autor |
+| 26/10/2026 | deck curto em blocos antes → resultado → depois: capa; regra; H1 (ficha, antes e depois do controle com o TOST, queda em 0,300); H3, que absorve a H2 (ficha, resultado, incentivo limitado e a ponte P1g); H4 (ficha, resultado, substituição e "em análise"); conclusão. Saem a H2 como slide, "Um estimador por hipótese", "Quatro hipóteses" e os dados crus | autor |
+
 Em aberto com o autor: a hipótese central (H3 ou H1), já revisável; quem
 apresenta em 28/10 e quem em 04/11.
 
@@ -76,8 +83,9 @@ Tudo sai do pipeline, lendo só de `output/`:
 
 ```bash
 python3 scripts/apresentacao/gerar_figuras_banca2.py                 # figuras, tabelas, números e bloco do 03
-PMME_DECK_GRUPO="<deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py   # deck
-PMME_DECK_GRUPO="<deck do grupo>" python3 -m unittest tests.test_conteudo_banca2
+PMME_DECK_GRUPO="<deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py   # deck completo
+PMME_DECK_GRUPO="<deck do grupo>" python3 scripts/apresentacao/gerar_deck_banca2.py --curto   # deck curto e PDF
+PMME_DECK_GRUPO="<deck do grupo>" python3 -m unittest tests.test_conteudo_banca2 tests.test_deck_curto_banca2
 ```
 
 Saídas em `output/apresentacao_banca2/`: as figuras (`h1_preenchimento.png`,
@@ -89,7 +97,10 @@ conferida pelo hash), as tabelas (`tabela_descritiva_ciclos` e
 (`numeros_banca2.json`), o manifesto das figuras, **o deck, num arquivo
 só** (`deck_banca2.pptx`: slides do grupo, parte empírica e apêndice), o
 manifesto do deck e as imagens de conferência em `qa_render/`, com a grade de
-miniaturas da parte empírica (`grade_empirica.png`). Os geradores não estão no `run_all.py`; a
+miniaturas da parte empírica (`grade_empirica.png`), e o deck curto
+(`deck_banca2_curto.pptx` e `.pdf`, com o manifesto e a grade
+`qa_render/grade_curto.png`). O slide da queda em 0,300 é **PRELIMINAR**: o
+diagnóstico do protocolo 61 ainda está em auditoria. Os geradores não estão no `run_all.py`; a
 inclusão fica para o coordenador do pipeline.
 
 ## 5. Estado

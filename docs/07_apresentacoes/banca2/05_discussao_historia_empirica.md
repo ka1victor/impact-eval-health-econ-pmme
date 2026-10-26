@@ -240,5 +240,5 @@ A conexão empírica mais direta virá:
 | Deck com os efeitos por corte | em produção |
 | Slides da história (seção 3) | depois da parte B auditada |
 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta; precisa de protocolo próprio |
-| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | estimando; depois, auditoria e slide próprio |
-| Slides de especificação por estimador e da cronologia dos ciclos | em produção no gerador do deck |
+| Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | em auditoria; o slide próprio já está nos dois decks, com o selo PRELIMINAR |
+| Slides de especificação por estimador e da cronologia dos ciclos | feitos: fichas com os mesmos campos no completo e recortes delas no curto |
