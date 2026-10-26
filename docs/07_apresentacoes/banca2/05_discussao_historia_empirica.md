@@ -34,6 +34,8 @@
 | 26/10/2026 | a história completa entra nos slides só depois de refinada e validada (protocolo 60 auditado) |
 | 26/10/2026 | cada estimador ganha nos slides a sua especificação explicada (outcome, amostra, equação em palavras, o que é por ciclo, erro-padrão, leitura, cuidado, sensibilidades); a equação formal fica no apêndice |
 | 26/10/2026 | a explicação da queda no corte 0,300 entra num slide próprio, logo depois do H1, com o diagnóstico do protocolo 61 |
+| 26/10/2026 | **estrutura obrigatória da versão final:** Hipótese (uma só depois da validação; planos B em cinza), Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez, Discussão ([`06`](06_estrutura_obrigatoria_versao_final.md)) |
+| 26/10/2026 | **só as versões curtas são usadas**; as longas não precisam mais ser geradas (o deck completo fica como registro, sem atualização) |
 
 ## 2. Perguntas e respostas
 

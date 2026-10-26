@@ -8,6 +8,18 @@
 
 ---
 
+## 26/10/2026 — Banca 2: estrutura obrigatória da versão final
+
+Motivo: decisão do autor sobre a estrutura de toda versão futura do deck da banca 2.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/06_estrutura_obrigatoria_versao_final.md`](07_apresentacoes/banca2/06_estrutura_obrigatoria_versao_final.md) | as oito seções obrigatórias e o que entra em cada uma, mais o encaixe proposto do conteúdo atual |
+
+---
+
 ## 26/10/2026 — Auditoria 35 (incentivos educacionais e financeiros ligados à vulnerabilidade)
 
 Motivo: o autor perguntou se há incentivo ligado ao IVS, ou a critério parecido, além da bolsa, que mude a escolha ou o preenchimento das vagas de especialistas. A pergunta veio da queda em 0,300 e da subida dentro das faixas (protocolos 61 e 62). Pesquisa documental, sem estimação; complementa a auditoria 18.
