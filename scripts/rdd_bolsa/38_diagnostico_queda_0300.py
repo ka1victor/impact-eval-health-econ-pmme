@@ -28,7 +28,8 @@ O que o script faz, na ordem
 Integridade
 -----------
 Nada imputado nem simulado; ausente fica ausente e é contado. Running variable = IVS 2010 oficial (a08); o arquivo
-local de IVS da auditoria 16 não é lido. O CNES só é lido no pré (202406–202506). As listas de candidatos (G1,
+local de IVS da auditoria 16 não é lido. O CNES só é lido no pré (202406–202506); a origem dos candidatos vem do
+G1 já gravado (competência de referência de cada ciclo, nenhuma posterior a 202609). As listas de candidatos (G1,
 escolhas) só são usadas agregadas, em memória: nenhum identificador de pessoa vai para `output/`. As saídas de outros
 blocos não são regravadas. Tudo é descritivo e pós-resultado; o contraste é o pacote do corte.
 
@@ -91,6 +92,7 @@ N_EST = OUT / "N_estimativas.csv"
 NA_EST = OUT / "NA_estimativas.csv"
 ND_EST = OUT / "ND_estimativas.csv"
 G1_ORIGEM = OUT / "G1_candidatos_origem.parquet"
+G1_RESUMO = OUT / "G1_resumo.json"
 ESCOLHAS = OUT / "outcomes" / "escolhas_candidatos.parquet"
 QUADRO_CONSOLIDADO = ROOT / "output" / "aquisicao" / "quadro_vagas_consolidado.parquet"
 ARQ_CNES = ROOT / "output" / "aquisicao" / "cnes_nacional" / "painel_municipio_cbo_mes.parquet"
@@ -1490,9 +1492,12 @@ TINTA = "#0b0b0b"
 TINTA_2 = "#52514e"
 SUPERF = "#fcfcfb"
 COMO_LER = {
-    "DQ_placebos.png": "Cada ponto cinza é o salto medido num corte que não existe (corte falso); quanto mais longe do "
-                       "zero, maior. O losango laranja é o salto no corte real 0,300 e o azul, em 0,400. Se o laranja "
-                       "fica no meio dos cinzas, um salto daquele tamanho é comum; se fica mais longe que todos, é raro.",
+    "DQ_placebos.png": "Cada ponto é o salto medido num corte que não existe (corte falso), em erros-padrão (t); quanto "
+                       "mais longe do zero, maior. Os pontos pretos são os 3 cortes falsos do protocolo; os cinza "
+                       "vazados, a grade maior, fora do protocolo. O losango laranja é o salto no corte real 0,300 e o "
+                       "azul, em 0,400. Se o laranja fica no meio dos outros, um salto daquele tamanho é comum; se fica "
+                       "mais longe que todos, é raro. Os cortes falsos vizinhos usam quase os mesmos municípios, então "
+                       "não são sorteios independentes.",
     "DQ_quanto_da_queda.png": "A primeira linha de cada painel é a queda em 0,300 como foi medida. Cada linha abaixo é a "
                               "mesma queda depois de igualar um fator entre os dois lados do corte. Se o ponto chega "
                               "perto do zero (passa da linha tracejada, metade da queda), aquele fator acompanha boa "
@@ -1720,30 +1725,46 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
                 "EXPLICACOES_CANDIDATAS_DESCRITIVAS": "As explicações que reduzem a queda pela metade são candidatas, "
                 "descritivas.",
                 "SEM_EXPLICACAO_NOS_DADOS": "Não há explicação nos dados disponíveis."}[lt["leitura_principal"]])
+    # Frase para a banca (corrigida pela auditoria 33): cada cláusula sai das saídas e só entra com o sinal e a
+    # incerteza que o CSV sustenta; a unidade dos índices é a célula (não a vaga); estimativa com IC que contém zero
+    # leva "estimativa imprecisa"; a queda é dita como estimada no corte, ao lado das médias brutas da janela.
+    reduz_por = {}
+    for _, r in fx[fx["reduz_metade"] == "sim"].iterrows():
+        reduz_por.setdefault((r["explicacao"], r["variante"]), set()).add(r["quantidade"])
+    nenhum_nas_tres = not any(len(v) == len(Q) for v in reduz_por.values())
+    conc_uf = _um(est, explicacao="D-d", bloco="medidas", quantidade="n_conc_uf", corte=RC[300])
+    cr_c2 = _um(est, explicacao="D-b", bloco="composicao", quantidade="so_cr", ciclo="2", corte=RC[300])
     clausulas = []
-    if _excl(comp_cel["so_cr"]) and float(comp_cel["so_cr"]["tau"]) > 0 and not cr_tambem_0400:
-        clausulas.append("mais vagas só de cadastro reserva")
     if _excl(comp_cel["idx_curso"]) and float(comp_cel["idx_curso"]["tau"]) < 0:
-        clausulas.append("mais vagas de cursos que preenchem pouco em qualquer lugar")
-    txt_quadro = ("acima do corte o quadro tinha " + " e ".join(clausulas)) if clausulas else ""
-    outros = []
+        clausulas.append("mais células de cursos que preenchem pouco em qualquer lugar")
+    if _excl(comp_cel["so_cr"]) and float(comp_cel["so_cr"]["tau"]) > 0 and not cr_tambem_0400:
+        clausulas.append("mais células só de cadastro reserva")
+    if "D-d" in lt["descritivas_que_reduzem_metade"] and _excl(conc_uf) and float(conc_uf["tau"]) > 0:
+        clausulas.append("mais células do mesmo curso na mesma UF")
+    itens = [("o lado de cima tinha " + " e ".join(clausulas))] if clausulas else []
     if float(fun["P_C"]["tau"]) < 0 and "D-c" in lt["descritivas_que_reduzem_metade"]:
-        outros.append("menos células foram escolhidas em 1º lugar")
+        itens.append("menos células desse lado tiveram candidato de 1ª opção"
+                     + ("" if _excl(fun["P_C"]) else " (estimativa imprecisa)"))
     if d2["apoia"]:
-        outros.append("no ciclo 2 vaga de reserva não podia ser preenchida na 1ª chamada")
-    itens = ([txt_quadro] if txt_quadro else []) + outros
-    descr = (", ".join(itens[:-1]) + " e " + itens[-1]) if len(itens) > 1 else (itens[0] if itens else "")
+        itens.append("no ciclo 2, em que vaga de reserva não podia ser preenchida na 1ª chamada, mais células desse lado "
+                     "eram só de reserva" if (_excl(cr_c2) and float(cr_c2["tau"]) > 0) else
+                     "no ciclo 2 vaga de reserva não podia ser preenchida na 1ª chamada")
+    descr = ("; ".join(itens[:-1]) + "; e " + itens[-1]) if len(itens) > 1 else (itens[0] if itens else "")
     acaso = ("acaso não está descartado" if lt["leitura_principal"] == "ACASO_MAIS_POUCOS_MUNICIPIOS" or
              any(comp[k]["p_posto"] > 0.10 for k in Q) else "a queda é maior que a dos cortes falsos")
+    fb0, fb1 = float(fb[300]["valor_abaixo"]), float(fb[300]["valor_acima"])
+    reta = (f"A queda aparece quando a reta de cada lado é levada até o corte (nas médias da janela, "
+            f"{_pp(fb0, 0, False)}% das células preenchidas abaixo e {_pp(fb1, 0, False)}% acima), e {acaso}. "
+            if abs(fb1 - fb0) < LIMIAR_METADE * abs(float(q["Q3"]["tau"])) else f"E {acaso}. ")
     if descr:
-        frase = (f"Em 0,300 o preenchimento cai, mas os dados só descrevem a queda: {descr}. "
-                 + ("Igualando esses fatores entre os lados, a queda diminui pela metade ou mais em parte das medidas, "
-                    if lt["descritivas_que_reduzem_metade"] else "Igualar esses fatores não reduz a queda pela metade, ")
-                 + f"e {acaso}. Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras "
-                   "regras.")
+        frase = (f"Em 0,300 o preenchimento estimado no corte cai, mas os dados só descrevem a queda. No corte, {descr}. "
+                 + (("Igualando esses fatores entre os lados, a queda diminui pela metade ou mais em parte das medidas"
+                     + (", nenhum fator nas três. " if nenhum_nas_tres else ". "))
+                    if lt["descritivas_que_reduzem_metade"] else "Igualar esses fatores não reduz a queda pela metade. ")
+                 + reta + "Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras.")
     else:
-        frase = ("Em 0,300 o preenchimento cai, e os dados disponíveis não explicam por quê; "
-                 f"{acaso}. Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras.")
+        frase = ("Em 0,300 o preenchimento estimado no corte cai, e os dados disponíveis não explicam por quê. "
+                 + reta + "Nada disso mostra que a bolsa reduz o preenchimento: o corte junta a bolsa com outras regras.")
     p.append(f"**Para dizer na banca.** \"{frase}\"")
     return "\n\n".join(p)
 
@@ -1839,7 +1860,22 @@ def tabela_db_q3(est) -> str:
     return _tab(["Corte", "Especificação", "municípios abaixo / acima", "Salto", "IC 95%", "p"], linhas)
 
 
-ROT_FUNIL = {"P_C": "P(candidato de 1ª opção)", "P_F_dado_C": "P(preenchida | candidato de 1ª opção)",
+def leitura_db_ii(est) -> str:
+    """Teste (ii) do D-b lido como o protocolo o escreve: Q3 com toda a composição contra Q3 sem ela (auditoria 33)."""
+    r = {v: _um(est, explicacao="D-b", bloco="q3_composicao", corte=RC[300], variante=v)
+         for v in ("sem_composicao", "original_Q3", "com_composicao")}
+    t0, tq, tc = (float(r[v]["tau"]) for v in ("sem_composicao", "original_Q3", "com_composicao"))
+    return (f"**Leitura do teste (ii) como o protocolo o escreve** (acréscimo da auditoria 33). Em 0,300, do salto sem "
+            f"efeitos fixos ({_fq('Q3', t0)}) ao salto com curso × ciclo, tipo de vaga, tipo e gestão do estabelecimento "
+            f"({_fq('Q3', tc)}) sobram {_num(tc / t0 * 100, 0, False)}%: "
+            + ("o salto cai pela metade ou mais" if abs(tc) <= LIMIAR_METADE * abs(t0) else "o salto não cai pela metade")
+            + f". A maior parte da redução já vem de curso × ciclo e tipo de vaga ({_fq('Q3', tq)}), que o Q3 original "
+              f"fixa; por isso a tabela da §10 compara a composição com o Q3 original (sobram "
+              f"{_num(tc / tq * 100, 0, False)}%). As duas leituras são descritivas, e o D-b já está entre as explicações "
+              "que reduzem a queda pela metade (§11); a leitura pré-registrada não muda.")
+
+
+ROT_FUNIL = {"P_C":"P(candidato de 1ª opção)", "P_F_dado_C": "P(preenchida | candidato de 1ª opção)",
              "P_F_dado_semC": "P(preenchida | sem candidato de 1ª opção)", "P_F": "P(preenchida) = Q3"}
 
 
@@ -1989,7 +2025,11 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
                                     "literal é relatada e, ao lado dela, uma grade complementar **fora do protocolo** "
                                     "(rótulo `COMPLEMENTAR_FORA_DO_PROTOCOLO_61`): mesmos cortes de 0,250 a 0,450 a mais "
                                     "de 0,010 dos cortes reais, usando só as observações do mesmo segmento de bolsa do "
-                                    "corte falso, como o S-i do protocolo 48 (a janela nunca atravessa 0,300 nem 0,400).")
+                                    "corte falso, como o S-i do protocolo 48 (a janela nunca atravessa 0,300 nem 0,400). "
+                                    "Nessa grade, cortes falsos vizinhos compartilham quase todos os municípios e, perto "
+                                    "dos cortes reais, a janela fica truncada de um lado, enquanto o salto real usa a "
+                                    "janela inteira: o p por posto dela é indicativo, não um teste (nota da auditoria "
+                                    "33).")
                   + "\n\n" + _bloco("da_complementar", tabela_placebos(est, ROT_COMPLEMENTAR))
                   + "\n\n**Randomização local (Fisher).** Janelas ±0,010 e ±0,020, 999 permutações, semente 20261026. "
                     "O lado do corte é sorteado entre os municípios da janela (todas as linhas de ciclo do município "
@@ -2007,15 +2047,21 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
                   + "\n\nPor ciclo (`*` = IC 95% que exclui zero):\n\n" + _bloco("db_ciclos", tabela_db_ciclos(est))
                   + "\n\n**(ii) Q3 com e sem a composição** e **(iii) Q2 sem as células só de CR.** Mesma amostra nas "
                     "três linhas de Q3 (células com tipo e gestão definidos). O indicador de célula só de CR é o "
-                    "complemento do tipo de vaga, que Q3 já fixa.\n\n" + _bloco("db_q3", tabela_db_q3(est)))
+                    "complemento do tipo de vaga, que Q3 já fixa.\n\n" + _bloco("db_q3", tabela_db_q3(est))
+                  + "\n\n" + _bloco("db_q3_leitura", leitura_db_ii(est)))
     partes.append("## 5. D-c — funil\n\n"
                   "Q3 se decompõe em ter candidato de 1ª opção e ser preenchida dado esse candidato (e, sem ele, por "
                   "candidatos de 2ª opção). Os saltos condicionais comparam subamostras escolhidas depois do anúncio: "
                   "são descritivos.\n\n" + _bloco("dc_funil", tabela_dc(est))
                   + "\n\nDecomposição aproximada nos limites de cada lado (sem efeitos fixos, porque efeitos fixos não "
-                    "dão nível; as quatro regressões usam amostras diferentes, daí o resíduo). Regra fixada no script "
-                    "antes de rodar: a queda se concentra numa parte se a maior contribuição, em módulo, for ao menos "
-                    "2/3 da soma dos módulos.\n\n" + _bloco("dc_decomposicao", tabela_dc_decomp(est))
+                    "dão nível; as quatro regressões usam amostras diferentes, daí o resíduo). Regra do script, não do "
+                    "protocolo (que diz só \"a queda se concentra numa das partes\"): concentra se a maior contribuição, "
+                    "em módulo, for ao menos 2/3 da soma dos módulos. O histórico do Git não mostra quando ela foi "
+                    "fixada. Em 0,300 a maior parte leva "
+                    + _num(100 * max(abs(v) for v in lt["D-c"]["contribuicoes"].values())
+                           / sum(abs(v) for v in lt["D-c"]["contribuicoes"].values()), 0, False)
+                    + "% da soma dos módulos; qualquer limiar acima disso dá a mesma leitura (nota da auditoria 33)."
+                      "\n\n" + _bloco("dc_decomposicao", tabela_dc_decomp(est))
                   + "\n\n**Motivo de não alocação.** Entre as células com candidato de 1ª opção e não preenchidas, o "
                     "motivo onde a base distingue (ordem: sem vaga imediata; alocação desconsiderada pela gestão, só "
                     "ciclo 1; candidato alocado em outra célula; todos os candidatos inelegíveis, só ciclo 1; outro). "
@@ -2035,7 +2081,14 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
                   "Balanço pré-determinado: vínculos CNES pré (202406–202506) das CBO do curso na região de saúde por "
                   "10 mil hab. (lógica do P5); distância do município da célula à origem mais próxima entre os "
                   "candidatos do mesmo curso e ciclo (G1, regra principal; o conjunto de candidatos se forma depois do "
-                  "anúncio); nível REGIC.\n\n" + _bloco("de_balanco", tabela_medidas(est, "D-e", "balanco")))
+                  "anúncio); nível REGIC.\n\n" + _bloco("de_balanco", tabela_medidas(est, "D-e", "balanco"))
+                  + "\n\n" + _bloco("de_origem", "A origem dos candidatos vem do G1 já gravado, que a mediu no CNES da "
+                                    "competência de referência de cada ciclo ("
+                                    + ", ".join(f"ciclo {k}: {v}" for k, v in sorted(
+                                        json.loads(G1_RESUMO.read_text(encoding="utf-8"))["competencia_referencia"]
+                                        .items()))
+                                    + "), não na janela pré 202406–202506 das outras medidas; nenhuma é posterior a "
+                                      "202609. Esta nota é da auditoria 33."))
     partes.append("## 8. D-f — ciclo 2 e cadastro reserva\n\n" + _bloco("df_tabela", tabela_df(est))
                   + "\n\n" + _bloco("df_edital",
                                     "**A regra do ciclo 2 sobre o cadastro reserva na 1ª chamada.** "
@@ -2071,12 +2124,14 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
                   "Igualar fatores escolhidos ou formados depois do anúncio é descritivo.\n\n"
                   + _bloco("tabela_resumo", tabela_resumo(est)))
     candid = lt["descritivas_que_reduzem_metade"]
+    pelo_fixar = {k.split(" ")[0] for k in lt["fixar_reduz_metade_em_0300"]}
+    candid_txt = [e if e in pelo_fixar else f"{e} (só pelo critério do ciclo 2; na §10 não reduz)" for e in candid]
     partes.append("## 11. Leitura pré-registrada (§3)\n\n" + _bloco("leitura", _tab(
         ["Situação do §3", "Ocorre?", "Leitura"],
         [["D-a apoia", "sim (por construção: 3 placebos)" if da["apoia"] else "não",
           "acaso mais poucos municípios; as outras viram descrição"],
          ["uma ou mais de D-b a D-f reduzem o salto pela metade ou mais",
-          ("sim: " + ", ".join(candid)) if candid else "não", "explicações candidatas, ditas como descritivas"],
+          ("sim: " + ", ".join(candid_txt)) if candid else "não","explicações candidatas, ditas como descritivas"],
          ["nada reduz o salto e D-a não apoia", "não" if (candid or da["apoia"]) else "sim",
           "não há explicação nos dados disponíveis"]])
         + f"\n\nLeitura aplicada: **{lt['leitura_principal']}**. "
@@ -2147,7 +2202,8 @@ DECISOES = [
     "controle do protocolo 48) ou efeito fixo; razao contra o original na mesma amostra. Fator que retira celulas: razao "
     "contra o original. Reduz pela metade = |fixado| <= 0,5 |comparado|, so em 0,300.",
     "D-c: decomposicao nos limites sem efeitos fixos (interceptos ponderados pelos pesos omega), aproximada; "
-    "'concentra' se a maior contribuicao em modulo for >= 2/3 da soma dos modulos (regra fixada antes de rodar).",
+    "'concentra' se a maior contribuicao em modulo for >= 2/3 da soma dos modulos (regra do script, nao do protocolo; "
+    "o historico nao mostra quando foi fixada, conforme a auditoria 33).",
     "D-f: 'some' operacionalizado como o salto do ciclo 2 sem as celulas so de CR caindo pela metade ou mais (o mesmo "
     "criterio do §3).",
     "BKY entre as linhas tipo_linha = salto de cada explicacao, so do protocolo (a grade complementar fica fora).",

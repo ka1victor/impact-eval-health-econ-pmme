@@ -8,6 +8,21 @@
 
 ---
 
+## 26/10/2026 — Auditoria 33: diagnóstico da queda no corte 0,300 (protocolo 61), aprovado com correções
+
+Motivo: auditoria independente do script 38, das saídas `DQ_*`, do doc 57l e dos testes. Recálculo próprio de
+328 números, todos iguais ao gravado; nenhum número mudou. Correções de texto e rótulo feitas pelo script 38:
+frase "Para dizer na banca", leitura literal do D-b (ii), ressalva da grade complementar, "Como ler" da figura
+de placebos, regra dos 2/3 do D-c, D-f na leitura e origem do G1 no D-e.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/33_auditoria_diagnostico_queda_0300.md`](auditorias/33_auditoria_diagnostico_queda_0300.md) | auditoria do protocolo 61: recálculo contra o gravado, fidelidade, achados (1 média, 6 baixas), frase da banca validada, veredito |
+
+---
+
 ## 26/10/2026 — Protocolo 62 (gradiente do preenchimento dentro das faixas)
 
 Motivo: o autor notou, na figura de dados crus (`output/apresentacao_banca2/exp_rdd_crua.png`), que o preenchimento parece subir com o IVS dentro das faixas de R$ 10 e 15 mil; protocolo descritivo congelado antes de calcular.
