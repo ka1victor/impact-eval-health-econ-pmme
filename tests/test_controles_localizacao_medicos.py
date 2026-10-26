@@ -205,7 +205,7 @@ class TestDoc(unittest.TestCase):
         self.assertIn("## 0. Decisões de implementação", txt)
         self.assertLess(txt.index("## 0. Decisões"), txt.index("## 1. Resposta curta"))
         self.assertIn("ADENDO_48D_POS_RESULTADO", txt)
-        self.assertIn("Auditoria:** pendente", txt)
+        self.assertIn("Auditoria:** [auditoria 40]", txt)
         for proibido in ("a bolsa reduz", "a bolsa aumenta", "a bolsa causa", "efeito da bolsa sobre"):
             self.assertNotIn(proibido, txt.lower())
 

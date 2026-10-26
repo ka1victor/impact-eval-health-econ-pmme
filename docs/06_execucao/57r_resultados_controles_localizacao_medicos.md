@@ -7,7 +7,8 @@
 > **Estatuto:** `ADENDO_48D_POS_RESULTADO` para a H1 (os saltos da H1 já tinham sido vistos, inclusive com capital e
 > UF, no adendo 48c). Para a oferta local (protocolo 64) é pré-resultado. Toda linha de `CL_estimativas.csv` e
 > `CL_balanco.csv` tem `natureza_dos_dados = EMPIRICO`.<br>
-> **Auditoria:** pendente.<br>
+> **Auditoria:** [auditoria 40](../auditorias/40_auditoria_controles_localizacao_medicos.md), aprovado com
+> correções; nenhuma estimativa mudou (correções no texto gerado e no diagnóstico de separação).<br>
 > **Script:** `scripts/rdd_bolsa/44_controles_localizacao_medicos.py` (estimadores de `rdd_lib.py` e funções dos
 > scripts 23, 37 e 40, importadas). **Saídas:** `output/rdd_bolsa/CL_estimativas.csv`, `CL_balanco.csv`,
 > `CL_resumo.json`, `CL_figuras/`. **Testes:** `tests/test_controles_localizacao_medicos.py`.<br>
@@ -123,17 +124,19 @@ local). Estas decisões foram escritas antes de rodar qualquer conta nova do ade
 ## 1. Resposta curta
 
 <!-- CL:resposta_curta:inicio -->
-**Pareando por escore de propensão (principal deste adendo), a H1 não se distingue de zero em 0,300**: comparando municípios parecidos em localização e em médicos na região, dos dois lados do corte, o preenchimento das vagas imediatas não difere de forma detectável. Em 0,400 o PSM **não tem estimativa**: pela regra fixada antes (decisão 13), o logit não convergiu porque há categoria de L presente só de um lado da janela (separação): em 0,400, capital (10 unidade(s), todas abaixo do corte), região Sul (1 unidade(s), todas abaixo do corte).
+**Pareando por escore de propensão (principal deste adendo), a H1 não se distingue de zero em 0,300**: comparando municípios parecidos em localização e em médicos na região, dos dois lados do corte, o preenchimento das vagas imediatas não difere de forma detectável. Em 0,400 o PSM **não tem estimativa**: pela regra fixada antes (decisão 13), o logit não convergiu porque há categorias de L presentes só de um lado da janela (separação): em 0,400, capitais (10 linhas município × ciclo de 4 município(s), todos abaixo do corte), região Centro-Oeste (8 município(s), todos abaixo do corte), região Sul (1 município(s), todos abaixo do corte). Sem escore não há comparação pareada nesse corte, e o principal deste adendo só informa 0,300. Outra regra (por exemplo, tirar antes do logit as unidades dessas categorias) mudaria a especificação: é decisão do autor, com novo adendo.
 
 - **Corte 0,300** (R$ 10 mil → R$ 15 mil): fração de células preenchidas (município × ciclo): −0,6 p.p. (IC permutação [−13,1; +11,8]; p Holm 1,000; 86 pares; balanço limpo); alocados por vaga imediata (município × ciclo): +0,04 (IC permutação [−0,08; +0,17]; p Holm 1,000; 86 pares; balanço limpo).
 
 - **Corte 0,400** (R$ 15 mil → R$ 20 mil): fração de células preenchidas (município × ciclo): sem estimativa (escore nao estimado; logit nao convergiu); alocados por vaga imediata (município × ciclo): sem estimativa (escore nao estimado; logit nao convergiu).
 
-**Oferta local pareada (PS-2, principal deste adendo para o protocolo 64):** ΔB1 vínculos de especialistas em 0,300: −0,09 (IC permutação [−0,96; +0,78]; p Holm 1,000; 88 pares); ΔB2 horas SUS de especialistas em 0,300: −0,71 (IC permutação [−9,32; +8,01]; p Holm 1,000; 87 pares); ΔB1 vínculos de especialistas em 0,400: sem estimativa; ΔB2 horas SUS de especialistas em 0,400: sem estimativa. Onde falta estimativa, o motivo é o mesmo: há categoria de L presente só de um lado da janela (separação): em 0,400, capital (4 unidade(s), todas abaixo do corte), região Sul (1 unidade(s), todas abaixo do corte).
+**Oferta local pareada (PS-2, principal deste adendo para o protocolo 64):** ΔB1 vínculos de especialistas em 0,300: −0,09 (IC permutação [−0,96; +0,78]; p Holm 1,000; 88 pares); ΔB2 horas SUS de especialistas em 0,300: −0,71 (IC permutação [−9,32; +8,01]; p Holm 1,000; 87 pares); ΔB1 vínculos de especialistas em 0,400: sem estimativa; ΔB2 horas SUS de especialistas em 0,400: sem estimativa. Onde falta estimativa, o motivo é o mesmo: há categorias de L presentes só de um lado da janela (separação): em 0,400, capitais (4 município(s), todos abaixo do corte), região Sul (1 município(s), todos abaixo do corte).
 
 **Controles somados na regressão (CL-1, secundária), na mesma amostra:** HI-1 em 0,300: sem controle −4,1 p.p. [−23,6; +15,4], com L+M +3,6 p.p. [−16,8; +23,9] (`RELATAR_COMO_ESTA`); HI-2 em 0,300: sem controle −1,11 [−2,17; −0,05], com L+M −0,25 [−1,37; +0,87] (`ANDA_JUNTO_COM_LOCALIZACAO_OU_MEDICOS`); HI-1 em 0,400: sem controle +2,8 p.p. [−20,3; +25,8], com L+M −1,5 p.p. [−23,9; +20,9] (`RELATAR_COMO_ESTA`); HI-2 em 0,400: sem controle −0,16 [−0,99; +0,68], com L+M −0,38 [−1,11; +0,35] (`RELATAR_COMO_ESTA`).
 
 **Balanço no corte (CL-0):** as variáveis com salto (IC sem zero) na amostra da H1 são em 0,300 (H1, celula, amostra da HI-1): especialistas do curso /10 mil (resto da região); em 0,300 (H1, municipio x ciclo, amostra da HI-2): capital, especialistas CBO-alvo /10 mil (resto da região), região Nordeste; em 0,400 (H1, celula, amostra da HI-1): especialistas do curso /10 mil (resto da região); em 0,400 (H1, municipio x ciclo, amostra da HI-2): especialistas CBO-alvo /10 mil (resto da região).
+
+**O que o balanço no corte quer dizer (limite da RDD):** Em 0,300, os municípios logo acima do corte não são parecidos com os logo abaixo: do lado de bolsa maior há menos capitais, menos municípios do Nordeste e mais especialistas por habitante nos outros municípios da mesma região de saúde (a HI-1 tem IC que contém zero com e sem L+M; com L+M somados na regressão, a HI-2 vai de −1,11 [−2,17; −0,05] para −0,25 [−1,37; +0,87], e o IC passa a conter zero). Já em 0,400, os municípios logo acima do corte não são parecidos com os logo abaixo: do lado de bolsa maior há mais especialistas por habitante nos outros municípios da mesma região de saúde (a HI-1 tem IC que contém zero com e sem L+M; a HI-2 tem IC que contém zero com e sem L+M). A RDD supõe que, sem o pacote do corte, os dois lados seriam iguais em média; com essas diferenças, a diferença medida no corte pode vir delas e não do pacote, e os dados não separam as duas explicações. Isso é um limite da RDD nesse corte; não mostra que a localização ou os médicos da região explicam a queda.
 
 **Pareado × RDD:** discordam em PS-1 alocados por vaga imediata (município × ciclo) × CL-4 HI-2 em 0,300. Relatam-se as duas: o pareado supõe randomização local condicional; a RDD supõe continuidade. Nenhuma passa a ser a principal da H1 por isso.
 
@@ -512,3 +515,22 @@ As regras estão na seção 0 (itens 22 a 25). O código as aplica; nada aqui é
 - **Cursos fora da ponte.** Na célula, as variáveis de especialistas usam as CBO do curso; os cursos 17 a 20 do ciclo 3 não estão na ponte do a09: 192 células com vaga imediata desses cursos ficam fora das linhas da HI-1 que usam M (contadas na seção 1).
 - **Médicos é vínculo, não pessoa.** M conta vínculos do CNES (um médico em dois estabelecimentos conta duas vezes), como o B1 do protocolo 64.
 <!-- CL:limites:fim -->
+
+### 7.1 Notas da auditoria 40 (26/10/2026)
+
+- **Ordem do pareamento.** O adendo (§3.1) diz que o lado com menos unidades procura par; a decisão 11 trocou isso
+  pelo guloso global (o par mais próximo primeiro). A auditoria refez o PSM em 0,300 com o lado menor procurando par,
+  em ordem de código: os quatro IC continuam contendo zero, mas as estimativas pontuais mudam. A conclusão não depende
+  da ordem; o número exato, sim. Os números estão na auditoria.
+- **Holm e BKY.** As linhas sem estimativa (0,400) ficaram fora das famílias. Contá-las com p = 1 não muda nada: todos
+  os p ajustados já são 1.
+- **Mahalanobis quase sem pares.** Não é erro de escala. A distância de Mahalanobis já está em desvios-padrão, e o
+  desvio-padrão das distâncias entre pares fica perto de 1; as duas leituras do *caliper* de 0,25 dão quase o mesmo
+  limite. O vizinho mais próximo de quase todo município fica bem mais longe que isso, com quatro variáveis contínuas
+  e pareamento exato em região, capital e ciclo. O *caliper* congelado é que é apertado demais para estes dados.
+- **Separação em 0,400.** Na H1, além das capitais e do Sul, o Centro-Oeste (categoria de referência da
+  macrorregião) também só aparece do lado de baixo. O diagnóstico do script passou a contar a categoria de
+  referência; a estimativa não muda (continua sem escore).
+- **Região de saúde.** A troca da malha pela CIR (decisão 5 revista) entrou no mesmo commit dos resultados: o
+  histórico do Git não prova que ela veio antes das contas. A malha não tem a região na maioria dos municípios, e a
+  CIR é a tabela oficial já versionada, com manifesto e SHA-256; sem ela, a variável não existiria sem adquirir dado.

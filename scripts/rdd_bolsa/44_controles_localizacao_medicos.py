@@ -789,14 +789,17 @@ def escore_propensao(d: pd.DataFrame) -> tuple[np.ndarray | None, dict]:
         nomes.append(n)
     X = np.column_stack(cols)
     y = d["acima"].to_numpy(float)
-    # Diagnóstico de separação: categoria binária presente só de um lado da janela.
+    # Diagnóstico de separação: capital ou macrorregião presente só de um lado da janela. Inclui a região de
+    # referência (Centro-Oeste), que não tem coluna própria no logit (auditoria 40: na H1 em 0,400 ela também
+    # separa). Só diagnóstico: não muda o ajuste.
     so_um_lado = []
-    for j, n in enumerate(nz):
-        z = Z[:, j]
-        if set(np.unique(z)) <= {0.0, 1.0} and z.sum() > 0:
-            if y[z == 1].min() == y[z == 1].max():
-                so_um_lado.append({"variavel": n, "unidades": int(z.sum()),
-                                   "lado": "acima" if y[z == 1][0] == 1 else "abaixo"})
+    cats = [("capital", (d["capital"] == 1).to_numpy())] + [(f"regiao[{r}]", (d["regiao"] == r).to_numpy())
+                                                            for r in REGIOES]
+    for n, z in cats:
+        if z.sum() > 0 and y[z].min() == y[z].max():
+            so_um_lado.append({"variavel": n, "unidades": int(z.sum()),
+                               "municipios": int(d.loc[z, "co_ibge"].nunique()),
+                               "lado": "acima" if y[z][0] == 1 else "abaixo"})
     info = {"colunas": nomes, "tiradas_sem_variacao_ou_colineares": tiradas, "n": int(len(d)),
             "n_acima": int(y.sum()), "n_abaixo": int((1 - y).sum()), "categorias_so_de_um_lado": so_um_lado}
     if y.sum() < 2 or (1 - y).sum() < 2:
@@ -1579,14 +1582,69 @@ def resumo_separacao(resumo: dict, parte: str) -> str:
             continue
         cats = e.get("categorias_so_de_um_lado") or []
         if cats:
+            def _qtd(c: dict) -> str:
+                m = int(c.get("municipios", c["unidades"]))
+                if parte == "H1" and int(c["unidades"]) != m:
+                    return f"{c['unidades']} linhas município × ciclo de {m} município(s)"
+                return f"{m} município(s)"
             frases.append(f"em {_corte_txt(x['corte'])}, " + ", ".join(
-                f"{'capital' if c['variavel'] == 'capital' else c['variavel'].replace('regiao[', 'região ').rstrip(']')}"
-                f" ({c['unidades']} unidade(s), todas {'acima' if c['lado'] == 'acima' else 'abaixo'} do corte)"
+                f"{'capitais' if c['variavel'] == 'capital' else c['variavel'].replace('regiao[', 'região ').rstrip(']')}"
+                f" ({_qtd(c)}, todos {'acima' if c['lado'] == 'acima' else 'abaixo'} do corte)"
                 for c in cats))
         else:
             frases.append(f"em {_corte_txt(x['corte'])}, {e['erro']}")
-    return ("há categoria de L presente só de um lado da janela (separação): " + "; ".join(frases)) if frases else \
-        "o logit não ajustou"
+    return ("há categorias de L presentes só de um lado da janela (separação): " + "; ".join(frases)) if frases \
+        else "o logit não ajustou"
+
+
+DIRECAO_VAR = {"capital": "capitais", "log_pop": "população (log)", "med": "médicos por habitante no município",
+               "esp": "especialistas por habitante no próprio município",
+               "esp_resto": "especialistas por habitante nos outros municípios da mesma região de saúde",
+               **{f"regiao_{r}": f"municípios do {r}" for r in REGIOES}}
+
+
+def limite_rdd(est: pd.DataFrame, bal: pd.DataFrame, le: dict) -> str:
+    """Em linguagem simples, o que o CL-0 implica para a RDD em cada corte (acrescentado na auditoria 40).
+
+    Só lê o que já está em `bal` (CL-0, amostras da H1) e em `est` (CL-1 e CL-4); não estima nada."""
+    sub = bal[(bal["tipo"] == "salto_no_corte") & bal["populacao"].astype(str).str.startswith("H1")
+              & (bal["status"] == "EXECUTADO")]
+    frases = []
+    for c in CORTES:
+        ct = ROT_CORTE[c]
+        s = sub[sub["corte"].astype(str) == ct]
+        s = s[~s.apply(_contem_zero, axis=1)]
+        if s.empty:
+            continue
+        itens, vistos = [], set()
+        for _, r in s.iterrows():
+            base = str(r["variavel"]).removesuffix("_curso")
+            if base in vistos:
+                continue
+            vistos.add(base)
+            itens.append(f"{'mais' if _f(r['tau']) > 0 else 'menos'} {DIRECAO_VAR.get(base, base)}")
+        lista = ", ".join(itens[:-1]) + (" e " if len(itens) > 1 else "") + itens[-1]
+        txt = (f"em {TXT_CORTE[c]}, os municípios logo acima do corte não são parecidos com os logo abaixo: do lado de "
+               f"bolsa maior há {lista}")
+        mud = []
+        for oid in ("HI-1", "HI-2"):
+            x = le["rdd_h1"][f"{oid} {ct}"]
+            r1 = _uma(est, bloco="CL-1", outcome=oid, corte=ct)
+            r4 = _uma(est, bloco="CL-4", outcome=oid, corte=ct)
+            if x["codigo"] == "ANDA_JUNTO_COM_LOCALIZACAO_OU_MEDICOS":
+                mud.append(f"com L+M somados na regressão, a {oid} vai de {fv(r4)} {fic(r4)} para {fv(r1)} {fic(r1)}, "
+                           "e o IC passa a conter zero")
+            elif x["cl4_ic_contem_zero"] and x["cl1_ic_contem_zero"]:
+                mud.append(f"a {oid} tem IC que contém zero com e sem L+M")
+        frases.append(txt + (" (" + "; ".join(mud) + ")" if mud else "") + ".")
+    if not frases:
+        return ""
+    return ("**O que o balanço no corte quer dizer (limite da RDD):** " + " Já ".join(
+        f[0].upper() + f[1:] if i == 0 else f for i, f in enumerate(frases))
+            + " A RDD supõe que, sem o pacote do corte, os dois lados seriam iguais em média; com essas diferenças, a "
+              "diferença medida no corte pode vir delas e não do pacote, e os dados "
+              "não separam as duas explicações. Isso é um limite da RDD nesse corte; não mostra que a localização ou "
+              "os médicos da região explicam a queda.")
 
 
 def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
@@ -1614,7 +1672,10 @@ def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
     if sem:
         cortes_sem = sorted({_corte_txt(x["corte"]) for x in sem})
         cab += (" Em " + " e ".join(cortes_sem) + " o PSM **não tem estimativa**: pela regra fixada antes (decisão 13), "
-                "o logit não convergiu porque " + resumo_separacao(resumo, "H1") + ".")
+                "o logit não convergiu porque " + resumo_separacao(resumo, "H1") + ". Sem escore não há comparação "
+                "pareada nesse corte, e o principal deste adendo só informa " + " e ".join(cortes_exe or ["—"])
+                + ". Outra regra (por exemplo, tirar antes do logit as unidades dessas categorias) mudaria a "
+                "especificação: é decisão do autor, com novo adendo.")
     partes.append(cab)
     for c in CORTES:
         partes.append(f"- **Corte {TXT_CORTE[c]}** ({BOLSA[c]}): " + "; ".join(
@@ -1659,6 +1720,9 @@ def resposta_curta(est: pd.DataFrame, bal: pd.DataFrame, resumo: dict) -> str:
                                                      + "; ".join(saltos) + "." if saltos else
                                                      "na amostra da H1, nenhuma variável de L ou M tem salto com IC "
                                                      "sem zero."))
+    lim = limite_rdd(est, bal, le)
+    if lim:
+        partes.append(lim)
     conc = le["concordancia"]
     if conc:
         disc = [x for x in conc if not x["concorda"]]
@@ -1981,7 +2045,7 @@ def gerar_figuras(est: pd.DataFrame, bal: pd.DataFrame, regs: list[dict]) -> lis
             cats = ((rg or {}).get("escore") or {}).get("categorias_so_de_um_lado") or []
             txt = "escore não estimado (o logit não convergiu)"
             if cats:
-                txt += "\nseparação: " + ", ".join(
+                txt += "\nseparação:\n" + "\n".join(
                     ("capital" if c_["variavel"] == "capital" else c_["variavel"].replace("regiao[", "região ")
                      .rstrip("]")) + f" só {'acima' if c_['lado'] == 'acima' else 'abaixo'} do corte" for c_ in cats)
             ax.text(0.5, 0.5, txt, ha="center", va="center", transform=ax.transAxes, fontsize=10.5)
