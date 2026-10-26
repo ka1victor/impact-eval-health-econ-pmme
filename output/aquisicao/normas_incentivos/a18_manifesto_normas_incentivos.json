@@ -1,0 +1,454 @@
+{
+  "script": "scripts/aquisicao/a18_normas_incentivos_vulnerabilidade.py",
+  "relatorio": "docs/auditorias/35_incentivos_ligados_a_vulnerabilidade.md",
+  "data_acesso": "2026-10-26",
+  "outcomes_abertos": "nenhum",
+  "fontes_copiadas_em_output": [
+    {
+      "arquivo": "lei_10260_2001_compilada_planalto.html",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/leis_2001/l10260compilado.htm",
+      "ato": "Lei 10.260/2001 (Fies), texto compilado",
+      "publicacao": "DOU 13/07/2001; compilação Planalto consultada em 26/10/2026",
+      "natureza": "ato oficial (texto compilado do Planalto)",
+      "caminho": "output/aquisicao/normas_incentivos/lei_10260_2001_compilada_planalto.html",
+      "data_acesso": "2026-10-26",
+      "bytes": 272495,
+      "sha256": "6b005960d419053e760542efa36a99d0a6c8bd85539aada6b2df255ae4e6ca65",
+      "conferencia": "texto",
+      "ancoras": [
+        "m[ée]dico integrante de equipe de sa[úu]de da fam[íi]lia oficialmente cadastrada",
+        "definidas como priorit[áa]rias pelo Minist[ée]rio da Sa[úu]de",
+        "contratados at[ée] o segundo semestre de 2017",
+        "at[ée] 50% \\(cinquenta por cento\\) do valor mensal devido",
+        "contratados a partir do primeiro semestre de 2018",
+        "especialidades priorit[áa]rias definidas em ato do Ministro"
+      ],
+      "ancoras_encontradas": 6
+    },
+    {
+      "arquivo": "fiesmed_faq_ms.html",
+      "url": "https://www.gov.br/saude/pt-br/composicao/sgtes/mais-medicos/medico-e-medica/fiesmed/faq",
+      "ato": "FAQ do FIESMED (Ministério da Saúde)",
+      "publicacao": "página publicada em 19/11/2025, atualizada em 08/09/2026",
+      "natureza": "página oficial do Ministério da Saúde",
+      "caminho": "output/aquisicao/normas_incentivos/fiesmed_faq_ms.html",
+      "data_acesso": "2026-10-26",
+      "bytes": 129427,
+      "sha256": "220f79ab0571b8743dd25fdfce65ea1296bba5347d8d3259025fc72fcf583dea",
+      "conferencia": "texto",
+      "ancoras": [
+        "Atualizado em 08/09/2026",
+        "Portaria Conjunta SGTES/SAS n[ºo] 3, de 19 de fevereiro de 2013",
+        "equipes da Estrat[ée]gia de Sa[úu]de da Fam[íi]lia \\(eSF\\)",
+        "20% mais pobres do munic[íi]pio",
+        "Atua[çc][ãa]o nos munic[íi]pios definidos como priorit[áa]rios pelo Minist[ée]rio da Sa[úu]de"
+      ],
+      "ancoras_encontradas": 5
+    },
+    {
+      "arquivo": "fiesmed_pagina_ms.html",
+      "url": "https://www.gov.br/saude/pt-br/composicao/sgtes/mais-medicos/medico-e-medica/fiesmed",
+      "ato": "Página do FIESMED (Ministério da Saúde)",
+      "publicacao": "sem data na página",
+      "natureza": "página oficial do Ministério da Saúde",
+      "caminho": "output/aquisicao/normas_incentivos/fiesmed_pagina_ms.html",
+      "data_acesso": "2026-10-26",
+      "bytes": 144118,
+      "sha256": "88ac5ee2ea2acb1e41e0e6f356c1d70756241ce98e7c53b8757aada55ad71be8",
+      "conferencia": "texto",
+      "ancoras": [
+        "FIESMED"
+      ],
+      "ancoras_encontradas": 1
+    },
+    {
+      "arquivo": "conass_ci30_2013_portaria_conjunta_3.html",
+      "url": "https://www.conass.org.br/ci-n30-publicada-portaria-conj-n3-que-estabelece-criterios-para-definicao-das-areas-e-regioes-prioritarias-com-carencia-e-dificuldade-de-retencao-de-medico-integrante-de-equipe-de-saude-da-familia/",
+      "ato": "Portaria Conjunta SGTES/SAS 3/2013 (reprodução do texto pelo CONASS, CI n. 30/2013)",
+      "publicacao": "DOU 20/02/2013 (segundo o CONASS)",
+      "natureza": "reprodução secundária; o texto na BVS-MS respondeu HTTP 503 em 26/10/2026",
+      "caminho": "output/aquisicao/normas_incentivos/conass_ci30_2013_portaria_conjunta_3.html",
+      "data_acesso": "2026-10-26",
+      "bytes": 458122,
+      "sha256": "ca6186255017b1af9f6838a62b1aa8dbe43856e63f52e4726b62b1cb05e16c47",
+      "conferencia": "texto",
+      "ancoras": [
+        "percentual da popula[çc][ãa]o em extrema pobreza",
+        "percentual da popula[çc][ãa]o residente na [áa]rea rural",
+        "20% \\(vinte por cento\\) mais pobres do Munic[íi]pio"
+      ],
+      "ancoras_encontradas": 3
+    },
+    {
+      "arquivo": "lei_12871_2013_compilada_planalto.html",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/lei/l12871.htm",
+      "ato": "Lei 12.871/2013 (Mais Médicos), texto compilado",
+      "publicacao": "DOU 23/10/2013; compilação Planalto consultada em 26/10/2026",
+      "natureza": "ato oficial (texto compilado do Planalto)",
+      "caminho": "output/aquisicao/normas_incentivos/lei_12871_2013_compilada_planalto.html",
+      "data_acesso": "2026-10-26",
+      "bytes": 201762,
+      "sha256": "21f149e175a55405dd6860d1b6b7caa579bfdf96a6fc68a2875e1f4d3fcaf4f5",
+      "conferencia": "texto",
+      "ancoras": [
+        "receber[áa] pontua[çc][ãa]o adicional de 10% \\(dez por cento\\) na nota de todas as fases",
+        "\\(Revogado pela Lei n[ºo] 15\\.233, de 2025\\)",
+        "poder[ãa]o fazer jus a bolsa-forma[çc][ãa]o e demais benef[íi]cios do Projeto Mais M[ée]dicos para o Brasil",
+        "classifica[çc][ãa]o socioecon[ôo]mica de alta vulnerabilidade far[ãa]o jus a adicional",
+        "Art\\. 22-E\\. O profissional que tiver conclu[íi]do a Resid[êe]ncia em Medicina de Fam[íi]lia e Comunidade",
+        "Art\\. 19-B\\. O m[ée]dico participante do Projeto Mais M[ée]dicos para o Brasil que tiver realizado gradua[çc][ãa]o em Medicina financiada"
+      ],
+      "ancoras_encontradas": 6
+    },
+    {
+      "arquivo": "portaria_mec_446_2026_abmes.pdf",
+      "url": "https://abmes.org.br/arquivos/legislacoes/Portaria-mec-446-2026-05-19.pdf",
+      "ato": "Portaria MEC 446, de 19/05/2026 (bonificação em seleções de residência médica)",
+      "publicacao": "DOU 20/05/2026, Seção 1, p. 27 (recorte do DOU arquivado pela ABMES)",
+      "natureza": "recorte do DOU (PDF da ABMES)",
+      "caminho": "output/aquisicao/normas_incentivos/portaria_mec_446_2026_abmes.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 251844,
+      "sha256": "c2244443a2b239a6f0bb1c14b3c9fc63ab6a5c9d0073d9e86465ea85a3105ec7",
+      "conferencia": "texto",
+      "ancoras": [
+        "Publicado em: 20/05/2026",
+        "Far[áa] jus [àa] pontua[çc][ãa]o adicional ou bonifica[çc][ãa]o de 10% \\(dez por cento\\) o candidato que houver conclu[íi]do Programa de Resid[êe]ncia M[ée]dica em Medicina de Fam[íi]lia e Comunidade",
+        "I - participa[çc][ãa]o em programas de provimento",
+        "Esta Portaria se aplica aos processos seletivos cujos editais sejam publicados ap[óo]s"
+      ],
+      "ancoras_encontradas": 4
+    },
+    {
+      "arquivo": "lei_13958_2019_compilada_planalto.html",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/lei/l13958.htm",
+      "ato": "Lei 13.958/2019 (Médicos pelo Brasil / AgSUS), texto compilado",
+      "publicacao": "DOU 19/12/2019; compilação Planalto consultada em 26/10/2026",
+      "natureza": "ato oficial (texto compilado do Planalto)",
+      "caminho": "output/aquisicao/normas_incentivos/lei_13958_2019_compilada_planalto.html",
+      "data_acesso": "2026-10-26",
+      "bytes": 145784,
+      "sha256": "51a13bb64f69b41b68ff8bba7ab14e952f0868b45216778f077ac3b0c9e0de26",
+      "conferencia": "texto",
+      "ancoras": [
+        "acrescida de incentivo financeiro diferenciado e vari[áa]vel",
+        "benef[íi]cio previdenci[áa]rio no valor m[áa]ximo de 2 \\(dois\\) sal[áa]rios m[íi]nimos",
+        "Munic[íi]pios de pequeno tamanho populacional, baixa densidade demogr[áa]fica"
+      ],
+      "ancoras_encontradas": 3
+    },
+    {
+      "arquivo": "agsus_resolucao_cda_21_2025_pcs.pdf",
+      "url": "https://agenciasus.org.br/wp-content/uploads/2025/05/Resolucao-no-21-de-5-de-maio-de-2025-Aprova-o-Plano-de-Cargos-e-Salarios-dos-medicos-do-programa-de-provimento-da-Agencia-Brasileira-de-Apoio-a-Gestao-do-SUS-AgSUS.pdf",
+      "ato": "Resolução CDA/AgSUS 21/2025 (Plano de Cargos e Salários dos médicos do provimento)",
+      "publicacao": "assinada em 06/05/2025",
+      "natureza": "ato oficial da AgSUS (serviço social autônomo)",
+      "caminho": "output/aquisicao/normas_incentivos/agsus_resolucao_cda_21_2025_pcs.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 147308,
+      "sha256": "6cada2160f192d954eff592ad8526cac167dce2106f67607d5f519bd9e0cd38c",
+      "conferencia": "texto",
+      "ancoras": [
+        "munic[íi]pios classificados como de alta ou muito alta vulnerabilidade pelo IPEA",
+        "vantagem pecuni[áa]ria paga ao Tutor M[ée]dico e ao M[ée]dico de Fam[íi]lia e Comunidade",
+        "Os incentivos por localidade n[ãa]o ser[ãa]o cumulativos"
+      ],
+      "ancoras_encontradas": 3
+    },
+    {
+      "arquivo": "agsus_resolucao_direx_37_2025.pdf",
+      "url": "https://agenciasus.org.br/wp-content/uploads/2025/05/SEI_0018065_Resolucao_DIREX_37.pdf",
+      "ato": "Resolução DIREX/AgSUS 37/2025 (valores do PCS, incentivo por localidade)",
+      "publicacao": "assinada em 29/05/2025; efeitos retroativos a 06/05/2025",
+      "natureza": "ato oficial da AgSUS",
+      "caminho": "output/aquisicao/normas_incentivos/agsus_resolucao_direx_37_2025.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 112791,
+      "sha256": "8328ae77a757c1a24ce4609ea744cb8c40152345d1c854bcc65921d1ce101882",
+      "conferencia": "texto",
+      "ancoras": [
+        "Munic[íi]pios de alta e muito alta vulnerabilidade social \\(IVS\\) ser[áa] de R\\$ 3\\.000,00",
+        "classificados como rural remoto \\(IBGE\\) ser[áa] de R\\$ 3\\.000,00",
+        "Portaria GM/MS n[ºo] 485, de 14 de abril de 2023",
+        "efeitos retroativos a 6 de maio de 2025",
+        "Medicina de fam[íi]lia e comunidade:\\s*a\\) N[íi]vel I: R\\$ R\\$ 15\\.750,00|m[ée]dico de fam[íi]lia e comunidade:\\s*a\\) N[íi]vel I: R\\$ R\\$ 15\\.750,00"
+      ],
+      "ancoras_encontradas": 5
+    },
+    {
+      "arquivo": "agsus_edital_01_2025_eixo_vinculo.pdf",
+      "url": "https://agenciasus.org.br/wp-content/uploads/2025/06/EDITAL-DE-ABERTURA_03_06_25_FINAL.pdf",
+      "ato": "Edital de abertura AgSUS 01/2025 (Médico de Família e Comunidade, FCC)",
+      "publicacao": "edital de 03/06/2025",
+      "natureza": "edital oficial da AgSUS",
+      "caminho": "output/aquisicao/normas_incentivos/agsus_edital_01_2025_eixo_vinculo.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 620984,
+      "sha256": "1b977414c829b103522b3527dc1f33ff74fcc5adb0a3b35112fb92e100f8a5f4",
+      "conferencia": "texto",
+      "ancoras": [
+        "Remunera[çc][ãa]o Inicial: R\\$ 16\\.587,90",
+        "alterada somente para locais de mais alta vulnerabilidade"
+      ],
+      "ancoras_encontradas": 2
+    },
+    {
+      "arquivo": "agsus_faq_integracao_v2.pdf",
+      "url": "https://agenciasus.org.br/wp-content/uploads/2024/11/FAQ_Integracao_v2.pdf",
+      "ato": "FAQ AgSUS: integração dos programas de provimento (v2)",
+      "publicacao": "carregado em 11/2024 (caminho do arquivo)",
+      "natureza": "documento informativo da AgSUS",
+      "caminho": "output/aquisicao/normas_incentivos/agsus_faq_integracao_v2.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 269867,
+      "sha256": "cc5c4840be87d4bb1534eda1a6be2c55a4acb611869b79030b29e5121a601661",
+      "conferencia": "texto",
+      "ancoras": [
+        "Prioriza [áa]reas de alta e muito alta vulnerabilidade"
+      ],
+      "ancoras_encontradas": 1
+    },
+    {
+      "arquivo": "edital_sgtes_06_2025_pro_residencia_dou.html",
+      "url": "https://www.in.gov.br/en/web/dou/-/edital-sgtes/ms-n-6-de-16-setembro-de-2025-656600096",
+      "ato": "Edital SGTES/MS 6/2025 (Pró-Residência, bolsas de residência médica)",
+      "publicacao": "DOU 18/09/2025, Seção 3, p. 95",
+      "natureza": "ato oficial (DOU)",
+      "caminho": "output/aquisicao/normas_incentivos/edital_sgtes_06_2025_pro_residencia_dou.html",
+      "data_acesso": "2026-10-26",
+      "bytes": 140028,
+      "sha256": "c206cd8364e90e3f542d323aad2322ae0a5f51ffe90efdaee466429ec92980bb",
+      "conferencia": "texto",
+      "ancoras": [
+        "Publicado em: 18/09/2025",
+        "Programas de Resid[êe]ncia M[ée]dica localizados em estados da Amaz[ôo]nia Legal",
+        "raz[ãa]o de especialistas por 100 mil habitantes abaixo da m[ée]dia nacional",
+        "m[ée]dia entre o [ÍI]ndice de Vulnerabilidade Social - IVS e o [ÍI]ndice de Desenvolvimento Humano",
+        "IVS do IPEA do munic[íi]pio da institui[çc][ãa]o ofertante"
+      ],
+      "ancoras_encontradas": 5
+    },
+    {
+      "arquivo": "pmme_ciclo2_edital_03_2026.pdf",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/edital-no-3.2026",
+      "ato": "Edital SGTES/MS 3/2026 (PMM-E, ciclo 2, médicos), Chamamento 1/2026",
+      "publicacao": "página do chamamento publicada em 03/02/2026; PDF gerado em 03/02/2026",
+      "natureza": "edital oficial (PDF do SEI, imagem sem camada de texto)",
+      "conferencia": "visual",
+      "paginas_lidas": "1, 9, 10, 20 e 21 (itens 1, 5.2 a 5.8 e 11.1 a 11.4)",
+      "caminho": "output/aquisicao/normas_incentivos/pmme_ciclo2_edital_03_2026.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 6535918,
+      "sha256": "6ab45aefa62e14d761f704b2e4df5496c6593eda48a8e92d9e7df2d74da97a28",
+      "ancoras": []
+    },
+    {
+      "arquivo": "pmme_ciclo2_errata.pdf",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-1-2026-pmm-e/errata",
+      "ato": "Errata do Edital SGTES/MS 3/2026",
+      "publicacao": "assinada em 12/02/2026",
+      "natureza": "documento oficial (SEI)",
+      "caminho": "output/aquisicao/normas_incentivos/pmme_ciclo2_errata.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 45833,
+      "sha256": "5882182441a7cbb0e38a0f3b5c404bbb2b36ef8cdbc7370afd46bb1480bf39a1",
+      "conferencia": "texto",
+      "ancoras": [
+        "ativos no PMMB e PMM-E"
+      ],
+      "ancoras_encontradas": 1
+    },
+    {
+      "arquivo": "pmme_ciclo3_gestores_edital_05_2026.pdf",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/participacao-social/chamamentos-publicos/2026/chamamento-publico-sgtes-ms-no-5-2026-pmm-e/edital",
+      "ato": "Edital SGTES/MS 25/2026 (adesão dos entes ao PMM-E, ciclo 3), Chamamento 5/2026",
+      "publicacao": "2026 (data de assinatura no SEI não conferida)",
+      "natureza": "edital oficial (PDF do SEI)",
+      "caminho": "output/aquisicao/normas_incentivos/pmme_ciclo3_gestores_edital_05_2026.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 107010,
+      "sha256": "6cdad2f0863ca9a1a90f3e7f6efd995bf342e51072e42bfcddc1b4cf8db9d6b2",
+      "conferencia": "texto",
+      "ancoras": [
+        "EDITAL N[ºo] 25/2026",
+        "baixa disponibilidade regional e distribui[çc][ãa]o desigual",
+        "identificados com escassez de m[ée]dicos especialistas"
+      ],
+      "ancoras_encontradas": 3
+    },
+    {
+      "arquivo": "manual_implementacao_execucao_pmme_2025.pdf",
+      "url": "https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/guias-e-manuais/2025/manual-de-implementacao-e-execucao-mais-medicos-especialistas.pdf",
+      "ato": "Manual de Implementação e Execução do PMM-E (versão preliminar)",
+      "publicacao": "PDF criado em 30/12/2025",
+      "natureza": "publicação oficial do Ministério da Saúde",
+      "conferencia": "parcial: valores da ajuda de custo lidos na imagem da p. 31 (PDF p. 33)",
+      "caminho": "output/aquisicao/normas_incentivos/manual_implementacao_execucao_pmme_2025.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 27059790,
+      "sha256": "1d2247bd9258bf87e0b48d6c50bd7f6f76c82ab51170a0b9b30ba4edf770a02a",
+      "ancoras": [
+        "hospitais integrantes da rede Ebserh, cuja unidade de aloca[çc][ãa]o esteja situada a mais de 50km"
+      ],
+      "ancoras_encontradas": 1
+    },
+    {
+      "arquivo": "lei_municipal_joao_monlevade_2581_2023.pdf",
+      "url": "https://pmjm.mg.gov.br/legislacao/LEI-MUN-2581-2023-AUXILIO-PECUNIARIO-PROJETO-MAIS-MEDICOS-PARA-O-BRASIL.pdf",
+      "ato": "Lei 2.581/2023 de João Monlevade (MG), auxílio-moradia e alimentação do PMMB",
+      "publicacao": "21/11/2023",
+      "natureza": "ato oficial municipal",
+      "caminho": "output/aquisicao/normas_incentivos/lei_municipal_joao_monlevade_2581_2023.pdf",
+      "data_acesso": "2026-10-26",
+      "bytes": 477666,
+      "sha256": "8530bb633b073160acd1c4756270a78fd6d924566722ca6a203337c4ee38433e",
+      "conferencia": "texto",
+      "ancoras": [
+        "R\\$ 1\\.700,00 \\(mil e setecentos reais\\) mensais",
+        "Projeto Mais M[ée]dicos para o Brasil"
+      ],
+      "ancoras_encontradas": 2
+    }
+  ],
+  "normas_ja_arquivadas_em_data_raw": [
+    {
+      "ato": "Edital SGTES/MS 3/2025 (PMM-E, ciclo 1), DOU 24/07/2025",
+      "caminho": "data/raw/aquisicao/ivs_regra/edital_sgtes_03_2025_dou.pdf",
+      "bytes": 476954,
+      "sha256": "417c82d903ab6cf26ca17a5b50705175de40ccc539f0fd2f1e66a3ad9daf6fb2",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "Tabela 4 - Barema",
+        "mesma UF do seu domic[íi]lio de resid[êe]ncia ou do seu local de nascimento",
+        "categoriza[çc][ãa]o municipal do [ÍI]ndice de Vulnerabilidade Social"
+      ],
+      "ancoras_encontradas": 3
+    },
+    {
+      "ato": "Retificação do Edital SGTES/MS 3/2025, DOU 28/10/2025",
+      "caminho": "data/raw/aquisicao/normas_ivs/edital_sgtes_03_2025_retificacao_dou.html",
+      "bytes": 89150,
+      "sha256": "c5f8a3979f7f82a91676915f2d9ad3db8ebc9f92d6c1ffcf0c38683c57bb67ba",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "aux[íi]lio nas despesas relacionadas [àa] participa[çc][ãa]o nas imers[õo]es presenciais|auxiliar nas despesas relacionadas [àa] participa[çc][ãa]o nas imers[õo]es presenciais",
+        "parcela [úu]nica para cada ciclo de imers[ãa]o"
+      ],
+      "ancoras_encontradas": 2
+    },
+    {
+      "ato": "Edital SGTES/MS 28/2026 (PMM-E, ciclo 3, médicos); o arquivo é PDF",
+      "caminho": "data/raw/aquisicao/ivs_regra/edital_sgtes_06_2026_edital_28_2026_ciclo3.html",
+      "bytes": 224250,
+      "sha256": "eb1e07b44465edc8226efe0743ed1fd8fca97de0f88d5886e249478052c84306",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "acrescido um valor vari[áa]vel de R\\$ 5\\.000,00",
+        "muito alta ou alta vulnerabilidade social ser[ãa]o enquadrados na Faixa 1",
+        "imers[õo]es presenciais",
+        "mesma UF do munic[íi]pio de seu nascimento"
+      ],
+      "ancoras_encontradas": 4
+    },
+    {
+      "ato": "Portaria GM/MS 7.177/2025 (institui o PMM-E)",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_7177_2025_dou.html",
+      "bytes": 99267,
+      "sha256": "df646c6b057935dbcaf1948365de4b729d593b7a9e80d6b765d268976f949ddf",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "As bolsas concedidas poder[ãa]o ser cumuladas com outras atividades remuneradas",
+        "disponibilidade para atua[çc][ãa]o em territ[óo]rio priorit[áa]rio"
+      ],
+      "ancoras_encontradas": 2
+    },
+    {
+      "ato": "Portaria GM/MS 7.266/2025 (Agora Tem Especialistas)",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_7266_2025_dou.html",
+      "bytes": 106659,
+      "sha256": "327cd5a4a023dfa17bfb2f806ec15c38b78748019cedf6ef99309380414d05fb",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "estrat[ée]gias de provimento, aprimoramento, forma[çc][ãa]o, fixa[çc][ãa]o, incentivo e aloca[çc][ãa]o",
+        "II - [áa]reas de dif[íi]cil provimento"
+      ],
+      "ancoras_encontradas": 2
+    },
+    {
+      "ato": "Portaria SGTES/MS 169/2025 (indenizações dos arts. 19-A e 19-B da Lei 12.871)",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_sgtes_ms_169_2025_dou.html",
+      "bytes": 99949,
+      "sha256": "dc38cd9e18aec8f81aaa836fdad0592a60ed97ed41e6924588062cfed10c5d29",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "graduação em medicina financiada pelo Fundo de Financiamento Estudantil - Fies",
+        "IVS maior do que 0,638",
+        "no [âa]mbito do Projeto Mais M[ée]dicos para o Brasil"
+      ],
+      "ancoras_encontradas": 3
+    },
+    {
+      "ato": "Portaria Interministerial MS/MEC 7/2026 (regulamento do PMMB)",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_interm_ms_mec_07_2026_dou.html",
+      "bytes": 141289,
+      "sha256": "5436be051dbc04189b1a7be3bbc856046d0435dfbb3f0346d638988064a18869",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "Faixa 2: munic[íi]pios classificados como de vulnerabilidade social alta",
+        "assegurar o pagamento do aux[íi]lio-moradia e do aux[íi]lio-alimenta[çc][ãa]o"
+      ],
+      "ancoras_encontradas": 2
+    },
+    {
+      "ato": "Portaria GM/MS 9.177/2025 (Mais Médicos Eixos Vínculo e Estratégico)",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_9177_2025_dou.html",
+      "bytes": 114232,
+      "sha256": "38ed660e78d67f92128e1fb526c734b04d55b4fddd10f94122e0ed75dcb17f3c",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "com incentivos adicionais para especialistas com t[íi]tulo de M[ée]dico de Fam[íi]lia e Comunidade",
+        "munic[íi]pios de alta e muito alta vulnerabilidade social"
+      ],
+      "ancoras_encontradas": 2
+    },
+    {
+      "ato": "Portaria GM/MS 3.352/2021 (metodologia do Médicos pelo Brasil)",
+      "caminho": "data/raw/aquisicao/normas_ivs/portaria_gm_ms_3352_2021_dou.html.gz",
+      "bytes": 60598,
+      "sha256": "3b5a06cc1c7c474632f867d615576b65e134f0b868e58614945a06bd793160a8",
+      "origem": "adquirida por a03/a10; ver manifestos a03 e a10",
+      "conferencia": "texto",
+      "ancoras": [
+        "rural remoto",
+        "percentual da popula[çc][ãa]o vulner[áa]vel socioeconomicamente"
+      ],
+      "ancoras_encontradas": 2
+    }
+  ],
+  "nao_preservados": [
+    {
+      "url": "https://bvsms.saude.gov.br/bvs/saudelegis/sgtes/2013/poc0003_19_02_2013.html",
+      "motivo": "HTTP 503 em 26/10/2026; texto lido na reprodução do CONASS"
+    },
+    {
+      "url": "https://bvsms.saude.gov.br/bvs/saudelegis/gm/2011/prt1377_13_06_2011.html",
+      "motivo": "HTTP 503 em 26/10/2026"
+    },
+    {
+      "url": "https://www.gov.br/mec/pt-br/assuntos/noticias/2026/maio/mec-regulamenta-bonificacao-em-selecoes-de-residencia-medica",
+      "motivo": "página anti-robô (captcha); a portaria foi lida no recorte do DOU"
+    },
+    {
+      "url": "https://mecnormas.mec.gov.br/pesquisa/detalhar/11313",
+      "motivo": "conteúdo carregado por JavaScript; sem texto do ato na resposta"
+    }
+  ]
+}
