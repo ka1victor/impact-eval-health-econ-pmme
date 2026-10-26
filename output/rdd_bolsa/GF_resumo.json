@@ -1,0 +1,652 @@
+{
+  "etapa": "GF_gradiente_dentro_das_faixas",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "DESCRITIVO_62_POS_RESULTADO",
+  "data_execucao": "2026-10-26",
+  "script": "scripts/rdd_bolsa/39_gradiente_faixas.py",
+  "protocolo": {
+    "texto": "docs/06_execucao/62_protocolo_gradiente_dentro_das_faixas.md",
+    "sha256": "01995cf4a85aea114ea08585ebc208c941fd8cab780464c89506afa1e9fb842d"
+  },
+  "contraste": "nenhum contraste causal: dentro de cada faixa a bolsa e constante; a inclinacao compara celulas com a mesma bolsa e IVS diferente (descritivo)",
+  "quantidade": "inclinacao da probabilidade de a celula aberta ser preenchida na 1a chamada por 0,100 de IVS, por faixa da bolsa, na faixa inteira e na janela de 0,050 junto ao corte superior",
+  "faixas": [
+    {
+      "faixa": "R$10mil",
+      "bolsa_mil": 10,
+      "lo": null,
+      "hi": 300,
+      "faixa_anunciada": "FAIXA 3",
+      "rotulo": "R$ 10 mil (IVS até 0,300)"
+    },
+    {
+      "faixa": "R$15mil",
+      "bolsa_mil": 15,
+      "lo": 300,
+      "hi": 400,
+      "faixa_anunciada": "FAIXA 2",
+      "rotulo": "R$ 15 mil (IVS de 0,301 a 0,400)"
+    },
+    {
+      "faixa": "R$20mil",
+      "bolsa_mil": 20,
+      "lo": 400,
+      "hi": null,
+      "faixa_anunciada": "FAIXA 1",
+      "rotulo": "R$ 20 mil (IVS acima de 0,400)"
+    }
+  ],
+  "explicacoes": [
+    {
+      "id": "G-a",
+      "nome": "regiao",
+      "explicacao": "IVS maior está mais no Norte e no Nordeste, onde há mais candidatos que ficam perto de casa",
+      "fator": "efeito fixo de macrorregiao; depois, de UF"
+    },
+    {
+      "id": "G-b",
+      "nome": "oferta de candidatos por perto",
+      "explicacao": "mais candidatos do curso por perto da celula, por vaga",
+      "fator": "n de candidatos do mesmo curso e ciclo com origem (G1) na mesma UF e na mesma regiao de saude da celula, por vaga oferecida"
+    },
+    {
+      "id": "G-c",
+      "nome": "composicao das vagas",
+      "explicacao": "celulas de IVS maior sao de cursos, tipos de vaga ou estabelecimentos que preenchem mais",
+      "fator": "efeito fixo de curso x ciclo; celula so de cadastro reserva; tipo e gestao do estabelecimento"
+    },
+    {
+      "id": "G-d",
+      "nome": "porte e hierarquia urbana",
+      "explicacao": "IVS anda junto com porte e posicao na rede urbana",
+      "fator": "log(populacao 2022); REGIC"
+    },
+    {
+      "id": "G-e",
+      "nome": "concorrencia",
+      "explicacao": "menos celulas do mesmo curso competindo pelos mesmos candidatos",
+      "fator": "n de celulas do mesmo curso e ciclo na regiao de saude"
+    },
+    {
+      "id": "G-f",
+      "nome": "outras politicas que variam com o IVS",
+      "explicacao": "regras federais ligadas ao IVS",
+      "fator": "sem fator testavel no nivel da celula; relato da pesquisa documental"
+    }
+  ],
+  "variantes": [
+    {
+      "explicacao": "G-a",
+      "variante": "macrorregiao",
+      "efeitos_fixos": [
+        "macro"
+      ],
+      "covariaveis": [],
+      "principal": false,
+      "descricao": "efeito fixo de macrorregiao"
+    },
+    {
+      "explicacao": "G-a",
+      "variante": "uf",
+      "efeitos_fixos": [
+        "uf"
+      ],
+      "covariaveis": [],
+      "principal": true,
+      "descricao": "efeito fixo de UF"
+    },
+    {
+      "explicacao": "G-b",
+      "variante": "uf",
+      "efeitos_fixos": [],
+      "covariaveis": [
+        "cand_uf_por_vaga"
+      ],
+      "principal": false,
+      "descricao": "candidatos com origem na UF da celula por vaga oferecida na UF"
+    },
+    {
+      "explicacao": "G-b",
+      "variante": "cir",
+      "efeitos_fixos": [],
+      "covariaveis": [
+        "cand_cir_por_vaga"
+      ],
+      "principal": false,
+      "descricao": "candidatos com origem na regiao de saude da celula por vaga oferecida na regiao"
+    },
+    {
+      "explicacao": "G-b",
+      "variante": "uf_e_cir",
+      "efeitos_fixos": [],
+      "covariaveis": [
+        "cand_uf_por_vaga",
+        "cand_cir_por_vaga"
+      ],
+      "principal": true,
+      "descricao": "as duas medidas juntas"
+    },
+    {
+      "explicacao": "G-c",
+      "variante": "curso_x_ciclo",
+      "efeitos_fixos": [
+        "fe_curso_ciclo"
+      ],
+      "covariaveis": [],
+      "principal": false,
+      "descricao": "efeito fixo de curso x ciclo"
+    },
+    {
+      "explicacao": "G-c",
+      "variante": "so_cr",
+      "efeitos_fixos": [],
+      "covariaveis": [
+        "so_cr"
+      ],
+      "principal": false,
+      "descricao": "indicador de celula so de cadastro reserva"
+    },
+    {
+      "explicacao": "G-c",
+      "variante": "tipo_e_gestao",
+      "efeitos_fixos": [
+        "tipo_estab",
+        "gestao"
+      ],
+      "covariaveis": [],
+      "principal": false,
+      "descricao": "tipo e gestao do estabelecimento"
+    },
+    {
+      "explicacao": "G-c",
+      "variante": "todos",
+      "efeitos_fixos": [
+        "fe_curso_ciclo",
+        "tipo_estab",
+        "gestao"
+      ],
+      "covariaveis": [
+        "so_cr"
+      ],
+      "principal": true,
+      "descricao": "os tres juntos"
+    },
+    {
+      "explicacao": "G-d",
+      "variante": "log_pop",
+      "efeitos_fixos": [],
+      "covariaveis": [
+        "log_pop22"
+      ],
+      "principal": false,
+      "descricao": "log da populacao do Censo 2022"
+    },
+    {
+      "explicacao": "G-d",
+      "variante": "regic",
+      "efeitos_fixos": [
+        "regic_cat"
+      ],
+      "covariaveis": [],
+      "principal": false,
+      "descricao": "nivel REGIC 2018 (efeito fixo)"
+    },
+    {
+      "explicacao": "G-d",
+      "variante": "log_pop_e_regic",
+      "efeitos_fixos": [
+        "regic_cat"
+      ],
+      "covariaveis": [
+        "log_pop22"
+      ],
+      "principal": true,
+      "descricao": "os dois juntos"
+    },
+    {
+      "explicacao": "G-e",
+      "variante": "n_celulas_cir",
+      "efeitos_fixos": [],
+      "covariaveis": [
+        "n_conc_cir"
+      ],
+      "principal": true,
+      "descricao": "outras celulas do mesmo curso e ciclo na regiao de saude"
+    },
+    {
+      "explicacao": "TODOS",
+      "variante": "todos_juntos",
+      "efeitos_fixos": [
+        "uf",
+        "fe_curso_ciclo",
+        "tipo_estab",
+        "gestao",
+        "regic_cat"
+      ],
+      "covariaveis": [
+        "cand_uf_por_vaga",
+        "cand_cir_por_vaga",
+        "so_cr",
+        "log_pop22",
+        "n_conc_cir"
+      ],
+      "principal": true,
+      "descricao": "G-a (UF), G-b, G-c, G-d e G-e juntos"
+    }
+  ],
+  "parametros": {
+    "unidade_x_mil": 100,
+    "janela_mil": 50,
+    "bin_mil": 10,
+    "limiar_metade": 0.5,
+    "regra_ligacao_g1": "g1_cpf_nome"
+  },
+  "leitura": {
+    "R$10mil|faixa_inteira": {
+      "leitura": "FATOR_DESCREVE_A_SUBIDA",
+      "inclinacao_original": 0.11850795579738627,
+      "ic_exclui_zero": true,
+      "fatores_que_reduzem_metade": [
+        "G-a"
+      ],
+      "variantes_que_reduzem_metade": [
+        "G-a (macrorregiao)",
+        "G-a (uf)"
+      ],
+      "todos_juntos_fracao": 0.9580034717318057,
+      "todos_juntos_reduz_metade": "sim"
+    },
+    "R$10mil|janela_0050_corte_superior": {
+      "leitura": "SUBIDA_NAO_SE_EXPLICA_COM_OS_DADOS",
+      "inclinacao_original": 0.36084277182352764,
+      "ic_exclui_zero": true,
+      "fatores_que_reduzem_metade": [],
+      "variantes_que_reduzem_metade": [],
+      "todos_juntos_fracao": 0.2836042645023681,
+      "todos_juntos_reduz_metade": "nao"
+    },
+    "R$15mil|faixa_inteira": {
+      "leitura": "FATOR_DESCREVE_A_SUBIDA",
+      "inclinacao_original": 0.07008716920791258,
+      "ic_exclui_zero": false,
+      "fatores_que_reduzem_metade": [
+        "G-a",
+        "G-c"
+      ],
+      "variantes_que_reduzem_metade": [
+        "G-a (macrorregiao)",
+        "G-a (uf)",
+        "G-c (so_cr)",
+        "G-c (todos)"
+      ],
+      "todos_juntos_fracao": 1.7246312947338804,
+      "todos_juntos_reduz_metade": "sim"
+    },
+    "R$15mil|janela_0050_corte_superior": {
+      "leitura": "FATOR_DESCREVE_A_SUBIDA",
+      "inclinacao_original": 0.10711284193290282,
+      "ic_exclui_zero": false,
+      "fatores_que_reduzem_metade": [
+        "G-a",
+        "G-c"
+      ],
+      "variantes_que_reduzem_metade": [
+        "G-a (uf)",
+        "G-c (curso_x_ciclo)",
+        "G-c (so_cr)",
+        "G-c (todos)"
+      ],
+      "todos_juntos_fracao": 1.06805421655015,
+      "todos_juntos_reduz_metade": "sim"
+    },
+    "R$20mil|faixa_inteira": {
+      "leitura": "SEM_SUBIDA",
+      "inclinacao_original": -0.12246443150667208,
+      "ic_exclui_zero": true,
+      "fatores_que_reduzem_metade": []
+    },
+    "R$20mil|janela_0050_corte_superior": {
+      "leitura": "NAO_SE_APLICA",
+      "motivo": "faixa sem corte superior: nao ha janela de 0,050 junto ao corte"
+    }
+  },
+  "G-f": {
+    "situacao": "pesquisa documental em andamento em paralelo; quando existir, fica em docs/auditorias/35_* (nao existia na execucao)",
+    "arquivos": [],
+    "situacao_doc": "em andamento em paralelo; quando existir, fica em `docs/auditorias/35_*` (não existia nesta execução)."
+  },
+  "regras_gf_auditoria_18": [
+    {
+      "texto": "Na faixa de R$ 15 mil (0,301 a 0,400) todo município está na mesma classe de IVS (\"média\"): as regras por classe que a auditoria 18 lista (estrato do IED no cofinanciamento da APS, incentivo de nutrição, priorização de eMulti) não mudam dentro dela.",
+      "secao": "§2.5 e §2.7",
+      "ancora": "código 3 vai de\n  0,301 a 0,400"
+    },
+    {
+      "texto": "Dentro da faixa de R$ 10 mil há um degrau em 0,200 (muito baixa → baixa): o estrato do IED muda no porte 1 (até 20 mil hab.). Dentro da faixa de R$ 20 mil há um degrau em 0,500 (alta → muito alta), nos portes 1 a 3 do IED. São degraus, não uma subida contínua, e nenhum cai nos últimos 0,050 antes de 0,300 ou de 0,400.",
+      "secao": "§2.5",
+      "ancora": "| 1 — até 20 mil | 1 | 2 | 3 | 3 | 4 |"
+    },
+    {
+      "texto": "A priorização de eMulti (Portaria 635/2023) tem cortes em 0,2, 0,3, 0,4 e 0,5: também degraus, em 0,200 dentro da faixa de R$ 10 mil e em 0,500 dentro da de R$ 20 mil.",
+      "secao": "§2.7",
+      "ancora": "0,2/0,3/0,4/0,5"
+    },
+    {
+      "texto": "O único índice contínuo citado é o ICSD do SUS Digital, que não é o IVS e está marcado como não verificado.",
+      "secao": "§2.7",
+      "ancora": "índice ICSD contínuo, sem corte"
+    }
+  ],
+  "info_dados": {
+    "cir": {
+      "codigos": 5606,
+      "regioes": 446,
+      "linhas_ignorado": 28
+    },
+    "G-b": {
+      "regra_ligacao": "g1_cpf_nome (principal do G1)",
+      "candidatos_por_ciclo": {
+        "1": 993,
+        "2": 2179,
+        "3": 2604
+      },
+      "candidatos_sem_origem_por_ciclo": {
+        "1": 75,
+        "2": 108,
+        "3": 109
+      },
+      "linhas_curso_candidato_sem_g1_ou_origem": 306,
+      "candidatos_com_origem_sem_cir": 1,
+      "celulas_sem_cir": 9,
+      "definicao": "n de candidatos (com alguma opcao no curso e ciclo da celula e origem principal conhecida no G1) cujo municipio de origem esta na mesma UF (ou regiao de saude) da celula, dividido pelas vagas oferecidas (imediatas + CR) de todas as celulas do mesmo curso e ciclo nessa UF (ou regiao de saude), a propria celula incluida",
+      "ressalva": "o conjunto de candidatos se forma depois do anuncio da faixa; candidato sem origem conhecida nao entra (a medida e um piso)"
+    },
+    "celulas_por_faixa": {
+      "R$10mil": 2392,
+      "R$15mil": 1730,
+      "R$20mil": 1012
+    },
+    "celulas_por_ciclo": {
+      "1": 1295,
+      "2": 1547,
+      "3": 2292
+    },
+    "ausentes": {
+      "cand_cir_por_vaga": 9,
+      "cand_uf_por_vaga": 0,
+      "fe_curso_ciclo": 0,
+      "gestao": 0,
+      "log_pop22": 0,
+      "macro": 0,
+      "n_conc_cir": 9,
+      "regic_cat": 0,
+      "so_cr": 0,
+      "tipo_estab": 225,
+      "uf": 0
+    },
+    "fontes_dos_atributos": {
+      "base_de_celulas": "adendo §7 do protocolo 48 (A3), via carregar() do script 38 -> carregar_tudo() do 24",
+      "macro_e_uf": "codigo IBGE do municipio da celula (conferido contra a coluna regiao do quadro)",
+      "curso_x_ciclo_e_so_cr": "fe_curso_ciclo e tipo_vaga_imediata do 24",
+      "tipo_estab": "dq_para_gf.tipo_por_celula (cardapio de gestores do ciclo 3; fora dele = ausente)",
+      "gestao": "dq_para_gf.gestao_por_celula (quadro da 1a chamada)",
+      "log_pop22": "Censo 2022 (a06), via 24",
+      "regic": "REGIC 2018 (IBGE), via 29",
+      "n_conc_cir": "script 32 (protocolo 58): outras celulas do mesmo curso e ciclo na CIR",
+      "G-b": "G1 (origem) + escolhas do 12 + quadro do 12 + CIR do TabNet (via 29)"
+    }
+  },
+  "decisoes": [
+    "Base: celulas abertas do A3 (adendo §7 do protocolo 48), ciclos 1-3 juntos, lidas por carregar() do script 38 (que chama carregar_tudo() do 24); faixa pelo IVS 2010 oficial (s <= 0,300; 0,301-0,400; > 0,400), conferida contra a faixa anunciada do quadro.",
+    "Modelo: MQO da celula preenchida (>= 1 alocado na 1a chamada) em IVS/0,100 com efeito fixo de ciclo; EP CR1 agrupado por municipio; IC e p pela normal (como a rdd_lib).",
+    "Janela de 0,050 junto ao corte superior: 0,250 < IVS <= 0,300 e 0,350 < IVS <= 0,400 (|IVS - corte| < 0,050, como a janela da RDD); a faixa de R$ 20 mil nao tem corte superior (linha NAO_SE_APLICA).",
+    "Fatores: indicadores para as categoricas (1a categoria em ordem = base; indicador colinear descartado de forma deterministica e anotado); continuas em nivel. Cada fator e comparado com a inclinacao original na mesma amostra (celulas com o fator definido).",
+    "G-a: macrorregiao e UF pelo codigo IBGE (conferidas contra a regiao do quadro). Variante principal (e a usada em 'todos juntos'): UF.",
+    "G-b: candidatos com alguma opcao no curso e ciclo, origem principal do G1 (regra g1_cpf_nome) na mesma UF ou CIR da celula, divididos pelas vagas oferecidas (imediatas + CR) do mesmo curso e ciclo naquela UF ou CIR (a propria celula incluida). 'Por vaga oferecida' lido como razao do mercado, nao da celula.",
+    "G-c: efeito fixo de curso x ciclo; indicador de celula so de cadastro reserva; tipo (cardapio do ciclo 3) e gestao (quadro da 1a chamada) do estabelecimento, como no D-b do script 38.",
+    "G-d: log(populacao 2022) e nivel REGIC 2018 como efeito fixo. G-e: outras celulas do mesmo curso e ciclo na CIR (exposicao 'mesmo_curso' do script 32).",
+    "Fracao da subida levada = 1 - depois / original na mesma amostra, so com original > 0; reduz pela metade = fracao >= 0,5. Leitura do §3 por faixa x trecho; 'todos juntos' e relatado, mas nao conta como fator.",
+    "BKY entre todas as inclinacoes do preenchimento (originais e depois de cada fator); balancos e medias nao entram.",
+    "Balanco (fora do protocolo, descritivo): cada fator continuo ou indicador no lugar do preenchimento, mesmo modelo, para mostrar se o proprio fator anda junto com o IVS dentro da faixa.",
+    "G-f: relato. A pesquisa documental do mesmo dia roda em paralelo; o script procura docs/auditorias/35_* na execucao e registra o que achou no resumo."
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/62_protocolo_gradiente_dentro_das_faixas.md",
+      "sha256": "01995cf4a85aea114ea08585ebc208c941fd8cab780464c89506afa1e9fb842d",
+      "bytes": 3611,
+      "papel": "protocolo 62 (congelado antes de rodar)",
+      "fonte": "docs/06_execucao",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "texto",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/exp_rdd_crua.png",
+      "sha256": "1289e91dc8648cf79e10fea4d376747f821ba31bb6bd5ef1d2ec1ed968aac036",
+      "bytes": 286855,
+      "papel": "figura de dados crus que motivou o protocolo (so citada)",
+      "fonte": "deck banca 2",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "imagem",
+      "chaves": "-",
+      "filtros": "nao lida pelo script"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
+      "sha256": "76ee988cd019325555ffc3600600067d269606e44985f5692f119cab28e50b50",
+      "bytes": 147454,
+      "papel": "script 38 (carregar() importado, nao alterado)",
+      "fonte": "scripts/rdd_bolsa",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "codigo",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "celulas do quadro da 1a chamada (A3) e vagas do G-b",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "5135 celulas",
+      "unidade": "celula x ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "celulas sem IVS fora da analise"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "municipios do quadro (conferencias do 24 e do 38)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "municipios do quadro",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14",
+      "bytes": 246282,
+      "papel": "U (todos os municipios), via 24",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "-",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/populacao_censo2022_municipios.csv",
+      "sha256": "b51fc6cf27a49fd559415280fa7cfb7e89c28f92125720b280b9455e7f36c96b",
+      "bytes": 215790,
+      "papel": "populacao 2022 (G-d)",
+      "fonte": "IBGE (a06)",
+      "data_referencia": "Censo 2022",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge_6d",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos: cursos de cada candidato (G-b)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "candidato x opcao",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "so agregado, em memoria"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "municipio de origem dos candidatos (G-b)",
+      "fonte": "portao G1",
+      "data_referencia": "competencia de referencia do ciclo",
+      "cobertura": "-",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra g1_cpf_nome; so agregado"
+    },
+    {
+      "caminho": "output/aquisicao/quadro_vagas_consolidado.parquet",
+      "sha256": "47cf61e4018b17759a088b320757b0269557c808721089a2490a3ce830b642db",
+      "bytes": 535176,
+      "papel": "gestao do estabelecimento (G-c), via 38",
+      "fonte": "aquisicao (02)",
+      "data_referencia": "quadros 1a chamada",
+      "cobertura": "-",
+      "unidade": "linha do quadro",
+      "chaves": "ciclo, co_cnes_7d",
+      "filtros": "OFERTA_VAGAS, chamada 1"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo3_gestores_quadro_vagas_original.xlsx",
+      "sha256": "3c77f7dc86f02267b9db0df0ccb97ffe84fcdc756c300f95b355e73d65cbe6f1",
+      "bytes": 986492,
+      "papel": "tipo do estabelecimento (G-c), via 38 e 29",
+      "fonte": "MS",
+      "data_referencia": "ciclo 3",
+      "cobertura": "-",
+      "unidade": "planilha",
+      "chaves": "CNES",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "CNES pre lido pelo carregar() do 38 (nao usado nos fatores do 62)",
+      "fonte": "a09",
+      "data_referencia": "202406-202506",
+      "cobertura": "Brasil",
+      "unidade": "municipio x grupo x mes",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "so 202406-202506"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "concorrencia (G-e), via script 32",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "celula",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "celulas com IVS e CIR"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "regiao de saude (G-b, G-e)",
+      "fonte": "DATASUS/TabNet",
+      "data_referencia": "base corrente",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx",
+      "sha256": "f1d29395964e4827d8294d27b57bcffb36fc47918f91b8ecee4efdbac1cda03e",
+      "bytes": 491476,
+      "papel": "hierarquia urbana (G-d)",
+      "fonte": "IBGE",
+      "data_referencia": "2018",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "codmun",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md",
+      "sha256": "9afe8cc10cc28edcd29016c7578140e28eaafc41713cea8cda6704adb6a66eb9",
+      "bytes": 42237,
+      "papel": "regras de IVS (G-f)",
+      "fonte": "auditoria 18",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "texto",
+      "chaves": "-",
+      "filtros": "-"
+    }
+  ],
+  "validacoes": {
+    "linhas": 200,
+    "executado": 75,
+    "sem_estimativa": 0,
+    "nao_se_aplica": 1
+  },
+  "saidas": {
+    "GF_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/GF_estimativas.csv",
+      "sha256": "f87a23057478ee4bd7132f89a41619ddb7aa5cb2d5ff7766e19d960ba8419b1c"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/GF_figuras/GF_medias_por_ivs.png",
+        "como_ler": "Cada ponto é a fração de células abertas preenchidas na 1ª chamada numa faixa de IVS de 0,010 (tamanho = número de células). A linha laranja é a reta da faixa inteira; a azul tracejada tem a inclinação que sobra depois de comparar só células parecidas em região (UF), candidatos por perto, composição, porte e concorrência; as duas passam pelo ponto médio da faixa. A linha preta pontilhada é a reta só nos últimos 0,050 antes do corte. Dentro de uma faixa a bolsa é a mesma.",
+        "detalhe_tecnico": "Médias de GF_estimativas.csv (tipo_linha = media_bin; faixas de 0,010 fechadas à direita, como as faixas da bolsa). Retas: inclinação de tipo_linha = inclinacao (ORIGINAL e TODOS), MQO com efeito fixo de ciclo, ancoradas na média de IVS e de preenchimento da amostra (faixa inteira ou janela). A reta 'todos juntos' é estimada nas células com todos os fatores definidos.",
+        "sha256": "7e12cac3890c20fab08db79bb6265f23a0ac7ec84cc130bfd91d30ef018e9073"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/GF_figuras/GF_inclinacao_fatores.png",
+        "como_ler": "Cada par de barras mostra quanto o preenchimento sobe a cada 0,100 de IVS dentro da faixa: a barra cinza é a subida original (na mesma amostra) e a azul, a subida depois de comparar só células iguais naquele fator (mesma amostra). Se a azul fica com metade ou menos da cinza, a subida anda junto com aquele fator. Traço = IC 95%.",
+        "detalhe_tecnico": "Inclinação em p.p. por 0,100 de IVS (MQO, efeito fixo de ciclo, CR1 por município). Barra cinza = inclinacao_original_mesma_amostra; barra azul = inclinacao depois do fator (GF_estimativas.csv). G-b, G-c e G-d na variante principal (todos os itens).",
+        "sha256": "6cd1d57171740ced2525a4876b3bb50b4d99faeb04444691f3035e07a9facc09"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/GF_figuras/GF_inclinacao_fatores_janela.png",
+        "como_ler": "Igual à figura anterior, mas só com as células dos últimos 0,050 de IVS antes do corte (0,251 a 0,300 e 0,351 a 0,400), o trecho que a RDD usa do lado de baixo. A faixa de R$ 20 mil não tem corte de cima.",
+        "detalhe_tecnico": "Como GF_inclinacao_fatores.png, com janela = janela_0050_corte_superior.",
+        "sha256": "65c2c787142cf18e4833b03c49df9fa4887cb3b7d08686e9bc55d0ee3db931d2"
+      }
+    ]
+  },
+  "linguagem": "descritivo e pos-resultado: diz com o que a subida anda junto, nao por que"
+}
