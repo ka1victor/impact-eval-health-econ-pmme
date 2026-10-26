@@ -8,6 +8,22 @@
 
 ---
 
+## 26/10/2026 — Protocolo 60, parte A: equivalência no preenchimento (H1)
+
+Motivo: execução da parte A do protocolo 60 (TOST de A3 e N1 com as margens do protocolo), só com as estimativas
+gravadas pelos scripts 23 e 24.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57j_resultados_equivalencia_H1.md`](06_execucao/57j_resultados_equivalencia_H1.md) | resultados da parte A, gerado por `scripts/rdd_bolsa/36_equivalencia_H1.py --atualizar-doc` a partir de `output/rdd_bolsa/EQ_*` |
+| `scripts/rdd_bolsa/36_equivalencia_H1.py` | TOST, Holm entre as primárias, IC honesto onde gravado, figura e doc 57j; no `run_all.py` depois do 34 |
+| `output/rdd_bolsa/EQ_estimativas.csv`, `EQ_resumo.json`, `EQ_figuras/EQ_tost_ic90.png` | saídas `EMPIRICO`, estatuto `PROTOCOLO_60_POS_RESULTADO` |
+| `tests/test_equivalencia_H1.py` | testes do script 36 e do doc 57j (com caso sintético em memória) |
+
+---
+
 ## 26/10/2026 — Protocolo 60 (equivalência em H1 e oferta local depois da chegada)
 
 Motivo: perguntas do autor ("dá para dizer que não mudou nada?"; "aumentaram as horas, mas não os especialistas no município?"), congelado antes de calcular.

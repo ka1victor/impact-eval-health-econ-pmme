@@ -72,6 +72,7 @@
     ".venv/bin/python scripts/rdd_bolsa/27_producao_extensoes.py",
     ".venv/bin/python scripts/rdd_bolsa/35_comparacao_alternativa_P3P4.py",
     ".venv/bin/python scripts/rdd_bolsa/34_sensibilidade_honestdid.py",
+    ".venv/bin/python scripts/rdd_bolsa/36_equivalencia_H1.py",
     ".venv/bin/python scripts/rdd_bolsa/15_sintese_E8.py",
     ".venv/bin/python scripts/rdd_bolsa/09b_conferir_sinal.py",
     ".venv/bin/python scripts/rdd_bolsa/09_gerar_relatorio_pdf.py",

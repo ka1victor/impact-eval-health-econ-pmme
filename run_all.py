@@ -170,6 +170,9 @@ STEPS = [
     # do 27 e do 28; no run_all os dois só conferem as saídas e o doc 57h contra o resumo (ver ARGUMENTOS).
     ROOT / "scripts" / "rdd_bolsa" / "35_comparacao_alternativa_P3P4.py",
     ROOT / "scripts" / "rdd_bolsa" / "34_sensibilidade_honestdid.py",
+    # Protocolo 60, parte A (pós-resultado): TOST de equivalência de A3 e N1. Lê só as estimativas gravadas pelo 23
+    # (N_estimativas) e pelo 24 (NA_estimativas) e confere-as contra o doc 57; não reestima nada.
+    ROOT / "scripts" / "rdd_bolsa" / "36_equivalencia_H1.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.

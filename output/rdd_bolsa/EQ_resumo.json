@@ -1,0 +1,566 @@
+{
+  "etapa": "EQ_equivalencia_H1",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "PROTOCOLO_60_POS_RESULTADO",
+  "gerador": "scripts/rdd_bolsa/36_equivalencia_H1.py",
+  "data_execucao": "2026-10-26",
+  "protocolo": {
+    "texto": "docs/06_execucao/60_protocolo_equivalencia_e_oferta_local.md",
+    "secao": "Parte A",
+    "sha256_texto": "4c7cb1d096805a01189f611e3d54ef3a97fb4f9030055af1f688625fa505699b",
+    "sha256_texto_congelado": "4c7cb1d096805a01189f611e3d54ef3a97fb4f9030055af1f688625fa505699b",
+    "commit_congelamento": "f47624f"
+  },
+  "margens": {
+    "A3": {
+      "valor": 0.1,
+      "unidade": "fração (±10 p.p.)"
+    },
+    "N1": {
+      "fracao_da_media_abaixo": 0.25,
+      "media_abaixo": "gravada pelo bloco, mesma amostra"
+    }
+  },
+  "metodo": {
+    "teste": "TOST, dois testes unilaterais a 5% (IC 90%)",
+    "alfa_unilateral": 0.05,
+    "z": 1.6448536269514722,
+    "p_aumento": "Φ((τ̂ − m + B)/EP)",
+    "p_queda": "Φ((−m − τ̂ + B)/EP)",
+    "ic90": "τ̂ ∓ (B + z·EP)",
+    "margem_minima": "|τ̂| + B + z·EP",
+    "B": "0 no IC convencional; viés máximo gravado no IC honesto",
+    "holm": "entre A3-emp-123 e N1-emp-123, em p_aumento, p_queda e p_tost",
+    "secundarias": "sem ajuste"
+  },
+  "conferencia": {
+    "doc57": [
+      {
+        "linha": "A3-300-123",
+        "campo": "tau",
+        "doc57": -8.4,
+        "lido": -8.394018,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-123",
+        "campo": "ic95_inf",
+        "doc57": -18.5,
+        "lido": -18.510784,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-123",
+        "campo": "ic95_sup",
+        "doc57": 1.7,
+        "lido": 1.722748,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-123",
+        "campo": "maior_aumento",
+        "doc57": 1.7,
+        "lido": 1.722748,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-123",
+        "campo": "mde",
+        "doc57": 14.5,
+        "lido": 14.452788,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-123",
+        "campo": "media_abaixo",
+        "doc57": 33.3,
+        "lido": 33.305085,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-c1",
+        "campo": "tau",
+        "doc57": 0.9,
+        "lido": 0.912075,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-c1",
+        "campo": "ic95_inf",
+        "doc57": -23.5,
+        "lido": -23.498257,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-c1",
+        "campo": "ic95_sup",
+        "doc57": 25.3,
+        "lido": 25.322407,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-c1",
+        "campo": "maior_aumento",
+        "doc57": 25.3,
+        "lido": 25.322407,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-c1",
+        "campo": "mde",
+        "doc57": 34.9,
+        "lido": 34.872544,
+        "confere": true
+      },
+      {
+        "linha": "A3-300-c1",
+        "campo": "media_abaixo",
+        "doc57": 26.0,
+        "lido": 26.041667,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-123",
+        "campo": "tau",
+        "doc57": -1.3,
+        "lido": -1.318283,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-123",
+        "campo": "ic95_inf",
+        "doc57": -14.0,
+        "lido": -13.971955,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-123",
+        "campo": "ic95_sup",
+        "doc57": 11.3,
+        "lido": 11.335389,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-123",
+        "campo": "maior_aumento",
+        "doc57": 11.3,
+        "lido": 11.335389,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-123",
+        "campo": "mde",
+        "doc57": 18.1,
+        "lido": 18.077007,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-123",
+        "campo": "media_abaixo",
+        "doc57": 36.8,
+        "lido": 36.787565,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-c1",
+        "campo": "tau",
+        "doc57": -12.4,
+        "lido": -12.446579,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-c1",
+        "campo": "ic95_inf",
+        "doc57": -37.5,
+        "lido": -37.496795,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-c1",
+        "campo": "ic95_sup",
+        "doc57": 12.6,
+        "lido": 12.603637,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-c1",
+        "campo": "maior_aumento",
+        "doc57": 12.6,
+        "lido": 12.603637,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-c1",
+        "campo": "mde",
+        "doc57": 35.8,
+        "lido": 35.78668,
+        "confere": true
+      },
+      {
+        "linha": "A3-400-c1",
+        "campo": "media_abaixo",
+        "doc57": 37.2,
+        "lido": 37.246964,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-123",
+        "campo": "tau",
+        "doc57": -4.9,
+        "lido": -4.859048,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-123",
+        "campo": "ic95_inf",
+        "doc57": -12.9,
+        "lido": -12.907869,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-123",
+        "campo": "ic95_sup",
+        "doc57": 3.2,
+        "lido": 3.189774,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-123",
+        "campo": "maior_aumento",
+        "doc57": 3.2,
+        "lido": 3.189774,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-123",
+        "campo": "mde",
+        "doc57": 11.5,
+        "lido": 11.498528,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-123",
+        "campo": "media_abaixo",
+        "doc57": 34.7,
+        "lido": 34.682377,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-c1",
+        "campo": "tau",
+        "doc57": -3.3,
+        "lido": -3.311023,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-c1",
+        "campo": "ic95_inf",
+        "doc57": -20.9,
+        "lido": -20.857767,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-c1",
+        "campo": "ic95_sup",
+        "doc57": 14.2,
+        "lido": 14.23572,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-c1",
+        "campo": "maior_aumento",
+        "doc57": 14.2,
+        "lido": 14.23572,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-c1",
+        "campo": "mde",
+        "doc57": 25.1,
+        "lido": 25.067238,
+        "confere": true
+      },
+      {
+        "linha": "A3-emp-c1",
+        "campo": "media_abaixo",
+        "doc57": 31.2,
+        "lido": 31.214953,
+        "confere": true
+      },
+      {
+        "linha": "N1-emp-123",
+        "campo": "tau",
+        "doc57": -0.76,
+        "lido": -0.755868,
+        "confere": true
+      },
+      {
+        "linha": "N1-emp-123",
+        "campo": "ic95_inf",
+        "doc57": -1.44,
+        "lido": -1.442171,
+        "confere": true
+      },
+      {
+        "linha": "N1-emp-123",
+        "campo": "ic95_sup",
+        "doc57": -0.07,
+        "lido": -0.069565,
+        "confere": true
+      },
+      {
+        "linha": "N1-emp-123",
+        "campo": "maior_aumento",
+        "doc57": -0.07,
+        "lido": -0.069565,
+        "confere": true
+      },
+      {
+        "linha": "N1-emp-123",
+        "campo": "mde",
+        "doc57": 0.98,
+        "lido": 0.980451,
+        "confere": true
+      }
+    ],
+    "coerencia_interna": [
+      {
+        "linha": "A3-emp-123",
+        "dif_ic95_normal": 8.326672684688674e-17,
+        "dif_p_normal": 2.7755575615628914e-17
+      },
+      {
+        "linha": "N1-emp-123",
+        "dif_ic95_normal": 4.163336342344337e-17,
+        "dif_p_normal": 9.020562075079397e-17
+      },
+      {
+        "linha": "N1-emp-123",
+        "ic": "honesto_M_x1",
+        "dif_ic_honesto_reconstruido": 0.0,
+        "dif_tau": 2.9976021664879227e-15,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-emp-123",
+        "ic": "honesto_M_x0.5",
+        "dif_ic_honesto_reconstruido": 0.0,
+        "dif_tau": 2.9976021664879227e-15,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-emp-123",
+        "ic": "honesto_M_x2",
+        "dif_ic_honesto_reconstruido": 2.842170943040401e-14,
+        "dif_tau": 2.9976021664879227e-15,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-emp-123",
+        "ic": "honesto_pos_resultado",
+        "dif_ic_honesto_reconstruido": 0.0,
+        "dif_tau": 2.9976021664879227e-15,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "A3-300-123",
+        "dif_ic95_normal": 1.1102230246251565e-16,
+        "dif_p_normal": 2.0816681711721685e-16
+      },
+      {
+        "linha": "A3-400-123",
+        "dif_ic95_normal": 8.326672684688674e-17,
+        "dif_p_normal": 4.440892098500626e-16
+      },
+      {
+        "linha": "A3-300-c1",
+        "dif_ic95_normal": 2.220446049250313e-16,
+        "dif_p_normal": 3.3306690738754696e-16
+      },
+      {
+        "linha": "A3-400-c1",
+        "dif_ic95_normal": 1.1102230246251565e-16,
+        "dif_p_normal": 0.0
+      },
+      {
+        "linha": "A3-emp-c1",
+        "dif_ic95_normal": 5.551115123125783e-17,
+        "dif_p_normal": 4.440892098500626e-16
+      },
+      {
+        "linha": "N1-300-123",
+        "dif_ic95_normal": 2.7755575615628914e-17,
+        "dif_p_normal": 4.85722573273506e-17
+      },
+      {
+        "linha": "N1-300-123",
+        "ic": "honesto_M_x1",
+        "dif_ic_honesto_reconstruido": 1.4210854715202004e-14,
+        "dif_tau": 1.532107773982716e-14,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-300-123",
+        "ic": "honesto_M_x0.5",
+        "dif_ic_honesto_reconstruido": 0.0,
+        "dif_tau": 1.532107773982716e-14,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-300-123",
+        "ic": "honesto_M_x2",
+        "dif_ic_honesto_reconstruido": 0.0,
+        "dif_tau": 1.532107773982716e-14,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-300-123",
+        "ic": "honesto_pos_resultado",
+        "dif_ic_honesto_reconstruido": 0.0,
+        "dif_tau": 1.532107773982716e-14,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-400-123",
+        "dif_ic95_normal": 0.0,
+        "dif_p_normal": 0.0
+      },
+      {
+        "linha": "N1-400-123",
+        "ic": "honesto_M_x1",
+        "dif_ic_honesto_reconstruido": 7.105427357601002e-15,
+        "dif_tau": 4.801714581503802e-15,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-400-123",
+        "ic": "honesto_M_x0.5",
+        "dif_ic_honesto_reconstruido": 7.105427357601002e-15,
+        "dif_tau": 4.801714581503802e-15,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-400-123",
+        "ic": "honesto_M_x2",
+        "dif_ic_honesto_reconstruido": 1.4210854715202004e-14,
+        "dif_tau": 4.801714581503802e-15,
+        "dif_media": 0.0
+      },
+      {
+        "linha": "N1-400-123",
+        "ic": "honesto_pos_resultado",
+        "dif_ic_honesto_reconstruido": 0.0,
+        "dif_tau": 4.801714581503802e-15,
+        "dif_media": 0.0
+      }
+    ]
+  },
+  "primarias": {
+    "A3-emp-123": {
+      "tau": -0.0485904753910461,
+      "ep": 0.0410661713891896,
+      "margem": 0.1,
+      "ic90_inf": -0.1161383163455654,
+      "ic90_sup": 0.018957365563473196,
+      "p_aumento": 0.0001482618418574862,
+      "p_queda": 0.10530854515525412,
+      "p_tost": 0.10530854515525412,
+      "p_holm_aumento": 0.00021722030653017742,
+      "p_holm_queda": 0.21061709031050824,
+      "p_holm_tost": 0.21061709031050824,
+      "rejeita_aumento": true,
+      "rejeita_queda": false,
+      "equivalente": false,
+      "leitura_codigo": "SO_AUMENTO",
+      "margem_minima": 0.1161383163455654
+    },
+    "N1-emp-123": {
+      "tau": -0.7558679548614217,
+      "ep": 0.3501611258212572,
+      "margem": 0.5390625,
+      "ic90_inf": -1.3318317526859274,
+      "ic90_sup": -0.17990415703691598,
+      "p_aumento": 0.00010861015326508871,
+      "p_queda": 0.7320942305063854,
+      "p_tost": 0.7320942305063854,
+      "p_holm_aumento": 0.00021722030653017742,
+      "p_holm_queda": 0.7320942305063854,
+      "p_holm_tost": 0.7320942305063854,
+      "rejeita_aumento": true,
+      "rejeita_queda": false,
+      "equivalente": false,
+      "leitura_codigo": "SO_AUMENTO",
+      "margem_minima": 1.3318317526859274
+    }
+  },
+  "contagem_leituras": {
+    "convencional": {
+      "INCONCLUSIVO": 2,
+      "SO_AUMENTO": 7
+    },
+    "honesto": {
+      "INCONCLUSIVO": 12
+    }
+  },
+  "linhas": 21,
+  "saidas": {
+    "output/rdd_bolsa/EQ_estimativas.csv": "9d0272f2e6cf4e4958e044f8e7fe0087afd628e223af5ce47cf1709707b74c8d"
+  },
+  "figuras": [
+    {
+      "arquivo": "output/rdd_bolsa/EQ_figuras/EQ_tost_ic90.png",
+      "sha256": "980e755c9591f02aa49688b2e5e15577f4b4ecd5384900d52b0990c7b05559be"
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/60_protocolo_equivalencia_e_oferta_local.md",
+      "sha256": "4c7cb1d096805a01189f611e3d54ef3a97fb4f9030055af1f688625fa505699b",
+      "papel": "protocolo congelado (parte A)"
+    },
+    {
+      "caminho": "docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md",
+      "sha256": "85f11f309e033516fd28b742e46cf678fd01e2e4f787f37028496759029449c9",
+      "papel": "referências de magnitude (§7)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/NA_estimativas.csv",
+      "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374",
+      "papel": "A3 (script 24, adendo §7 do protocolo 48)"
+    },
+    {
+      "caminho": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed",
+      "papel": "N1 S-a e IC honesto (script 23)"
+    },
+    {
+      "caminho": "docs/06_execucao/57_sintese_perguntas_reformuladas.md",
+      "sha256": "7597de65704e52e07765b006a62845e344d6e3b1328d0d7ec831973ab4d99449",
+      "papel": "conferência dos números citados (§4.1 e §4.2)"
+    }
+  ],
+  "decisoes": [
+    {
+      "item": "secundárias de A3",
+      "decisao": "\"A3 por corte e no ciclo 1\" = as cinco outras linhas de preenchimento da tabela do doc 57, §4.2: ciclos 1–3 por corte (0,300 e 0,400) e ciclo 1 por corte e empilhado"
+    },
+    {
+      "item": "conferência de N1",
+      "decisao": "o doc 57, §4.2 não traz N1; a conferência de N1 usa a linha do §4.1 (mesma síntese), e a de A3 o §4.2"
+    },
+    {
+      "item": "Holm",
+      "decisao": "entre as duas primárias, aplicado ao p de cada teste unilateral e ao p do TOST; a decisão de equivalência é a mesma pelas duas vias (conferido)"
+    },
+    {
+      "item": "IC honesto",
+      "decisao": "TOST honesto unilateral com o viés máximo gravado: IC 90% = τ̂ ∓ (B + 1,645·EP); a variante do protocolo 48 (M da regra do E6) é a principal, as outras três ficam como registro; sem Holm (A3 não tem IC honesto)"
+    },
+    {
+      "item": "caso só-queda",
+      "decisao": "não listado no protocolo; lido como o espelho do só-aumento"
+    }
+  ],
+  "contraste": "pacote do corte (bolsa anunciada maior e outras regras federais nos mesmos cortes); não é o incentivo marginal isolado nem a participação no PMM-E",
+  "integridade": "lê só estimativas gravadas; nada reestimado, simulado ou imputado; o arquivo local de IVS não é lido; nenhum CNES lido; saídas anteriores não regravadas"
+}
