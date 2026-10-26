@@ -447,10 +447,10 @@ parada antes dos retratos WIP.
 
 | # | Item | Estado | Próximo passo |
 |---|---|---|---|
-| 1 | Auditoria 38 do adendo 48b (`HI_*`, doc 57n) | interrompida, nada salvo | relançar; até lá, H1 principal marcada "em auditoria" |
-| 2 | Adendo 48c (capitais e UF; script 41, `HC_*`, doc 57o) | **WIP**: rodou, sem testes próprios, sem auditoria, sem leitura revisada | escrever `tests/` do 48c, conferir o doc 57o contra o protocolo, auditar |
-| 3 | Adendo 52c (escolha com tipo de vaga do ciclo 2 de 13/02) | rodado (doc 57p), **sem auditoria** | auditar |
-| 4 | Seleção pelo tipo de vaga (seção 2.12, canal 2) | **aberto** | adendo novo: limites de Lee, "ter vaga imediata" como outcome, balanço dentro da amostra imediata; congelar antes de rodar |
+| 1 | Auditoria 38 do adendo 48b (`HI_*`, doc 57n) | feito: aprovado com correções de texto; nenhum número mudou | tirar "em auditoria" do slide 8 |
+| 2 | Adendo 48c (capitais e UF; script 41, `HC_*`, doc 57o) | feito: testes, pipeline e auditoria 42 (aprovado com correções; nenhum número mudou). Pendente: arquivar a fonte bruta do IBGE (capitais/regiões), que exige novo download autorizado pelo autor | — |
+| 3 | Adendo 52c (escolha com tipo de vaga do ciclo 2 de 13/02) | feito: auditoria 41 (aprovado com correções; nenhum número mudou); pendência do achado 1 na §2.16 | — |
+| 4 | Seleção pelo tipo de vaga (seção 2.12, canal 2) | adendo 48f congelado, em execução | adendo novo: limites de Lee, "ter vaga imediata" como outcome, balanço dentro da amostra imediata; congelar antes de rodar |
 | 5 | H1 com covariáveis pré-determinadas (doc 63, §2 e §3) | proposto | congelar adendo com o conjunto fixo; balanço de cada controle no corte; relatar cada um isolado e todos juntos |
 | 6 | Controles a adquirir (doc 63, §3): escola médica e residência (e-MEC, CNRM), beneficiários ANS, PIB e receita municipal (só controle, nunca running variable), homicídios (SIM), leitos e estrutura se o CNES do repo não tiver | não adquiridos | scripts de aquisição com manifesto e hash, como os a0x |
 | 7 | Heterogeneidade por porte (estrato da atenção primária muda em 0,300 só para portes 2 e 3; auditoria 18) | oferecido, **não aprovado pelo autor** | aguardar decisão |

@@ -5,6 +5,7 @@
 > `adendo` de `HC_resumo.json`). Especificação principal da H1: [`48b`](48b_adendo_H1_vagas_imediatas.md) (com a §7:
 > no ciclo 2, tipo de vaga do quadro de 13/02/2026).<br>
 > **Origem:** a [auditoria 36](../auditorias/36_auditoria_dados_H1.md) viu capitais concentradas logo abaixo de 0,300.<br>
+> **Auditoria:** [42](../auditorias/42_auditoria_capitais_uf.md) (recálculo independente; correções só de texto).<br>
 > **Estatuto:** `ADENDO_48C_POS_RESULTADO`. Robustez **pós-resultado**; não muda a especificação principal. O contraste é o pacote
 > do corte (incentivo marginal anunciado e outras regras no mesmo corte), nunca a participação no PMM-E nem o Agora
 > Tem Especialistas. Toda linha de `HC_estimativas.csv` tem `natureza_dos_dados = EMPIRICO`.<br>
@@ -16,15 +17,15 @@
 ## 1. Resposta curta
 
 <!-- HC:resposta_curta:inicio -->
-**Sim, pela leitura pré-registrada:** a queda em 0,300 anda junto com a presença de capitais (ou região) logo abaixo do corte, que é desbalanceamento de poucos municípios grandes, e não com a bolsa. É robustez pós-resultado, com poucos municípios perto do corte.
+**Sim, pela leitura pré-registrada:** a queda em 0,300 anda junto com a presença de capitais (ou região) logo abaixo do corte, que é desbalanceamento de poucos municípios grandes, e não com a bolsa. É robustez pós-resultado, com poucos municípios perto do corte. Na regra, "e não com a bolsa" quer dizer que o corte não separa a bolsa da composição de capitais; não quer dizer que a bolsa não tenha efeito.
 
 - **Capitais no corte.** Na janela de 0,050 em torno de 0,300 há 13 capitais abaixo (bolsa menor) e 6 acima. A menos de 0,010 do corte: São Paulo (0,291), Goiânia (0,291), Natal (0,292), Brasília (0,294), todas abaixo. Na amostra da H1, a fração de municípios que são capital é 29,9 p.p. menor logo acima do corte (bolsa maior) do que logo abaixo (IC [−57,1; −2,8]); por célula, a fração de células em capital é 38,7 p.p. menor logo acima do corte (bolsa maior) do que logo abaixo (IC [−71,2; −6,1]). Ser capital é anterior à bolsa: o corte não é balanceado em capital.
-- **Região.** Nordeste: a fração de municípios do Nordeste é 47,7 p.p. menor logo acima do corte (bolsa maior) do que logo abaixo (IC [−82,6; −12,8]), embora na janela inteira de 0,050 sejam 26% abaixo e 39% acima (sem reta). A reta local pesa os municípios colados no corte, e logo abaixo estão capitais do Nordeste; Norte: o salto no corte tem IC que contém zero (+18,4 p.p. por município, IC [−6,0; +42,7]).
+- **Região.** Nordeste: a fração de municípios do Nordeste é 47,7 p.p. menor logo acima do corte (bolsa maior) do que logo abaixo (IC [−82,6; −12,8]), embora na janela inteira de 0,050 sejam 26% abaixo e 39% acima (sem reta). A reta local pesa os municípios colados no corte: a menos de 0,010, são 60% abaixo (20 municípios × ciclo) e 19% acima (21); dos 12 municípios × ciclo do Nordeste logo abaixo, 2 são capital, então o desbalanceamento de região não se resume às capitais; Norte: o salto no corte tem IC que contém zero (+18,4 p.p. por município, IC [−6,0; +42,7]).
 - **HI-1: célula com vaga imediata preenchida na 1ª chamada** (salto em p.p.): sem ajuste −3,7 [−21,3; +13,9]; + dummy de capital +2,6 [−15,7; +21,0]; + efeito fixo de UF +4,0 [−11,0; +19,0]; sem as capitais +2,9 [−16,3; +22,1].
 - **HI-2: médicos alocados em células com vaga imediata, por município** (salto em médicos): sem ajuste −1,13 [−2,15; −0,10]; + dummy de capital −0,83 [−1,87; +0,21]; + efeito fixo de UF −0,32 [−1,31; +0,66]; sem as capitais −0,30 [−1,22; +0,62].
 - **0,400:** relatar como está (C-1 não mostra salto em capital nem em região na amostra da H1; nenhuma linha da H1 (HI-1, HI-2) tem IC que exclui zero sem ajuste: não há salto a levar).
 
-**Para dizer na banca:** Logo abaixo de 0,300 (a menos de 0,010) estão 4 capitais (São Paulo, Goiânia, Natal, Brasília) e nenhuma logo acima; o corte não é balanceado em capital. A única queda das vagas imediatas que se distinguia de zero (HI-2, −1,13 médico por município) deixa de se distinguir quando se compara capital com capital, municípios da mesma UF, ou quando se tiram as capitais; a HI-1 já não se distinguia de zero. A queda anda junto com essas poucas capitais grandes, e não com a bolsa. É robustez pós-resultado, com poucos municípios perto do corte.
+**Para dizer na banca:** Logo abaixo de 0,300 (a menos de 0,010) estão 4 capitais (São Paulo, Goiânia, Natal, Brasília) e nenhuma logo acima; o corte não é balanceado em capital. A única queda das vagas imediatas que se distinguia de zero sem correção (HI-2, −1,13 médico por município; no 48b, depois do Holm, ela já não rejeitava zero: p de Holm 0,126) deixa de se distinguir quando se compara capital com capital, municípios da mesma UF, ou quando se tiram as capitais; a HI-1 já não se distinguia de zero. A queda anda junto com essas poucas capitais grandes: o corte não separa a bolsa delas. Isso não mostra que a bolsa não tenha efeito. É robustez pós-resultado, com poucos municípios perto do corte.
 <!-- HC:resposta_curta:fim -->
 
 ## 2. O que se estima
@@ -122,6 +123,21 @@ Médias cruas na janela de 0,050, sem reta (só para ler o salto):
 | 0,400 | quadro inteiro | célula | 772 / 471 | 19% → 0% | 67% → 67% | 17% → 13% |
 <!-- HC:composicao:fim -->
 
+Médias cruas na janela de 0,010, sem reta (os municípios que mais pesam na reta local; acrescentada pela auditoria 42):
+
+<!-- HC:composicao_estreita:inicio -->
+| Corte | Amostra | Unidade | Linhas abaixo / acima | Capital (abaixo → acima) | Nordeste | Norte |
+|---|---|---|---|---|---|---|
+| 0,300 | H1 | município × ciclo | 20 / 21 | 30% → 0% | 60% → 19% | 0% → 14% |
+| 0,300 | H1 | célula | 74 / 40 | 49% → 0% | 51% → 18% | 0% → 10% |
+| 0,300 | quadro inteiro | município × ciclo | 41 / 34 | 17% → 0% | 39% → 15% | 5% → 9% |
+| 0,300 | quadro inteiro | célula | 183 / 132 | 53% → 0% | 49% → 15% | 1% → 6% |
+| 0,400 | H1 | município × ciclo | 31 / 23 | 10% → 0% | 55% → 65% | 26% → 22% |
+| 0,400 | H1 | célula | 87 / 45 | 15% → 0% | 55% → 47% | 15% → 31% |
+| 0,400 | quadro inteiro | município × ciclo | 51 / 48 | 6% → 0% | 63% → 65% | 18% → 17% |
+| 0,400 | quadro inteiro | célula | 209 / 122 | 35% → 0% | 72% → 56% | 10% → 25% |
+<!-- HC:composicao_estreita:fim -->
+
 ## 4. C-2 a C-4 — H1 com dummy de capital, efeito fixo de UF e sem capitais
 
 "Base" é a H1 do 48b sem controle extra, refeita aqui com a mesma base e o mesmo estimador. HI-1 em p.p.; HI-2 em médicos alocados por município. O coeficiente de capital é a diferença média entre capital e não capital, dos dois lados, na mesma unidade da medida.
@@ -207,7 +223,7 @@ Regra aplicada a cada corte. "C-1 mostra salto": alguma linha de balanço na amo
 | base de células e de municípios × ciclo igual à da auditoria 36 (`a36_celulas.csv`, `a36_municipios.csv`) | sim (o script para se não for) |
 | linhas já calculadas pela auditoria 36 (estimador próprio) | 26 linhas iguais; maior diferença 5.6e-14 |
 | A3, N1 S-a e taxa S-e sem ajuste contra o pipeline (`NA_estimativas.csv`, `N_estimativas.csv`) | 6 linhas iguais; maior diferença 3.6e-14 |
-| HI-1 e HI-2 sem ajuste contra `HI_estimativas.csv` (script 40) | **pendente**: HI_estimativas.csv (script 40) não estava no branch nesta execução |
+| HI-1 e HI-2 sem ajuste contra `HI_estimativas.csv` (script 40) | conferido: 4 linhas (HI-1 e HI-2 × 2 cortes) iguais a `output/rdd_bolsa/HI_estimativas.csv`; maior diferença 3.0e-14 |
 | lista de capitais do IBGE igual à digitada na auditoria 36 | sim |
 | municípios marcados CAPITAL no quadro do ciclo 3 estão na lista do IBGE | sim (22 marcados) |
 | capitais com célula em algum quadro | 27 |
@@ -251,6 +267,7 @@ Regra aplicada a cada corte. "C-1 mostra salto": alguma linha de balanço na amo
 
 <!-- HC:limites:inicio -->
 - **Balanço de capital em 0,300: violado.** A fração de capitais salta no corte (4 das 4 linhas de capital do C-1 com IC que exclui zero). Pelo 48c, isso é registrado como **limite da RDD em 0,300**.
+- **A regra do §2 olha só o IC.** Em 0,300, a HI-2 sem ajuste é −1,13 [−2,15; −0,10], com p = 0,032: um IC que exclui zero por pouco passa a conter zero com qualquer perda de precisão ou recuo do ponto. Com os ajustes: + dummy de capital −0,83 [−1,87; +0,21], 73% do ponto sem ajuste; + efeito fixo de UF −0,32 [−1,31; +0,66], 29% do ponto sem ajuste; sem as capitais −0,30 [−1,22; +0,62], 27% do ponto sem ajuste. Perder a significância não é o mesmo que o salto ir a zero; com a dummy de capital, mais da metade do ponto continua lá.
 - **Pós-resultado.** O adendo foi escrito depois de a auditoria 36 ver o desbalanceamento de capitais e o efeito da dummy de capital nas medidas antigas. Estas linhas são robustez; não substituem a especificação principal (48b) nem autorizam escolher, depois de ver, a variante que mais agrada.
 - **Poucos municípios.** Na janela de 0,050 há poucas capitais de cada lado; a estimativa no corte se apoia nos municípios mais próximos, e cada capital tem muitas células. Um município a mais ou a menos muda o número.
 - **Capital e região não são a explicação de mecanismo.** Ser capital junta porte, rede de serviços, residência médica e atratividade. "Anda junto com capitais" não diz qual desses atributos importa, nem que a bolsa não tenha efeito: diz que o corte não separa a bolsa da composição de capitais.

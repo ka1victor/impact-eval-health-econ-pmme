@@ -64,6 +64,7 @@ CADEIA = [
     RDD / "38_diagnostico_queda_0300.py",  # protocolo 61: diagnóstico da queda em 0,300; reproduz N_, NA_ e ND_
     RDD / "39_gradiente_faixas.py",  # protocolo 62: gradiente dentro das faixas; importa carregar() do 38
     RDD / "40_h1_vagas_imediatas.py",  # adendo 48b: H1 só com vagas imediatas; reproduz N_, NA_ e ND_
+    RDD / "41_h1_capitais_uf.py",  # adendo 48c: capitais e UF; portões contra HI_ (40), NA_ (24), N_ (23)
     RDD / "37_oferta_local_chegada.py",  # protocolo 60, parte B: importa o 22; lê K_D2, a09, a16 e a X1
     RDD / "43_oferta_local_corte.py",  # protocolo 64: importa o 37; reproduz o F3.1 do E7 e confere V com OL_
     RDD / "44_controles_localizacao_medicos.py",  # adendo 48d: portões contra HI_ (40) e OC_ (43)
@@ -249,9 +250,14 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             RDD / "43_oferta_local_corte.py": [RDD / "37_oferta_local_chegada.py", RDD / "22_chegada_pmme_evento.py",
                                                RDD / "14_estimar_E7_dird_cnes.py", RDD / "21_producao_dird.py",
                                                RDD / "12_construir_outcomes_funil.py", A09, A16],
-            # Adendo 48d (44): portões contra HI_ (40) e OC_ (43); importa o 19 (CIR), o 23 e o 37. Importa também
-            # funções de leitura do 41 (adendo 48c, ainda fora do pipeline por falta de testes e auditoria).
+            # Adendo 48c (41): portões contra HI_ (40), NA_ (24) e N_ (23); lê o a08 e a referência do IBGE gravada.
+            RDD / "41_h1_capitais_uf.py": [RDD / "40_h1_vagas_imediatas.py", RDD / "24_abertura_vagas_selecao.py",
+                                           RDD / "23_estimar_contagem_vagas.py",
+                                           AQ / "a08_adquirir_ivs_2010_oficial.py"],
+            # Adendo 48d (44): portões contra HI_ (40) e OC_ (43); importa o 19 (CIR), o 23 e o 37, e a leitura da
+            # referência do IBGE do 41 (adendo 48c, auditoria 42).
             RDD / "44_controles_localizacao_medicos.py": [RDD / "40_h1_vagas_imediatas.py",
+                                                          RDD / "41_h1_capitais_uf.py",
                                                           RDD / "43_oferta_local_corte.py",
                                                           RDD / "37_oferta_local_chegada.py",
                                                           RDD / "23_estimar_contagem_vagas.py"],

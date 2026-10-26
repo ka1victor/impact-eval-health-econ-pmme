@@ -1,0 +1,119 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "rotulo": "AUDITORIA_42_RECALCULO",
+  "script": "scripts/auditoria_H1/a42_auditoria_capitais_uf.py",
+  "referencia": {
+    "sha256_csv": "e4c9ffb63c0eb14b4ddaae64550639d620e0cdd8caef7c793b2ee280963d1bd9",
+    "sha256_manifesto_saida": "e4c9ffb63c0eb14b4ddaae64550639d620e0cdd8caef7c793b2ee280963d1bd9",
+    "csv_igual_ao_manifesto": true,
+    "ufs": 27,
+    "capitais": 27,
+    "regic_ufs_com_uma_regiao": 27,
+    "regiao_igual_regic": 27,
+    "capitais_existem_na_regic": 27,
+    "ufs_no_quadro_c2": 27,
+    "regiao_igual_quadro_c2_nas_ufs_do_quadro": 27,
+    "regiao_igual_primeiro_digito": 27
+  },
+  "base": {
+    "celulas": {
+      "1": 1295,
+      "2": 1547,
+      "3": 2293
+    },
+    "celulas_sem_ivs": 1,
+    "c2_celulas_no_quadro_13fev": 1547,
+    "c2_vi_pre_diferente_do_bruto_13fev": 0,
+    "uf_do_quadro_diferente_do_codigo": 0,
+    "municipios_ciclo": {
+      "1": 368,
+      "2": 454,
+      "3": 747
+    }
+  },
+  "capitais_na_janela": [
+    {
+      "corte": 300,
+      "abaixo": 13,
+      "acima": 6,
+      "a_menos_de_0010_abaixo": 4,
+      "a_menos_de_0010_acima": 0
+    },
+    {
+      "corte": 400,
+      "abaixo": 3,
+      "acima": 0,
+      "a_menos_de_0010_abaixo": 1,
+      "a_menos_de_0010_acima": 0
+    }
+  ],
+  "leitura_refeita": {
+    "0.300": {
+      "c1": true,
+      "a_levar": [
+        "HI-2"
+      ],
+      "c2": true,
+      "leitura": "ANDA_JUNTO_COM_CAPITAIS_OU_REGIAO"
+    },
+    "0.400": {
+      "c1": false,
+      "a_levar": [],
+      "c2": false,
+      "leitura": "RELATAR_COMO_ESTA"
+    }
+  },
+  "leitura_gravada": {
+    "0.300": "ANDA_JUNTO_COM_CAPITAIS_OU_REGIAO",
+    "0.400": "RELATAR_COMO_ESTA"
+  },
+  "portao_HI": [
+    {
+      "medida": "HI-1",
+      "corte": "0.300",
+      "dif_tau": 1.0630385460785874e-14,
+      "dif_ep": 3.219646771412954e-15,
+      "p_holm_48b": 1.0
+    },
+    {
+      "medida": "HI-2",
+      "corte": "0.300",
+      "dif_tau": 1.6653345369377348e-14,
+      "dif_ep": 1.7763568394002505e-15,
+      "p_holm_48b": 0.1264831941245729
+    },
+    {
+      "medida": "HI-1",
+      "corte": "0.400",
+      "dif_tau": 3.49442697000768e-14,
+      "dif_ep": 1.6792123247455493e-15,
+      "p_holm_48b": 1.0
+    },
+    {
+      "medida": "HI-2",
+      "corte": "0.400",
+      "dif_tau": 1.176836406102666e-14,
+      "dif_ep": 5.551115123125783e-17,
+      "p_holm_48b": 1.0
+    }
+  ],
+  "maior_diferenca_contra_HC": {
+    "tau": 6.80566714095221e-14,
+    "ep": 1.765254609153999e-14,
+    "p_valor": 4.1233683134578314e-13
+  },
+  "maior_diferenca_q_bky": 0.0,
+  "contagens_iguais": true,
+  "linhas_recalculadas": 42,
+  "arquivo_ivs_errado_aberto": false,
+  "entradas": {
+    "output/auditoria_H1/a36_celulas.csv": "9921cf98f32563de9e54c9630831fdf913cd2923944c33044cb8effce1aaf225",
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+    "output/aquisicao/ibge_capitais_uf_regiao.csv": "e4c9ffb63c0eb14b4ddaae64550639d620e0cdd8caef7c793b2ee280963d1bd9",
+    "output/aquisicao/manifesto_ibge_capitais_uf_regiao.json": "d1b75dc54078312f1df5e3ff09314ca58438eacffde3e66c73412d5dbbe34637",
+    "data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx": "f1d29395964e4827d8294d27b57bcffb36fc47918f91b8ecee4efdbac1cda03e",
+    "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8",
+    "output/rdd_bolsa/HC_estimativas.csv": "74c3fd87b90ad1a8eb2dff50291cb646c1ce916ed4008a760f15555d7b347762",
+    "output/rdd_bolsa/HI_estimativas.csv": "7f5d0008790949a2acf3590c0aa17f5c44be9e4100e8bbbf6e0688795c26fe76"
+  }
+}
