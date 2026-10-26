@@ -60,6 +60,7 @@ CADEIA = [
     RDD / "35_comparacao_alternativa_P3P4.py",  # protocolo 59, parte B: só verificar (cache privado)
     RDD / "34_sensibilidade_honestdid.py",  # protocolo 59, parte A: só verificar (hashes e doc 57h)
     RDD / "36_equivalencia_H1.py",  # protocolo 60, parte A: TOST a partir de N_ (23) e NA_ (24)
+    RDD / "38_diagnostico_queda_0300.py",  # protocolo 61: diagnóstico da queda em 0,300; reproduz N_, NA_ e ND_
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
     RDD / "09_gerar_relatorio_pdf.py",  # lê E1 a E9 e a síntese E8
@@ -209,6 +210,14 @@ class TestCadeiaRddBolsa(unittest.TestCase):
             # Protocolo 60, parte A: o 36 lê só N_estimativas (23) e NA_estimativas (24).
             RDD / "36_equivalencia_H1.py": [RDD / "23_estimar_contagem_vagas.py",
                                             RDD / "24_abertura_vagas_selecao.py"],
+            # Protocolo 61: o 38 reproduz N_ (23) e NA_ (24), lê os outcomes (12), o CNES pré (a09), o a08 e importa
+            # funções do 29 e do 32.
+            RDD / "38_diagnostico_queda_0300.py": [RDD / "23_estimar_contagem_vagas.py",
+                                                   RDD / "24_abertura_vagas_selecao.py",
+                                                   RDD / "12_construir_outcomes_funil.py", A09,
+                                                   AQ / "a08_adquirir_ivs_2010_oficial.py",
+                                                   RDD / "29_determinantes_abertura.py",
+                                                   RDD / "32_realocacao_bolsa.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],

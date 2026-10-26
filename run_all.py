@@ -173,6 +173,11 @@ STEPS = [
     # Protocolo 60, parte A (pós-resultado): TOST de equivalência de A3 e N1. Lê só as estimativas gravadas pelo 23
     # (N_estimativas) e pelo 24 (NA_estimativas) e confere-as contra o doc 57; não reestima nada.
     ROOT / "scripts" / "rdd_bolsa" / "36_equivalencia_H1.py",
+    # Protocolo 61 (diagnóstico pós-resultado): por que o preenchimento cai em 0,300 (D-a a D-g). Reproduz Q1–Q3 e
+    # para se não baterem com N_ (23), NA_ (24) e ND_estimativas (23b, saída versionada, fora do run_all); lê os
+    # outcomes do 12, o CNES pré (a09), o G1 versionado, a CIR, o REGIC e o cardápio (funções do 29) e as exposições
+    # de concorrência do 32.
+    ROOT / "scripts" / "rdd_bolsa" / "38_diagnostico_queda_0300.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.

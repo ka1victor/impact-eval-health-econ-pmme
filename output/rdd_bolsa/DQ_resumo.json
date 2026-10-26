@@ -1,0 +1,726 @@
+{
+  "etapa": "DQ_diagnostico_queda_0300",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "DIAGNOSTICO_61_POS_RESULTADO",
+  "data_execucao": "2026-10-26",
+  "script": "scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
+  "protocolo": {
+    "texto": "docs/06_execucao/61_protocolo_diagnostico_queda_0300.md",
+    "sha256": "0d3185defeab87ea1a7fbc2ed7dc71e27323fe02aa3fbb80eba767d3ef2f4e5b"
+  },
+  "contraste": "pacote do corte: anúncio de +R$ 5 mil por mês na bolsa (0,300: R$ 10 mil -> 15 mil; 0,400: R$ 15 mil -> 20 mil) mais as outras regras federais que mudam nos mesmos cortes (protocolo §13, auditoria 18); não é efeito da participação no PMM-E nem do Agora Tem Especialistas",
+  "salto": "tau = lado com bolsa maior (s > c) menos lado com bolsa menor; o corte pertence ao lado inferior",
+  "nao_muda": "nada aqui vira especificacao principal nem muda o Holm ou a leitura dos protocolos 40 e 48",
+  "quantidades": {
+    "Q1": "N1 com o controle das vagas oferecidas (S-a), ciclos 1-3 juntos",
+    "Q2": "taxa N1 / vagas oferecidas, ponderada pelas vagas (S-e), ciclos 1-3 juntos",
+    "Q3": "A3: celula aberta preenchida, efeitos fixos de curso x ciclo e tipo de vaga, ciclos 1-3 juntos"
+  },
+  "explicacoes": [
+    {
+      "id": "D-a",
+      "nome": "acaso",
+      "teste": "cortes placebo de 0,250 a 0,450 (passo 0,005, sem os pontos a menos de h = 0,050 dos cortes reais), mesma especificacao de Q1-Q3; p por posto e fracao com |t| > 1,96; randomizacao local de Fisher (999 permutacoes, semente 20261026) em +-0,010 e +-0,020",
+      "apoio": "p por posto > 0,10"
+    },
+    {
+      "id": "D-b",
+      "nome": "composicao das vagas",
+      "teste": "(i) salto da composicao por ciclo; (ii) Q3 com efeitos fixos de curso x ciclo, indicador de so CR, tipo e gestao do estabelecimento contra Q3 sem eles; (iii) Q2 sem as celulas so de CR",
+      "apoio": "o salto cai pela metade ou mais ao fixar a composicao"
+    },
+    {
+      "id": "D-c",
+      "nome": "funil",
+      "teste": "Q3 = P(candidato de 1a opcao) e P(preenchida | candidato); motivo de nao alocacao onde a base distingue",
+      "apoio": "a queda se concentra numa das partes"
+    },
+    {
+      "id": "D-d",
+      "nome": "concorrencia",
+      "teste": "celulas do mesmo curso e ciclo na regiao de saude e na UF e a bolsa delas: salto no corte e Q3 controlando por elas",
+      "apoio": "as medidas saltam no corte e controlar por elas reduz o salto"
+    },
+    {
+      "id": "D-e",
+      "nome": "medicos por perto",
+      "teste": "balanco pre-determinado: vinculos pre das CBO do curso na regiao de saude por 10 mil hab.; distancia a origem mais proxima entre os candidatos (G1); REGIC",
+      "apoio": "as medidas saltam no corte e controlar por elas reduz o salto"
+    },
+    {
+      "id": "D-f",
+      "nome": "ciclo 2 e cadastro reserva",
+      "teste": "ciclo 2: Q2 com e sem as celulas so de CR; Q2 so com vagas imediatas; n de celulas so de CR de cada lado; regra arquivada do ciclo 2",
+      "apoio": "a queda do ciclo 2 some sem as celulas so de CR"
+    },
+    {
+      "id": "D-g",
+      "nome": "outras politicas em 0,300",
+      "teste": "sem teste causal; balanco de generalistas pre e de vinculos SUS totais pre por 10 mil hab.; regras da auditoria 18 que mudam em 0,300 e nao em 0,400",
+      "apoio": "— (relato)"
+    }
+  ],
+  "parametros": {
+    "h_mil": 50,
+    "placebos_protocolo_mil": [
+      250,
+      350,
+      450
+    ],
+    "placebos_complementares_mil": [
+      250,
+      255,
+      260,
+      265,
+      270,
+      275,
+      280,
+      285,
+      315,
+      320,
+      325,
+      330,
+      335,
+      340,
+      345,
+      350,
+      355,
+      360,
+      365,
+      370,
+      375,
+      380,
+      385,
+      415,
+      420,
+      425,
+      430,
+      435,
+      440,
+      445,
+      450
+    ],
+    "janelas_fisher_mil": [
+      10,
+      20
+    ],
+    "n_permutacoes": 999,
+    "semente": 20261026,
+    "limiar_metade": 0.5,
+    "cnes_pre": [
+      "202406",
+      "202506"
+    ]
+  },
+  "leitura": {
+    "descritivas_que_reduzem_metade": [
+      "D-b",
+      "D-c",
+      "D-d",
+      "D-f"
+    ],
+    "D-a": {
+      "p_posto_por_q": {
+        "Q1": 0.25,
+        "Q2": 0.25,
+        "Q3": 0.25
+      },
+      "p_minimo_possivel": 0.25,
+      "n_placebos": 3,
+      "apoia": true,
+      "ressalva": "com a grade do protocolo sobram 3 cortes placebo (0,250; 0,350; 0,450): o menor p por posto possivel e 1/4 = 0,25 > 0,10, entao o criterio 'p por posto > 0,10' e cumprido por construcao e nao informa se o salto se destaca",
+      "complementar_fora_do_protocolo": {
+        "Q1": {
+          "p_posto": 0.03125,
+          "n_placebos": 31
+        },
+        "Q2": {
+          "p_posto": 0.03125,
+          "n_placebos": 31
+        },
+        "Q3": {
+          "p_posto": 0.1875,
+          "n_placebos": 31
+        }
+      }
+    },
+    "fixar_reduz_metade_em_0300": {
+      "D-b (composicao)": [
+        "Q2"
+      ],
+      "D-b (sem_celulas_so_cr)": [
+        "Q3"
+      ],
+      "D-c (funil)": [
+        "Q1",
+        "Q3"
+      ],
+      "D-d (concorrencia)": [
+        "Q2",
+        "Q3"
+      ]
+    },
+    "D-c": {
+      "contribuicoes": {
+        "candidatos": -0.07774052390687407,
+        "preencher_dado_candidato": -0.0318171134097078,
+        "preencher_sem_candidato": -0.03540842509084997
+      },
+      "maior": "candidatos",
+      "concentra": false,
+      "regra": "concentra se a maior contribuicao em modulo for >= 2/3 da soma dos modulos"
+    },
+    "D-f": {
+      "tau_q2_ciclo2_todas": -0.27837295045451116,
+      "tau_q2_ciclo2_sem_so_cr": -0.129183421034074,
+      "apoia": true,
+      "regra": "some = o salto do ciclo 2 sem as celulas so de CR cai pela metade ou mais"
+    },
+    "leitura_principal": "ACASO_MAIS_POUCOS_MUNICIPIOS",
+    "regra": "§3 do protocolo 61: D-a apoia -> acaso mais poucos municipios; senao, D-b a D-f que reduzem o salto pela metade ou mais -> explicacoes candidatas, descritivas; senao, nao ha explicacao"
+  },
+  "decomposicao_funil": {
+    "0.300": {
+      "contribuicoes": {
+        "candidatos": -0.07774052390687407,
+        "preencher_dado_candidato": -0.0318171134097078,
+        "preencher_sem_candidato": -0.03540842509084997
+      },
+      "residuo": -0.015957050195445105,
+      "salto_P_F_sem_ef": -0.16092311260287695
+    },
+    "0.400": {
+      "contribuicoes": {
+        "candidatos": -0.0023553169045694503,
+        "preencher_dado_candidato": -0.028502726204466068,
+        "preencher_sem_candidato": 0.013349958256708329
+      },
+      "residuo": -0.0029986497577748072,
+      "salto_P_F_sem_ef": -0.020506734610101995
+    }
+  },
+  "regra_ciclo2": {
+    "pagina_do_chamamento": {
+      "arquivo": "data/raw/aquisicao/ivs_regra/edital_sgtes_01_2026_ciclo2.html",
+      "sha256": "3ca76e6fceef05881e22b18828bedd6f584d484287b22985fb8c63ec45ca4061",
+      "ocorrencias_de_cadastro_reserva_ou_remanejamento": 0,
+      "lista_o_edital_3_2026_como_anexo": true
+    },
+    "texto_do_edital_3_2026_arquivado": [],
+    "nota_do_quadro_original": {
+      "aba": "Quadro-Vagas",
+      "linha": 13,
+      "coluna": 1,
+      "texto": "Obs. (*) O cadastro reserva corresponde aos municípios que não possuem vagas para preenchimento imediato, mas que, em caso de desocupações, poderão ter vagas ofertadas em chamadas futuras enquanto durar a vigência do edital.",
+      "arquivo": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_original.xlsx",
+      "sha256": "cddad12d958963e29d3b9912814990c90a9220ba724f4657d9181cc1b9e3e049"
+    },
+    "cabecalho_desclassificados_c2": [
+      "APRIMORAMENTO",
+      "CPF_MASC",
+      "NOME"
+    ],
+    "conclusao": "o texto do Edital no 3/2026 (ciclo 2) nao esta arquivado em data/raw: a copia e so a pagina do Chamamento SGTES/MS no 1/2026, que lista o edital como anexo e nao menciona cadastro reserva; nao ha item do edital a citar. A regra arquivada mais proxima e a observacao do quadro de vagas original do ciclo 2, citada aqui"
+  },
+  "regras_auditoria_18": [
+    {
+      "regra": "acrescimo de 20% no teto de emendas e de parcelas de custeio da APS (PAP) e da MAC para IVS maior que 0,3 (Portarias 3.283/2024 e seguintes, exercicios 2024-2027)",
+      "em_0300": "sim",
+      "em_0400": "nao",
+      "fronteira": "a mesma da bolsa (0,300 fica de fora)",
+      "secao": "§2.6",
+      "ancora": "**Só 0,300.** Não há regra em 0,400."
+    },
+    {
+      "regra": "estrato do IED do cofinanciamento federal da APS (Portaria 3.493/2024): muda em 0,300 so nos portes 2 e 3; em 0,400, nos portes 1, 2 e 4 (o porte 3, de 50 a 100 mil hab., so muda em 0,300)",
+      "em_0300": "sim (portes 2 e 3)",
+      "em_0400": "sim (portes 1, 2 e 4)",
+      "fronteira": "a mesma da bolsa",
+      "secao": "§2.5",
+      "ancora": "Em **0,300** (baixa → média): porte 2 e 3"
+    },
+    {
+      "regra": "texto da Portaria 752/2023 (teto de vagas do PMMB em coparticipacao), incentivo de nutricao (5.721/2024) e priorizacao de eMulti (635/2023)",
+      "em_0300": "sim",
+      "em_0400": "sim",
+      "fronteira": "oposta a da bolsa (classe de cima)",
+      "secao": "§2.1, §2.7 e §3",
+      "ancora": "texto da 752 (10% → 40% de teto de coparticipação, fronteira oposta)"
+    }
+  ],
+  "info_dados": {
+    "concorrencia": {
+      "fonte": "script 32 (protocolo 58): exposicoes(mercado, 'mesmo_curso')",
+      "exclusoes_do_universo_32": {
+        "sem_ivs": {
+          "3": 1
+        },
+        "sem_cir": {
+          "1": 6,
+          "2": 2,
+          "3": 1
+        },
+        "sem_cov": {}
+      },
+      "n_ge": "n de concorrentes com bolsa igual ou maior = n_conc x (fracao maior + fracao igual); zero concorrentes e contagem zero verdadeira"
+    },
+    "gestao": {
+      "fonte": "output/aquisicao/quadro_vagas_consolidado.parquet",
+      "regra": "tipo_gestao do quadro OFERTA_VAGAS da 1a chamada do ciclo, por (ciclo, CNES); CNES com gestoes diferentes no mesmo ciclo fica ausente",
+      "cnes_com_conflito": 0,
+      "celulas_sem_gestao": 0
+    },
+    "tipo_estabelecimento": {
+      "fonte": "cardapio de gestores do ciclo 3 (lido pela funcao do script 29), por CNES",
+      "cobertura_por_ciclo": {
+        "1": 0.9142857142857143,
+        "2": 0.9431157078215902,
+        "3": 0.9886561954624782
+      },
+      "celulas_sem_tipo": 225,
+      "motivo_ausente": "CNES fora do cardapio do ciclo 3: tipo ausente, a celula sai das linhas que usam o tipo (contada), nunca recebe tipo por suposicao"
+    },
+    "distancia_origem": {
+      "regra_ligacao": "g1_cpf_nome (principal do G1)",
+      "candidatos_com_origem_por_ciclo": {
+        "1": 918,
+        "2": 2071,
+        "3": 2495
+      },
+      "celulas_sem_distancia": 0,
+      "definicao": "minimo, entre os candidatos com alguma opcao no curso e ciclo da celula, da distancia de circulo maximo entre o centroide do municipio da celula e o do municipio de origem principal",
+      "ressalva": "o conjunto de candidatos se forma depois do anuncio da faixa: a medida e de vizinhanca de medicos interessados, nao estritamente pre-determinada"
+    },
+    "vinculos_regiao": {
+      "cnes": {
+        "competencias": [
+          "202406",
+          "202407",
+          "202408",
+          "202409",
+          "202410",
+          "202411",
+          "202412",
+          "202501",
+          "202502",
+          "202503",
+          "202504",
+          "202505",
+          "202506"
+        ],
+        "n_competencias": 13,
+        "municipios": 5565,
+        "grupos": [
+          "alvo_pmme",
+          "todos_medicos",
+          "cbo_225120",
+          "cbo_225121",
+          "cbo_225148",
+          "cbo_225151",
+          "cbo_225165",
+          "cbo_225220",
+          "cbo_225225",
+          "cbo_225250",
+          "cbo_225255",
+          "cbo_225275",
+          "cbo_225280",
+          "cbo_225290",
+          "cbo_225305",
+          "cbo_225310",
+          "cbo_225320",
+          "cbo_225325",
+          "cbo_225330"
+        ],
+        "medida": "media mensal de n_vinculos (a09) no municipio x grupo de CBO, 202406-202506",
+        "municipio_grupo_sem_competencias_completas": 0
+      },
+      "cursos_fora_da_ponte": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "celulas_sem_medida": 805,
+      "medida": "soma das CBO do curso (ponte curso-CBO do a09), media mensal de n_vinculos 202406-202506, na regiao de saude (CIR do TabNet), por 10 mil hab. do Censo 2022"
+    },
+    "motivos": {
+      "celulas_em_que_a_contagem_de_1a_opcao_das_escolhas_difere_do_quadro": 0,
+      "ordem": [
+        "sem_vaga_imediata",
+        "desconsiderada_pela_gestao (so ciclo 1)",
+        "candidato_alocado_em_outra_celula",
+        "candidatos_inelegiveis (so ciclo 1)",
+        "outro_nao_distinguido"
+      ],
+      "o_que_a_base_nao_distingue": {
+        "nota_insuficiente_contra_a_2a_opcao": "nao distinguivel: a base nao registra o motivo da rejeicao por celula; no mecanismo reconstruido pelo G2 quem pos a celula em 1a opcao tem prioridade sobre quem a pos em 2a, entao esse motivo nao e esperado numa celula com vaga imediata",
+        "desclassificacao_ciclos_2_e_3": "nao distinguivel: as listas de escolhas dos ciclos 2 e 3 trazem so os classificados; a aba 'Desclassificados' do resultado do ciclo 2 tem so curso, CPF mascarado e nome, sem as opcoes de celula (cabecalho conferido)",
+        "desistencia_ou_nao_homologacao": "nao distinguivel na 1a chamada dos ciclos 2 e 3"
+      }
+    },
+    "indices_composicao": {
+      "regra": "para cada categoria (curso x ciclo; tipo do estabelecimento x ciclo; gestao x ciclo), a fracao de celulas preenchidas entre as celulas com |IVS - corte| >= 0,050 nos dois cortes (fora de qualquer janela); categoria sem celula fora das janelas fica ausente",
+      "celulas_fora_das_janelas": 1776
+    },
+    "cnes_sus": {
+      "competencias": [
+        "202406",
+        "202407",
+        "202408",
+        "202409",
+        "202410",
+        "202411",
+        "202412",
+        "202501",
+        "202502",
+        "202503",
+        "202504",
+        "202505",
+        "202506"
+      ],
+      "n_competencias": 13,
+      "municipios_sem_media_completa": 0,
+      "medida": "media mensal de n_vinculos_sus do grupo todos_medicos (a09), 202406-202506"
+    },
+    "cir": {
+      "codigos": 5606,
+      "regioes": 446,
+      "linhas_ignorado": 28
+    },
+    "regic": {
+      "municipios": 5570,
+      "niveis": {
+        "1 METROPOLE": 214,
+        "2 CAPITAL REGIONAL": 308,
+        "3 CENTRO SUB REGIONAL": 496,
+        "4 CENTRO DE ZONA": 437,
+        "5 CENTRO LOCAL": 4115
+      },
+      "regra": "nivel = 1o digito de 'Hierarquia - grupo' (1 Metropole ... 5 Centro Local); a marca 'Integrante de Arranjo Populacional' nao entra"
+    },
+    "celulas_por_ciclo": {
+      "1": 1295,
+      "2": 1547,
+      "3": 2292
+    },
+    "municipios_por_ciclo": {
+      "1": 368,
+      "2": 454,
+      "3": 747
+    }
+  },
+  "decisoes": [
+    "Q1, Q2 e Q3 por corte, ciclos 1-3 juntos (intercepto e inclinacoes por ciclo, salto comum, CR1 por municipio), com as funcoes do ND (23b) e do adendo §7 (24); conferidos contra N_, NA_ e ND_estimativas antes de qualquer teste.",
+    "D-a: grade do protocolo = 0,250 a 0,450, passo 0,005, sem |c - corte real| < 0,050 -> 0,250; 0,350; 0,450. Grade complementar fora do protocolo: mesma grade a mais de 0,010 dos cortes reais, so observacoes do mesmo segmento de bolsa (como o S-i do protocolo 48).",
+    "D-a, Fisher: lado do corte permutado entre municipios (n acima fixo), 999 permutacoes, semente [20261026]; estatistica = coeficiente do lado de cima (Frisch-Waugh-Lovell) com intercepto por ciclo e os controles de cada Q.",
+    "Saltos de composicao, de concorrencia e de balanco na celula: sem efeitos fixos (o efeito fixo de curso absorveria o indice de curso); saltos das partes do funil e dos motivos: especificacao de Q3.",
+    "Indices de composicao (curso, tipo, gestao): preenchimento medio da categoria no ciclo entre as celulas com |IVS - corte| >= 0,050 nos dois cortes.",
+    "Tipo do estabelecimento: cardapio de gestores do ciclo 3 por CNES (unica fonte arquivada); gestao: quadro OFERTA_VAGAS da 1a chamada do ciclo, por CNES.",
+    "Fixar o fator: covariavel (um coeficiente por ciclo, comum aos dois lados, centrada na media do kernel, como o controle do protocolo 48) ou efeito fixo; razao contra o original na mesma amostra. Fator que retira celulas: razao contra o original. Reduz pela metade = |fixado| <= 0,5 |comparado|, so em 0,300.",
+    "D-c: decomposicao nos limites sem efeitos fixos (interceptos ponderados pelos pesos omega), aproximada; 'concentra' se a maior contribuicao em modulo for >= 2/3 da soma dos modulos (regra fixada antes de rodar).",
+    "D-f: 'some' operacionalizado como o salto do ciclo 2 sem as celulas so de CR caindo pela metade ou mais (o mesmo criterio do §3).",
+    "BKY entre as linhas tipo_linha = salto de cada explicacao, so do protocolo (a grade complementar fica fora)."
+  ],
+  "desvios": [
+    {
+      "data": "2026-10-26",
+      "o_que": "D-a: a grade do protocolo deixa 3 cortes placebo; o menor p por posto possivel e 0,25 > 0,10, entao o criterio de apoio e cumprido por construcao. O protocolo nao muda: a leitura literal e relatada, e uma grade complementar fora do protocolo (rotulo COMPLEMENTAR_FORA_DO_PROTOCOLO_61) e relatada ao lado, sem entrar na leitura pre-registrada.",
+      "forcado_por": "aritmetica da grade do protocolo"
+    },
+    {
+      "data": "2026-10-26",
+      "o_que": "D-f: o texto do Edital no 3/2026 (ciclo 2) nao esta arquivado; cita-se a observacao do quadro de vagas original do ciclo 2 e registra-se a ausencia",
+      "forcado_por": "dados arquivados"
+    },
+    {
+      "data": "2026-10-26",
+      "o_que": "D-b: tipo do estabelecimento so existe no cardapio do ciclo 3; celulas de CNES fora dele ficam ausentes (contadas) nas linhas que usam o tipo",
+      "forcado_por": "dados arquivados"
+    }
+  ],
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/61_protocolo_diagnostico_queda_0300.md",
+      "sha256": "0d3185defeab87ea1a7fbc2ed7dc71e27323fe02aa3fbb80eba767d3ef2f4e5b",
+      "bytes": 5941,
+      "papel": "protocolo 61 (congelado antes de rodar)",
+      "fonte": "docs/06_execucao",
+      "data_referencia": "2026-10-26",
+      "cobertura": "-",
+      "unidade": "texto",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "running variable (IVS 2010 oficial)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_municipio.parquet",
+      "sha256": "36ced6f6a4c41407cad59c18969c9ad240505f54049f869cc293a325b1fc31dc",
+      "bytes": 89518,
+      "papel": "N1, vagas oferecidas, populacao (V1-V3)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "municipios do quadro",
+      "unidade": "municipio x ciclo",
+      "chaves": "ciclo, co_ibge",
+      "filtros": "municipios sem IVS fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "celulas do quadro (Q3, composicao, funil)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "5135 celulas",
+      "unidade": "celula x ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "celulas sem IVS fora"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_U_municipio.parquet",
+      "sha256": "5d4bf05a24e1b5f704aa50bbff4325b3997f1505f57c80f14f822e08e1c3db14",
+      "bytes": 246282,
+      "papel": "U (todos os municipios) e conferencias",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "-",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/N_estimativas.csv",
+      "sha256": "3490d69c568ed13eb2b03612100a24aeefd72fc5f5f7cb3ac84e301d94f684ed",
+      "bytes": 1455159,
+      "papel": "alvo da reproducao de Q1 e Q2",
+      "fonte": "script 23",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "linha",
+      "chaves": "-",
+      "filtros": "N1, V1+V2+V3, S-a e S-e"
+    },
+    {
+      "caminho": "output/rdd_bolsa/NA_estimativas.csv",
+      "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374",
+      "bytes": 538158,
+      "papel": "alvo da reproducao de Q3",
+      "fonte": "script 24",
+      "data_referencia": "2026-10-19",
+      "cobertura": "-",
+      "unidade": "linha",
+      "chaves": "-",
+      "filtros": "A3_PREENCHIDA principal"
+    },
+    {
+      "caminho": "output/rdd_bolsa/ND_estimativas.csv",
+      "sha256": "0b78d4469229be4f42d275c626ba1782d01be74a985e862097cf0f7556837146",
+      "bytes": 860136,
+      "papel": "alvo da reproducao de Q1 e Q2 (ND)",
+      "fonte": "script 23b",
+      "data_referencia": "2026-10-21",
+      "cobertura": "-",
+      "unidade": "linha",
+      "chaves": "-",
+      "filtros": "POR_CORTE, D4 e D1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos (D-c motivos; D-e candidatos do curso)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "candidato x opcao",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "so agregado, em memoria"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "municipio de origem dos candidatos (D-e)",
+      "fonte": "portao G1",
+      "data_referencia": "competencia de referencia do ciclo",
+      "cobertura": "-",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra g1_cpf_nome; so agregado"
+    },
+    {
+      "caminho": "output/aquisicao/quadro_vagas_consolidado.parquet",
+      "sha256": "47cf61e4018b17759a088b320757b0269557c808721089a2490a3ce830b642db",
+      "bytes": 535176,
+      "papel": "gestao do estabelecimento (D-b)",
+      "fonte": "aquisicao (02)",
+      "data_referencia": "quadros 1a chamada",
+      "cobertura": "-",
+      "unidade": "linha do quadro",
+      "chaves": "ciclo, co_cnes_7d",
+      "filtros": "OFERTA_VAGAS, chamada 1"
+    },
+    {
+      "caminho": "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
+      "sha256": "08aec0e3b4b4fafa91217e0517a58aa5071dda0a6699ff58f0e9fd736fe1b3fd",
+      "bytes": 20167560,
+      "papel": "CNES pre (D-e, D-g)",
+      "fonte": "a09",
+      "data_referencia": "202406-202506",
+      "cobertura": "Brasil",
+      "unidade": "municipio x grupo x mes",
+      "chaves": "co_ibge, competencia, grupo",
+      "filtros": "so 202406-202506"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/outcomes_V_celula.parquet",
+      "sha256": "34e33decb2742515c58cc9e1350b2792c21ad7dc3796715018b36c99a8fb203d",
+      "bytes": 115198,
+      "papel": "exposicoes de concorrencia (via script 32)",
+      "fonte": "tarefa B (12)",
+      "data_referencia": "ciclos 1-3",
+      "cobertura": "-",
+      "unidade": "celula",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "celulas com IVS e CIR"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "regiao de saude (CIR)",
+      "fonte": "DATASUS/TabNet",
+      "data_referencia": "base corrente",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "co_ibge",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/REGIC2018_Municipios_Hierarquia_e_regiao.xlsx",
+      "sha256": "f1d29395964e4827d8294d27b57bcffb36fc47918f91b8ecee4efdbac1cda03e",
+      "bytes": 491476,
+      "papel": "hierarquia urbana (REGIC 2018)",
+      "fonte": "IBGE",
+      "data_referencia": "2018",
+      "cobertura": "Brasil",
+      "unidade": "municipio",
+      "chaves": "codmun",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/aquisicao/ponte_curso_cbo_oficial.json",
+      "sha256": "ed8c2a9a3fcda4f0f261b5321da7750da389cc0f574f2e5ac5140e5ebd8f2d9e",
+      "bytes": 16218,
+      "papel": "ponte curso-CBO",
+      "fonte": "a09/ponte",
+      "data_referencia": "-",
+      "cobertura": "cursos PMM-E",
+      "unidade": "curso",
+      "chaves": "cod_curso",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/ivs_regra/edital_sgtes_01_2026_ciclo2.html",
+      "sha256": "3ca76e6fceef05881e22b18828bedd6f584d484287b22985fb8c63ec45ca4061",
+      "bytes": 128700,
+      "papel": "pagina do chamamento do ciclo 2 (D-f)",
+      "fonte": "MS",
+      "data_referencia": "2026",
+      "cobertura": "-",
+      "unidade": "texto",
+      "chaves": "-",
+      "filtros": "so leitura"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_original.xlsx",
+      "sha256": "cddad12d958963e29d3b9912814990c90a9220ba724f4657d9181cc1b9e3e049",
+      "bytes": 337149,
+      "papel": "quadro original do ciclo 2: observacao sobre o CR (D-f)",
+      "fonte": "MS",
+      "data_referencia": "2026",
+      "cobertura": "-",
+      "unidade": "planilha",
+      "chaves": "-",
+      "filtros": "so a celula da observacao"
+    },
+    {
+      "caminho": "data/raw/pmm_e/resultado-final-pmme-2o-ciclo-25-05.xlsx",
+      "sha256": "8e85a28a57db1283cd3103065b04909b637cb76aab73482889e6b5fe50182e3c",
+      "bytes": 320107,
+      "papel": "resultado do ciclo 2: cabecalho da aba Desclassificados (D-c)",
+      "fonte": "MS",
+      "data_referencia": "2026",
+      "cobertura": "-",
+      "unidade": "planilha",
+      "chaves": "-",
+      "filtros": "so o cabecalho"
+    },
+    {
+      "caminho": "docs/auditorias/18_politicas_nos_mesmos_cortes_ivs.md",
+      "sha256": "9afe8cc10cc28edcd29016c7578140e28eaafc41713cea8cda6704adb6a66eb9",
+      "bytes": 42237,
+      "papel": "regras nos mesmos cortes (D-g)",
+      "fonte": "auditoria 18",
+      "data_referencia": "2026-10-18",
+      "cobertura": "-",
+      "unidade": "texto",
+      "chaves": "-",
+      "filtros": "-"
+    }
+  ],
+  "validacoes": {
+    "reproducao": {
+      "max_abs_dif": 6.938893903907228e-17,
+      "linhas_alvo": 10,
+      "tolerancia": 1e-09
+    },
+    "linhas": 339,
+    "executado": 339,
+    "sem_estimativa": 0,
+    "nao_executado": 0,
+    "max_residuo_motivos": 5.320396900820867e-15
+  },
+  "saidas": {
+    "DQ_estimativas.csv": {
+      "arquivo": "output/rdd_bolsa/DQ_estimativas.csv",
+      "sha256": "81897f10c47355c9491293fa6493cd8258a8be097d5864992f14f10358db86de"
+    },
+    "figuras": [
+      {
+        "arquivo": "output/rdd_bolsa/DQ_figuras/DQ_placebos.png",
+        "como_ler": "Cada ponto cinza é o salto medido num corte que não existe (corte falso); quanto mais longe do zero, maior. O losango laranja é o salto no corte real 0,300 e o azul, em 0,400. Se o laranja fica no meio dos cinzas, um salto daquele tamanho é comum; se fica mais longe que todos, é raro.",
+        "detalhe_tecnico": "Estatística t do salto (mesma especificação de Q1, Q2 e Q3: local linear, h = 0,050, kernel triangular, ciclos 1–3 juntos, CR1 por município). Pontos pretos: os 3 cortes placebo do protocolo 61 (0,250; 0,350; 0,450). Pontos cinza vazados: grade complementar fora do protocolo (0,250 a 0,450, passo 0,005, a mais de 0,010 dos cortes reais, só observações do mesmo segmento de bolsa). Linhas tracejadas: |t| = 1,96.",
+        "sha256": "8b874aa098ba06a39bb3cb50acc3ee9b6974a3ded49d8b545e706786017b0074"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/DQ_figuras/DQ_quanto_da_queda.png",
+        "como_ler": "A primeira linha de cada painel é a queda em 0,300 como foi medida. Cada linha abaixo é a mesma queda depois de igualar um fator entre os dois lados do corte. Se o ponto chega perto do zero (passa da linha tracejada, metade da queda), aquele fator acompanha boa parte da queda; isso descreve, não prova causa.",
+        "detalhe_tecnico": "Salto em 0,300 com IC 95% (CR1 por município): Q1 em vagas por município; Q2 e Q3 em p.p. 'Original' = Q reproduzido. Fatores como covariável comparam-se ao original na mesma amostra; fatores que retiram células, ao original (DQ_estimativas.csv, tipo_linha = fixado). Linha tracejada = metade do original.",
+        "sha256": "806b888ca81297e85f003f9dab0d3d65628035bd986c07f680a5f4a5970b49a0"
+      },
+      {
+        "arquivo": "output/rdd_bolsa/DQ_figuras/DQ_funil.png",
+        "como_ler": "Cada par de barras compara as células logo abaixo (azul) e logo acima (laranja) do corte: quantas eram só de cadastro reserva, quantas tiveram alguém que as escolheu em 1º lugar, quantas destas foram preenchidas e quantas foram preenchidas no total. Mostra em que passo os dois lados se separam.",
+        "detalhe_tecnico": "Médias simples nas células da janela (|IVS − corte| < 0,050), ciclos 1–3 juntos, sem reta nem efeitos fixos (tipo_linha = funil_bruto). Os saltos com a especificação de Q3 estão na tabela do D-c.",
+        "sha256": "02863905cdf04a4794f085e90f8121651a3db26917a6623337a75d43253c814a"
+      }
+    ]
+  },
+  "linguagem": "diagnostico descritivo e pos-resultado do pacote do corte; nada aqui diz que a bolsa causa a queda"
+}
