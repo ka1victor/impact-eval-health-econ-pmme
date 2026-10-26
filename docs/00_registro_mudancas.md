@@ -8,6 +8,27 @@
 
 ---
 
+## 26/10/2026 — Execução do P1h (protocolo 52b): peso da bolsa contra o custo do lugar
+
+Motivo: execução do protocolo 52b (H3 do plano da banca 2), com portão de reprodução do M1 e das
+sensibilidades contra o P1. As saídas do P1 (`P1_*`) não foram regravadas.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57i_resultados_P1h_magnitudes.md`](06_execucao/57i_resultados_P1h_magnitudes.md) | resultados do P1h, gerado pelo script entre marcadores `<!-- P1h:... -->`: D_UF = θ_UF − 10·β, km equivalentes à bolsa (delta e Fieller), sensibilidades com BKY, figura com "Como ler" |
+
+Também criados, fora de `docs/`:
+- `scripts/rdd_bolsa/25c_magnitudes_P1h.py` (no `run_all.py`, depois do 25);
+- `output/rdd_bolsa/P1h_magnitudes.csv`, `P1h_resumo.json` e `P1h_figuras/P1h_magnitudes.png`, todos `EMPIRICO`;
+- `tests/test_P1h_magnitudes.py`.
+
+O manifesto A6 (`output/tema_trabalho/A6_manifesto_reproducao.json`) foi regenerado pelo gerador para incluir o
+novo passo.
+
+---
+
 ## 26/10/2026 — Protocolo 52b (P1h: peso da bolsa contra o custo do lugar)
 
 Motivo: teste formal da H3 do plano da banca 2, congelado antes de calcular.
