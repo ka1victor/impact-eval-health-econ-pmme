@@ -1217,11 +1217,28 @@ def texto_bky(est: pd.DataFrame, resumo: dict) -> str:
         linhas.append([QUADRO_DA_VERSAO[v], _int(len(f)), _int(int((f["q_bky"] < ALFA).sum()))] +
                       [f"{_int(por.loc[i, 'rej'])} de {_int(por.loc[i, 'n'])}" if i in por.index else "—"
                        for i in ("RB-1", "RB-2", "RB-3", "RB-4", "RB-5")])
+    # Auditoria 54 (A1): q abaixo de p numa família em que quase todos os membros rejeitam.
+    avisos = []
+    for v in VERSOES:
+        f = est[(est["versao"] == v) & est["entra_bky"]]
+        sub = f[(f["p"] >= ALFA) & (f["q_bky"] < ALFA)]
+        rots = [f"{r['id_rb']}, {'ciclo 2' if r['ciclo'] == '2' else 'empilhado'}, {rot_linha(r)} (p = {_n(r['p'], 3)}; q = {_p(r['q_bky'])})"
+                for _, r in sub.iterrows()]
+        avisos.append(f"com o quadro de {QUADRO_DA_VERSAO[v]}, {_int(int((f['q_bky'] < f['p']).sum()))} dos "
+                      f"{_int(len(f))} membros têm q menor que o p, e {_int(len(sub))} têm p ≥ 0,05 e q < 0,05"
+                      + (f": {_lista(rots)}" if rots else ""))
     return "\n".join([
         "Família BKY nova, uma por versão (decisão 9): toda linha secundária que testa H0: peso da bolsa = 0, com o p "
         "da própria linha. O q de cada linha está nas tabelas acima e em `q_bky` de `RB_estimativas.csv`; q = 0,001 é o "
         "piso da grade do algoritmo (Anderson, 2008). O q depende dos p de toda a família, e não só do p da linha.", "",
-        _tab(["Quadro do ciclo 2", "Membros", "q < 0,05", "RB-1 (empilhado)", "RB-2", "RB-3", "RB-4", "RB-5"], linhas)])
+        _tab(["Quadro do ciclo 2", "Membros", "q < 0,05", "RB-1 (empilhado)", "RB-2", "RB-3", "RB-4", "RB-5"], linhas),
+        "",
+        "**Como ler o q (auditoria 54).** O BKY estima quantas hipóteses nulas são verdadeiras a partir da própria "
+        "família. Quando quase todos os membros rejeitam, ele estima poucas nulas verdadeiras e afrouxa o limiar, e o q "
+        "pode ficar abaixo do p. É o que acontece aqui: " + "; ".join(avisos) + ". A família junta várias inferências "
+        "sobre o mesmo coeficiente (score bootstrap, CV3, cluster por curso), que rejeitam juntas e empurram o limiar "
+        "para cima. Por isso a contagem de q < 0,05 não é uma contagem de achados independentes, e uma linha com p ≥ "
+        "0,05 não passa a contar como significativa por causa do q. A leitura do §3 não usa o q."])
 
 
 def tabela_mudancas(resumo: dict) -> str:
@@ -1249,7 +1266,8 @@ def tabela_mudancas(resumo: dict) -> str:
         "em `mudancas` de `RB_resumo.json`. A estimativa é o coeficiente (ou o p, nas linhas de p).", "",
         _tab(["Id", "Ciclo", "Linha", "Estimativa (antiga → corrigida)", "O que muda"], linhas), "",
         "Como ler: a regra conta qualquer troca de sinal, mesmo de uma estimativa perto de zero, e qualquer passagem "
-        "do IC por zero, mesmo na borda; o IC de cada linha está nas seções 5.1 a 5.5."])
+        "do IC por zero, mesmo na borda; o IC de cada linha está nas seções 5.1 a 5.5. O IC do coeficiente exclui 0 "
+        "exatamente quando o IC da razão de chances exclui 1, que é como o §3 do adendo e a resposta curta falam."])
 
 
 def _lista(xs: list[str]) -> str:
@@ -1277,6 +1295,18 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
             f"ao do corte verdadeiro, e o p por posto é {_n(c['RB2_p_posto'], 3)}"
             f"{', o menor possível com essa grade' if c['RB2_corte_fora_da_distribuicao'] else ''} (com o quadro de "
             f"19/03: {'nenhum' if na == 0 else na}; p por posto {_n(a['RB2_p_posto'], 3)}).")
+    # Auditoria 54 (A2): o p por posto não mostra a folga entre o corte verdadeiro e o maior corte falso.
+    pg = {v: {s: _rob(est, v, "placebo_cortes", "2", s)["estimativa"]
+              for s in ("t_real", "abs_t_placebo_max", "fracao_abs_t_placebo_maior_que_1_96", "n_placebos")}
+          for v in VERSOES}
+    folga = {v: abs(pg[v]["t_real"]) / pg[v]["abs_t_placebo_max"] for v in VERSOES}
+    n196 = {v: int(round(pg[v]["fracao_abs_t_placebo_maior_que_1_96"] * pg[v]["n_placebos"])) for v in VERSOES}
+    plac += (f" O p por posto não mede a folga: o maior |t| entre os cortes falsos vai de "
+             f"{_n(pg[ANTIGA]['abs_t_placebo_max'], 2)} para {_n(pg[CORRIGIDA]['abs_t_placebo_max'], 2)}, contra |t| "
+             f"real de {_n(abs(pg[ANTIGA]['t_real']), 2)} e {_n(abs(pg[CORRIGIDA]['t_real']), 2)}, e os cortes falsos com "
+             f"|t| > 1,96 vão de {_int(n196[ANTIGA])} para {_int(n196[CORRIGIDA])} de {_int(pg[CORRIGIDA]['n_placebos'])}."
+             + (" Com o quadro da inscrição, o corte verdadeiro ainda fica à frente de todos os falsos, mas por pouco."
+                if folga[CORRIGIDA] < folga[ANTIGA] else ""))
 
     frase = "\"o ciclo 2 é robusto a poucos *clusters* e a placebos\""
     if c["regra"] == "MANTEM":
@@ -1311,9 +1341,20 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
     if r["sem_estimativa"]:
         s += f"Sem estimativa numa das versões: {_lista(r['sem_estimativa'])}. "
     s += ("Pela leitura pré-registrada, a leitura se apoia nas que não mudam. " if (sinal or perde) else "")
-    s += (f"A ressalva do doc 44 sobre o spline cúbico no ciclo 2: o coeficiente vai de {_fc(cub_a)} para "
-          f"{_fc(cub_c)}; o IC {'exclui' if _exclui(cub_c['ic95_inf'], cub_c['ic95_sup']) else 'contém'} zero na "
-          "corrigida.")
+    def _fc_par(r: pd.Series) -> str:
+        return f"{_n(r['estimativa'], 4)} {_ic(r['ic95_inf'], r['ic95_sup'], 4)} ({_peq(r['p'])})"
+
+    s += (f"A ressalva do doc 44 sobre o spline cúbico no ciclo 2 continua de pé: o coeficiente vai de "
+          f"{_fc_par(cub_a)} para {_fc_par(cub_c)}, e o IC "
+          f"{'exclui' if _exclui(cub_c['ic95_inf'], cub_c['ic95_sup']) else 'contém'} zero na corrigida.")
+    # Auditoria 54 (A3): todas as variantes cúbicas do ciclo 2 (sem janela e nas três janelas).
+    cubs = ["spline_cubico__bolsa_linear"] + [f"janela_{h:04d}__spline_cubico__bolsa_linear" for h in E9.JANELAS_MIL]
+    n_exc = {v: sum(bool(_exclui(r["ic95_inf"], r["ic95_sup"])) for r in
+                    (_coef(est, v, "2", COND, "principal", e) for e in cubs)) for v in VERSOES}
+    s += (f" Somando as janelas, há {_int(len(cubs))} especificações com spline cúbico no ciclo 2; o IC exclui zero em "
+          f"{_int(n_exc[ANTIGA])} delas com o quadro de 19/03 e em {_int(n_exc[CORRIGIDA])} com o de 13/02. A regra do "
+          "§3 confere a robustez a poucos clusters e a placebos, com o spline linear; não confere a robustez a uma forma "
+          "mais flexível do IVS, que o doc 44 já tratava como ressalva.")
     t.append(s)
     emp = [(_rob(est, v, "score_bootstrap_rademacher_cluster_conjunto", "empilhado"),
             _rob(est, v, "placebo_cortes", "empilhado", "p_posto")) for v in VERSOES]
@@ -1321,7 +1362,15 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
              f"{_p(emp[0][0]['p'])} → {_p(emp[1][0]['p'])}; p por posto contra os placebos: "
              f"{_n(emp[0][1]['estimativa'], 3)} → {_n(emp[1][1]['estimativa'], 3)}. O empilhado continua sendo uma "
              "média de ciclos heterogêneos (doc 42).")
-    veredito = {"MANTEM": "A conclusão continua de pé: com o quadro da inscrição, os testes dão o mesmo recado.",
+    ressalvas = []
+    if folga[CORRIGIDA] < folga[ANTIGA]:
+        ressalvas.append("a folga contra os cortes falsos ficou menor")
+    if not _exclui(cub_c["ic95_inf"], cub_c["ic95_sup"]):
+        ressalvas.append("com uma curva mais flexível do IVS (spline cúbico) o efeito continua sem se separar do zero, "
+                         "como o doc 44 já dizia")
+    veredito = {"MANTEM": "Pela regra fixada antes das contas, a conclusão continua de pé: com o quadro da inscrição, "
+                          "os testes para poucos grupos e o de cortes falsos dão o mesmo recado."
+                          + (f" Mas {', e '.join(ressalvas)}." if ressalvas else ""),
                 "REBAIXAR": "A conclusão precisa ser rebaixada: com o quadro da inscrição, parte dos testes para poucos "
                             "grupos deixa de excluir o zero.",
                 "PLACEBO_NAO_CONFIRMA": "A conclusão fica pela metade: os testes para poucos grupos se mantêm, mas o "
@@ -1371,7 +1420,8 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "> **Saídas:** `output/rdd_bolsa/RB_estimativas.csv`, `RB_resumo.json` e `RB_figuras/RB_antigo_corrigido.png`. "
         "As saídas `E9_*`, `VC_*`, `VD_*` e `VL_*` não são regravadas, e os docs 42, 44, 57, 57p e 57v não são "
         "editados.<br>",
-        "> **Auditoria:** pendente.",
+        "> **Auditoria:** [auditoria 54](../auditorias/54_auditoria_robustez_E9_ciclo2.md), aprovada com correções de "
+        "texto (folga dos placebos, spline cúbico e leitura do q do BKY); nenhum número mudou.",
         "",
         "## 1. Resposta curta",
         "",

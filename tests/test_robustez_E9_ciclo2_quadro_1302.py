@@ -417,7 +417,8 @@ class TestDoc57y(unittest.TestCase):
             self.assertEqual(t.count(f"<!-- RB:{nome}:inicio -->"), 1, nome)
             self.assertEqual(t.count(f"<!-- RB:{nome}:fim -->"), 1, nome)
         for s in ("## 1. Resposta curta", "## 2. Portão", "## 3. Decisões de implementação", "## 7. Limites",
-                  "`ADENDO_52F_POS_RESULTADO`", "> **Auditoria:** pendente.", "> **Gerado por**",
+                  "`ADENDO_52F_POS_RESULTADO`",
+                  "> **Auditoria:** [auditoria 54](../auditorias/54_auditoria_robustez_E9_ciclo2.md)", "> **Gerado por**",
                   "52f_adendo_robustez_E9_ciclo2_quadro_1302.md"):
             self.assertIn(s, t)
         self.assertLess(t.index("<!-- RB:decisoes:fim -->"), t.index("## 4. A correção"))
@@ -442,6 +443,12 @@ class TestDoc57y(unittest.TestCase):
         self.assertIn("pacote do corte", t)
         self.assertIn("Não é efeito da participação no PMM-E", t)
         self.assertNotIn("a bolsa funciona", t.lower())
+        # Auditoria 54: folga dos placebos, spline cúbico com as janelas e leitura do q do BKY.
+        self.assertIn("O p por posto não mede a folga", r)
+        self.assertIn("especificações com spline cúbico no ciclo 2", r)
+        bky = " ".join(_bloco(DOC.read_text(encoding="utf-8"), "bky").split())
+        self.assertIn("Como ler o q (auditoria 54)", bky)
+        self.assertIn("A leitura do §3 não usa o q", bky)
 
     def test_decisoes_iguais_as_do_pre_registro(self) -> None:
         t = DOC.read_text(encoding="utf-8")
