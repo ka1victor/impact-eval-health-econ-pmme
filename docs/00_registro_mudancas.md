@@ -8,6 +8,20 @@
 
 ---
 
+## 27/10/2026 — Banca 2: nova hipótese (bolsa muda qual vaga, não quantas)
+
+Motivo: o autor decidiu usar como hipótese única a antiga H2 (bolsa × origem), reformulada, com o resultado da
+antiga H1 como fato que a motiva (doc 65, seções 4.6 a 4.8). O documento registra a hipótese, a história, o que dá
+e o que não dá para afirmar e os gráficos simples do novo deck.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/07_nova_hipotese.md`](07_apresentacoes/banca2/07_nova_hipotese.md) | nova hipótese da banca 2 e roteiro da apresentação |
+
+---
+
 ## 27/10/2026 — Auditoria 48: adendo 52e (H2 com efeito fixo do par de UFs e comparação local no corte)
 
 Motivo: auditoria independente da execução do adendo 52e (script 50, saídas `VL_*`, doc 57x). O veredito é aprovado
