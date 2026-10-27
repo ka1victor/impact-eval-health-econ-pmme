@@ -11,7 +11,8 @@
 ## 1. A hipótese (H2)
 
 **O médico especialista escolhe vagas perto de onde já trabalha. A bolsa maior muda *qual* vaga ele escolhe
-dentro da sua região, mas pesa menos que a própria origem. Por isso não aumenta o número de vagas preenchidas.**
+dentro da sua região, mas pesa menos que a própria origem.** É coerente com não termos detectado aumento do
+preenchimento no corte, mas essa ligação é interpretação, não teste.
 
 - Foi formulada **depois** de ver os dados. Isso deve ser dito no slide.
 - As outras hipóteses (antigas H1 e H3) saem do corpo e vão para um apêndice rápido (no máximo 2 slides).
@@ -20,10 +21,10 @@ dentro da sua região, mas pesa menos que a própria origem. Por isso não aumen
 
 | Passo | Mensagem | Figura pronta |
 |---|---|---|
-| 1. Motivação | no corte de IVS, a bolsa R$ 5 mil maior não encheu mais vagas | só uma linha de texto; o gráfico vai para o apêndice |
+| 1. Motivação | no corte de IVS, não detectamos aumento do preenchimento onde a bolsa é R$ 5 mil maior | só uma linha de texto; o gráfico vai para o apêndice |
 | 2. Onde escolhem | a maioria põe a 1ª opção na mesma UF onde já trabalhava | `output/apresentacao_banca2/exp_escolha_origem.png` |
 | 3. A bolsa pesa dentro da região | comparando só vagas da mesma UF, a vaga de bolsa maior é mais escolhida | `output/rdd_bolsa/VL_figuras/VL_razao_chances_e_km.png` |
-| 4. Mas a origem pesa mais | estar na UF de origem pesa mais que toda a diferença de bolsa | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` |
+| 4. Mas a origem pesa mais (o teste central da H2) | estar na UF de origem pesa mais que toda a diferença de bolsa | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` |
 | 5. Robustez | a leitura não muda com o quadro corrigido do ciclo 2 nem com outras variantes | `output/rdd_bolsa/VC_figuras/VC_antigo_corrigido.png`, `output/rdd_bolsa/VD_figuras/VD_antigo_corrigido.png` |
 | 6. Teoria | incentivo limitado: o custo de sair da própria região pesa mais que o degrau da bolsa | texto |
 
@@ -31,10 +32,10 @@ dentro da sua região, mas pesa menos que a própria origem. Por isso não aumen
 
 | O quê | Valor | Fonte (doc auditado) |
 |---|---|---|
-| 1ª opção na mesma UF de origem | 79% (mesma região de saúde: 46%; mesmo município: 36%; distância mediana 51 km) | figura `exp_escolha_origem.png` (bases `G1_*`) |
-| Bolsa +R$ 5 mil, vagas da mesma UF, ciclos 1–3 | razão de chances 1,47 [1,15; 1,89] | [57x](../../06_execucao/57x_resultados_escolha_localizacao_par.md), auditoria 48 |
+| 1ª opção na mesma UF de origem (descritivo) | 79% (mesma região de saúde: 46%; mesmo município: 36%; distância mediana 51 km) | `output/apresentacao_banca2/numeros_banca2.json` (`ESC_UF`) e figura `exp_escolha_origem.png` (bases `G1_*`) |
+| Bolsa +R$ 5 mil, vagas da mesma UF, ciclos 1–3 (adendo pós-resultado) | razão de chances 1,47 [1,15; 1,89] | [57x](../../06_execucao/57x_resultados_escolha_localizacao_par.md), auditoria 48 |
 | Idem, ciclo 2 | 1,90 [1,30; 2,78] | 57x |
-| Sem fixar a UF (base), ciclos 1–3 | 1,25 [0,98; 1,61] | [57p](../../06_execucao/57p_escolha_vaga_imediata_c2.md), auditoria 41 |
+| Sem fixar a UF (base, pré-registrada), ciclos 1–3 | 1,25 [0,98; 1,61]: não passa no Holm | [57p](../../06_execucao/57p_escolha_vaga_imediata_c2.md), auditoria 41 |
 | +R$ 5 mil pesa como… | 75 km a menos de distância, dentro da mesma UF | 57x |
 | Origem × toda a bolsa (D_UF) | 1,94 [1,48; 2,40] (em log-chance; > 0 = a origem pesa mais) | 57p |
 | Só vagas perto do corte | 1,28 [0,95; 1,72]: inconclusivo | 57x |
@@ -48,11 +49,13 @@ dentro da sua região, mas pesa menos que a própria origem. Por isso não aumen
 |---|---|
 | "entre quem se candidatou, a vaga de bolsa maior é preferida a uma vaga parecida da mesma UF" | "a bolsa traz mais médicos" |
 | "a origem pesa mais que toda a diferença de bolsa na escolha" | "a origem causa a escolha" (é preferência revelada) |
-| "no corte, não detectamos aumento do preenchimento" | "a bolsa não tem efeito nenhum" ou "a bolsa reduz o preenchimento" |
+| "no corte, não detectamos aumento do preenchimento" | "a bolsa não encheu mais vagas", "a bolsa não tem efeito nenhum" ou "a bolsa reduz o preenchimento" |
+| "em 0,400, se a bolsa traz médico de outra UF é inconclusivo" | "a bolsa não traz médico de longe" |
 | "o contraste da bolsa é o pacote de regras que muda no corte" | "o efeito do PMM-E" |
 
-**Ressalvas obrigatórias:** (1) a hipótese veio depois dos dados; (2) a origem é preferência, não causa; (3) a bolsa
-desloca a escolha com força só no ciclo 2; (4) a comparação só perto do corte é inconclusiva.
+**Ressalvas obrigatórias:** (1) a hipótese veio depois dos dados; (2) a origem é preferência, não causa (e é medida
+pelo vínculo anterior no CNES); (3) a bolsa desloca a escolha com força só no ciclo 2; (4) a comparação só perto do
+corte é inconclusiva; (5) tudo é condicional a se candidatar; (6) a bolsa é o pacote de regras do corte.
 
 ## 5. Estrutura obrigatória do deck (8 seções, até 14 slides + apêndice)
 
