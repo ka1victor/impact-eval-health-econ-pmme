@@ -498,6 +498,29 @@ com gráfico que fala sozinho e um resultado firme.
 **fato** que motiva a pergunta ("no corte, a bolsa maior não encheu mais vagas") e a H2 como a hipótese que o
 explica ("porque a origem pesa mais que a bolsa"). A H2 deve ser dita como formulada depois de ver os dados.
 
+## 4.8 Atualização de 27/10/2026: H1 e H2 com a localização controlada (adendos 48h e 52e)
+
+Pedido do autor: rodar H1 e H2 "com pareamento pela localização da unidade e do médico, o controle mais importante".
+Os dois adendos foram executados e auditados, e nenhuma estimativa mudou nas auditorias.
+
+- **H1 ([57w](57w_resultados_pareamento_localizacao.md), [auditoria 47](../auditorias/47_auditoria_pareamento_localizacao.md)).**
+  - **Pareamento:** cada município do lado de bolsa maior pareado com um da **mesma UF**, mesma condição de capital
+    e parecido no estoque de especialistas a até 100 km.
+  - **Resultado:** nenhuma diferença de preenchimento nos dois cortes.
+  - **Poder:** sobram poucos pares (25 e 29), e só seria detectada uma diferença de cerca de 24 a 29 p.p.
+  - **De onde vinha a queda em 0,300:** da **UF**. Com efeito fixo de UF, a queda some; só com o estoque de
+    especialistas no entorno, ela continua.
+- **H2 ([57x](57x_resultados_escolha_localizacao_par.md), [auditoria 48](../auditorias/48_auditoria_escolha_localizacao_par.md)).**
+  - **Comparação:** só vagas da mesma UF, vistas por médicos da mesma UF de origem.
+  - **Resultado:** a bolsa maior faz a vaga ser escolhida mais vezes como 1ª opção. Nos ciclos 1–3, a bolsa pesa
+    **mais** do que na especificação base, e passa a se distinguir de zero depois do Holm. No ciclo 2, pesa o mesmo.
+  - **Perto do corte:** a comparação local tem o ponto parecido e o IC que contém 1 (inconclusiva).
+
+**Efeito sobre a avaliação.** A H2 ganha força: o peso da bolsa na escolha deixa de depender de onde as vagas
+ficam. A H1 continua inconclusiva, agora com a explicação do sinal resolvida (UF). As duas juntas dão uma leitura
+simples, que é a do "incentivo limitado": a bolsa muda **qual** vaga o médico escolhe dentro da sua região, mas
+não **quantas** vagas são preenchidas.
+
 ---
 
 ## 5. O que foi lido
