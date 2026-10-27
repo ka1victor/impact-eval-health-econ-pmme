@@ -597,7 +597,12 @@ def desenho_ef(D0: dict, dados: dict, ef: str) -> tuple[dict, dict, dict]:
             "componentes_com_base": len(bases), "bases_no_par_da_propria_uf": int(sum(propria for _, propria in
                                                                                   bases.values()))}
     diag.update(contagens(D, cod_m, rot.to_numpy()[idx]))
-    return D, {"col": col, "nomes": nomes, "bases": bases}, diag
+    par_lin = rot.to_numpy()[idx]
+    comp = componentes_de_pares(D["grp"], par_lin)
+    base_de = {p: bases[comp[p]][0] for p in comp}
+    nome_par = {PREFIXO_EF + p.replace("|", "_"): p for p in comp}
+    return D, {"col": col, "nomes": nomes, "bases": bases, "par_lin": par_lin, "base_de": base_de,
+               "nome_par": nome_par}, diag
 
 
 def matriz_vl(D: dict, dv: dict, espec: dict, ef: dict | None) -> pd.DataFrame:
@@ -622,11 +627,15 @@ def matriz_vl(D: dict, dv: dict, espec: dict, ef: dict | None) -> pd.DataFrame:
 
 def score_bootstrap(r: dict, termo: str = B) -> dict:
     """Score bootstrap de Kline e Santos (2012) para H0: β = 0, como no `score_efetivo_por_cluster` do script 16, com
-    a verossimilhança do 25 (com β0 = 0 o ajuste restrito é o modelo sem a coluna da bolsa)."""
+    a verossimilhança do 25 (com β0 = 0 o ajuste restrito é o modelo sem a coluna da bolsa).
+
+    O Newton restrito parte da estimativa irrestrita sem a bolsa: partindo de zero, o 1º passo leva os efeitos fixos
+    de pares com pouquíssimas escolhas a valores muito negativos e a informação fica numericamente singular. O ponto de
+    partida não muda o máximo (a log-verossimilhança é côncava)."""
     A, D = r["_A"], r["_D"]
     k = r["termos"].index(termo)
     outros = [j for j in range(A.shape[1]) if j != k]
-    fit = P1.ajustar_cl(np.ascontiguousarray(A[:, outros]), D)
+    fit = P1.ajustar_cl(np.ascontiguousarray(A[:, outros]), D, theta0=np.asarray(r["theta"])[outros])
     if not fit["convergiu"]:
         return {"status": "NAO_CONVERGIU", "nota": "ajuste restrito sob H0 não convergiu"}
     theta = np.zeros(A.shape[1])
@@ -641,12 +650,92 @@ def score_bootstrap(r: dict, termo: str = B) -> dict:
     p_w, met_w, n_w = E9.p_score_bootstrap(sc, "webb")
     return {"status": "EXECUTADO", "g": int(len(sc)), "t_score": float(sc.sum() / math.sqrt((sc ** 2).sum())),
             "p_rademacher": p_r, "metodo_rademacher": met_r, "n_rademacher": n_r, "p_webb": p_w,
-            "metodo_webb": met_w, "n_webb": n_w, "iteracoes_ajuste_restrito": fit["iteracoes"]}
+            "metodo_webb": met_w, "n_webb": n_w, "iteracoes_ajuste_restrito": fit["iteracoes"],
+            "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"}
 
 
-def ajustar(chave: str, X: pd.DataFrame, D: dict, log=print, com_score: bool = True) -> dict:
+def contracao_ef(v0: np.ndarray, D: dict, par_lin: np.ndarray, max_it: int = 5000, tol: float = 1e-10) -> tuple[
+        dict, int]:
+    """Constantes de par que igualam escolhas previstas e observadas em cada par, com a utilidade `v0` fixa
+    (contração de escala iterativa: α_p += log O_p − log E_p(α)). Só serve de ponto de partida do Newton."""
+    cod, uniq = pd.factorize(pd.Series(par_lin, dtype=object))
+    n_p = len(uniq)
+    O = np.bincount(cod[D["esc"]], minlength=n_p).astype(float)
+    if (O <= 0).any():
+        raise FalhaValidacao("par sem escolha no desenho final")
+    alfa = np.zeros(n_p)
+    st, grp = D["starts"], D["grp"]
+    it = 0
+    for it in range(1, max_it + 1):
+        v = v0 + alfa[cod]
+        vmax = np.maximum.reduceat(v, st)
+        ex = np.exp(v - vmax[grp])
+        p = ex / np.add.reduceat(ex, st)[grp]
+        E = np.bincount(cod, weights=p, minlength=n_p)
+        delta = np.log(O) - np.log(E)
+        alfa += delta
+        if np.max(np.abs(delta)) < tol:
+            break
+    return dict(zip(uniq, alfa)), it
+
+
+def estimar_ef(X: pd.DataFrame, D: dict, ef: dict, *, modelo: str, ciclo: str, amostra: str) -> dict:
+    """A função `estimar` do script 25 com ponto de partida para o Newton (nota de execução 1 do doc 57x).
+
+    Mesmas etapas do 25: colunas sem variação omitidas, posto da matriz centrada no grupo, `ajustar_cl` (Newton com
+    meio-passo e o mesmo critério de parada), covariâncias de MV e sanduíche por conjunto e por candidato. A única
+    diferença é o `theta0`: partindo de zero, o Newton com centenas de indicadores de par levava pares com
+    pouquíssimas escolhas a valores muito negativos e a informação ficava numericamente singular. A partida é (i) os
+    termos que não são de par, ajustados sem os indicadores, e (ii) as constantes de par da `contracao_ef` com essa
+    utilidade fixa, normalizadas pela base de cada componente. A log-verossimilhança é côncava e a matriz tem posto
+    completo: o máximo é único e não depende da partida."""
+    omit = P1.colunas_sem_variacao(X, D)
+    X = X.drop(columns=omit)
+    A = X.to_numpy(dtype=float)
+    G = D["grupos"]
+    termos = list(X.columns)
+    base = {"modelo": modelo, "ciclo": ciclo, "amostra": amostra, "termos": termos, "omitidas": omit,
+            "n_candidatos": int(G.loc[G["posto"] == 1, "id_candidato"].nunique()), "n_grupos": int(len(G)),
+            "n_linhas": int(len(A)), "n_conjuntos": int(G["cluster_conjunto"].nunique())}
+    media = np.add.reduceat(A, D["starts"], axis=0) / D["tam"][:, None]
+    posto = int(np.linalg.matrix_rank(A - media[D["grp"]]))
+    del media
+    if posto < A.shape[1]:
+        return {**base, "ok": False, "status": "NAO_CONVERGIU", "nota": f"X sem posto completo ({posto} < {A.shape[1]})"}
+    k_n = [j for j, t in enumerate(termos) if not t.startswith(PREFIXO_EF)]
+    theta0 = np.zeros(A.shape[1])
+    try:
+        f0 = P1.ajustar_cl(np.ascontiguousarray(A[:, k_n]), D)
+        if f0["convergiu"]:
+            theta0[k_n] = f0["theta"]
+        alfa, it_c = contracao_ef(A[:, k_n] @ theta0[k_n], D, ef["par_lin"])
+        for j, t in enumerate(termos):
+            if t.startswith(PREFIXO_EF):
+                p = ef["nome_par"][t]
+                theta0[j] = alfa[p] - alfa[ef["base_de"][p]]
+        fit = P1.ajustar_cl(A, D, theta0=theta0)
+    except (np.linalg.LinAlgError, FloatingPointError) as erro:
+        return {**base, "ok": False, "status": "NAO_CONVERGIU", "nota": f"estimação falhou ({type(erro).__name__})"}
+    if not fit["convergiu"]:
+        return {**base, "ok": False, "status": "NAO_CONVERGIU", "nota": "Newton–Raphson não convergiu",
+                "iteracoes": fit["iteracoes"]}
+    info_inv = np.linalg.inv(fit["info"])
+    Vc, Gc = E9.covariancia_cluster(info_inv, fit["scores"], G["cluster_conjunto"].to_numpy())
+    Vk, Gk = E9.covariancia_cluster(info_inv, fit["scores"], G["cluster_candidato"].to_numpy())
+    nota = P1._juntar("omitidas por não variarem dentro de nenhum grupo: " + ", ".join(omit) if omit else "")
+    return {**base, "ok": True, "status": "EXECUTADO", "nota": nota, "theta": fit["theta"], "ll": fit["ll"],
+            "iteracoes": fit["iteracoes"], "V_mle": info_inv, "V_conj": Vc, "V_cand": Vk, "G_conj": Gc, "G_cand": Gk,
+            "grad_max": float(np.max(np.abs(fit["grad"]))), "decremento_final": fit["decremento_final"],
+            "iteracoes_contracao": it_c, "partida": "termos sem par ajustados sem os indicadores + contração",
+            "_A": A, "_D": D, "_scores": fit["scores"], "_info": fit["info"]}
+
+
+def ajustar(chave: str, X: pd.DataFrame, D: dict, log=print, com_score: bool = True, ef: dict | None = None) -> dict:
     e = ESPECS[chave]
-    r = P1.estimar(X, D, modelo=chave, ciclo=e["ciclo"], amostra=AMOSTRA)
+    if ef is None:
+        r = P1.estimar(X, D, modelo=chave, ciclo=e["ciclo"], amostra=AMOSTRA)
+    else:
+        r = estimar_ef(X, D, ef, modelo=chave, ciclo=e["ciclo"], amostra=AMOSTRA)
     r["n_efeitos_fixos"] = int(sum(1 for t in r["termos"] if t.startswith(PREFIXO_EF)))
     if r["ok"]:
         kb = r["termos"].index(B)
@@ -657,7 +746,8 @@ def ajustar(chave: str, X: pd.DataFrame, D: dict, log=print, com_score: bool = T
             r["score_bootstrap"] = score_bootstrap(r)
     for k in ("_A", "_D", "_scores", "_info"):
         r.pop(k, None)
-    log(f"{chave}: ok={r['ok']} it={r.get('iteracoes')} termos={len(r['termos'])} candidatos={r['n_candidatos']}")
+    log(f"{chave}: ok={r['ok']} it={r.get('iteracoes')} termos={len(r['termos'])} candidatos={r['n_candidatos']} "
+        f"grad_max={r.get('grad_max')}")
     return r
 
 
@@ -675,7 +765,7 @@ def estimar_linha(chave: str, dados: dict, conj_p1: pd.DataFrame, log=print) -> 
     else:
         D, ef = D0, None
     X = matriz_vl(D, dv, e, ef)
-    r = ajustar(chave, X, D, log)
+    r = ajustar(chave, X, D, log, ef=ef)
     del X, D
     gc.collect()
     return r, diag
@@ -981,12 +1071,15 @@ def _plt():
 
 
 COR = {"M1": "#8a8984", "M4": "#b07a2a", "VL1": "#2a78d6", "VL2": "#1d4f8f"}
-ROT_FIG = {"M1": "M1 base", "M4": "M4: efeito fixo de UF da vaga", "VL1": "VL-1: par UF de origem × UF da vaga",
-           "VL2": "VL-2: VL-1 só a até 0,050 de um corte"}
+ROT_FIG = {"M1": "M1 base", "M4": "M4: UF da vaga", "VL1": "VL-1: par de UFs", "VL2": "VL-2: par de UFs, perto do corte"}
 
 
-def titulo_figura(lei: dict) -> str:
-    return {"LOCALIZACAO_NAO_EXPLICA": "Comparando vagas da mesma UF, a bolsa pesa na escolha como no modelo base",
+def titulo_figura(lei: dict, est: pd.DataFrame) -> str:
+    nao_cai = all(_sel(est, k, "razao_chances_por_5mil")["estimativa"] >=
+                  _sel(est, ESPECS[k]["referencia"], "razao_chances_por_5mil")["estimativa"] for k in PRINCIPAIS)
+    return {"LOCALIZACAO_NAO_EXPLICA": ("Comparando vagas da mesma UF, o peso da bolsa na escolha não diminui" if nao_cai
+                                        else "Comparando vagas da mesma UF, o peso da bolsa na escolha fica parecido "
+                                             "com o do modelo base"),
             "LOCALIZACAO_EXPLICA_EM_PARTE": "Comparando vagas da mesma UF, o peso da bolsa na escolha cai para perto "
                                             "de nenhum",
             "MISTA": "Comparando vagas da mesma UF, o peso da bolsa na escolha muda conforme o recorte"}[lei["geral"]]
@@ -1042,21 +1135,21 @@ def figura(est: pd.DataFrame, lei: dict) -> dict:
     ax2.set_xlim(min(-20.0, float(k["ic95_inf"].min()) - 20), float(k["ic95_sup"].max()) + 90)
     ax2.set_yticks(ys2)
     ax2.set_yticklabels(rot2, fontsize=10.5)
-    ax2.set_xlabel("km a menos com o mesmo peso de +R$ 5 mil, IC 95% (delta)", fontsize=11.5)
+    ax2.set_xlabel("km a menos com o peso de +R$ 5 mil\n(IC 95%, método delta)", fontsize=11.5)
     for ax in (ax1, ax2):
         for s in ("top", "right", "left"):
             ax.spines[s].set_visible(False)
         ax.tick_params(axis="y", length=0)
         ax.grid(axis="x", color="#e6e5e0", lw=0.6)
         ax.set_axisbelow(True)
-    fig.text(0.012, 0.975, titulo_figura(lei), fontsize=15, ha="left", va="top", color="#1f1f1d")
+    fig.text(0.012, 0.975, titulo_figura(lei, est), fontsize=15, ha="left", va="top", color="#1f1f1d")
     fig.text(0.012, 0.02, "Escolha da 1ª opção, condicional a se candidatar; IC 95% com cluster por conjunto de escolha "
-             "(curso × ciclo); tipo de vaga do ciclo 2 pelo quadro de 13/02/2026. Bolsa: pacote do corte; origem: "
+             "(curso × ciclo); tipo de vaga do ciclo 2 pelo quadro de 13/02/2026.\nBolsa: pacote do corte; origem: "
              "preferência revelada, não efeito causal.", fontsize=9.5, color="#52514e", ha="left", va="bottom")
-    fig.subplots_adjust(left=0.27, right=0.985, top=0.9, bottom=0.12, wspace=0.75)
+    fig.subplots_adjust(left=0.25, right=0.965, top=0.9, bottom=0.16, wspace=0.7)
     fig.savefig(FIG, dpi=150, metadata={"Software": None})
     plt.close(fig)
-    return {"arquivo": rel(FIG), "sha256": sha256(FIG), "titulo": titulo_figura(lei), "como_ler": COMO_LER}
+    return {"arquivo": rel(FIG), "sha256": sha256(FIG), "titulo": titulo_figura(lei, est), "como_ler": COMO_LER}
 
 
 # ---------------------------------------------------------------------------
@@ -1088,6 +1181,35 @@ def texto_decisoes() -> str:
          "números). Em qualquer ambiguidade, vale a leitura mais próxima dos scripts 25 e 42.", ""]
     for i, d in enumerate(DECISOES, 1):
         t.append(f"{i}. **{d['item']}** ({_data_br(d['data'])}). {d['situacao']} *Resolução:* {d['resolucao']}")
+    return "\n".join(t)
+
+
+NOTAS_EXECUCAO = [
+    {"data": "2026-10-27", "item": "Ponto de partida do Newton nas linhas com efeito fixo de par",
+     "o_que": "A decisão 1 dizia que as linhas com par seriam estimadas com a função `estimar` do script 25 sem "
+              "alteração. Na 1ª execução, o Newton dela, que parte de zero, levou os indicadores de pares com "
+              "pouquíssimas escolhas a valores muito negativos já no 1º passo; a informação ficou numericamente "
+              "singular, e uma linha parou como NAO_CONVERGIU. Nenhuma estimativa da bolsa dessa execução foi lida ou "
+              "gravada (o script parou antes de gravar qualquer saída).",
+     "mudanca": "As linhas com par usam `estimar_ef`, que repete as etapas do `estimar` do 25 (colunas sem variação, "
+                "posto, `ajustar_cl` com o mesmo critério de parada, covariâncias de MV e sanduíches) e só acrescenta "
+                "o ponto de partida: os termos que não são de par, ajustados sem os indicadores, e as constantes de "
+                "par que igualam escolhas previstas e observadas em cada par (contração de escala). A "
+                "log-verossimilhança é côncava e a matriz tem posto completo, então o máximo é o mesmo; o resumo "
+                "registra o gradiente máximo e o decremento de Newton finais de cada linha. As referências (M1, M4) "
+                "continuam com o `estimar` do 25, sem mudança (portão)."},
+    {"data": "2026-10-27", "item": "Ponto de partida do ajuste restrito do score bootstrap",
+     "o_que": "Pelo mesmo motivo, o Newton do ajuste restrito (sem a bolsa) partindo de zero chegava a uma informação "
+              "singular.",
+     "mudanca": "O ajuste restrito parte da estimativa irrestrita sem a bolsa. O máximo restrito não muda."},
+]
+
+
+def texto_notas() -> str:
+    t = ["Mudanças de execução feitas depois do commit das decisões e antes de ler qualquer estimativa da bolsa. Não "
+         "mudam amostra, especificação, inferência nem leitura.", ""]
+    for i, n in enumerate(NOTAS_EXECUCAO, 1):
+        t.append(f"{i}. **{n['item']}** ({_data_br(n['data'])}). {n['o_que']} *O que mudou:* {n['mudanca']}")
     return "\n".join(t)
 
 
@@ -1171,7 +1293,7 @@ def tabela_principais(est: pd.DataFrame, resumo: dict) -> str:
         "escolha (curso × ciclo); p de Holm na família das três principais; p do score bootstrap (Kline–Santos, "
         "Rademacher) e o seu Holm, como robustez para poucos clusters; diferença do log da razão de chances contra a "
         "referência (M1), com IC pelo sanduíche conjunto (decisão 10). Tipo de vaga do ciclo 2 pelo quadro de "
-        "13/02/2026.", "",
+        "13/02/2026. O ponto de partida do Newton está na seção 7.1 (notas de execução).", "",
         _tab(["Linha", "Candidatos", "Conjuntos (G)", "RC [IC 95%]", "p", "p Holm", "p score", "p Holm (score)",
               "Referência: RC [IC 95%]", "Diferença de log RC [IC 95%]"], linhas), "",
         "Referências (VL-5, sem teste novo; os mesmos números do `VC_estimativas.csv`), com o score bootstrap "
@@ -1242,8 +1364,10 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
     t = []
     geral = {
         "LOCALIZACAO_NAO_EXPLICA": "**O peso da bolsa na escolha não vem da localização.** Comparando só vagas da mesma "
-                                   "UF, vistas por médicos da mesma UF de origem, a bolsa maior pesa o mesmo que no "
-                                   "modelo base (1ª linha do §3).",
+                                   "UF, vistas por médicos da mesma UF de origem, a razão de chances da bolsa fica "
+                                   "parecida com a do modelo base nas três principais, pela regra fixada (1ª linha do "
+                                   "§3): entre vagas na mesma relação geográfica com o médico, a bolsa maior continua "
+                                   "pesando.",
         "LOCALIZACAO_EXPLICA_EM_PARTE": "**Parte do peso da bolsa no modelo base vinha de onde ficam as vagas de bolsa "
                                         "maior em relação à origem dos médicos** (2ª linha do §3).",
         "MISTA": "**A leitura muda conforme o recorte; vale linha a linha.**",
@@ -1258,6 +1382,11 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
                  f"{ROTULO[ESPECS[chave]['referencia']]}; {ROTULO_REGRA[li['regra']]}. p de Holm {_p(r['p_holm'])} "
                  f"(score bootstrap: {_p(r['p_holm_score_rademacher'])}). Diferença de log da razão de chances "
                  f"{_n(d['estimativa'], 2)} {_ic(d['ic95_inf'], d['ic95_sup'], 2)}.")
+        if d["ic95_inf"] > 0 or d["ic95_sup"] < 0:
+            frase += (f" A diferença contra o M1 exclui zero: comparando dentro da mesma UF, a bolsa pesa "
+                      f"{'mais' if d['estimativa'] > 0 else 'menos'} que no M1 (descritivo, fora do Holm).")
+        else:
+            frase += " A diferença contra o M1 contém zero."
         if li.get("ic_muito_largo"):
             frase += " O IC é pelo menos duas vezes mais largo que o da referência: a comparação local tem pouca " \
                      "informação (3ª linha do §3)."
@@ -1276,6 +1405,18 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
     if contem:
         frase_km += (" O IC do β contém zero em " + " e ".join(ROTULO[c] for c in contem) +
                      "; o IC dos km também contém zero ali.")
+    for vl, m1 in (("VL1_emp", "M1_emp"), ("VL1_c2", "M1_c2")):
+        gv, gm = _sel(est, vl, "coeficiente", DIST), _sel(est, m1, "coeficiente", DIST)
+        bv, bm = _sel(est, vl, "coeficiente", B), _sel(est, m1, "coeficiente", B)
+        kv, km_ = _sel(est, vl, "km_equivalentes", "K5"), _sel(est, m1, "km_equivalentes", "K5")
+        if kv["estimativa"] < km_["estimativa"] and abs(gv["estimativa"]) > abs(gm["estimativa"]) and \
+                bv["estimativa"] >= bm["estimativa"]:
+            frase_km += (f" Em {ROTULO[vl]}, os km caem em relação ao M1 porque, dentro da mesma UF, a distância pesa "
+                         f"mais ({_n(gv['estimativa'], 2)} por 100 km, contra {_n(gm['estimativa'], 2)} no M1), e não "
+                         "porque a bolsa pese menos.")
+        else:
+            frase_km += (f" Em {ROTULO[vl]}, o peso da distância é {_n(gv['estimativa'], 2)} por 100 km (no M1, "
+                         f"{_n(gm['estimativa'], 2)}).")
     t.append(frase_km)
     v1 = resumo["identificacao"]["VL1_emp"]["identificacao"]
     t.append(f"**Quem identifica.** Nos ciclos 1–3, {v1['pares_com_variacao_de_bolsa']} pares de UF (origem, vaga) "
@@ -1392,6 +1533,10 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "",
         *bloco("decisoes", texto_decisoes()),
         "",
+    ]
+    if tem_portao:
+        Lh += ["### 7.1 Notas de execução", "", *bloco("notas", texto_notas()), ""]
+    Lh += [
         "## 8. Limites",
         "",
         "- **Pós-resultado.** O M1, o P1h, o 52c e o 52d já eram conhecidos. O adendo foi congelado antes de rodar, mas "
@@ -1540,6 +1685,7 @@ def main(argv: list[str] | None = None) -> int:
                                                                   "celulas_com_vagas_imediatas_diferentes",
                                                                   "imputadas")}},
         "decisoes": DECISOES,
+        "notas_de_execucao": NOTAS_EXECUCAO,
         "especificacoes": ESPECS,
         "entradas": entradas(dados),
         "integridade": ("nada simulado nem imputado; data/ só lido; IVS do a08 (o arquivo local de IVS da auditoria 16 "
@@ -1585,6 +1731,8 @@ def main(argv: list[str] | None = None) -> int:
     resumo["score_bootstrap"] = {k: res[k].get("score_bootstrap", {}) for k in COM_SCORE}
     resumo["convergencia"] = {k: {"ok": bool(r["ok"]), "status": r.get("status"), "iteracoes": r.get("iteracoes"),
                                   "omitidas": r.get("omitidas", []), "n_efeitos_fixos": r.get("n_efeitos_fixos", 0),
+                                  "grad_max": r.get("grad_max"), "decremento_final": r.get("decremento_final"),
+                                  "partida": r.get("partida", "zero (estimar do script 25)"),
                                   "termos_sem_efeito_fixo": [t for t in r["termos"] if not t.startswith(PREFIXO_EF)],
                                   "nota": r.get("nota", "")} for k, r in res.items()}
     resumo["covariancias"] = covariancias(res)

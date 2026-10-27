@@ -145,6 +145,10 @@ STEPS = [
     # imediata, P1 M2, M4, M6–M9, DAP, km e D_UF). Importa o 42 (e por ele o 25c, o 25, o 16 e o 12); portão contra
     # E9_, P1_, P1_dap e P1h_ (1e-8) antes de trocar a covariável; confere M1 e M5 contra VC_.
     ROOT / "scripts" / "rdd_bolsa" / "48_sensibilidades_ciclo2_quadro_1302.py",
+    # Adendo 52e (pós-resultado): H2 com efeito fixo de UF de origem × UF da vaga (VL-1), comparação local no corte
+    # (VL-2), região de saúde de origem × UF da vaga (VL-3) e km equivalentes (VL-4). Importa o 42 (e por ele o 25c, o
+    # 25, o 16 e o 12); portão VL-5 contra P1_, P1h_, VC_ (42) e VD_ (48) antes de qualquer conta nova.
+    ROOT / "scripts" / "rdd_bolsa" / "50_escolha_localizacao_par.py",
     # Realocação (protocolo 58, exploratório): a bolsa das concorrentes do mesmo curso e ciclo na região de saúde
     # desloca candidatos e preenchimento? Lê as células do 12, o a08, a grade de faixas (a03, a04), a CIR e os
     # centroides brutos, o Censo 2022 (a06) e o CNES pré (a09, função do 24); importa o 16, o 17, o 19 e o 24.

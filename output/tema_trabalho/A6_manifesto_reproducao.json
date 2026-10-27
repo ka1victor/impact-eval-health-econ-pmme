@@ -64,6 +64,7 @@
     ".venv/bin/python scripts/rdd_bolsa/25c_magnitudes_P1h.py",
     ".venv/bin/python scripts/rdd_bolsa/42_escolha_vaga_imediata_c2.py",
     ".venv/bin/python scripts/rdd_bolsa/48_sensibilidades_ciclo2_quadro_1302.py",
+    ".venv/bin/python scripts/rdd_bolsa/50_escolha_localizacao_par.py",
     ".venv/bin/python scripts/rdd_bolsa/32_realocacao_bolsa.py",
     ".venv/bin/python scripts/rdd_bolsa/28_trajetoria_medicos.py",
     ".venv/bin/python scripts/rdd_bolsa/30_mecanismo_alocacao.py",
@@ -97,7 +98,7 @@
   "comandos_derivados_de": "run_all.py (lista STEPS)",
   "versoes": {
     "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
-    "platform": "Linux-6.18.44-fc-v153-x86_64-with-glibc2.39",
+    "platform": "Linux-6.18.44-fc-v165-x86_64-with-glibc2.39",
     "pandas": "3.0.5",
     "numpy": "2.5.2",
     "statsmodels": "0.15.0"
