@@ -651,7 +651,7 @@ CHAVE_RB = ["fonte", "ciclo", "modelo", "conjunto", "especificacao", "analise", 
 # ---------------------------------------------------------------------------
 
 def _sel(est: pd.DataFrame, versao: str, **f) -> pd.Series:
-    m = (est["versao"] == versao).to_numpy()
+    m = (est["versao"] == versao).to_numpy().copy()
     for k, v in f.items():
         m &= (est[k].fillna("").astype(str) == str(v)).to_numpy()
     s = est[m]
@@ -817,8 +817,12 @@ ROT_ANALISE = {"score_bootstrap_rademacher_cluster_conjunto": "p do score bootst
                "ic_inversao_score_rademacher_cluster_curso": "IC por inversão do score"}
 
 
+ROT_CONJUNTO = {"principal": "conjunto principal", "sensibilidade": "só vaga imediata"}
+
+
 def rot_linha(m: dict | pd.Series) -> str:
     espec = ROT_ESPEC.get(m["especificacao"], m["especificacao"])
+    m = {**dict(m), "conjunto": ROT_CONJUNTO.get(m["conjunto"], m["conjunto"])}
     if m["analise"] == "cluster_curso":
         return f"{ROT_MODELO.get(m['modelo'], m['modelo'])}, {m['conjunto']}, {espec}, {ROT_TERMO.get(m['termo'], m['termo'])} (CR1 por curso)"
     if m["analise"]:
@@ -863,9 +867,9 @@ def linhas_figura(est: pd.DataFrame) -> list[tuple[str, str, dict]]:
                 if e == ESPEC and modelo == COND:
                     continue
                 for t in termos:
-                    rot = f"{idr}: {rotc}, {ROT_MODELO[modelo]}, {ROT_ESPEC[e]}"
-                    if t != B:
-                        rot += f" ({ROT_TERMO[t]})"
+                    pre = f"{idr}: só vaga imediata" if conjunto == "sensibilidade" else f"{idr}: {ROT_MODELO[modelo]}"
+                    rot = (f"{pre}, {ROT_ESPEC[e]}" if t == B else
+                           f"{pre}, {ROT_ESPEC[e].replace(', degraus', '')}, {ROT_TERMO[t]}")
                     sel.append((rot, idr, dict(fonte="E9_estimativas", modelo=modelo, conjunto=conjunto,
                                                especificacao=e, termo=t)))
     return sel
@@ -914,6 +918,7 @@ def figura(est: pd.DataFrame, lei: dict) -> dict:
     ax1.set_xlabel("razão de chances da 1ª opção por +R$ 5 mil (escala log), IC 95%", fontsize=10.5)
     ax1.set_title("ciclo 2: peças RB-1, RB-3, RB-4 e RB-5", fontsize=11, loc="left")
     # Placebos (RB-2)
+    tmax = 0.0
     for k, v in enumerate(VERSOES):
         pl = est[(est["versao"] == v) & (est["ciclo"] == "2") & (est["id_rb"] == "RB-2") &
                  (est["fonte"] == "E9_estimativas") & (est["termo"] == "degrau_placebo")]
@@ -925,12 +930,14 @@ def figura(est: pd.DataFrame, lei: dict) -> dict:
                  mec=COR[v])
         tr = abs(_rob(est, v, "placebo_cortes", "2", "t_real")["estimativa"])
         ax2.plot([tr], [yk], "D", ms=11, color=COR[v], mec="#1f1f1d", mew=1.2, zorder=4)
-        ax2.text(tr, yk + 0.22, f"|t| real {_n(tr, 2)}", ha="center", fontsize=9.5, color="#2b2b29")
+        tmax = max(tmax, tr, float(t.max()) if len(t) else 0.0)
+        ax2.text(tr, yk + 0.2, f"|t| real {_n(tr, 2)}", ha="right", fontsize=9.5, color="#2b2b29")
     ax2.axvline(1.96, color="#52514e", lw=0.8, ls=":")
     ax2.set_yticks([1, 0])
     ax2.set_yticklabels(["antiga (19/03)", "corrigida (13/02)"], fontsize=10)
     ax2.set_ylim(-0.6, 1.6)
-    ax2.set_xlabel("|t| do degrau no corte falso (pontos) e da bolsa no corte verdadeiro (losango)", fontsize=10)
+    ax2.set_xlim(0, tmax * 1.1)
+    ax2.set_xlabel("|t|: cortes falsos (pontos) e corte verdadeiro (losango)", fontsize=10)
     ax2.set_title("ciclo 2: cortes placebo (RB-2)", fontsize=11, loc="left")
     for ax in (ax1, ax2):
         for s in ("top", "right", "left"):
@@ -947,7 +954,7 @@ def figura(est: pd.DataFrame, lei: dict) -> dict:
     fig.text(0.01, 0.985, titulo_figura(lei), fontsize=14.5, ha="left", va="top", color="#1f1f1d")
     fig.text(0.01, 0.012, "Escolha da 1ª opção, condicional a se candidatar. Faixa azul: peça principal (RB-1). Bolsa: "
              "pacote do corte, não participação no PMM-E.", fontsize=9.5, color="#52514e", ha="left", va="bottom")
-    fig.subplots_adjust(left=0.30, right=0.985, top=0.90, bottom=0.07, wspace=0.18)
+    fig.subplots_adjust(left=0.27, right=0.975, top=0.90, bottom=0.07, wspace=0.22)
     fig.savefig(FIG, dpi=130, metadata={"Software": None})
     plt.close(fig)
     return {"arquivo": rel(FIG), "sha256": sha256(FIG), "titulo": titulo_figura(lei), "como_ler": COMO_LER}
@@ -1181,7 +1188,7 @@ def tabela_rb4(est: pd.DataFrame) -> str:
     for ciclo in CICLOS_QUE_MUDAM:
         a = _coef(est, ANTIGA, ciclo, COND, "sensibilidade", "spline_quadratico__bolsa_linear")
         c = _coef(est, CORRIGIDA, ciclo, COND, "sensibilidade", "spline_quadratico__bolsa_linear")
-        n.append(f"ciclo {ciclo}: {_int(a['n_candidatos'])} → {_int(c['n_candidatos'])}")
+        n.append(f"{'ciclo 2' if ciclo == '2' else 'ciclos 1–3'}: {_int(a['n_candidatos'])} → {_int(c['n_candidatos'])}")
     return "\n".join([
         "Logit condicional da 1ª opção no conjunto só com células de vaga imediata (o tipo de vaga define o conjunto e "
         f"os candidatos; candidatos, antiga → corrigida: {'; '.join(n)}). A especificação principal desse conjunto "
@@ -1255,15 +1262,22 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
     t = []
     cr_a = _coef(est, ANTIGA, "2", COND, "principal", ESPEC)
     cr_c = _coef(est, CORRIGIDA, "2", COND, "principal", ESPEC)
-    nums = (f"No ciclo 2, com o quadro de 13/02, o p do score bootstrap é {_p(c['p_score_rademacher'])} (Rademacher) e "
-            f"{_p(c['p_score_webb'])} (Webb), contra {_p(a['p_score_rademacher'])} e {_p(a['p_score_webb'])} com o "
-            f"quadro de 19/03; o CV3 dá p {_p(c['p_cv3'])} e IC {_ic(*c['ic_cv3'], 4)} (antes, p {_p(a['p_cv3'])}, "
+    nums = (f"No ciclo 2, com o quadro de 13/02, o score bootstrap dá {_peq(c['p_score_rademacher'])} (Rademacher) e "
+            f"{_peq(c['p_score_webb'])} (Webb), contra {_peq(a['p_score_rademacher'])} e {_peq(a['p_score_webb'])} com "
+            f"o quadro de 19/03; o CV3 dá {_peq(c['p_cv3'])} e IC {_ic(*c['ic_cv3'], 4)} (antes, {_peq(a['p_cv3'])}, "
             f"IC {_ic(*a['ic_cv3'], 4)}); o IC por inversão do score vai de {_ic(*a['ic_inversao'], 4)} para "
             f"{_ic(*c['ic_inversao'], 4)}. O coeficiente da bolsa (CR1, adendo 52c) vai de {_n(cr_a['estimativa'], 4)} "
             f"para {_n(cr_c['estimativa'], 4)} por R$ 1 mil/mês.")
-    plac = (f"Nos cortes placebo (RB-2), {_int(c['RB2_n_placebos_com_abs_t_maior_ou_igual'])} corte(s) falso(s) têm "
-            f"|t| maior ou igual ao do corte verdadeiro, e o p por posto é {_n(c['RB2_p_posto'], 3)} (antes: "
-            f"{_int(a['RB2_n_placebos_com_abs_t_maior_ou_igual'])} e {_n(a['RB2_p_posto'], 3)}).")
+    def _quantos(n) -> str:
+        n = int(n)
+        return "nenhum corte falso tem" if n == 0 else ("1 corte falso tem" if n == 1 else f"{n} cortes falsos têm")
+
+    na = int(a["RB2_n_placebos_com_abs_t_maior_ou_igual"])
+    plac = (f"Nos cortes placebo (RB-2), {_quantos(c['RB2_n_placebos_com_abs_t_maior_ou_igual'])} |t| maior ou igual "
+            f"ao do corte verdadeiro, e o p por posto é {_n(c['RB2_p_posto'], 3)}"
+            f"{', o menor possível com essa grade' if c['RB2_corte_fora_da_distribuicao'] else ''} (com o quadro de "
+            f"19/03: {'nenhum' if na == 0 else na}; p por posto {_n(a['RB2_p_posto'], 3)}).")
+
     frase = "\"o ciclo 2 é robusto a poucos *clusters* e a placebos\""
     if c["regra"] == "MANTEM":
         t.append(f"**RB-1 e RB-2: a frase do doc 44 {frase} continua valendo com o tipo de vaga anterior à "
@@ -1307,10 +1321,14 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
              f"{_p(emp[0][0]['p'])} → {_p(emp[1][0]['p'])}; p por posto contra os placebos: "
              f"{_n(emp[0][1]['estimativa'], 3)} → {_n(emp[1][1]['estimativa'], 3)}. O empilhado continua sendo uma "
              "média de ciclos heterogêneos (doc 42).")
+    veredito = {"MANTEM": "A conclusão continua de pé: com o quadro da inscrição, os testes dão o mesmo recado.",
+                "REBAIXAR": "A conclusão precisa ser rebaixada: com o quadro da inscrição, parte dos testes para poucos "
+                            "grupos deixa de excluir o zero.",
+                "PLACEBO_NAO_CONFIRMA": "A conclusão fica pela metade: os testes para poucos grupos se mantêm, mas o "
+                                        "corte verdadeiro deixa de se destacar dos cortes falsos."}[c["regra"]]
     t.append("**Em linguagem simples.** O doc 44 diz que o efeito da bolsa sobre a 1ª opção no ciclo 2 aguenta testes "
              "feitos para poucos grupos e para cortes falsos. Esses testes usavam um quadro de vagas arrumado depois do "
-             "resultado. Aqui eles foram refeitos com o quadro que o candidato via na inscrição; a primeira frase desta "
-             "seção diz se a conclusão do doc 44 continua de pé. A bolsa aqui é o pacote do corte de IVS (bolsa e "
+             "resultado. Aqui eles foram refeitos com o quadro que o candidato via na inscrição. " + veredito + " A bolsa aqui é o pacote do corte de IVS (bolsa e "
              "outras regras federais que mudam nos mesmos cortes), não a participação no PMM-E; o E9 não usa a origem "
              "do candidato, e onde ela aparece (P1) é preferência revelada, não efeito causal; tudo vale para quem se "
              "candidatou, dentro das vagas abertas.")
@@ -1425,7 +1443,7 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "- **Placebos têm piso.** Com a grade do doc 42, o menor p por posto possível é o de nenhum corte falso com |t| "
         "maior que o real; o teste não distingue efeitos maiores que isso. A fração de placebos com |t| alto mostra que "
         "o t com cluster por conjunto, com spline linear, superestima a precisão (doc 42).",
-        "- **BKY novo.** O E9 é exploratório e não tinha família de correção múltipla; a família da seção 5.6 foi "
+        "- **BKY novo.** O E9 é exploratório e não tinha família de correção múltipla; a família BKY deste adendo foi "
         "fixada na decisão 9, antes das estimativas, e junta inferências diferentes sobre o mesmo peso da bolsa.",
         "- **Escolha condicional.** Tudo vale para quem se candidatou, dentro das vagas abertas do seu curso e ciclo; o "
         "conjunto de escolha supõe que o candidato viu todas as células do curso; IIA do logit condicional; o "

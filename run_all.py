@@ -145,6 +145,11 @@ STEPS = [
     # imediata, P1 M2, M4, M6–M9, DAP, km e D_UF). Importa o 42 (e por ele o 25c, o 25, o 16 e o 12); portão contra
     # E9_, P1_, P1_dap e P1h_ (1e-8) antes de trocar a covariável; confere M1 e M5 contra VC_.
     ROOT / "scripts" / "rdd_bolsa" / "48_sensibilidades_ciclo2_quadro_1302.py",
+    # Adendo 52f (pós-resultado): robustezes do E9 no ciclo 2 com o quadro de 13/02/2026 (score bootstrap, CV3,
+    # inversão, placebos, forma funcional, janelas, só vaga imediata, explodido, cluster por curso). Importa o 48 (e
+    # por ele o 42 e o 16); portão RB-6 contra todas as linhas de E9_ (1e-8) antes de trocar o tipo de vaga; confere o
+    # E9 principal contra VC_ (42) e o só vaga imediata contra VD_ (48).
+    ROOT / "scripts" / "rdd_bolsa" / "52_robustez_E9_ciclo2_quadro_1302.py",
     # Adendo 52e (pós-resultado): H2 com efeito fixo de UF de origem × UF da vaga (VL-1), comparação local no corte
     # (VL-2), região de saúde de origem × UF da vaga (VL-3) e km equivalentes (VL-4). Importa o 42 (e por ele o 25c, o
     # 25, o 16 e o 12); portão VL-5 contra P1_, P1h_, VC_ (42) e VD_ (48) antes de qualquer conta nova.
