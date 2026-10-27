@@ -21,6 +21,13 @@ atualizacao: 27 de outubro de 2026
 > [09_roteiro_fala_7min.md](09_roteiro_fala_7min.md); o mapa do deck anterior para este, em
 > [10_mapa_deck_anterior_para_rubrica.md](10_mapa_deck_anterior_para_rubrica.md).
 >
+> **Correções da [auditoria 55](../../auditorias/55_auditoria_deck_rubrica.md) (27/10/2026), só de redação.** A
+> leitura do coeficiente diz contra o quê se compara ("UF de origem vs. outra UF: chance ×11,0"; na fala, "entre duas
+> vagas iguais no resto, inclusive na distância"); "toda a bolsa" no título da Conclusão e na robustez, como no teste
+> D_UF; o conjunto de escolha é "suposto"; a limitação "só ciclo 2" implica "não generalizar"; o roteiro dos slides
+> 2, 3, 7 e 11 fala menos números (eles ficam na tela) para caber nos 7 minutos com folga; "família" saiu da lista do
+> que "sai da conta" no logit condicional. Nenhum número mudou.
+>
 > **Pedidos do autor (27/10/2026), nesta versão.**
 > - **Hipótese única** ([07](07_nova_hipotese.md)): "o médico escolhe vagas perto de onde já trabalha; a bolsa maior
 >   muda qual vaga ele escolhe dentro da sua região, mas pesa menos que a própria origem". Foi formulada **depois**
@@ -112,9 +119,8 @@ atualizacao: 27 de outubro de 2026
 > **Roteiro (50 s).** A 1ª opção de cada candidato vem dos editais do Ministério da Saúde, ciclos 1 a 3; a origem
 > vem do CNES: o município onde ele tinha vínculo médico antes da inscrição; bolsa e vagas, dos quadros de vagas; o
 > IVS, do Ipea; distância e UF, do IBGE. A unidade de observação é o par candidato × vaga: cada candidato aparece
-> uma vez para cada vaga aberta do seu curso e ciclo, e a variável dependente vale 1 na sua 1ª opção. O funil: dos
-> 5.714 candidatos com 1ª opção, 5.513 se ligam ao CNES, 5.425 têm origem e 5.421 entram no modelo, em 932.577
-> pares e 56 conjuntos de escolha.
+> uma vez para cada vaga aberta do seu curso e ciclo, e a variável dependente vale 1 na sua 1ª opção. O funil, à
+> direita, mostra quem sai em cada etapa: dos 5.714 candidatos com 1ª opção, 5.421 entram no modelo.
 
 > **Notas do apresentador.** 1ª opção: listas de classificação dos editais do PMM-E (SGTES/MS), ciclos 1–3, uma
 > linha por candidato e opção. Cada ciclo é um chamamento com quadro de vagas próprio: o ciclo 1 com quadro de
@@ -151,8 +157,8 @@ atualizacao: 27 de outubro de 2026
 **Números:** `R_C1_REPR`, `R_C1_MUN`, `R_C2_REPR`, `R_C2_MUN`, `R_ESCORE_IGUAIS`, `R_C3_REPR`, `R_C3_MUN`
 
 > **Roteiro (25 s).** De onde vem a variação da bolsa? De uma regra. Até IVS 0,300, R$ 10 mil; até 0,400, R$ 15 mil;
-> acima, R$ 20 mil. Cada ponto é um município, e a regra reproduz a faixa de 368 de 368 municípios no ciclo 1 e de
-> 454 de 454 no ciclo 2. O município não escolhe a bolsa: é a regra que dá.
+> acima, R$ 20 mil. Cada ponto é um município, e a regra reproduz a faixa de todos os municípios dos ciclos 1 e 2.
+> O município não escolhe a bolsa: é a regra que dá.
 
 > **Notas do apresentador.** Como ler: cada ponto é um município com vaga no quadro da 1ª chamada do ciclo 1; o
 > eixo horizontal é o IVS 2010 oficial, a cor também; o vertical, a bolsa anunciada. Até 0,300, R$ 10 mil; até
@@ -180,8 +186,8 @@ atualizacao: 27 de outubro de 2026
 
 > **Roteiro (35 s).** Antes do modelo, os dados crus. Dos 5.425 candidatos com origem, 79% põem a 1ª opção na
 > própria UF, 46% na mesma região de saúde e 36% no próprio município; a distância mediana é de 51 km. Isso é
-> descritivo: mostra onde escolhem, não por quê. Para a nossa pergunta, diz que a origem é uma força grande. O que
-> falta saber é quanto a bolsa pesa diante dela, e é isso que o modelo mede.
+> descritivo: mostra onde escolhem, não por quê. Para a pergunta: a origem é uma força grande; falta saber quanto a
+> bolsa pesa diante dela, e é isso que o modelo mede.
 
 > **Notas do apresentador.** Descritivo. Dos 5.425 candidatos com 1ª opção e município de origem, 79% põem a 1ª
 > opção na UF onde já trabalhavam, 46% na mesma região de saúde e 36% no próprio município; a distância mediana até
@@ -211,7 +217,7 @@ atualizacao: 27 de outubro de 2026
 
 > **Roteiro (45 s).** Usamos um logit condicional, por três razões. Primeiro, a escolha é discreta: o candidato
 > escolhe uma entre as vagas abertas do seu curso. Segundo, cada candidato é comparado consigo mesmo: tudo o que
-> é dele, como idade, nota ou família, é igual entre as vagas e sai da conta. Terceiro, a bolsa varia entre vagas por
+> é dele, como idade ou nota, é igual entre as vagas e sai da conta. Terceiro, a bolsa varia entre vagas por
 > uma regra do IVS, e o IVS entra como curva contínua; então o peso da bolsa vem só dos saltos nos cortes. O teste
 > central é o D_UF: o peso de a vaga estar na UF de origem menos o peso de toda a diferença de bolsa. É unilateral,
 > com erro-padrão agrupado por conjunto de escolha.
@@ -245,7 +251,7 @@ atualizacao: 27 de outubro de 2026
 | Só a bolsa? | não: pacote do corte |
 | IIA | em parte; bolsa estável |
 | Localização | par de UFs fixado |
-| Conjunto | todas as vagas vistas |
+| Conjunto | suposto: todas vistas |
 
 **Fontes:** auditorias 16, 18, 41 e 48; docs 57a (M9), 57i, 57p e 57x; `output/rdd_bolsa/portao_r1_ivs_oficial.json`; `VC_estimativas.csv`.
 
@@ -282,7 +288,7 @@ atualizacao: 27 de outubro de 2026
 ![Quanto a vaga na UF de origem e toda a diferença de bolsa (R$ 10 → 20 mil) multiplicam a chance de a vaga ser a 1ª opção, com IC 95%](../../../output/apresentacao_banca2/curto_origem_bolsa.png)
 
 - **Origem − bolsa:** 1,94 [1,48; 2,40] em log-chance; p < 0,001.
-- Na UF de origem, chance 11,0 vezes maior; toda a bolsa: 1,57 (IC contém 1).
+- UF de origem vs. outra UF: chance ×11,0; toda a bolsa: ×1,57 (IC contém 1).
 
 > **Origem é preferência revelada, não causa.**
 
@@ -290,21 +296,21 @@ atualizacao: 27 de outubro de 2026
 
 **Números:** `M1_N`, `VC_DUF_EST`, `VC_DUF_INF`, `VC_DUF_SUP`, `VC_DUF_P`, `VC_DUF_HOLM`, `VC_THETA_EST`, `VC_THETA_INF`, `VC_THETA_SUP`, `VC_THETAX_EST`, `VC_THETAX_INF`, `VC_THETAX_SUP`, `VC_B10_EST`, `VC_B10_INF`, `VC_B10_SUP`, `VC_B10X_EST`, `VC_B10X_INF`, `VC_B10X_SUP`
 
-> **Roteiro (50 s).** Este é o teste central. No mesmo modelo, com os mesmos 5.421 candidatos, ter a vaga na UF de
-> origem multiplica a chance de ela ser a 1ª opção por 11,0. Toda a diferença de bolsa, de R$ 10 mil para R$ 20 mil,
-> multiplica por 1,57, e esse intervalo contém 1: sozinha, ela não se distingue de zero. A diferença entre os dois
-> pesos, em log-chance, é 1,94, com intervalo de 1,48 a 2,40, e p unilateral menor que 0,001. Em palavras: a origem
-> pesa muito mais que toda a bolsa. Um cuidado: a origem é preferência revelada. Diz quanto ela pesa na escolha, não
-> que mudar o médico de lugar mudaria a escolha.
+> **Roteiro (50 s).** Este é o teste central. No mesmo modelo, entre duas vagas iguais no resto, inclusive na
+> distância, a da UF de origem tem 11,0 vezes a chance de ser a 1ª opção. Toda a diferença de bolsa, de R$ 10 mil
+> para R$ 20 mil, multiplica a chance por 1,57, e esse intervalo contém 1: sozinho, o peso da bolsa não se distingue
+> de zero. A diferença entre os dois pesos, em log-chance, é 1,94, com p unilateral menor que 0,001. Em palavras: a
+> origem pesa muito mais que toda a bolsa. Um cuidado: a origem é preferência revelada, não causa.
 
 > **Notas do apresentador.** Teste central da hipótese (P1h-1, com o tipo de vaga do ciclo 2 do quadro de
-> 13/02/2026; adendo 52c, auditoria 41). No mesmo modelo e com os mesmos candidatos (ciclos 1–3), a vaga ficar na UF
+> 13/02/2026; adendo 52c, auditoria 41). No mesmo modelo e com os mesmos 5.421 candidatos (ciclos 1–3), a vaga ficar na UF
 > de origem pesa 2,40 [2,27; 2,52] em log-chance: multiplica a chance de ser a 1ª opção por 11,0 [9,7; 12,5]. Toda
 > a diferença de bolsa, de R$ 10 mil para R$ 20 mil, pesa 0,45 [−0,04; 0,95]: multiplica a chance por 1,57 [0,96;
 > 2,58], intervalo que contém 1. A diferença é 1,94 [1,48; 2,40], p unilateral < 0,001 e p de Holm < 0,001
 > (família de um teste). Como ler o coeficiente: em log-chance, exp(coeficiente) é a razão de chances; 11,0 quer
-> dizer que, entre duas vagas iguais no resto, a da UF de origem tem chance 11,0 vezes maior de ser a 1ª opção. A
-> conclusão resiste à imprecisão da bolsa: o limite de cima de toda a bolsa fica abaixo do limite de baixo da origem.
+> dizer que, entre duas vagas iguais no resto (inclusive a distância), a da UF de origem tem 11,0 vezes a chance
+> de ser a 1ª opção que a de outra UF; no logit condicional, é a razão entre as probabilidades de escolher uma e a
+> outra. A conclusão resiste à imprecisão da bolsa: o limite de cima de toda a bolsa fica abaixo do limite de baixo da origem.
 > Por ciclo, a origem pesa mais nos três (Robustez). Escolha condicional a se candidatar; a bolsa é o pacote do
 > corte; a origem é preferência revelada, medida pelo vínculo anterior no CNES, e não causa da escolha.
 
@@ -318,7 +324,7 @@ atualizacao: 27 de outubro de 2026
 
 ![Razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF, ciclos 1–3 e ciclo 2, com o modelo pré-registrado em cinza claro](../../../output/apresentacao_banca2/curto_bolsa_mesma_uf.png)
 
-- Na mesma UF, +R$ 5 mil: chance 1,47 vez maior; vale 75 km a menos.
+- Na mesma UF, +R$ 5 mil: chance ×1,47; vale 75 km a menos.
 
 > **Adendo pós-resultado; pré-registrado, sem fixar a UF: p 0,072.**
 
@@ -335,7 +341,7 @@ atualizacao: 27 de outubro de 2026
 > **Notas do apresentador.** Adendo 52e (doc 57x; auditoria 48; pós-resultado): comparando só vagas da mesma UF
 > (a de origem ou outra), vistas por médicos da mesma UF de origem (efeito fixo do par de UFs), a razão de chances da
 > 1ª opção por +R$ 5 mil é 1,47 [1,15; 1,89] nos ciclos 1–3 (p de Holm 0,005) e 1,90 [1,30; 2,78] no ciclo 2 (p de
-> Holm 0,003). Como ler: entre duas vagas parecidas da mesma UF, a de bolsa R$ 5 mil maior tem chance 1,47 vez maior
+> Holm 0,003). Como ler: entre duas vagas parecidas da mesma UF, a de bolsa R$ 5 mil maior tem 1,47 vez a chance
 > de ser a 1ª opção. No modelo base, sem fixar a UF: 1,25 [0,98; 1,61] e 1,79 [1,19; 2,68]; a especificação
 > pré-registrada (P1a) não rejeita zero (p 0,072; família de um teste, Holm = p). Em km: dentro da mesma UF, +R$ 5
 > mil pesam como 75 km [28; 122] a menos de distância nos ciclos 1–3 e 117 km [56; 178] no ciclo 2; no modelo base,
@@ -357,8 +363,8 @@ atualizacao: 27 de outubro de 2026
 
 ![Robustez da escolha: razão de chances por +R$ 5 mil no modelo pré-registrado e por ciclo, com o quadro antigo do ciclo 2, com distância em log, com a região de saúde fixada e só perto do corte; à direita, origem menos toda a bolsa por ciclo](../../../output/apresentacao_banca2/curto_robustez_escolha.png)
 
-- **Mantém:** a origem pesa mais que a bolsa nos três ciclos.
-- **Não se mantém:** peso da bolsa: forte só no ciclo 2; perto do corte, inconclusivo.
+- **Mantém:** origem pesa mais que toda a bolsa nos três ciclos.
+- **Não se mantém:** peso da bolsa, forte só no ciclo 2; perto do corte, inconclusivo.
 
 > **Pré-registrado: IC contém 1.**
 
@@ -390,7 +396,7 @@ atualizacao: 27 de outubro de 2026
 
 # Discussão
 
-## Conclusão: a origem pesa mais que a bolsa? Sim
+## Conclusão: a origem pesa mais que toda a bolsa? Sim
 
 `Discussão · Conclusão`
 
@@ -404,8 +410,8 @@ atualizacao: 27 de outubro de 2026
 
 **Números:** nenhum
 
-> **Roteiro (30 s).** Voltando à pergunta: na escolha da vaga, a origem pesa mais que a bolsa? Sim, e em todos os
-> ciclos. Segundo, entre vagas da mesma UF, a bolsa maior é preferida: ela muda qual vaga o médico escolhe. Terceiro,
+> **Roteiro (30 s).** Voltando à pergunta: na escolha da vaga, a origem pesa mais que toda a bolsa? Sim, e em todos
+> os ciclos. Segundo, entre vagas da mesma UF, a bolsa maior é preferida: ela muda qual vaga o médico escolhe. Terceiro,
 > pela teoria da banca 1, o médico aceita a vaga se a bolsa compensa o custo do lugar; os dados sugerem que um degrau
 > de R$ 5 mil não compensa sair da própria UF: incentivo limitado.
 
@@ -436,18 +442,18 @@ atualizacao: 27 de outubro de 2026
 | Preferência revelada | não é causa |
 | Só candidatos | sem margem extensiva |
 | Pacote do corte | bolsa não isolada |
-| Só ciclo 2 | bolsa instável |
+| Só ciclo 2 | não generalizar |
 | Origem = CNES | não é residência |
 
 **Fontes:** doc 66 (§0, §5 e §8); doc 07 da banca 2 (§3 e §4); auditorias 18, 50, 52 e 53.
 
 **Números:** `VL1_EMP_RC`, `VL1_EMP_RCI`, `VL1_EMP_RCS`, `VL1_EMP_HOLM`, `VC_B_HOLM`
 
-> **Roteiro (40 s).** Seis limitações, cada uma com o que ela implica. A hipótese é pós-resultado: o resultado é
-> exploratório e pede confirmação com dados novos. A origem é preferência revelada: não dá para dizer que mudar o
-> médico de lugar mudaria a escolha. Só vemos quem se candidatou: nada diz quantos médicos a bolsa atrairia. O
-> contraste é o pacote do corte: não isolamos a bolsa. O peso forte da bolsa aparece só no ciclo 2: não dá para generalizar.
-> E a origem é o vínculo no CNES, não a residência: laços de família ficam de fora. Obrigado.
+> **Roteiro (40 s).** Seis limitações e o que cada uma implica. A hipótese é pós-resultado: o resultado é
+> exploratório e pede dados novos. A origem é preferência revelada: não é causa da escolha. Só vemos quem se
+> candidatou: nada diz quantos médicos a bolsa atrairia. O contraste é o pacote do corte: vale para o pacote, não
+> para os R$ 5 mil sozinhos. A bolsa pesa forte só no ciclo 2: não dá para generalizar. E a origem é o vínculo no
+> CNES, não a residência: para quem trabalha longe de casa, é a do trabalho. Obrigado.
 
 > **Notas do apresentador.** Implicações, com mais detalhe. Pós-resultado: a hipótese e o teste D_UF vieram
 > depois dos coeficientes; o resultado é exploratório e só vira confirmatório com um protocolo congelado aplicado a

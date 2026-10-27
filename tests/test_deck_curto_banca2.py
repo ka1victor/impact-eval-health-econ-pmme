@@ -71,7 +71,7 @@ SEQUENCIA = [  # (seção, título, layout); versão de 27/10/2026 revista pela 
     ("Resultados", "Teste central: a origem pesa mais que toda a bolsa", "curto_figura"),
     ("Resultados", "Dentro da mesma UF, a vaga de bolsa maior é preferida", "curto_figura"),
     ("Robustez", "Robustez: o que se mantém e o que não se mantém", "curto_figura"),
-    ("Discussão", "Conclusão: a origem pesa mais que a bolsa? Sim", "curto_texto"),
+    ("Discussão", "Conclusão: a origem pesa mais que toda a bolsa? Sim", "curto_texto"),
     ("Discussão", "Limitações e o que cada uma implica", "curto_tabela"),
     ("Apêndice", "Apêndice · O fato: sem aumento detectado no corte", "curto_figura"),
     ("Apêndice", "Apêndice · H3: oferta, numa frase", "curto_capa"),
@@ -324,7 +324,7 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertEqual(linhas["Bolsa por regra"],
                          f"sharp: {self.v('R_C1_REPR')}/{self.v('R_C1_MUN')}, {self.v('R_C2_REPR')}/{self.v('R_C2_MUN')}")
         self.assertEqual(linhas["Só a bolsa?"], "não: pacote do corte")
-        self.assertEqual(linhas["Conjunto"], "todas as vagas vistas")
+        self.assertEqual(linhas["Conjunto"], "suposto: todas vistas")  # premissa não testável (auditoria 55)
         self.assertEqual(len(linhas), 5)  # enxuto: origem e pós-resultado vão para Limitações
         self.assertIn("par de UFs", linhas["Localização"])
         self.assertIn("em parte", linhas["IIA"])
@@ -348,9 +348,12 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertTrue(self.b("VC_B10X_INF") < 1.0 < self.b("VC_B10X_SUP"))
         self.assertAlmostEqual(self.b("VC_THETA_EST") - self.b("VC_B10_EST"), self.b("VC_DUF_EST"), places=6)
         self.assertIn("preferência revelada", s["cautela"])
-        # rubrica (interpretação): a leitura do coeficiente em linguagem simples, na tela
-        self.assertIn(f"chance {self.v('VC_THETAX_EST')} vezes maior; toda a bolsa: {self.v('VC_B10X_EST')} "
-                      "(IC contém 1)", tela(s))
+        # rubrica (interpretação): a leitura do coeficiente em linguagem simples, na tela, com o termo de comparação
+        # (auditoria 55: a razão de chances compara duas vagas iguais no resto, inclusive na distância)
+        self.assertIn(f"UF de origem vs. outra UF: chance ×{self.v('VC_THETAX_EST')}; toda a bolsa: "
+                      f"×{self.v('VC_B10X_EST')} (IC contém 1)", tela(s))
+        self.assertIn("entre duas vagas iguais no resto, inclusive na distância", corrido(s["roteiro"]))
+        self.assertNotIn("vezes maior", tela(s))
         for c in ("VC_DUF_EST", "VC_THETA_EST", "VC_B10_EST"):
             self.assertIn("auditoria 41", self.todos[c]["auditoria"], c)
             self.assertIn("corrigida_13fev", json.dumps(self.todos[c]["seletor"]), c)
@@ -368,7 +371,7 @@ class TestConteudoCurto(unittest.TestCase):
         versão base em cinza; dito como adendo pós-resultado, com o Holm da especificação pré-registrada na tela."""
         s = self.por_titulo["Dentro da mesma UF, a vaga de bolsa maior é preferida"]
         self.assertIn(f"{self.v('VL1_EMP_K5')} km a menos", tela(s))
-        self.assertIn(f"chance {self.v('VL1_EMP_RC')} vez maior", tela(s))  # leitura do coeficiente (rubrica)
+        self.assertIn(f"chance ×{self.v('VL1_EMP_RC')}", tela(s))  # leitura do coeficiente (rubrica; auditoria 55)
         self.assertNotIn(self.v("VLB_EMP_K5"), tela(s))  # 75 km na tela, não os 119 do M1 (auditoria 53)
         self.assertIn("pós-resultado", s["cautela"])
         self.assertIn(f"p {self.v('VC_B_HOLM')}", s["cautela"])  # família de um teste: Holm = p (auditoria 52)
@@ -394,7 +397,7 @@ class TestConteudoCurto(unittest.TestCase):
         saúde e comparação local (inconclusiva); à direita, origem − bolsa positiva nos três ciclos."""
         s = self.por_titulo["Robustez: o que se mantém e o que não se mantém"]
         self.assertEqual(rotulos(s), ["Mantém:", "Não se mantém:"])  # rubrica (robustez)
-        self.assertIn("a origem pesa mais que a bolsa nos três ciclos", tela(s))
+        self.assertIn("origem pesa mais que toda a bolsa nos três ciclos", tela(s))
         self.assertIn("forte só no ciclo 2", tela(s))
         self.assertIn("perto do corte, inconclusivo", tela(s))
         for c in ("C1", "C3"):
@@ -438,7 +441,7 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertEqual([s["layout"] for s in disc], ["curto_texto", "curto_tabela"])
         conc, lim = disc
         self.assertIn("origem ou bolsa", self.slides[0]["titulo"])  # a pergunta, no slide 1
-        self.assertIn("a origem pesa mais que a bolsa?", conc["titulo"])  # retomada na Conclusão
+        self.assertIn("a origem pesa mais que toda a bolsa?", conc["titulo"])  # retomada na Conclusão, como o D_UF
         self.assertEqual(rotulos(conc), ["Origem", "Bolsa", "Teoria"])
         txt = tela(conc)
         for k in ("pesa mais que toda a bolsa, nos três ciclos", "muda qual vaga, na mesma UF (adendo)",
@@ -454,7 +457,7 @@ class TestConteudoCurto(unittest.TestCase):
         par = {D.texto_puro(r[0]): D.texto_puro(r[1]) for r in lim["tabela"][1:]}
         self.assertEqual(par, {"Pós-resultado": "exploratório", "Preferência revelada": "não é causa",
                                "Só candidatos": "sem margem extensiva", "Pacote do corte": "bolsa não isolada",
-                               "Só ciclo 2": "bolsa instável", "Origem = CNES": "não é residência"})
+                               "Só ciclo 2": "não generalizar", "Origem = CNES": "não é residência"})
         rot = corrido(lim["roteiro"])
         for k in ("pós-resultado", "preferência revelada", "se candidatou", "pacote do corte", "ciclo 2",
                   "não a residência"):

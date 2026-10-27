@@ -24,7 +24,9 @@
 > [09](09_roteiro_fala_7min.md). Mapa do deck anterior (`8901dea`, auditoria 53) para o novo, com o texto exato da
 > tela e o checklist do grupo: [10](10_mapa_deck_anterior_para_rubrica.md); a cópia do PDF anterior está em
 > `output/apresentacao_banca2/versoes/deck_banca2_curto_8901dea.pdf`. A rubrica está no
-> [06](06_estrutura_obrigatoria_versao_final.md), §4.
+> [06](06_estrutura_obrigatoria_versao_final.md), §4. Auditado na
+> [auditoria 55](../../auditorias/55_auditoria_deck_rubrica.md) (aprovado com correções de redação, já aplicadas;
+> o que mudou para o grupo está no doc 10, §5).
 
 > [!IMPORTANT]
 > **Hipótese única da versão final: a H2** (decisão do autor). Comece pelo
