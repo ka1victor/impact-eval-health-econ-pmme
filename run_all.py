@@ -225,6 +225,11 @@ STEPS = [
     # salto onde muda − onde não muda) na H1 (HI-1, HI-2) e na oferta local (ΔB1, ΔB2, ΔB5). G lido do a10 (JSON e
     # CSV). Importa o 40, o 43 e o 44 (referência do IBGE); portão contra HI_ (40) e OC_ (43) antes de qualquer conta.
     ROOT / "scripts" / "rdd_bolsa" / "47_heterogeneidade_porte_ied.py",
+    # Adendo 48h (pós-resultado): H1 pareada pela localização da unidade (exato na UF e em capital) e dos médicos
+    # (especialistas do curso num raio de 100 km, centroides e distância do 17), regra literal e regra 2 do 45 com a
+    # UF; origem dos médicos (X1, versionada) só como outcome. Importa o 44 e o 45 sem reescrevê-los; portão contra o
+    # PM-1 de PM_estimativas (45) antes de qualquer conta; não regrava HI_, CL_, PM_, PO_ nem X1_.
+    ROOT / "scripts" / "rdd_bolsa" / "49_pareamento_localizacao.py",
     # Síntese E8: lê E3, E5, E6, E7 e E9 e aplica o Holm às primárias P1 e P2.
     ROOT / "scripts" / "rdd_bolsa" / "15_sintese_E8.py",
     # O relatório para se a conferência do sinal não corresponder ao E3 atual.

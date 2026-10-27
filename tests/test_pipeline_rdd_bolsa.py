@@ -72,6 +72,7 @@ CADEIA = [
     RDD / "45_pareamento_regra_literal.py",  # adendo 48e: importa o 44; portão contra o PS-1/PS-2 de CL_ (44)
     RDD / "46_selecao_tipo_vaga.py",  # adendo 48f: portões contra HI_ (40) e DQ_ (38); confere CL_ (44)
     RDD / "47_heterogeneidade_porte_ied.py",  # adendo 48g: portões contra HI_ (40) e OC_ (43); G lido do a10
+    RDD / "49_pareamento_localizacao.py",  # adendo 48h: importa o 44 e o 45; portão contra o PM-1 de PM_ (45)
     RDD / "15_sintese_E8.py",
     RDD / "09b_conferir_sinal.py",  # o 09 exige a conferência em dia com o E3
     RDD / "09_gerar_relatorio_pdf.py",  # lê E1 a E9 e a síntese E8
@@ -290,6 +291,12 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                                                       RDD / "44_controles_localizacao_medicos.py",
                                                       AQ / "a10_normas_mesmos_cortes_ivs.py",
                                                       AQ / "a08_adquirir_ivs_2010_oficial.py"],
+            # Adendo 48h (49): importa o 44 e o 45 (e por eles o 40 e o 43) e confere-se contra o PM-1 de
+            # PM_estimativas.csv e os pares de PM_resumo.json (45); lê a X1 versionada e os centroides do 17.
+            RDD / "49_pareamento_localizacao.py": [RDD / "45_pareamento_regra_literal.py",
+                                                   RDD / "44_controles_localizacao_medicos.py",
+                                                   RDD / "40_h1_vagas_imediatas.py",
+                                                   RDD / "43_oferta_local_corte.py"],
             # E9 lê as tabelas de escolha do 12 e o manifesto do a11.
             RDD / "16_estimar_E9_escolha.py": [RDD / "12_construir_outcomes_funil.py",
                                               AQ / "a11_adquirir_resultado_ciclo2_chamada1.py"],
