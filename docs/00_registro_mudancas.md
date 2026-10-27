@@ -8,6 +8,31 @@
 
 ---
 
+## 27/10/2026 — Auditoria 49: deck curto da banca 2 e documentos de conteúdo
+
+Motivo: auditoria independente do deck curto da banca 2 (`output/apresentacao_banca2/deck_banca2_curto.*`), dos
+geradores, das figuras, dos manifestos, dos docs 03 a 06 e do README da banca 2 e do doc 63. O veredito é aprovado
+com correções. As 190 citações de número do deck batem com a fonte, e as 29 linhas das figuras novas também. Algumas
+afirmações estão vencidas:
+- a H2 do ciclo 2 ainda usa o quadro de 19/03, com "reestimação em curso" nas notas;
+- a explicação do sinal da H1 não traz a UF (adendos 48c e 48h);
+- algumas frases tratam "não detectado" como "não muda".
+
+A meio da auditoria, o escopo mudou: o autor decidiu trocar a hipótese, e o deck vai ser reconstruído por outro
+agente. Por isso o deck, o gerador e os docs 03, 04 e 06 não foram tocados, e os achados ficam como lista para o deck
+novo. Correções de erro factual, só de texto, nos docs 05 e 63:
+- a frase errada do cadastro reserva no ciclo 2;
+- o estado vencido da fila (§2.16 e §4.1) e das explicações da H1;
+- o cabeçalho do 05, que dizia que o doc não traz número de resultado.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/49_auditoria_deck_banca2.md`](auditorias/49_auditoria_deck_banca2.md) | auditoria do deck curto da banca 2 (`07_apresentacoes/banca2/`): veredito, achados por gravidade e tabela de conferência slide × número × fonte |
+
+---
+
 ## 27/10/2026 — Auditoria 50: doc 65 (avaliação da força das hipóteses H1, H2 e H3)
 
 Motivo: auditoria independente do doc 65, que o autor vai usar para escolher a hipótese única da banca 2. O veredito é
