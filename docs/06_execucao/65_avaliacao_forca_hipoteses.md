@@ -436,6 +436,38 @@ Duas ressalvas para a fala:
 
 ---
 
+## 4.6 Avaliação por critérios (acrescentada em 27/10/2026, a pedido do autor)
+
+Notas de 1 (fraco) a 5 (forte). São julgamento técnico sobre os números das seções 1 a 3; nenhum número novo.
+
+| Critério | H1 preenchimento | H2 bolsa × origem | H3 oferta |
+|---|:-:|:-:|:-:|
+| **Limpeza do desenho** (a variação é exógena?) | **3**: regra *sharp*, sem manipulação; mas em 0,300 capital, Nordeste e especialistas na região diferem entre os lados, e o corte é um pacote | **2**: a bolsa vem dos mesmos cortes (pacote), com hipóteses a mais (IIA, *spline* do IVS, conjunto de escolha); a origem não tem variação exógena | **1**: evento escalonado sem fonte de exogeneidade; no corte, o instrumento é fraco (F ≈ 0) |
+| **Hipótese formulada antes dos dados** | **4**: vem do modelo da banca 1; a especificação principal (48b) é pós-resultado | **2**: formulada depois de ver os coeficientes | **3**: a pergunta "soma ou remaneja" é do plano; os protocolos são pós-resultado |
+| **Força da conclusão** | **2**: "não detectado"; descarta só aumentos grandes, em parte das medidas, com IC convencional | **4**: a origem pesa muito mais que toda a bolsa, com IC longe de zero; o peso da bolsa sozinho não se distingue de zero | **2**: no médico é associação; no município, inconclusivo |
+| **Robustez** | **3**: o "não detectado" se mantém em todas as variantes (controles, PSM, Lee, porte); o **sinal** não se mantém (vira positivo com controles e pareamento) | **4**: estável entre variantes, ciclos e com o quadro corrigido; a bolsa só desloca a escolha no ciclo 2 | **2**: as horas do médico são estáveis; o município tem pré-tendência e ruptura M̄ abaixo de 1 |
+| **Precisão / poder** | **2**: só detectaria saltos de 25 a 31 p.p. por corte | **4** na desigualdade origem × bolsa; **2** no peso da bolsa | **3**: alta no médico; baixa no município |
+| **Clareza para explicar** | **4**: o gráfico do salto no corte é intuitivo; o sinal negativo exige explicação | **3**: logit e log-chance são abstratos; "R$ 5 mil = 112 km" ajuda | **3**: os dois níveis (médico e município) confundem |
+| **Ligação com a teoria da banca 1** | **5**: é o teste direto de ∂Pr(aceitar)/∂B > 0 | **4**: mostra que o custo individual (origem) domina o custo do lugar que a bolsa compensa | **2**: fala de oferta, não da bolsa |
+| **Relevância para a pergunta do artigo** | **5**: "bolsa maior enche mais vagas?" | **3**: explica por que não, mas não responde à pergunta | **3**: oferta líquida é parte da cadeia, sem a bolsa no contraste |
+| **Soma (máx. 40)** | **28** | **26** | **19** |
+
+**Leitura.** H1 e H2 ficam próximas; a H3 fica para trás em quase tudo. A H1 ganha em desenho, teoria e relevância;
+a H2 ganha em força da conclusão, robustez do que afirma e precisão. A escolha depende do peso que a banca dá a
+"desenho limpo testando a pergunta" (H1) contra "resultado firme" (H2). Os critérios têm o mesmo peso nesta soma;
+com outros pesos a ordem entre H1 e H2 pode inverter.
+
+**Pergunta mais provável da banca, e a resposta honesta:**
+- **H1:** "o resultado é nulo ou falta poder?". Os dois: não se detecta aumento, e o desenho só detectaria saltos
+  grandes por corte. Descarta aumento ≥ 25% nos alocados em 0,300, não descarta queda.
+- **H2:** "a origem é causal?". Não: é preferência revelada. A comparação diz quanto cada coisa pesa na escolha,
+  não o que aconteceria se o médico mudasse de origem. E "por que só no ciclo 2?": não sabemos; os ciclos 1 e 3
+  têm IC largo.
+- **H3:** "as horas cadastradas são presença?". Não: vínculo cadastrado não é presença, e no município o pré já
+  vinha subindo.
+
+---
+
 ## 5. O que foi lido
 
 - **H1:** [48](48_protocolo_contagem_vagas_preenchidas.md), [48b](48b_adendo_H1_vagas_imediatas.md),
