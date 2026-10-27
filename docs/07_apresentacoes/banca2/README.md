@@ -17,6 +17,12 @@
 > **Atualização:** 26 de outubro de 2026
 
 > [!IMPORTANT]
+> **Hipótese única da versão final: a H2** (decisão do autor). Comece pelo
+> [guia do grupo](08_guia_do_grupo_H2.md) e pela [nova hipótese](07_nova_hipotese.md).
+> O corpo do deck tem só a H2; as antigas H1 e H3 vão para um apêndice rápido.
+> O deck com a H2 e a análise completa (doc 66) estão em preparação.
+
+> [!IMPORTANT]
 > **Versão final (decisão do autor de 26/10/2026):** só o **deck curto** é
 > usado (`output/apresentacao_banca2/deck_banca2_curto.pptx` e `.pdf`), na
 > estrutura obrigatória do [06](06_estrutura_obrigatoria_versao_final.md)

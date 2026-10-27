@@ -8,6 +8,18 @@
 
 ---
 
+## 27/10/2026 — Banca 2: guia do grupo para a H2
+
+Motivo: o autor pediu documentação imediata, na `main`, para o grupo acompanhar e montar os slides da H2.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/08_guia_do_grupo_H2.md`](07_apresentacoes/banca2/08_guia_do_grupo_H2.md) | a H2 em uma página: história, figuras prontas, números com fonte, o que dizer e o que não dizer |
+
+---
+
 ## 27/10/2026 — Banca 2: nova hipótese (bolsa muda qual vaga, não quantas)
 
 Motivo: o autor decidiu usar como hipótese única a antiga H2 (bolsa × origem), reformulada, com o resultado da
