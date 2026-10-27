@@ -1087,8 +1087,10 @@ def resposta_curta(est: pd.DataFrame, exc: pd.DataFrame, resumo: dict, pm_est: p
     algum = any(x["codigo"] == "INDICIO_ATRAI_DE_LONGE" for x in le["ph5"])
     partes.append("**De onde vem o médico (PH-5, descritiva):** " + "; ".join(f5) + ". "
                   + ("Há indício de que o lado de bolsa maior recebe mais médicos de outra UF, mesmo sem mudar o "
-                     "total." if algum else "Não há indício de que o lado de bolsa maior atraia mais médicos de outra "
-                     "UF.") + " A origem vem da X1 (ativos em 11/09/2026), não exatamente dos alocados da 1ª chamada.")
+                     "total." if algum else "Pela regra do §3 não há indício de que o lado de bolsa maior receba mais "
+                     "médicos de outra UF: nenhum intervalo exclui o zero.")
+                  + (" " + _frase_ph5_poder(est, resumo) if not algum and _frase_ph5_poder(est, resumo) else "")
+                  + " A origem vem da X1 (ativos em 11/09/2026), não exatamente dos alocados da 1ª chamada.")
     partes.append("Tudo é robustez pós-resultado e se refere ao pacote do corte, não à bolsa isolada. O principal da H1 "
                   "continua o 48b.")
     return "\n\n".join(partes)
@@ -1096,6 +1098,82 @@ def resposta_curta(est: pd.DataFrame, exc: pd.DataFrame, resumo: dict, pm_est: p
 
 def _largura(r) -> float:
     return _f(r["ic95_sup"]) - _f(r["ic95_inf"])
+
+
+def _mde(r) -> float:
+    """Diferença mínima detectável (80% de poder, 5% bicaudal) pelo t pareado: (t_0,975 + t_0,80) × EP, com o EP
+    tirado do IC t gravado. Auditoria 47: só texto, calculado das saídas."""
+    from scipy import stats
+    n = int(_f(r["n_pares"]))
+    if r["status"] != "EXECUTADO" or n < 2:
+        return float("nan")
+    tc = float(stats.t.ppf(0.975, n - 1))
+    ep = (_f(r["ic_t_sup"]) - _f(r["ic_t_inf"])) / (2 * tc)
+    return (tc + float(stats.t.ppf(0.80, n - 1))) * ep
+
+
+def _pares_por_ciclo(rg: dict) -> dict[int, int]:
+    out = {k: 0 for k in CICLOS}
+    for p in (rg.get("PSM") or {}).get("pares") or []:
+        out[int(p["acima"].split("|c")[1])] += 1
+    return out
+
+
+def _pares_possiveis_sem_caliper(rg: dict) -> int:
+    """Máximo de pares no estrato exato (UF, capital, ciclo) entre as unidades no suporte comum, sem o caliper:
+    soma, por estrato, do menor lado. Auditoria 47 (só contagem; nenhum outcome)."""
+    caps = set(CL.T41.A36.CAPITAIS)
+    e = rg["escore_por_unidade"]
+    lo, hi = rg["PSM"]["suporte_comum"]
+    cont: dict[str, list[int]] = {}
+    for i, a, p in zip(e["id"], e["acima"], e["escore"]):
+        if not (lo - 1e-9 <= p <= hi + 1e-9):
+            continue
+        k = f"{i[:2]}|{int(i[:6] in caps)}|{i.split('|c')[1]}"
+        cont.setdefault(k, [0, 0])[0 if a else 1] += 1
+    return sum(min(v) for v in cont.values())
+
+
+def _frase_ponto(est: pd.DataFrame, res: dict) -> str:
+    """O ponto da fração preenchida comparado com a diferença mínima detectável e com os pares do 48e (auditoria
+    47): o ponto de poucos pares não é tamanho de efeito."""
+    pm_res = PM.ler_saidas()[3]
+    itens = []
+    for c in CORTES:
+        ct = ROT_CORTE[c]
+        r = CL._uma(est, bloco="PH-1", outcome="H1M-FRAC", corte=ct)
+        if r["status"] != "EXECUTADO" or not abs(_f(r["tau"])) < _mde(r):
+            continue
+        a = next(x for x in pm_res["pareamento"] if x["bloco"] == "PM-1" and x["parte"] == "H1" and x["corte"] == ct)
+        h = next(x for x in res["pareamento"] if x["bloco"] == "PH-1" and x["corte"] == ct)
+        comuns = len({(p["acima"], p["abaixo"]) for p in a["PSM"]["pares"]}
+                     & {(p["acima"], p["abaixo"]) for p in h["PSM"]["pares"]})
+        itens.append(f"{fv(r)} em {TXT_CORTE[c]}, com {comuns} {'par' if comuns == 1 else 'pares'} em comum com os "
+                     f"{len(a['PSM']['pares'])} do 48e")
+    if not itens:
+        return ""
+    return (" O ponto da fração preenchida fica abaixo dessa diferença mínima e vem de outro conjunto de pares: "
+            + "; ".join(itens) + ". Ele não deve ser lido como tamanho de efeito.")
+
+
+def _frase_ph5_poder(est: pd.DataFrame, resumo: dict) -> str:
+    """Quando todos os pares com diferença vão no mesmo sentido e o menor p possível passa de 5%, diz isso: o teste
+    não rejeita, mas o dado também não mostra ausência (auditoria 47)."""
+    partes = []
+    for x in resumo["ph5_medias"]:
+        g = x["sinais"]["H1M-OUTRA-UF"]
+        if g["diferentes_de_zero"] == 0 or g["p_minimo_permutacao"] <= ALFA:
+            continue
+        if g["abaixo_maior"] == 0 or g["acima_maior"] == 0:
+            lado = "de bolsa maior" if g["abaixo_maior"] == 0 else "de bolsa menor"
+            o = CL._uma(est, bloco="PH-5", outcome="H1M-OUTRA-UF", corte=x["corte"])
+            lim = (" O limite do intervalo mostrado como 0,00 é o próprio zero: o teste não o rejeita."
+                   if abs(_f(o["ic95_inf"])) < 0.005 or abs(_f(o["ic95_sup"])) < 0.005 else "")
+            partes.append(f"Em {_corte_txt(x['corte'])}, os {g['diferentes_de_zero']} pares com alguma diferença têm "
+                          f"todos mais médicos de outra UF do lado {lado}; com {g['diferentes_de_zero']} pares, o "
+                          f"menor p possível é {fn(g['p_minimo_permutacao'], 4, False)}, acima de 5%. O teste não "
+                          "consegue separar esse padrão do acaso, e o dado também não mostra que ele não exista." + lim)
+    return " ".join(partes)
 
 
 def interpretacao(est: pd.DataFrame, resumo: dict, pm_est: pd.DataFrame, hi: pd.DataFrame) -> str:
@@ -1126,18 +1204,31 @@ def interpretacao(est: pd.DataFrame, resumo: dict, pm_est: pd.DataFrame, hi: pd.
     else:
         itens.append("**O resultado.** Nenhuma linha principal se distingue de zero depois do Holm, mas a primeira "
                      "leitura do §3 não vale para todas (" + "; ".join(sinais) + "); ver a seção 9.")
-    pares, larg = [], []
+    pares, larg, possiveis, ciclos, mdes = [], [], [], [], []
     for c in CORTES:
         ct = ROT_CORTE[c]
         a = CL._uma(pm_est, bloco="PM-1", outcome="H1M-FRAC", corte=ct)
         r = CL._uma(est, bloco="PH-1", outcome="H1M-FRAC", corte=ct)
+        r2 = CL._uma(est, bloco="PH-1", outcome="H1M-ALOC", corte=ct)
+        rg = next(x for x in resumo["pareamento"] if x["bloco"] == "PH-1" and x["corte"] == ct)
         pares.append(f"{fint(r['n_pares'])} pares em {TXT_CORTE[c]} (no 48e, {fint(a['n_pares'])})")
+        possiveis.append(f"até {_pares_possiveis_sem_caliper(rg)} em {TXT_CORTE[c]}")
+        pc = _pares_por_ciclo(rg)
+        ciclos.append(f"{' / '.join(str(pc[k]) for k in CICLOS)} em {TXT_CORTE[c]}")
+        mdes.append(f"em {TXT_CORTE[c]}, cerca de {fn(100 * _mde(r), 0, False)} p.p. na fração preenchida (o lado de "
+                    f"baixo dos pares preencheu {fn(100 * _f(r['media_abaixo']), 0, False)}% das células) e "
+                    f"{fn(_mde(r2), 2, False)} médico por vaga imediata")
         if np.isfinite(_largura(a)) and _largura(a) > 0 and np.isfinite(_largura(r)):
             larg.append(f"{fn(_largura(r) / _largura(a), 1, False)} vezes a largura do 48e em {TXT_CORTE[c]}")
-    itens.append("**O preço.** Comparar dentro da mesma UF deixa poucos pares: " + "; ".join(pares)
-                 + ". O intervalo da fração preenchida fica com " + "; ".join(larg)
-                 + ". Não detectar diferença com tão poucos pares é um resultado fraco: diz que os dados não mostram "
-                   "diferença, não que ela não exista.")
+    itens.append("**O preço.** Comparar dentro da mesma UF, com o *caliper* do 48e (0,2 desvio-padrão do logit do "
+                 "escore), deixa poucos pares: " + "; ".join(pares) + ". Sem o *caliper*, a mesma UF, capital e ciclo "
+                 "permitiriam " + "; ".join(possiveis) + ": o que mais corta pares é o *caliper*, estreito porque o "
+                 "escore varia pouco. Os pares ficam sobretudo no ciclo 2 (ciclos 1 / 2 / 3: " + "; ".join(ciclos)
+                 + "). O intervalo da fração preenchida fica com " + "; ".join(larg)
+                 + ". Com esses pares, a menor diferença com 80% de chance de aparecer como diferente de zero (a 5%) "
+                   "fica assim: "
+                 + "; ".join(mdes) + ". Não detectar diferença com tão poucos pares é um resultado fraco: diz que os "
+                 "dados não mostram diferença, não que ela não exista." + _frase_ponto(est, resumo))
     p2 = est[est["bloco"] == "PH-2"]
     p3 = est[est["bloco"] == "PH-3"]
     z2 = all(r["status"] == "EXECUTADO" and _contem_zero(r) for _, r in p2.iterrows())
@@ -1149,8 +1240,8 @@ def interpretacao(est: pd.DataFrame, resumo: dict, pm_est: pd.DataFrame, hi: pd.
         + (" O balanço não fica limpo (alguma |DP| acima de 0,25 depois) com " + ", ".join(nl2) + "." if nl2 else "")
         + " Exigir a mesma região de saúde (PH-3) quase não forma par ("
         + "; ".join(f"{fint(r['n_pares'])} em {_corte_txt(r['corte'])}" for _, r in p3.iterrows()
-                    if r["outcome"] == "H1M-FRAC") + "): nos dois lados de um corte raramente há municípios da mesma "
-        "região de saúde, e a PH-3 não informa.")
+                    if r["outcome"] == "H1M-FRAC") + "): na mesma região de saúde e dentro do *caliper* quase não "
+        "sobra par dos dois lados do corte, e a PH-3 não informa.")
     rd = []
     for c in CORTES:
         ct = ROT_CORTE[c]
@@ -1175,10 +1266,11 @@ def interpretacao(est: pd.DataFrame, resumo: dict, pm_est: pd.DataFrame, hi: pd.
     g = {x["corte"]: x["sinais"]["H1M-OUTRA-UF"] for x in resumo["ph5_medias"]}
     itens.append("**De onde vem o médico.** " + (
         "Há indício de que o lado de bolsa maior recebe mais médicos de outra UF." if algum else
-        "Não há indício firme de que a bolsa maior traga médicos de outra UF.") + " Médico de outra UF é raro nos "
+        "Não há indício firme de que o lado de bolsa maior receba mais médicos de outra UF.") + " Médico de outra UF é raro nos "
         "pares: " + "; ".join(f"em {_corte_txt(k)}, só {v['diferentes_de_zero']} de {v['pares']} pares têm alguma "
                               f"diferença ({v['acima_maior']} com mais do lado de bolsa maior)" for k, v in g.items())
-        + ". Com tão poucos pares informativos, o teste não tem como ser conclusivo.")
+        + ". Com tão poucos pares informativos, o teste não tem como ser conclusivo."
+        + (" " + _frase_ph5_poder(est, resumo) if not algum and _frase_ph5_poder(est, resumo) else ""))
     itens.append("**O que não dá para dizer.** Que a bolsa não tem efeito (não detectar não é zero); que o resultado "
                  "isola os R$ 5 mil (em 0,300 e 0,400 muda um pacote de regras); que vale para as UFs que só aparecem "
                  "de um lado do corte (saíram pela regra 2).")
@@ -1202,7 +1294,9 @@ def gerar_blocos(est, bal, exc, resumo, pm_est, cl_est, hi) -> dict[str, str]:
         "em dois estabelecimentos conta duas vezes), nos municípios cujo centroide está a até 100 km, sem olhar "
         "estradas ou tempo de viagem. Municípios criados depois de 2010 (fora do a08) não entram, como no 44.",
         "**Cursos fora da ponte.** Os cursos 17 a 20 do ciclo 3 não têm CBO-alvo na ponte do a09 e ficam fora da média "
-        "do raio da unidade (seção 1.2).",
+        "do raio da unidade (seção 1.2). O município × ciclo que só tem vaga imediata nesses cursos fica sem o raio e "
+        "sai do pareamento (entra em \"sem alguma covariável\", seção 3); a auditoria 47 conta essa perda por lado do "
+        "corte. Ela ajuda a explicar por que quase não há par do ciclo 3.",
         "**PH-5 não é a divisão exata de Y2.** Y2 conta os alocados da 1ª chamada; a origem vem da X1, que liga os "
         "médicos ativos em 11/09/2026 ao CNES (regra D1). Só ciclos 1 e 2; parte dos médicos tem origem desconhecida. "
         "É descritiva.",

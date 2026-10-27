@@ -8,6 +8,20 @@
 
 ---
 
+## 27/10/2026 — Auditoria 47: adendo 48h (H1 pareada por UF e pelos especialistas num raio de 100 km)
+
+Motivo: auditoria independente da execução do adendo 48h (script 49, saídas `PL_*`, doc 57w). O veredito é aprovado com
+correções de texto. O recálculo próprio reproduz todas as linhas, e nenhuma estimativa mudou. As correções foram feitas
+nos blocos gerados do 57w (pelo script 49) e no cabeçalho, que passa a apontar para a auditoria.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/47_auditoria_pareamento_localizacao.md`](auditorias/47_auditoria_pareamento_localizacao.md) | auditoria do adendo 48h: veredito, achados e recálculo |
+
+---
+
 ## 27/10/2026 — Doc 57w: resultados do adendo 48h (H1 pareada por UF e pelos especialistas num raio de 100 km)
 
 Motivo: execução do adendo 48h. O doc 57w abre com as decisões de implementação, gravadas em commit próprio antes de
