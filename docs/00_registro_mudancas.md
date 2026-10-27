@@ -8,6 +8,19 @@
 
 ---
 
+## 27/10/2026 — Adendo 52f: robustez do E9 no ciclo 2 com o quadro de 13/02
+
+Motivo: o autor pediu refazer com o quadro de vagas vigente na inscrição as robustezes do conjunto principal da
+escolha no ciclo 2 e as variantes que ficaram fora do 52d (auditoria 46, A1 e A2). Congelado antes de rodar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/52f_adendo_robustez_E9_ciclo2_quadro_1302.md`](06_execucao/52f_adendo_robustez_E9_ciclo2_quadro_1302.md) | adendo congelado; resultados irão para o doc 57y |
+
+---
+
 ## 27/10/2026 — Auditoria 53: deck novo da banca 2 (só a H2)
 
 Motivo: auditoria independente do deck curto com a hipótese única, já em uso pelo grupo, na véspera da banca.
