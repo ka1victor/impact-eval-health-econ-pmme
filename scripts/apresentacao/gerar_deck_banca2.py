@@ -33,7 +33,8 @@ meio". O modo curto lê
 `docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md` e grava `deck_banca2_curto.pptx`, o PDF dele (pelo
 LibreOffice, se houver) e `manifesto_deck_banca2_curto.json`. Usa o deck do grupo só como template (mestre,
 layout; o rodapé passa a listar as oito seções da estrutura obrigatória): nenhum slide do grupo, nenhuma
-divisória, nenhum diagrama e nenhum apêndice. Cada slide tem título-afirmação, a figura (ou a tabela) grande e
+divisória e nenhum diagrama; desde 27/10/2026 (doc 07 da banca 2), o corpo tem só a hipótese da banca 2 e pode
+vir seguido de um apêndice curto (`# Apêndice` no doc 04, no máximo 2 slides, sem seção marcada no rodapé). Cada slide tem título-afirmação, a figura (ou a tabela) grande e
 poucas linhas curtas; o resto vai para as notas. H2 e H3 (plano B) saem em cinza: no título, nos rótulos que
 começam por H2 ou H3 e, nas tabelas, nas linhas todas em itálico (variáveis secundárias). O script para se as
 seções fugirem da estrutura obrigatória, se o deck passar de 14 slides (decisão do autor de 26/10/2026:
@@ -1001,7 +1002,10 @@ LAYOUTS_CURTOS = ("curto_figura", "curto_tabela", "curto_texto", "curto_ficha", 
 SECOES_CURTO = ("Hipótese", "Dados", "Análise descritiva", "Metodologia", "Identificação", "Resultados", "Robustez",
                 "Discussão")
 MAX_PALAVRAS = 30           # palavras visíveis por slide, fora o título, a figura e a linha de fontes (doc 06, §2)
-MAX_SLIDES_CURTO = 14       # slides no deck curto (decisão do autor de 26/10/2026: "idealmente <15 slides"; doc 06, §2)
+MAX_SLIDES_CURTO = 14       # slides no corpo do deck curto (decisão do autor de 26/10/2026: "idealmente <15 slides"; doc 06)
+MAX_APENDICE_CURTO = 2      # slides do apêndice curto, depois da Discussão (decisão do autor de 27/10/2026: "deixa no
+#                             apêndice, se quiser, mas bem rápido"; o corpo tem só a H2)
+APENDICE = "Apêndice"
 MAX_LINHAS_ESPEC = 4        # linhas curtas por slide de especificação: equação, outcome, amostra ou comparação, cuidado
 CINZA_FUNDO, CINZA_LINHA, CINZA_TEXTO, CINZA_ROTULO = "F2F2F0", "C9C9C4", "8A8A85", "A3A39E"
 PLANO_B = "plano B"          # marca das hipóteses secundárias (H2 e H3): rótulo e título em cinza
@@ -1011,6 +1015,12 @@ COR_TITULO_PLANO_B = "C4CCC6"  # título cinza-claro sobre a faixa verde do temp
 def eh_plano_b(rotulo: str) -> bool:
     """Rótulo de hipótese secundária: diz "plano B" ou começa por H2 ou H3 (doc 06: H2 e H3 são plano B)."""
     return PLANO_B in rotulo or bool(re.match(r"H[23]\b", rotulo))
+
+
+def rotulo_central(rotulo: str) -> bool:
+    """Rótulo da hipótese em destaque no slide de Hipótese: diz "central" ou é só "Hipótese" (desde 27/10/2026 o
+    corpo tem uma hipótese só; o outro item, a motivação, sai em cinza)."""
+    return "central" in rotulo or rotulo.strip() == "Hipótese"
 
 
 def linhas_curtas(sl: dict) -> list[tuple[str, bool]]:
@@ -1043,12 +1053,19 @@ def palavras_visiveis(sl: dict) -> int:
 
 
 def conferir_estrutura(slides: list[dict]) -> None:
-    """As seções do doc 04 são as da estrutura obrigatória (doc 06), nesta ordem, cada uma uma vez; no máximo
-    MAX_SLIDES_CURTO slides."""
-    if len(slides) > MAX_SLIDES_CURTO:
-        raise SystemExit(f"ERRO: {len(slides)} slides no deck curto; o máximo é {MAX_SLIDES_CURTO} (doc 06, §2)")
+    """As seções do corpo do doc 04 são as da estrutura obrigatória (doc 06), nesta ordem, cada uma uma vez; no
+    máximo MAX_SLIDES_CURTO slides no corpo; depois da Discussão, um apêndice curto opcional, de no máximo
+    MAX_APENDICE_CURTO slides (decisão do autor de 27/10/2026)."""
+    corpo = [sl for sl in slides if not sl["apendice"]]
+    apend = [sl for sl in slides if sl["apendice"]]
+    if slides[len(corpo):] != apend:
+        raise SystemExit("ERRO: o apêndice do deck curto vem depois da Discussão, no fim")
+    if len(corpo) > MAX_SLIDES_CURTO:
+        raise SystemExit(f"ERRO: {len(corpo)} slides no corpo do deck curto; o máximo é {MAX_SLIDES_CURTO} (doc 06, §2)")
+    if len(apend) > MAX_APENDICE_CURTO:
+        raise SystemExit(f"ERRO: {len(apend)} slides no apêndice; o máximo é {MAX_APENDICE_CURTO} (doc 06, §2)")
     vistas: list[str] = []
-    for sl in slides:
+    for sl in corpo:
         if not vistas or vistas[-1] != sl["secao"]:
             vistas.append(sl["secao"])
     if tuple(vistas) != SECOES_CURTO:
@@ -1078,7 +1095,7 @@ def conferir_curto(sl: dict) -> None:
                                  or not all(re.match(r"\*\*", m) for m in sl["marcadores"][1:])):
         raise SystemExit(f"ERRO: a especificação {sl['titulo']!r} abre com a equação (sem rótulo) e segue com linhas "
                          "rotuladas")
-    if lay == "curto_hipotese" and sum("central" in m.split("**")[1] for m in sl["marcadores"]) != 1:
+    if lay == "curto_hipotese" and sum(rotulo_central(m.split("**")[1]) for m in sl["marcadores"]) != 1:
         raise SystemExit(f"ERRO: o slide de hipóteses {sl['titulo']!r} tem de ter uma, e só uma, hipótese central")
     n = len(linhas_curtas(sl))
     if n > limite_linhas(sl):
@@ -1230,8 +1247,8 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
             _linha_curta(s, caut[0], True, y_c)
             y_fim = y_c - 0.25
         partes = [re.match(r"\*\*(.+?)\*\*\s*(.*)", it).groups() for it in itens]
-        central = [p for p in partes if "central" in p[0]]
-        planos = [p for p in partes if "central" not in p[0]]
+        central = [p for p in partes if rotulo_central(p[0])]
+        planos = [p for p in partes if not rotulo_central(p[0])]
         gap, w_rot = 0.25, 2.9
         h_c = (y_fim - Y0 - gap * len(planos)) * 0.5
         h_b = (y_fim - Y0 - h_c - gap * len(planos)) / max(len(planos), 1)
@@ -1356,8 +1373,6 @@ def xml_slide_curto(titulo: str, secao: str, partes: list[str]) -> str:
 def construir_curto(deck: Path, saida: Path) -> dict:
     """Deck curto: o deck do grupo entra só como template (mestre, layout, rodapé); os slides vêm do doc 04."""
     slides_doc = ler_slides(DOC_CURTO)
-    if any(sl["apendice"] for sl in slides_doc):
-        raise SystemExit("ERRO: o deck curto não tem apêndice")
     conferir_estrutura(slides_doc)
     for sl in slides_doc:
         conferir_curto(sl)
@@ -1459,12 +1474,16 @@ def escrever_manifesto_curto(deck: Path, saida: Path, resumo: dict, com_pdf: boo
         "natureza_dos_dados": "EMPIRICO",
         "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)",
         "pedido": "autor, 26/10/2026: só a parte empírica, muito menor, sem o diagrama causal da teoria; estrutura "
-                  "obrigatória da versão final (doc 06); no máximo cerca de 30 palavras por slide",
+                  "obrigatória da versão final (doc 06); no máximo cerca de 30 palavras por slide; 27/10/2026: "
+                  "hipótese única, a antiga H2, com gráficos simples (doc 07 da banca 2); o corpo tem só a H2, e a "
+                  "antiga H1 (o fato) e a antiga H3 vão para um apêndice de no máximo 2 slides",
         "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na "
                  f"ordem {' → '.join(SECOES_CURTO)}; no máximo {MAX_PALAVRAS} palavras visíveis por slide, fora o "
-                 "título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama, sem apêndice",
+                 "título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama; corpo com só a H2 "
+                 f"(no máximo {MAX_SLIDES_CURTO} slides) e apêndice curto (no máximo {MAX_APENDICE_CURTO} slides) "
+                 "depois da Discussão",
         "numeracao_das_hipoteses": "a partir de 26/10/2026: H1 preenchimento; H2 bolsa × origem (antes H3); H3 "
-                                   "oferta (antes H4)",
+                                   "oferta (antes H4); desde 27/10/2026 o corpo tem só a H2 (doc 07 da banca 2)",
         "conteudo_canonico": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
         "entradas": [
             {"caminho": "deck do grupo (fora do repositório; não é alterado)", "nome": deck.name,

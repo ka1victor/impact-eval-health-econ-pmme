@@ -71,5 +71,5 @@ Hipótese → Dados → Análise descritiva → Metodologia → Identificação 
 | a avaliação das hipóteses (por que H2) | [`docs/06_execucao/65_avaliacao_forca_hipoteses.md`](../../06_execucao/65_avaliacao_forca_hipoteses.md) §4.6–4.8 |
 | os resultados da escolha | docs 57a, 57i, 57p, 57v, 57x em `docs/06_execucao/` |
 | a análise completa da H2 | [`docs/06_execucao/66_analise_completa_H2.md`](../../06_execucao/66_analise_completa_H2.md) (auditoria em curso) |
-| o deck | `output/apresentacao_banca2/deck_banca2_curto.pdf` (a versão com a H2 está sendo gerada; a atual ainda é a antiga) |
+| o deck | `output/apresentacao_banca2/deck_banca2_curto.pdf` (versão com a H2, 27/10/2026: 11 slides no corpo e 2 no apêndice; conteúdo em [04](04_conteudo_deck_curto.md)) |
 | decisões e pendências | [05_discussao_historia_empirica.md](05_discussao_historia_empirica.md) §2.16 e §4.1 |

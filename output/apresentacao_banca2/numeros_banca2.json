@@ -1,7 +1,7 @@
 {
   "natureza_dos_dados": "EMPIRICO",
   "nota": "blocos separados: 'numeros' (EMPIRICO), 'failure_mode' (só documenta o arquivo errado) e 'texto_citado' (atos normativos e literatura, extraídos do texto-fonte)",
-  "numeracao_das_hipoteses": "a partir de 26/10/2026, na apresentação: H1 preenchimento; H2 bolsa × origem (antes H3); H3 oferta (antes H4). Os nomes dos códigos não mudam (H3_* são do P1h, hoje a H2); o campo 'hipotese_apresentacao' de cada código traz a numeração nova",
+  "numeracao_das_hipoteses": "a partir de 26/10/2026, na apresentação: H1 preenchimento; H2 bolsa × origem (antes H3); H3 oferta (antes H4). Os nomes dos códigos não mudam (H3_* são do P1h, hoje a H2); o campo 'hipotese_apresentacao' de cada código traz a numeração nova. Desde 27/10/2026 (doc 07 da banca 2) o corpo do deck tem só a H2; a H1 (o fato) e a H3 ficam no apêndice",
   "script": "scripts/apresentacao/gerar_figuras_banca2.py",
   "numeros": {
     "R_ESCORE_IGUAIS": {
@@ -14459,6 +14459,2481 @@
       },
       "formato": "int",
       "descricao": "registros na lista de especialistas ativos do PMM-E de 11/09/2026"
+    },
+    "HI1_300_MDE": {
+      "valor": "25,1",
+      "valor_bruto": 25.113580486803944,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.300|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "mde",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1, corte 0,300: MDE de 80% (p.p.)",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI1_400_MDE": {
+      "valor": "31,0",
+      "valor_bruto": 30.985107950549263,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-1|HI-1|1+2+3|0.400|principal|h=0.050|c2=13fev"
+        },
+        "coluna": "mde",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-1, corte 0,400: MDE de 80% (p.p.)",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C1_300_TAU": {
+      "valor": "−1,07",
+      "valor_bruto": -1.0707162342748726,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|1|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 1, corte 0,300: salto",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C1_300_INF": {
+      "valor": "−2,88",
+      "valor_bruto": -2.876543245504001,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|1|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 1, corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C1_300_SUP": {
+      "valor": "+0,74",
+      "valor_bruto": 0.735110776954256,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|1|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 1, corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C2_300_TAU": {
+      "valor": "−0,97",
+      "valor_bruto": -0.9666406715728325,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|2|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 2, corte 0,300: salto",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C2_300_INF": {
+      "valor": "−2,48",
+      "valor_bruto": -2.482744586828748,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|2|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 2, corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C2_300_SUP": {
+      "valor": "+0,55",
+      "valor_bruto": 0.549463243683083,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|2|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 2, corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C3_300_TAU": {
+      "valor": "−1,33",
+      "valor_bruto": -1.3306637747556005,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|3|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 3, corte 0,300: salto",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C3_300_INF": {
+      "valor": "−3,59",
+      "valor_bruto": -3.587252500914854,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|3|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 3, corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "HI2_C3_300_SUP": {
+      "valor": "+0,93",
+      "valor_bruto": 0.9259249514036529,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/HI_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/HI_estimativas.csv",
+        "filtro": {
+          "id_linha": "HI-s1|HI-2|3|0.300|por_ciclo|h=0.050|c2=13fev"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48b (doc 57n; auditoria 38, aprovado com correções de texto; pós-resultado): HI-s1, HI-2 só no ciclo 3, corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 38 (adendo 48b, doc 57n): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H41_300_TAU": {
+      "valor": "+5,4",
+      "valor_bruto": 5.441828953332411,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,300: salto",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H41_300_INF": {
+      "valor": "−11,0",
+      "valor_bruto": -10.953151894087485,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H41_300_SUP": {
+      "valor": "+21,8",
+      "valor_bruto": 21.836809800752306,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H41_400_TAU": {
+      "valor": "−4,2",
+      "valor_bruto": -4.236024337827605,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,400: salto",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H41_400_INF": {
+      "valor": "−21,1",
+      "valor_bruto": -21.09393046886385,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,400: IC 95% inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H41_400_SUP": {
+      "valor": "+12,6",
+      "valor_bruto": 12.621881793208642,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,400: IC 95% superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H42_300_TAU": {
+      "valor": "−0,62",
+      "valor_bruto": -0.6198541709186329,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,300: salto",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H42_300_INF": {
+      "valor": "−1,67",
+      "valor_bruto": -1.6712730758306078,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,300: IC 95% inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H42_300_SUP": {
+      "valor": "+0,43",
+      "valor_bruto": 0.43156473399334194,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,300: IC 95% superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H42_400_TAU": {
+      "valor": "−0,08",
+      "valor_bruto": -0.08030796096276224,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,400: salto",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H42_400_INF": {
+      "valor": "−0,68",
+      "valor_bruto": -0.683667398229734,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,400: IC 95% inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H42_400_SUP": {
+      "valor": "+0,52",
+      "valor_bruto": 0.5230514763042095,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,400: IC 95% superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_300_TAU": {
+      "valor": "+16,4",
+      "valor_bruto": 16.38925518925519,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,300: média das diferenças nos pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_300_INF": {
+      "valor": "−3,8",
+      "valor_bruto": -3.795685801470766,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,300: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_300_SUP": {
+      "valor": "+36,6",
+      "valor_bruto": 36.64747950930236,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,300: IC 95% de permutação, superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_300_HOLM": {
+      "valor": "0,434",
+      "valor_bruto": 0.434,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,300: p de Holm (quatro principais)",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_300_NPAR": {
+      "valor": "25",
+      "valor_bruto": 25.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "n_pares"
+      },
+      "formato": "int",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,300: pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_400_TAU": {
+      "valor": "−6,0",
+      "valor_bruto": -6.026272577996716,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "tau",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,400: média das diferenças nos pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_400_INF": {
+      "valor": "−23,2",
+      "valor_bruto": -23.214285717704346,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,400: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_400_SUP": {
+      "valor": "+11,5",
+      "valor_bruto": 11.45833334097261,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,400: IC 95% de permutação, superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_400_HOLM": {
+      "valor": "0,988",
+      "valor_bruto": 0.9878,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,400: p de Holm (quatro principais)",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_FRAC_400_NPAR": {
+      "valor": "29",
+      "valor_bruto": 29.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-FRAC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "n_pares"
+      },
+      "formato": "int",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), fração das células com vaga imediata preenchidas (p.p.), corte 0,400: pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_ALOC_300_TAU": {
+      "valor": "+0,13",
+      "valor_bruto": 0.1319644723092999,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-ALOC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), médicos alocados por vaga imediata, corte 0,300: média das diferenças nos pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_ALOC_300_INF": {
+      "valor": "−0,07",
+      "valor_bruto": -0.07342215265475942,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-ALOC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), médicos alocados por vaga imediata, corte 0,300: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_ALOC_300_SUP": {
+      "valor": "+0,33",
+      "valor_bruto": 0.3347222222761471,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-ALOC|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), médicos alocados por vaga imediata, corte 0,300: IC 95% de permutação, superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_ALOC_400_TAU": {
+      "valor": "−0,08",
+      "valor_bruto": -0.07673782156540777,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-ALOC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), médicos alocados por vaga imediata, corte 0,400: média das diferenças nos pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_ALOC_400_INF": {
+      "valor": "−0,30",
+      "valor_bruto": -0.30000000012663186,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-ALOC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), médicos alocados por vaga imediata, corte 0,400: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_ALOC_400_SUP": {
+      "valor": "+0,15",
+      "valor_bruto": 0.14752567697906593,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-1|H1M-ALOC|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-1 (pareados na mesma UF e condição de capital), médicos alocados por vaga imediata, corte 0,400: IC 95% de permutação, superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_OUT_300_TAU": {
+      "valor": "+0,02",
+      "valor_bruto": 0.021194705677464298,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-5|H1M-OUTRA-UF|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-5 (pareados na mesma UF e condição de capital), médicos de outra UF por vaga imediata (X1, descritivo), corte 0,300: média das diferenças nos pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_OUT_300_INF": {
+      "valor": "−0,01",
+      "valor_bruto": -0.008333333423476773,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-5|H1M-OUTRA-UF|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-5 (pareados na mesma UF e condição de capital), médicos de outra UF por vaga imediata (X1, descritivo), corte 0,300: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_OUT_300_SUP": {
+      "valor": "+0,06",
+      "valor_bruto": 0.06396943580147524,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-5|H1M-OUTRA-UF|0.300|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-5 (pareados na mesma UF e condição de capital), médicos de outra UF por vaga imediata (X1, descritivo), corte 0,300: IC 95% de permutação, superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_OUT_400_TAU": {
+      "valor": "+0,16",
+      "valor_bruto": 0.15914351851851852,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-5|H1M-OUTRA-UF|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "tau"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-5 (pareados na mesma UF e condição de capital), médicos de outra UF por vaga imediata (X1, descritivo), corte 0,400: média das diferenças nos pares",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_OUT_400_INF": {
+      "valor": "+0,00",
+      "valor_bruto": -5.220153313330416e-11,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-5|H1M-OUTRA-UF|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-5 (pareados na mesma UF e condição de capital), médicos de outra UF por vaga imediata (X1, descritivo), corte 0,400: IC 95% de permutação, inferior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_OUT_400_SUP": {
+      "valor": "+0,35",
+      "valor_bruto": 0.34722222231421646,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-5|H1M-OUTRA-UF|0.400|w=0.050|raio=100|exato=cd_uf;capital;ciclo"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-5 (pareados na mesma UF e condição de capital), médicos de outra UF por vaga imediata (X1, descritivo), corte 0,400: IC 95% de permutação, superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "VL1_EMP_RC": {
+      "valor": "1,47",
+      "valor_bruto": 1.470207254,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_EMP_RCI": {
+      "valor": "1,15",
+      "valor_bruto": 1.145523185,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_EMP_RCS": {
+      "valor": "1,89",
+      "valor_bruto": 1.886918919,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_RC": {
+      "valor": "1,90",
+      "valor_bruto": 1.904473606,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_RCI": {
+      "valor": "1,30",
+      "valor_bruto": 1.303144245,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_RCS": {
+      "valor": "2,78",
+      "valor_bruto": 2.78328338,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_EMP_RC": {
+      "valor": "1,25",
+      "valor_bruto": 1.254150653,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base, quadro do ciclo 2 corrigido), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_EMP_RCI": {
+      "valor": "0,98",
+      "valor_bruto": 0.9796381653,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base, quadro do ciclo 2 corrigido), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_EMP_RCS": {
+      "valor": "1,61",
+      "valor_bruto": 1.605586549,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base, quadro do ciclo 2 corrigido), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_C2_RC": {
+      "valor": "1,79",
+      "valor_bruto": 1.788723492,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base, quadro do ciclo 2 corrigido), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_C2_RCI": {
+      "valor": "1,19",
+      "valor_bruto": 1.193826831,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base, quadro do ciclo 2 corrigido), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_C2_RCS": {
+      "valor": "2,68",
+      "valor_bruto": 2.680063512,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base, quadro do ciclo 2 corrigido), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL2_EMP_RC": {
+      "valor": "1,28",
+      "valor_bruto": 1.279774706,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL2_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-2 (só vagas perto do corte, par de UFs), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL2_EMP_RCI": {
+      "valor": "0,95",
+      "valor_bruto": 0.9514025728,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL2_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-2 (só vagas perto do corte, par de UFs), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL2_EMP_RCS": {
+      "valor": "1,72",
+      "valor_bruto": 1.72148294,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL2_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-2 (só vagas perto do corte, par de UFs), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLLOG_EMP_RC": {
+      "valor": "1,45",
+      "valor_bruto": 1.454632669,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1log_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 com log da distância, ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLLOG_EMP_RCI": {
+      "valor": "1,15",
+      "valor_bruto": 1.153979855,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1log_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 com log da distância, ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLLOG_EMP_RCS": {
+      "valor": "1,83",
+      "valor_bruto": 1.833616239,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1log_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 com log da distância, ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLLOG_C2_RC": {
+      "valor": "1,75",
+      "valor_bruto": 1.751664851,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1log_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 com log da distância, ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLLOG_C2_RCI": {
+      "valor": "1,23",
+      "valor_bruto": 1.233798379,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1log_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 com log da distância, ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLLOG_C2_RCS": {
+      "valor": "2,49",
+      "valor_bruto": 2.486897214,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1log_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 com log da distância, ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3_EMP_RC": {
+      "valor": "1,49",
+      "valor_bruto": 1.487768079,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 (região de saúde de origem × UF da vaga), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3_EMP_RCI": {
+      "valor": "1,15",
+      "valor_bruto": 1.152051977,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 (região de saúde de origem × UF da vaga), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3_EMP_RCS": {
+      "valor": "1,92",
+      "valor_bruto": 1.921314229,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 (região de saúde de origem × UF da vaga), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3_C2_RC": {
+      "valor": "1,91",
+      "valor_bruto": 1.911341968,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 (região de saúde de origem × UF da vaga), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3_C2_RCI": {
+      "valor": "1,33",
+      "valor_bruto": 1.331954043,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 (região de saúde de origem × UF da vaga), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3_C2_RCS": {
+      "valor": "2,74",
+      "valor_bruto": 2.742758384,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 (região de saúde de origem × UF da vaga), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_EMP_HOLM": {
+      "valor": "0,005",
+      "valor_bruto": 0.004939004264,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1, ciclos 1–3: p de Holm (três principais do 52e)",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_HOLM": {
+      "valor": "0,003",
+      "valor_bruto": 0.002626856034,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1, ciclo 2: p de Holm (três principais do 52e)",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL2_EMP_HOLM": {
+      "valor": "0,103",
+      "valor_bruto": 0.1029636219,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL2_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-2, ciclos 1–3: p de Holm (três principais do 52e)",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_EMP_K5": {
+      "valor": "75",
+      "valor_bruto": 74.91095779,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclos 1–3: km a menos de distância que pesam como +R$ 5 mil (K5), estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_EMP_K5I": {
+      "valor": "28",
+      "valor_bruto": 27.72323011,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclos 1–3: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_EMP_K5S": {
+      "valor": "122",
+      "valor_bruto": 122.0986855,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclos 1–3: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_K5": {
+      "valor": "117",
+      "valor_bruto": 116.5733951,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclo 2: km a menos de distância que pesam como +R$ 5 mil (K5), estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_K5I": {
+      "valor": "56",
+      "valor_bruto": 55.53572893,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclo 2: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_K5S": {
+      "valor": "178",
+      "valor_bruto": 177.6110612,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1 (par de UFs), ciclo 2: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_EMP_K5": {
+      "valor": "119",
+      "valor_bruto": 118.8096767,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_emp",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base), ciclos 1–3: km a menos de distância que pesam como +R$ 5 mil (K5), estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_EMP_K5I": {
+      "valor": "−12",
+      "valor_bruto": -12.34711009,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_emp",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base), ciclos 1–3: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_EMP_K5S": {
+      "valor": "250",
+      "valor_bruto": 249.9664635,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_emp",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base), ciclos 1–3: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_C2_K5": {
+      "valor": "302",
+      "valor_bruto": 302.4296131,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_c2",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base), ciclo 2: km a menos de distância que pesam como +R$ 5 mil (K5), estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_C2_K5I": {
+      "valor": "88",
+      "valor_bruto": 88.36378262,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_c2",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base), ciclo 2: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VLB_C2_K5S": {
+      "valor": "516",
+      "valor_bruto": 516.4954435,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "M1_c2",
+          "tipo_linha": "km_equivalentes",
+          "termo": "K5"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d0",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): M1 (base), ciclo 2: km a menos de distância que pesam como +R$ 5 mil (K5), IC 95% delta, superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_THETA_EST": {
+      "valor": "2,40",
+      "valor_bruto": 2.395004988,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "mesma_uf"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: peso da vaga na UF de origem (θ_UF, log-chance), estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_THETA_INF": {
+      "valor": "2,27",
+      "valor_bruto": 2.267655608,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "mesma_uf"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: peso da vaga na UF de origem (θ_UF, log-chance), IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_THETA_SUP": {
+      "valor": "2,52",
+      "valor_bruto": 2.522354369,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "mesma_uf"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: peso da vaga na UF de origem (θ_UF, log-chance), IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_THETAX_EST": {
+      "valor": "11,0",
+      "valor_bruto": 10.968252768588785,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "mesma_uf"
+        },
+        "coluna": "estimativa",
+        "transf": [
+          [
+            "exp"
+          ]
+        ]
+      },
+      "formato": "d1",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: quanto a vaga na UF de origem multiplica a chance (exp θ_UF), estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_THETAX_INF": {
+      "valor": "9,7",
+      "valor_bruto": 9.656735083299717,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "mesma_uf"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "exp"
+          ]
+        ]
+      },
+      "formato": "d1",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: quanto a vaga na UF de origem multiplica a chance (exp θ_UF), IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_THETAX_SUP": {
+      "valor": "12,5",
+      "valor_bruto": 12.457892639512126,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "mesma_uf"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "exp"
+          ]
+        ]
+      },
+      "formato": "d1",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: quanto a vaga na UF de origem multiplica a chance (exp θ_UF), IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_B10_EST": {
+      "valor": "0,45",
+      "valor_bruto": 0.45291714660000004,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa",
+        "transf": [
+          [
+            "mul",
+            10
+          ]
+        ]
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: peso de toda a bolsa, R$ 10 → 20 mil (10·β, log-chance), estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_B10_INF": {
+      "valor": "−0,04",
+      "valor_bruto": -0.04114398912,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            10
+          ]
+        ]
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: peso de toda a bolsa, R$ 10 → 20 mil (10·β, log-chance), IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_B10_SUP": {
+      "valor": "0,95",
+      "valor_bruto": 0.9469782824,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            10
+          ]
+        ]
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: peso de toda a bolsa, R$ 10 → 20 mil (10·β, log-chance), IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_B10X_EST": {
+      "valor": "1,57",
+      "valor_bruto": 1.5728938615110495,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa",
+        "transf": [
+          [
+            "mul",
+            10
+          ],
+          [
+            "exp"
+          ]
+        ]
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: quanto toda a bolsa, R$ 10 → 20 mil, multiplica a chance (exp 10·β), estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_B10X_INF": {
+      "valor": "0,96",
+      "valor_bruto": 0.9596909349455545,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf",
+        "transf": [
+          [
+            "mul",
+            10
+          ],
+          [
+            "exp"
+          ]
+        ]
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: quanto toda a bolsa, R$ 10 → 20 mil, multiplica a chance (exp 10·β), IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_B10X_SUP": {
+      "valor": "2,58",
+      "valor_bruto": 2.5779081678180233,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup",
+        "transf": [
+          [
+            "mul",
+            10
+          ],
+          [
+            "exp"
+          ]
+        ]
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3: quanto toda a bolsa, R$ 10 → 20 mil, multiplica a chance (exp 10·β), IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_B_HOLM": {
+      "valor": "0,072",
+      "valor_bruto": 0.0723762979,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "coeficiente",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3 (P1a, pré-registrado, sem fixar a UF): p de Holm do peso da bolsa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_P": {
+      "valor": "< 0,001",
+      "valor_bruto": 6.388843124e-17,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "D_UF",
+          "termo": "D_UF = θ_UF − 10·β"
+        },
+        "coluna": "p_unilateral"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3 (P1h-1, teste central): p unilateral de H0: D_UF ≤ 0",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_HOLM": {
+      "valor": "< 0,001",
+      "valor_bruto": 6.388843124e-17,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "D_UF",
+          "termo": "D_UF = θ_UF − 10·β"
+        },
+        "coluna": "p_holm"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M1, ciclos 1–3 (P1h-1, teste central): p de Holm (família de um teste)",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_EST": {
+      "valor": "1,94",
+      "valor_bruto": 1.942087841,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M1, ciclos 1–3 (P1h-1): estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_INF": {
+      "valor": "1,48",
+      "valor_bruto": 1.482132328,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M1, ciclos 1–3 (P1h-1): IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_SUP": {
+      "valor": "2,40",
+      "valor_bruto": 2.402043355,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M1",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M1, ciclos 1–3 (P1h-1): IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C1_EST": {
+      "valor": "2,34",
+      "valor_bruto": 2.343017749,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_1",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 1: estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C1_INF": {
+      "valor": "1,45",
+      "valor_bruto": 1.446870917,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_1",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 1: IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C1_SUP": {
+      "valor": "3,24",
+      "valor_bruto": 3.239164581,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_1",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 1: IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C2_EST": {
+      "valor": "1,19",
+      "valor_bruto": 1.18691262,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 2: estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C2_INF": {
+      "valor": "0,51",
+      "valor_bruto": 0.5131065776,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 2: IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C2_SUP": {
+      "valor": "1,86",
+      "valor_bruto": 1.860718661,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 2: IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C3_EST": {
+      "valor": "2,37",
+      "valor_bruto": 2.372508452,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_3",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 3: estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C3_INF": {
+      "valor": "1,75",
+      "valor_bruto": 1.749943192,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_3",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 3: IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_DUF_C3_SUP": {
+      "valor": "3,00",
+      "valor_bruto": 2.995073713,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_3",
+          "tipo_linha": "D_UF"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): D_UF = θ_UF − 10·β, M5, ciclo 3: IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C1_RC": {
+      "valor": "1,07",
+      "valor_bruto": 1.068413151,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_1",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 1: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C1_RCI": {
+      "valor": "0,69",
+      "valor_bruto": 0.6937466971,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_1",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 1: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C1_RCS": {
+      "valor": "1,65",
+      "valor_bruto": 1.645422842,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_1",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 1: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C2_RC": {
+      "valor": "1,79",
+      "valor_bruto": 1.788723492,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro de 13/02/2026: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C2_RCI": {
+      "valor": "1,19",
+      "valor_bruto": 1.193826831,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro de 13/02/2026: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C2_RCS": {
+      "valor": "2,68",
+      "valor_bruto": 2.680063512,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro de 13/02/2026: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C3_RC": {
+      "valor": "1,00",
+      "valor_bruto": 0.9978416489,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_3",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 3: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C3_RCI": {
+      "valor": "0,72",
+      "valor_bruto": 0.7182471221,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_3",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C3_RCS": {
+      "valor": "1,39",
+      "valor_bruto": 1.386274898,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "corrigida_13fev",
+          "chave_modelo": "M5_3",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C2A_RC": {
+      "valor": "1,70",
+      "valor_bruto": 1.702096044,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "antiga_19mar",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro refeito de 19/03/2026: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C2A_RCI": {
+      "valor": "1,22",
+      "valor_bruto": 1.224724396,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "antiga_19mar",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro refeito de 19/03/2026: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VC_M5C2A_RCS": {
+      "valor": "2,37",
+      "valor_bruto": 2.365537058,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VC_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VC_estimativas.csv",
+        "filtro": {
+          "versao": "antiga_19mar",
+          "chave_modelo": "M5_2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro refeito de 19/03/2026: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
     }
   },
   "failure_mode": {
@@ -14731,6 +17206,18 @@
       },
       "formato": "txt",
       "descricao": "ciclo 2: quadro original"
+    },
+    "CR_C2_RETIF1302": {
+      "valor": "13/02/2026",
+      "valor_bruto": "13/02/2026",
+      "natureza": "REGISTRO_DOCUMENTAL",
+      "arquivo": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+      "seletor": {
+        "texto": "docs/auditorias/aquisicao/A01_vagas_e_versionamento.md",
+        "regex": "\\| `vagas_2026_c2_ch1_retificado_servicos` \\| `[^`]+` \\| [^|]+ \\| (\\d{2}/\\d{2}/\\d{4}) \\|"
+      },
+      "formato": "txt",
+      "descricao": "ciclo 2: quadro retificado vigente na inscrição (tipo de vaga usado na H1 e na H2 corrigida; auditoria 36)"
     },
     "CR_C2_RETIF": {
       "valor": "19/03/2026",

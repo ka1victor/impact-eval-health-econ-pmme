@@ -311,9 +311,9 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 | Ciclo | Chamamento | Quadro de vagas (1ª chamada) | Resultado (1ª chamada) | 2ª chamada |
 |---|---|---|---|---|
-| 1 | Edital nº 3/2025 | 24/07/2025 | 10/09/2025 (alocação retificada) | 29/09/2025, só cadastro reserva |
-| 2 | Edital nº 1/2026 | 03/02/2026 (retificado em 19/03/2026) | 05/05/2026 (remanescentes) | 16/04/2026, só cadastro reserva |
-| 3 | Chamamento nº 28/2026, após adesão dos gestores (15/07/2026) | 16/07/2026 (retificado em 24/07/2026) | 25/08/2026, sub judice | não houve |
+| 1 | Edital nº 3/2025 | 24/07/2025 | 10/09/2025 (alocação retificada) | 29/09/2025, só reserva |
+| 2 | Edital nº 1/2026 | 03/02/2026 (retificado em 13/02/2026 e 19/03/2026) | 05/05/2026 (remanescentes) | 16/04/2026, só reserva |
+| 3 | Chamamento nº 28/2026 (gestores: 15/07/2026) | 16/07/2026 (retificado em 24/07/2026) | 25/08/2026, sub judice | não houve |
 
 - **Quadro, candidatos, escolhas e 1ª chamada:** temos dos ciclos 1, 2 e 3.
 - **2ª chamada e CNES depois do início:** só dos ciclos 1 e 2.
@@ -324,13 +324,14 @@ foi proposto; o que entrou em cada estimador está nos slides de metodologia.
 
 **Fontes:** `output/apresentacao_banca2/cronologia_ciclos.csv`, gerada por `scripts/apresentacao/gerar_figuras_banca2.py` a partir de `docs/auditorias/aquisicao/A01_vagas_e_versionamento.md` (datas de publicação), do protocolo 48, §8 (editais), e de `output/rdd_bolsa/K_D2_resumo.json` (coortes de chegada).
 
-**Números:** `CR_C1_EDITAL`, `CR_C2_EDITAL`, `CR_C3_EDITAL`, `CR_C1_QUADRO`, `CR_C1_RES`, `CR_C1_CH2`, `CR_C2_QUADRO`, `CR_C2_RETIF`, `CR_C2_RES`, `CR_C2_CH2`, `CR_C3_GEST`, `CR_C3_QUADRO`, `CR_C3_RETIF`, `CR_C3_RES`, `CR_D2_INI`, `CR_D2_FIM`
+**Números:** `CR_C1_EDITAL`, `CR_C2_EDITAL`, `CR_C3_EDITAL`, `CR_C1_QUADRO`, `CR_C1_RES`, `CR_C1_CH2`, `CR_C2_QUADRO`, `CR_C2_RETIF1302`, `CR_C2_RETIF`, `CR_C2_RES`, `CR_C2_CH2`, `CR_C3_GEST`, `CR_C3_QUADRO`, `CR_C3_RETIF`, `CR_C3_RES`, `CR_D2_INI`, `CR_D2_FIM`
 
 > **Notas do apresentador.** Resposta à pergunta "já rolou em três
 > edições?": sim. Cada ciclo tem edital, quadro de vagas, escolha dos
 > candidatos e resultado próprios. O ciclo 1 abriu com o Edital nº 3/2025 e o
 > quadro de 24/07/2025; a 2ª chamada, em 29/09/2025, só teve vagas de cadastro
 > reserva. O ciclo 2 abriu em 03/02/2026, com o quadro retificado em
+> 13/02/2026 (o vigente na inscrição, usado nas análises) e de novo em
 > 19/03/2026. No ciclo 3, os gestores aderiram primeiro (resultado de
 > 15/07/2026) e o quadro dos médicos saiu em 16/07/2026; o resultado de
 > 25/08/2026 está sub judice. Os médicos dos ciclos 1 e 2 chegaram, na lista

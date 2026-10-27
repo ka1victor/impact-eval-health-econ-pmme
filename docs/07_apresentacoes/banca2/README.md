@@ -20,7 +20,8 @@
 > **Hipótese única da versão final: a H2** (decisão do autor). Comece pelo
 > [guia do grupo](08_guia_do_grupo_H2.md) e pela [nova hipótese](07_nova_hipotese.md).
 > O corpo do deck tem só a H2; as antigas H1 e H3 vão para um apêndice rápido.
-> O deck com a H2 e a análise completa (doc 66) estão em preparação.
+> O deck com a H2 está pronto ([04](04_conteudo_deck_curto.md); 27/10/2026); a análise completa (doc 66) está em
+> preparação.
 
 > [!IMPORTANT]
 > **Versão final (decisão do autor de 26/10/2026):** só o **deck curto** é
@@ -30,18 +31,13 @@
 > Resultados, Robustez, Discussão), com no máximo 14 slides e 30 palavras
 > visíveis por slide. Conteúdo canônico: [04](04_conteudo_deck_curto.md). O deck completo
 > (doc 02) fica como registro e só é refeito com `--completo`.<br>
-> **Numeração da apresentação a partir de 26/10/2026:** H1 preenchimento; H2
-> bolsa × origem (antes H3); H3 oferta (antes H4). **A H1 é a candidata
-> central**; H2 e H3 aparecem em cinza, como plano B, até a validação dos
-> professores. Os slides de cada hipótese ficam juntos dentro de cada seção. Nas
-> seções abaixo, escritas antes da troca, "H3" é a H2 de hoje e "H4", a H3.<br>
-> **H1 principal:** a do adendo 48b (só vagas imediatas); o slide está marcado
-> "aguardando 48b" até as saídas `HI_*` existirem. As medidas antigas (A3, N1,
-> taxa por vaga), o "antes e depois do controle", a H1 por ciclo e o passo a
-> passo da queda em 0,300 estão em Robustez. A queda em 0,300 é explicada pelas
-> capitais logo abaixo do corte (auditoria 36, diagnóstico); a explicação pelo
-> cadastro reserva do ciclo 2 saiu do deck. O doc 57m entra na versão auditada
-> (auditoria 37).
+> **Desde 27/10/2026, hipótese única** ([07](07_nova_hipotese.md)): o corpo do deck curto tem 11 slides só com a
+> antiga H2 (bolsa × origem), formulada depois de ver os dados; o teste central é origem × toda a bolsa, com o quadro
+> do ciclo 2 de 13/02/2026 (adendo 52c, auditoria 41), e o peso da bolsa dentro da mesma UF (adendo 52e, auditoria
+> 48) entra como resultado de apoio, pós-resultado. Um apêndice de 2 slides traz o fato da antiga H1 (sem aumento
+> detectado do preenchimento no corte; o sinal negativo em 0,300 nunca passou no Holm e anda junto com a UF:
+> adendos 48b e 48h, auditorias 38 e 47) e a antiga H3 numa frase. A redação segue as auditorias 49 e 50. Nas
+> seções abaixo, escritas antes da troca, a numeração é a antiga.
 
 ## 1. O que esta entrega é
 
@@ -96,7 +92,7 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | 26/10/2026 | bloco exploratório no completo, entre Base de Dados e Metodologia: IVS × faixa, distribuição do IVS com o E1, RDD crua e escolha × origem | autor |
 | 26/10/2026 | deck curto em blocos antes → resultado → depois: capa; regra; H1 (ficha, antes e depois do controle com o TOST, queda em 0,300); H3, que absorve a H2 (ficha, resultado, incentivo limitado e a ponte P1g); H4 (ficha, resultado, substituição e "em análise"); conclusão. Saem a H2 como slide, "Um estimador por hipótese", "Quatro hipóteses" e os dados crus | autor |
 
-Em aberto com o autor: a hipótese central (H3 ou H1), já revisável; quem
+A hipótese foi decidida pelo autor em 27/10/2026 ([07](07_nova_hipotese.md)). Em aberto: quem
 apresenta em 28/10 e quem em 04/11.
 
 **Slides "EXEMPLO" 32 e 33 do deck do grupo:** saíram do deck proposto pelo
@@ -127,12 +123,11 @@ só** (`deck_banca2.pptx`: slides do grupo, parte empírica e apêndice), o
 manifesto do deck e as imagens de conferência em `qa_render/`, com a grade de
 miniaturas da parte empírica (`grade_empirica.png`), e o deck curto
 (`deck_banca2_curto.pptx` e `.pdf`, com o manifesto e a grade
-`qa_render/grade_curto.png`), com as figuras próprias dele
-(`curto_dispersao_a3.png`, `curto_reta_0300.png`, `curto_h1_por_ciclo.png`,
-`curto_h3_horas.png`, `curto_h3_nota_corte.png` e `curto_tost.png`) e as da
-subida dentro das faixas (`output/rdd_bolsa/GF_figuras/`, doc 57m, em
-auditoria). O slide da queda em 0,300 usa o diagnóstico do
-protocolo 61 auditado (auditoria 33). Os geradores não estão no `run_all.py`; a
+`qa_render/grade_curto.png`), com as figuras da hipótese única
+(`curto_origem_bolsa.png`, `curto_bolsa_mesma_uf.png`,
+`curto_robustez_escolha.png` e, no apêndice, `curto_fato.png`), além da regra
+e de `exp_escolha_origem.png`. As figuras antigas do curto continuam geradas e
+registradas, mas não entram no deck. Os geradores não estão no `run_all.py`; a
 inclusão fica para o coordenador do pipeline.
 
 ## 5. Estado
