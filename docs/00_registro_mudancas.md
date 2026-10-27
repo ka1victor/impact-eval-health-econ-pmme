@@ -8,6 +8,36 @@
 
 ---
 
+## 27/10/2026 — Auditoria 51: arquivamento do IBGE, formato *fuzzy* do OC, correção da reserva no ciclo 2, registro e worktrees
+
+Motivo: auditoria independente de cinco peças que entraram na `main` sem auditoria. Vereditos:
+- arquivamento do IBGE (a19) aprovado: hashes conferem e o CSV se reconstrói byte a byte com leitor próprio;
+- formato *fuzzy* do protocolo 64 aprovado: linhas não *fuzzy* idênticas, `ar_p_beta0` igual ao p antigo, Holm e
+  BKY iguais;
+- correção da reserva no ciclo 2 aprovada com ressalvas: nenhuma estimativa mudou; ficam a frase congelada do 48b
+  §1, presa por hash, e um aviso de condicionamento no 57l/49b, como recomendações ao autor;
+- registro corrigido;
+- worktrees inventariados, sem apagar nada.
+
+Nenhum script, saída ou dado mudou. Correções de registro nesta entrada e abaixo:
+- a entrada repetida "Execução do protocolo 60, parte B" era um retrato WIP (`886ac00`) colado em três lugares; os
+  dois fragmentos foram marcados como substituídos, sem apagar texto;
+- sete entradas "auditoria pendente"/WIP ganharam nota apontando a auditoria.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/51_auditoria_arquivamento_correcoes_registro.md`](auditorias/51_auditoria_arquivamento_correcoes_registro.md) | auditoria das cinco peças: veredito por peça, achados numerados, conferências e inventário dos worktrees |
+
+### Registro retroativo (criado em 26/10/2026, sem entrada até aqui)
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/04_conteudo_deck_curto.md`](07_apresentacoes/banca2/04_conteudo_deck_curto.md) | conteúdo canônico do deck curto da banca 2; criado no WIP `57683ad` e auditado na auditoria 49 |
+
+---
+
 ## 27/10/2026 — Auditoria 49: deck curto da banca 2 e documentos de conteúdo
 
 Motivo: auditoria independente do deck curto da banca 2 (`output/apresentacao_banca2/deck_banca2_curto.*`), dos
@@ -140,6 +170,9 @@ qualquer estimativa; os resultados entram depois, em blocos gerados pelo script 
 |---|---|
 | [`06_execucao/57w_resultados_pareamento_localizacao.md`](06_execucao/57w_resultados_pareamento_localizacao.md) | resultados do adendo 48h (PH-1 a PH-6) |
 
+> *Nota de 27/10/2026 (auditoria 51):* auditado depois, na
+> [auditoria 47](auditorias/47_auditoria_pareamento_localizacao.md) (entrada de 27/10/2026 acima).
+
 ---
 
 ## 27/10/2026 — Adendos 48h (H1 pareada pela localização da unidade e dos médicos) e 52e (H2 com o par de localizações fixado)
@@ -208,6 +241,9 @@ depois, gerados pelo script a partir de `output/rdd_bolsa/VD_*`. Os docs 42, 44,
 |---|---|
 | [`06_execucao/57v_sensibilidades_ciclo2_quadro_1302.md`](06_execucao/57v_sensibilidades_ciclo2_quadro_1302.md) | resultados do adendo 52d (VD-1 a VD-5), gerado pelo script 48; auditoria pendente |
 
+> *Nota de 27/10/2026 (auditoria 51):* auditado depois, na
+> [auditoria 46](auditorias/46_auditoria_sensibilidades_ciclo2.md) (entrada de 26/10/2026 acima).
+
 ---
 
 ## 26/10/2026 — Auditoria 45: adendo 48g (heterogeneidade do salto pelo porte do IED), aprovado com correções
@@ -241,6 +277,9 @@ saídas `PO_*`. Auditoria pendente.
 | Arquivo | O que é |
 |---|---|
 | [`06_execucao/57u_resultados_heterogeneidade_porte.md`](06_execucao/57u_resultados_heterogeneidade_porte.md) | resultados do adendo 48g (PO-1 a PO-5), blocos gerados por `scripts/rdd_bolsa/47_heterogeneidade_porte_ied.py` |
+
+> *Nota de 27/10/2026 (auditoria 51):* auditado depois, na
+> [auditoria 45](auditorias/45_auditoria_heterogeneidade_porte.md) (entrada de 26/10/2026 acima).
 
 ---
 
@@ -333,6 +372,9 @@ próprio antes de qualquer estimativa; os números entram só nos blocos gerados
 |---|---|
 | [`06_execucao/57t_resultados_selecao_tipo_vaga.md`](06_execucao/57t_resultados_selecao_tipo_vaga.md) | resultados do adendo 48f (SV-1 a SV-5), com decisões de implementação, leitura pré-registrada aplicada por regra no código e limites; auditoria pendente |
 
+> *Nota de 27/10/2026 (auditoria 51):* auditado depois, na
+> [auditoria 44](auditorias/44_auditoria_selecao_tipo_vaga.md) (entrada de 26/10/2026 acima).
+
 ---
 
 ## 26/10/2026 — Doc 57s: resultados do adendo 48e (pareamento pela regra literal e PSM em 0,400)
@@ -346,6 +388,9 @@ de qualquer estimativa; os resultados entram depois, em blocos gerados pelo scri
 | Arquivo | O que é |
 |---|---|
 | [`06_execucao/57s_resultados_pareamento_regra_literal.md`](06_execucao/57s_resultados_pareamento_regra_literal.md) | resultados do adendo 48e: portão, quem saiu pela regra 2, pares, balanço, PM-1 a PM-7, leitura do §3 e limites; auditoria pendente |
+
+> *Nota de 27/10/2026 (auditoria 51):* auditado depois, na
+> [auditoria 43](auditorias/43_auditoria_pareamento_regra_literal.md) (entrada de 26/10/2026 acima).
 
 ---
 
@@ -480,6 +525,10 @@ estimativas; os blocos de resultado são gerados pelo script 43 a partir de `out
 |---|---|
 | [`06_execucao/57q_resultados_oferta_local_corte.md`](06_execucao/57q_resultados_oferta_local_corte.md) | resultados do protocolo 64 (forma reduzida no corte, primeiro estágio, razão *fuzzy* com IC de Anderson–Rubin, estudo de evento no corte, chegada por lado do corte, seleção de V), gerado por `scripts/rdd_bolsa/43_oferta_local_corte.py`; auditoria pendente |
 
+> *Nota de 27/10/2026 (auditoria 51):* auditado depois, na
+> [auditoria 39](auditorias/39_auditoria_oferta_local_corte.md) (entrada de 26/10/2026 acima); a correção de
+> formato das linhas *fuzzy* de 26/10/2026 foi conferida na auditoria 51.
+
 ---
 
 ## 26/10/2026 — Adendo 48d: controles de localização e de médicos na região, e pareamento perto do corte
@@ -524,6 +573,13 @@ de `HC_*` não são vigentes até a auditoria. O deck curto foi regerado pelo ge
 | Arquivo | O que é |
 |---|---|
 | [`06_execucao/57o_h1_capitais_uf.md`](06_execucao/57o_h1_capitais_uf.md) | resultados do adendo 48c (WIP, sem auditoria), gerado por `scripts/rdd_bolsa/41_h1_capitais_uf.py` |
+
+> *Nota de 27/10/2026 (auditoria 51):* o 48c foi completado e auditado depois, na
+> [auditoria 42](auditorias/42_auditoria_capitais_uf.md) (entrada "Adendo 48c completado" acima); a fonte bruta do
+> IBGE foi arquivada pelo a19 e conferida na auditoria 51. O deck curto deste retrato foi auditado na
+> [auditoria 49](auditorias/49_auditoria_deck_banca2.md). O doc de conteúdo do deck curto,
+> `07_apresentacoes/banca2/04_conteudo_deck_curto.md`, criado no WIP `57683ad`, não tinha entrada: ver o registro
+> retroativo na entrada da auditoria 51 (27/10/2026).
 
 ---
 
@@ -745,10 +801,16 @@ Motivo: o autor notou, na figura de dados crus (`output/apresentacao_banca2/exp_
 
 Motivo: execução do protocolo 61 (por que o preenchimento cai em 0,300), com Q1–Q3 reproduzidos antes de qualquer
 teste.
-## 26/10/2026 — Execução do protocolo 60, parte B (oferta local de especialistas depois da chegada, H4)
 
-Motivo: execução da parte B do protocolo 60, com os portões de coerência (coortes do D2 e definições do F3 do
-E7) antes de abrir os resultados. As saídas dos blocos anteriores não foram regravadas.
+> *Nota de 27/10/2026 ([auditoria 51](auditorias/51_auditoria_arquivamento_correcoes_registro.md)):* o título e o
+> motivo logo abaixo, riscados, repetem a entrada "Execução do protocolo 60, parte B" (doc 57k) e entraram aqui por
+> erro de junção do retrato WIP `886ac00`. Ficam como registro, **substituídos** pela entrada da parte B mais acima.
+> A tabela que segue (doc 57l, script 38, `DQ_*`) pertence a esta entrada, do protocolo 61.
+>
+> ~~26/10/2026 — Execução do protocolo 60, parte B (oferta local de especialistas depois da chegada, H4)~~
+>
+> ~~Motivo: execução da parte B do protocolo 60, com os portões de coerência (coortes do D2 e definições do F3 do
+> E7) antes de abrir os resultados. As saídas dos blocos anteriores não foram regravadas.~~
 
 ### Criado
 
@@ -823,6 +885,11 @@ Também criados, fora de `docs/`:
 
 O manifesto A6 (`output/tema_trabalho/A6_manifesto_reproducao.json`) foi regenerado pelo gerador para incluir o
 novo passo.
+
+> *Nota de 27/10/2026 ([auditoria 51](auditorias/51_auditoria_arquivamento_correcoes_registro.md)):* a última linha
+> da tabela acima (doc 57k) e os dois parágrafos que a seguem são da parte B, não da parte A: repetem, com o mesmo
+> texto, a entrada "Execução do protocolo 60, parte B" e entraram aqui por erro de junção do retrato WIP `886ac00`.
+> Ficam como registro, **substituídos** por aquela entrada.
 
 ---
 

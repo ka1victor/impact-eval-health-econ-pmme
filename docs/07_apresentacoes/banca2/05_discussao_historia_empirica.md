@@ -503,7 +503,7 @@ linhas abaixo foram corrigidos onde estavam vencidos, com a marca "auditoria
 
 | # | Onde | Erro | Correção |
 |---|---|---|---|
-| 13 | doc 49, §2; doc 57l (§8 e "Para dizer na banca"), gerado pelo script 38; seção 2.11 deste doc (corrigida acima) | "no ciclo 2, vaga de reserva não podia ser preenchida na 1ª chamada" | é efeito do quadro refeito depois do resultado (auditoria 36); no 57l, corrigir pelo script e rodar de novo, não à mão |
+| 13 | doc 49, §2; doc 57l (§8 e "Para dizer na banca"), gerado pelo script 38; seção 2.11 deste doc (corrigida acima) | "no ciclo 2, vaga de reserva não podia ser preenchida na 1ª chamada" | é efeito do quadro refeito depois do resultado (auditoria 36); no 57l, corrigir pelo script e rodar de novo, não à mão. **Feito** (26/10/2026, commit `515a559`): docs 49 §2, 49b e 57l corrigidos, os dois últimos pelos scripts 23b e 38; conferido na auditoria 51 (27/10/2026) |
 | 14 | doc 06, seção 3 | — | já corrigido pelo agente do deck (H1 central) |
 | 15 | doc 04, §3 e §8 | recomendação antiga "H3" (hoje H2) como central | mantida como registro da proposta; a decisão do autor (H1) entra no §9 do doc 04 |
 
