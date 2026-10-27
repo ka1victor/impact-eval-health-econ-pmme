@@ -477,6 +477,17 @@ auditados e a `main` está no commit `7e9f881`, igual ao branch. Os estados das
 linhas abaixo foram corrigidos onde estavam vencidos, com a marca "auditoria
 49".*
 
+> [!IMPORTANT]
+> **Nova hipótese (decisão do autor de 27/10/2026; [doc 07](07_nova_hipotese.md)).** O deck curto foi reconstruído
+> com uma hipótese só, a antiga H2 (bolsa × origem): o médico escolhe perto de onde já trabalha, e a bolsa muda qual
+> vaga ele escolhe, mas pesa menos que a origem. É pós-resultado, e o slide de Hipótese diz isso. O corpo tem 11
+> slides nas oito seções; a antiga H1 (o fato, gráfico G-A) e a antiga H3 (uma frase) estão num apêndice de 2
+> slides ([doc 04](04_conteudo_deck_curto.md); [doc 06](06_estrutura_obrigatoria_versao_final.md), §3). Por isso,
+> as linhas da "H1 (plano A)" abaixo deixam de ser fila do deck: ficam como fila de análise, fora da apresentação.
+> O teste central da hipótese é origem × toda a bolsa (D_UF, adendo 52c, auditoria 41); o peso da bolsa dentro da
+> mesma UF (adendo 52e, auditoria 48) entra como resultado de apoio, dito como pós-resultado. A redação segue as
+> auditorias 49 e 50. Itens novos da fila do deck: 22 e 23, no fim desta seção.
+
 **H1 (plano A)**
 
 | # | Item | Estado | Próximo passo |
@@ -522,3 +533,10 @@ linhas abaixo foram corrigidos onde estavam vencidos, com a marca "auditoria
 |---|---|
 | 20 | Suíte completa módulo a módulo (a suíte inteira morre por memória); depois, levar à `main` só o que estiver auditado |
 | 21 | Doc 63 atualizado a cada explicação nova, com data |
+
+**Deck da hipótese única (27/10/2026)**
+
+| # | Item | Estado |
+|---|---|---|
+| 22 | Reconstruir o deck curto em torno da hipótese única, com os gráficos simples G-A a G-D do doc 07 e a robustez da escolha numa figura | **feito** (27/10/2026): 11 slides no corpo e 2 no apêndice; figuras `curto_origem_bolsa.png`, `curto_bolsa_mesma_uf.png`, `curto_robustez_escolha.png` e `curto_fato.png`, lidas de `output/` pelo gerador de figuras; números relidos do registro pelos testes; PDF conferido slide a slide |
+| 23 | Usar no deck as figuras e o texto da análise completa da H2 (doc 66), quando auditados | a fazer: o doc 66 está em preparação; o deck atual não depende dele |

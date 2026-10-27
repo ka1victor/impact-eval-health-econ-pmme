@@ -437,6 +437,8 @@ NUMEROS_CRONOLOGIA: list[tuple[str, str, dict, str, str]] = [
     ("CR_C1_CH2", "REGISTRO_DOCUMENTAL", _a01("vagas_alocados_2025_c1_ch2"), "txt",
      "ciclo 1: 2ª chamada (só cadastro reserva)"),
     ("CR_C2_QUADRO", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c2_ch1_original"), "txt", "ciclo 2: quadro original"),
+    ("CR_C2_RETIF1302", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c2_ch1_retificado_servicos"), "txt",
+     "ciclo 2: quadro retificado vigente na inscrição (tipo de vaga usado na H1 e na H2 corrigida; auditoria 36)"),
     ("CR_C2_RETIF", "REGISTRO_DOCUMENTAL", _a01("vagas_2026_c2_ch1_retificada"), "txt",
      "ciclo 2: quadro retificado final"),
     ("CR_C2_RES", "REGISTRO_DOCUMENTAL", _a01("resultado_2026_c2_ch1_remanescentes"), "txt",
@@ -581,7 +583,7 @@ HIPOTESE_POR_PREFIXO = (("H3_", "H2"), ("M1_", "H2"), ("M5_", "H2"), ("M0_", "H2
                         ("P4_", "H3"), ("CA_", "H3"), ("RR_", "H3"),
                         ("N1_", "H1"), ("A3_", "H1"), ("EQ_", "H1"), ("ND_", "H1"), ("VIC_", "H1"), ("DQ_", "H1"),
                         ("GF_", "H1"), ("PC_", "H1"), ("A36_", "H1"), ("HI", "H1"), ("CL_", "H1"), ("PM_", "H1"),
-                        ("HC_", "H1"), ("SV", "H1"), ("OC_", "H3"))
+                        ("HC_", "H1"), ("SV", "H1"), ("OC_", "H3"), ("PL_", "H1"), ("VL", "H2"), ("VC_", "H2"))
 # Saídas auditadas lidas a partir de 26/10/2026 (deck curto depois das auditorias 38 a 44): cada código leva, no campo
 # `auditoria` do registro, a auditoria que aprovou a etapa de onde ele vem.
 CL_EST = "output/rdd_bolsa/CL_estimativas.csv"
@@ -596,11 +598,20 @@ PM_PRE = "Adendo 48e (doc 57s; auditoria 43; robustez pós-resultado da H1): "
 HC_PRE = "Adendo 48c (doc 57o; auditoria 42; pós-resultado): "
 SV_PRE = "Adendo 48f (doc 57t; auditoria 44; pós-resultado): "
 OC_PRE = "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): "
+PL_EST = "output/rdd_bolsa/PL_estimativas.csv"
+VL_EST = "output/rdd_bolsa/VL_estimativas.csv"
+VC_EST = "output/rdd_bolsa/VC_estimativas.csv"
+PL_PRE = "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): "
+VL_PRE = "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): "
+VC_PRE = "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): "
 AUDITORIA_POR_PREFIXO = (("CL_", "auditoria 40 (adendo 48d, doc 57r): aprovado com correções"),
                          ("PM_", "auditoria 43 (adendo 48e, doc 57s): aprovado com correções de texto"),
                          ("HC_", "auditoria 42 (adendo 48c, doc 57o): aprovado com correções"),
                          ("SV", "auditoria 44 (adendo 48f, doc 57t): aprovado com correções de texto"),
-                         ("OC_", "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto"))
+                         ("OC_", "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto"),
+                         ("PL_", "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto"),
+                         ("VL", "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto"),
+                         ("VC_", "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto"))
 CORTES_LONGO = (("300", "0.300"), ("400", "0.400"))
 
 
@@ -1141,6 +1152,111 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
     ("D_POP_MUN", "EMPIRICO", _d("POP_MUN"), "int", "municípios com população do Censo 2022"),
     ("D_ATIVOS", "EMPIRICO", _j(A16_MAN, "listas_pmme", "registros_ativos_2026_09_11"), "int",
      "registros na lista de especialistas ativos do PMM-E de 11/09/2026"),
+    # ---- Nova hipótese da banca 2 (doc 07 da banca 2, decisão do autor de 27/10/2026): o fato (antiga H1) com a
+    # localização controlada (adendo 48h, PL_*, auditoria 47) e a hipótese (antiga H2) com o par de UFs (adendo 52e,
+    # VL_*, auditoria 48) e o quadro do ciclo 2 corrigido (adendo 52c, VC_*, auditoria 41). Nada recalculado.
+    *[(f"HI1_{c}_MDE", "EMPIRICO",
+       _c(HI_EST, {"id_linha": f"HI-1|HI-1|1+2+3|{ct}|principal|h=0.050|c2=13fev"}, "mde", PP), "d1",
+       HI_PRE + f"HI-1, corte {ct.replace('.', ',')}: MDE de 80% (p.p.)") for c, ct in CORTES_TXT],
+    *[(f"HI2_C{k}_{c}_{s}", "EMPIRICO",
+       _c(HI_EST, {"id_linha": f"HI-s1|HI-2|{k}|{ct}|por_ciclo|h=0.050|c2=13fev"}, col), "d2s",
+       HI_PRE + f"HI-s1, HI-2 só no ciclo {k}, corte {ct.replace('.', ',')}: {ds}")
+      for k in ("1", "2", "3")
+      for c, ct in CORTES_TXT if c == "300"
+      for s, col, ds in (("TAU", "tau", "salto"), ("INF", "ic95_inf", "IC 95% inferior"),
+                         ("SUP", "ic95_sup", "IC 95% superior"))],
+    *[(f"PL_H4{h}_{c}_{s}", "EMPIRICO",
+       _c(PL_EST, {"id_linha": f"PH-4|HI-{h}|{ct}|w=0.050|raio=100|exato="}, col, PP if h == "1" else None),
+       "d1s" if h == "1" else "d2s",
+       PL_PRE + f"PH-4, HI-{h} com efeito fixo de UF e o raio de 100 km, corte {ct.replace('.', ',')}: {ds}")
+      for h in ("1", "2")
+      for c, ct in CORTES_TXT
+      for s, col, ds in (("TAU", "tau", "salto"), ("INF", "ic95_inf", "IC 95% inferior"),
+                         ("SUP", "ic95_sup", "IC 95% superior"))],
+    *[(f"PL_{o}_{c}_{s}", "EMPIRICO",
+       _c(PL_EST, {"id_linha": f"{lin}|H1M-{oid}|{ct}|w=0.050|raio=100|exato=cd_uf;capital;ciclo"}, col,
+          PP if (o == "FRAC" and s in ("TAU", "INF", "SUP")) else None),
+       fm if s in ("HOLM", "NPAR") else ("d1s" if o == "FRAC" else "d2s"),
+       PL_PRE + f"{lin} (pareados na mesma UF e condição de capital), {do}, corte {ct.replace('.', ',')}: {ds}")
+      for o, oid, lin, do, stats in (
+          ("FRAC", "FRAC", "PH-1", "fração das células com vaga imediata preenchidas (p.p.)",
+           ("TAU", "INF", "SUP", "HOLM", "NPAR")),
+          ("ALOC", "ALOC", "PH-1", "médicos alocados por vaga imediata", ("TAU", "INF", "SUP")),
+          ("OUT", "OUTRA-UF", "PH-5", "médicos de outra UF por vaga imediata (X1, descritivo)", ("TAU", "INF", "SUP")))
+      for c, ct in CORTES_TXT
+      for s, col, fm, ds in (("TAU", "tau", "", "média das diferenças nos pares"),
+                             ("INF", "ic95_inf", "", "IC 95% de permutação, inferior"),
+                             ("SUP", "ic95_sup", "", "IC 95% de permutação, superior"),
+                             ("HOLM", "p_holm", "p3", "p de Holm (quatro principais)"),
+                             ("NPAR", "n_pares", "int", "pares"))
+      if s in stats],
+    *[(f"{pre}_{k}_{s}", "EMPIRICO",
+       _c(VL_EST, {"chave_modelo": ch, "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, col), "d2",
+       VL_PRE + f"{dm}: razão de chances da 1ª opção por +R$ 5 mil, {ds}")
+      for pre, k, ch, dm in (("VL1", "EMP", "VL1_emp", "VL-1 (par de UFs), ciclos 1–3"),
+                             ("VL1", "C2", "VL1_c2", "VL-1 (par de UFs), ciclo 2"),
+                             ("VLB", "EMP", "M1_emp", "M1 (base, quadro do ciclo 2 corrigido), ciclos 1–3"),
+                             ("VLB", "C2", "M1_c2", "M1 (base, quadro do ciclo 2 corrigido), ciclo 2"),
+                             ("VL2", "EMP", "VL2_emp", "VL-2 (só vagas perto do corte, par de UFs), ciclos 1–3"),
+                             ("VLLOG", "EMP", "VL1log_emp", "VL-1 com log da distância, ciclos 1–3"),
+                             ("VLLOG", "C2", "VL1log_c2", "VL-1 com log da distância, ciclo 2"),
+                             ("VL3", "EMP", "VL3_VL1_emp", "VL-3 (região de saúde de origem × UF da vaga), ciclos 1–3"),
+                             ("VL3", "C2", "VL3_VL1_c2", "VL-3 (região de saúde de origem × UF da vaga), ciclo 2"))
+      for s, col, ds in (("RC", "estimativa", "estimativa"), ("RCI", "ic95_inf", "IC 95% inferior"),
+                         ("RCS", "ic95_sup", "IC 95% superior"))],
+    *[(f"{pre}_{k}_HOLM", "EMPIRICO",
+       _c(VL_EST, {"chave_modelo": ch, "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, "p_holm"), "p3",
+       VL_PRE + f"{dm}: p de Holm (três principais do 52e)")
+      for pre, k, ch, dm in (("VL1", "EMP", "VL1_emp", "VL-1, ciclos 1–3"), ("VL1", "C2", "VL1_c2", "VL-1, ciclo 2"),
+                             ("VL2", "EMP", "VL2_emp", "VL-2, ciclos 1–3"))],
+    *[(f"{pre}_{k}_{s}", "EMPIRICO",
+       _c(VL_EST, {"chave_modelo": ch, "tipo_linha": "km_equivalentes", "termo": "K5"}, col), "d0",
+       VL_PRE + f"{dm}: km a menos de distância que pesam como +R$ 5 mil (K5), {ds}")
+      for pre, k, ch, dm in (("VL1", "EMP", "VL1_emp", "VL-1 (par de UFs), ciclos 1–3"),
+                             ("VL1", "C2", "VL1_c2", "VL-1 (par de UFs), ciclo 2"),
+                             ("VLB", "EMP", "M1_emp", "M1 (base), ciclos 1–3"),
+                             ("VLB", "C2", "M1_c2", "M1 (base), ciclo 2"))
+      for s, col, ds in (("K5", "estimativa", "estimativa"), ("K5I", "ic95_inf", "IC 95% delta, inferior"),
+                         ("K5S", "ic95_sup", "IC 95% delta, superior"))],
+    # G-D: peso da origem (mesma UF) e de toda a bolsa (10·β), M1 corrigido; em log-chance e como multiplicador da
+    # chance (exp), com o IC transformado do IC do coeficiente
+    *[(f"VC_{k}_{s}", "EMPIRICO",
+       _c(VC_EST, {"versao": "corrigida_13fev", "chave_modelo": "M1", "tipo_linha": "coeficiente", "termo": termo},
+          col, tr), fm, VC_PRE + f"M1, ciclos 1–3: {dk}, {ds}")
+      for k, termo, tr, fm, dk in (
+          ("THETA", "mesma_uf", None, "d2", "peso da vaga na UF de origem (θ_UF, log-chance)"),
+          ("THETAX", "mesma_uf", [["exp"]], "d1", "quanto a vaga na UF de origem multiplica a chance (exp θ_UF)"),
+          ("B10", "bolsa_mil", [["mul", 10]], "d2", "peso de toda a bolsa, R$ 10 → 20 mil (10·β, log-chance)"),
+          ("B10X", "bolsa_mil", [["mul", 10], ["exp"]], "d2",
+           "quanto toda a bolsa, R$ 10 → 20 mil, multiplica a chance (exp 10·β)"))
+      for s, col, ds in (("EST", "estimativa", "estimativa"), ("INF", "ic95_inf", "IC 95% inferior"),
+                         ("SUP", "ic95_sup", "IC 95% superior"))],
+    *[(f"VC_{k}", "EMPIRICO",
+       _c(VC_EST, {"versao": "corrigida_13fev", "chave_modelo": "M1", "tipo_linha": tl, "termo": termo}, col), "p3",
+       VC_PRE + dk)
+      for k, tl, termo, col, dk in (
+          ("B_HOLM", "coeficiente", "bolsa_mil", "p_holm",
+           "M1, ciclos 1–3 (P1a, pré-registrado, sem fixar a UF): p de Holm do peso da bolsa"),
+          ("DUF_P", "D_UF", "D_UF = θ_UF − 10·β", "p_unilateral",
+           "M1, ciclos 1–3 (P1h-1, teste central): p unilateral de H0: D_UF ≤ 0"),
+          ("DUF_HOLM", "D_UF", "D_UF = θ_UF − 10·β", "p_holm",
+           "M1, ciclos 1–3 (P1h-1, teste central): p de Holm (família de um teste)"))],
+    *[(f"VC_DUF{k}_{s}", "EMPIRICO",
+       _c(VC_EST, {"versao": "corrigida_13fev", "chave_modelo": ch, "tipo_linha": "D_UF"}, col), "d2",
+       VC_PRE + f"D_UF = θ_UF − 10·β, {dk}: {ds}")
+      for k, ch, dk in (("", "M1", "M1, ciclos 1–3 (P1h-1)"), ("_C1", "M5_1", "M5, ciclo 1"),
+                        ("_C2", "M5_2", "M5, ciclo 2"), ("_C3", "M5_3", "M5, ciclo 3"))
+      for s, col, ds in (("EST", "estimativa", "estimativa"), ("INF", "ic95_inf", "IC 95% inferior"),
+                         ("SUP", "ic95_sup", "IC 95% superior"))],
+    *[(f"VC_M5{k}_{s}", "EMPIRICO",
+       _c(VC_EST, {"versao": v, "chave_modelo": ch, "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"},
+          col), "d2", VC_PRE + f"{dk}: razão de chances da 1ª opção por +R$ 5 mil, {ds}")
+      for k, v, ch, dk in (("C1", "corrigida_13fev", "M5_1", "M5 (base), ciclo 1"),
+                           ("C2", "corrigida_13fev", "M5_2", "M5 (base), ciclo 2, quadro de 13/02/2026"),
+                           ("C3", "corrigida_13fev", "M5_3", "M5 (base), ciclo 3"),
+                           ("C2A", "antiga_19mar", "M5_2", "M5 (base), ciclo 2, quadro refeito de 19/03/2026"))
+      for s, col, ds in (("RC", "estimativa", "estimativa"), ("RCI", "ic95_inf", "IC 95% inferior"),
+                         ("RCS", "ic95_sup", "IC 95% superior"))],
 ]
 
 
@@ -2598,6 +2714,266 @@ def figura_parecidos(num: dict, destino: Path) -> dict:
     return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
 
 
+# --------------------------------------------------------------------------
+# Nova hipótese da banca 2 (doc 07 da banca 2; decisões do autor de 27/10/2026): gráficos simples G-A a G-D e a
+# robustez da escolha. Tudo lido do registro (PL_*, VL*, VC_*, HI*), sem recálculo.
+# --------------------------------------------------------------------------
+
+CINZA_BASE = "#c4c4bd"  # versão base, ao lado, em cinza claro
+
+
+def _ticks_log(lo: float, hi: float) -> list[float]:
+    return [t for t in (0.5, 0.75, 1, 1.5, 2, 3, 5, 10, 15) if lo <= t <= hi]
+
+
+def _bloco_log(fig, reg: "Registro", num: dict, W: float, H: float, x: float, y_top: float, w: float,
+               titulo: str, linhas: list[dict], xlim: tuple[float, float], w_rot: float, w_val: float,
+               alt: float = 0.56, nulo: float = 1.0, log: bool = True, painel: str = "") -> tuple[float, list]:
+    """Gráfico de intervalos com rótulo à esquerda e valor à direita, em escala log (razão de chances) ou linear.
+    Linha com `base=True` sai em cinza claro (versão base ou antiga, só como referência). Verde: o IC 95% exclui o
+    nulo; cinza: contém. Devolve o pé do gráfico e o registro das linhas."""
+    if titulo:
+        reg.t(fig, x / W, (y_top - 0.02) / H, titulo, fontsize=13.5, weight="bold", color=VERDE_ESC, va="top")
+        y = y_top - 0.36
+    else:
+        y = y_top
+    n = len(linhas)
+    ph = alt * n
+    y0 = y - ph
+    xp, wp = x + w_rot, w - w_rot - w_val
+    ax = fig.add_axes([xp / W, y0 / H, wp / W, ph / H])
+    if log:
+        ax.set_xscale("log")
+    ax.set_xlim(*xlim)
+    ax.set_ylim(n - 0.5, -0.5)
+    ax.axvline(nulo, color="#2b2b2b", lw=1.4, zorder=1)
+    registro = []
+    for i, ln in enumerate(linhas):
+        yc = y0 + ph - (i + 0.5) * alt
+        est, inf, sup = (_bruto(num, ln[c]) for c in ("est", "inf", "sup"))
+        excl = inf > nulo or sup < nulo
+        base = ln.get("base", False)
+        cor = CINZA_BASE if base else (VERDE_DADO if excl else CINZA_DADO)
+        ax.plot([inf, sup], [i, i], color=cor, lw=3.4 if base else 4.6, solid_capstyle="round", zorder=2)
+        ax.plot([est], [i], "o", ms=9 if base else 11, color=cor, mec="white", mew=1.6, zorder=3)
+        txt = f"{_val(num, ln['est'])} [{_val(num, ln['inf'])}; {_val(num, ln['sup'])}]"
+        cor_txt = MUDO if base else TINTA
+        nota = ln.get("nota", "")
+        if ln["rot"].strip():
+            reg.t(fig, x / W, yc / H, ln["rot"], fontsize=12.5, weight="normal" if base else "bold", color=cor_txt,
+                  va="center")
+        reg.t(fig, (xp + wp + 0.12) / W, (yc + (0.11 if nota else 0)) / H, txt, fontsize=12.5,
+              weight="normal" if base else "bold", color=cor_txt, va="center")
+        if nota:
+            reg.t(fig, (xp + wp + 0.12) / W, (yc - 0.14) / H, nota, fontsize=11.5, color=TINTA2, va="center")
+        registro.append({"painel": painel or titulo, "linha": f"{titulo or painel}: {ln['rot'].strip()}",
+                         "texto": txt, "codigos": [ln["est"], ln["inf"], ln["sup"]], "exclui_nulo": bool(excl)})
+    ticks = _ticks_log(*xlim) if log else [t for t in ax.get_xticks() if xlim[0] <= t <= xlim[1]]
+    ax.set_xticks(ticks)
+    rot = [_fmt_eixo(t, log) for t in ticks]
+    ax.set_xticklabels(rot, fontsize=11.5, color=TINTA2)
+    reg.eixos += rot
+    ax.minorticks_off()
+    ax.set_yticks([])
+    ax.tick_params(axis="x", length=0, pad=3)
+    ax.grid(axis="x", color=GRADE, lw=0.8)
+    ax.set_axisbelow(True)
+    for lado in ("top", "right", "left"):
+        ax.spines[lado].set_visible(False)
+    ax.spines["bottom"].set_color(EIXO)
+    return y0, registro
+
+
+def _escala_log(num: dict, cods: list[str], folga: float = 1.12) -> tuple[float, float]:
+    v = [_bruto(num, c) for c in cods] + [1.0]
+    return min(v) / folga, max(v) * folga
+
+
+def _salvar(fig, destino: Path) -> None:
+    fig.savefig(destino, dpi=200, facecolor="white", metadata={"Software": None})
+    plt.close(fig)
+
+
+def figura_fato(num: dict, destino: Path) -> dict:
+    """G-A, o fato (antiga H1; apêndice do deck): por corte, o salto do preenchimento sem controle (HI-1 do 48b), com
+    efeito fixo de UF (PH-4 do 48h) e comparando municípios da mesma UF (PH-1 do 48h, pareamento). Mesma escala nos
+    dois cortes. Mensagem: não enche mais vagas; o negativo era localização."""
+    reg = Registro()
+    W, H = 12.3, 3.95
+    fig = plt.figure(figsize=(W, H))
+    faixa = {"300": "Corte 0,300: R$ 10 → 15 mil", "400": "Corte 0,400: R$ 15 → 20 mil"}
+    cods = [f"{p}_{c}_{s}" for p in ("HI1", "PL_H41", "PL_FRAC") for c, _ in CORTES_TXT for s in ("INF", "SUP")]
+    xlim = _escala(num, cods)
+    rotulos = ["Sem controle (RDD)", "RDD com efeito fixo de UF", "Pareados na mesma UF"]
+    registro = []
+    y_top, w_val, w_plot, w_rot = H - 0.06, 2.1, 2.5, 2.75
+    blocos = (("300", 0.1, w_rot), ("400", 0.1 + w_rot + w_plot + w_val + 0.15, 0.0))
+    y_fim = y_top
+    for c, x, wr in blocos:
+        linhas = [dict(est=f"HI1_{c}_TAU", inf=f"HI1_{c}_INF", sup=f"HI1_{c}_SUP"),
+                  dict(est=f"PL_H41_{c}_TAU", inf=f"PL_H41_{c}_INF", sup=f"PL_H41_{c}_SUP"),
+                  dict(est=f"PL_FRAC_{c}_TAU", inf=f"PL_FRAC_{c}_INF", sup=f"PL_FRAC_{c}_SUP",
+                       nota=f"{_val(num, f'PL_FRAC_{c}_NPAR')} pares")]
+        for ln, rot in zip(linhas, rotulos):
+            ln["rot"] = rot if wr else " "
+        reg.t(fig, (x + wr) / W, (y_top - 0.02) / H, faixa[c], fontsize=13.5, weight="bold", color=VERDE_ESC,
+              va="top")
+        y, r = _bloco_log(fig, reg, num, W, H, x, y_top - 0.36, wr + w_plot + w_val, "", linhas, xlim,
+                          max(wr, 0.01), w_val, alt=0.6, nulo=0.0, log=False,
+                          painel=f"Salto do preenchimento no corte 0,{c} (p.p.)")
+        registro += [dict(e, linha=f"0,{c} · {rot}") for e, rot in zip(r, rotulos)]
+        y_fim = min(y_fim, y)
+    xl = blocos[1][1] - 0.08
+    fig.add_artist(plt.Line2D([xl / W] * 2, [(y_fim - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    reg.t(fig, (0.1 + w_rot) / W, (y_fim - 0.36) / H, "p.p. das vagas imediatas preenchidas na 1ª chamada",
+          fontsize=11.5, color=TINTA2, va="center")
+    _caixa_como_ler(fig, reg, W, ["ponto = lado de bolsa maior menos o de menor; barra = IC 95%. Barra que cruza o zero: "
+                                  "não se detecta diferença.",
+                                  "Em 0,300, fixando a UF ou pareando municípios da mesma UF, o ponto deixa de ser "
+                                  "negativo: anda junto com a UF."], 0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: HI_estimativas.csv (adendo 48b; doc 57n; auditoria 38); PL_estimativas.csv "
+          "(adendo 48h; doc 57w; auditoria 47). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    _salvar(fig, destino)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_bolsa_mesma_uf(num: dict, destino: Path) -> dict:
+    """G-C: razão de chances da 1ª opção por +R$ 5 mil, comparando vagas da mesma UF (VL-1, par de UFs), nos ciclos
+    1–3 e no ciclo 2, com a versão base (M1, quadro do ciclo 2 corrigido) ao lado, em cinza claro."""
+    reg = Registro()
+    W, H = 12.3, 3.5
+    fig = plt.figure(figsize=(W, H))
+    cods = [f"{p}_{k}_{s}" for p in ("VL1", "VLB") for k in ("EMP", "C2") for s in ("RCI", "RCS")]
+    xlim = _escala_log(num, cods)
+    registro = []
+    y_top, w_rot, w_plot, w_val = H - 0.06, 2.55, 2.7, 2.0
+    tit = {"EMP": "Ciclos 1–3", "C2": "Ciclo 2"}
+    blocos = (("EMP", 0.1, w_rot), ("C2", 0.1 + w_rot + w_plot + w_val + 0.15, 0.0))
+    y_fim = y_top
+    for k, x, wr in blocos:
+        linhas = [dict(rot="Vagas da mesma UF" if wr else " ", est=f"VL1_{k}_RC", inf=f"VL1_{k}_RCI",
+                       sup=f"VL1_{k}_RCS", nota=f"= {_val(num, f'VL1_{k}_K5')} km a menos"),
+                  dict(rot="Modelo base" if wr else " ", est=f"VLB_{k}_RC", inf=f"VLB_{k}_RCI", sup=f"VLB_{k}_RCS",
+                       base=True)]
+        reg.t(fig, (x + wr) / W, (y_top - 0.02) / H, tit[k], fontsize=13.5, weight="bold", color=VERDE_ESC,
+              va="top")
+        y, r = _bloco_log(fig, reg, num, W, H, x, y_top - 0.36, wr + w_plot + w_val, "", linhas, xlim,
+                          max(wr, 0.01), w_val, alt=0.72,
+                          painel=f"Razão de chances da 1ª opção por +R$ 5 mil, {tit[k].lower()}")
+        registro += [dict(e, linha=f"{tit[k]} · {rot}") for e, rot in zip(r, ("mesma UF", "base"))]
+        y_fim = min(y_fim, y)
+    xl = blocos[1][1] - 0.08
+    fig.add_artist(plt.Line2D([xl / W] * 2, [(y_fim - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    reg.t(fig, (0.1 + w_rot) / W, (y_fim - 0.36) / H, "razão de chances (escala log); 1 = a bolsa não muda a escolha",
+          fontsize=11.5, color=TINTA2, va="center")
+    _caixa_como_ler(fig, reg, W, ["acima de 1: a vaga de bolsa maior é mais escolhida como 1ª opção; barra = IC 95%; "
+                                  "verde: exclui 1.",
+                                  "Mesma UF: só vagas da mesma UF, vistas por médicos da mesma UF de origem. Cinza "
+                                  "claro: modelo base."], 0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48). " + FONTE_FIG,
+          fontsize=8.5, color=MUDO, va="bottom")
+    _salvar(fig, destino)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_origem_bolsa(num: dict, destino: Path) -> dict:
+    """G-D: quanto a vaga na UF de origem e toda a diferença de bolsa (R$ 10 → 20 mil) multiplicam a chance de a vaga
+    ser a 1ª opção, no mesmo modelo (M1, ciclos 1–3, quadro do ciclo 2 corrigido). Duas barras com IC 95%."""
+    reg = Registro()
+    W, H = 12.3, 3.75
+    fig = plt.figure(figsize=(W, H))
+    linhas = [("Vaga na UF de origem", "THETAX", VERDE_ESC),
+              ("Toda a diferença de bolsa (R$ 10 → 20 mil)", "B10X", "#7fae8c")]
+    x_rot, w_rot, w_val = 0.1, 4.45, 2.35
+    xp, wp = x_rot + w_rot, W - x_rot - w_rot - w_val - 0.1
+    yb, hb = 1.62, H - 1.62 - 0.48
+    reg.t(fig, x_rot / W, (H - 0.08) / H, "Razão de chances da 1ª opção: quanto cada coisa multiplica a chance",
+          fontsize=13.5, weight="bold", color=VERDE_ESC, va="top")
+    ax = fig.add_axes([xp / W, yb / H, wp / W, hb / H])
+    ax.set_xscale("log")
+    hi = max(_bruto(num, f"VC_{k}_SUP") for _, k, _ in linhas) * 1.15
+    lo = min(_bruto(num, f"VC_{k}_INF") for _, k, _ in linhas) / 1.15
+    ax.set_xlim(lo, hi)
+    ax.set_ylim(1.5, -0.5)
+    registro = []
+    for i, (rot, k, cor) in enumerate(linhas):
+        est, inf, sup = (_bruto(num, f"VC_{k}_{s}") for s in ("EST", "INF", "SUP"))
+        ax.barh(i, est - 1.0, left=1.0, height=0.55, color=cor, zorder=2)
+        ax.plot([inf, sup], [i, i], color="#2b2b2b", lw=2.2, zorder=3)
+        for v in (inf, sup):
+            ax.plot([v, v], [i - 0.12, i + 0.12], color="#2b2b2b", lw=2.2, zorder=3)
+        yc = yb + hb - (i + 0.5) * hb / 2
+        reg.t(fig, x_rot / W, yc / H, rot, fontsize=13, weight="bold", color=TINTA, va="center")
+        txt = f"×{_val(num, f'VC_{k}_EST')} [{_val(num, f'VC_{k}_INF')}; {_val(num, f'VC_{k}_SUP')}]"
+        reg.t(fig, (xp + wp + 0.15) / W, yc / H, txt, fontsize=13, weight="bold", color=TINTA, va="center")
+        registro.append({"painel": "Razão de chances da 1ª opção (multiplicador da chance)", "linha": rot,
+                         "texto": txt, "codigos": [f"VC_{k}_EST", f"VC_{k}_INF", f"VC_{k}_SUP"],
+                         "exclui_nulo": bool(inf > 1.0 or sup < 1.0)})
+    ax.axvline(1.0, color="#2b2b2b", lw=1.4, zorder=1)
+    ticks = _ticks_log(lo, hi)
+    ax.set_xticks(ticks)
+    rot_t = [_fmt_eixo(t, True) for t in ticks]
+    ax.set_xticklabels(rot_t, fontsize=11.5, color=TINTA2)
+    reg.eixos += rot_t
+    ax.minorticks_off()
+    ax.set_yticks([])
+    ax.tick_params(axis="x", length=0, pad=3)
+    ax.grid(axis="x", color=GRADE, lw=0.8)
+    ax.set_axisbelow(True)
+    for lado in ("top", "right", "left"):
+        ax.spines[lado].set_visible(False)
+    ax.spines["bottom"].set_color(EIXO)
+    reg.t(fig, xp / W, (yb - 0.34) / H, "multiplica a chance por (escala log); 1 = não muda", fontsize=11.5,
+          color=TINTA2, va="center")
+    _caixa_como_ler(fig, reg, W, ["Mesmo modelo, mesmos candidatos (ciclos 1–3). Barra fina: IC 95%. A origem é "
+                                  "preferência revelada, não causa.",
+                                  f"Diferença em log-chance (origem − bolsa): {_val(num, 'VC_DUF_EST')} "
+                                  f"[{_val(num, 'VC_DUF_INF')}; {_val(num, 'VC_DUF_SUP')}]."], 0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VC_estimativas.csv (adendo 52c; doc 57p; auditoria 41); P1h (doc 57i; "
+          "auditoria 31). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    _salvar(fig, destino)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_robustez_escolha(num: dict, destino: Path) -> dict:
+    """Robustez da hipótese: à esquerda, a razão de chances por +R$ 5 mil por ciclo (modelo base), no ciclo 2 com o
+    quadro refeito (antigo, cinza claro), com distância em log, com região de saúde de origem e só perto do corte; à
+    direita, origem − toda a bolsa (D_UF) por ciclo."""
+    reg = Registro()
+    W, H = 12.3, 4.85
+    fig = plt.figure(figsize=(W, H))
+    esq = [dict(rot="Ciclo 1", est="VC_M5C1_RC", inf="VC_M5C1_RCI", sup="VC_M5C1_RCS"),
+           dict(rot="Ciclo 2", est="VC_M5C2_RC", inf="VC_M5C2_RCI", sup="VC_M5C2_RCS"),
+           dict(rot="Ciclo 3", est="VC_M5C3_RC", inf="VC_M5C3_RCI", sup="VC_M5C3_RCS"),
+           dict(rot="Ciclo 2, quadro refeito", est="VC_M5C2A_RC", inf="VC_M5C2A_RCI", sup="VC_M5C2A_RCS", base=True),
+           dict(rot="Distância em log", est="VLLOG_EMP_RC", inf="VLLOG_EMP_RCI", sup="VLLOG_EMP_RCS"),
+           dict(rot="Região de saúde fixada", est="VL3_EMP_RC", inf="VL3_EMP_RCI", sup="VL3_EMP_RCS"),
+           dict(rot="Só vagas perto do corte", est="VL2_EMP_RC", inf="VL2_EMP_RCI", sup="VL2_EMP_RCS")]
+    xlim = _escala_log(num, [ln[s] for ln in esq for s in ("inf", "sup")])
+    y_top = H - 0.06
+    w_esq = 7.3
+    y1, r1 = _bloco_log(fig, reg, num, W, H, 0.1, y_top, w_esq, "Razão de chances por +R$ 5 mil", esq, xlim,
+                        2.55, 1.95, alt=0.4)
+    dir_ = [dict(rot=f"Ciclo {c}", est=f"VC_DUF_C{c}_EST", inf=f"VC_DUF_C{c}_INF", sup=f"VC_DUF_C{c}_SUP")
+            for c in (1, 2, 3)]
+    xlim2 = _escala(num, [ln[s] for ln in dir_ for s in ("inf", "sup")], extra=(0.0,))
+    y2, r2 = _bloco_log(fig, reg, num, W, H, w_esq + 0.35, y_top, W - w_esq - 0.45, "Origem − toda a bolsa", dir_,
+                        xlim2, 0.85, 1.75, alt=0.4, nulo=0.0, log=False)
+    fig.add_artist(plt.Line2D([(w_esq + 0.22) / W] * 2, [(y1 - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    reg.t(fig, (0.1 + 2.55) / W, (y1 - 0.33) / H, "escala log; 1 = a bolsa não pesa", fontsize=11.5, color=TINTA2,
+          va="center")
+    reg.t(fig, (w_esq + 0.35 + 0.85) / W, (y2 - 0.33) / H, "log-chance; 0 = pesam igual", fontsize=11.5,
+          color=TINTA2, va="center")
+    _caixa_como_ler(fig, reg, W, ["Ciclo 1, 2 e 3: modelo base, um por ciclo. As três últimas: ciclos 1–3, vagas da "
+                                  "mesma UF. Barra = IC 95%; verde: exclui o nulo.",
+                                  "Cinza claro: ciclo 2 com o quadro de vagas refeito depois do resultado (versão "
+                                  "antiga, só referência)."], 0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VC_estimativas.csv (adendo 52c; doc 57p; auditoria 41); VL_estimativas.csv "
+          "(adendo 52e; doc 57x; auditoria 48). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    _salvar(fig, destino)
+    return {"linhas": r1 + r2, "textos": reg.textos, "eixos": reg.eixos}
+
+
 def figura_h3_horas(num: dict, destino: Path) -> dict:
     """H3 da apresentação (antes H4), especificação principal: só o P4."""
     paineis = [dict(titulo="Horas semanais cadastradas do médico no CNES (P4)", nulo=0.0,
@@ -2801,10 +3177,11 @@ def linhas_tabela_cronologia(num: dict) -> list[list[str]]:
     return [
         ["Ciclo", "Chamamento", "Quadro de vagas (1ª chamada)", "Resultado (1ª chamada)", "2ª chamada"],
         ["1", f"Edital {v('CR_C1_EDITAL')}", v("CR_C1_QUADRO"), f"{v('CR_C1_RES')} (alocação retificada)",
-         f"{v('CR_C1_CH2')}, só cadastro reserva"],
-        ["2", f"Edital {v('CR_C2_EDITAL')}", f"{v('CR_C2_QUADRO')} (retificado em {v('CR_C2_RETIF')})",
-         f"{v('CR_C2_RES')} (remanescentes)", f"{v('CR_C2_CH2')}, só cadastro reserva"],
-        ["3", f"Chamamento {v('CR_C3_EDITAL')}, após adesão dos gestores ({v('CR_C3_GEST')})",
+         f"{v('CR_C1_CH2')}, só reserva"],
+        ["2", f"Edital {v('CR_C2_EDITAL')}",
+         f"{v('CR_C2_QUADRO')} (retificado em {v('CR_C2_RETIF1302')} e {v('CR_C2_RETIF')})",
+         f"{v('CR_C2_RES')} (remanescentes)", f"{v('CR_C2_CH2')}, só reserva"],
+        ["3", f"Chamamento {v('CR_C3_EDITAL')} (gestores: {v('CR_C3_GEST')})",
          f"{v('CR_C3_QUADRO')} (retificado em {v('CR_C3_RETIF')})", f"{v('CR_C3_RES')}, sub judice", "não houve"],
     ]
 
@@ -2970,6 +3347,15 @@ ENTRADAS = [
     (RAIZ / OC_EST, "protocolo 64 (doc 57q; auditoria 39): oferta local de especialistas comparada no corte",
      "2026-10-26", "V (1.037 municípios) e U, cortes 0,300 e 0,400", "por 10 mil hab.; F robusto", "id_oc + populacao "
      "+ corte + especificacao (+ outcome_id)"),
+    (RAIZ / PL_EST, "adendo 48h (doc 57w; auditoria 47): o fato com a localização controlada (efeito fixo de UF; "
+     "pareamento na mesma UF)", "2026-10-27", "municípios × ciclo e células com vaga imediata, cortes 0,300 e 0,400",
+     "p.p.; alocados por município; alocados por vaga imediata", "id_linha"),
+    (RAIZ / VL_EST, "adendo 52e (doc 57x; auditoria 48): escolha da 1ª opção com o par de UFs fixado", "2026-10-27",
+     "candidatos de 1ª opção, ciclos 1–3 e ciclo 2", "razão de chances por +R$ 5 mil; km",
+     "chave_modelo + tipo_linha + termo"),
+    (RAIZ / VC_EST, "adendo 52c (doc 57p; auditoria 41): escolha com o quadro do ciclo 2 de 13/02/2026", "2026-10-26",
+     "candidatos de 1ª opção, ciclos 1–3 e por ciclo", "log-chance; razão de chances",
+     "versao + chave_modelo + tipo_linha + termo"),
     (RAIZ / NA_EST, "família A (protocolo 48): A3 por ciclo e por corte", "2026-10-19",
      "células abertas, ciclos 1, 2, 3 e juntos, cortes 0,300 e 0,400", "fração (x100 = p.p.)",
      "outcome_id + populacao + ciclo + corte + especificacao + variante"),
@@ -3115,7 +3501,19 @@ def main() -> int:
                            ("curto_h3_horas.png", figura_h3_horas,
                             "deck curto, resultados: H3 (antes H4), horas do médico, só o P4"),
                            ("curto_h3_nota_corte.png", figura_h3_nota_corte,
-                            "deck curto, robustez: H3 (antes H4) na nota de corte (P4-CA)")):
+                            "deck curto, robustez: H3 (antes H4) na nota de corte (P4-CA)"),
+                           ("curto_fato.png", figura_fato,
+                            "deck curto, G-A (apêndice): o fato da antiga H1 por corte, sem controle, com efeito fixo "
+                            "de UF e pareando municípios da mesma UF (adendos 48b e 48h)"),
+                           ("curto_bolsa_mesma_uf.png", figura_bolsa_mesma_uf,
+                            "deck curto, G-C: razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF "
+                            "(adendo 52e), ciclos 1–3 e ciclo 2, com a versão base em cinza"),
+                           ("curto_origem_bolsa.png", figura_origem_bolsa,
+                            "deck curto, G-D: quanto a UF de origem e toda a bolsa multiplicam a chance da 1ª opção "
+                            "(M1 com o quadro do ciclo 2 corrigido, adendo 52c)"),
+                           ("curto_robustez_escolha.png", figura_robustez_escolha,
+                            "deck curto, robustez da hipótese: por ciclo, quadro do ciclo 2, distância em log, região "
+                            "de saúde, perto do corte; origem − bolsa por ciclo")):
         p = SAIDA / nome
         novas[nome] = fn(num, p)
         figs.append({"arquivo": p, "natureza": "EMPIRICO", "descricao": desc,
@@ -3125,7 +3523,10 @@ def main() -> int:
                      + ([RAIZ / NA_EST, RAIZ / ND_EST] if nome == "curto_h1_por_ciclo.png" else [])
                      + ([RAIZ / A36_EST] if nome == "curto_queda_capital.png" else [])
                      + ([RAIZ / CL_EST, RAIZ / PM_EST] if nome == "curto_h1_parecidos.png" else [])
-                     + ([RAIZ / HI_EST] if nome == "curto_tost_hi.png" else [])})
+                     + ([RAIZ / HI_EST] if nome == "curto_tost_hi.png" else [])
+                     + ([RAIZ / HI_EST, RAIZ / PL_EST] if nome == "curto_fato.png" else [])
+                     + ([RAIZ / VL_EST] if nome in ("curto_bolsa_mesma_uf.png", "curto_robustez_escolha.png") else [])
+                     + ([RAIZ / VC_EST] if nome in ("curto_origem_bolsa.png", "curto_robustez_escolha.png") else [])})
     t_desc = linhas_tabela_descritiva(num)
     t_font = linhas_tabela_fontes(num)
     gravar_csv_tabela(linhas_tabela_cronologia(num), SAIDA / "cronologia_ciclos.csv")
@@ -3147,7 +3548,9 @@ def main() -> int:
                    "numeracao_das_hipoteses": "a partir de 26/10/2026, na apresentação: H1 preenchimento; H2 bolsa × "
                                               "origem (antes H3); H3 oferta (antes H4). Os nomes dos códigos não "
                                               "mudam (H3_* são do P1h, hoje a H2); o campo 'hipotese_apresentacao' "
-                                              "de cada código traz a numeração nova",
+                                              "de cada código traz a numeração nova. Desde 27/10/2026 (doc 07 da "
+                                              "banca 2) o corpo do deck tem só a H2; a H1 (o fato) e a H3 ficam no "
+                                              "apêndice",
                    "script": "scripts/apresentacao/gerar_figuras_banca2.py", **numeros}
     (SAIDA / "numeros_banca2.json").write_text(json.dumps(numeros_doc, ensure_ascii=False, indent=2) + "\n",
                                                encoding="utf-8")
