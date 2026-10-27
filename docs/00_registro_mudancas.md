@@ -8,6 +8,21 @@
 
 ---
 
+## 27/10/2026 — Doc 57x: execução do adendo 52e (H2 com efeito fixo do par de UFs e comparação local no corte)
+
+Motivo: execução do adendo 52e. O doc 57x foi aberto primeiro só com o bloco "Decisões de implementação" (como o
+efeito fixo do par entra no logit condicional, pares sem escolha e efeitos fixos separados, pares sem variação de
+bolsa, janela e spline do VL-2, score bootstrap), commitado antes de qualquer estimativa; os resultados entram depois,
+gerados pelo script 50 entre marcadores `<!-- VL:... -->`.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57x_resultados_escolha_localizacao_par.md`](06_execucao/57x_resultados_escolha_localizacao_par.md) | resultados do adendo 52e, gerados por `scripts/rdd_bolsa/50_escolha_localizacao_par.py` a partir de `output/rdd_bolsa/VL_*`; testes em `tests/test_escolha_localizacao_par.py` |
+
+---
+
 ## 27/10/2026 — Adendos 48h (H1 pareada pela localização da unidade e dos médicos) e 52e (H2 com o par de localizações fixado)
 
 Motivo: o autor pediu rodar de novo a H1 e a H2 com pareamento pela localização da unidade e do médico, "o controle
