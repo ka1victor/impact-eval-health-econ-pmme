@@ -5,18 +5,22 @@
 > **Estatuto:** `ADENDO_52E_POS_RESULTADO`. O P1 (doc 57a), o P1h (57i), o 52c (57p) e o 52d (57v) já tinham sido vistos; isto não é teste confirmatório novo. Toda linha de `VL_estimativas.csv` e o resumo têm `natureza_dos_dados = EMPIRICO`.<br>
 > **Pedido do autor (27/10/2026):** "rodar de novo a H1 fazendo pareamento pela localização da unidade e do médico, como se fosse um controle. O mesmo vale para a H2." Este doc é a parte da H2.<br>
 > **Saídas:** `output/rdd_bolsa/VL_estimativas.csv`, `VL_resumo.json` e `VL_figuras/VL_razao_chances_e_km.png`. As saídas `E9_*`, `P1_*`, `P1h_*`, `VC_*` e `VD_*` não são regravadas, e os docs 57a, 57i, 57p e 57v não são editados.<br>
-> **Auditoria:** pendente.
+> **Auditoria:** [48](../auditorias/48_auditoria_escolha_localizacao_par.md), aprovada com correções de texto: o recálculo independente reproduz todas as linhas, e nenhuma estimativa mudou. A auditoria acrescentou à resposta curta a leitura da comparação pareada com o M1, a frase do M4 e a da distância em log. A redação da resposta curta e o título da figura foram escritos depois de ver as estimativas; as regras do §3 (`regra_linha`, `leitura`) são as do commit das decisões.
 
 ## 1. Resposta curta
 
 <!-- VL:resposta:inicio -->
-**O peso da bolsa na escolha não vem da localização.** Comparando só vagas da mesma UF, vistas por médicos da mesma UF de origem, a razão de chances da bolsa fica parecida com a do modelo base nas três principais, pela regra fixada (1ª linha do §3): entre vagas na mesma relação geográfica com o médico, a bolsa maior continua pesando.
+**O peso da bolsa na escolha não vem da localização.** Comparando só vagas da mesma UF, vistas por médicos da mesma UF de origem, a razão de chances da bolsa fica parecida com a do modelo base nas três principais, pela regra fixada (1ª linha do §3): entre vagas na mesma relação geográfica com o médico, a bolsa maior continua pesando. Mais que isso: em VL-1 (par de UFs), ciclos 1–3, a comparação pareada com o M1 mostra a bolsa pesando mais que no modelo base, não o mesmo; "parecida" é o rótulo da regra fixada, que compara os IC lado a lado.
 
-- **VL-1 (par de UFs), ciclos 1–3:** razão de chances 1,47 [1,15; 1,89] contra 1,25 [0,98; 1,61] no M1 (base), ciclos 1–3; parecida com a do M1. p de Holm 0,005 (score bootstrap: 0,023). Diferença de log da razão de chances 0,16 [0,09; 0,23]. A diferença contra o M1 exclui zero: comparando dentro da mesma UF, a bolsa pesa mais que no M1 (descritivo, fora do Holm).
+- **VL-1 (par de UFs), ciclos 1–3:** razão de chances 1,47 [1,15; 1,89] contra 1,25 [0,98; 1,61] no M1 (base), ciclos 1–3; pela regra fixada, parecida com a do M1 (cada estimativa cai no IC da outra). p de Holm 0,005 (score bootstrap: 0,023). Diferença de log da razão de chances 0,16 [0,09; 0,23]. Essa diferença é medida nos mesmos candidatos, e os dois β andam juntos (correlação 0,96); por isso ela exclui zero mesmo com os IC lado a lado se sobrepondo. A leitura mais exata é que, comparando dentro da mesma UF, a bolsa pesa mais que no M1, não o mesmo (descritivo, fora do Holm).
 
 - **VL-1 (par de UFs), ciclo 2:** razão de chances 1,90 [1,30; 2,78] contra 1,79 [1,19; 2,68] no M1 (base), ciclo 2; parecida com a do M1. p de Holm 0,003 (score bootstrap: 0,011). Diferença de log da razão de chances 0,06 [−0,06; 0,19]. A diferença contra o M1 contém zero.
 
 - **VL-2 (local no corte, par de UFs), ciclos 1–3:** razão de chances 1,28 [0,95; 1,72] contra 1,25 [0,98; 1,61] no M1 (base), ciclos 1–3; parecida com a do M1. p de Holm 0,103 (score bootstrap: 0,183). Diferença de log da razão de chances 0,02 [−0,23; 0,27]. A diferença contra o M1 contém zero.
+
+**De onde vem a diferença contra o M1.** O M4, que só troca a macrorregião por efeito fixo de UF da vaga, dá 1,48 [1,14; 1,91] nos ciclos 1–3 e 2,04 [1,37; 3,03] no ciclo 2: perto do VL-1. O que muda o peso da bolsa é comparar vagas dentro da mesma UF; fixar também a UF de origem do médico muda pouco (descritivo, sem teste).
+
+**Com o log da distância.** O parêntese do VL-1 no §2 do adendo fala em log da distância; a decisão 4 manteve a distância linear do M1 e pôs o log como secundária. Com o log, o VL-1 dá 1,45 [1,15; 1,83] nos ciclos 1–3 e 1,75 [1,23; 2,49] no ciclo 2 (q BKY 0,004 e 0,004); pela mesma regra do §3, a leitura não muda.
 
 **VL-4.** Comparando vagas da mesma UF, +R$ 5 mil pesam como 75 km a menos de distância nos ciclos 1–3 (IC delta [28; 122]; no M1, 119 km) e 117 km no ciclo 2 (IC [56; 178]; no M1, 302 km). Em VL-1 (par de UFs), ciclos 1–3, os km caem em relação ao M1 porque, dentro da mesma UF, a distância pesa mais (−0,51 por 100 km, contra −0,19 no M1), e não porque a bolsa pese menos. Em VL-1 (par de UFs), ciclo 2, os km caem em relação ao M1 porque, dentro da mesma UF, a distância pesa mais (−0,55 por 100 km, contra −0,19 no M1), e não porque a bolsa pese menos.
 

@@ -449,7 +449,8 @@ class TestDoc57x(unittest.TestCase):
             self.assertEqual(t.count(f"<!-- VL:{nome}:inicio -->"), 1, nome)
             self.assertEqual(t.count(f"<!-- VL:{nome}:fim -->"), 1, nome)
         for s in ("## 1. Resposta curta", "## 2. Portão", "## 3. Quantos pares de UF", "## 7. Decisões de "
-                  "implementação", "## 8. Limites", "ADENDO_52E_POS_RESULTADO", "**Auditoria:** pendente"):
+                  "implementação", "## 8. Limites", "ADENDO_52E_POS_RESULTADO",
+                  "**Auditoria:** [48](../auditorias/48_auditoria_escolha_localizacao_par.md)"):
             self.assertIn(s, t)
 
     def test_nenhum_numero_de_resultado_fora_dos_blocos(self) -> None:
@@ -458,6 +459,16 @@ class TestDoc57x(unittest.TestCase):
         fora = "\n".join(x for x in fora.splitlines() if not x.startswith("#"))
         self.assertEqual(re.findall(r"\d+,\d+", fora), [])
         self.assertEqual(re.findall(r"\d+\.\d+", fora), [])
+
+    def test_parecida_com_diferenca_pareada_que_exclui_zero(self) -> None:
+        """Auditoria 48 (A1): se a diferença pareada contra o M1 exclui zero, o texto não fica só no "parecida"."""
+        t = " ".join(DOC.read_text(encoding="utf-8").split())
+        est = M.ler_est()
+        dif = est[est["tipo_linha"] == "diferenca_log_rc_contra_referencia"]
+        exclui = ((dif["ic95_inf"] > 0) | (dif["ic95_sup"] < 0)).any()
+        self.assertEqual("A leitura mais exata" in t, bool(exclui))
+        self.assertIn("De onde vem a diferença contra o M1", t)
+        self.assertIn("Com o log da distância", t)
 
     def test_linguagem(self) -> None:
         t = " ".join(DOC.read_text(encoding="utf-8").split())
