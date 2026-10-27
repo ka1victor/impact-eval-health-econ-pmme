@@ -13,7 +13,9 @@
 > volta à saída de origem e que não há número de resultado fora dos blocos. O texto fora dos blocos é escrito à mão.<br>
 > **Revisão de redação:** segue a [auditoria 50](../auditorias/50_auditoria_avaliacao_hipoteses.md): "não
 > detectamos aumento" do preenchimento, nunca a ausência como fato; o teste central da H2 é origem × toda a bolsa (D_UF).<br>
-> **Auditoria:** pendente (auditoria 52 em curso). Até sair, use com essa ressalva.<br>
+> **Auditoria:** [52](../auditorias/52_auditoria_analise_H2.md), aprovada com correções de redação e de rótulo: os
+> números copiados conferem com as saídas auditadas, os descritivos novos foram refeitos de forma independente e batem,
+> e nenhuma estimativa mudou. As correções estão no script 51 (texto gerado) e no texto à mão, com nota "auditoria 52".<br>
 > **Natureza dos dados:** `EMPIRICO` em todas as linhas. Nenhum cenário, nada sintético, nada imputado. Os cenários do
 > [doc 57b](57b_cenarios_P1_bolsa.md) são **simulação** e só aparecem citados em palavras, rotulados como tal.
 
@@ -22,10 +24,10 @@
 <!-- H2:resposta:inicio -->
 - **Perto de casa (descritivo).** Entre os 5.425 candidatos com origem conhecida, 79% põem a 1ª opção na UF onde já tinham vínculo médico, 46% na mesma região de saúde e 36% no mesmo município; a distância mediana é 51 km (`ESC_*` de `numeros_banca2.json`, reproduzidos pelo script 51).
 - **Teste central: a origem pesa mais que toda a bolsa.** No modelo de escolha pré-registrado (M1, quadro do ciclo 2 de 13/02), D_UF = θ_UF − 10·β = 1,94 [1,48; 2,40], p unilateral < 0,001 (Holm = p). Ter a vaga na UF de origem pesa 2,40; toda a amplitude da bolsa, 0,45 [−0,04; 0,95].
-- **O peso da bolsa sozinho, na especificação pré-registrada, não passa no Holm:** β = 0,0453 por R$ 1 mil [−0,0041; 0,0947], p de Holm 0,072.
-- **Dentro da UF de origem, a bolsa maior é mais escolhida (adendo pós-resultado 52e).** Comparando só vagas da mesma UF, vistas por médicos da mesma UF de origem, a razão de chances por +R$ 5 mil é 1,47 [1,15; 1,89] nos ciclos 1–3 (p de Holm 0,005) e 1,90 [1,30; 2,78] no ciclo 2 (p de Holm 0,003). Só com vagas perto do corte: 1,28 [0,95; 1,72], inconclusivo.
-- **Dentro da UF, perto do corte (descritivo, sem teste).** O lado de bolsa maior é 52,5% das vagas disponíveis e 60,8% das 1ªs opções (1.568 candidatos que veem os dois lados do corte na sua UF).
-- **Em km.** Um degrau de R$ 5 mil pesa como 119 km [−12; 250] a menos de distância no M1 e 75 km [28; 122] comparando dentro da mesma UF.
+- **O peso da bolsa sozinho, na especificação pré-registrada, não passa no Holm:** β = 0,0453 por R$ 1 mil [−0,0041; 0,0947], p de Holm 0,072 (família de um teste: Holm = p).
+- **Comparando vagas da mesma UF, a bolsa maior é mais escolhida (adendo pós-resultado 52e).** Cada vaga é comparada só com vagas da mesma UF (a da origem ou outra), vistas por médicos da mesma UF de origem (VL-1). A razão de chances por +R$ 5 mil é 1,47 [1,15; 1,89] nos ciclos 1–3 (p de Holm 0,005) e 1,90 [1,30; 2,78] no ciclo 2 (p de Holm 0,003); nos ciclos 1 e 3 o VL-1 não foi estimado. Só com vagas perto do corte (VL-2): 1,28 [0,95; 1,72], inconclusivo.
+- **Na UF de origem, perto do corte (descritivo, sem teste e sem controlar a distância).** O lado de bolsa maior é 52,5% das vagas disponíveis e 60,8% das 1ªs opções (1.568 candidatos que veem os dois lados do corte na sua UF). Não é evidência à parte: a versão com inferência e distância (VL-2) é inconclusiva.
+- **Em km.** Comparando vagas da mesma UF, um degrau de R$ 5 mil pesa como 75 km [28; 122] a menos de distância; no M1, 119 km [−12; 250], com IC que contém zero.
 <!-- H2:resposta:fim -->
 
 Três ressalvas acompanham toda frase acima:
@@ -43,6 +45,9 @@ Três ressalvas acompanham toda frase acima:
 **A hipótese.** O médico especialista escolhe vagas perto de onde já trabalha. A bolsa maior muda qual vaga ele
 escolhe dentro da sua região, mas pesa menos que a própria origem.
 
+Nos dados, "dentro da sua região" é medido no nível da **UF**: o VL-1 compara vagas da mesma UF, e o D_UF compara a
+origem na UF com toda a bolsa. A região de saúde não é testada como margem da bolsa (auditoria 50, A4; auditoria 52).
+
 **O fato que motiva a pergunta (antiga H1).** Nos cortes de IVS em 0,300 e 0,400, onde a bolsa sobe R$ 5 mil por mês,
 **não detectamos aumento** do preenchimento das vagas. Esse resultado não é um nulo bem estimado: o desenho por corte
 só detectaria saltos grandes, e o sinal negativo em 0,300 nunca passou no Holm e anda junto com a localização
@@ -51,8 +56,8 @@ só detectaria saltos grandes, e o sinal negativo em 0,300 nunca passou no Holm 
 
 **A pergunta.** Por que um incentivo de R$ 5 mil por mês não produz aumento detectável do preenchimento?
 
-**A resposta proposta.** Porque a escolha do médico é dominada pela origem. A bolsa desloca a escolha entre vagas
-parecidas da mesma região, mas não compensa sair dela. A ligação entre isso e o preenchimento é
+**A resposta proposta.** Porque, na escolha, a origem pesa muito mais que a bolsa. O pacote do corte desloca a
+escolha entre vagas parecidas da mesma UF, mas toda a diferença de bolsa pesa menos que ter a vaga na UF de origem. A ligação entre isso e o preenchimento é
 **interpretação**, não teste: a H2 mede pesos na escolha de quem já se candidatou; não mede o preenchimento.
 
 **Por que importa.** A política paga mais onde o IVS é maior para atrair especialistas a lugares que eles evitam. Se
@@ -135,9 +140,9 @@ Por corte (ciclos 1–3): em 0,300, 52,3% das vagas disponíveis e 60,6% das esc
 
 **Como ler.** Cada barra é a parte das 1ªs opções no mesmo lugar do vínculo médico anterior no CNES (origem); descritivo, entre quem se candidatou. *Fonte: numeros_banca2.json (ESC_*); G1_candidatos_origem, G1_distancias_opcoes, escolhas_candidatos (script 12), malha de regiões de saúde; script 51.*
 
-![Na UF de origem, perto do corte, o lado de bolsa maior é mais escolhido do que oferecido](../../output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png)
+![Descritivo: na UF de origem, perto do corte, a bolsa maior é mais escolhida que oferecida](../../output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png)
 
-**Como ler.** Só 1ªs opções na UF de origem e a até 0,050 de um corte de IVS; cinza: parte das vagas do mesmo curso e UF no lado de bolsa maior; azul: parte das escolhas. Descritivo, sem teste. *Fonte: escolhas_candidatos e escolhas_conjunto_principal (script 12), G1, IVS 2010 oficial (a08); script 51.*
+**Como ler.** Só 1ªs opções na UF de origem a até 0,050 de um corte; cinza: parte das vagas (CNES × curso) do mesmo curso e UF no lado de bolsa maior; azul: parte das escolhas. Sem teste e sem controlar a distância; com inferência (VL-2), inconclusivo. *Fonte: escolhas_candidatos e escolhas_conjunto_principal (script 12), G1, IVS 2010 oficial (a08); script 51.*
 <!-- H2:descritiva:fim -->
 
 **Leitura.**
@@ -145,14 +150,20 @@ Por corte (ciclos 1–3): em 0,300, 52,3% das vagas disponíveis e 60,6% das esc
 - **Perto de casa.** A grande maioria põe a 1ª opção na UF de origem, perto de metade na própria região de saúde e
   uma parte grande no próprio município. O ciclo 1 é o mais disperso; ele também tinha menos vagas por candidato
   (57a §7), mas isso não foi testado como causa.
-- **A comparação crua engana.** Olhando todas as vagas da UF, a vaga escolhida tem bolsa média quase igual à das
-  disponíveis, e a parte das escolhas na UF quase não muda com a faixa da vaga. Isso não contradiz a H2: as vagas de
-  bolsa maior ficam em municípios mais vulneráveis, que por outros motivos atraem menos. A bolsa e o IVS andam
-  juntos, e a comparação crua mistura os dois.
-- **Perto do corte, a bolsa aparece.** Restringindo às vagas da UF de origem a até 0,050 de um corte, onde o IVS é
+- **A comparação crua não isola a bolsa.** "Disponível" é a média da bolsa das vagas (CNES × curso) do mesmo curso
+  e ciclo na UF de origem, cada vaga com o mesmo peso; "escolhida" é a bolsa da 1ª opção; só entram os candidatos
+  cuja 1ª opção está na UF de origem. As duas médias são quase iguais, e a parte das escolhas na UF quase não muda
+  com a faixa da vaga. Isso não contradiz a H2 nem a confirma: a comparação crua mistura a bolsa com tudo o que anda
+  com ela, como o IVS, a distância e, sobretudo, a própria origem. Muitos ficam no próprio município de origem, e a
+  bolsa que "escolhem" é a do município onde já trabalham. Que as vagas mais vulneráveis atraiam menos por outros
+  motivos é uma leitura possível, não testada aqui. O modelo de escolha (seção 6) é quem separa esses pesos
+  (auditoria 52).
+- **Perto do corte (descritivo).** Restringindo às vagas da UF de origem a até 0,050 de um corte, onde o IVS é
   parecido dos dois lados, o lado de bolsa maior é mais escolhido do que a sua parte nas vagas, nos dois cortes e
-  nos três ciclos, com a maior diferença no ciclo 2. É descritivo e sem teste; a versão com inferência é o VL-2
-  (seção 6), que é inconclusiva.
+  nos três ciclos, com a maior diferença no ciclo 2. É descritivo, sem teste, sem controlar a distância nem a
+  origem, e só conta quem tem a 1ª opção perto do corte na UF de origem. Não é evidência à parte: a versão com
+  inferência e distância, o VL-2 (seção 6), é inconclusiva. O VL-2 também usa vagas de outras UFs, comparadas
+  dentro do par de UFs.
 
 ## 4. Método em palavras
 
@@ -172,8 +183,10 @@ Por corte (ciclos 1–3): em 0,300, 52,3% das vagas disponíveis e 60,6% das esc
    quadro da inscrição ([52c](52c_adendo_vaga_imediata_ciclo2.md)).
 5. **A bolsa pesa dentro da região? (adendo 52e).** Para afastar a dúvida de que a bolsa só "pesa" porque as vagas de
    bolsa maior ficam em UFs que os médicos já preferem, o adendo [52e](52e_adendo_escolha_localizacao_par.md) põe um
-   efeito fixo para cada par (UF de origem, UF da vaga). O peso da bolsa passa a vir de vagas **da mesma UF**,
-   vistas por médicos **da mesma UF de origem** (VL-1). O VL-2 faz o mesmo só com vagas perto de um corte.
+   efeito fixo para cada par (UF de origem, UF da vaga). O peso da bolsa passa a vir de vagas **da mesma UF**
+   (a UF de origem ou qualquer outra), vistas por médicos **da mesma UF de origem** (VL-1). O VL-2 faz o mesmo só
+   com vagas perto de um corte. O VL-1 foi estimado nos ciclos 1–3 juntos e no ciclo 2, não nos ciclos 1 e 3
+   separados.
 6. **Tradução em km.** O peso de um degrau de bolsa dividido pelo peso da distância diz quantos km a menos de
    distância "valem" R$ 5 mil na escolha.
 7. **Inferência.** Erro-padrão agrupado por conjunto de escolha (curso × ciclo), Holm nas famílias principais, BKY nas
@@ -207,6 +220,7 @@ No VL-1, os indicadores de UF são trocados por um efeito fixo de cada par (UF d
 | Forma da curva do IVS | spline linear, quadrático, cúbico, nós extras, janelas (E9, doc 42) | **frágil para o peso da bolsa**: com spline cúbico o IC inclui zero (seção 7) |
 | Independência de alternativas irrelevantes | logit aninhado por região de saúde (M9) | violada em parte; o peso da bolsa quase não muda |
 | Poucos grupos | *score bootstrap* | o VL-1 e o ciclo 2 se mantêm |
+| Precisão calibrada | cortes placebo do E9 (doc 42 §5.2) | **frágil no empilhado**: com cluster por conjunto e spline linear, o t superestima a precisão; o ciclo 2 resiste. O VL-1 usa o mesmo spline e a mesma inferência (auditoria 50, A4) |
 | Tipo de vaga do ciclo 2 medido antes da alocação | adendos 52c e 52d | resolvido; D_UF quase não muda |
 | Seleção pela ligação ao CNES | E9 na amostra completa, sem origem | mesmo sinal |
 | Quem identifica o peso da bolsa no VL-1 | contagem de pares e candidatos com variação de bolsa dentro da UF | ver abaixo |
@@ -235,7 +249,7 @@ No VL-1 (ciclos 1–3), 260 dos 281 pares (UF de origem, UF da vaga) com alguma 
 | VL-1: mesma UF (par de UFs), ciclos 1–3 | 5.417 | 1,47 [1,15; 1,89] | 0,002 | 0,005 | Holm (3 principais do 52e) | 57x §4.1 |
 | VL-1: mesma UF (par de UFs), ciclo 2 | 2.012 | 1,90 [1,30; 2,78] | < 0,001 | 0,003 | Holm (3 principais do 52e) | 57x §4.1 |
 | VL-2: mesma UF, só vagas perto do corte, ciclos 1–3 | 4.288 | 1,28 [0,95; 1,72] | 0,103 | 0,103 | Holm (3 principais do 52e) | 57x §4.1 |
-| M1 (base), ciclos 1–3 | 5.421 | 1,25 [0,98; 1,61] | 0,072 | — | — | 57x §4.1 |
+| M1 (base, pré-registrado), ciclos 1–3 | 5.421 | 1,25 [0,98; 1,61] | 0,072 | — | — | 57x §4.1 |
 | M1 (base), ciclo 2 | 2.032 | 1,79 [1,19; 2,68] | 0,005 | — | — | 57x §4.1 |
 | M1 (base), ciclo 1 | 915 | 1,07 [0,69; 1,65] | 0,764 | — | — | 57p §4.1 |
 | M1 (base), ciclo 3 | 2.474 | 1,00 [0,72; 1,39] | 0,990 | — | — | 57p §4.1 |
@@ -251,7 +265,7 @@ Diferença pareada contra o M1, em log da razão de chances (52e, decisão 10): 
 | Um degrau de +R$ 5 mil, em km a menos (IC 95% delta) | Ciclos 1–3 | Ciclo 2 | Fonte |
 |---|---|---|---|
 | M1: todas as vagas (quadro corrigido) | 119 [−12; 250] | 302 [88; 516] | 57x §4.3; 57v §5.6 |
-| VL-1: só vagas da UF de origem | 75 [28; 122] | 117 [56; 178] | 57x §4.3 |
+| VL-1: vagas da mesma UF (par de UFs) | 75 [28; 122] | 117 [56; 178] | 57x §4.3 |
 
 Dentro da UF, a distância pesa mais (−0,51 por 100 km, contra −0,19 no M1) e a bolsa também (β de 0,077 contra 0,045 por R$ 1 mil). Por isso os km do VL-1 caem: são km dentro da UF.
 
@@ -263,7 +277,7 @@ Dentro da UF, a distância pesa mais (−0,51 por 100 km, contra −0,19 no M1) 
 
 **Como ler.** Barras na mesma escala da utilidade do modelo M1 (quadro do ciclo 2 de 13/02); D_UF > 0: a origem pesa mais. A origem é preferência revelada; a bolsa, o pacote do corte. *Fonte: VC_estimativas.csv (adendo 52c; P1h-1 corrigido); script 51.*
 
-![+R$ 5 mil pesam como 119 km a menos; dentro da mesma UF, 75 km](../../output/rdd_bolsa/H2_figuras/H2_F5_bolsa_em_km.png)
+![Na mesma UF, +R$ 5 mil pesam como 75 km a menos; no M1, 119 km (IC contém zero)](../../output/rdd_bolsa/H2_figuras/H2_F5_bolsa_em_km.png)
 
 **Como ler.** Cada ponto converte o peso de um degrau de bolsa em km de distância origem → vaga. Os km do VL-1 são km dentro da UF, onde a distância pesa mais: não se comparam um a um com os do M1. *Fonte: VL_estimativas.csv (VL-4 e VL-5); numeros_banca2.json (ESC_DIST_P50); script 51.*
 <!-- H2:resultados:fim -->
@@ -275,11 +289,13 @@ Dentro da UF, a distância pesa mais (−0,51 por 100 km, contra −0,19 no M1) 
    limite de cima de 10·β fica abaixo do limite de baixo de θ_UF.
 2. **O peso da bolsa sozinho, na especificação pré-registrada, não passa no Holm.** Nos ciclos 1–3 o IC do M1 contém
    1; o peso vem do ciclo 2. Isso é dito sempre que o VL-1 é mostrado.
-3. **Dentro da UF, a escolha responde à bolsa (adendo pós-resultado).** Comparando só vagas da mesma UF, vistas por
-   médicos da mesma UF de origem, a vaga de bolsa maior é mais escolhida, nos ciclos 1–3 e no ciclo 2, e passa no
-   Holm. A diferença pareada mostra que, nos ciclos 1–3, o peso fica **maior** que no M1, não menor: a localização
-   no nível da UF não explica o peso da bolsa. O VL-1 reforça que a escolha responde à bolsa; não testa a comparação
-   com a origem.
+3. **Comparando vagas da mesma UF, a escolha responde à bolsa (adendo pós-resultado).** Comparando só vagas da
+   mesma UF (a de origem ou outra), vistas por médicos da mesma UF de origem, a vaga de bolsa maior é mais escolhida,
+   nos ciclos 1–3 e no ciclo 2, e passa no Holm do adendo. A diferença pareada (descritiva, fora do Holm) mostra
+   que, nos ciclos 1–3, o peso fica **maior** que no M1, não menor; no ciclo 2, a diferença não se distingue de
+   zero. A localização no nível da UF não explica o peso da bolsa; diferenças dentro da UF não são controladas. O
+   VL-1 não foi estimado nos ciclos 1 e 3, e o resultado dos ciclos 1–3 juntos não vale para cada ciclo. O VL-1
+   reforça que a escolha responde à bolsa (pacote do corte); não testa a comparação com a origem.
 4. **Perto do corte, inconclusivo.** Só com vagas a até 0,050 de um corte (VL-2), o ponto é parecido, mas o IC contém
    1.
 5. **Em km.** No M1, um degrau de R$ 5 mil vale cerca de duas vezes a distância mediana entre a origem e a 1ª opção,
@@ -289,11 +305,15 @@ Dentro da UF, a distância pesa mais (−0,51 por 100 km, contra −0,19 no M1) 
 ## 7. Robustez
 
 <!-- H2:robustez:inicio -->
-Bolsa: razão de chances da 1ª opção por +R$ 5 mil. Linha principal em negrito.
+Bolsa: razão de chances da 1ª opção por +R$ 5 mil. Em negrito, a especificação pré-registrada (M1, P1a); o VL-1 é a principal do adendo pós-resultado 52e, não da H2.
 
 | Variante | Candidatos | Razão de chances [IC 95%] | p | p ajustado | Ajuste | Quadro do ciclo 2 | Fonte |
 |---|---|---|---|---|---|---|---|
-| **VL-1: mesma UF (par de UFs), ciclos 1–3** | 5.417 | 1,47 [1,15; 1,89] | 0,002 | 0,005 | Holm (3 principais do 52e) | 13/02/2026 | 57x §4.1 |
+| **M1 (base, pré-registrado), ciclos 1–3** | 5.421 | 1,25 [0,98; 1,61] | 0,072 | — | — | 13/02/2026 | 57x §4.1 |
+| M1 (base), ciclo 1 | 915 | 1,07 [0,69; 1,65] | 0,764 | — | — | 13/02/2026 | 57p §4.1 |
+| M1 (base), ciclo 2 | 2.032 | 1,79 [1,19; 2,68] | 0,005 | — | — | 13/02/2026 | 57x §4.1 |
+| M1 (base), ciclo 3 | 2.474 | 1,00 [0,72; 1,39] | 0,990 | — | — | 13/02/2026 | 57p §4.1 |
+| VL-1: mesma UF (par de UFs), ciclos 1–3 | 5.417 | 1,47 [1,15; 1,89] | 0,002 | 0,005 | Holm (3 principais do 52e) | 13/02/2026 | 57x §4.1 |
 | VL-1: mesma UF (par de UFs), ciclo 2 | 2.012 | 1,90 [1,30; 2,78] | < 0,001 | 0,003 | Holm (3 principais do 52e) | 13/02/2026 | 57x §4.1 |
 | VL-1 com log da distância, ciclos 1–3 | 5.417 | 1,45 [1,15; 1,83] | 0,002 | 0,004 | BKY (7 secundárias do 52e) | 13/02/2026 | 57x §4.2 |
 | VL-1 com log da distância, ciclo 2 | 2.012 | 1,75 [1,23; 2,49] | 0,002 | 0,004 | BKY (7 secundárias do 52e) | 13/02/2026 | 57x §4.2 |
@@ -305,10 +325,6 @@ Bolsa: razão de chances da 1ª opção por +R$ 5 mil. Linha principal em negrit
 | VL-3 perto do corte, ciclo 2 | 1.575 | 1,49 [1,04; 2,13] | 0,029 | 0,018 | BKY (7 secundárias do 52e) | 13/02/2026 | 57x §4.2 |
 | M4: efeito fixo de UF da vaga, ciclos 1–3 | 5.421 | 1,48 [1,14; 1,91] | 0,003 | — | — | 13/02/2026 | 57x §4.2 |
 | M4: efeito fixo de UF da vaga, ciclo 2 | 2.032 | 2,04 [1,37; 3,03] | < 0,001 | — | — | 13/02/2026 | 57x §4.2 |
-| M1 (base), ciclos 1–3 | 5.421 | 1,25 [0,98; 1,61] | 0,072 | — | — | 13/02/2026 | 57x §4.1 |
-| M1 (base), ciclo 1 | 915 | 1,07 [0,69; 1,65] | 0,764 | — | — | 13/02/2026 | 57p §4.1 |
-| M1 (base), ciclo 2 | 2.032 | 1,79 [1,19; 2,68] | 0,005 | — | — | 13/02/2026 | 57x §4.1 |
-| M1 (base), ciclo 3 | 2.474 | 1,00 [0,72; 1,39] | 0,990 | — | — | 13/02/2026 | 57p §4.1 |
 | M2: log da distância, ciclos 1–3 | 5.421 | 1,28 [1,04; 1,58] | 0,020 | — | — | 13/02/2026 | 57v §5 |
 | M7: logit explodido (1ª e 2ª opção), ciclos 1–3 | 5.421 | 1,18 [0,92; 1,52] | 0,190 | — | — | 13/02/2026 | 57v §5 |
 | M8: logit misto (média), ciclos 1–3 | 5.421 | 1,30 [1,04; 1,64] | 0,024 | — | — | 13/02/2026 | 57v §5 |
@@ -323,9 +339,9 @@ Origem contra toda a bolsa: D_UF = θ_UF − 10·β (log-chance). Linha principa
 | Variante | D_UF [IC 95%] | p unilateral | p ajustado | Quadro do ciclo 2 | Fonte |
 |---|---|---|---|---|---|
 | **D_UF no M1 (P1h-1), ciclos 1–3** | 1,94 [1,48; 2,40] | < 0,001 | < 0,001 | 13/02/2026 | 57p §4.2 |
-| D_UF no M2 (log da distância) | 1,16 [0,77; 1,54] | — | 0,001 | 13/02/2026 | 57v §5.6 |
-| D_UF no M4 (efeito fixo de UF da vaga) | 1,70 [1,21; 2,19] | — | 0,001 | 13/02/2026 | 57v §5.6 |
-| D_UF no M7 (logit explodido) | 2,03 [1,56; 2,51] | — | 0,001 | 13/02/2026 | 57v §5.6 |
+| D_UF no M2 (log da distância) | 1,16 [0,77; 1,54] | < 0,001 | 0,001 | 13/02/2026 | 57v §5.6 |
+| D_UF no M4 (efeito fixo de UF da vaga) | 1,70 [1,21; 2,19] | < 0,001 | 0,001 | 13/02/2026 | 57v §5.6 |
+| D_UF no M7 (logit explodido) | 2,03 [1,56; 2,51] | < 0,001 | 0,001 | 13/02/2026 | 57v §5.6 |
 | D_UF no M1 só do ciclo 1 | 2,34 [1,45; 3,24] | < 0,001 | — | 13/02/2026 | 57p §4.2 |
 | D_UF no M1 só do ciclo 2 | 1,19 [0,51; 1,86] | < 0,001 | — | 13/02/2026 | 57p §4.2 |
 | D_UF no M1 só do ciclo 3 | 2,37 [1,75; 3,00] | < 0,001 | — | 13/02/2026 | 57p §4.2 |
@@ -333,9 +349,11 @@ Origem contra toda a bolsa: D_UF = θ_UF − 10·β (log-chance). Linha principa
 
 Contagem: D_UF tem IC acima de zero em 8 de 8 variantes; a razão de chances da bolsa tem IC acima de 1 em 16 de 24. O 10·β do VL-1, que é o maior peso da bolsa entre as principais, é 0,77 [0,27; 1,27]: o limite de cima fica abaixo do limite de baixo do θ_UF do M1 (2,27). É comparação entre modelos, sem teste: no VL-1 o efeito fixo do par absorve a mesma UF, e o D_UF não é identificado.
 
+Na família BKY, o q pode ficar abaixo do p, porque o método estima quantas nulas são verdadeiras e aqui quase todas as secundárias rejeitam. Por isso o VL-3 perto do corte, ciclos 1–3, tem q 0,043 com p 0,101 e IC 95% que contém 1. Lemos pelo IC: inconclusivo, como o VL-2.
+
 ![Em todas as variantes a origem pesa mais que a bolsa; o peso da bolsa sozinho muda com a especificação](../../output/rdd_bolsa/H2_figuras/H2_F6_robustez.png)
 
-**Como ler.** Losango azul: linha principal; ponto vazado: tipo de vaga do ciclo 2 do quadro de 19/03 (versão antiga). IC 95%. À esquerda, IC que cruza 1 não distingue a bolsa de zero. *Fonte: VL_, VC_, VD_, E9_estimativas.csv e P1h_magnitudes.csv; script 51.*
+**Como ler.** Losango azul: especificação pré-registrada (M1; D_UF do P1h-1); VL, M4 e outras são variantes, o VL-1 é adendo pós-resultado; vazado: quadro do ciclo 2 de 19/03. IC 95%; à esquerda, IC que cruza 1 não distingue de zero. *Fonte: VL_, VC_, VD_, E9_estimativas.csv e P1h_magnitudes.csv; script 51.*
 <!-- H2:robustez:fim -->
 
 **O que se mantém:** D_UF positivo em todas as variantes, ciclos e versões do quadro do ciclo 2. A razão de chances
@@ -360,13 +378,15 @@ honesta é: a bolsa desloca a escolha com força no ciclo 2 e quando se compara 
 - **"Isso é a bolsa ou o pacote?"** O pacote do corte. Nos mesmos cortes mudam outras regras federais (auditoria 18).
   Em 0,300 nenhum outro incentivo individual ao especialista do PMM-E muda (auditoria 35); em 0,400 fica aberta a
   ajuda de custo do PMMB (doc 42 §1). Nos dois cortes, o serviço do município pode mudar.
-- **"Se a bolsa não passa no Holm no M1, como ela 'muda qual vaga'?"** Pelo VL-1, que compara dentro da UF e passa no
-  Holm, e pelo ciclo 2. Na especificação pré-registrada, o peso sozinho não passa. Os dois fatos vão juntos na fala.
+- **"Se a bolsa não passa no Holm no M1, como ela 'muda qual vaga'?"** Pelo VL-1, que compara vagas da mesma UF e
+  passa no Holm do adendo pós-resultado, e pelo ciclo 2. Na especificação pré-registrada, o peso sozinho não passa.
+  Os dois fatos vão juntos na fala, e o teste central da H2 continua sendo o D_UF.
 - **"Por que só o ciclo 2?"** Não sabemos. Há leituras candidatas, sem teste: informação sobre a grade de bolsas, o
   número de vagas por curso e a parte de vagas imediatas (57a §7). Nos ciclos 1 e 3, os IC são largos.
 - **"A bolsa traz médico de longe?"** Não detectamos. Em 0,300 não se detecta mais médico de outra UF do lado de
   bolsa maior; em 0,400 o resultado é **inconclusivo**, com poucos pares ([57w](57w_resultados_pareamento_localizacao.md),
-  PH-5; auditoria 47).
+  PH-5; auditoria 47): os poucos pares com diferença apontam todos para mais médicos de fora do lado de bolsa
+  maior, mas são poucos para concluir. A ausência não é fato.
 - **"Escolha não é preenchimento."** Correto. A ponte do modelo para o número de candidatos por vaga (P1g) não se
   distingue de zero, e o salto observado também não (57a §3). A simulação do [doc 57b](57b_cenarios_P1_bolsa.md)
   (**cenário contrafactual, não observação**) aponta no mesmo sentido: com os candidatos fixos, subir a bolsa
@@ -397,15 +417,19 @@ custo de vida, compensa o custo do lugar e supera a sua melhor alternativa. O cu
 depende do território (do IVS) e uma parte individual. No corte, a vaga mais vulnerável é preenchida se o degrau de
 bolsa supera o degrau de custo.
 
-- **O que a H2 acrescenta.** O termo que domina a escolha não é o custo ligado ao IVS, que a bolsa foi desenhada para
-  compensar, e sim o componente individual ligado à origem, junto com a renda alternativa perto dela (hipótese H3 do
-  modelo micro: a bolsa concorre com a renda alternativa).
+- **O que a H2 acrescenta.** Os pesos estimados **sugerem** que o termo que domina a escolha não é o custo ligado ao
+  IVS, que a bolsa foi desenhada para compensar, e sim o componente individual ligado à origem, junto com a renda
+  alternativa perto dela (hipótese H3 do modelo micro: a bolsa concorre com a renda alternativa). A origem é
+  preferência revelada: os dados não dizem qual desses canais pesa.
 - **Como o degrau age.** Com custos individuais grandes e diferentes entre médicos, poucos estão na margem de
-  aceitar uma vaga longe da origem. O degrau de R$ 5 mil desloca a escolha entre vagas próximas, dentro da região,
-  onde o custo individual é parecido. No logit condicional, o que uma vaga ganha outra do mesmo curso perde.
-- **O resultado é um incentivo limitado.** O degrau alcança a margem "qual vaga perto de casa", mas não a margem
-  "sair da região". Isso é coerente com não detectarmos aumento do preenchimento no corte. A teoria não exigia efeito
-  positivo: exigia que o degrau superasse o custo relevante, e a resposta sugerida é "não com este degrau".
+  aceitar uma vaga longe da origem. O degrau de R$ 5 mil (pacote do corte) desloca a escolha entre vagas parecidas
+  da mesma UF, onde o custo ligado à origem é parecido. No logit condicional, o que uma vaga ganha outra do mesmo
+  curso perde.
+- **O resultado é um incentivo limitado.** Na escolha, toda a diferença de bolsa pesa menos que ter a vaga na UF
+  de origem. Isso não quer dizer que o degrau não mova ninguém para fora da UF: no modelo, a bolsa aumenta a chance
+  de qualquer vaga, perto ou longe; quer dizer que ela compensa só uma parte do peso da origem. Isso é coerente com
+  não detectarmos aumento do preenchimento no corte. A teoria não exigia efeito positivo: exigia que o degrau
+  superasse o custo relevante, e a resposta sugerida, não testada, é "não com este degrau".
 - **Duas ressalvas.** O contraste é o pacote do corte. E o canal da renda alternativa não foi separado do custo do
   lugar.
 

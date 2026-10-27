@@ -4,7 +4,10 @@
 > **Data:** 27/10/2026.<br>
 > **Estado:** a hipótese está decidida (doc [07](07_nova_hipotese.md)). A **análise completa da H2** já está na
 > `main`: [doc 66](../../06_execucao/66_analise_completa_H2.md), com 6 figuras simples em
-> `output/rdd_bolsa/H2_figuras/` (auditoria em curso; os números de estimação são cópia de saídas já auditadas).
+> `output/rdd_bolsa/H2_figuras/`, auditada na [auditoria 52](../../auditorias/52_auditoria_analise_H2.md)
+> (aprovada com correções de redação e de rótulo; os números de estimação são cópia de saídas já auditadas). Atenção:
+> o VL-1 compara vagas **da mesma UF** (a de origem ou outra), não "só vagas da UF de origem", e a F2 é descritiva:
+> não vale como evidência à parte, porque a versão com inferência (VL-2) é inconclusiva.
 > O deck novo está sendo reconstruído e entra na `main` quando for auditado.<br>
 > **Regra do projeto:** todo número dos slides sai de `output/` por script. Os números abaixo servem para o grupo
 > entender a história. No slide, use a figura gerada pelo pipeline, nunca um número digitado à mão.
@@ -70,6 +73,6 @@ Hipótese → Dados → Análise descritiva → Metodologia → Identificação 
 | a hipótese e o roteiro | [07_nova_hipotese.md](07_nova_hipotese.md) |
 | a avaliação das hipóteses (por que H2) | [`docs/06_execucao/65_avaliacao_forca_hipoteses.md`](../../06_execucao/65_avaliacao_forca_hipoteses.md) §4.6–4.8 |
 | os resultados da escolha | docs 57a, 57i, 57p, 57v, 57x em `docs/06_execucao/` |
-| a análise completa da H2 | [`docs/06_execucao/66_analise_completa_H2.md`](../../06_execucao/66_analise_completa_H2.md) (auditoria em curso) |
+| a análise completa da H2 | [`docs/06_execucao/66_analise_completa_H2.md`](../../06_execucao/66_analise_completa_H2.md) ([auditoria 52](../../auditorias/52_auditoria_analise_H2.md)) |
 | o deck | `output/apresentacao_banca2/deck_banca2_curto.pdf` (a versão com a H2 está sendo gerada; a atual ainda é a antiga) |
 | decisões e pendências | [05_discussao_historia_empirica.md](05_discussao_historia_empirica.md) §2.16 e §4.1 |

@@ -219,8 +219,8 @@
     },
     "F2": {
       "arquivo": "output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png",
-      "titulo": "Na UF de origem, perto do corte, o lado de bolsa maior é mais escolhido do que oferecido",
-      "como_ler": "só 1ªs opções na UF de origem e a até 0,050 de um corte de IVS; cinza: parte das vagas do mesmo curso e UF no lado de bolsa maior; azul: parte das escolhas. Descritivo, sem teste.",
+      "titulo": "Descritivo: na UF de origem, perto do corte, a bolsa maior é mais escolhida que oferecida",
+      "como_ler": "só 1ªs opções na UF de origem a até 0,050 de um corte; cinza: parte das vagas (CNES × curso) do mesmo curso e UF no lado de bolsa maior; azul: parte das escolhas. Sem teste e sem controlar a distância; com inferência (VL-2), inconclusivo.",
       "fonte": "Fonte: escolhas_candidatos e escolhas_conjunto_principal (script 12), G1, IVS 2010 oficial (a08); script 51."
     },
     "F3": {
@@ -237,25 +237,25 @@
     },
     "F5": {
       "arquivo": "output/rdd_bolsa/H2_figuras/H2_F5_bolsa_em_km.png",
-      "titulo": "+R$ 5 mil pesam como 119 km a menos; dentro da mesma UF, 75 km",
+      "titulo": "Na mesma UF, +R$ 5 mil pesam como 75 km a menos; no M1, 119 km (IC contém zero)",
       "como_ler": "cada ponto converte o peso de um degrau de bolsa em km de distância origem → vaga. Os km do VL-1 são km dentro da UF, onde a distância pesa mais: não se comparam um a um com os do M1.",
       "fonte": "Fonte: VL_estimativas.csv (VL-4 e VL-5); numeros_banca2.json (ESC_DIST_P50); script 51."
     },
     "F6": {
       "arquivo": "output/rdd_bolsa/H2_figuras/H2_F6_robustez.png",
       "titulo": "Em todas as variantes a origem pesa mais que a bolsa; o peso da bolsa sozinho muda com a especificação",
-      "como_ler": "losango azul: linha principal; ponto vazado: tipo de vaga do ciclo 2 do quadro de 19/03 (versão antiga). IC 95%. À esquerda, IC que cruza 1 não distingue a bolsa de zero.",
+      "como_ler": "losango azul: especificação pré-registrada (M1; D_UF do P1h-1); VL, M4 e outras são variantes, o VL-1 é adendo pós-resultado; vazado: quadro do ciclo 2 de 19/03. IC 95%; à esquerda, IC que cruza 1 não distingue de zero.",
       "fonte": "Fonte: VL_, VC_, VD_, E9_estimativas.csv e P1h_magnitudes.csv; script 51."
     }
   },
   "saidas": {
-    "output/rdd_bolsa/H2_sintese.csv": "40a4242655316b6caedea95fa0db7aefc23fa5d038ebaa403be23eb5c49430b5",
+    "output/rdd_bolsa/H2_sintese.csv": "42308e104e2a5b4ea1f790cc9196ade89e200c993fe944d446be3de100f0d335",
     "output/rdd_bolsa/H2_figuras/H2_F1_onde_escolhem.png": "140ac90a8128de113d1e10cdfedee274ed3c7ccd62e4fe644a41ddff80c223d3",
-    "output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png": "dd0791e4d515ec3ff6cf0729f7622ce62c806704f13adf66a63335c37b5a9179",
-    "output/rdd_bolsa/H2_figuras/H2_F3_razao_chances_bolsa.png": "fff8611a0cabaccf233dcca4bdfcaa8c260f16614b61ac628b15603328f55552",
+    "output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png": "19196d2405bd9585a61c3da9bb09a4660eb304d5122ca8f4b45c1de11d30917c",
+    "output/rdd_bolsa/H2_figuras/H2_F3_razao_chances_bolsa.png": "7cd9bb2ddd7ab2abd238a6181c2caf13e359874c26724247b30f3dfc04dfb803",
     "output/rdd_bolsa/H2_figuras/H2_F4_origem_contra_bolsa.png": "61cb870f20b253cd48fb2827601e426401dfb06a4a5ef73036952a9a184f41ec",
-    "output/rdd_bolsa/H2_figuras/H2_F5_bolsa_em_km.png": "ed74cc4aab67c24aff2f698a7474a79d1fb983120ed62bf94f4b2ed4ec9d06f2",
-    "output/rdd_bolsa/H2_figuras/H2_F6_robustez.png": "e53b32ce9b25f19c513476cf3ccde0ea0f98c4f3ca7daee7f17c152571fcd77a"
+    "output/rdd_bolsa/H2_figuras/H2_F5_bolsa_em_km.png": "e51e10c4b7b562d02f579fdaf6b0680e9c6358c84121f9c39b62aea90c655053",
+    "output/rdd_bolsa/H2_figuras/H2_F6_robustez.png": "b805b316f917b619ba40f5c93d9a6ab8bb20c38a59886f6e18f5297beb213bbf"
   },
   "n_linhas": 137,
   "linguagem": "pacote do corte; preferência revelada; pós-resultado; não detectamos aumento do preenchimento"

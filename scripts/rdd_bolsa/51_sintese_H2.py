@@ -190,13 +190,15 @@ DUF_T = "D_UF = θ_UF − 10·β"
 
 TABELAS = {
     # Razão de chances da 1ª opção por +R$ 5 mil
-    "OR_M1_EMP": _t(VL, _vl("M1_emp"), "M1 (base), ciclos 1–3", RC, "1–3", "bolsa", "57x §4.1", "48"),
+    # Linha principal da bolsa = M1 dos ciclos 1–3, a especificação pré-registrada (P1a); o VL-1 é a principal do
+    # adendo pós-resultado 52e, não da H2 (auditoria 52, A2).
+    "OR_M1_EMP": _t(VL, _vl("M1_emp"), "M1 (base, pré-registrado), ciclos 1–3", RC, "1–3", "bolsa", "57x §4.1", "48",
+                    principal=True),
     "OR_M1_C2": _t(VL, _vl("M1_c2"), "M1 (base), ciclo 2", RC, "2", "bolsa", "57x §4.1", "48"),
     "OR_M5_C1": _t(VC, _vc("M5_1", RC, "bolsa_mil"), "M1 (base), ciclo 1", RC, "1", "bolsa", "57p §4.1", "41"),
     "OR_M5_C3": _t(VC, _vc("M5_3", RC, "bolsa_mil"), "M1 (base), ciclo 3", RC, "3", "bolsa", "57p §4.1", "41"),
     "OR_VL1_EMP": _t(VL, _vl("VL1_emp"), "VL-1: mesma UF (par de UFs), ciclos 1–3", RC, "1–3", "bolsa", "57x §4.1",
-                     "48", padj="p_holm", tipo_ajuste="Holm (3 principais do 52e)", pscore="p_score_rademacher",
-                     principal=True),
+                     "48", padj="p_holm", tipo_ajuste="Holm (3 principais do 52e)", pscore="p_score_rademacher"),
     "OR_VL1_C2": _t(VL, _vl("VL1_c2"), "VL-1: mesma UF (par de UFs), ciclo 2", RC, "2", "bolsa", "57x §4.1", "48",
                     padj="p_holm", tipo_ajuste="Holm (3 principais do 52e)", pscore="p_score_rademacher"),
     "OR_VL2_EMP": _t(VL, _vl("VL2_emp"), "VL-2: mesma UF, só vagas perto do corte, ciclos 1–3", RC, "1–3", "bolsa",
@@ -261,11 +263,11 @@ TABELAS = {
     "DUF_M5_C3": _t(VC, _vc("M5_3", DU, DUF_T), "D_UF no M1 só do ciclo 3", "D_UF", "3", "origem", "57p §4.2",
                     "41", p="p_unilateral"),
     "DUF_M2": _t(VD, _vd("M2", DU, "D_UF"), "D_UF no M2 (log da distância)", "D_UF", "1–3", "origem", "57v §5.6",
-                 "46", p=None, padj="q_bky", tipo_ajuste="BKY (6 sensibilidades P1h-3)"),
+                 "46", p="p_unilateral", padj="q_bky", tipo_ajuste="BKY (6 sensibilidades P1h-3)"),
     "DUF_M4": _t(VD, _vd("M4", DU, "D_UF"), "D_UF no M4 (efeito fixo de UF da vaga)", "D_UF", "1–3", "origem",
-                 "57v §5.6", "46", p=None, padj="q_bky", tipo_ajuste="BKY (6 sensibilidades P1h-3)"),
+                 "57v §5.6", "46", p="p_unilateral", padj="q_bky", tipo_ajuste="BKY (6 sensibilidades P1h-3)"),
     "DUF_M7": _t(VD, _vd("M7", DU, "D_UF"), "D_UF no M7 (logit explodido)", "D_UF", "1–3", "origem", "57v §5.6",
-                 "46", p=None, padj="q_bky", tipo_ajuste="BKY (6 sensibilidades P1h-3)"),
+                 "46", p="p_unilateral", padj="q_bky", tipo_ajuste="BKY (6 sensibilidades P1h-3)"),
     "DUF_M1_ANTIGA": _t("output/rdd_bolsa/P1h_magnitudes.csv", {"id_linha": "P1h-1", "modelo": "M1"},
                         "D_UF no M1, quadro de 19/03 (antiga)", "D_UF", "1–3", "origem",
                         "57i §4", "31", p="p_unilateral", padj="p_holm", tipo_ajuste="Holm (família de um teste)",
@@ -640,6 +642,9 @@ def figuras(df: pd.DataFrame, base: pd.DataFrame) -> dict:
     info = {}
 
     def salvar(fig, nome, titulo, como_ler, fonte):
+        # título em uma linha, sem cortar na borda (auditoria 52): até ~8,5 caracteres por polegada a 14 pt
+        if len(titulo) > 8.5 * fig.get_figwidth():
+            raise AssertionError(f"título longo demais para a largura da figura: {titulo}")
         fig.suptitle(titulo, x=0.01, ha="left", fontsize=14, fontweight="bold")
         _rodape(fig, como_ler, fonte)
         caminho = FIG_DIR / nome
@@ -696,11 +701,13 @@ def figuras(df: pd.DataFrame, base: pd.DataFrame) -> dict:
     ax.set_ylabel("% do lado de bolsa maior")
     ax.legend(frameon=False, loc="upper right")
     maior = N["D_LADO_ESC_EMP"]["estimativa"] > N["D_LADO_DISP_EMP"]["estimativa"]
-    titulo_f2 = ("Na UF de origem, perto do corte, o lado de bolsa maior é mais escolhido do que oferecido"
-                 if maior else "Na UF de origem, perto do corte, o lado de bolsa maior não é mais escolhido do que oferecido")
+    titulo_f2 = ("Descritivo: na UF de origem, perto do corte, a bolsa maior é mais escolhida que oferecida"
+                 if maior else
+                 "Descritivo: na UF de origem, perto do corte, a bolsa maior não é mais escolhida que oferecida")
     salvar(fig, "H2_F2_mesma_uf_perto_do_corte.png", titulo_f2,
-           "só 1ªs opções na UF de origem e a até 0,050 de um corte de IVS; cinza: parte das vagas do mesmo curso e UF "
-           "no lado de bolsa maior; azul: parte das escolhas. Descritivo, sem teste.",
+           "só 1ªs opções na UF de origem a até 0,050 de um corte; cinza: parte das vagas (CNES × curso) do mesmo curso "
+           "e UF no lado de bolsa maior; azul: parte das escolhas. Sem teste e sem controlar a distância; com inferência "
+           "(VL-2), inconclusivo.",
            "Fonte: escolhas_candidatos e escolhas_conjunto_principal (script 12), G1, IVS 2010 oficial (a08); script 51.")
 
     # F3: razão de chances por +R$ 5 mil
@@ -717,7 +724,7 @@ def figuras(df: pd.DataFrame, base: pd.DataFrame) -> dict:
             r = N[vl_id]
             ax.errorbar(r["estimativa"], yy - 0.15,
                         xerr=[[r["estimativa"] - r["ic95_inf"]], [r["ic95_sup"] - r["estimativa"]]], fmt="o",
-                        color=AZUL, ms=9, capsize=3, label="VL-1: só vagas da UF de origem" if i == 0 else None)
+                        color=AZUL, ms=9, capsize=3, label="VL-1: vagas da mesma UF (par de UFs)" if i == 0 else None)
             ax.text(r["ic95_sup"] * 1.04, yy - 0.15, f2(r["estimativa"]), va="center", color=AZUL, fontweight="bold")
         else:
             ax.text(1.75, yy - 0.15, "VL-1: não estimado neste ciclo (adendo 52e)", fontsize=9, color=CINZA,
@@ -782,8 +789,9 @@ def figuras(df: pd.DataFrame, base: pd.DataFrame) -> dict:
     ax.set_yticks(range(len(kms)), [k[0] for k in kms][::-1])
     ax.set_xlabel("km a menos de distância que pesam como +R$ 5 mil de bolsa (IC 95%, método delta)")
     salvar(fig, "H2_F5_bolsa_em_km.png",
-           f"+R$ 5 mil pesam como {f0(N['K5_M1_EMP']['estimativa'])} km a menos; dentro da mesma UF, "
-           f"{f0(N['K5_VL1_EMP']['estimativa'])} km",
+           f"Na mesma UF, +R$ 5 mil pesam como {f0(N['K5_VL1_EMP']['estimativa'])} km a menos; "
+           f"no M1, {f0(N['K5_M1_EMP']['estimativa'])} km"
+           + (" (IC contém zero)" if N["K5_M1_EMP"]["ic95_inf"] < 0 else ""),
            "cada ponto converte o peso de um degrau de bolsa em km de distância origem → vaga. Os km do VL-1 são "
            "km dentro da UF, onde a distância pesa mais: não se comparam um a um com os do M1.",
            "Fonte: VL_estimativas.csv (VL-4 e VL-5); numeros_banca2.json (ESC_DIST_P50); script 51.")
@@ -814,15 +822,15 @@ def figuras(df: pd.DataFrame, base: pd.DataFrame) -> dict:
     a2.set_title("A origem pesa mais que toda a bolsa?", loc="left", fontsize=12)
     salvar(fig, "H2_F6_robustez.png",
            "Em todas as variantes a origem pesa mais que a bolsa; o peso da bolsa sozinho muda com a especificação",
-           "losango azul: linha principal; ponto vazado: tipo de vaga do ciclo 2 do quadro de 19/03 (versão antiga). "
-           "IC 95%. À esquerda, IC que cruza 1 não distingue a bolsa de zero.",
+           "losango azul: especificação pré-registrada (M1; D_UF do P1h-1); VL, M4 e outras são variantes, o VL-1 é adendo "
+           "pós-resultado; vazado: quadro do ciclo 2 de 19/03. IC 95%; à esquerda, IC que cruza 1 não distingue de zero.",
            "Fonte: VL_, VC_, VD_, E9_estimativas.csv e P1h_magnitudes.csv; script 51.")
     return info
 
 
-ROBUSTEZ_OR = ["OR_VL1_EMP", "OR_VL1_C2", "OR_VL1LOG_EMP", "OR_VL1LOG_C2", "OR_VL3_VL1_EMP", "OR_VL3_VL1_C2",
-               "OR_VL2_EMP", "OR_VL2_C2", "OR_VL3_VL2_EMP", "OR_VL3_VL2_C2", "OR_M4_EMP", "OR_M4_C2", "OR_M1_EMP",
-               "OR_M5_C1", "OR_M1_C2", "OR_M5_C3", "OR_M2_EMP", "OR_M7_EMP", "OR_M8_EMP", "OR_M9_EMP", "OR_E9_EMP",
+ROBUSTEZ_OR = ["OR_M1_EMP", "OR_M5_C1", "OR_M1_C2", "OR_M5_C3", "OR_VL1_EMP", "OR_VL1_C2", "OR_VL1LOG_EMP",
+               "OR_VL1LOG_C2", "OR_VL3_VL1_EMP", "OR_VL3_VL1_C2", "OR_VL2_EMP", "OR_VL2_C2", "OR_VL3_VL2_EMP",
+               "OR_VL3_VL2_C2", "OR_M4_EMP", "OR_M4_C2", "OR_M2_EMP", "OR_M7_EMP", "OR_M8_EMP", "OR_M9_EMP", "OR_E9_EMP",
                "OR_E9_C2", "OR_E9CUB_EMP", "OR_E9CUB_C2"]
 ROBUSTEZ_DUF = ["DUF_M1", "DUF_M2", "DUF_M4", "DUF_M7", "DUF_M5_C1", "DUF_M5_C2", "DUF_M5_C3", "DUF_M1_ANTIGA"]
 
@@ -859,18 +867,21 @@ def blocos(df: pd.DataFrame, resumo: dict) -> dict[str, str]:
         f"amplitude da bolsa, {f2(g('BOLSA10_M1'))} {ic(N['BOLSA10_M1'])}.",
         f"- **O peso da bolsa sozinho, na especificação pré-registrada, não passa no Holm:** β = "
         f"{_br(g('BETA_M1_EMP'), 4)} por R$ 1 mil {ic(N['BETA_M1_EMP'], lambda x: _br(x, 4))}, p de Holm "
-        f"{fp(N['BETA_M1_EMP']['p_ajustado'])}.",
-        f"- **Dentro da UF de origem, a bolsa maior é mais escolhida (adendo pós-resultado 52e).** Comparando só vagas "
-        f"da mesma UF, vistas por médicos da mesma UF de origem, a razão de chances por +R$ 5 mil é "
+        f"{fp(N['BETA_M1_EMP']['p_ajustado'])} (família de um teste: Holm = p).",
+        f"- **Comparando vagas da mesma UF, a bolsa maior é mais escolhida (adendo pós-resultado 52e).** Cada vaga é "
+        f"comparada só com vagas da mesma UF (a da origem ou outra), vistas por médicos da mesma UF de origem (VL-1). A "
+        f"razão de chances por +R$ 5 mil é "
         f"{f2(g('OR_VL1_EMP'))} {ic(N['OR_VL1_EMP'])} nos ciclos 1–3 (p de Holm {fp(N['OR_VL1_EMP']['p_ajustado'])}) e "
-        f"{f2(g('OR_VL1_C2'))} {ic(N['OR_VL1_C2'])} no ciclo 2 (p de Holm {fp(N['OR_VL1_C2']['p_ajustado'])}). Só com "
-        f"vagas perto do corte: {f2(g('OR_VL2_EMP'))} {ic(N['OR_VL2_EMP'])}, inconclusivo.",
-        f"- **Dentro da UF, perto do corte (descritivo, sem teste).** O lado de bolsa maior é "
-        f"{pct1(g('D_LADO_DISP_EMP'))} das vagas disponíveis e {pct1(g('D_LADO_ESC_EMP'))} das 1ªs opções "
-        f"({f0(N['D_LADO_ESC_EMP']['n_candidatos'])} candidatos que veem os dois lados do corte na sua UF).",
-        f"- **Em km.** Um degrau de R$ 5 mil pesa como {f0(g('K5_M1_EMP'))} km "
-        f"{ic(N['K5_M1_EMP'], f0)} a menos de distância no M1 e {f0(g('K5_VL1_EMP'))} km {ic(N['K5_VL1_EMP'], f0)} "
-        f"comparando dentro da mesma UF.",
+        f"{f2(g('OR_VL1_C2'))} {ic(N['OR_VL1_C2'])} no ciclo 2 (p de Holm {fp(N['OR_VL1_C2']['p_ajustado'])}); nos "
+        f"ciclos 1 e 3 o VL-1 não foi estimado. Só com vagas perto do corte (VL-2): {f2(g('OR_VL2_EMP'))} "
+        f"{ic(N['OR_VL2_EMP'])}, inconclusivo.",
+        f"- **Na UF de origem, perto do corte (descritivo, sem teste e sem controlar a distância).** O lado de bolsa "
+        f"maior é {pct1(g('D_LADO_DISP_EMP'))} das vagas disponíveis e {pct1(g('D_LADO_ESC_EMP'))} das 1ªs opções "
+        f"({f0(N['D_LADO_ESC_EMP']['n_candidatos'])} candidatos que veem os dois lados do corte na sua UF). Não é "
+        f"evidência à parte: a versão com inferência e distância (VL-2) é inconclusiva.",
+        f"- **Em km.** Comparando vagas da mesma UF, um degrau de R$ 5 mil pesa como {f0(g('K5_VL1_EMP'))} km "
+        f"{ic(N['K5_VL1_EMP'], f0)} a menos de distância; no M1, {f0(g('K5_M1_EMP'))} km {ic(N['K5_M1_EMP'], f0)}"
+        + (", com IC que contém zero." if N["K5_M1_EMP"]["ic95_inf"] < 0 else "."),
     ])
 
     B["amostra"] = "\n".join([
@@ -957,7 +968,7 @@ def blocos(df: pd.DataFrame, resumo: dict) -> dict[str, str]:
           "|---|---|---|---|",
           f"| M1: todas as vagas (quadro corrigido) | {f0(g('K5_M1_EMP'))} {ic(N['K5_M1_EMP'], f0)} | "
           f"{f0(g('K5_M1_C2'))} {ic(N['K5_M1_C2'], f0)} | 57x §4.3; 57v §5.6 |",
-          f"| VL-1: só vagas da UF de origem | {f0(g('K5_VL1_EMP'))} {ic(N['K5_VL1_EMP'], f0)} | {f0(g('K5_VL1_C2'))} "
+          f"| VL-1: vagas da mesma UF (par de UFs) | {f0(g('K5_VL1_EMP'))} {ic(N['K5_VL1_EMP'], f0)} | {f0(g('K5_VL1_C2'))} "
           f"{ic(N['K5_VL1_C2'], f0)} | 57x §4.3 |",
           "", f"Dentro da UF, a distância pesa mais ({f2(g('GAMA_VL1_EMP'))} por 100 km, contra "
           f"{f2(g('GAMA_M1_EMP'))} no M1) e a bolsa também (β de {f3(g('BETA_VL1_EMP'))} contra "
@@ -965,7 +976,8 @@ def blocos(df: pd.DataFrame, resumo: dict) -> dict[str, str]:
           "", img("F3"), "", img("F4"), "", img("F5")]
     B["resultados"] = "\n".join(t)
 
-    r = ["Bolsa: razão de chances da 1ª opção por +R$ 5 mil. Linha principal em negrito.", "",
+    r = ["Bolsa: razão de chances da 1ª opção por +R$ 5 mil. Em negrito, a especificação pré-registrada (M1, P1a); o "
+         "VL-1 é a principal do adendo pós-resultado 52e, não da H2.", "",
          "| Variante | Candidatos | Razão de chances [IC 95%] | p | p ajustado | Ajuste | Quadro do ciclo 2 | Fonte |",
          "|---|---|---|---|---|---|---|---|"]
     for k in ROBUSTEZ_OR:
@@ -989,6 +1001,10 @@ def blocos(df: pd.DataFrame, resumo: dict) -> dict[str, str]:
           f"peso da bolsa entre as principais, é {f2(g('BOLSA10_VL1_EMP'))} {ic(N['BOLSA10_VL1_EMP'])}: o limite de "
           f"cima fica abaixo do limite de baixo do θ_UF do M1 ({f2(N['THETA_UF_M1']['ic95_inf'])}). É comparação entre "
           "modelos, sem teste: no VL-1 o efeito fixo do par absorve a mesma UF, e o D_UF não é identificado.",
+          "", f"Na família BKY, o q pode ficar abaixo do p, porque o método estima quantas nulas são verdadeiras e aqui "
+          f"quase todas as secundárias rejeitam. Por isso o VL-3 perto do corte, ciclos 1–3, tem q "
+          f"{fp(N['OR_VL3_VL2_EMP']['p_ajustado'])} com p {fp(N['OR_VL3_VL2_EMP']['p'])} e IC 95% que contém 1. Lemos "
+          "pelo IC: inconclusivo, como o VL-2.",
           "", img("F6")]
     B["robustez"] = "\n".join(r)
 
