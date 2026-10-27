@@ -1,0 +1,262 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "SINTESE_H2_POS_RESULTADO",
+  "data_execucao": "2026-10-27",
+  "script": "scripts/rdd_bolsa/51_sintese_H2.py",
+  "hipotese": "O médico especialista escolhe vagas perto de onde já trabalha. A bolsa maior muda qual vaga ele escolhe dentro da sua região, mas pesa menos que a própria origem.",
+  "teste_central": "D_UF = θ_UF − 10·β > 0 no M1 (P1h-1, quadro do ciclo 2 de 13/02/2026; 57p §4.2)",
+  "contraste": "bolsa = pacote do corte (bolsa e outras regras federais nos mesmos cortes de IVS, auditoria 18); origem = preferência revelada (município do vínculo médico no CNES antes da inscrição); tudo condicional a se candidatar, dentro das vagas abertas; não é participação no PMM-E",
+  "pos_resultado": "a hipótese foi formulada depois de ver os resultados; nada aqui é teste confirmatório novo",
+  "nao_reestima": true,
+  "entradas": [
+    {
+      "caminho": "output/rdd_bolsa/G1_resumo.json",
+      "papel": "portão G1: candidatos, ligados e com município de origem",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "ciclo",
+      "chaves": "taxas_ligacao.g1_cpf_nome.<ciclo>",
+      "filtros": "regra g1_cpf_nome",
+      "sha256": "c8a88d469f818d364fdbe9b8405652987c0b90568af406050f08e8ead06d8529",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "papel": "município de origem do candidato no CNES (vínculo médico na competência anterior à inscrição)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra g1_cpf_nome; co_ibge_origem preenchido",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "papel": "distância (km) da origem principal a cada opção ranqueada",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "opcao_rank = 1; distância preenchida",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "papel": "opções publicadas de cada candidato (script 12)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "1ª chamada dos ciclos 1–3",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "opcao_rank = 1",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "papel": "conjunto de escolha principal: vagas (CNES × curso) abertas por curso e ciclo (script 12)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "1ª chamada dos ciclos 1–3",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "id_conjunto_escolha, co_cnes_7d",
+      "filtros": "células com IVS 2010 oficial",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/aquisicao/malha_municipios_regioes_saude.parquet",
+      "papel": "UF e região de saúde do município (só as colunas co_ibge_6d, sg_uf, no_regiao_saude)",
+      "data_referencia": "2026-09",
+      "cobertura": "5.565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge_6d",
+      "filtros": "nenhum; a coluna de IVS da malha não é usada",
+      "sha256": "beed0d11a1d367c97261aa20b798dd050473677a879fb3d6f69a3d8dfead9728",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "papel": "IVS 2010 oficial do IPEA (running variable canônica)",
+      "data_referencia": "2010",
+      "cobertura": "municípios com IVS 2010",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "só a coluna ivs",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_estimativas.csv",
+      "papel": "E9: logit condicional sem distância; robustez com spline cúbico (quadro do ciclo 2 de 19/03)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "ciclos 1–3",
+      "unidade": "termo × especificação",
+      "chaves": "especificacao, ciclo, conjunto, modelo, termo",
+      "filtros": "termo bolsa_mil",
+      "sha256": "517e88d1488568c645b71707b63c5ffed985af53beae84f8f8684a124f604bd0",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/E9_resumo.json",
+      "papel": "E9: mapa faixa → bolsa (R$ mil/mês)",
+      "data_referencia": "2026-10-18",
+      "cobertura": "editais 2025 e 2026",
+      "unidade": "faixa",
+      "chaves": "mapa_faixa_bolsa",
+      "filtros": "nenhum",
+      "sha256": "fff0ca8da645a4783df22d2a079cace3b46503571de616f6ad100132ef9e8d7e",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1_resumo.json",
+      "papel": "P1: amostra do modelo de escolha com origem (M1)",
+      "data_referencia": "2026-10-19",
+      "cobertura": "ciclos 1–3",
+      "unidade": "ciclo",
+      "chaves": "amostra",
+      "filtros": "nenhum",
+      "sha256": "bddaf9ef03a4374b751f49655757d8b813d096d6af9ac219337df27273790d7d",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "papel": "P1h: D_UF com o quadro do ciclo 2 de 19/03 (versão antiga, referência)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "ciclos 1–3",
+      "unidade": "linha × modelo",
+      "chaves": "id_linha, modelo",
+      "filtros": "P1h-1, M1",
+      "sha256": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VC_estimativas.csv",
+      "papel": "adendo 52c: M1 e M5 com o tipo de vaga do ciclo 2 de 13/02 (versão de referência)",
+      "data_referencia": "2026-10-26",
+      "cobertura": "ciclos 1–3",
+      "unidade": "termo × modelo × versão",
+      "chaves": "versao, chave_modelo, tipo_linha, termo",
+      "filtros": "versao corrigida_13fev",
+      "sha256": "c32e5ef3ed614861dfd7976c558ebd23eeb076a59a521368385f7ad4ffb2d451",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VD_estimativas.csv",
+      "papel": "adendo 52d: M2, M4, M7, M8, M9 e D_UF com o quadro de 13/02",
+      "data_referencia": "2026-10-26",
+      "cobertura": "ciclos 1–3",
+      "unidade": "termo × modelo × versão",
+      "chaves": "id_vd, versao, chave_modelo, tipo_linha, termo",
+      "filtros": "versao corrigida_13fev",
+      "sha256": "3b512c0849ed9f0ef3a2345cfbc9dd12c7bc88395f60f02ee4250030634b19ef",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VL_estimativas.csv",
+      "papel": "adendo 52e: efeito fixo do par de UFs (VL-1), comparação local (VL-2), VL-3, km (VL-4), M1 e M4",
+      "data_referencia": "2026-10-27",
+      "cobertura": "ciclos 1–3 e ciclo 2",
+      "unidade": "termo × modelo",
+      "chaves": "chave_modelo, tipo_linha, termo",
+      "filtros": "nenhum",
+      "sha256": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VL_resumo.json",
+      "papel": "adendo 52e: contagens de identificação do VL-1",
+      "data_referencia": "2026-10-27",
+      "cobertura": "ciclos 1–3 e ciclo 2",
+      "unidade": "modelo",
+      "chaves": "identificacao.<chave>",
+      "filtros": "nenhum",
+      "sha256": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
+      "conferencia": "sha256"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/numeros_banca2.json",
+      "papel": "descritivos ESC_* da banca 2 (fonte dos 79%; gerado fora do run_all por scripts/apresentacao/gerar_figuras_banca2.py)",
+      "data_referencia": "2026-10-27",
+      "cobertura": "ciclos 1–3",
+      "unidade": "número",
+      "chaves": "numeros.<id>",
+      "filtros": "só ESC_*",
+      "sha256": "03f3844a90977b7b617d044b267dfc966862b7f72bb6da1cbb499e8459da7ec9",
+      "conferencia": "valores"
+    }
+  ],
+  "descritivas": {
+    "candidatos_1a_opcao": 5714,
+    "com_origem_e_distancia": 5425,
+    "celulas_conjunto": 5135,
+    "celulas_sem_ivs_retiradas": 1,
+    "mapa_faixa_bolsa_mil": {
+      "FAIXA 1": 20.0,
+      "FAIXA 2": 15.0,
+      "FAIXA 3": 10.0
+    },
+    "perto_do_corte": {
+      "janela_mil": 50,
+      "regra_corte": "s ≤ 350 → 0,300; s > 350 → 0,400",
+      "candidatos": 1568,
+      "pares_conjunto_uf": 222
+    },
+    "definicoes": {
+      "base": "1ª opção publicada (escolhas_candidatos, opcao_rank = 1) com município de origem (G1, regra g1_cpf_nome) e distância à origem principal (G1_distancias_opcoes)",
+      "mesma_regiao": "região de saúde da malha (sg_uf + no_regiao_saude), como em numeros_banca2.json",
+      "dentro_da_uf": "vagas do mesmo conjunto de escolha (curso × ciclo) na UF de origem, com IVS 2010 oficial; média por candidato e depois entre candidatos",
+      "perto_do_corte": "1ª opção na UF de origem com |IVS − corte| ≤ 0,050 (s ≤ 350 → corte 0,300; s > 350 → 0,400); vagas disponíveis = mesmo conjunto, mesma UF, mesma janela; só candidatos que veem os dois lados do corte; lado de bolsa maior = IVS acima do corte",
+      "inferencia": "nenhuma: são descritivos, sem teste"
+    }
+  },
+  "figuras": {
+    "F1": {
+      "arquivo": "output/rdd_bolsa/H2_figuras/H2_F1_onde_escolhem.png",
+      "titulo": "O médico escolhe perto de onde já trabalha: 79% põem a 1ª opção na UF de origem",
+      "como_ler": "cada barra é a parte das 1ªs opções no mesmo lugar do vínculo médico anterior no CNES (origem); descritivo, entre quem se candidatou.",
+      "fonte": "Fonte: numeros_banca2.json (ESC_*); G1_candidatos_origem, G1_distancias_opcoes, escolhas_candidatos (script 12), malha de regiões de saúde; script 51."
+    },
+    "F2": {
+      "arquivo": "output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png",
+      "titulo": "Na UF de origem, perto do corte, o lado de bolsa maior é mais escolhido do que oferecido",
+      "como_ler": "só 1ªs opções na UF de origem e a até 0,050 de um corte de IVS; cinza: parte das vagas do mesmo curso e UF no lado de bolsa maior; azul: parte das escolhas. Descritivo, sem teste.",
+      "fonte": "Fonte: escolhas_candidatos e escolhas_conjunto_principal (script 12), G1, IVS 2010 oficial (a08); script 51."
+    },
+    "F3": {
+      "arquivo": "output/rdd_bolsa/H2_figuras/H2_F3_razao_chances_bolsa.png",
+      "titulo": "Comparando vagas da mesma UF, a de bolsa maior é mais escolhida (ciclos 1–3 e ciclo 2)",
+      "como_ler": "acima de 1, a vaga com bolsa R$ 5 mil maior é mais escolhida, com distância, origem e IVS contínuo fixos; barra: IC 95%. Bolsa = pacote do corte; VL-1 é adendo pós-resultado.",
+      "fonte": "Fonte: VL_estimativas.csv (52e), VC_estimativas.csv (52c); script 51."
+    },
+    "F4": {
+      "arquivo": "output/rdd_bolsa/H2_figuras/H2_F4_origem_contra_bolsa.png",
+      "titulo": "Ter a vaga na UF de origem pesa mais que toda a diferença de bolsa (R$ 10 → 20 mil)",
+      "como_ler": "barras na mesma escala da utilidade do modelo M1 (quadro do ciclo 2 de 13/02); D_UF > 0: a origem pesa mais. A origem é preferência revelada; a bolsa, o pacote do corte.",
+      "fonte": "Fonte: VC_estimativas.csv (adendo 52c; P1h-1 corrigido); script 51."
+    },
+    "F5": {
+      "arquivo": "output/rdd_bolsa/H2_figuras/H2_F5_bolsa_em_km.png",
+      "titulo": "+R$ 5 mil pesam como 119 km a menos; dentro da mesma UF, 75 km",
+      "como_ler": "cada ponto converte o peso de um degrau de bolsa em km de distância origem → vaga. Os km do VL-1 são km dentro da UF, onde a distância pesa mais: não se comparam um a um com os do M1.",
+      "fonte": "Fonte: VL_estimativas.csv (VL-4 e VL-5); numeros_banca2.json (ESC_DIST_P50); script 51."
+    },
+    "F6": {
+      "arquivo": "output/rdd_bolsa/H2_figuras/H2_F6_robustez.png",
+      "titulo": "Em todas as variantes a origem pesa mais que a bolsa; o peso da bolsa sozinho muda com a especificação",
+      "como_ler": "losango azul: linha principal; ponto vazado: tipo de vaga do ciclo 2 do quadro de 19/03 (versão antiga). IC 95%. À esquerda, IC que cruza 1 não distingue a bolsa de zero.",
+      "fonte": "Fonte: VL_, VC_, VD_, E9_estimativas.csv e P1h_magnitudes.csv; script 51."
+    }
+  },
+  "saidas": {
+    "output/rdd_bolsa/H2_sintese.csv": "40a4242655316b6caedea95fa0db7aefc23fa5d038ebaa403be23eb5c49430b5",
+    "output/rdd_bolsa/H2_figuras/H2_F1_onde_escolhem.png": "140ac90a8128de113d1e10cdfedee274ed3c7ccd62e4fe644a41ddff80c223d3",
+    "output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png": "dd0791e4d515ec3ff6cf0729f7622ce62c806704f13adf66a63335c37b5a9179",
+    "output/rdd_bolsa/H2_figuras/H2_F3_razao_chances_bolsa.png": "fff8611a0cabaccf233dcca4bdfcaa8c260f16614b61ac628b15603328f55552",
+    "output/rdd_bolsa/H2_figuras/H2_F4_origem_contra_bolsa.png": "61cb870f20b253cd48fb2827601e426401dfb06a4a5ef73036952a9a184f41ec",
+    "output/rdd_bolsa/H2_figuras/H2_F5_bolsa_em_km.png": "ed74cc4aab67c24aff2f698a7474a79d1fb983120ed62bf94f4b2ed4ec9d06f2",
+    "output/rdd_bolsa/H2_figuras/H2_F6_robustez.png": "e53b32ce9b25f19c513476cf3ccde0ea0f98c4f3ca7daee7f17c152571fcd77a"
+  },
+  "n_linhas": 137,
+  "linguagem": "pacote do corte; preferência revelada; pós-resultado; não detectamos aumento do preenchimento"
+}
