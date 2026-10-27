@@ -14,12 +14,34 @@
 > federais nos mesmos cortes, [auditoria 18](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md)), nunca a
 > participação no PMM-E nem o Agora Tem Especialistas.
 
+> **Estado atual (nota da [auditoria 50](../auditorias/50_auditoria_avaliacao_hipoteses.md), 27/10/2026).**
+> - **A seção mais recente é a §4.8.** Só ela conhece o 48h e o 52e. A §0 a §4.5 são de 26/10. A §4.6 e a §4.7
+>   foram escritas em 27/10, antes desses adendos.
+> - **As seções divergem na recomendação:**
+>   - a §0 ("Veredito curto") e a §4.4 recomendam a **H1 como hipótese única**, e a §4.4 avisa que trocar para a H2
+>     porque a H1 deu nulo é escolher a hipótese depois do resultado;
+>   - a §4.7 propõe a **H2 como hipótese, com a H1 como fato que motiva**, que a §4.4 só admitia como plano B;
+>   - a §4.8 diz que a H2 "ganha força".
+>
+>   Nenhuma seção revoga a outra, e a escolha é do autor.
+> - **Valha qual valer, três cuidados:**
+>   - **A H1 não é fato de nulo.** "Não encheu mais vagas" e "não quantas" (§4.7 e §4.8) contrariam a §1.6. A H1
+>     não detecta aumento e, por corte, só detectaria saltos de 25 a 31 p.p. (no 48h, de 24 a 29 p.p.).
+>   - **O 52e não testa a H2 como ela está definida aqui.** A H2 é D_UF, e o VL-1 não identifica D_UF. O 52e reforça
+>     que o pacote do corte desloca a escolha. Isso fala de β > 0, que é outra afirmação. A primária pré-registrada
+>     (P1a, quadro corrigido) continua sem rejeitar zero.
+>   - **A queda em 0,300 não ficou "explicada pela UF".** Ela nunca passou no Holm, e capital, L+M e pareamento
+>     também a mexem.
+> - **A origem dos médicos (PH-5) não é ausência.** Se for citada, em 0,400 ela é inconclusiva, não ausência de
+>   médicos de outra UF (auditoria 47, A3).
+> - **A §0 e as notas da §4.6 e da §4.7 não incorporam o 48h e o 52e.**
+
 ## 0. Tabela-resumo
 
 | | Estimando e contraste | Resultado principal | Força | Frase defensável |
 |---|---|---|---|---|
 | **H1** bolsa maior → mais vagas preenchidas | salto no corte (lado de bolsa maior − menor) na chance de a célula com vaga imediata ser preenchida (HI-1) e nos alocados por município (HI-2); **pacote do corte**, condicional a a célula ter vaga imediata | HI-1: −3,7 p.p. [−21,3; +13,9] em 0,300 e −2,3 p.p. [−24,0; +19,4] em 0,400; HI-2: −1,13 [−2,15; −0,10] (p 0,032; **Holm 0,126**) e −0,16 [−0,99; +0,68]. Nenhuma primária passa no Holm (57n §3) | **Inconclusiva.** Não sustenta o efeito positivo proposto. Não é nulo bem estimado: TOST inconclusivo em 3 das 4 primárias; MDE da HI-1 de 25 a 31 p.p. | "No corte de IVS, não detectamos aumento do preenchimento onde a bolsa é maior. Com o IC convencional, os dados descartam só aumentos grandes, e só em parte das medidas." |
-| **H2** a bolsa pesa pouco perto da origem | no modelo de escolha da 1ª opção, D_UF = peso da vaga na UF de origem − peso de toda a amplitude da bolsa (R$ 10 → 20 mil); **comparação de pesos na utilidade**, condicional a se candidatar; a bolsa é identificada pelos cortes (pacote) e a origem é preferência revelada | D_UF = 1,98 [1,56; 2,40], p < 0,001, unilateral (57i §3); com o tipo de vaga do ciclo 2 corrigido, 1,94 [1,48; 2,40] (57p §1). O peso da bolsa sozinho não se distingue de zero: β = 0,0424 [−0,0027; 0,0874], p 0,065 (57a §4) | **Moderada.** A desigualdade é forte e estável dentro do modelo, mas foi formulada depois de ver os coeficientes, e o lado da origem não é causal | "Entre quem se candidatou, toda a diferença de bolsa pesa na escolha bem menos que a vaga ficar na UF de origem do médico." |
+| **H2** a bolsa pesa pouco perto da origem | no modelo de escolha da 1ª opção, D_UF = peso da vaga na UF de origem − peso de toda a amplitude da bolsa (R$ 10 → 20 mil); **comparação de pesos na utilidade**, condicional a se candidatar; a bolsa é identificada pelos cortes (pacote) e a origem é preferência revelada | D_UF = 1,98 [1,56; 2,40], p < 0,001, unilateral (57i §3); com o tipo de vaga do ciclo 2 corrigido, 1,94 [1,48; 2,40] (57p §1). O peso da bolsa sozinho não se distingue de zero: β = 0,0424 [−0,0027; 0,0874], p 0,065 (57a §4) [*auditoria 50, 27/10/2026: na versão corrigida, que é a de referência, β = 0,0453 [−0,0041; 0,0947], p de Holm 0,072 (57p §1)*] | **Moderada.** A desigualdade é forte e estável dentro do modelo, mas foi formulada depois de ver os coeficientes, e o lado da origem não é causal | "Entre quem se candidatou, toda a diferença de bolsa pesa na escolha bem menos que a vaga ficar na UF de origem do médico." |
 | **H3** a chegada soma oferta ou remaneja | no médico: horas cadastradas associadas à entrada no PMM-E (Callaway–Sant'Anna, coortes de entrada); no município: oferta de especialistas depois da chegada (CS) e comparada no corte (forma reduzida); **associação sob tendências paralelas**, não efeito da bolsa | médico: +6,6 h/sem [+5,4; +7,8] (57d §5); 51,0% já tinham vínculo no município do posto (57d §3). Município, pela chegada: sobe, mas o pré já subia e a ruptura de Rambachan–Roth é 0 (57k §5.1); no corte: nada se distingue de zero, Holm 1,000 (57q §5.1) | **Fraca a moderada.** Moderada no nível do médico (associação); inconclusiva no município, que é onde a pergunta "soma ou remaneja" se responde | "O médico que entra passa a cadastrar mais horas, cerca de metade já estava no município e parte do ganho sai de horas que ele tinha fora; no município, não dá para afirmar aumento da oferta, nem há sinal de saída dos outros especialistas." |
 
 **Veredito curto (detalhe na seção 4).** Recomendo manter a **H1 como hipótese única**, apresentada como hipótese
@@ -191,7 +213,7 @@ identificação em 0,300 fica comprometida pelo balanço.
 | Homogeneidade entre ciclos | β por ciclo; Wald | ciclo 1 +0,0132; ciclo 2 +0,1064 [+0,0405; +0,1722]; ciclo 3 −0,0004; Wald p 0,058 (57a §7) | o sinal de β vem do ciclo 2 |
 | Conjunto de escolha completo; escolha não estratégica | — | não testável (42 §7) | aberto |
 | Seleção pela ligação candidato–CNES | E9 na amostra completa | 5.421 de 5.714 candidatos ligados; β na amostra completa 0,0662 (57a §2 e §4) | pouco efeito |
-| Tipo de vaga do ciclo 2 pré-alocação | adendos 52c e 52d | D_UF 1,98 → 1,94; β M1 0,0424 → 0,0453 (Holm 0,065 → 0,072) (57p §1) | **resolvido** nas principais; sensibilidades em [57v](57v_sensibilidades_ciclo2_quadro_1302.md), auditoria pendente |
+| Tipo de vaga do ciclo 2 pré-alocação | adendos 52c e 52d | D_UF 1,98 → 1,94; β M1 0,0424 → 0,0453 (Holm 0,065 → 0,072) (57p §1) | **resolvido** nas principais; sensibilidades em [57v](57v_sensibilidades_ciclo2_quadro_1302.md), auditada na [auditoria 46](../auditorias/46_auditoria_sensibilidades_ciclo2.md) (*correção da auditoria 50, 27/10/2026; antes dizia "auditoria pendente"*) |
 
 **Não testável:** se θ_UF reflete custo do lugar ou outras coisas que andam com a origem: registro no conselho,
 família, rede, ou manter o emprego atual. As 20 h da bolsa são cumuláveis (doc 63 §3), e no doc 57d §5 o médico
@@ -207,7 +229,7 @@ só "custo do lugar".
 | peso de toda a amplitude da bolsa, 10·β | 0,42 | [−0,03; 0,87] | — | 57i §4 |
 | peso da mesma UF, θ_UF | 2,40 | [2,28; 2,53] | — | 57i §4 |
 | β por R$ 1 mil (P1a, a primária do protocolo 52) | 0,0424 | [−0,0027; 0,0874] | p 0,065, Holm 0,065: **não rejeita zero** | 57a §4 |
-| km equivalentes a um degrau de R$ 5 mil (K5) | 112 km | [−9; 233] (delta) | descritivo | 57i §4 |
+| km equivalentes a um degrau de R$ 5 mil (K5) | 112 km | [−9; 233] (delta) | descritivo | 57i §4 [*auditoria 50, 27/10/2026: com o quadro corrigido, 119 km [−12; 250] (57v §5.6)*] |
 
 **Estatuto:** comparação de pesos estruturais dentro de um modelo de escolha. Há preferência revelada de um lado e
 um coeficiente identificado pelo pacote do corte do outro. **Não é efeito causal** da origem nem da bolsa sobre o
@@ -221,7 +243,7 @@ limite inferior de θ_UF (2,28).
 | M2 (log da distância) / M4 (efeito fixo de UF) / M7 (explodido) | 1,18 / 1,73 / 2,07; q BKY 0,001 | 57i §3 |
 | M5 por ciclo (1, 2, 3) | 2,34 / 1,31 / 2,37; q BKY 0,001 | 57i §3 |
 | M5 ciclo 2 com o quadro de 13/02 | 1,19 [0,51; 1,86] | 57p §4.2 |
-| M2 / M4 / M7 com o quadro de 13/02 | 1,16 / 1,70 / 2,03 | 57v §5.6 (auditoria pendente) |
+| M2 / M4 / M7 com o quadro de 13/02 | 1,16 / 1,70 / 2,03 | 57v §5.6 (auditoria 46; *correção da auditoria 50, 27/10/2026: antes "auditoria pendente"*) |
 
 - **O que se mantém:** D_UF > 0 em todas as especificações, ciclos e versões do quadro.
 - **O que muda:** a significância do próprio β. Ele passa no ciclo 2 e em M2, M4, M8 e M9, mas não no M1, no M7 nem
@@ -418,7 +440,9 @@ preenche se ΔB/p > Δc₀ (com c_im = c₀(IVS_m) + η_i, §3).
 - **Bolsa** (o degrau ΔB que a regra fixa): é o único termo que a política mexe.
 - **Custo do lugar:** a H2 sugere que o termo que domina a escolha não é o c₀(IVS) que a bolsa compensa, mas o
   componente individual ligado à origem (η_i e a renda alternativa perto da origem). Um degrau de R$ 5 mil pesa
-  na escolha o mesmo que 112 km [−9; 233] a menos de distância (57i §3).
+  na escolha o mesmo que 112 km [−9; 233] a menos de distância (57i §3). [*Auditoria 50, 27/10/2026: com o quadro
+  corrigido do ciclo 2, de referência, são 119 km [−12; 250] (57v §5.6). Comparando só vagas da mesma UF (52e,
+  VL-1), são 75 km [28; 122] (57x §4.3), que são "km dentro da UF" e não se comparam um a um com os do M1.*]
 - **Escolha:** com custos individuais grandes e heterogêneos, poucos médicos estão na margem no corte. O degrau
   reordena candidatos entre vagas, como no ciclo 2 (E9). No logit condicional, porém, o que uma vaga ganha outra do
   mesmo curso perde (42 §1).
@@ -485,7 +509,9 @@ Mesmos números; outros critérios. Notas de 1 a 5.
   grandes, e o corte muda outras regras junto." Precisa de cinco ressalvas: pacote do corte, poder, balanço em
   0,300, sinal negativo e especificação escolhida depois.
 - **H2:** "O médico escolhe perto de onde já trabalha: 79% põem a 1ª opção na mesma UF, e ter a vaga na UF de
-  origem pesa na escolha muito mais que toda a diferença de bolsa." Precisa de três ressalvas: é preferência, não
+  origem pesa na escolha muito mais que toda a diferença de bolsa." [*Fonte dos 79%, acrescentada pela auditoria
+  50 em 27/10/2026: `output/apresentacao_banca2/numeros_banca2.json`, `ESC_UF`, sobre os 5.425 candidatos do G1, no
+  doc 02 da banca 2. É descritivo, não o teste da H2.*] Precisa de três ressalvas: é preferência, não
   efeito causal da origem; a hipótese veio depois dos dados; a bolsa só deslocou a escolha no ciclo 2.
 - **H3:** "O médico que entra cadastra mais horas, mas metade já estava no município, e não dá para dizer que a
   oferta local subiu." Precisa de duas ressalvas, mas a conclusão central é inconclusiva.
@@ -504,12 +530,20 @@ Pedido do autor: rodar H1 e H2 "com pareamento pela localização da unidade e d
 Os dois adendos foram executados e auditados, e nenhuma estimativa mudou nas auditorias.
 
 - **H1 ([57w](57w_resultados_pareamento_localizacao.md), [auditoria 47](../auditorias/47_auditoria_pareamento_localizacao.md)).**
-  - **Pareamento:** cada município do lado de bolsa maior pareado com um da **mesma UF**, mesma condição de capital
-    e parecido no estoque de especialistas a até 100 km.
-  - **Resultado:** nenhuma diferença de preenchimento nos dois cortes.
+  - **Pareamento:** pares formados dentro da **mesma UF** e da mesma condição de capital, parecidos no escore
+    (população, médicos, especialistas no município e a até 100 km). Em cada ciclo, quem procura par é o lado com
+    menos unidades. A maioria fica sem par, e os pares são sobretudo do ciclo 2 (57w, "O preço" e §4). [*Correção da
+    auditoria 50, 27/10/2026: antes dizia "cada município do lado de bolsa maior pareado com um da mesma UF".*]
+  - **Resultado:** não se detecta diferença de preenchimento nos dois cortes. Em 0,300, o ponto da fração preenchida
+    é +16,4 p.p. [−3,8; +36,6], com sinal oposto ao da RDD, e não deve ser lido como tamanho de efeito (auditoria
+    47, A5). [*Correção da auditoria 50, 27/10/2026: antes dizia "nenhuma diferença".*]
   - **Poder:** sobram poucos pares (25 e 29), e só seria detectada uma diferença de cerca de 24 a 29 p.p.
-  - **De onde vinha a queda em 0,300:** da **UF**. Com efeito fixo de UF, a queda some; só com o estoque de
-    especialistas no entorno, ela continua.
+  - **De onde vinha a queda em 0,300:** da **UF**. Na mesma amostra, a HI-2 em 0,300 vai de −1,15 [−2,21; −0,08],
+    sem controle, para −0,55 [−1,61; +0,50] só com efeito fixo de UF. O ponto cai à metade, e o IC passa a conter
+    zero. Só com o estoque de especialistas no entorno, ela continua: −1,19 [−2,24; −0,13] (auditoria 47,
+    observações). [*Correção da auditoria 50, 27/10/2026: antes dizia "com efeito fixo de UF, a queda some". A
+    leitura "vinha da UF" é opinião. A queda nunca passou no Holm, e capital, L+M e pareamento também a mexem (ver a
+    nota de estado atual no topo).*]
 - **H2 ([57x](57x_resultados_escolha_localizacao_par.md), [auditoria 48](../auditorias/48_auditoria_escolha_localizacao_par.md)).**
   - **Comparação:** só vagas da mesma UF, vistas por médicos da mesma UF de origem.
   - **Resultado:** a bolsa maior faz a vaga ser escolhida mais vezes como 1ª opção. Nos ciclos 1–3, a bolsa pesa
@@ -539,7 +573,8 @@ não **quantas** vagas são preenchidas.
   [52b](52b_protocolo_P1h_magnitudes.md), [52c](52c_adendo_vaga_imediata_ciclo2.md),
   [57a](57a_resultados_P1_escolha.md), [57i](57i_resultados_P1h_magnitudes.md),
   [57p](57p_escolha_vaga_imediata_c2.md), [52d](52d_adendo_sensibilidades_ciclo2_quadro_1302.md),
-  [57v](57v_sensibilidades_ciclo2_quadro_1302.md) (auditoria pendente), [44](44_sintese_rdd_bolsa_multioutcome.md);
+  [57v](57v_sensibilidades_ciclo2_quadro_1302.md) (auditoria 46; *correção da auditoria 50, 27/10/2026: antes
+  "auditoria pendente"*), [44](44_sintese_rdd_bolsa_multioutcome.md);
   auditorias 31 e 41.
 - **H3:** [57d](57d_resultados_P4_trajetoria.md), [57h](57h_resultados_P3P4_sensibilidade.md),
   [60](60_protocolo_equivalencia_e_oferta_local.md), [57k](57k_resultados_oferta_local.md),

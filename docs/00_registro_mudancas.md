@@ -8,6 +8,29 @@
 
 ---
 
+## 27/10/2026 — Auditoria 50: doc 65 (avaliação da força das hipóteses H1, H2 e H3)
+
+Motivo: auditoria independente do doc 65, que o autor vai usar para escolher a hipótese única da banca 2. O veredito é
+aprovado com correções.
+
+- **Números.** Conferem com as fontes: os docs 57* e os CSV em `output/rdd_bolsa/`.
+- **Correções factuais no doc 65**, cada uma com nota datada:
+  - quatro itens desatualizados: β e km anteriores à correção do quadro do ciclo 2, e "auditoria pendente" do 57v,
+    que já tinha passado pela auditoria 46;
+  - os 79% sem fonte;
+  - três frases da §4.8: a descrição do pareamento, "nenhuma diferença" e "a queda some".
+- **Divergências de recomendação.** A §0 e a §4.4 recomendam a H1; a §4.7 e a §4.8 vão para a H2, com a H1 como
+  fato. Não foram reescritas: foi acrescentada no topo do doc 65 uma nota de estado atual que diz qual seção é a mais
+  recente e onde as seções divergem.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/50_auditoria_avaliacao_hipoteses.md`](auditorias/50_auditoria_avaliacao_hipoteses.md) | auditoria do doc 65: veredito, achados por gravidade, notas por critério e tabela de conferência dos números |
+
+---
+
 ## 27/10/2026 — Auditoria 48: adendo 52e (H2 com efeito fixo do par de UFs e comparação local no corte)
 
 Motivo: auditoria independente da execução do adendo 52e (script 50, saídas `VL_*`, doc 57x). O veredito é aprovado
