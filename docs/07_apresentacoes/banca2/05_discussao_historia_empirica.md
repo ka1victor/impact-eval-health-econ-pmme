@@ -3,10 +3,14 @@
 > **Finalidade:** registrar as perguntas do autor sobre a parte empírica, as
 > respostas dadas e as decisões de apresentação. Isto alimenta a sequência de
 > slides da "história" da banca 2.<br>
-> **Números:** este documento não traz número de resultado. Cada resposta
-> aponta a seção do documento gerado onde o número está (docs 49, 49b, 57, 57a,
-> 57d, 57e, 57i, 57j, 57k), conferido por teste contra `output/`. Fora disso
-> aparecem só parâmetros: cortes, valores da bolsa, margens e datas.<br>
+> **Números:** cada resposta aponta a seção do documento gerado onde o número
+> está (docs 49, 49b, 57, 57a, 57d, 57e, 57i, 57j, 57k), conferido por teste
+> contra `output/`. Fora disso aparecem parâmetros (cortes, valores da bolsa,
+> margens e datas) e, nas seções 2.11 a 2.14, números de resultado copiados dos
+> docs auditados (57d, 57k, 57l, 57q, 57t e auditoria 36). **Esses números não
+> são conferidos por teste**; a auditoria 49 conferiu um a um contra a fonte em
+> 27/10/2026 (todos batem). Correção da auditoria 49: a versão anterior dizia
+> que este documento não trazia número de resultado.<br>
 > **Estatuto:** registro de discussão. Não muda protocolo nem resultado.
 
 > [!NOTE]
@@ -27,6 +31,11 @@
 > Servem para continuar o trabalho, não como resultado final: números e textos
 > podem mudar até a auditoria. A `main` só recebe essas partes depois de
 > revisadas.
+>
+> **Atualização de 27/10/2026 (auditoria 49).** O retrato acima está vencido: o
+> diagnóstico 61 foi auditado (auditoria 33), a oferta local da parte B também
+> (auditoria 34), e o deck curto foi auditado pela auditoria 49. A `main` está
+> no commit `7e9f881`, igual ao branch.
 
 ## 1. Decisões de apresentação tomadas pelo autor
 
@@ -80,9 +89,13 @@ coisas diferentes em cada corte (doc 49b, §3):
 - **Corte 0,300: a taxa por vaga oferecida cai.**
   - O porte não explica essa queda.
   - Cerca de metade dela vem do ciclo 2 (doc 49b, §14). Nesse ciclo, o lado de
-    bolsa maior teve mais vagas de cadastro reserva, e nenhuma célula só de
-    reserva foi preenchida na 1ª chamada. Mais reserva no denominador derruba a
-    taxa.
+    bolsa maior teve mais vagas de cadastro reserva. ~~E nenhuma célula só de
+    reserva foi preenchida na 1ª chamada.~~ **Errado** (auditoria 36; corrigido
+    no doc 49b em 26/10/2026): o zero de alocados nas células só de reserva vem
+    do quadro de 19/03/2026, refeito depois do resultado preliminar; pelo quadro
+    de 13/02/2026, vigente na inscrição, havia alocados do ciclo 2 em células só
+    de reserva. Com esse quadro, mais reserva no denominador baixa a taxa por
+    vaga oferecida, mas não explica a queda inteira.
   - O resultado depende da medida: contando só as vagas imediatas, ou dando o
     mesmo peso a cada município, o intervalo inclui zero (doc 49b, §6).
 - **"A reta extrapola uma subida"** (doc 49b, §5 e §7):
@@ -134,8 +147,12 @@ O funil dos ciclos 2 e 3 foi reconstruído às cegas e entrou no E6 (doc 41a;
 doc 38, D2). A tabela "os três ciclos em números" do deck mostra as contagens.
 
 O "ponto do ciclo 2" é o diagnóstico do doc 49b, §14: no corte 0,300, cerca de
-metade da queda da taxa por vaga oferecida vem do ciclo 2, ligada ao cadastro
-reserva (seção 2.1).
+metade da queda da taxa por vaga oferecida vem do ciclo 2. A ligação com o
+cadastro reserva que esta resposta fazia vinha do quadro de 19/03/2026, refeito
+depois do resultado (auditoria 36; seção 2.1, corrigida). Na especificação
+principal (adendo 48b, quadro de 13/02), a HI-1 em 0,300 cai sobretudo no ciclo
+2, mas a HI-2 cai de tamanho parecido nos três ciclos; por ciclo, todos os IC
+contêm zero (doc 57n, HI-s1).
 
 ### 2.4 E daí?
 
@@ -227,6 +244,11 @@ queda desse tamanho não fica descartada. Com o IC honesto, nem isso se sustenta
     vagas por município);
   - **nenhum dos dois é firme:** o peso da bolsa na escolha encosta no zero, e
     o salto do preenchimento não passa no Holm.
+  - **Atualização de 27/10/2026 (auditoria 49):** com a comparação só entre
+    vagas da mesma UF, vistas por médicos da mesma UF de origem (adendo 52e,
+    doc 57x, auditoria 48), o peso da bolsa na escolha passa a se distinguir de
+    zero depois do Holm nos ciclos 1–3; perto do corte, não. No M1 com o quadro
+    de 13/02 (doc 57p), continua sem rejeitar zero.
 
 ### 2.10 Já existe uma conexão entre H1 e H2/H3?
 
@@ -257,7 +279,7 @@ doc 57l e nas saídas `DQ_*`.
 |---|---|---|---|
 | **1. É a reta, não os dados** | nos dados crus a fração preenchida é igual dos dois lados; a queda aparece quando a reta é levada até o corte | cortes falsos (grade do protocolo e grade maior, esta fora do protocolo); randomização local em ±0,010 e ±0,020 | janelas h = 0,030 e 0,080 para Q2 e Q3; reta quadrática; retirar um município por vez perto do corte; donut |
 | **2. Vagas piores do lado de bolsa maior** | mais vagas só de cadastro reserva e de cursos que preenchem pouco em qualquer lugar | Q3 com efeitos fixos de composição; Q2 sem as células só de reserva | repetir por ciclo; índice de curso medido fora da amostra (outros ciclos); taxa só com as vagas imediatas |
-| **3. Cadastro reserva no ciclo 2** | ~~no ciclo 2, a vaga de reserva não foi preenchida na 1ª chamada~~ **errado** (auditoria 36): o quadro do ciclo 2 usado no pipeline (19/03/2026) foi refeito depois do resultado preliminar, convertendo 630 vagas de reserva em imediatas; pelo quadro de 13/02/2026, 42% dos alocados do ciclo 2 estavam em células só de reserva. Ver seção 2.12 | ciclo 2 com e sem as células só de reserva | feito pelo adendo 48b (tipo de vaga do ciclo 2 pelo quadro de 13/02); falta a seleção pelo tipo de vaga (seção 2.12) |
+| **3. Cadastro reserva no ciclo 2** | ~~no ciclo 2, a vaga de reserva não foi preenchida na 1ª chamada~~ **errado** (auditoria 36): o quadro do ciclo 2 usado no pipeline (19/03/2026) foi refeito depois do resultado preliminar, convertendo 630 vagas de reserva em imediatas; pelo quadro de 13/02/2026, 42% dos alocados do ciclo 2 estavam em células só de reserva. Ver seção 2.12 | ciclo 2 com e sem as células só de reserva | feito pelo adendo 48b (tipo de vaga do ciclo 2 pelo quadro de 13/02); a seleção pelo tipo de vaga foi testada no adendo 48f (seção 2.12, linha 2a) |
 | **4. Porte em 0,400** | municípios grandes logo abaixo do corte abrem e preenchem muitas vagas | doc 49b: retirada dos maiores; controle das vagas oferecidas | o mesmo com log(população) e vagas oferecidas juntas; retirar um por vez |
 
 Todas as linhas são descritivas e pós-resultado: medem o pacote do corte. A
@@ -266,6 +288,8 @@ robustez a fazer precisa de adendo datado ao protocolo 61 antes de rodar.
 ### 2.12 O que decide se a vaga é imediata ou de reserva não pode estar influenciando a H1?
 
 Pergunta do autor, 26/10/2026. **Pode, e hoje está resolvido só pela metade.**
+*(Atualização de 27/10/2026, auditoria 49: o canal 2 foi testado no adendo 48f;
+ver a linha 2a.)*
 
 **Quem decide o tipo.** A SGTES/MS monta o quadro de vagas. Pelo edital do
 ciclo 1 (item 4.1.3.4), "considera-se em cadastro de reserva o município que,
@@ -279,7 +303,7 @@ arquivados.**
 | # | Canal | Evidência | Estado |
 |---|---|---|---|
 | 1 | **Composição:** o tipo salta no corte | acima de 0,300, a parte das células só de reserva é +15,4 p.p. maior (IC [+2,1; +28,6]); em 0,400, +11,3 p.p. (doc 57l, descritivo). **Atualização (26/10/2026, auditoria 44):** esse +15,4 usa o quadro do ciclo 2 de 19/03, refeito depois do resultado; com o quadro de 13/02 é +14,0 p.p. [−0,2; +28,3], e com efeitos fixos de curso × ciclo, +4,3 p.p. (doc 57t). Comparar todas as células mistura efeito com composição do quadro | tratado: o adendo 48b compara só vagas imediatas; em 0,300 a célula preenchida vai de −8,4 para −3,7 p.p. (IC contém zero) |
-| 2 | **Seleção:** restringir às vagas imediatas condiciona numa variável que o Ministério pode ter decidido olhando o lado do corte (por exemplo, mais reserva onde a bolsa custa mais; **hipótese, sem evidência**) | se o tipo responde ao corte, os municípios com vaga imediata acima e abaixo não são comparáveis. A medida antiga mistura tipos; a nova pode comparar grupos selecionados de forma diferente. A verdade provavelmente fica entre as duas | **aberto** |
+| 2 | **Seleção:** restringir às vagas imediatas condiciona numa variável que o Ministério pode ter decidido olhando o lado do corte (por exemplo, mais reserva onde a bolsa custa mais; **hipótese, sem evidência**) | se o tipo responde ao corte, os municípios com vaga imediata acima e abaixo não são comparáveis. A medida antiga mistura tipos; a nova pode comparar grupos selecionados de forma diferente. A verdade provavelmente fica entre as duas | testado (linha 2a) |
 | 2a | **Resultado do teste (adendo 48f, doc 57t, auditoria 44)** | a chance de o município × ciclo ter vaga imediata não salta no corte (IC contém zero), mas em 0,400 as taxas diferem (66% abaixo, 53% acima) e em 0,300 o lado com mais vaga imediata troca entre ciclos; os limites de Lee, que não supõem como o Ministério escolheu o tipo (só monotonicidade dentro de cada ciclo), contêm zero nos dois cortes, para fração preenchida e alocados por vaga; com a reta (sensibilidade), os alocados em 0,300 ficam inteiramente abaixo de zero, com IC que contém zero | **feito**: a seleção pelo tipo de vaga não muda a conclusão da H1, com a ressalva de que, em 0,300, restringir a vagas imediatas piora o balanço (capital, Nordeste, especialistas na região) |
 | 3 | **Conversão pós-resultado no ciclo 2:** 630 vagas de reserva viraram imediatas em 301 células depois do resultado preliminar (297 com alocado) | auditoria 36 | tratado: tipo do ciclo 2 pelo quadro de 13/02/2026 (adendo 48b, §7; adendo 52c no logit) |
 
@@ -407,12 +431,14 @@ auditoria independente:
 |---|---|---|---|
 | A | Item 2: regra do pareamento | adendo 48e: no PSM e no Mahalanobis do 48d, a regra literal da §3.1 ("o lado com menos municípios procura par") passa a ser a principal; a gulosa global (decisão 11 do 57r) vira sensibilidade; refazer PS-1 a PS-4 e CL-7 a CL-9 | feito: adendo 48e, doc 57s, auditoria 43 (aprovado com correções de texto; nenhum número mudou). O CL-9 (Mahalanobis na janela de 0,020) não foi refeito: o 48e não o pede |
 | B | Item 1: PSM em 0,400 | no mesmo adendo 48e: antes do logit, tirar as unidades das categorias que só aparecem de um lado do corte na janela (capitais, Sul, Centro-Oeste em 0,400; checar também 0,300), contá-las e relatar quem saiu; depois estimar PS-1 e PS-2 em 0,400 | feito: adendo 48e, doc 57s, auditoria 43. Em 0,400 saíram 19 linhas da H1 e 5 municípios da oferta local; nenhuma linha principal detecta diferença |
-| C | Item 3: razão *fuzzy* do protocolo 64 | deixar `tau` e os limites de Anderson–Rubin vazios em `OC_estimativas.csv` quando o F robusto do primeiro estágio for < 10, com a nota "instrumento fraco"; ajustar teste e doc 57q; é mudança de formato de saída, não de especificação | **a fazer** |
-| D | Item 5: seleção pelo tipo de vaga | adendo novo à H1: limites de Lee por corte; "ter vaga imediata" como outcome da RDD; balanço dos controles L e M dentro da amostra só de vagas imediatas (§2.12) | **a fazer** |
-| — | Item 4: heterogeneidade por porte | sem recomendação; **continua aguardando decisão do autor** | aberto |
+| C | Item 3: razão *fuzzy* do protocolo 64 | deixar `tau` e os limites de Anderson–Rubin vazios em `OC_estimativas.csv` quando o F robusto do primeiro estágio for < 10, com a nota "instrumento fraco"; ajustar teste e doc 57q; é mudança de formato de saída, não de especificação | **feito** (commit `515a559`, 26/10/2026): `tau`, EP, IC e p vazios nas linhas *fuzzy* com F < 10; AR ilimitado em `ar_ilimitado`; doc 57q §5.4 e §8 (correção da auditoria 49: constava "a fazer") |
+| D | Item 5: seleção pelo tipo de vaga | adendo novo à H1: limites de Lee por corte; "ter vaga imediata" como outcome da RDD; balanço dos controles L e M dentro da amostra só de vagas imediatas (§2.12) | **feito**: adendo 48f, doc 57t, auditoria 44 (§2.12, linha 2a) (correção da auditoria 49: constava "a fazer") |
+| — | Item 4: heterogeneidade por porte | adendo 48g (estrato do IED da APS) | **feito**: doc 57u, auditoria 45 (aprovado com correções). Não se detecta que o salto dependa de o estrato mudar; o IED não explica o sinal, com pouca potência, e o canal **não** fica descartado (auditoria 45). Fora do deck curto (correção da auditoria 49: constava "aberto") |
+| — | H1 pareada por UF e capital e pelos especialistas num raio de 100 km (pedido do autor de 27/10/2026) | adendo 48h | **feito**: doc 57w, auditoria 47 (aprovado com correções de texto). Nenhuma diferença de preenchimento nos dois cortes, com poucos pares; com efeito fixo de UF, a queda da HI-2 em 0,300 deixa de se distinguir de zero (doc 65, §4.8). Fora do deck curto |
+| — | H2 com efeito fixo do par de UFs e comparação local no corte (pedido do autor de 27/10/2026) | adendo 52e | **feito**: doc 57x, auditoria 48 (aprovado com correções de texto). Comparando vagas da mesma UF, a bolsa pesa mais que no M1 e passa no Holm nos ciclos 1–3; perto do corte, IC com 1. Fora do deck curto |
 | — | Auditoria 41 (adendo 52c), achado 1: as sensibilidades da escolha no ciclo 2 (conjunto "só células com vaga imediata" do E9, M2, M4, M6–M9 e DAP) ainda usam o quadro de 19/03/2026, refeito depois do resultado | refazer com o quadro de 13/02 exige adendo; recomendação: refazer ao menos o conjunto "só vaga imediata" do E9, que sustenta a robustez do ciclo 2 no doc 44 | **feito**: adendo 52d (doc 57v; auditoria 46, aprovado com correções); VD-1 mantém o sinal e o IC exclui 1 |
 | — | Auditoria 46 (adendo 52d), A1 e A2: as robustezes do **conjunto principal** do E9 no ciclo 2 (placebos, *spline* cúbico, janelas, *cluster* por curso) e as variantes quadrática e de degraus do conjunto só com vaga imediata ainda usam o quadro de 19/03 ou ficaram fora do 52d; na conta da auditoria, a bolsa linear se mantém e o degrau de 0,400 com *spline* quadrático vai a p = 0,060 | refazer exige adendo | **aguarda decisão do autor** |
-| — | Hipótese única da versão final | doc [65](../../06_execucao/65_avaliacao_forca_hipoteses.md): H1 inconclusiva (testada, não confirmada), H2 moderada (pós-resultado, preferência revelada), H3 fraca a moderada; recomendação: H1 como hipótese única, H2 na Discussão | **aguarda decisão do autor** |
+| — | Hipótese única da versão final | doc [65](../../06_execucao/65_avaliacao_forca_hipoteses.md): H1 inconclusiva (testada, não confirmada), H2 moderada (pós-resultado, preferência revelada), H3 fraca a moderada; recomendação: H1 como hipótese única, H2 na Discussão | **aguarda decisão do autor**. Em 27/10/2026 o coordenador informou à auditoria 49 que o autor decidiu trocar a hipótese e que o deck será reconstruído; o conteúdo da decisão ainda não está registrado aqui |
 
 ## 3. A história, na ordem dos slides (depois da validação)
 
@@ -429,15 +455,15 @@ auditoria independente:
 
 | Item | Estado |
 |---|---|
-| Protocolo 60, parte B (oferta local e deslocamento) | estimando; depois, auditoria |
+| Protocolo 60, parte B (oferta local e deslocamento) | feito: doc 57k, auditoria 34 (correção da auditoria 49: constava "estimando") |
 | Deck curto na estrutura obrigatória (doc 06), H1 central, numeração nova, até 30 palavras por slide | feito em 26/10/2026, com a H1 principal do adendo 48b (em auditoria) e o scatter só com vagas imediatas; reduzido a 14 slides no mesmo dia |
-| Slides da história (seção 3) | depois da parte B auditada |
+| Slides da história (seção 3) | a parte B foi auditada (auditoria 34); a história entrou no deck curto de 14 slides, auditado pela auditoria 49 |
 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta; precisa de protocolo próprio |
 | Diagnóstico da queda em 0,300 (protocolo 61, doc 57l) | auditado (auditoria 33, aprovado com correções de texto); no curto de 14 slides, o slide das capitais em Robustez e uma frase por explicação na Discussão (o passo a passo foi para as notas) |
 | Robustez das explicações da queda (seção 2.11) | a fazer; adendo datado ao protocolo 61 antes de rodar |
 | Slides de especificação por estimador e da cronologia dos ciclos | feitos: fichas no completo; no curto, até 4 linhas com a equação em palavras no centro e o resto nas notas |
 | Subida dentro das faixas (protocolo 62, doc 57m) | auditada (auditoria 37, aprovado com correções de texto) |
-| Capitais e UF no corte 0,300 (adendo 48c) e vaga imediata do ciclo 2 no logit (adendo 52c) | congelados; no curto, o diagnóstico da auditoria 36 até as saídas padronizadas; a nota do 52c só nas notas da H2 |
+| Capitais e UF no corte 0,300 (adendo 48c) e vaga imediata do ciclo 2 no logit (adendo 52c) | executados e auditados: 48c (doc 57o, auditoria 42) e 52c (doc 57p, auditoria 41). O deck curto ainda usa a H2 do ciclo 2 com o quadro de 19/03 e diz "reestimação em curso" nas notas (auditoria 49, achado A2) |
 
 ### 4.1 Fila consolidada em 26/10/2026, fim do dia (pedido do autor: "anota absolutamente tudo isso para resolvermos")
 
@@ -446,17 +472,22 @@ deck, do adendo 48c e da auditoria 38 foram interrompidos; o trabalho do deck e
 do 48c entrou como **WIP** (registro de mudanças, 26/10/2026). A `main` está
 parada antes dos retratos WIP.
 
+*Atualização de 27/10/2026 (auditoria 49): o retrato acima venceu. Os WIP foram
+auditados e a `main` está no commit `7e9f881`, igual ao branch. Os estados das
+linhas abaixo foram corrigidos onde estavam vencidos, com a marca "auditoria
+49".*
+
 **H1 (plano A)**
 
 | # | Item | Estado | Próximo passo |
 |---|---|---|---|
 | 1 | Auditoria 38 do adendo 48b (`HI_*`, doc 57n) | feito: aprovado com correções de texto; nenhum número mudou | **feito** (26/10/2026): "em auditoria" saiu do slide 8 e das linhas de fontes; nas notas, o p sem correção e o p de Holm da HI-2 em 0,300 e a leitura desse caso como decisão de implementação (achado 3) |
-| 2 | Adendo 48c (capitais e UF; script 41, `HC_*`, doc 57o) | feito: testes, pipeline e auditoria 42 (aprovado com correções; nenhum número mudou). Pendente: arquivar a fonte bruta do IBGE (capitais/regiões), que exige novo download autorizado pelo autor | — |
+| 2 | Adendo 48c (capitais e UF; script 41, `HC_*`, doc 57o) | feito: testes, pipeline e auditoria 42 (aprovado com correções; nenhum número mudou). A fonte bruta do IBGE foi arquivada em 26/10/2026, com autorização do autor (script a19; nota da auditoria 42) | — (auditoria 49: constava "pendente") |
 | 3 | Adendo 52c (escolha com tipo de vaga do ciclo 2 de 13/02) | feito: auditoria 41 (aprovado com correções; nenhum número mudou); pendência do achado 1 na §2.16 | — |
 | 4 | Seleção pelo tipo de vaga (seção 2.12, canal 2) | feito: adendo 48f, doc 57t, auditoria 44 (seção 2.12, linha 2a) | no deck curto, linha "Tipo de vaga · testado: Lee contém zero" na Identificação, com o detalhe nas notas |
-| 5 | H1 com covariáveis pré-determinadas (doc 63, §2 e §3) | proposto | congelar adendo com o conjunto fixo; balanço de cada controle no corte; relatar cada um isolado e todos juntos |
+| 5 | H1 com covariáveis pré-determinadas (doc 63, §2 e §3) | em parte feito (auditoria 49: constava "proposto"): capital e efeito fixo de UF no 48c; localização (capital, macrorregião, porte) e médicos na região no 48d; UF e especialistas num raio de 100 km no 48h. Falta a composição de curso na HI-2 e os controles a adquirir (item 6) | congelar adendo com o que falta; relatar cada um isolado e todos juntos |
 | 6 | Controles a adquirir (doc 63, §3): escola médica e residência (e-MEC, CNRM), beneficiários ANS, PIB e receita municipal (só controle, nunca running variable), homicídios (SIM), leitos e estrutura se o CNES do repo não tiver | não adquiridos | scripts de aquisição com manifesto e hash, como os a0x |
-| 7 | Heterogeneidade por porte (estrato da atenção primária muda em 0,300 só para portes 2 e 3; auditoria 18) | oferecido, **não aprovado pelo autor** | aguardar decisão |
+| 7 | Heterogeneidade por porte (estrato da atenção primária muda em 0,300 só para portes 2 e 3; auditoria 18) | **feito** (auditoria 49: constava "não aprovado"): adendo 48g, doc 57u, auditoria 45. O IED não explica o sinal, com pouca potência; o canal não fica descartado | fora do deck curto |
 | 8 | Robustez das explicações da queda (seção 2.11) | a fazer | adendo datado ao protocolo 61 |
 | 9 | "Ir de fato depois de alocado" por faixa (seção 2.9) | sem estimativa | protocolo próprio |
 | 10 | RDD das vagas oferecidas por município, por ciclo e corte (seção 2.2) | proposta | protocolo próprio |

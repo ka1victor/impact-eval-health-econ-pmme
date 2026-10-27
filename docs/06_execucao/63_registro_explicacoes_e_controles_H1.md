@@ -17,20 +17,20 @@
 
 | # | Explicação | Evidência até agora | Variável de controle | Pré-determinada? | Estado |
 |---|---|---|---|---|---|
-| 1 | **Capitais logo abaixo de 0,300** (São Paulo, Goiânia, Natal, Brasília a menos de 0,010; nenhuma acima) | com uma dummy de capital, a queda encolhe e o IC contém zero (auditoria 36) | dummy de capital | sim | em teste formal (adendo 48c) |
-| 2 | **Região e UF**: o Nordeste se concentra nos últimos 0,050 antes de 0,300 e preenche mais | dentro da mesma UF, a subida da faixa de R$ 10 mil quase some; na janela sai 40% (auditoria 37) | efeito fixo de UF; ou de macrorregião | sim | em teste formal (48c, efeito fixo de UF) |
-| 3 | **Porte do município** (cidades grandes abrem e preenchem mais; em 0,400, três grandes logo abaixo do corte) | em 0,400, com o controle das vagas oferecidas, a queda some (doc 49b) | log(população 2022) | sim | a incluir |
+| 1 | **Capitais logo abaixo de 0,300** (São Paulo, Goiânia, Natal, Brasília a menos de 0,010; nenhuma acima) | com uma dummy de capital, a queda encolhe e o IC contém zero (auditoria 36) | dummy de capital | sim | testado: adendo 48c (doc 57o, auditoria 42). Com a dummy, o IC da HI-2 em 0,300 passa a conter zero, mas a maior parte do ponto fica; sem as capitais, o ponto cai a menos de um terço |
+| 2 | **Região e UF**: o Nordeste se concentra nos últimos 0,050 antes de 0,300 e preenche mais | dentro da mesma UF, a subida da faixa de R$ 10 mil quase some; na janela sai 40% (auditoria 37) | efeito fixo de UF; ou de macrorregião | sim | testado: com efeito fixo de UF (48c, doc 57o) ou pareando na mesma UF (48h, doc 57w, auditoria 47), a queda em 0,300 deixa de se distinguir de zero e o ponto cai a menos de um terço no 48c; macrorregião no 48d (doc 57r) |
+| 3 | **Porte do município** (cidades grandes abrem e preenchem mais; em 0,400, três grandes logo abaixo do corte) | em 0,400, com o controle das vagas oferecidas, a queda some (doc 49b) | log(população 2022) | sim | incluído no conjunto de localização do 48d (doc 57r) |
 | 4 | **Hierarquia urbana** (REGIC) | no diagnóstico 61 não saltou no corte nem reduziu a queda (doc 57l) | categorias do REGIC 2018 | sim | testado; fraco |
 | 5 | **Tipo de vaga** (imediata, mista, só de reserva) | comparando só vagas imediatas, a célula preenchida em 0,300 vai de −8,4 a −3,7 p.p. (57n) | tipo de célula do **quadro de 13/02** no ciclo 2 (48b, §7) | anterior à alocação só com o quadro de 13/02 no ciclo 2; **mas pode responder ao corte** (ver 14) | já é a principal (48b) |
 | 6 | **Curso** (cursos que preenchem pouco em qualquer lugar) | o índice de curso salta no corte em 0,300 (57l) | efeito fixo de curso × ciclo | sim | já no A3 e no HI-1; a incluir no HI-2 (por município, a parte de cada curso nas vagas) |
 | 7 | **Concorrência** (mais células do mesmo curso na mesma UF) | entre os fatores que mais reduzem a queda (57l) | nº de células do mesmo curso e ciclo na UF ou região de saúde | **depende**: o quadro é decidido pelo Ministério e pode responder ao corte | só diagnóstico |
-| 8 | **Candidatos por perto** (oferta de médicos da região) | tira 44% da subida na janela antes de 0,300 (auditoria 37); não salta no corte (57l) | candidatos do curso com origem na UF ou região, ou especialistas pré no CNES por 10 mil hab. (202406–202506) | os especialistas pré no CNES, sim; candidatos, **não** (é escolha) | especialistas pré: a incluir; candidatos: só diagnóstico |
+| 8 | **Candidatos por perto** (oferta de médicos da região) | tira 44% da subida na janela antes de 0,300 (auditoria 37); não salta no corte (57l) | candidatos do curso com origem na UF ou região, ou especialistas pré no CNES por 10 mil hab. (202406–202506) | os especialistas pré no CNES, sim; candidatos, **não** (é escolha) | especialistas pré: incluídos no 48d (no município e no resto da região de saúde) e no 48h (num raio de 100 km); candidatos: só diagnóstico |
 | 9 | **Vagas oferecidas** (o controle do S-a) | em 0,400 explica a queda (49b) | vagas imediatas pré-alocação | **duvidosa**: o quadro pode responder ao corte (protocolo 48, §2) | já na HI-2; manter com a ressalva |
 | 10 | **Ciclo** (o sinal varia por ciclo) | a taxa por vaga em 0,300 cai mais no ciclo 2 | efeito fixo de ciclo e parâmetros por ciclo | sim | já incluído |
-| 11 | **Outras políticas no mesmo corte** (estrato da atenção primária, emendas +20%, PMMB) | sem teste causal; o estrato da atenção primária só muda para portes 2 e 3 em 0,300 (auditoria 18) | porte × lado (heterogeneidade: onde o estrato muda e onde não) | sim | proposto ao autor; sem protocolo |
+| 11 | **Outras políticas no mesmo corte** (estrato da atenção primária, emendas +20%, PMMB) | sem teste causal; o estrato da atenção primária só muda para portes 2 e 3 em 0,300 (auditoria 18) | porte × lado (heterogeneidade: onde o estrato muda e onde não) | sim | testado: adendo 48g (doc 57u, auditoria 45). Não se detecta que o salto dependa de o estrato mudar; o IED não explica o sinal, com pouca potência, e o canal **não** fica descartado |
 | 12 | **Definição de "preenchida" diferente no ciclo 1** (confirmação ou homologação) | HI-1 usa ≥ 1 alocado; a F1.3 entra como sensibilidade (57n) | definição única | — | resolvido no 48b |
 | 13 | **Acaso / poucos municípios** | cortes placebo e randomização local não descartam (57l) | — | — | relatar |
-| 14 | **Seleção pelo tipo de vaga** (26/10/2026, pergunta do autor): a SGTES decide qual município recebe vaga imediata e qual fica na reserva, com critério que não está nos dados; se o tipo responde ao corte, restringir às vagas imediatas (48b) compara grupos selecionados de forma diferente | o tipo salta no corte: parte de células só de reserva +15,4 p.p. [+2,1; +28,6] em 0,300 e +11,3 p.p. em 0,400 (57l, descritivo) | nenhuma: o tipo **não** é pré-determinado em relação ao corte, logo não entra como controle | **não** (decidido pelo Ministério, possivelmente olhando a faixa) | aberto: limites de Lee, "ter vaga imediata" como outcome e balanço dentro da amostra imediata (`docs/07_apresentacoes/banca2/05_discussao_historia_empirica.md`, §2.12); precisa de adendo congelado |
+| 14 | **Seleção pelo tipo de vaga** (26/10/2026, pergunta do autor): a SGTES decide qual município recebe vaga imediata e qual fica na reserva, com critério que não está nos dados; se o tipo responde ao corte, restringir às vagas imediatas (48b) compara grupos selecionados de forma diferente | o tipo salta no corte: parte de células só de reserva +15,4 p.p. [+2,1; +28,6] em 0,300 e +11,3 p.p. em 0,400 (57l, descritivo). Esse +15,4 usa o quadro do ciclo 2 de 19/03, refeito depois do resultado; com o de 13/02, o IC contém zero (doc 57t) | nenhuma: o tipo **não** é pré-determinado em relação ao corte, logo não entra como controle | **não** (decidido pelo Ministério, possivelmente olhando a faixa) | testado: adendo 48f (doc 57t, auditoria 44). Os limites de Lee contêm zero nos dois cortes; em 0,300, restringir a vagas imediatas piora o balanço (`docs/07_apresentacoes/banca2/05_discussao_historia_empirica.md`, §2.12, linha 2a) |
 
 ## 2. Próximo passo proposto
 
@@ -88,5 +88,14 @@ ou médicos": é limite da RDD nesse corte, não prova de que a localização ex
 diferença na H1 nem na oferta local; em 0,400 não tem estimativa (capitais, Sul e, na H1, Centro-Oeste só do lado
 de baixo; o logit não converge). Números no doc 57r.
 Explicações 1, 2 e 8 da tabela ganham apoio; "especialistas no resto da região" entra como explicação nova.
+
+**27/10/2026, auditoria 49 (estado da tabela):** a coluna "Estado" das explicações 1, 2, 3, 8, 11 e 14 estava
+vencida e foi corrigida. Os adendos 48c (capital e UF; doc 57o, auditoria 42), 48d (localização e médicos; 57r,
+auditoria 40), 48f (tipo de vaga; 57t, auditoria 44), 48g (estrato do IED; 57u, auditoria 45) e 48h (UF e
+especialistas num raio de 100 km; 57w, auditoria 47) já rodaram e foram auditados. Pelo doc 65, §4.8, a explicação com
+mais apoio para a queda em 0,300 é a **UF**: com efeito fixo de UF, ou pareando na mesma UF, a queda deixa de se
+distinguir de zero; só com os especialistas no entorno, ela continua. É robustez pós-resultado e limite da RDD nesse
+corte, não prova de mecanismo. Do conjunto da seção 2 falta só a composição de curso na HI-2; os controles da seção 3
+marcados "adquirir" continuam fora.
 
 Este registro é atualizado a cada explicação nova, com data.
