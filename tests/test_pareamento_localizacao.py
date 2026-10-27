@@ -329,7 +329,7 @@ class TestDoc(unittest.TestCase):
     def test_cabecalho_decisoes_e_linguagem(self):
         txt = DOC.read_text(encoding="utf-8")
         self.assertIn("ADENDO_48H_POS_RESULTADO", txt)
-        self.assertIn("**Auditoria:** pendente", txt)
+        self.assertIn("**Auditoria:** [auditoria 47]", txt)
         self.assertIn("## 0. Decisões de implementação", txt)
         self.assertLess(txt.index("## 0. Decisões"), txt.index("## 1. Resposta curta"))
         for proibido in ("a bolsa reduz", "a bolsa aumenta", "a bolsa causa", "efeito da bolsa sobre"):
