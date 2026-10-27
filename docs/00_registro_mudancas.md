@@ -8,6 +8,21 @@
 
 ---
 
+## 27/10/2026 — Doc 57w: resultados do adendo 48h (H1 pareada por UF e pelos especialistas num raio de 100 km)
+
+Motivo: execução do adendo 48h. O doc 57w abre com as decisões de implementação, gravadas em commit próprio antes de
+qualquer estimativa; os resultados entram depois, em blocos gerados pelo script 49
+(`scripts/rdd_bolsa/49_pareamento_localizacao.py`, saídas `output/rdd_bolsa/PL_*`, teste
+`tests/test_pareamento_localizacao.py`). Auditoria pendente.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57w_resultados_pareamento_localizacao.md`](06_execucao/57w_resultados_pareamento_localizacao.md) | resultados do adendo 48h (PH-1 a PH-6) |
+
+---
+
 ## 27/10/2026 — Adendos 48h (H1 pareada pela localização da unidade e dos médicos) e 52e (H2 com o par de localizações fixado)
 
 Motivo: o autor pediu rodar de novo a H1 e a H2 com pareamento pela localização da unidade e do médico, "o controle
