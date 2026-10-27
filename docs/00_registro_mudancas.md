@@ -8,6 +8,20 @@
 
 ---
 
+## 27/10/2026 — Doc 57y: resultados do adendo 52f (robustez do E9 no ciclo 2 com o quadro de 13/02)
+
+Motivo: execução do adendo 52f. O bloco de decisões de implementação (inventário de RB-1 a RB-5, função original de
+cada peça, como o quadro de 13/02 entra e sementes) foi commitado antes de qualquer estimativa; os números vêm depois,
+só em blocos gerados pelo script 52.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57y_robustez_E9_ciclo2_quadro_1302.md`](06_execucao/57y_robustez_E9_ciclo2_quadro_1302.md) | resultados do adendo 52f, gerado por `scripts/rdd_bolsa/52_robustez_E9_ciclo2_quadro_1302.py` a partir de `output/rdd_bolsa/RB_*`; auditoria pendente |
+
+---
+
 ## 27/10/2026 — Adendo 52f: robustez do E9 no ciclo 2 com o quadro de 13/02
 
 Motivo: o autor pediu refazer com o quadro de vagas vigente na inscrição as robustezes do conjunto principal da
