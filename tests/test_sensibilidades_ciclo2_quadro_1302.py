@@ -464,7 +464,7 @@ class TestDoc57v(unittest.TestCase):
             self.assertEqual(t.count(f"<!-- VD:{nome}:inicio -->"), 1, nome)
             self.assertEqual(t.count(f"<!-- VD:{nome}:fim -->"), 1, nome)
         for s in ("## 1. Resposta curta", "## 2. Portão", "## 3. O que usa o tipo de vaga", "## 7. Decisões de "
-                  "implementação", "## 8. Limites", "ADENDO_52D_POS_RESULTADO", "**Auditoria:** pendente"):
+                  "implementação", "## 8. Limites", "ADENDO_52D_POS_RESULTADO", "**Auditoria:** [auditoria 46]"):
             self.assertIn(s, t)
         self.assertLess(t.index("<!-- VD:decisoes:inicio -->"), t.index("## 8. Limites"))
 

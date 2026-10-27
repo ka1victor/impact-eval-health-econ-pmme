@@ -1262,6 +1262,9 @@ def tabela_e9(est: pd.DataFrame) -> str:
         _tab(["Linha", "Candidatos (antiga → corrigida)", "Coef. antigo [IC]; p", "Coef. corrigido [IC]; p",
               "Razão de chances antiga [IC]", "Razão de chances corrigida [IC]", "Δ prob., p.p. (antiga → corrigida)"],
              linhas), "",
+        "A variação em p.p. não é comparável entre as versões como tamanho de efeito: com o quadro de 13/02 cada "
+        "conjunto tem menos células, a probabilidade-base de cada célula é maior, e a mesma razão de chances dá uma "
+        "variação maior em p.p.", "",
         "Peso de `log(vagas imediatas + 1)` no mesmo modelo (a outra covariável do tipo de vaga é constante neste "
         "conjunto e sai):", "",
         _tab(["Linha", "Antigo [IC]", "Corrigido [IC]"], lv)])
@@ -1414,7 +1417,11 @@ def tabela_mudancas(resumo: dict) -> str:
     return "\n".join([
         f"Das {n} quantidades lidas (seções 5.1 a 5.6), só as abaixo mudam de sinal ou de significância pelo critério "
         "da decisão 8; a lista completa, com o critério de cada uma, está em `mudancas` de `VD_resumo.json`.", "",
-        _tab(["Id", "Linha", "Tipo", "Termo", "Estimativa (antiga → corrigida)", "O que muda"], linhas)])
+        _tab(["Id", "Linha", "Tipo", "Termo", "Estimativa (antiga → corrigida)", "O que muda"], linhas), "",
+        "Como ler esta tabela. A regra conta qualquer troca de sinal, mesmo de uma estimativa perto de zero (o IC de "
+        "cada linha está nas seções 5.3 a 5.6). Nas linhas das famílias BKY, a significância é a do q, que depende "
+        "dos p de todos os membros da família (seção 5.4), e não só do p da linha. Na DAP e nos km, \"significância\" "
+        "quer dizer só que o IC delta exclui zero: as razões continuam descritivas, sem teste, como no P1."])
 
 
 def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
@@ -1433,8 +1440,12 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
     if regra == "MANTEM":
         t.append("**VD-1 (principal deste adendo): a robustez do ciclo 2 (doc 44) se mantém com o tipo de vaga anterior "
                  f"à alocação.** {frase1} Pela leitura pré-registrada (§3), o mesmo sinal e o IC que exclui 1 mantêm a "
-                 "frase do doc 44 nesta peça. Os placebos de corte, o score bootstrap e o spline cúbico do doc 42 não "
-                 "foram refeitos no conjunto de sensibilidade (decisão 2).")
+                 "frase do doc 44 nesta peça, isto é, no conjunto só com vaga imediata e na especificação principal do "
+                 "E9 (decisão 2; as variantes quadrática e de degraus desse conjunto não foram refeitas). O que o doc "
+                 "44 chama de robustez a placebos vem do conjunto principal: lá, os placebos de corte, o spline cúbico, "
+                 "as janelas e o cluster por curso do doc 42 continuam com o quadro de 19/03 (só o score bootstrap foi "
+                 "refeito, no scratch da auditoria 41). Essa parte da frase do doc 44 não foi conferida com o quadro de "
+                 "13/02.")
     elif regra == "DEPENDIA_DO_QUADRO_POS_RESULTADO":
         t.append("**VD-1 (principal deste adendo): a robustez do ciclo 2 dependia do quadro pós-resultado.** "
                  f"{frase1} Pela leitura pré-registrada (§3), o IC que contém 1 obriga a relatar e a rebaixar a frase do "
@@ -1452,17 +1463,33 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
     lista = "; ".join(f"{ROTULO[k].replace('P1 ', '')}: {_n(a['estimativa'], 2)} → {_n(c['estimativa'], 2)}"
                       for k, (a, c) in rc.items())
     v3 = lei["VD3"]
-    rot = lambda ks: ", ".join(ROTULO[k].replace("P1 ", "") for k in ks)  # noqa: E731
+    rot = lambda ks: "; ".join(ROTULO[k].replace("P1 ", "") for k in ks)  # noqa: E731
     if v3["mudam_sinal"]:
-        frase3 = (f"Mudam de sinal em algum peso da bolsa: {rot(v3['mudam_sinal'])}. Pela leitura pré-registrada, a "
-                  f"leitura da H2 se apoia nas que não mudam: {rot(v3['nao_mudam_sinal_base_da_H2'])}.")
+        sinal3 = [m for m in resumo["mudancas"] if m["id_vd"] == "VD-3" and m["muda_sinal"]]
+        quais = "; ".join(f"`{m['termo']}`, {_n(m['estimativa_antiga'], 4)} → {_n(m['estimativa_corrigida'], 4)}"
+                          for m in sinal3)
+        frase3 = (f"Mudam de sinal em algum peso da bolsa: {rot(v3['mudam_sinal'])} ({quais}; a regra da decisão 8 "
+                  "conta qualquer troca de sinal, mesmo de uma estimativa perto de zero, e a seção 5.3 mostra o IC). "
+                  "Pela leitura pré-registrada, a leitura da H2 se apoia nas que não mudam: "
+                  f"{rot(v3['nao_mudam_sinal_base_da_H2'])}.")
     else:
         frase3 = ("Nenhuma variante muda o sinal de um peso da bolsa (β, média do M8, inclinações e interações do M6); "
                   "a leitura da H2 continua apoiada em todas elas.")
     mud_sig3 = [m for m in resumo["mudancas"] if m["id_vd"] == "VD-3" and m["muda_significancia"]]
+    def _pq(m: dict) -> str:
+        if "BKY" not in m["criterio"]:
+            return ""
+        a = _sel(est, ANTIGA, m["chave_modelo"], m["tipo_linha"], m["termo"])
+        c = _sel(est, CORRIGIDA, m["chave_modelo"], m["tipo_linha"], m["termo"])
+        por_que = (", e aqui o p da própria linha não sobe: a mudança vem de outros membros com p maior"
+                   if float(c["p"]) <= float(a["p"]) else "")
+        return (f"; p {_p(a['p'])} → {_p(c['p'])}, q BKY {_p(a['q_bky'])} → {_p(c['q_bky'])}: o q depende dos p de "
+                f"toda a família, ver seção 5.4{por_que}")
+
     sig3 = ("Mudam de significância: " + "; ".join(f"{ROTULO.get(m['chave_modelo'])}, `{m['termo']}` "
                                                    f"({_sim(m['significativa_antiga'])} → "
-                                                   f"{_sim(m['significativa_corrigida'])})" for m in mud_sig3) + "."
+                                                   f"{_sim(m['significativa_corrigida'])}{_pq(m)})"
+                                                   for m in mud_sig3) + "."
             if mud_sig3 else "Nenhuma linha do VD-3 muda de significância pelo critério da decisão 8.")
     t.append(f"**VD-3 (variantes do P1).** Razão de chances por +R$ 5 mil, antiga → corrigida: {lista}. {frase3} "
              f"{sig3}")
@@ -1521,7 +1548,8 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "> **Saídas:** `output/rdd_bolsa/VD_estimativas.csv`, `VD_resumo.json` e `VD_figuras/VD_antigo_corrigido.png`. "
         "As saídas `E9_*`, `P1_*`, `P1h_*` e `VC_*` não são regravadas, e os docs 42, 44, 57, 57a, 57i e 57p não são "
         "editados.<br>",
-        "> **Auditoria:** pendente.",
+        "> **Auditoria:** [auditoria 46](../auditorias/46_auditoria_sensibilidades_ciclo2.md), aprovado com correções "
+        "de texto; nenhuma estimativa mudou.",
         "",
         "## 1. Resposta curta",
         "",
@@ -1588,8 +1616,11 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "- **Pós-resultado.** As versões antigas e as principais corrigidas já eram conhecidas. O adendo foi congelado "
         "antes de rodar, mas as sensibilidades corrigidas não são teste confirmatório novo.",
         "- **Só o tipo de vaga do ciclo 2 muda.** As linhas fora do §1 do adendo (seção 3) continuam com o quadro de "
-        "19/03; os placebos de corte, o score bootstrap e o spline cúbico do doc 42 não foram refeitos no conjunto só "
-        "com vaga imediata.",
+        "19/03. No conjunto só com vaga imediata, só a especificação principal do E9 foi refeita; as variantes "
+        "quadrática e de degraus e o cluster por curso desse conjunto, não (decisão 2). No conjunto principal, "
+        "corrigido pelo adendo 52c, as robustezes pós-auditoria do doc 42 (placebos de corte, spline cúbico, janelas, "
+        "nós extras e cluster por curso) continuam com o quadro de 19/03; delas, só o score bootstrap foi refeito, no "
+        "scratch da auditoria 41. A frase do doc 44 sobre robustez a placebos ainda se apoia no quadro antigo.",
         "- **O quadro de 13/02 também é anúncio.** Ele mede o que estava publicado na inscrição, não a vaga que de fato "
         "seria preenchida; o remanejamento posterior fica fora do atributo, como deve ficar num controle "
         "pré-tratamento.",
