@@ -466,6 +466,38 @@ com outros pesos a ordem entre H1 e H2 pode inverter.
 - **H3:** "as horas cadastradas são presença?". Não: vínculo cadastrado não é presença, e no município o pré já
   vinha subindo.
 
+## 4.7 Reavaliação com foco em interpretação simples e clara (27/10/2026, a pedido do autor)
+
+Mesmos números; outros critérios. Notas de 1 a 5.
+
+| Critério | H1 | H2 | H3 |
+|---|:-:|:-:|:-:|
+| A mensagem cabe numa frase, sem "mas" | 2 | 5 | 3 |
+| O gráfico principal fala sozinho | 3 | 5 | 3 |
+| A conclusão diz algo que acontece (e não só "não detectado") | 1 | 4 | 3 |
+| Poucas ressalvas obrigatórias | 1 | 3 | 2 |
+| O método se explica para leigo | 4 | 3 | 3 |
+| Resposta firme à pergunta mais dura da banca | 2 | 4 | 2 |
+| **Soma (máx. 30)** | **13** | **24** | **16** |
+
+**Frase de 10 segundos de cada uma:**
+- **H1:** "Onde a bolsa é R$ 5 mil maior, não vimos mais vagas preenchidas; mas o desenho só pegaria efeitos
+  grandes, e o corte muda outras regras junto." Precisa de cinco ressalvas: pacote do corte, poder, balanço em
+  0,300, sinal negativo e especificação escolhida depois.
+- **H2:** "O médico escolhe perto de onde já trabalha: 79% põem a 1ª opção na mesma UF, e ter a vaga na UF de
+  origem pesa na escolha muito mais que toda a diferença de bolsa." Precisa de três ressalvas: é preferência, não
+  efeito causal da origem; a hipótese veio depois dos dados; a bolsa só deslocou a escolha no ciclo 2.
+- **H3:** "O médico que entra cadastra mais horas, mas metade já estava no município, e não dá para dizer que a
+  oferta local subiu." Precisa de duas ressalvas, mas a conclusão central é inconclusiva.
+
+**Leitura.** Com foco em clareza, a ordem muda: **H2 > H3 > H1**. A H1 continua a de melhor desenho, mas é a mais
+difícil de contar: a conclusão é uma ausência e vem cercada de ressalvas. A H2 conta uma história simples,
+com gráfico que fala sozinho e um resultado firme.
+
+**Uma forma de juntar as duas numa só hipótese (H2), sem esconder a ordem:** apresentar o resultado da H1 como o
+**fato** que motiva a pergunta ("no corte, a bolsa maior não encheu mais vagas") e a H2 como a hipótese que o
+explica ("porque a origem pesa mais que a bolsa"). A H2 deve ser dita como formulada depois de ver os dados.
+
 ---
 
 ## 5. O que foi lido
