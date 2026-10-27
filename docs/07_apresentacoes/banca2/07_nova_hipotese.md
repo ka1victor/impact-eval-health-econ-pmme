@@ -3,6 +3,10 @@
 > **Decisão do autor, 27/10/2026.** A versão final da banca 2 usa como hipótese única a antiga H2 (bolsa ×
 > origem), reformulada abaixo. O resultado da antiga H1 (preenchimento no corte) entra como o **fato** que motiva a
 > hipótese. A antiga H3 (oferta) sai do corpo e fica só nas notas.<br>
+> **Atualização da decisão (27/10/2026):** "pode tirar todas as hipóteses além da H2, que agora é nosso foco.
+> Deixa no apêndice, se quiser, mas bem rápido. Agora precisamos de uma análise clara e completa da hipótese 2."
+> O corpo do deck tem **só a H2**. O fato da antiga H1 vira no máximo uma linha de motivação e vai para o apêndice,
+> com a antiga H3, em no máximo 2 slides.<br>
 > **Base da decisão:** [doc 65](../../06_execucao/65_avaliacao_forca_hipoteses.md), seções 4.6 a 4.8 (avaliação por
 > critérios, foco em interpretação simples e resultados com a localização controlada).<br>
 > **Estatuto:** a hipótese foi formulada **depois** de ver os resultados da H1 e dos coeficientes do modelo de
