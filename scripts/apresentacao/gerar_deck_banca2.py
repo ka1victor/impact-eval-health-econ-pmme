@@ -150,7 +150,7 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
             atual = dict(secao=secao, titulo=ln[3:].strip(), rastreio="", layout="", imagem=None, alt="",
                          tabela=[], marcadores=[], paragrafos=[], codigo=[], cadeia="", cautela="", fontes="",
                          notas="", colunas=[], explica="", blocos=[], apendice=secao == "Apêndice", selo="",
-                         max_linhas=None)
+                         max_linhas=None, roteiro="", tempo_s=None)
             slides.append(atual)
         elif atual is not None and ln.startswith("### "):
             atual["colunas"].append({"titulo": ln[4:].strip(), "itens": []})
@@ -191,6 +191,10 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
                 texto = " ".join(b.strip() for b in bloco)
                 if texto.startswith("> [!NOTE]") or texto.startswith("**Números:**") or texto == "---":
                     pass
+                elif m := RE_ROTEIRO.match(texto):
+                    # roteiro de fala do slide (rubrica da banca, 27/10/2026): tempo-alvo em segundos e a fala
+                    atual["tempo_s"] = int(m.group(1))
+                    atual["roteiro"] = re.sub(r"\s*>\s*", " ", m.group(2)).strip()
                 elif texto.startswith("> **Notas do apresentador.**"):
                     atual["notas"] = re.sub(r"\s*>\s*", " ", texto[1:]).replace("**Notas do apresentador.**", "").strip()
                 elif texto.startswith("> "):
@@ -209,6 +213,7 @@ def ler_slides(doc: Path = DOC02) -> list[dict]:
     return slides
 
 
+RE_ROTEIRO = re.compile(r"> \*\*Roteiro \((\d+) s\)\.\*\*(.*)", re.S)
 MARCA_GRUPO = re.compile(r"<!-- grupo: (\d+)(?: \| (.+?))? -->")
 
 
@@ -689,6 +694,32 @@ def notas_do_slide(sl: dict) -> str:
     return " ".join(partes) or sl["titulo"]
 
 
+def mmss(seg: int) -> str:
+    return f"{seg // 60}:{seg % 60:02d}"
+
+
+def paragrafos_notas_curto(sl: dict) -> list[str]:
+    """Notas do deck curto: primeiro o roteiro de fala, com o tempo-alvo (rubrica da banca: apresentador); depois o
+    detalhe para perguntas e a cautela da tela. No apêndice, que não é apresentado, só o detalhe."""
+    partes = []
+    if sl["roteiro"]:
+        partes.append(f"FALA ({mmss(sl['tempo_s'])}): " + texto_puro(sl["roteiro"]))
+    if sl["notas"]:
+        partes.append(("DETALHE PARA PERGUNTAS: " if sl["roteiro"] else "") + texto_puro(sl["notas"]))
+    if sl["cautela"]:
+        partes.append("Cautela na tela: " + texto_puro(sl["cautela"]))
+    return partes or [sl["titulo"]]
+
+
+def xml_notas_paragrafos(paragrafos: list[str]) -> str:
+    """As notas do slide em parágrafos separados (o roteiro de fala fica legível no modo do apresentador)."""
+    um = BF.xml_notas("\x00")
+    corpo = "".join(f'<a:p><a:r><a:rPr lang="pt-BR" dirty="0"/><a:t>{escape(p)}</a:t></a:r></a:p>' for p in paragrafos)
+    k = um.index('<a:p><a:r><a:rPr lang="pt-BR" dirty="0"/><a:t>\x00</a:t></a:r></a:p>')
+    fim = um.index("</a:p>", k) + len("</a:p>")
+    return um[:k] + corpo + um[fim:]
+
+
 # --------------------------------------------------------------------------------------------------
 # Correções no deck do grupo (plano da banca 2, §2)
 # --------------------------------------------------------------------------------------------------
@@ -1070,6 +1101,27 @@ def conferir_estrutura(slides: list[dict]) -> None:
             vistas.append(sl["secao"])
     if tuple(vistas) != SECOES_CURTO:
         raise SystemExit(f"ERRO: seções do deck curto fora da estrutura obrigatória (doc 06): {vistas}")
+    conferir_roteiro(slides)
+
+
+TEMPO_MIN_S, TEMPO_MAX_S = 390, 450   # roteiro de fala: cerca de 7 minutos (rubrica da banca; de 6:30 a 7:30)
+PALAVRAS_POR_MINUTO = (120, 160)      # ritmo do roteiro (alvo: cerca de 140 palavras por minuto)
+
+
+def conferir_roteiro(slides: list[dict]) -> None:
+    """Cada slide do corpo tem roteiro de fala com tempo-alvo; o apêndice, não (não é apresentado). A soma dos
+    tempos fica entre 6:30 e 7:30, e o ritmo total, entre 120 e 160 palavras por minuto."""
+    corpo = [sl for sl in slides if not sl["apendice"]]
+    if any(not sl["roteiro"] or not sl["tempo_s"] for sl in corpo):
+        raise SystemExit("ERRO: slide do corpo sem roteiro de fala (> **Roteiro (N s).**)")
+    if any(sl["roteiro"] for sl in slides if sl["apendice"]):
+        raise SystemExit("ERRO: o apêndice não é apresentado e não leva roteiro de fala")
+    total = sum(sl["tempo_s"] for sl in corpo)
+    if not TEMPO_MIN_S <= total <= TEMPO_MAX_S:
+        raise SystemExit(f"ERRO: roteiro de {mmss(total)}; o alvo é de {mmss(TEMPO_MIN_S)} a {mmss(TEMPO_MAX_S)}")
+    ppm = sum(palavras(sl["roteiro"]) for sl in corpo) / total * 60
+    if not PALAVRAS_POR_MINUTO[0] <= ppm <= PALAVRAS_POR_MINUTO[1]:
+        raise SystemExit(f"ERRO: roteiro a {ppm:.0f} palavras por minuto; o alvo é de {PALAVRAS_POR_MINUTO}")
 
 
 def cabe_numa_linha(txt: str) -> bool:
@@ -1416,7 +1468,7 @@ def construir_curto(deck: Path, saida: Path) -> dict:
                   '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
                   '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
                   + "".join(rels_slide) + "</Relationships>")
-        pk.gravar(f"ppt/notesSlides/notesSlide{nn}.xml", xml_notas(notas_do_slide(sl)))
+        pk.gravar(f"ppt/notesSlides/notesSlide{nn}.xml", xml_notas_paragrafos(paragrafos_notas_curto(sl)))
         pk.gravar(f"ppt/notesSlides/_rels/notesSlide{nn}.xml.rels",
                   '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
                   '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
@@ -1430,6 +1482,7 @@ def construir_curto(deck: Path, saida: Path) -> dict:
         itens.append((str(prox_id + k), rid))
         lista.append(dict(posicao=k + 1, titulo=sl["titulo"], secao=sl["secao"], layout=sl["layout"],
                           linhas=[texto_puro(t) for t, _ in linhas_curtas(sl)], palavras=palavras_visiveis(sl),
+                          tempo_s=sl["tempo_s"], palavras_faladas=palavras(sl["roteiro"]) if sl["roteiro"] else 0,
                           figura=sl["imagem"].relative_to(ROOT).as_posix() if sl["imagem"] else None))
     nova = "<p:sldIdLst>" + "".join(f'<p:sldId id="{i}" r:id="{r}"/>' for i, r in itens) + "</p:sldIdLst>"
     pres = re.sub(r"<p:sldIdLst>.*?</p:sldIdLst>", lambda _m: nova, pres, count=1, flags=re.S)
@@ -1499,6 +1552,17 @@ def escrever_manifesto_curto(deck: Path, saida: Path, resumo: dict, com_pdf: boo
                    for n in ((ARQ_CURTO, ARQ_CURTO_PDF) if com_pdf else (ARQ_CURTO,))],
         "nota_pdf": "o PDF é renderizado pelo LibreOffice e não é byte a byte determinístico; o .pptx é",
         "ordem": resumo["ordem"],
+        "roteiro": {"tempo_total_s": sum(o["tempo_s"] or 0 for o in resumo["ordem"]),
+                    "tempo_total": mmss(sum(o["tempo_s"] or 0 for o in resumo["ordem"])),
+                    "palavras_faladas": sum(o["palavras_faladas"] for o in resumo["ordem"]),
+                    "documento": "docs/07_apresentacoes/banca2/09_roteiro_fala_7min.md",
+                    "regra": "um roteiro por slide do corpo, nas notas, antes do detalhe; apêndice não apresentado; "
+                             f"soma de {mmss(TEMPO_MIN_S)} a {mmss(TEMPO_MAX_S)}"},
+        "versao_anterior": {"commit": "8901dea",
+                            "pdf": "output/apresentacao_banca2/versoes/deck_banca2_curto_8901dea.pdf",
+                            "sha256": sha256_arq(SAIDA / "versoes" / "deck_banca2_curto_8901dea.pdf")
+                            if (SAIDA / "versoes" / "deck_banca2_curto_8901dea.pdf").exists() else None,
+                            "mapa": "docs/07_apresentacoes/banca2/10_mapa_deck_anterior_para_rubrica.md"},
     }
     (saida / ARQ_MANIF_CURTO).write_text(json.dumps(man, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
                                          encoding="utf-8")

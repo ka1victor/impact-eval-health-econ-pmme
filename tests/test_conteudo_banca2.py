@@ -281,6 +281,8 @@ def _resolver_bruto(sel: dict, brutos: dict, calculados: dict):
     if "diferenca" in sel:
         a, b = sel["diferenca"]
         return float(brutos[a]) - float(brutos[b])
+    if "soma" in sel:
+        return float(sum(float(brutos[c]) for c in sel["soma"]))
     if "calculado" in sel:
         return calculados[sel["calculado"]]
     raise AssertionError(sel)

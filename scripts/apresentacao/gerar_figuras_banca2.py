@@ -583,7 +583,8 @@ HIPOTESE_POR_PREFIXO = (("H3_", "H2"), ("M1_", "H2"), ("M5_", "H2"), ("M0_", "H2
                         ("P4_", "H3"), ("CA_", "H3"), ("RR_", "H3"),
                         ("N1_", "H1"), ("A3_", "H1"), ("EQ_", "H1"), ("ND_", "H1"), ("VIC_", "H1"), ("DQ_", "H1"),
                         ("GF_", "H1"), ("PC_", "H1"), ("A36_", "H1"), ("HI", "H1"), ("CL_", "H1"), ("PM_", "H1"),
-                        ("HC_", "H1"), ("SV", "H1"), ("OC_", "H3"), ("PL_", "H1"), ("VL", "H2"), ("VC_", "H2"))
+                        ("HC_", "H1"), ("SV", "H1"), ("OC_", "H3"), ("PL_", "H1"), ("VL", "H2"), ("VC_", "H2"),
+                        ("AM_", "H2"))
 # Saídas auditadas lidas a partir de 26/10/2026 (deck curto depois das auditorias 38 a 44): cada código leva, no campo
 # `auditoria` do registro, a auditoria que aprovou a etapa de onde ele vem.
 CL_EST = "output/rdd_bolsa/CL_estimativas.csv"
@@ -601,6 +602,7 @@ OC_PRE = "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): "
 PL_EST = "output/rdd_bolsa/PL_estimativas.csv"
 VL_EST = "output/rdd_bolsa/VL_estimativas.csv"
 VC_EST = "output/rdd_bolsa/VC_estimativas.csv"
+P1_RES = "output/rdd_bolsa/P1_resumo.json"
 PL_PRE = "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): "
 VL_PRE = "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): "
 VC_PRE = "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): "
@@ -1258,6 +1260,34 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                            ("C2A", "antiga_19mar", "M5_2", "M5 (base), ciclo 2, quadro refeito de 19/03/2026"))
       for s, col, ds in (("RC", "estimativa", "estimativa"), ("RCI", "ic95_inf", "IC 95% inferior"),
                          ("RCS", "ic95_sup", "IC 95% superior"))],
+    # Construção da amostra da escolha (funil por ciclo; rubrica da banca, 27/10/2026): lida do P1_resumo.json, sem
+    # recálculo. Etapas: 1ª opção numa célula do quadro (R1) → ligados ao CNES → com município de origem → modelo
+    # (D_C*_P1). Cada exclusão é a do resumo do P1; as etapas intermediárias são diferenças entre códigos registrados.
+    *[(f"AM_C{c}_{s}", "EMPIRICO", _j(P1_RES, "amostra", *cam), "int", f"ciclo {c}: {d}")
+      for c in (1, 2, 3)
+      for s, cam, d in (
+          ("R1", ("r1_por_ciclo", str(c)), "candidatos com linha de 1ª opção numa célula do quadro (R1 do P1)"),
+          ("NLIG", ("exclusoes", "sem município de origem no G1 (candidato não ligado)", str(c)),
+           "excluídos: candidato não ligado ao CNES (G1)"),
+          ("SVIN", ("exclusoes", "sem município de origem no G1 (sem vínculo médico na competência de referência)",
+                    str(c)), "excluídos: ligado, sem vínculo médico na competência anterior à inscrição"))],
+    *[(f"AM_C{c}_LIG", "EMPIRICO", {"diferenca": [f"AM_C{c}_R1", f"AM_C{c}_NLIG"]}, "int",
+       f"ciclo {c}: candidatos com 1ª opção ligados ao CNES (R1 − não ligados)") for c in (1, 2, 3)],
+    *[(f"AM_C{c}_ORI", "EMPIRICO", {"diferenca": [f"AM_C{c}_LIG", f"AM_C{c}_SVIN"]}, "int",
+       f"ciclo {c}: candidatos com 1ª opção e município de origem no CNES (ligados − sem vínculo)") for c in (1, 2, 3)],
+    *[(f"AM_C{c}_SREG", "EMPIRICO", {"diferenca": [f"AM_C{c}_ORI", f"D_C{c}_P1"]}, "int",
+       f"ciclo {c}: excluídos por origem ou 1ª opção sem região de saúde na tabela oficial (com origem − modelo)")
+      for c in (1, 2, 3)],
+    *[(f"AM_TOT_{s}", "EMPIRICO", {"soma": [f"AM_C{c}_{s}" for c in (1, 2, 3)]}, "int", f"ciclos 1–3: {d}")
+      for s, d in (("R1", "candidatos com linha de 1ª opção numa célula do quadro"),
+                   ("LIG", "candidatos com 1ª opção ligados ao CNES"),
+                   ("ORI", "candidatos com 1ª opção e município de origem no CNES"))],
+    ("AM_PARES", "EMPIRICO", _j(P1_RES, "amostra", "linhas_m1"), "int",
+     "M1: pares candidato × vaga (linhas do logit condicional), ciclos 1–3"),
+    ("AM_CONJ", "EMPIRICO", _j(P1_RES, "amostra", "conjuntos_m1"), "int",
+     "M1: conjuntos de escolha (curso × ciclo), ciclos 1–3"),
+    ("AM_VAGAS", "EMPIRICO", _j(P1_RES, "amostra", "celulas_p1"), "int",
+     "M1: vagas (células estabelecimento × curso) nos conjuntos de escolha, ciclos 1–3"),
 ]
 
 
@@ -1426,6 +1456,8 @@ def _resolver_bruto(seletor: dict, calculados: dict, ja: dict):
     if "diferenca" in seletor:
         a, b = seletor["diferenca"]
         return float(ja[a]) - float(ja[b])
+    if "soma" in seletor:
+        return float(sum(float(ja[c]) for c in seletor["soma"]))
     raise SystemExit(f"ERRO: seletor desconhecido {seletor}")
 
 
@@ -2938,6 +2970,85 @@ def figura_origem_bolsa(num: dict, destino: Path) -> dict:
     return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
 
 
+def figura_dados_amostra(num: dict, destino: Path) -> dict:
+    """Dados e amostra (rubrica da banca, 27/10/2026: origem dos dados, variáveis, unidade de observação e construção
+    da amostra). À esquerda, cada variável e a sua fonte; à direita, o funil da amostra da escolha por ciclo, lido do
+    P1_resumo.json (AM_*, D_C*_P1, M1_N), com quem sai em cada etapa, e o tamanho do modelo em pares candidato × vaga.
+    Descritivo; nada é estimado."""
+    from matplotlib.patches import FancyBboxPatch
+    reg = Registro()
+    W, H = 12.3, 5.0
+    fig = plt.figure(figsize=(W, H))
+
+    def caixa(x, y, w, h, cor, borda=None):
+        fig.patches.append(FancyBboxPatch((x / W, y / H), w / W, h / H, boxstyle="round,pad=0,rounding_size=0.01",
+                                          transform=fig.transFigure, facecolor=cor, edgecolor=borda or cor, lw=1))
+
+    # esquerda: variáveis e fontes
+    xl, wl = 0.1, 4.35
+    reg.t(fig, xl / W, (H - 0.1) / H, "De onde vêm os dados", fontsize=13.5, weight="bold", color=VERDE_ESC, va="top")
+    fontes = [("1ª opção (y)", "editais SGTES/MS, ciclos 1–3", False),
+              ("Origem do médico", "CNES, vínculo antes da inscrição", False),
+              ("Bolsa e vagas", "quadros de vagas SGTES/MS", False),
+              ("IVS 2010", "Ipea, Censo 2010", False),
+              ("Distância, UF, região", "IBGE; TabNet (regiões de saúde)", False),
+              ("Porte, capital", "IBGE (controles)", True)]
+    y = H - 0.62
+    for var, fonte, sec in fontes:
+        cor = CINZA_DADO if sec else TINTA
+        reg.t(fig, xl / W, y / H, var, fontsize=12.5, weight="bold", color=cor, va="center",
+              style="italic" if sec else "normal")
+        reg.t(fig, xl / W, (y - 0.27) / H, fonte, fontsize=12, color=CINZA_DADO if sec else TINTA2, va="center",
+              style="italic" if sec else "normal")
+        y -= 0.62
+    fig.add_artist(plt.Line2D([(xl + wl + 0.12) / W] * 2, [0.95 / H, (H - 0.12) / H], color=LINHA_CLARA, lw=1.2,
+                              transform=fig.transFigure))
+
+    # direita: funil por ciclo
+    xr = xl + wl + 0.35
+    cols = {"Ciclo 1": 8.55, "Ciclo 2": 9.55, "Ciclo 3": 10.55, "Total": 11.65}
+    reg.t(fig, xr / W, (H - 0.1) / H, "Construção da amostra (candidatos)", fontsize=13.5, weight="bold",
+          color=VERDE_ESC, va="top")
+    yh = H - 0.62
+    for rot, xc in cols.items():
+        reg.t(fig, xc / W, yh / H, rot, fontsize=12, weight="bold", color=TINTA2, ha="center", va="center")
+    etapas = [("1ª opção numa vaga do quadro", [f"AM_C{c}_R1" for c in (1, 2, 3)] + ["AM_TOT_R1"], "etapa"),
+              ("sem ligação ao CNES", [f"AM_C{c}_NLIG" for c in (1, 2, 3)], "sai"),
+              ("Ligados ao CNES", [f"AM_C{c}_LIG" for c in (1, 2, 3)] + ["AM_TOT_LIG"], "etapa"),
+              ("sem vínculo médico antes da inscrição", [f"AM_C{c}_SVIN" for c in (1, 2, 3)], "sai"),
+              ("Com município de origem", [f"AM_C{c}_ORI" for c in (1, 2, 3)] + ["AM_TOT_ORI"], "etapa"),
+              ("sem região de saúde na tabela oficial", [f"AM_C{c}_SREG" for c in (1, 2, 3)], "sai"),
+              ("No modelo", [f"D_C{c}_P1" for c in (1, 2, 3)] + ["M1_N"], "modelo")]
+    y = yh - 0.28
+    linhas = []
+    for rot, cods, tipo in etapas:
+        h = 0.42 if tipo != "sai" else 0.32
+        yc = y - h / 2
+        if tipo == "etapa":
+            caixa(xr, y - h, W - xr - 0.1, h, CLARO_FUNDO, LINHA_CLARA)
+        elif tipo == "modelo":
+            caixa(xr, y - h, W - xr - 0.1, h, VERDE_ESC)
+        cor = "white" if tipo == "modelo" else (CINZA_DADO if tipo == "sai" else TINTA)
+        peso = "normal" if tipo == "sai" else "bold"
+        tam = 11.5 if tipo == "sai" else 12.5
+        txt_rot = ("− " + rot) if tipo == "sai" else rot
+        reg.t(fig, (xr + 0.15) / W, yc / H, txt_rot, fontsize=tam, weight=peso, color=cor, va="center",
+              style="italic" if tipo == "sai" else "normal")
+        for cod, xc in zip(cods, cols.values()):
+            reg.t(fig, xc / W, yc / H, _val(num, cod), fontsize=tam, weight=peso, color=cor, ha="center", va="center")
+        linhas.append({"etapa": txt_rot, "codigos": cods, "valores": [_val(num, c) for c in cods]})
+        y -= h + 0.06
+    reg.t(fig, xr / W, (y - 0.12) / H, f"No modelo: {_val(num, 'AM_PARES')} pares candidato × vaga, em "
+          f"{_val(num, 'AM_CONJ')} conjuntos (curso × ciclo) e {_val(num, 'AM_VAGAS')} vagas.", fontsize=12,
+          color=TINTA, va="center")
+    _caixa_como_ler(fig, reg, W, ["cada faixa é uma etapa do funil; em cinza, quem sai e por quê. Origem = vínculo "
+                                  "médico no CNES antes da inscrição, não a residência."], 0.25)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: P1_resumo.json (protocolo 52; doc 57a); portão G1; tabela_fontes.csv. "
+          + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    _salvar(fig, destino)
+    return {"funil": linhas, "textos": reg.textos, "eixos": reg.eixos}
+
+
 def figura_robustez_escolha(num: dict, destino: Path) -> dict:
     """Robustez da hipótese: à esquerda, a razão de chances por +R$ 5 mil por ciclo (modelo base), no ciclo 2 com o
     quadro refeito (antigo, cinza claro), com distância em log, com região de saúde de origem e só perto do corte; à
@@ -3287,6 +3398,9 @@ ENTRADAS = [
      "candidatos perto da nota de corte", "h/sem", "id_linha + outcome + estatistica"),
     (RAIZ / G1_RES, "portão G1: candidatos ligados ao CNES por ciclo", "2026-10-19", "ciclos 1–3", "candidatos",
      "taxas_ligacao.g1_cpf_nome.<ciclo>"),
+    (RAIZ / P1_RES, "P1 (protocolo 52): construção da amostra da escolha (funil, exclusões, pares e conjuntos)",
+     "2026-10-23", "candidatos de 1ª opção, ciclos 1–3", "candidatos; pares candidato × vaga",
+     "amostra.r1_por_ciclo; amostra.exclusoes; amostra.p1_por_ciclo; amostra.linhas_m1"),
     (RAIZ / A16_MAN, "manifesto do a16: lista de ativos do PMM-E", "2026-10-19", "lista de 11/09/2026", "registros",
      "listas_pmme"),
     (CELULAS, "quadro de células da 1ª chamada (descritivas por ciclo)", "2026-10-19", "ciclos 1–3",
@@ -3515,6 +3629,9 @@ def main() -> int:
                            ("curto_origem_bolsa.png", figura_origem_bolsa,
                             "deck curto, G-D: quanto a UF de origem e toda a bolsa multiplicam a chance da 1ª opção "
                             "(M1 com o quadro do ciclo 2 corrigido, adendo 52c)"),
+                           ("curto_dados_amostra.png", figura_dados_amostra,
+                            "deck curto, Dados e amostra: variáveis e fontes; funil da amostra da escolha por ciclo "
+                            "(P1_resumo.json) e o tamanho do modelo em pares candidato × vaga"),
                            ("curto_robustez_escolha.png", figura_robustez_escolha,
                             "deck curto, robustez da hipótese: por ciclo, quadro do ciclo 2, distância em log, região "
                             "de saúde, perto do corte; origem − bolsa por ciclo")):
@@ -3530,7 +3647,8 @@ def main() -> int:
                      + ([RAIZ / HI_EST] if nome == "curto_tost_hi.png" else [])
                      + ([RAIZ / HI_EST, RAIZ / PL_EST] if nome == "curto_fato.png" else [])
                      + ([RAIZ / VL_EST] if nome in ("curto_bolsa_mesma_uf.png", "curto_robustez_escolha.png") else [])
-                     + ([RAIZ / VC_EST] if nome in ("curto_origem_bolsa.png", "curto_robustez_escolha.png") else [])})
+                     + ([RAIZ / VC_EST] if nome in ("curto_origem_bolsa.png", "curto_robustez_escolha.png") else [])
+                     + ([RAIZ / P1_RES, RAIZ / G1_RES] if nome == "curto_dados_amostra.png" else [])})
     t_desc = linhas_tabela_descritiva(num)
     t_font = linhas_tabela_fontes(num)
     gravar_csv_tabela(linhas_tabela_cronologia(num), SAIDA / "cronologia_ciclos.csv")

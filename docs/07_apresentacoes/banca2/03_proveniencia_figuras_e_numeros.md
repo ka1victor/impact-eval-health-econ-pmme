@@ -14,7 +14,10 @@
 > `G27` dos municípios parecidos e códigos `CL_*`, `PM_*`, `HC_*`, `SV*` e `OC_*`); **27 de outubro de 2026**: deck
 > da hipótese única (doc 07), com as figuras `G28` a `G31` e os códigos `VC_*` (adendo 52c, auditoria 41), `VL*`
 > (adendo 52e, auditoria 48), `PL_*` (adendo 48h, auditoria 47), `HI1_*_MDE`, `HI2_C*` e `CR_C2_RETIF1302`; redação
-> das auditorias 49 e 50
+> das auditorias 49 e 50; **27 de outubro de 2026, revisão pela rubrica da banca**: figura `G32` (dados e amostra:
+> fontes, variáveis e o funil da amostra da escolha por ciclo) e códigos `AM_*` (construção da amostra, lidos do
+> `P1_resumo.json`; as etapas intermediárias e os totais são diferenças e somas de códigos registrados, com os
+> seletores `diferenca` e `soma`); roteiro de fala nas notas (doc 09)
 
 > [!NOTE]
 > **Hipótese única a partir de 27/10/2026** ([doc 07](07_nova_hipotese.md)): o deck curto tem só a antiga H2 no
@@ -68,6 +71,7 @@
 | `G28` | deck curto, G-D (teste central): quanto a vaga na UF de origem e toda a diferença de bolsa (R$ 10 → 20 mil) multiplicam a chance de a vaga ser a 1ª opção, M1 com o quadro do ciclo 2 de 13/02/2026 (adendo 52c), duas barras com IC 95% e a diferença em log-chance no "Como ler" | Teste central: a origem pesa mais que toda a bolsa (curto) | `output/apresentacao_banca2/curto_origem_bolsa.png` | `scripts/apresentacao/gerar_figuras_banca2.py` | EMPIRICO |
 | `G29` | deck curto, G-C: razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF (adendo 52e, VL-1), ciclos 1–3 e ciclo 2, com o modelo base em cinza claro e os km equivalentes, com "Como ler" | Dentro da mesma UF, a vaga de bolsa maior é preferida (curto) | `output/apresentacao_banca2/curto_bolsa_mesma_uf.png` | idem | EMPIRICO |
 | `G30` | deck curto, robustez da escolha: razão de chances por ciclo (M5 corrigido), ciclo 2 com o quadro refeito (cinza claro), distância em log, região de saúde de origem, só perto do corte; à direita, origem − toda a bolsa por ciclo, com "Como ler" | Robustez: a origem pesa mais em todos os ciclos (curto) | `output/apresentacao_banca2/curto_robustez_escolha.png` | idem | EMPIRICO |
+| `G32` | deck curto, Dados e amostra (rubrica da banca, 27/10/2026): à esquerda, cada variável e a sua fonte (1ª opção, origem no CNES, bolsa e vagas, IVS 2010, distância e UF; porte e capital em cinza); à direita, o funil da amostra da escolha por ciclo (1ª opção numa vaga do quadro → ligados ao CNES → com município de origem → no modelo), com quem sai em cada etapa, e o tamanho do modelo em pares candidato × vaga, conjuntos e vagas (`AM_*`, `D_C*_P1`, `M1_N`), com "Como ler" | Dados e amostra: de onde vêm e quem entra no modelo (curto) | `output/apresentacao_banca2/curto_dados_amostra.png` | idem | EMPIRICO |
 | `G31` | deck curto, G-A (apêndice): o fato da antiga H1 por corte, HI-1 sem controle (adendo 48b), com efeito fixo de UF e o raio (PH-4, amostra menor, com o ponto sem controle nela ao lado; auditoria 53) e pareando municípios da mesma UF (PH-1, adendo 48h), com "Como ler" | Apêndice · O fato: sem aumento detectado no corte (curto) | `output/apresentacao_banca2/curto_fato.png` | idem | EMPIRICO |
 | `G24` | deck curto, robustez: H3 (antes H4) na nota de corte (P4-CA) | H3: na nota de corte (curto) | `output/apresentacao_banca2/curto_h3_nota_corte.png` | idem | EMPIRICO |
 | `G25` | subida do preenchimento dentro das faixas: médias por IVS e quanto da subida sobra depois de cada fator, nos últimos 0,050 antes do corte (protocolo 62; doc 57m; auditoria 37) | Dentro da faixa de R$ 10 mil; Perto de 0,300 (curto) | `output/rdd_bolsa/GF_figuras/GF_medias_por_ivs.png` e `GF_inclinacao_fatores_janela.png` | `scripts/rdd_bolsa/39_gradiente_faixas.py` (não é redesenhada aqui) | EMPIRICO |
@@ -1131,6 +1135,30 @@ milhar; `fracao` = "a/b" com separador de milhar; `txt` = trecho como está.
 | `VC_M5C2A_RC` | 1,70 | EMPIRICO | `output/rdd_bolsa/VC_estimativas.csv` | `{"filtro": {"versao": "antiga_19mar", "chave_modelo": "M5_2", "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, "coluna": "estimativa"}` | `d2` | Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro refeito de 19/03/2026: razão de chances da 1ª opção por +R$ 5 mil, estimativa |
 | `VC_M5C2A_RCI` | 1,22 | EMPIRICO | `output/rdd_bolsa/VC_estimativas.csv` | `{"filtro": {"versao": "antiga_19mar", "chave_modelo": "M5_2", "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, "coluna": "ic95_inf"}` | `d2` | Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro refeito de 19/03/2026: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior |
 | `VC_M5C2A_RCS` | 2,37 | EMPIRICO | `output/rdd_bolsa/VC_estimativas.csv` | `{"filtro": {"versao": "antiga_19mar", "chave_modelo": "M5_2", "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, "coluna": "ic95_sup"}` | `d2` | Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro refeito de 19/03/2026: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior |
+| `AM_C1_R1` | 993 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "r1_por_ciclo", "1"]}` | `int` | ciclo 1: candidatos com linha de 1ª opção numa célula do quadro (R1 do P1) |
+| `AM_C1_NLIG` | 55 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "exclusoes", "sem município de origem no G1 (candidato não ligado)", "1"]}` | `int` | ciclo 1: excluídos: candidato não ligado ao CNES (G1) |
+| `AM_C1_SVIN` | 20 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "exclusoes", "sem município de origem no G1 (sem vínculo médico na competência de referência)", "1"]}` | `int` | ciclo 1: excluídos: ligado, sem vínculo médico na competência anterior à inscrição |
+| `AM_C2_R1` | 2.140 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "r1_por_ciclo", "2"]}` | `int` | ciclo 2: candidatos com linha de 1ª opção numa célula do quadro (R1 do P1) |
+| `AM_C2_NLIG` | 77 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "exclusoes", "sem município de origem no G1 (candidato não ligado)", "2"]}` | `int` | ciclo 2: excluídos: candidato não ligado ao CNES (G1) |
+| `AM_C2_SVIN` | 30 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "exclusoes", "sem município de origem no G1 (sem vínculo médico na competência de referência)", "2"]}` | `int` | ciclo 2: excluídos: ligado, sem vínculo médico na competência anterior à inscrição |
+| `AM_C3_R1` | 2.581 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "r1_por_ciclo", "3"]}` | `int` | ciclo 3: candidatos com linha de 1ª opção numa célula do quadro (R1 do P1) |
+| `AM_C3_NLIG` | 69 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "exclusoes", "sem município de origem no G1 (candidato não ligado)", "3"]}` | `int` | ciclo 3: excluídos: candidato não ligado ao CNES (G1) |
+| `AM_C3_SVIN` | 38 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "exclusoes", "sem município de origem no G1 (sem vínculo médico na competência de referência)", "3"]}` | `int` | ciclo 3: excluídos: ligado, sem vínculo médico na competência anterior à inscrição |
+| `AM_C1_LIG` | 938 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C1_R1", "AM_C1_NLIG"]}` | `int` | ciclo 1: candidatos com 1ª opção ligados ao CNES (R1 − não ligados) |
+| `AM_C2_LIG` | 2.063 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C2_R1", "AM_C2_NLIG"]}` | `int` | ciclo 2: candidatos com 1ª opção ligados ao CNES (R1 − não ligados) |
+| `AM_C3_LIG` | 2.512 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C3_R1", "AM_C3_NLIG"]}` | `int` | ciclo 3: candidatos com 1ª opção ligados ao CNES (R1 − não ligados) |
+| `AM_C1_ORI` | 918 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C1_LIG", "AM_C1_SVIN"]}` | `int` | ciclo 1: candidatos com 1ª opção e município de origem no CNES (ligados − sem vínculo) |
+| `AM_C2_ORI` | 2.033 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C2_LIG", "AM_C2_SVIN"]}` | `int` | ciclo 2: candidatos com 1ª opção e município de origem no CNES (ligados − sem vínculo) |
+| `AM_C3_ORI` | 2.474 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C3_LIG", "AM_C3_SVIN"]}` | `int` | ciclo 3: candidatos com 1ª opção e município de origem no CNES (ligados − sem vínculo) |
+| `AM_C1_SREG` | 3 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C1_ORI", "D_C1_P1"]}` | `int` | ciclo 1: excluídos por origem ou 1ª opção sem região de saúde na tabela oficial (com origem − modelo) |
+| `AM_C2_SREG` | 1 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C2_ORI", "D_C2_P1"]}` | `int` | ciclo 2: excluídos por origem ou 1ª opção sem região de saúde na tabela oficial (com origem − modelo) |
+| `AM_C3_SREG` | 0 | EMPIRICO | calculado por este script | `{"diferenca": ["AM_C3_ORI", "D_C3_P1"]}` | `int` | ciclo 3: excluídos por origem ou 1ª opção sem região de saúde na tabela oficial (com origem − modelo) |
+| `AM_TOT_R1` | 5.714 | EMPIRICO | calculado por este script | `{"soma": ["AM_C1_R1", "AM_C2_R1", "AM_C3_R1"]}` | `int` | ciclos 1–3: candidatos com linha de 1ª opção numa célula do quadro |
+| `AM_TOT_LIG` | 5.513 | EMPIRICO | calculado por este script | `{"soma": ["AM_C1_LIG", "AM_C2_LIG", "AM_C3_LIG"]}` | `int` | ciclos 1–3: candidatos com 1ª opção ligados ao CNES |
+| `AM_TOT_ORI` | 5.425 | EMPIRICO | calculado por este script | `{"soma": ["AM_C1_ORI", "AM_C2_ORI", "AM_C3_ORI"]}` | `int` | ciclos 1–3: candidatos com 1ª opção e município de origem no CNES |
+| `AM_PARES` | 932.577 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "linhas_m1"]}` | `int` | M1: pares candidato × vaga (linhas do logit condicional), ciclos 1–3 |
+| `AM_CONJ` | 56 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "conjuntos_m1"]}` | `int` | M1: conjuntos de escolha (curso × ciclo), ciclos 1–3 |
+| `AM_VAGAS` | 5.125 | EMPIRICO | `output/rdd_bolsa/P1_resumo.json` | `{"caminho": ["amostra", "celulas_p1"]}` | `int` | M1: vagas (células estabelecimento × curso) nos conjuntos de escolha, ciclos 1–3 |
 | `FM_NMU` | 4.362 | FAILURE_MODE | `output/rdd_bolsa/identificacao_arquivo_local_ivs.json` | `{"caminho": ["mecanismo", "linha_escolhida_por_municipio", "Negro / Mulher / Urbano"]}` | `int` | municípios em que o arquivo errado traz a linha Negro / Mulher / Urbano |
 | `FM_MUN` | 5.565 | FAILURE_MODE | `output/rdd_bolsa/identificacao_arquivo_local_ivs.json` | `{"caminho": ["mecanismo", "conferencia_por_coluna", "municipios"]}` | `int` | municípios do arquivo |
 | `FM_NMU_PCT` | 78 | FAILURE_MODE | calculado por este script | `{"razao": ["FM_NMU", "FM_MUN"]}` | `pct0` | FM_NMU / FM_MUN (%) |
@@ -1195,6 +1223,7 @@ regenerados.
 | `output/rdd_bolsa/H_estimativas.csv` | Rambachan–Roth do P4 (protocolo 59, parte A) |
 | `output/rdd_bolsa/CA_estimativas.csv` | comparação na nota de corte (protocolo 59, parte B) |
 | `output/rdd_bolsa/G1_resumo.json` | candidatos ligados ao CNES, por ciclo |
+| `output/rdd_bolsa/P1_resumo.json` | construção da amostra da escolha (P1, protocolo 52): candidatos com 1ª opção por ciclo, exclusões, amostra do modelo, pares candidato × vaga, conjuntos e vagas (`AM_*`, `D_C*_P1`) |
 | `output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json` | lista de ativos do PMM-E |
 | `output/rdd_bolsa/outcomes/outcomes_V_celula.parquet` | quadro de células da 1ª chamada (descritivas) |
 | `output/aquisicao/populacao_censo2022_municipios.csv` | cobertura da tabela de fontes |
@@ -1242,8 +1271,9 @@ e grava em `output/apresentacao_banca2/`:
 | `deck_banca2.pptx` | **registro** desde 26/10/2026 (só o curto é usado; doc 06): na ordem do doc 02, prévios do grupo com as correções, parte empírica, Q&A e apêndice; só é refeito com `--completo` |
 | `manifesto_deck_banca2.json` | entradas (deck do grupo, doc 02, registro, figuras) e saídas com SHA-256; ordem dos slides; classificação de cada slide do grupo; correções aplicadas |
 | `qa_render/` | imagens de conferência dos slides novos, do corpo e do apêndice (LibreOffice, com a Montserrat instalada), e `grade_empirica.png`, a grade de miniaturas da parte empírica |
-| `deck_banca2_curto.pptx` e `.pdf` | o deck usado (modo padrão do gerador), na ordem do doc 04 e na estrutura obrigatória do doc 06: Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez, Discussão e, depois, um apêndice curto; desde 27/10/2026 o corpo tem só a hipótese da banca 2 (doc 07), no máximo 14 slides no corpo (decisão do autor de 26/10/2026), no máximo 2 no apêndice (decisão de 27/10/2026) e 30 palavras visíveis por slide; rodapé com as oito seções; o PDF é renderizado pelo LibreOffice. Usa as figuras `G1`, `G18`, `G28`, `G29`, `G30` e `G31`; as demais figuras do curto continuam geradas e registradas, mas não entram no deck |
-| `manifesto_deck_banca2_curto.json` | entradas e saídas do deck curto com SHA-256, a ordem dos slides, a seção e as palavras visíveis de cada um |
+| `deck_banca2_curto.pptx` e `.pdf` | o deck usado (modo padrão do gerador), na ordem do doc 04 e na estrutura obrigatória do doc 06: Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez, Discussão e, depois, um apêndice curto; desde 27/10/2026 o corpo tem só a hipótese da banca 2 (doc 07), no máximo 14 slides no corpo (decisão do autor de 26/10/2026), no máximo 2 no apêndice (decisão de 27/10/2026) e 30 palavras visíveis por slide; rodapé com as oito seções; o PDF é renderizado pelo LibreOffice. Usa as figuras `G1`, `G18`, `G28`, `G29`, `G30`, `G31` e `G32` (desde a revisão pela rubrica, 27/10/2026); as demais figuras do curto continuam geradas e registradas, mas não entram no deck |
+| `manifesto_deck_banca2_curto.json` | entradas e saídas do deck curto com SHA-256, a ordem dos slides, a seção, as palavras visíveis e o tempo de fala de cada um, o tempo total do roteiro e o hash da versão anterior |
+| `versoes/deck_banca2_curto_8901dea.pdf` | cópia rotulada do PDF do deck curto no commit `8901dea` (auditoria 53), extraída do histórico, sem regerar; o SHA-256 está no manifesto do deck curto (`versao_anterior`) e no doc 10 |
 | `qa_render/curto_slideNN.png` e `qa_render/grade_curto.png` | uma imagem por slide do deck curto (do PDF) e a grade de miniaturas |
 
 A ordem do deck inteiro é a do doc 02: cada `##` é um slide novo e cada
@@ -1309,6 +1339,11 @@ estável, e duas execuções dão o mesmo SHA-256.
     o sinal negativo em 0,300 "anda junto com a UF" (`PL_*`, auditoria 47); o ponto só com a UF, citado pela
     auditoria 50, não está em `output/` e por isso entra nas notas sem número. Os adendos 48g e 52d ficam fora do
     deck; o 52d aparece nas fontes da Robustez.
+12. **Revisão pela rubrica (27/10/2026).** Os códigos `AM_*` são contagens da amostra lidas do `P1_resumo.json`, sem
+    recálculo; as etapas "ligados ao CNES" e "com município de origem" são diferenças entre o R1 e as exclusões
+    registradas, e o total "com município de origem" coincide com `ESC_N` (o teste confere). Os códigos novos mudam
+    o SHA-256 de `numeros_banca2.json`: o doc 66 e o `H2_resumo.json` guardam o hash de antes, como registro da
+    entrada que leram; os `ESC_*` que eles usam não mudaram. O doc 66 não foi regerado nesta revisão.
 
 ## 7. Reprodução
 

@@ -61,27 +61,28 @@ SECOES = ("Hipótese", "Dados", "Análise descritiva", "Metodologia", "Identific
           "Discussão")
 MAX_SLIDES = 14   # corpo; decisão do autor de 26/10/2026: "idealmente <15 slides" (doc 06, §2)
 MAX_APENDICE = 2  # decisão do autor de 27/10/2026: apêndice "bem rápido", no máximo 2 slides
-SEQUENCIA = [  # (seção, título, layout)
-    ("Hipótese", "Hipótese: a origem pesa mais que a bolsa na escolha", "curto_hipotese"),
-    ("Dados", "Dados: as variáveis e de onde vêm", "curto_tabela"),
-    ("Análise descritiva", "Os três ciclos em números", "curto_tabela"),
+SEQUENCIA = [  # (seção, título, layout); versão de 27/10/2026 revista pela rubrica da banca (doc 10)
+    ("Hipótese", "Pergunta e hipótese: origem ou bolsa na escolha?", "curto_hipotese"),
+    ("Dados", "Dados e amostra: de onde vêm e quem entra no modelo", "curto_figura"),
     ("Análise descritiva", "A bolsa é função exata do IVS: a regra é sharp", "curto_figura"),
     ("Análise descritiva", "Onde escolhem: perto de onde já trabalham", "curto_figura"),
-    ("Metodologia", "Metodologia: logit condicional da 1ª opção", "curto_espec"),
+    ("Metodologia", "Modelo: logit condicional da 1ª opção", "curto_espec"),
     ("Identificação", "Identificação: as premissas e o nosso caso", "curto_tabela"),
     ("Resultados", "Teste central: a origem pesa mais que toda a bolsa", "curto_figura"),
     ("Resultados", "Dentro da mesma UF, a vaga de bolsa maior é preferida", "curto_figura"),
-    ("Robustez", "Robustez: a origem pesa mais em todos os ciclos", "curto_figura"),
-    ("Discussão", "Discussão: um incentivo limitado", "curto_texto"),
+    ("Robustez", "Robustez: o que se mantém e o que não se mantém", "curto_figura"),
+    ("Discussão", "Conclusão: a origem pesa mais que a bolsa? Sim", "curto_texto"),
+    ("Discussão", "Limitações e o que cada uma implica", "curto_tabela"),
     ("Apêndice", "Apêndice · O fato: sem aumento detectado no corte", "curto_figura"),
     ("Apêndice", "Apêndice · H3: oferta, numa frase", "curto_capa"),
 ]
-FIGURAS = {  # título → figura de output/ (G-A a G-D do doc 07 e a robustez)
+FIGURAS = {  # título → figura de output/ (G-A a G-D do doc 07, a robustez e o funil da amostra)
+    "Dados e amostra: de onde vêm e quem entra no modelo": "curto_dados_amostra.png",
     "A bolsa é função exata do IVS: a regra é sharp": "regra_bolsa_ivs_oficial.png",
     "Onde escolhem: perto de onde já trabalham": "exp_escolha_origem.png",
     "Teste central: a origem pesa mais que toda a bolsa": "curto_origem_bolsa.png",
     "Dentro da mesma UF, a vaga de bolsa maior é preferida": "curto_bolsa_mesma_uf.png",
-    "Robustez: a origem pesa mais em todos os ciclos": "curto_robustez_escolha.png",
+    "Robustez: o que se mantém e o que não se mantém": "curto_robustez_escolha.png",
     "Apêndice · O fato: sem aumento detectado no corte": "curto_fato.png",
 }
 # Redação das auditorias 49 e 50: "não detectado" não é "não muda"; o sinal negativo "anda junto com a UF", não
@@ -99,6 +100,11 @@ PROIBIDAS = ("não encheu", "não enche", "não aumenta quantas", "era localiza�
              "dentro da sua região", "dentro da região", "só vagas da UF de origem", "Holm 0,072",
              "p de Holm 0,072")
 # Guardas antigas que a reescrita de 27/10/2026 tinha deixado de fora (auditoria 36 e 33; auditoria 53)
+DOC09 = ROOT / "docs" / "07_apresentacoes" / "banca2" / "09_roteiro_fala_7min.md"
+DOC10 = ROOT / "docs" / "07_apresentacoes" / "banca2" / "10_mapa_deck_anterior_para_rubrica.md"
+VERSAO_ANTERIOR = SAIDA / "versoes" / "deck_banca2_curto_8901dea.pdf"
+TEMPO_MIN, TEMPO_MAX = 390, 450  # roteiro de fala: de 6:30 a 7:30 (rubrica da banca; cerca de 7 minutos)
+MARCA_ROTEIRO = re.compile(r"\*\*Roteiro \(\d+ s\)\.\*\*")  # o tempo-alvo é parâmetro de fala, não resultado
 PROIBIDAS_A36 = ("não podia ser preenchida", "só de reserva", "só de cadastro reserva", "vagas de reserva",
                  "células só de CR", "reserva não")
 
@@ -199,7 +205,7 @@ class TestConteudoCurto(unittest.TestCase):
             self.assertTrue(sl["imagem"].as_posix().endswith(f"output/apresentacao_banca2/{nome}"), tit)
         novas = self.man_fig["figuras_novas"]
         for nome in ("curto_fato.png", "curto_bolsa_mesma_uf.png", "curto_origem_bolsa.png",
-                     "curto_robustez_escolha.png", "exp_escolha_origem.png"):
+                     "curto_robustez_escolha.png", "exp_escolha_origem.png", "curto_dados_amostra.png"):
             self.assertTrue(any(t.startswith("Como ler") for t in novas[nome]["textos"]), nome)
         regra = self.por_titulo["A bolsa é função exata do IVS: a regra é sharp"]
         self.assertTrue(D.texto_puro(regra["marcadores"][0]).startswith("Como ler:"))
@@ -230,34 +236,46 @@ class TestConteudoCurto(unittest.TestCase):
 
     # ---- dados e análise descritiva ----------------------------------------------------------------------------
 
-    def test_dados_principais_e_secundarias(self) -> None:
-        s = self.por_titulo["Dados: as variáveis e de onde vêm"]
-        self.assertEqual(len(s["tabela"][0]), 2)
-        self.assertEqual(D.texto_puro(s["tabela"][0][1]), "Fonte")
-        sec = [D.texto_puro(r[0]) for r in s["tabela"][1:] if D._linha_italica(r)]
-        pri = [D.texto_puro(r[0]) for r in s["tabela"][1:] if not D._linha_italica(r)]
-        self.assertEqual(sec, ["Porte, capital"])
-        for k in ("1ª opção", "Origem do médico", "IVS 2010", "Distância, UF"):
-            self.assertIn(k, pri)
-        self.assertTrue(all(r[1].strip() for r in s["tabela"][1:]))  # toda variável tem fonte
-        notas = corrido(s["notas"])
-        self.assertIn("13/02/2026", notas)
-        self.assertIn("vínculo médico no CNES", notas)
-        self.assertIn("não é a residência", notas)
-
-    def test_ciclos_em_numeros(self) -> None:
-        s = self.por_titulo["Os três ciclos em números"]
-        self.assertEqual([D.texto_puro(c) for c in s["tabela"][0][1:]], ["Ciclo 1", "Ciclo 2", "Ciclo 3"])
-        linhas = {D.texto_puro(r[0]): [D.texto_puro(c) for c in r[1:]] for r in s["tabela"][1:]}
-        self.assertEqual(linhas["Células"], [self.v(f"D_C{c}_CEL") for c in "123"])
-        self.assertEqual(linhas["Candidatos, 1ª opção"], [self.v(f"D_C{c}_CAND1") for c in "123"])
-        self.assertEqual(linhas["Com origem"], [self.v(f"D_C{c}_P1") for c in "123"])
+    def test_dados_unidade_e_funil(self) -> None:
+        """Rubrica (base de dados): origem dos dados, variáveis, unidade de observação e construção da amostra. Um
+        slide só (antes "Dados" e "Os três ciclos em números"), com a figura das fontes e do funil por ciclo, lida do
+        P1_resumo.json; a unidade (candidato × vaga) e o tamanho do modelo na tela."""
+        s = self.por_titulo[SEQUENCIA[1][1]]
+        self.assertEqual(rotulos(s), ["Unidade:", "No modelo:"])
+        txt = tela(s)
+        self.assertIn("candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção", txt)
+        self.assertIn(f"{self.v('M1_N')} candidatos e {self.v('AM_PARES')} pares candidato × vaga", txt)
+        # o funil encaixa: R1 − não ligados = ligados; − sem vínculo = com origem; − sem região = modelo
+        for c in "123":
+            r1, nlig, svin, sreg = (self.b(f"AM_C{c}_{k}") for k in ("R1", "NLIG", "SVIN", "SREG"))
+            self.assertEqual(r1, self.b(f"D_C{c}_CAND1"), c)  # o mesmo R1 do quadro de células
+            self.assertEqual(r1 - nlig, self.b(f"AM_C{c}_LIG"), c)
+            self.assertEqual(r1 - nlig - svin, self.b(f"AM_C{c}_ORI"), c)
+            self.assertEqual(self.b(f"AM_C{c}_ORI") - sreg, self.b(f"D_C{c}_P1"), c)
+            self.assertGreaterEqual(sreg, 0.0, c)
+        self.assertEqual(self.b("AM_TOT_ORI"), self.b("ESC_N"))  # a descritiva da origem é a mesma amostra
         self.assertEqual(sum(self.b(f"D_C{c}_P1") for c in "123"), self.b("M1_N"))
-        self.assertIn("Ciclo = edital", D.texto_puro(s["marcadores"][0]))
+        for k in ("R1", "LIG", "ORI"):
+            self.assertEqual(self.b(f"AM_TOT_{k}"), sum(self.b(f"AM_C{c}_{k}") for c in "123"), k)
+        for c in ("AM_PARES", "AM_CONJ", "AM_VAGAS", "AM_C1_NLIG"):
+            self.assertIn("P1_resumo.json", json.dumps(self.todos[c]["seletor"]), c)
+        reg = self.man_fig["figuras_novas"]["curto_dados_amostra.png"]
+        self.assertEqual([ln["codigos"][-1] for ln in reg["funil"] if not ln["etapa"].startswith("−")],
+                         ["AM_TOT_R1", "AM_TOT_LIG", "AM_TOT_ORI", "M1_N"])
+        for ln in reg["funil"]:
+            self.assertEqual(ln["valores"], [self.v(c) for c in ln["codigos"]], ln["etapa"])
+        textos = " ".join(reg["textos"])
+        for k in ("De onde vêm os dados", "Construção da amostra", "1ª opção (y)", "CNES, vínculo antes da inscrição",
+                  "Ipea", "IBGE", "SGTES/MS", "não a residência",
+                  f"{self.v('AM_PARES')} pares candidato × vaga, em {self.v('AM_CONJ')} conjuntos"):
+            self.assertIn(k, textos, k)
+        notas = corrido(s["notas"])
+        for k in ("13/02/2026", "vínculo médico no CNES", "não é a residência", "Unidade do modelo"):
+            self.assertIn(k, notas, k)
         cron = (SAIDA / "cronologia_ciclos.csv").read_text(encoding="utf-8")
         for data in ("24/07/2025", "03/02/2026", "13/02/2026", "19/03/2026", "16/07/2026"):
             self.assertIn(data, cron)  # a cronologia cita a retificação de 13/02 (auditoria 49, A10)
-            self.assertIn(data, corrido(s["notas"]))
+            self.assertIn(data, notas)
         self.assertEqual(self.v("CR_C2_RETIF1302"), "13/02/2026")
 
     def test_regra_sharp(self) -> None:
@@ -273,6 +291,7 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertIn(f"{self.v('ESC_UF')}% põem a 1ª opção na UF de origem", tela(s))
         self.assertIn(f"{self.v('ESC_DIST_P50')} km", tela(s))
         self.assertIn("descritivo", tela(s))
+        self.assertIn("Para a pergunta", tela(s))  # rubrica (descritiva): a figura ligada à pergunta
         self.assertGreater(self.b("ESC_UF"), 0.5)  # "a maioria" (doc 07, §2)
         self.assertIn("preferência revelada", corrido(s["notas"]))
 
@@ -287,8 +306,12 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertFalse(eq.startswith("**"))
         for k in ("=", "bolsa", "distância", "origem"):
             self.assertIn(k, eq)
-        self.assertEqual(rotulos(m), ["Comparação", "Teste"])
-        self.assertIn("consigo mesmo", tela(m))
+        # rubrica (modelo): por que o logit condicional, de onde vem a variação da bolsa e qual é o teste
+        self.assertEqual(rotulos(m), ["Por quê", "Bolsa", "Teste"])
+        for k in ("escolha entre vagas", "consigo mesmo", "regra do IVS", "D_UF = origem − bolsa > zero",
+                  "cluster por conjunto"):
+            self.assertIn(k, tela(m), k)
+        self.assertIn("unilateral", corrido(m["roteiro"]))
         notas = corrido(m["notas"])
         for k in ("Logit condicional", "comparado consigo mesmo", "Só o salto da bolsa nos cortes de IVS",
                   "D_UF", "Erro-padrão agrupado por conjunto de escolha", "efeito fixo do par", "13/02/2026",
@@ -300,9 +323,9 @@ class TestConteudoCurto(unittest.TestCase):
         linhas = {D.texto_puro(r[0]): D.texto_puro(r[1]) for r in s["tabela"][1:]}
         self.assertEqual(linhas["Bolsa por regra"],
                          f"sharp: {self.v('R_C1_REPR')}/{self.v('R_C1_MUN')}, {self.v('R_C2_REPR')}/{self.v('R_C2_MUN')}")
-        self.assertEqual(linhas["Só a bolsa?"], "não: pacote")
-        self.assertEqual(linhas["Origem"], "preferência revelada")
-        self.assertEqual(linhas["Hipótese"], "pós-resultado")
+        self.assertEqual(linhas["Só a bolsa?"], "não: pacote do corte")
+        self.assertEqual(linhas["Conjunto"], "todas as vagas vistas")
+        self.assertEqual(len(linhas), 5)  # enxuto: origem e pós-resultado vão para Limitações
         self.assertIn("par de UFs", linhas["Localização"])
         self.assertIn("em parte", linhas["IIA"])
         notas = corrido(s["notas"])
@@ -325,6 +348,9 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertTrue(self.b("VC_B10X_INF") < 1.0 < self.b("VC_B10X_SUP"))
         self.assertAlmostEqual(self.b("VC_THETA_EST") - self.b("VC_B10_EST"), self.b("VC_DUF_EST"), places=6)
         self.assertIn("preferência revelada", s["cautela"])
+        # rubrica (interpretação): a leitura do coeficiente em linguagem simples, na tela
+        self.assertIn(f"chance {self.v('VC_THETAX_EST')} vezes maior; toda a bolsa: {self.v('VC_B10X_EST')} "
+                      "(IC contém 1)", tela(s))
         for c in ("VC_DUF_EST", "VC_THETA_EST", "VC_B10_EST"):
             self.assertIn("auditoria 41", self.todos[c]["auditoria"], c)
             self.assertIn("corrigida_13fev", json.dumps(self.todos[c]["seletor"]), c)
@@ -342,6 +368,8 @@ class TestConteudoCurto(unittest.TestCase):
         versão base em cinza; dito como adendo pós-resultado, com o Holm da especificação pré-registrada na tela."""
         s = self.por_titulo["Dentro da mesma UF, a vaga de bolsa maior é preferida"]
         self.assertIn(f"{self.v('VL1_EMP_K5')} km a menos", tela(s))
+        self.assertIn(f"chance {self.v('VL1_EMP_RC')} vez maior", tela(s))  # leitura do coeficiente (rubrica)
+        self.assertNotIn(self.v("VLB_EMP_K5"), tela(s))  # 75 km na tela, não os 119 do M1 (auditoria 53)
         self.assertIn("pós-resultado", s["cautela"])
         self.assertIn(f"p {self.v('VC_B_HOLM')}", s["cautela"])  # família de um teste: Holm = p (auditoria 52)
         for k in ("EMP", "C2"):
@@ -364,7 +392,9 @@ class TestConteudoCurto(unittest.TestCase):
     def test_robustez(self) -> None:
         """Por ciclo (só o ciclo 2 com força), quadro do ciclo 2 de 13/02 contra o refeito, distância em log, região de
         saúde e comparação local (inconclusiva); à direita, origem − bolsa positiva nos três ciclos."""
-        s = self.por_titulo["Robustez: a origem pesa mais em todos os ciclos"]
+        s = self.por_titulo["Robustez: o que se mantém e o que não se mantém"]
+        self.assertEqual(rotulos(s), ["Mantém:", "Não se mantém:"])  # rubrica (robustez)
+        self.assertIn("a origem pesa mais que a bolsa nos três ciclos", tela(s))
         self.assertIn("forte só no ciclo 2", tela(s))
         self.assertIn("perto do corte, inconclusivo", tela(s))
         for c in ("C1", "C3"):
@@ -400,21 +430,96 @@ class TestConteudoCurto(unittest.TestCase):
             if c.startswith("VC_") and c != "VC_M5C2A_RC" and not c.startswith("VC_M5C2A"):
                 self.assertIn("corrigida_13fev", json.dumps(e["seletor"]), c)
 
-    def test_discussao(self) -> None:
+    def test_discussao_conclusao_e_limitacoes(self) -> None:
+        """Rubrica (conclusões e limitações): a Discussão tem dois slides. A Conclusão retoma a pergunta do slide 1 e
+        sintetiza em três pontos, com a leitura pela teoria separada do dado; as Limitações vêm cada uma com a sua
+        implicação (tabela)."""
         disc = [s for s in self.slides if s["secao"] == "Discussão"]
-        self.assertEqual(len(disc), 1)
-        s = disc[0]
-        self.assertEqual(rotulos(s), ["Teoria", "Dados", "Leitura"])
-        self.assertIn("incentivo limitado", tela(s))
-        self.assertIn("sugerem", tela(s))
-        self.assertIn("pacote do corte", tela(s))
-        # auditoria 53: o que é dado (origem pesa mais que toda a bolsa) e o que é leitura (o custo de sair) separados
-        self.assertIn("a origem pesa mais que toda a bolsa", tela(s))
-        self.assertNotIn("custo que domina", tela(s))
-        notas = corrido(s["notas"])
+        self.assertEqual([s["layout"] for s in disc], ["curto_texto", "curto_tabela"])
+        conc, lim = disc
+        self.assertIn("origem ou bolsa", self.slides[0]["titulo"])  # a pergunta, no slide 1
+        self.assertIn("a origem pesa mais que a bolsa?", conc["titulo"])  # retomada na Conclusão
+        self.assertEqual(rotulos(conc), ["Origem", "Bolsa", "Teoria"])
+        txt = tela(conc)
+        for k in ("pesa mais que toda a bolsa, nos três ciclos", "muda qual vaga, na mesma UF (adendo)",
+                  "os dados sugerem incentivo limitado (pacote do corte)"):
+            self.assertIn(k, txt, k)
+        self.assertNotIn("custo que domina", txt)
+        self.assertIn("Voltando à pergunta", conc["roteiro"])
+        notas = corrido(conc["notas"])
         for k in ("modelo da banca 1", "interpretação, não teste", "Não dá para afirmar", "que a bolsa reduz o "
                   "preenchimento", "pacote do corte"):
             self.assertIn(k, notas, k)
+        self.assertEqual([D.texto_puro(c) for c in lim["tabela"][0]], ["Limitação", "Implicação"])
+        par = {D.texto_puro(r[0]): D.texto_puro(r[1]) for r in lim["tabela"][1:]}
+        self.assertEqual(par, {"Pós-resultado": "exploratório", "Preferência revelada": "não é causa",
+                               "Só candidatos": "sem margem extensiva", "Pacote do corte": "bolsa não isolada",
+                               "Só ciclo 2": "bolsa instável", "Origem = CNES": "não é residência"})
+        rot = corrido(lim["roteiro"])
+        for k in ("pós-resultado", "preferência revelada", "se candidatou", "pacote do corte", "ciclo 2",
+                  "não a residência"):
+            self.assertIn(k, rot, k)
+        notas = corrido(lim["notas"])
+        self.assertIn("Perguntas prováveis da banca", notas)
+        self.assertEqual(len(re.findall(r"\bP[123], \"", notas)), 3)
+        self.assertIn(f"{self.ic('VL1_EMP', 'RC', 'RCI', 'RCS')}, p de Holm {self.v('VL1_EMP_HOLM')}", notas)
+
+    def test_roteiro_de_fala(self) -> None:
+        """Rubrica (apresentador): cada slide do corpo tem roteiro de fala com tempo-alvo; a soma fica entre 6:30 e
+        7:30, a cerca de 140 palavras por minuto; o apêndice não é apresentado; o doc 09 traz o mesmo roteiro."""
+        corpo = [s for s in self.slides if not s["apendice"]]
+        self.assertTrue(all(s["roteiro"] and s["tempo_s"] for s in corpo))
+        self.assertTrue(all(not s["roteiro"] for s in self.slides if s["apendice"]))
+        total = sum(s["tempo_s"] for s in corpo)
+        self.assertTrue(TEMPO_MIN <= total <= TEMPO_MAX, total)
+        self.assertEqual((D.TEMPO_MIN_S, D.TEMPO_MAX_S), (TEMPO_MIN, TEMPO_MAX))
+        falas = sum(D.palavras(s["roteiro"]) for s in corpo)
+        self.assertTrue(120 <= falas / total * 60 <= 160, falas)
+        for s in corpo:  # nenhum slide fala rápido demais (até 175 palavras por minuto)
+            self.assertLessEqual(D.palavras(s["roteiro"]) / s["tempo_s"] * 60, 175, s["titulo"])
+        with self.assertRaises(SystemExit):  # o gerador para se o roteiro passar de 7:30
+            D.conferir_roteiro([dict(s, tempo_s=s["tempo_s"] * 2) if not s["apendice"] else s for s in self.slides])
+        with self.assertRaises(SystemExit):  # ou se faltar roteiro num slide do corpo
+            D.conferir_roteiro([dict(corpo[0], roteiro="")] + self.slides[1:])
+        # o doc 09 traz o mesmo roteiro, slide a slide, com o mesmo tempo e o total
+        t9 = DOC09.read_text(encoding="utf-8")
+        for k, s in enumerate(corpo, 1):
+            m = re.search(rf"(?ms)^## {k}\. (.+?) \((\d+) s\)\n\n(.*?)(?=\n\n|\Z)", t9)
+            self.assertIsNotNone(m, k)
+            self.assertEqual(m.group(1), s["titulo"], k)
+            self.assertEqual(int(m.group(2)), s["tempo_s"], k)
+            self.assertEqual(corrido(m.group(3)), corrido(s["roteiro"]), k)
+        self.assertIn(f"Total: {D.mmss(total)}", t9)
+        self.assertIn("Perguntas prováveis", t9)
+        falado = t9[t9.index("\n## 1. "):]  # a tabela de tempos (metas de fala) fica de fora
+        achados = {x for x in T.tokens(T.limpar(falado)) if not T.ano(x)}
+        validos = T.PERMITIDOS | T.todos_valores(self.registro)
+        tempos = {str(s["tempo_s"]) for s in corpo} | {str(k) for k in range(1, len(corpo) + 1)}
+        self.assertEqual(achados - validos - tempos, set())
+
+    def test_doc10_mapa_e_versao_anterior(self) -> None:
+        """Mapa do deck anterior (8901dea, auditoria 53) para o novo: cada título novo aparece no doc 10, com o
+        texto da tela dos slides do corpo; a cópia rotulada do PDF anterior existe e o hash confere."""
+        t10 = corrido(DOC10.read_text(encoding="utf-8"))
+        for s in self.slides:
+            self.assertIn(s["titulo"], t10, s["titulo"])
+        for tit in ("Hipótese: a origem pesa mais que a bolsa na escolha", "Dados: as variáveis e de onde vêm",
+                    "Os três ciclos em números", "Metodologia: logit condicional da 1ª opção",
+                    "Robustez: a origem pesa mais em todos os ciclos", "Discussão: um incentivo limitado"):
+            self.assertIn(tit, t10, tit)  # os títulos do deck anterior
+        for s in self.slides:
+            if s["apendice"]:
+                continue
+            for item in [t for t, _ in D.linhas_curtas(s)]:
+                self.assertIn(corrido(D.texto_puro(item).replace("**", "")), t10, s["titulo"])
+        self.assertTrue(VERSAO_ANTERIOR.exists())
+        self.assertIn(sha256(VERSAO_ANTERIOR), t10)
+        # o tempo de fala de cada slide é meta de fala, não resultado
+        sem_tempo = re.sub(r"Tempo de fala: \d+ s", "", DOC10.read_text(encoding="utf-8"))
+        achados = {x for x in T.tokens(T.limpar(sem_tempo)) if not T.ano(x)}
+        validos = T.PERMITIDOS | T.todos_valores(self.registro)
+        livres = {x for x in achados if x.lstrip("+").isdigit() and int(x.lstrip("+")) <= 15}  # nº de slide
+        self.assertEqual(achados - validos - livres, set())
 
     # ---- apêndice ------------------------------------------------------------------------------------------------
 
@@ -499,6 +604,7 @@ class TestConteudoCurto(unittest.TestCase):
             self.assertIsNotNone(m, b.splitlines()[0])
             codigos = re.findall(r"`([A-Z0-9_]+)`", m.group(1))
             sem_linha = re.sub(r"(?m)^\*\*Números:\*\*.*?(?=\n\n|\Z)", "", b, flags=re.S)
+            b = MARCA_ROTEIRO.sub("", b)
             permitidos = set(permitidos_base)
             for c in codigos:
                 self.assertIn(c, self.todos, c)
@@ -574,7 +680,7 @@ class TestDeckCurto(unittest.TestCase):
                 self.assertEqual(negrito, [] if sl["apendice"] else [sl["secao"]], titulo)
 
     def test_hipotese_em_destaque(self) -> None:
-        parte = next(p for p, t, _ in self.deck if t.startswith("Hipótese:"))
+        parte = next(p for p, t, _ in self.deck if t.startswith("Pergunta e hipótese:"))
         with zipfile.ZipFile(CURTO) as z:
             x = z.read(parte).decode("utf-8")
         central = re.search(r'name="Rótulo central".*?</p:sp>', x, flags=re.S).group(0)
@@ -592,9 +698,27 @@ class TestDeckCurto(unittest.TestCase):
                 self.assertNotIn(D.COR_TITULO_PLANO_B, tit, titulo)
                 # só a motivação, no slide de Hipótese, sai em cinza; nenhum item de plano B no resto
                 self.assertEqual(len(re.findall(r'name="(?:Item|Rótulo) plano B"', x)),
-                                 1 if titulo.startswith("Hipótese:") else 0, titulo)
-                if titulo.startswith("Dados"):  # variáveis secundárias em cinza
-                    self.assertIn(D.CINZA_TEXTO, x, titulo)
+                                 1 if titulo.startswith("Pergunta e hipótese:") else 0, titulo)
+
+    def test_notas_com_roteiro(self) -> None:
+        """As notas de cada slide do corpo abrem pelo roteiro de fala, com o tempo-alvo, em parágrafo próprio; o
+        apêndice não tem roteiro. O manifesto registra o tempo total e a versão anterior."""
+        with zipfile.ZipFile(CURTO) as z:
+            for (parte, titulo, _), sl in zip(self.deck, self.slides):
+                r = z.read(parte.replace("slides/", "slides/_rels/") + ".rels").decode("utf-8")
+                nota = "ppt/notesSlides/" + re.search(r'Target="\.\./notesSlides/([^"]+)"', r).group(1)
+                paras = [unescape("".join(re.findall(r"<a:t>([^<]*)</a:t>", p)))
+                         for p in re.findall(r"<a:p>(.*?)</a:p>", z.read(nota).decode("utf-8"), flags=re.S)]
+                if sl["apendice"]:
+                    self.assertFalse(any(p.startswith("FALA") for p in paras), titulo)
+                else:
+                    self.assertEqual(paras[0], f"FALA ({D.mmss(sl['tempo_s'])}): " + D.texto_puro(sl["roteiro"]),
+                                     titulo)
+                    self.assertTrue(paras[1].startswith("DETALHE PARA PERGUNTAS: "), titulo)
+        rot = self.man["roteiro"]
+        self.assertEqual(rot["tempo_total_s"], sum(s["tempo_s"] or 0 for s in self.slides))
+        self.assertTrue(TEMPO_MIN <= rot["tempo_total_s"] <= TEMPO_MAX)
+        self.assertEqual(self.man["versao_anterior"]["sha256"], sha256(VERSAO_ANTERIOR))
 
     def test_letra_minima(self) -> None:
         with zipfile.ZipFile(CURTO) as z:

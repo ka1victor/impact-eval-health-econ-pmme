@@ -17014,6 +17014,396 @@
       "descricao": "Adendo 52c (doc 57p; auditoria 41; quadro do ciclo 2 de 13/02/2026; hipótese da banca 2): M5 (base), ciclo 2, quadro refeito de 19/03/2026: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
       "auditoria": "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto",
       "hipotese_apresentacao": "H2"
+    },
+    "AM_C1_R1": {
+      "valor": "993",
+      "valor_bruto": 993,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "r1_por_ciclo",
+          "1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 1: candidatos com linha de 1ª opção numa célula do quadro (R1 do P1)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C1_NLIG": {
+      "valor": "55",
+      "valor_bruto": 55,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "exclusoes",
+          "sem município de origem no G1 (candidato não ligado)",
+          "1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 1: excluídos: candidato não ligado ao CNES (G1)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C1_SVIN": {
+      "valor": "20",
+      "valor_bruto": 20,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "exclusoes",
+          "sem município de origem no G1 (sem vínculo médico na competência de referência)",
+          "1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 1: excluídos: ligado, sem vínculo médico na competência anterior à inscrição",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C2_R1": {
+      "valor": "2.140",
+      "valor_bruto": 2140,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "r1_por_ciclo",
+          "2"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 2: candidatos com linha de 1ª opção numa célula do quadro (R1 do P1)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C2_NLIG": {
+      "valor": "77",
+      "valor_bruto": 77,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "exclusoes",
+          "sem município de origem no G1 (candidato não ligado)",
+          "2"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 2: excluídos: candidato não ligado ao CNES (G1)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C2_SVIN": {
+      "valor": "30",
+      "valor_bruto": 30,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "exclusoes",
+          "sem município de origem no G1 (sem vínculo médico na competência de referência)",
+          "2"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 2: excluídos: ligado, sem vínculo médico na competência anterior à inscrição",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C3_R1": {
+      "valor": "2.581",
+      "valor_bruto": 2581,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "r1_por_ciclo",
+          "3"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 3: candidatos com linha de 1ª opção numa célula do quadro (R1 do P1)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C3_NLIG": {
+      "valor": "69",
+      "valor_bruto": 69,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "exclusoes",
+          "sem município de origem no G1 (candidato não ligado)",
+          "3"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 3: excluídos: candidato não ligado ao CNES (G1)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C3_SVIN": {
+      "valor": "38",
+      "valor_bruto": 38,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "exclusoes",
+          "sem município de origem no G1 (sem vínculo médico na competência de referência)",
+          "3"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 3: excluídos: ligado, sem vínculo médico na competência anterior à inscrição",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C1_LIG": {
+      "valor": "938",
+      "valor_bruto": 938.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C1_R1",
+          "AM_C1_NLIG"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 1: candidatos com 1ª opção ligados ao CNES (R1 − não ligados)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C2_LIG": {
+      "valor": "2.063",
+      "valor_bruto": 2063.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C2_R1",
+          "AM_C2_NLIG"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 2: candidatos com 1ª opção ligados ao CNES (R1 − não ligados)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C3_LIG": {
+      "valor": "2.512",
+      "valor_bruto": 2512.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C3_R1",
+          "AM_C3_NLIG"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 3: candidatos com 1ª opção ligados ao CNES (R1 − não ligados)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C1_ORI": {
+      "valor": "918",
+      "valor_bruto": 918.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C1_LIG",
+          "AM_C1_SVIN"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 1: candidatos com 1ª opção e município de origem no CNES (ligados − sem vínculo)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C2_ORI": {
+      "valor": "2.033",
+      "valor_bruto": 2033.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C2_LIG",
+          "AM_C2_SVIN"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 2: candidatos com 1ª opção e município de origem no CNES (ligados − sem vínculo)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C3_ORI": {
+      "valor": "2.474",
+      "valor_bruto": 2474.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C3_LIG",
+          "AM_C3_SVIN"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 3: candidatos com 1ª opção e município de origem no CNES (ligados − sem vínculo)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C1_SREG": {
+      "valor": "3",
+      "valor_bruto": 3.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C1_ORI",
+          "D_C1_P1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 1: excluídos por origem ou 1ª opção sem região de saúde na tabela oficial (com origem − modelo)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C2_SREG": {
+      "valor": "1",
+      "valor_bruto": 1.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C2_ORI",
+          "D_C2_P1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 2: excluídos por origem ou 1ª opção sem região de saúde na tabela oficial (com origem − modelo)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_C3_SREG": {
+      "valor": "0",
+      "valor_bruto": 0.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "diferenca": [
+          "AM_C3_ORI",
+          "D_C3_P1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclo 3: excluídos por origem ou 1ª opção sem região de saúde na tabela oficial (com origem − modelo)",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_TOT_R1": {
+      "valor": "5.714",
+      "valor_bruto": 5714.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "soma": [
+          "AM_C1_R1",
+          "AM_C2_R1",
+          "AM_C3_R1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclos 1–3: candidatos com linha de 1ª opção numa célula do quadro",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_TOT_LIG": {
+      "valor": "5.513",
+      "valor_bruto": 5513.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "soma": [
+          "AM_C1_LIG",
+          "AM_C2_LIG",
+          "AM_C3_LIG"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclos 1–3: candidatos com 1ª opção ligados ao CNES",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_TOT_ORI": {
+      "valor": "5.425",
+      "valor_bruto": 5425.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "calculado por este script",
+      "seletor": {
+        "soma": [
+          "AM_C1_ORI",
+          "AM_C2_ORI",
+          "AM_C3_ORI"
+        ]
+      },
+      "formato": "int",
+      "descricao": "ciclos 1–3: candidatos com 1ª opção e município de origem no CNES",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_PARES": {
+      "valor": "932.577",
+      "valor_bruto": 932577,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "linhas_m1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "M1: pares candidato × vaga (linhas do logit condicional), ciclos 1–3",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_CONJ": {
+      "valor": "56",
+      "valor_bruto": 56,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "conjuntos_m1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "M1: conjuntos de escolha (curso × ciclo), ciclos 1–3",
+      "hipotese_apresentacao": "H2"
+    },
+    "AM_VAGAS": {
+      "valor": "5.125",
+      "valor_bruto": 5125,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/P1_resumo.json",
+      "seletor": {
+        "json": "output/rdd_bolsa/P1_resumo.json",
+        "caminho": [
+          "amostra",
+          "celulas_p1"
+        ]
+      },
+      "formato": "int",
+      "descricao": "M1: vagas (células estabelecimento × curso) nos conjuntos de escolha, ciclos 1–3",
+      "hipotese_apresentacao": "H2"
     }
   },
   "failure_mode": {
