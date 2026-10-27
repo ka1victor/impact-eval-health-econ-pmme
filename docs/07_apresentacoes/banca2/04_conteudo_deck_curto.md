@@ -206,10 +206,10 @@ atualizacao: 27 de outubro de 2026
 
 <!-- layout: curto_espec -->
 
-- chance da 1ª opção = bolsa + distância + origem
+- U = β·bolsa + γ·distância + θ·origem; P(j) = e^Uj/Σe^U
 - **Por quê** escolha entre vagas; candidato comparado consigo mesmo
 - **Bolsa** muda pela regra do IVS
-- **Teste** D_UF = origem − bolsa > zero; cluster por conjunto
+- **Teste** D_UF = θ − 10β > zero; cluster por conjunto
 
 **Fontes:** protocolos 52 e 52b; adendos 52c e 52e (`docs/06_execucao/`); docs 57a, 57i, 57p, 57x e 66 (§4).
 

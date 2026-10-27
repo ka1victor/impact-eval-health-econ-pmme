@@ -92,10 +92,10 @@ Seção: Análise descritiva. Tempo de fala: 35 s.
 
 Seção: Metodologia. Tempo de fala: 45 s.
 
-- **Linha:** chance da 1ª opção = bolsa + distância + origem
+- **Linha:** U = β·bolsa + γ·distância + θ·origem; P(j) = e^Uj/Σe^U (equação formal na tela desde 27/10/2026, para o critério "Modelo" da rubrica)
 - **Linha:** Por quê escolha entre vagas; candidato comparado consigo mesmo
 - **Linha:** Bolsa muda pela regra do IVS
-- **Linha:** Teste D_UF = origem − bolsa > zero; cluster por conjunto
+- **Linha:** Teste D_UF = θ − 10β > zero; cluster por conjunto
 - **Formato:** a 1ª linha é a equação em palavras, numa faixa verde-escura; as outras, com rótulo à esquerda.
 
 ### Slide 6. Identificação: as premissas e o nosso caso

@@ -10,7 +10,7 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "acc1d1364916776d131aa6e00245a70f811898bf35179b09a3946bf9253deed3"
+      "sha256": "bac2e81388844cb572ea9558f02882a34a0480dc1c4a313ca0c667359deab413"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
@@ -125,12 +125,12 @@
       "figura": null,
       "layout": "curto_espec",
       "linhas": [
-        "chance da 1ª opção = bolsa + distância + origem",
+        "U = β·bolsa + γ·distância + θ·origem; P(j) = e^Uj/Σe^U",
         "Por quê escolha entre vagas; candidato comparado consigo mesmo",
         "Bolsa muda pela regra do IVS",
-        "Teste D_UF = origem − bolsa > zero; cluster por conjunto"
+        "Teste D_UF = θ − 10β > zero; cluster por conjunto"
       ],
-      "palavras": 30,
+      "palavras": 28,
       "palavras_faladas": 111,
       "posicao": 5,
       "secao": "Metodologia",
@@ -258,14 +258,14 @@
   },
   "saidas": [
     {
-      "bytes": 1959954,
+      "bytes": 1959982,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "0e93345fd2097d566690370696d514102ad73558efd8b42be911c1aae990ec85"
+      "sha256": "a0b945a1aaa152d00ce69e66870c207390f93b8e60d6238e10d8b23d8ed7c5e8"
     },
     {
-      "bytes": 1328528,
+      "bytes": 1332034,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "329d2f79428b3cb469494116a77e911bfa3bcfe8b5cfc78ba1e3fa4db472e451"
+      "sha256": "71ac11e77b6fa2cbf701fb3176c0ec0fdd0a800728e3faf6b0e2dd08698b35e3"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)",

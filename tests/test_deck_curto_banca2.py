@@ -308,7 +308,7 @@ class TestConteudoCurto(unittest.TestCase):
             self.assertIn(k, eq)
         # rubrica (modelo): por que o logit condicional, de onde vem a variação da bolsa e qual é o teste
         self.assertEqual(rotulos(m), ["Por quê", "Bolsa", "Teste"])
-        for k in ("escolha entre vagas", "consigo mesmo", "regra do IVS", "D_UF = origem − bolsa > zero",
+        for k in ("escolha entre vagas", "consigo mesmo", "regra do IVS", "D_UF = θ − 10β > zero",
                   "cluster por conjunto"):
             self.assertIn(k, tela(m), k)
         self.assertIn("unilateral", corrido(m["roteiro"]))
