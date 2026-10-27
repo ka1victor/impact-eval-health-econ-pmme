@@ -539,4 +539,5 @@ linhas abaixo foram corrigidos onde estavam vencidos, com a marca "auditoria
 | # | Item | Estado |
 |---|---|---|
 | 22 | Reconstruir o deck curto em torno da hipótese única, com os gráficos simples G-A a G-D do doc 07 e a robustez da escolha numa figura | **feito** (27/10/2026): 11 slides no corpo e 2 no apêndice; figuras `curto_origem_bolsa.png`, `curto_bolsa_mesma_uf.png`, `curto_robustez_escolha.png` e `curto_fato.png`, lidas de `output/` pelo gerador de figuras; números relidos do registro pelos testes; PDF conferido slide a slide |
-| 23 | Usar no deck as figuras e o texto da análise completa da H2 (doc 66), quando auditados | a fazer: o doc 66 está em preparação; o deck atual não depende dele |
+| 23 | Usar no deck as figuras e o texto da análise completa da H2 (doc 66), quando auditados | a fazer: o doc 66 está na `main`, com a auditoria 52 em curso; o deck atual não depende dele |
+| 24 | Auditar o deck da H2 | **feito** (27/10/2026, [auditoria 53](../../auditorias/53_auditoria_deck_H2.md)): aprovado com correções, aplicadas no doc 04 e no gerador de figuras e regeradas; decisões em aberto do autor: a frase da hipótese no doc 07 ("dentro da sua região"; a auditoria 50 pede "dentro da mesma UF") |

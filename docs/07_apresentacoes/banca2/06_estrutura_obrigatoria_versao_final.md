@@ -79,8 +79,8 @@ O conteúdo canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_cu
 | Identificação | 7 | numa tabela: bolsa por regra (*sharp*); pacote do corte; IIA em parte; localização (par de UFs fixado); origem como preferência revelada; hipótese pós-resultado |
 | Resultados | 8–9 | o teste central, origem × toda a bolsa (G-D, quadro do ciclo 2 de 13/02/2026); a bolsa dentro da mesma UF (G-C, adendo pós-resultado, com o Holm da especificação pré-registrada na tela) |
 | Robustez | 10 | uma figura: razão de chances por ciclo, ciclo 2 com o quadro refeito (cinza), distância em log, região de saúde, só perto do corte; origem − bolsa por ciclo |
-| Discussão | 11 | incentivo limitado em termos do modelo da banca 1: teoria, o custo que domina, a leitura |
-| Apêndice | 12–13 | o fato da antiga H1 (G-A: sem controle, com efeito fixo de UF e pareando na mesma UF, por corte); a antiga H3 numa frase |
+| Discussão | 11 | incentivo limitado em termos do modelo da banca 1: a teoria, o dado (a origem pesa mais que toda a bolsa) e a leitura (o custo de sair da própria região domina), separados (auditoria 53) |
+| Apêndice | 12–13 | o fato da antiga H1 (G-A: sem controle, com efeito fixo de UF e o raio, numa amostra menor, e pareando na mesma UF, por corte); a antiga H3 numa frase |
 
 Saíram do corpo, com o essencial nas notas ou no apêndice: a H1 como hipótese (scatter, especificação, premissas,
 resultado, robustezes e "por que o sinal sai negativo"), a H3 como plano B e os planos B em cinza.

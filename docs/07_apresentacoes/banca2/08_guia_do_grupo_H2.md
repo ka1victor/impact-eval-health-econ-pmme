@@ -8,7 +8,8 @@
 > (aprovada com correções de redação e de rótulo; os números de estimação são cópia de saídas já auditadas). Atenção:
 > o VL-1 compara vagas **da mesma UF** (a de origem ou outra), não "só vagas da UF de origem", e a F2 é descritiva:
 > não vale como evidência à parte, porque a versão com inferência (VL-2) é inconclusiva.
-> O deck novo está sendo reconstruído e entra na `main` quando for auditado.<br>
+> O deck novo está pronto e auditado ([auditoria 53](../../auditorias/53_auditoria_deck_H2.md)): no slide, use as
+> figuras **do deck** (coluna "No deck" abaixo).<br>
 > **Regra do projeto:** todo número dos slides sai de `output/` por script. Os números abaixo servem para o grupo
 > entender a história. No slide, use a figura gerada pelo pipeline, nunca um número digitado à mão.
 
@@ -23,14 +24,16 @@ preenchimento no corte, mas essa ligação é interpretação, não teste.
 
 ## 2. A história em 6 passos (uma ideia por slide)
 
-| Passo | Mensagem | Figura simples (doc 66) | Alternativa já auditada |
+Na ordem do deck (slides 1, 5, 8, 9, 10 e 11). As figuras "No deck" estão em `output/apresentacao_banca2/`.
+
+| Passo | Mensagem | No deck (auditoria 53) | Doc 66 (auditoria 52) |
 |---|---|---|---|
-| 1. Motivação | no corte de IVS, não detectamos aumento do preenchimento onde a bolsa é R$ 5 mil maior | só uma linha de texto; o gráfico vai para o apêndice | — |
-| 2. Onde escolhem | a maioria põe a 1ª opção na mesma UF onde já trabalhava | `output/rdd_bolsa/H2_figuras/H2_F1_onde_escolhem.png` | `output/apresentacao_banca2/exp_escolha_origem.png` |
-| 3. A bolsa pesa entre vagas da mesma UF | comparando só vagas da mesma UF, a vaga de bolsa maior é mais escolhida | `H2_F3_razao_chances_bolsa.png` (e o descritivo `H2_F2_mesma_uf_perto_do_corte.png`) | `output/rdd_bolsa/VL_figuras/VL_razao_chances_e_km.png` |
-| 4. Mas a origem pesa mais (o teste central da H2) | estar na UF de origem pesa mais que toda a diferença de bolsa | `H2_F4_origem_contra_bolsa.png` (e `H2_F5_bolsa_em_km.png`) | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` |
-| 5. Robustez | a leitura não muda com o quadro corrigido do ciclo 2 nem com outras variantes | `H2_F6_robustez.png` | `VC_figuras/VC_antigo_corrigido.png`, `VD_figuras/VD_antigo_corrigido.png` |
-| 6. Teoria | incentivo limitado: o custo de sair da própria região pesa mais que o degrau da bolsa | texto (doc 66, seção 10) | — |
+| 1. Motivação | no corte de IVS, não detectamos aumento do preenchimento onde a bolsa é R$ 5 mil maior | uma linha no slide 1; o gráfico vai para o apêndice (`curto_fato.png`, slide 12) | — |
+| 2. Onde escolhem | a maioria põe a 1ª opção na mesma UF onde já trabalhava | `exp_escolha_origem.png` (slide 5) | `output/rdd_bolsa/H2_figuras/H2_F1_onde_escolhem.png` |
+| 3. A origem pesa mais (o teste central da H2) | estar na UF de origem pesa mais que toda a diferença de bolsa | `curto_origem_bolsa.png` (slide 8) | `H2_F4_origem_contra_bolsa.png` (e `H2_F5_bolsa_em_km.png`) |
+| 4. Entre vagas da mesma UF, a bolsa pesa (adendo pós-resultado) | comparando só vagas da mesma UF, a vaga de bolsa maior é mais escolhida | `curto_bolsa_mesma_uf.png` (slide 9) | `H2_F3_razao_chances_bolsa.png` (e o descritivo `H2_F2_mesma_uf_perto_do_corte.png`) |
+| 5. Robustez | a origem pesa mais em todos os ciclos; a bolsa pesa com força só no ciclo 2, e perto do corte é inconclusivo | `curto_robustez_escolha.png` (slide 10) | `H2_F6_robustez.png` |
+| 6. Teoria | incentivo limitado: a origem pesa mais que toda a bolsa (dado); os dados sugerem que o custo de sair da própria região domina (leitura), sempre sobre o pacote do corte | texto (slide 11) | doc 66, seção 10 |
 
 ## 3. Os números que contam a história (para entender, não para digitar)
 
@@ -74,5 +77,5 @@ Hipótese → Dados → Análise descritiva → Metodologia → Identificação 
 | a avaliação das hipóteses (por que H2) | [`docs/06_execucao/65_avaliacao_forca_hipoteses.md`](../../06_execucao/65_avaliacao_forca_hipoteses.md) §4.6–4.8 |
 | os resultados da escolha | docs 57a, 57i, 57p, 57v, 57x em `docs/06_execucao/` |
 | a análise completa da H2 | [`docs/06_execucao/66_analise_completa_H2.md`](../../06_execucao/66_analise_completa_H2.md) ([auditoria 52](../../auditorias/52_auditoria_analise_H2.md)) |
-| o deck | `output/apresentacao_banca2/deck_banca2_curto.pdf` (versão com a H2, 27/10/2026: 11 slides no corpo e 2 no apêndice; conteúdo em [04](04_conteudo_deck_curto.md); auditoria 53 em curso) |
+| o deck | `output/apresentacao_banca2/deck_banca2_curto.pdf` (versão com a H2, 27/10/2026: 11 slides no corpo e 2 no apêndice; conteúdo em [04](04_conteudo_deck_curto.md); [auditoria 53](../../auditorias/53_auditoria_deck_H2.md)) |
 | decisões e pendências | [05_discussao_historia_empirica.md](05_discussao_historia_empirica.md) §2.16 e §4.1 |

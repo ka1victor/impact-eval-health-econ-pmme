@@ -70,7 +70,7 @@ SEQUENCIA = [  # (seção, título, layout)
     ("Metodologia", "Metodologia: logit condicional da 1ª opção", "curto_espec"),
     ("Identificação", "Identificação: as premissas e o nosso caso", "curto_tabela"),
     ("Resultados", "Teste central: a origem pesa mais que toda a bolsa", "curto_figura"),
-    ("Resultados", "Dentro da mesma UF, a vaga de bolsa maior atrai", "curto_figura"),
+    ("Resultados", "Dentro da mesma UF, a vaga de bolsa maior é preferida", "curto_figura"),
     ("Robustez", "Robustez: a origem pesa mais em todos os ciclos", "curto_figura"),
     ("Discussão", "Discussão: um incentivo limitado", "curto_texto"),
     ("Apêndice", "Apêndice · O fato: sem aumento detectado no corte", "curto_figura"),
@@ -80,7 +80,7 @@ FIGURAS = {  # título → figura de output/ (G-A a G-D do doc 07 e a robustez)
     "A bolsa é função exata do IVS: a regra é sharp": "regra_bolsa_ivs_oficial.png",
     "Onde escolhem: perto de onde já trabalham": "exp_escolha_origem.png",
     "Teste central: a origem pesa mais que toda a bolsa": "curto_origem_bolsa.png",
-    "Dentro da mesma UF, a vaga de bolsa maior atrai": "curto_bolsa_mesma_uf.png",
+    "Dentro da mesma UF, a vaga de bolsa maior é preferida": "curto_bolsa_mesma_uf.png",
     "Robustez: a origem pesa mais em todos os ciclos": "curto_robustez_escolha.png",
     "Apêndice · O fato: sem aumento detectado no corte": "curto_fato.png",
 }
@@ -89,7 +89,18 @@ FIGURAS = {  # título → figura de output/ (G-A a G-D do doc 07 e a robustez)
 PROIBIDAS = ("não encheu", "não enche", "não aumenta quantas", "era localização", "vinha da localização",
              "não traz médico de longe", "oferta igual", "outros ficam", "por que não sobe", "não sobe", "não muda",
              "vem do ciclo 2", "Reestimação em curso", "mais reserva", "a oferta local muda igual", "1,31", "1,98",
-             "112 km")
+             "112 km",
+             # auditoria 53: título causal ("atrai"), interpretação dita como dado, número fora de output/ ("cai à
+             # metade" = −0,55, só na auditoria 47), "vagas próximas" (o VL-1 compara vagas da mesma UF), rótulo
+             # trocado do quadro do ciclo 2
+             "bolsa maior atrai", "o custo que domina é sair", "cai à metade", "vagas próximas",
+             "Quadro da inscrição, log",
+             # auditoria 52: o VL-1 compara vagas da mesma UF (a de origem ou outra); Holm de família de um teste
+             "dentro da sua região", "dentro da região", "só vagas da UF de origem", "Holm 0,072",
+             "p de Holm 0,072")
+# Guardas antigas que a reescrita de 27/10/2026 tinha deixado de fora (auditoria 36 e 33; auditoria 53)
+PROIBIDAS_A36 = ("não podia ser preenchida", "só de reserva", "só de cadastro reserva", "vagas de reserva",
+                 "células só de CR", "reserva não")
 
 
 def sha256(p: Path) -> str:
@@ -296,7 +307,7 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertIn("em parte", linhas["IIA"])
         notas = corrido(s["notas"])
         for k in ("auditoria 18", "auditoria 48", "vínculo anterior no CNES", "inconclusiva",
-                  "condicional a se candidatar", f"p de Holm {self.v('VC_B_HOLM')}"):
+                  "condicional a se candidatar", f"p {self.v('VC_B_HOLM')}; família de um teste, Holm = p"):
             self.assertIn(k, notas, k)
         self.assertGreaterEqual(self.b("VC_B_HOLM"), 0.05)  # a especificação pré-registrada não passa no Holm
 
@@ -329,10 +340,10 @@ class TestConteudoCurto(unittest.TestCase):
     def test_bolsa_dentro_da_mesma_uf(self) -> None:
         """G-C: comparando vagas da mesma UF (adendo 52e, auditoria 48), por +R$ 5 mil, ciclos 1–3 e ciclo 2, com a
         versão base em cinza; dito como adendo pós-resultado, com o Holm da especificação pré-registrada na tela."""
-        s = self.por_titulo["Dentro da mesma UF, a vaga de bolsa maior atrai"]
+        s = self.por_titulo["Dentro da mesma UF, a vaga de bolsa maior é preferida"]
         self.assertIn(f"{self.v('VL1_EMP_K5')} km a menos", tela(s))
         self.assertIn("pós-resultado", s["cautela"])
-        self.assertIn(f"Holm {self.v('VC_B_HOLM')}", s["cautela"])
+        self.assertIn(f"p {self.v('VC_B_HOLM')}", s["cautela"])  # família de um teste: Holm = p (auditoria 52)
         for k in ("EMP", "C2"):
             self.assertGreater(self.b(f"VL1_{k}_RCI"), 1.0, k)
             self.assertLess(self.b(f"VL1_{k}_HOLM"), 0.05, k)
@@ -367,12 +378,15 @@ class TestConteudoCurto(unittest.TestCase):
             self.assertGreater(self.b(f"VC_DUF_{c}_INF"), 0.0, c)
         reg = self.man_fig["figuras_novas"]["curto_robustez_escolha.png"]
         self.assertEqual([ln["codigos"][0] for ln in reg["linhas"]],
-                         ["VC_M5C1_RC", "VC_M5C2_RC", "VC_M5C3_RC", "VC_M5C2A_RC", "VLLOG_EMP_RC", "VL3_EMP_RC",
+                         ["VLB_EMP_RC", "VC_M5C1_RC", "VC_M5C2_RC", "VC_M5C3_RC", "VC_M5C2A_RC", "VLLOG_EMP_RC", "VL3_EMP_RC",
                           "VL2_EMP_RC", "VC_DUF_C1_EST", "VC_DUF_C2_EST", "VC_DUF_C3_EST"])
         notas = corrido(s["notas"])
         for k in ("13/02/2026", "19/03/2026", self.ic("VC_DUF_C2"), self.ic("VL2_EMP", "RC", "RCI", "RCS"),
-                  "inconclusivo", "não sabemos por quê"):
+                  "inconclusivo", "não sabemos por quê", "spline cúbico", "logit explodido"):
             self.assertIn(k, notas, k)
+        # auditorias 52 e 53: o pré-registrado (M1) abre a figura e a cautela; o VL-1 é adendo, não a principal
+        self.assertIn("Pré-registrado: IC contém 1", s["cautela"])
+        self.assertIn(self.ic("VLB_EMP", "RC", "RCI", "RCS"), notas)
 
     def test_quadro_corrigido_do_ciclo2(self) -> None:
         """Auditoria 49, A2: a H2 usa o quadro do ciclo 2 de 13/02/2026 (VC_*, versão corrigida); os números do quadro
@@ -392,7 +406,11 @@ class TestConteudoCurto(unittest.TestCase):
         s = disc[0]
         self.assertEqual(rotulos(s), ["Teoria", "Dados", "Leitura"])
         self.assertIn("incentivo limitado", tela(s))
-        self.assertIn("sair da própria região", tela(s))
+        self.assertIn("sugerem", tela(s))
+        self.assertIn("pacote do corte", tela(s))
+        # auditoria 53: o que é dado (origem pesa mais que toda a bolsa) e o que é leitura (o custo de sair) separados
+        self.assertIn("a origem pesa mais que toda a bolsa", tela(s))
+        self.assertNotIn("custo que domina", tela(s))
         notas = corrido(s["notas"])
         for k in ("modelo da banca 1", "interpretação, não teste", "Não dá para afirmar", "que a bolsa reduz o "
                   "preenchimento", "pacote do corte"):
@@ -449,6 +467,29 @@ class TestConteudoCurto(unittest.TestCase):
         for frase in ("não detectamos aumento", "sem aumento detectado", "Teste central",
                       "anda junto com a UF", "inconclusivo"):
             self.assertIn(frase, texto, frase)
+        # guardas restauradas (auditoria 53): redação da auditoria 36, SOCR, "em auditoria", termos técnicos na tela
+        for frase in PROIBIDAS_A36:
+            self.assertNotIn(frase, texto, frase)
+        self.assertNotIn("SOCR", texto)
+        self.assertNotIn("em auditoria", texto.lower())
+        for s in self.slides:
+            for frase in ("escolhidas em 1º lugar", "candidato de 1ª opção", "52c", "fuzzy"):
+                self.assertNotIn(frase, tela(s), f"{s['titulo']}: {frase}")
+        for c, e in self.todos.items():
+            if c.startswith(("HI", "PL_", "VL", "VC_")):
+                self.assertNotIn("EM AUDITORIA", e["descricao"], c)
+
+    def test_fato_mesma_amostra(self) -> None:
+        """Auditoria 53: a linha com UF e raio do G-A usa uma amostra menor; o ponto sem controle nessa amostra vai
+        na figura e nas notas, e a HI-2 sem controle na mesma amostra vem do registro, não da auditoria 47."""
+        s = self.por_titulo["Apêndice · O fato: sem aumento detectado no corte"]
+        notas = corrido(s["notas"])
+        for c in ("PL_H41_300_SC", "PL_H41_400_SC", "PL_H42_300_SC"):
+            self.assertIn(self.v(c), notas, c)
+        self.assertNotIn("−0,55", notas)
+        reg = self.man_fig["figuras_novas"]["curto_fato.png"]
+        for c in ("300", "400"):
+            self.assertTrue(any(f"sem controle nela: {self.v(f'PL_H41_{c}_SC')}" in t for t in reg["textos"]), c)
 
     def test_todo_numero_registrado_ou_parametro(self) -> None:
         sobra = {}

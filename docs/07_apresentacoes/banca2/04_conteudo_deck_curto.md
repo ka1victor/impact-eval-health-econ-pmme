@@ -3,7 +3,7 @@ documento: Conteúdo do deck curto — banca 2 (parte empírica)
 papel: fonte de verdade do deck curto, o único usado na versão final; o deck é derivado
 escopo: estrutura obrigatória da versão final (doc 06) — Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez e Discussão — só com a hipótese da banca 2 (a antiga H2); depois, um apêndice curto com a antiga H1 (o fato) e a antiga H3; sem os slides do grupo, sem divisórias e sem o diagrama da teoria
 slides: 13
-estado: em produção; corpo com só a H2 (doc 07; decisões do autor de 27/10/2026); teste central = origem × toda a bolsa (D_UF, adendo 52c, auditoria 41); bolsa dentro da mesma UF (adendo 52e, auditoria 48); robustez por ciclo, quadro do ciclo 2, distância em log, região de saúde e comparação local; apêndice com o fato (adendos 48b e 48h, auditorias 38 e 47) e a H3; redação revista pela auditoria 50; 11 slides no corpo e 2 no apêndice
+estado: em produção; corpo com só a H2 (doc 07; decisões do autor de 27/10/2026); teste central = origem × toda a bolsa (D_UF, adendo 52c, auditoria 41); bolsa dentro da mesma UF (adendo 52e, auditoria 48); robustez por ciclo, quadro do ciclo 2, distância em log, região de saúde e comparação local; apêndice com o fato (adendos 48b e 48h, auditorias 38 e 47) e a H3; redação revista pela auditoria 50; 11 slides no corpo e 2 no apêndice; auditado na auditoria 53 (aprovado com correções, aplicadas: título do slide 9, cautela do slide 10, dado e leitura separados na Discussão, amostra da linha com UF e raio no fato)
 atualizacao: 27 de outubro de 2026
 ---
 
@@ -62,7 +62,7 @@ atualizacao: 27 de outubro de 2026
 
 > **Notas do apresentador.** Hipótese única desta versão (decisão do autor de 27/10/2026; doc 07 da banca 2): a
 > antiga H2, bolsa × origem. O médico especialista escolhe vagas perto de onde já trabalha; a bolsa maior muda
-> qual vaga ele escolhe dentro da sua região, mas pesa menos que a própria origem. Foi formulada depois de ver os
+> qual vaga ele escolhe entre vagas da mesma UF, mas pesa menos que a própria origem. Foi formulada depois de ver os
 > resultados do preenchimento no corte e os coeficientes do modelo de escolha: é pós-resultado, e isso é dito
 > aqui. Motivação: onde a bolsa é R$ 5 mil maior, não detectamos aumento do preenchimento, e o desenho só pegaria
 > saltos grandes (apêndice). Ligar a hipótese a esse fato é interpretação, não teste (auditoria 50). O que se
@@ -203,7 +203,7 @@ atualizacao: 27 de outubro de 2026
 > Teste central (P1h-1, protocolo 52b, pós-resultado): D_UF = peso da vaga na UF de origem − peso de toda a bolsa
 > (10 × β), unilateral, com o tipo de vaga do ciclo 2 do quadro de 13/02/2026 (adendo 52c). Erro-padrão agrupado
 > por conjunto de escolha (curso × ciclo). Adendo 52e (pós-resultado): efeito fixo do par (UF de origem, UF da
-> vaga), comparando só vagas da mesma UF vistas por médicos da mesma UF de origem. Por ciclo: o mesmo modelo em
+> vaga), comparando só vagas da mesma UF (a de origem ou outra) vistas por médicos da mesma UF de origem. Por ciclo: o mesmo modelo em
 > cada ciclo.
 
 ---
@@ -233,12 +233,13 @@ atualizacao: 27 de outubro de 2026
 > ciclos 1 e 2 (368/368 e 454/454); o município não escolhe a bolsa. Pacote do corte: em 0,300 e 0,400 mudam
 > também outras regras federais (auditoria 18); o peso da bolsa é o do pacote, não o da bolsa sozinha nem o da
 > participação no PMM-E. IIA (independência de alternativas irrelevantes): o logit aninhado por região de saúde a
-> rejeita em parte, e o ponto do peso da bolsa fica perto do mesmo valor (doc 57a). Localização: com o par de UFs fixado, o peso da
+> rejeita em parte, e o ponto do peso da bolsa fica perto do mesmo valor (doc 57a; com o quadro de 13/02/2026, doc 57v). Localização: com o par de UFs fixado, o peso da
 > bolsa não diminui (adendo 52e, auditoria 48); a comparação só com vagas perto do corte é inconclusiva. Conjunto
 > de escolha: supõe que o candidato viu todas as vagas do seu curso. Origem: preferência revelada, medida pelo
 > vínculo anterior no CNES; mistura família, rede e registro; não é efeito causal de mudar alguém de lugar.
 > Pós-resultado: a hipótese e o teste D_UF foram formulados depois de ver os coeficientes; o peso da bolsa
-> pré-registrado (P1a, sem fixar a UF) não passa no Holm (p de Holm 0,072). Tudo é condicional a se candidatar.
+> pré-registrado (P1a, sem fixar a UF) não rejeita zero (p 0,072; família de um teste, Holm = p). Tudo é condicional
+> a se candidatar.
 
 ---
 
@@ -270,31 +271,32 @@ atualizacao: 27 de outubro de 2026
 
 ---
 
-## Dentro da mesma UF, a vaga de bolsa maior atrai
+## Dentro da mesma UF, a vaga de bolsa maior é preferida
 
 `Resultados · bolsa na mesma UF`
 
 <!-- layout: curto_figura -->
 
-![Razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF, ciclos 1–3 e ciclo 2, com o modelo base em cinza claro](../../../output/apresentacao_banca2/curto_bolsa_mesma_uf.png)
+![Razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF, ciclos 1–3 e ciclo 2, com o modelo pré-registrado em cinza claro](../../../output/apresentacao_banca2/curto_bolsa_mesma_uf.png)
 
 - **+R$ 5 mil** pesam como 75 km a menos de distância.
 
-> **Adendo pós-resultado; sem fixar a UF, Holm 0,072.**
+> **Adendo pós-resultado; pré-registrado, sem fixar a UF: p 0,072.**
 
 **Fontes:** `output/rdd_bolsa/VL_estimativas.csv` (adendo 52e; doc 57x; auditoria 48); `output/apresentacao_banca2/curto_bolsa_mesma_uf.png`.
 
 **Números:** `VL1_EMP_RC`, `VL1_EMP_RCI`, `VL1_EMP_RCS`, `VL1_EMP_HOLM`, `VL1_C2_RC`, `VL1_C2_RCI`, `VL1_C2_RCS`, `VL1_C2_HOLM`, `VLB_EMP_RC`, `VLB_EMP_RCI`, `VLB_EMP_RCS`, `VLB_C2_RC`, `VLB_C2_RCI`, `VLB_C2_RCS`, `VC_B_HOLM`, `VL1_EMP_K5`, `VL1_EMP_K5I`, `VL1_EMP_K5S`, `VL1_C2_K5`, `VL1_C2_K5I`, `VL1_C2_K5S`, `VLB_EMP_K5`, `VLB_EMP_K5I`, `VLB_EMP_K5S`, `VLB_C2_K5`, `VLB_C2_K5I`, `VLB_C2_K5S`
 
-> **Notas do apresentador.** Adendo 52e (doc 57x; auditoria 48; pós-resultado): comparando só vagas da mesma UF,
-> vistas por médicos da mesma UF de origem (efeito fixo do par de UFs), a razão de chances da 1ª opção por +R$ 5
+> **Notas do apresentador.** Adendo 52e (doc 57x; auditoria 48; pós-resultado): comparando só vagas da mesma UF
+> (a de origem ou outra), vistas por médicos da mesma UF de origem (efeito fixo do par de UFs), a razão de chances da 1ª opção por +R$ 5
 > mil é 1,47 [1,15; 1,89] nos ciclos 1–3 (p de Holm 0,005) e 1,90 [1,30; 2,78] no ciclo 2 (p de Holm 0,003). No
 > modelo base, sem fixar a UF: 1,25 [0,98; 1,61] e 1,79 [1,19; 2,68]; a especificação pré-registrada (P1a) não
-> passa no Holm (p de Holm 0,072). Em km: dentro da mesma UF, +R$ 5 mil pesam como 75 km [28; 122] a menos de
+> rejeita zero (p 0,072; família de um teste, Holm = p). Em km: dentro da mesma UF, +R$ 5 mil pesam como 75 km [28; 122] a menos de
 > distância nos ciclos 1–3 e 117 km [56; 178] no ciclo 2; no modelo base, com o quadro corrigido, 119 km [−12; 250]
 > e 302 km [88; 516]. Os km caem dentro da UF porque a distância pesa mais ali, não porque a bolsa pese menos. Mostra
 > que a escolha responde à bolsa; não testa a comparação com a origem. Escolha não é expansão: o que uma vaga
-> ganha, outra do mesmo curso perde. Pacote do corte.
+> ganha, outra do mesmo curso perde. Com o *score bootstrap* para poucos grupos, o VL-1 se mantém (doc 57x). Pacote
+> do corte.
 
 ---
 
@@ -306,17 +308,18 @@ atualizacao: 27 de outubro de 2026
 
 <!-- layout: curto_figura -->
 
-![Robustez da escolha: razão de chances por +R$ 5 mil por ciclo, com o quadro antigo do ciclo 2, com distância em log, com a região de saúde fixada e só perto do corte; à direita, origem menos toda a bolsa por ciclo](../../../output/apresentacao_banca2/curto_robustez_escolha.png)
+![Robustez da escolha: razão de chances por +R$ 5 mil no modelo pré-registrado e por ciclo, com o quadro antigo do ciclo 2, com distância em log, com a região de saúde fixada e só perto do corte; à direita, origem menos toda a bolsa por ciclo](../../../output/apresentacao_banca2/curto_robustez_escolha.png)
 
 - **Bolsa:** forte só no ciclo 2; perto do corte, inconclusivo.
 
-> **Quadro da inscrição, log e região: mesma leitura.**
+> **Pré-registrado: IC contém 1; variantes do adendo: mesma leitura.**
 
 **Fontes:** `output/rdd_bolsa/VC_estimativas.csv` (adendo 52c; doc 57p; auditoria 41); `VL_estimativas.csv` (adendo 52e; doc 57x; auditoria 48); doc 57v (adendo 52d; auditoria 46).
 
-**Números:** `VC_M5C1_RC`, `VC_M5C1_RCI`, `VC_M5C1_RCS`, `VC_M5C2_RC`, `VC_M5C2_RCI`, `VC_M5C2_RCS`, `VC_M5C3_RC`, `VC_M5C3_RCI`, `VC_M5C3_RCS`, `VC_M5C2A_RC`, `VC_M5C2A_RCI`, `VC_M5C2A_RCS`, `VLLOG_EMP_RC`, `VLLOG_EMP_RCI`, `VLLOG_EMP_RCS`, `VLLOG_C2_RC`, `VLLOG_C2_RCI`, `VLLOG_C2_RCS`, `VL3_EMP_RC`, `VL3_EMP_RCI`, `VL3_EMP_RCS`, `VL3_C2_RC`, `VL3_C2_RCI`, `VL3_C2_RCS`, `VL2_EMP_RC`, `VL2_EMP_RCI`, `VL2_EMP_RCS`, `VL2_EMP_HOLM`, `VC_DUF_C1_EST`, `VC_DUF_C1_INF`, `VC_DUF_C1_SUP`, `VC_DUF_C2_EST`, `VC_DUF_C2_INF`, `VC_DUF_C2_SUP`, `VC_DUF_C3_EST`, `VC_DUF_C3_INF`, `VC_DUF_C3_SUP`
+**Números:** `VLB_EMP_RC`, `VLB_EMP_RCI`, `VLB_EMP_RCS`, `VC_M5C1_RC`, `VC_M5C1_RCI`, `VC_M5C1_RCS`, `VC_M5C2_RC`, `VC_M5C2_RCI`, `VC_M5C2_RCS`, `VC_M5C3_RC`, `VC_M5C3_RCI`, `VC_M5C3_RCS`, `VC_M5C2A_RC`, `VC_M5C2A_RCI`, `VC_M5C2A_RCS`, `VLLOG_EMP_RC`, `VLLOG_EMP_RCI`, `VLLOG_EMP_RCS`, `VLLOG_C2_RC`, `VLLOG_C2_RCI`, `VLLOG_C2_RCS`, `VL3_EMP_RC`, `VL3_EMP_RCI`, `VL3_EMP_RCS`, `VL3_C2_RC`, `VL3_C2_RCI`, `VL3_C2_RCS`, `VL2_EMP_RC`, `VL2_EMP_RCI`, `VL2_EMP_RCS`, `VL2_EMP_HOLM`, `VC_DUF_C1_EST`, `VC_DUF_C1_INF`, `VC_DUF_C1_SUP`, `VC_DUF_C2_EST`, `VC_DUF_C2_INF`, `VC_DUF_C2_SUP`, `VC_DUF_C3_EST`, `VC_DUF_C3_INF`, `VC_DUF_C3_SUP`
 
-> **Notas do apresentador.** Por ciclo (modelo base, quadro corrigido): razão de chances 1,07 [0,69; 1,65] no ciclo
+> **Notas do apresentador.** Especificação pré-registrada (M1, ciclos 1–3, quadro corrigido): 1,25 [0,98; 1,61], IC
+> que contém 1; é a principal do peso da bolsa, e o VL-1 é adendo. Por ciclo (o mesmo modelo): razão de chances 1,07 [0,69; 1,65] no ciclo
 > 1, 1,79 [1,19; 2,68] no ciclo 2 e 1,00 [0,72; 1,39] no ciclo 3. A bolsa desloca a escolha com força só no ciclo
 > 2; nos ciclos 1 e 3, os intervalos são largos, e não sabemos por quê. Quadro do ciclo 2: com o quadro refeito
 > depois do resultado (19/03/2026), 1,70 [1,22; 2,37]; com o de 13/02/2026, vigente na inscrição, 1,79 (adendo 52c,
@@ -324,7 +327,9 @@ atualizacao: 27 de outubro de 2026
 > log, 1,45 [1,15; 1,83] (ciclo 2: 1,75 [1,23; 2,49]); com a região de saúde de origem no lugar da UF de origem,
 > 1,49 [1,15; 1,92] (ciclo 2: 1,91 [1,33; 2,74]); só com vagas a até 0,050 de um corte, 1,28 [0,95; 1,72], p de
 > Holm 0,103: inconclusivo. À direita, origem − toda a bolsa por ciclo: 2,34 [1,45; 3,24], 1,19 [0,51; 1,86] e 2,37
-> [1,75; 3,00]: a origem pesa mais nos três ciclos. Tudo pós-resultado e condicional a se candidatar.
+> [1,75; 3,00]: a origem pesa mais nos três ciclos. O peso da bolsa sozinho depende da especificação: com o logit
+> explodido (doc 57v) e com o spline cúbico do IVS (doc 42), o IC contém 1; origem − bolsa fica acima de zero em
+> todas as variantes. Tudo pós-resultado e condicional a se candidatar.
 
 ---
 
@@ -336,18 +341,20 @@ atualizacao: 27 de outubro de 2026
 
 <!-- layout: curto_texto -->
 
-- **Teoria** aceita a vaga se a bolsa compensa o custo do lugar
-- **Dados** o custo que domina é sair da própria região
-- **Leitura** a bolsa reordena vagas próximas: incentivo limitado
+- **Teoria** aceita se a bolsa compensa o custo do lugar
+- **Dados** a origem pesa mais que toda a bolsa
+- **Leitura** os dados sugerem incentivo limitado (pacote do corte)
 
 **Fontes:** modelo da banca 1; doc 07 da banca 2; docs 57i, 57p e 57x; auditorias 18 e 50.
 
 **Números:** nenhum
 
-> **Notas do apresentador.** No modelo da banca 1, o médico aceita a vaga se a bolsa compensa o custo do lugar. Na
-> escolha, o custo que domina não é o do município, que a bolsa compensa, e sim o de sair da própria região: a vaga
-> na UF de origem pesa mais que toda a diferença de bolsa. Um degrau de R$ 5 mil desloca a escolha entre vagas
-> próximas, mas não alcança esse custo: incentivo limitado. É coerente com não termos detectado aumento do
+> **Notas do apresentador.** No modelo da banca 1, o médico aceita a vaga se a bolsa compensa o custo do lugar. O
+> dado: a vaga na UF de origem pesa mais que toda a diferença de bolsa (o pacote do corte); o D_UF positivo diz só isso. A
+> leitura que os dados sugerem, sem teste direto: o custo que domina não é o do município, que a bolsa compensa, e
+> sim o de sair da própria UF; a origem é preferência revelada e pode carregar também família, rede e o emprego
+> atual. Um degrau de R$ 5 mil desloca a escolha entre vagas da mesma UF, e os dados sugerem que não compensa esse
+> custo: incentivo limitado. É coerente com não termos detectado aumento do
 > preenchimento no corte (apêndice), mas essa ligação é interpretação, não teste (auditoria 50). Dá para afirmar:
 > entre quem se candidatou, a vaga de bolsa maior é preferida a uma vaga parecida da mesma UF; a origem pesa mais
 > que toda a diferença de bolsa. Não dá para afirmar: que a bolsa causa mais médicos no município; que a origem
@@ -373,17 +380,18 @@ atualizacao: 27 de outubro de 2026
 
 **Fontes:** `output/rdd_bolsa/HI_estimativas.csv` (adendo 48b; doc 57n; auditoria 38); `PL_estimativas.csv` (adendo 48h; doc 57w; auditoria 47); `output/apresentacao_banca2/curto_fato.png`.
 
-**Números:** `HI1_300_TAU`, `HI1_300_INF`, `HI1_300_SUP`, `HI1_300_HOLM`, `HI1_400_TAU`, `HI1_400_INF`, `HI1_400_SUP`, `HI1_300_MDE`, `HI1_400_MDE`, `PL_H41_300_TAU`, `PL_H41_300_INF`, `PL_H41_300_SUP`, `PL_H41_400_TAU`, `PL_H41_400_INF`, `PL_H41_400_SUP`, `PL_FRAC_300_TAU`, `PL_FRAC_300_INF`, `PL_FRAC_300_SUP`, `PL_FRAC_300_NPAR`, `PL_FRAC_400_TAU`, `PL_FRAC_400_INF`, `PL_FRAC_400_SUP`, `PL_FRAC_400_NPAR`, `HI2_300_TAU`, `HI2_300_INF`, `HI2_300_SUP`, `HI2_300_HOLM`, `PL_H42_300_TAU`, `PL_H42_300_INF`, `PL_H42_300_SUP`, `PL_OUT_300_TAU`, `PL_OUT_300_INF`, `PL_OUT_300_SUP`, `PL_OUT_400_TAU`, `PL_OUT_400_INF`, `PL_OUT_400_SUP`, `HI2_C1_300_TAU`, `HI2_C1_300_INF`, `HI2_C1_300_SUP`, `HI2_C2_300_TAU`, `HI2_C2_300_INF`, `HI2_C2_300_SUP`, `HI2_C3_300_TAU`, `HI2_C3_300_INF`, `HI2_C3_300_SUP`, `CL_BAL_CAP_300`, `CL_BAL_NE_300`, `CL_BAL_ESP_300`
+**Números:** `HI1_300_TAU`, `HI1_300_INF`, `HI1_300_SUP`, `HI1_300_HOLM`, `HI1_400_TAU`, `HI1_400_INF`, `HI1_400_SUP`, `HI1_300_MDE`, `HI1_400_MDE`, `PL_H41_300_TAU`, `PL_H41_300_INF`, `PL_H41_300_SUP`, `PL_H41_400_TAU`, `PL_H41_400_INF`, `PL_H41_400_SUP`, `PL_H41_300_SC`, `PL_H41_400_SC`, `PL_FRAC_300_TAU`, `PL_FRAC_300_INF`, `PL_FRAC_300_SUP`, `PL_FRAC_300_NPAR`, `PL_FRAC_400_TAU`, `PL_FRAC_400_INF`, `PL_FRAC_400_SUP`, `PL_FRAC_400_NPAR`, `HI2_300_TAU`, `HI2_300_INF`, `HI2_300_SUP`, `HI2_300_HOLM`, `PL_H42_300_SC`, `PL_H42_300_TAU`, `PL_H42_300_INF`, `PL_H42_300_SUP`, `PL_OUT_300_TAU`, `PL_OUT_300_INF`, `PL_OUT_300_SUP`, `PL_OUT_400_TAU`, `PL_OUT_400_INF`, `PL_OUT_400_SUP`, `HI2_C1_300_TAU`, `HI2_C1_300_INF`, `HI2_C1_300_SUP`, `HI2_C2_300_TAU`, `HI2_C2_300_INF`, `HI2_C2_300_SUP`, `HI2_C3_300_TAU`, `HI2_C3_300_INF`, `HI2_C3_300_SUP`, `CL_BAL_CAP_300`, `CL_BAL_NE_300`, `CL_BAL_ESP_300`
 
 > **Notas do apresentador.** Antiga H1, só como motivação (adendo 48b, doc 57n, auditoria 38; adendo 48h, doc 57w,
 > auditoria 47). Chance de a célula com vaga imediata ser preenchida na 1ª chamada (HI-1): −3,7 p.p. [−21,3; +13,9]
 > em 0,300 e −2,3 [−24,0; +19,4] em 0,400, p de Holm 1,000; o desenho só detectaria saltos de 25,1 e 31,0 p.p. Com
-> efeito fixo de UF (e os especialistas no entorno): +5,4 [−11,0; +21,8] e −4,2 [−21,1; +12,6]. Pareando
+> efeito fixo de UF e os especialistas no entorno, só nos municípios com essa medida (nessa amostra, sem controle, −0,4
+> e +1,8): +5,4 [−11,0; +21,8] e −4,2 [−21,1; +12,6]. Pareando
 > municípios da mesma UF e condição de capital: +16,4 [−3,8; +36,6] com 25 pares e −6,0 [−23,2; +11,5] com 29
 > pares; o ponto não deve ser lido como tamanho de efeito. O sinal negativo era mais forte nos médicos alocados por
-> município em 0,300 (HI-2): −1,13 [−2,15; −0,10], p de Holm 0,126, nunca passou no Holm; com efeito fixo de UF e os
-> especialistas no entorno, −0,62 [−1,67; +0,43]: encolhe e deixa de se distinguir de zero (só com a UF, o ponto cai
-> à metade, auditoria 47). A HI-2 cai em tamanho parecido nos três ciclos: −1,07 [−2,88; +0,74], −0,97 [−2,48;
+> município em 0,300 (HI-2): −1,13 [−2,15; −0,10], p de Holm 0,126, nunca passou no Holm; na mesma amostra, sem
+> controle, −1,15; com efeito fixo de UF e os especialistas no entorno, −0,62 [−1,67; +0,43]: encolhe e deixa de se
+> distinguir de zero; o que move o ponto é a UF, não o raio (auditoria 47). A HI-2 cai em tamanho parecido nos três ciclos: −1,07 [−2,88; +0,74], −0,97 [−2,48;
 > +0,55] e −1,33 [−3,59; +0,93]. Em 0,300, o balanço falha: do lado de bolsa maior, a parte de capitais muda −29,9
 > p.p., a do Nordeste −47,7 p.p., e há +10,54 especialistas por 10 mil hab. no resto da região de saúde. O sinal anda
 > junto com a UF e a localização; é limite da RDD nesse corte, não prova de mecanismo, e não mostra que a bolsa
