@@ -5,16 +5,16 @@
 > **Estatuto:** `ADENDO_52D_POS_RESULTADO`. As versões com o quadro de 19/03 (docs 42, 57a e 57i) e as principais corrigidas do adendo 52c (doc 57p) já tinham sido vistas; isto não é teste confirmatório novo. Toda linha de `VD_estimativas.csv` e o resumo têm `natureza_dos_dados = EMPIRICO`.<br>
 > **Motivo:** [auditoria 41](../auditorias/41_auditoria_escolha_vaga_imediata_c2.md), achado A1: as sensibilidades que sustentam a robustez do ciclo 2 ([doc 44](44_sintese_rdd_bolsa_multioutcome.md)) ainda usavam o tipo de vaga do quadro retificado de 19/03/2026, refeito depois do resultado preliminar ([auditoria 36](../auditorias/36_auditoria_dados_H1.md)).<br>
 > **Saídas:** `output/rdd_bolsa/VD_estimativas.csv`, `VD_resumo.json` e `VD_figuras/VD_antigo_corrigido.png`. As saídas `E9_*`, `P1_*`, `P1h_*` e `VC_*` não são regravadas, e os docs 42, 44, 57, 57a, 57i e 57p não são editados.<br>
-> **Auditoria:** pendente.
+> **Auditoria:** [auditoria 46](../auditorias/46_auditoria_sensibilidades_ciclo2.md), aprovado com correções de texto; nenhuma estimativa mudou.
 
 ## 1. Resposta curta
 
 <!-- VD:resposta:inicio -->
-**VD-1 (principal deste adendo): a robustez do ciclo 2 (doc 44) se mantém com o tipo de vaga anterior à alocação.** No E9 do ciclo 2, no conjunto só com células de vaga imediata, a razão de chances da 1ª opção por +R$ 5 mil de bolsa passa de 1,95 (IC 95% [1,42; 2,67]) para 1,96 (IC [1,32; 2,89]); o IC corrigido exclui 1. Com o quadro de 13/02 o conjunto tem 714 células usadas e 1140 candidatos, contra 1015 e 1798 na versão antiga. Pela leitura pré-registrada (§3), o mesmo sinal e o IC que exclui 1 mantêm a frase do doc 44 nesta peça. Os placebos de corte, o score bootstrap e o spline cúbico do doc 42 não foram refeitos no conjunto de sensibilidade (decisão 2).
+**VD-1 (principal deste adendo): a robustez do ciclo 2 (doc 44) se mantém com o tipo de vaga anterior à alocação.** No E9 do ciclo 2, no conjunto só com células de vaga imediata, a razão de chances da 1ª opção por +R$ 5 mil de bolsa passa de 1,95 (IC 95% [1,42; 2,67]) para 1,96 (IC [1,32; 2,89]); o IC corrigido exclui 1. Com o quadro de 13/02 o conjunto tem 714 células usadas e 1140 candidatos, contra 1015 e 1798 na versão antiga. Pela leitura pré-registrada (§3), o mesmo sinal e o IC que exclui 1 mantêm a frase do doc 44 nesta peça, isto é, no conjunto só com vaga imediata e na especificação principal do E9 (decisão 2; as variantes quadrática e de degraus desse conjunto não foram refeitas). O que o doc 44 chama de robustez a placebos vem do conjunto principal: lá, os placebos de corte, o spline cúbico, as janelas e o cluster por curso do doc 42 continuam com o quadro de 19/03 (só o score bootstrap foi refeito, no scratch da auditoria 41). Essa parte da frase do doc 44 não foi conferida com o quadro de 13/02.
 
 **VD-2 (E9 empilhado, mesmo conjunto).** A razão de chances vai de 1,73 [1,39; 2,17] para 1,69 [1,35; 2,10]; o IC exclui 1 na antiga e exclui 1 na corrigida. O empilhado continua sendo uma média de ciclos heterogêneos (doc 42).
 
-**VD-3 (variantes do P1).** Razão de chances por +R$ 5 mil, antiga → corrigida: M2 (log da distância): 1,28 → 1,28; M4 (efeito fixo de UF): 1,46 → 1,48; M7 (logit explodido): 1,16 → 1,18; M8 (logit misto, média): 1,28 → 1,30; M9 (logit aninhado): 1,24 → 1,27. Mudam de sinal em algum peso da bolsa: M6, curso. Pela leitura pré-registrada, a leitura da H2 se apoia nas que não mudam: M2 (log da distância), M4 (efeito fixo de UF), M6, nota, M6, município de origem, M7 (logit explodido), M8 (logit misto, média), M9 (logit aninhado). Mudam de significância: P1 M6, nota, `bolsa_x_sem_pontuacao` (sim → não).
+**VD-3 (variantes do P1).** Razão de chances por +R$ 5 mil, antiga → corrigida: M2 (log da distância): 1,28 → 1,28; M4 (efeito fixo de UF): 1,46 → 1,48; M7 (logit explodido): 1,16 → 1,18; M8 (logit misto, média): 1,28 → 1,30; M9 (logit aninhado): 1,24 → 1,27. Mudam de sinal em algum peso da bolsa: M6, curso (`bolsa_mil|curso18`, −0,0038 → 0,0003; a regra da decisão 8 conta qualquer troca de sinal, mesmo de uma estimativa perto de zero, e a seção 5.3 mostra o IC). Pela leitura pré-registrada, a leitura da H2 se apoia nas que não mudam: M2 (log da distância); M4 (efeito fixo de UF); M6, nota; M6, município de origem; M7 (logit explodido); M8 (logit misto, média); M9 (logit aninhado). Mudam de significância: P1 M6, nota, `bolsa_x_sem_pontuacao` (sim → não; p 0,034 → 0,032, q BKY 0,047 → 0,051: o q depende dos p de toda a família, ver seção 5.4, e aqui o p da própria linha não sobe: a mudança vem de outros membros com p maior).
 
 **VD-4 (DAP, km e D_UF).** D_UF no P1h-3, antiga → corrigida: M2 (log da distância): 1,18 → 1,16 (q BKY 0,001 → 0,001); M4 (efeito fixo de UF): 1,73 → 1,70 (q BKY 0,001 → 0,001); M7 (logit explodido): 2,07 → 2,03 (q BKY 0,001 → 0,001). Um degrau da bolsa equivale a 112 km na antiga e 119 km na corrigida (IC delta [−12; 250]). Muda de sinal ou de significância uma linha de DAP, km ou D_UF (seção 5.7).
 
@@ -113,6 +113,8 @@ Logit condicional da 1ª opção, spline linear do IVS, bolsa linear (especifica
 |---|---|---|---|---|---|---|
 | VD-1: E9, só vaga imediata, ciclo 2 | 1798 → 1140 | 0,1336 [0,0705; 0,1968]; p < 0,001 | 0,1342 [0,0562; 0,2121]; p < 0,001 | 1,95 [1,42; 2,67] | 1,96 [1,32; 2,89] | 0,680 → 0,974 |
 | VD-2: E9, só vaga imediata, ciclos 1–3 | 3365 → 2707 | 0,1101 [0,0653; 0,1549]; p < 0,001 | 0,1044 [0,0601; 0,1487]; p < 0,001 | 1,73 [1,39; 2,17] | 1,69 [1,35; 2,10] | 0,741 → 0,969 |
+
+A variação em p.p. não é comparável entre as versões como tamanho de efeito: com o quadro de 13/02 cada conjunto tem menos células, a probabilidade-base de cada célula é maior, e a mesma razão de chances dá uma variação maior em p.p.
 
 Peso de `log(vagas imediatas + 1)` no mesmo modelo (a outra covariável do tipo de vaga é constante neste conjunto e sai):
 
@@ -268,6 +270,8 @@ Das 75 quantidades lidas (seções 5.1 a 5.6), só as abaixo mudam de sinal ou d
 | VD-3 | P1 M6, nota | interacao | `bolsa_x_sem_pontuacao` | −0,104 → −0,105 | significância (q BKY < 0,05: sim → não) |
 | VD-3 | P1 M6, curso | inclinacao_do_grupo | `bolsa_mil|curso18` | −0,004 → 0,000 | sinal |
 | VD-4 | P1 M4 (efeito fixo de UF) | dap | `capital (vs. interior próximo de polo)` | −5,240 → −4,547 | significância (IC 95% delta exclui 0: sim → não) |
+
+Como ler esta tabela. A regra conta qualquer troca de sinal, mesmo de uma estimativa perto de zero (o IC de cada linha está nas seções 5.3 a 5.6). Nas linhas das famílias BKY, a significância é a do q, que depende dos p de todos os membros da família (seção 5.4), e não só do p da linha. Na DAP e nos km, "significância" quer dizer só que o IC delta exclui zero: as razões continuam descritivas, sem teste, como no P1.
 <!-- VD:mudancas:fim -->
 
 ## 6. Figura
@@ -300,7 +304,7 @@ Decisões de implementação onde o adendo não fixava o detalhe. Foram registra
 ## 8. Limites
 
 - **Pós-resultado.** As versões antigas e as principais corrigidas já eram conhecidas. O adendo foi congelado antes de rodar, mas as sensibilidades corrigidas não são teste confirmatório novo.
-- **Só o tipo de vaga do ciclo 2 muda.** As linhas fora do §1 do adendo (seção 3) continuam com o quadro de 19/03; os placebos de corte, o score bootstrap e o spline cúbico do doc 42 não foram refeitos no conjunto só com vaga imediata.
+- **Só o tipo de vaga do ciclo 2 muda.** As linhas fora do §1 do adendo (seção 3) continuam com o quadro de 19/03. No conjunto só com vaga imediata, só a especificação principal do E9 foi refeita; as variantes quadrática e de degraus e o cluster por curso desse conjunto, não (decisão 2). No conjunto principal, corrigido pelo adendo 52c, as robustezes pós-auditoria do doc 42 (placebos de corte, spline cúbico, janelas, nós extras e cluster por curso) continuam com o quadro de 19/03; delas, só o score bootstrap foi refeito, no scratch da auditoria 41. A frase do doc 44 sobre robustez a placebos ainda se apoia no quadro antigo.
 - **O quadro de 13/02 também é anúncio.** Ele mede o que estava publicado na inscrição, não a vaga que de fato seria preenchida; o remanejamento posterior fica fora do atributo, como deve ficar num controle pré-tratamento.
 - **O conjunto só com vaga imediata muda de tamanho.** Com o quadro de 13/02 ele perde as células de reserva que viraram imediatas depois do resultado e os candidatos que as escolheram; a comparação antiga × corrigida mistura a troca da covariável com a troca da amostra.
 - **Escolha condicional.** Tudo vale para quem se candidatou, dentro das vagas abertas do seu curso e ciclo; o conjunto de escolha supõe que o candidato viu todas as células do curso; IIA do logit condicional (relaxada em parte no M8 e no M9).

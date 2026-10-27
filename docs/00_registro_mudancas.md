@@ -8,6 +8,29 @@
 
 ---
 
+## 26/10/2026 — Auditoria 46: adendo 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02), aprovado com correções
+
+Motivo: auditoria independente da execução do adendo 52d (script 48, saídas `VD_*`, doc 57v). O recálculo próprio,
+sem importar 48, 42, 25c, 25, 16 nem 12, bate com o gravado:
+- conjunto só com vaga imediata do ciclo 2: 714 células e 1.140 candidatos;
+- VD-1: razão de chances 1,96 [1,32; 2,89];
+- VD-2, M4, M6, Wald do P1d, DAP do M4 e as duas famílias BKY.
+
+O portão VD-5 confere. Nenhuma estimativa mudou: `VD_estimativas.csv`, `VD_resumo.json` e a figura não foram
+regravados com conteúdo novo. As correções foram de texto, no gerador do 48, e o 57v foi regravado:
+- a resposta curta e os limites dizem que a "robustez a placebos" do doc 44 vem do conjunto principal, ainda com o
+  quadro de 19/03;
+- as variantes do conjunto só com vaga imediata que a decisão 2 deixou de fora agora aparecem nos limites;
+- notas sobre as três linhas que "mudam" na seção 5.7 e sobre a variação em p.p.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/46_auditoria_sensibilidades_ciclo2.md`](auditorias/46_auditoria_sensibilidades_ciclo2.md) | auditoria do adendo 52d: veredito, achados A1–A11, recálculo e pendências para o autor |
+
+---
+
 ## 26/10/2026 — Doc 65: avaliação independente da força das hipóteses H1, H2 e H3 (banca 2)
 
 Motivo: pedido de avaliação cética do que dá para afirmar em cada hipótese da apresentação, para o autor escolher
