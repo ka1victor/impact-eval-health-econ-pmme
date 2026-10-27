@@ -8,6 +8,28 @@
 
 ---
 
+## 27/10/2026 — Auditoria 52: análise completa da H2 (doc 66, script 51)
+
+Motivo: auditoria independente da análise da H2 antes da banca 2. Veredito: **aprovado com correções**. Os números
+copiados conferem com as saídas auditadas, os descritivos novos foram refeitos por código próprio e batem, e nenhuma
+estimativa mudou. Corrigido no script 51 (texto gerado, rótulos, figuras F2, F3, F5 e F6) e no texto à mão do doc 66:
+- o VL-1 compara vagas da mesma UF, não "só vagas da UF de origem";
+- a linha principal da bolsa é o M1 pré-registrado, não o adendo 52e;
+- a F2 é descritiva e não vale como evidência à parte;
+- a comparação crua da bolsa média vinha com uma explicação não testada;
+- a §10 passou a dizer "sugere".
+
+O cabeçalho do doc 66 e o guia do grupo (doc 08 da banca 2) apontam para a auditoria; o teste ganhou a conferência
+dessas correções.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/52_auditoria_analise_H2.md`](auditorias/52_auditoria_analise_H2.md) | auditoria do doc 66, do script 51, das saídas `H2_*` e do teste |
+
+---
+
 ## 27/10/2026 — Análise completa da H2 (doc 66, script 51)
 
 Motivo: o autor fixou a H2 como hipótese única da banca 2 e pediu "uma análise clara e completa da hipótese 2". O doc

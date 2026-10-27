@@ -343,6 +343,22 @@ class TestDoc66(unittest.TestCase):
             self.assertNotIn(proibido, t.lower(), proibido)
         self.assertIn("**cenário contrafactual, não observação**", t)
 
+    def test_correcoes_da_auditoria_52(self) -> None:
+        """Cabeçalho aponta para a auditoria 52; o VL-1 não é descrito como 'só vagas da UF de origem'; a linha
+        principal da bolsa é a pré-registrada (M1), não o adendo pós-resultado; títulos cabem numa linha."""
+        cab = self.texto.split("## 0.")[0]
+        self.assertIn("../auditorias/52_auditoria_analise_H2.md", cab)
+        self.assertNotIn("auditoria 52 em curso", cab)
+        self.assertTrue((ROOT / "docs/auditorias/52_auditoria_analise_H2.md").exists())
+        t = " ".join(self.texto.split()).lower()
+        for proibido in ("só vagas da uf de origem", "dentro da uf de origem, a bolsa maior", "a bolsa aparece"):
+            self.assertNotIn(proibido, t, proibido)
+        principais = set(self.df.loc[self.df["principal"].astype(str) == "True", "id"])
+        self.assertEqual(principais, {"OR_M1_EMP", "DUF_M1"})
+        fig = json.loads(RESUMO.read_text(encoding="utf-8"))["figuras"]
+        self.assertIn("Descritivo", fig["F2"]["titulo"])
+        self.assertIn("pré-registrada", fig["F6"]["como_ler"])
+
     def test_frases_qualitativas_conferem_com_o_csv(self) -> None:
         N = self.N
         e = lambda k: N[k]["estimativa"]  # noqa: E731
