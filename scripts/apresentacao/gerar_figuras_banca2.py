@@ -1172,7 +1172,8 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
       for h in ("1", "2")
       for c, ct in CORTES_TXT
       for s, col, ds in (("TAU", "tau", "salto"), ("INF", "ic95_inf", "IC 95% inferior"),
-                         ("SUP", "ic95_sup", "IC 95% superior"))],
+                         ("SUP", "ic95_sup", "IC 95% superior"),
+                         ("SC", "tau_sem_controle", "salto sem controle na mesma amostra (auditoria 53)"))],
     *[(f"PL_{o}_{c}_{s}", "EMPIRICO",
        _c(PL_EST, {"id_linha": f"{lin}|H1M-{oid}|{ct}|w=0.050|raio=100|exato=cd_uf;capital;ciclo"}, col,
           PP if (o == "FRAC" and s in ("TAU", "INF", "SUP")) else None),
@@ -2797,21 +2798,23 @@ def _salvar(fig, destino: Path) -> None:
 def figura_fato(num: dict, destino: Path) -> dict:
     """G-A, o fato (antiga H1; apêndice do deck): por corte, o salto do preenchimento sem controle (HI-1 do 48b), com
     efeito fixo de UF (PH-4 do 48h) e comparando municípios da mesma UF (PH-1 do 48h, pareamento). Mesma escala nos
-    dois cortes. Mensagem: não enche mais vagas; o negativo era localização."""
+    dois cortes. Mensagem: não detectamos aumento; o negativo anda junto com a UF. A linha com UF e raio usa só os
+    municípios com raio; o ponto sem controle nessa amostra vai ao lado (auditoria 53)."""
     reg = Registro()
     W, H = 12.3, 3.95
     fig = plt.figure(figsize=(W, H))
     faixa = {"300": "Corte 0,300: R$ 10 → 15 mil", "400": "Corte 0,400: R$ 15 → 20 mil"}
     cods = [f"{p}_{c}_{s}" for p in ("HI1", "PL_H41", "PL_FRAC") for c, _ in CORTES_TXT for s in ("INF", "SUP")]
     xlim = _escala(num, cods)
-    rotulos = ["Sem controle (RDD)", "RDD com efeito fixo de UF", "Pareados na mesma UF"]
+    rotulos = ["Sem controle (RDD)", "RDD com UF e raio", "Pareados na mesma UF"]
     registro = []
     y_top, w_val, w_plot, w_rot = H - 0.06, 2.1, 2.5, 2.75
     blocos = (("300", 0.1, w_rot), ("400", 0.1 + w_rot + w_plot + w_val + 0.15, 0.0))
     y_fim = y_top
     for c, x, wr in blocos:
         linhas = [dict(est=f"HI1_{c}_TAU", inf=f"HI1_{c}_INF", sup=f"HI1_{c}_SUP"),
-                  dict(est=f"PL_H41_{c}_TAU", inf=f"PL_H41_{c}_INF", sup=f"PL_H41_{c}_SUP"),
+                  dict(est=f"PL_H41_{c}_TAU", inf=f"PL_H41_{c}_INF", sup=f"PL_H41_{c}_SUP",
+                       nota=f"sem controle nela: {_val(num, f'PL_H41_{c}_SC')}"),
                   dict(est=f"PL_FRAC_{c}_TAU", inf=f"PL_FRAC_{c}_INF", sup=f"PL_FRAC_{c}_SUP",
                        nota=f"{_val(num, f'PL_FRAC_{c}_NPAR')} pares")]
         for ln, rot in zip(linhas, rotulos):
@@ -2829,8 +2832,8 @@ def figura_fato(num: dict, destino: Path) -> dict:
           fontsize=11.5, color=TINTA2, va="center")
     _caixa_como_ler(fig, reg, W, ["ponto = lado de bolsa maior menos o de menor; barra = IC 95%. Barra que cruza o zero: "
                                   "não se detecta diferença.",
-                                  "Em 0,300, fixando a UF ou pareando municípios da mesma UF, o ponto deixa de ser "
-                                  "negativo: anda junto com a UF."], 0.28)
+                                  "UF e raio: UF e especialistas a 100 km; amostra menor (ao lado, sem controle nela). "
+                                  "Em 0,300, com a UF ou pareando, o ponto fica positivo."], 0.28)
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: HI_estimativas.csv (adendo 48b; doc 57n; auditoria 38); PL_estimativas.csv "
           "(adendo 48h; doc 57w; auditoria 47). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
     _salvar(fig, destino)
@@ -2853,8 +2856,8 @@ def figura_bolsa_mesma_uf(num: dict, destino: Path) -> dict:
     for k, x, wr in blocos:
         linhas = [dict(rot="Vagas da mesma UF" if wr else " ", est=f"VL1_{k}_RC", inf=f"VL1_{k}_RCI",
                        sup=f"VL1_{k}_RCS", nota=f"= {_val(num, f'VL1_{k}_K5')} km a menos"),
-                  dict(rot="Modelo base" if wr else " ", est=f"VLB_{k}_RC", inf=f"VLB_{k}_RCI", sup=f"VLB_{k}_RCS",
-                       base=True)]
+                  dict(rot="Pré-registrado (M1)" if wr else " ", est=f"VLB_{k}_RC", inf=f"VLB_{k}_RCI",
+                       sup=f"VLB_{k}_RCS", base=True)]
         reg.t(fig, (x + wr) / W, (y_top - 0.02) / H, tit[k], fontsize=13.5, weight="bold", color=VERDE_ESC,
               va="top")
         y, r = _bloco_log(fig, reg, num, W, H, x, y_top - 0.36, wr + w_plot + w_val, "", linhas, xlim,
@@ -2867,9 +2870,9 @@ def figura_bolsa_mesma_uf(num: dict, destino: Path) -> dict:
     reg.t(fig, (0.1 + w_rot) / W, (y_fim - 0.36) / H, "razão de chances (escala log); 1 = a bolsa não muda a escolha",
           fontsize=11.5, color=TINTA2, va="center")
     _caixa_como_ler(fig, reg, W, ["acima de 1: a vaga de bolsa maior é mais escolhida como 1ª opção; barra = IC 95%; "
-                                  "verde: exclui 1.",
-                                  "Mesma UF: só vagas da mesma UF, vistas por médicos da mesma UF de origem. Cinza "
-                                  "claro: modelo base."], 0.28)
+                                  "verde: exclui 1. Cinza: pré-registrado.",
+                                  "Mesma UF (adendo pós-resultado): vagas da mesma UF, a de origem ou outra, vistas "
+                                  "por médicos da mesma UF de origem."], 0.28)
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48). " + FONTE_FIG,
           fontsize=8.5, color=MUDO, va="bottom")
     _salvar(fig, destino)
@@ -2940,9 +2943,10 @@ def figura_robustez_escolha(num: dict, destino: Path) -> dict:
     quadro refeito (antigo, cinza claro), com distância em log, com região de saúde de origem e só perto do corte; à
     direita, origem − toda a bolsa (D_UF) por ciclo."""
     reg = Registro()
-    W, H = 12.3, 4.85
+    W, H = 12.3, 5.25
     fig = plt.figure(figsize=(W, H))
-    esq = [dict(rot="Ciclo 1", est="VC_M5C1_RC", inf="VC_M5C1_RCI", sup="VC_M5C1_RCS"),
+    esq = [dict(rot="Pré-registrado (M1)", est="VLB_EMP_RC", inf="VLB_EMP_RCI", sup="VLB_EMP_RCS"),
+           dict(rot="Ciclo 1", est="VC_M5C1_RC", inf="VC_M5C1_RCI", sup="VC_M5C1_RCS"),
            dict(rot="Ciclo 2", est="VC_M5C2_RC", inf="VC_M5C2_RCI", sup="VC_M5C2_RCS"),
            dict(rot="Ciclo 3", est="VC_M5C3_RC", inf="VC_M5C3_RCI", sup="VC_M5C3_RCS"),
            dict(rot="Ciclo 2, quadro refeito", est="VC_M5C2A_RC", inf="VC_M5C2A_RCI", sup="VC_M5C2A_RCS", base=True),
@@ -2964,8 +2968,8 @@ def figura_robustez_escolha(num: dict, destino: Path) -> dict:
           va="center")
     reg.t(fig, (w_esq + 0.35 + 0.85) / W, (y2 - 0.33) / H, "log-chance; 0 = pesam igual", fontsize=11.5,
           color=TINTA2, va="center")
-    _caixa_como_ler(fig, reg, W, ["Ciclo 1, 2 e 3: modelo base, um por ciclo. As três últimas: ciclos 1–3, vagas da "
-                                  "mesma UF. Barra = IC 95%; verde: exclui o nulo.",
+    _caixa_como_ler(fig, reg, W, ["1ª linha: pré-registrado (ciclos 1–3); depois, por ciclo. Três últimas: adendo "
+                                  "pós-resultado, mesma UF. Verde: IC 95% exclui o nulo.",
                                   "Cinza claro: ciclo 2 com o quadro de vagas refeito depois do resultado (versão "
                                   "antiga, só referência)."], 0.28)
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VC_estimativas.csv (adendo 52c; doc 57p; auditoria 41); VL_estimativas.csv "

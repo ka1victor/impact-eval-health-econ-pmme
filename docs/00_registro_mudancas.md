@@ -8,6 +8,36 @@
 
 ---
 
+## 27/10/2026 — Auditoria 53: deck novo da banca 2 (só a H2)
+
+Motivo: auditoria independente do deck curto com a hipótese única, já em uso pelo grupo, na véspera da banca.
+Veredito: **aprovado com correções**, todas aplicadas. Os números conferem com `output/`. As correções são de
+redação e de rótulo, e incorporam a auditoria 52:
+- amostra menor da linha com UF e raio no fato, com códigos novos `PL_H4*_SC` lidos de `PL_estimativas.csv`;
+- "cai à metade" (número fora de `output/`) trocado por números do registro;
+- cautela do slide 10 com o rótulo do quadro trocado;
+- dado e leitura separados na Discussão, com "sugerem" e "pacote do corte";
+- o VL-1 como "vagas da mesma UF, a de origem ou outra";
+- o M1 pré-registrado na frente do adendo nos slides 9 e 10;
+- "p 0,072" (família de um teste) no lugar de "Holm 0,072";
+- título do slide 9 sem "atrai".
+
+Os testes recuperaram as guardas antigas de redação.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/53_auditoria_deck_H2.md`](auditorias/53_auditoria_deck_H2.md) | auditoria do deck da H2: veredito, achados por gravidade, tabela de conferência e o que mudou |
+
+### Alterado (sem mudança estrutural)
+
+Docs 03, 04, 05 (§4.1), 06, 08 e README da banca 2; `scripts/apresentacao/gerar_figuras_banca2.py`;
+`tests/test_deck_curto_banca2.py`; figuras `curto_fato.png`, `curto_bolsa_mesma_uf.png` e
+`curto_robustez_escolha.png`; registro e manifestos; deck curto (`.pptx` e `.pdf`); `qa_render/`.
+
+---
+
 ## 27/10/2026 — Auditoria 52: análise completa da H2 (doc 66, script 51)
 
 Motivo: auditoria independente da análise da H2 antes da banca 2. Veredito: **aprovado com correções**. Os números

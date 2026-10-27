@@ -14728,6 +14728,29 @@
       "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
+    "PL_H41_300_SC": {
+      "valor": "−0,4",
+      "valor_bruto": -0.4034164970847142,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau_sem_controle",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,300: salto sem controle na mesma amostra (auditoria 53)",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
     "PL_H41_400_TAU": {
       "valor": "−4,2",
       "valor_bruto": -4.236024337827605,
@@ -14797,6 +14820,29 @@
       "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
+    "PL_H41_400_SC": {
+      "valor": "+1,8",
+      "valor_bruto": 1.832291804395432,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-1|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau_sem_controle",
+        "transf": [
+          [
+            "mul",
+            100
+          ]
+        ]
+      },
+      "formato": "d1s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-1 com efeito fixo de UF e o raio de 100 km, corte 0,400: salto sem controle na mesma amostra (auditoria 53)",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
     "PL_H42_300_TAU": {
       "valor": "−0,62",
       "valor_bruto": -0.6198541709186329,
@@ -14848,6 +14894,23 @@
       "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },
+    "PL_H42_300_SC": {
+      "valor": "−1,15",
+      "valor_bruto": -1.1453677447676907,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.300|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau_sem_controle"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,300: salto sem controle na mesma amostra (auditoria 53)",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
     "PL_H42_400_TAU": {
       "valor": "−0,08",
       "valor_bruto": -0.08030796096276224,
@@ -14896,6 +14959,23 @@
       },
       "formato": "d2s",
       "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,400: IC 95% superior",
+      "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
+      "hipotese_apresentacao": "H1"
+    },
+    "PL_H42_400_SC": {
+      "valor": "+0,02",
+      "valor_bruto": 0.024066398079137765,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/PL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/PL_estimativas.csv",
+        "filtro": {
+          "id_linha": "PH-4|HI-2|0.400|w=0.050|raio=100|exato="
+        },
+        "coluna": "tau_sem_controle"
+      },
+      "formato": "d2s",
+      "descricao": "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): PH-4, HI-2 com efeito fixo de UF e o raio de 100 km, corte 0,400: salto sem controle na mesma amostra (auditoria 53)",
       "auditoria": "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto",
       "hipotese_apresentacao": "H1"
     },

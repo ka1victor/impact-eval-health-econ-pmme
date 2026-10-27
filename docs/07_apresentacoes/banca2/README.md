@@ -20,8 +20,11 @@
 > **Hipótese única da versão final: a H2** (decisão do autor). Comece pelo
 > [guia do grupo](08_guia_do_grupo_H2.md) e pela [nova hipótese](07_nova_hipotese.md).
 > O corpo do deck tem só a H2; as antigas H1 e H3 vão para um apêndice rápido.
-> O deck com a H2 está pronto ([04](04_conteudo_deck_curto.md); 27/10/2026); a análise completa (doc 66) está em
-> preparação.
+> O deck com a H2 está pronto ([04](04_conteudo_deck_curto.md); 27/10/2026) e foi auditado
+> ([auditoria 53](../../auditorias/53_auditoria_deck_H2.md): aprovado com correções, já aplicadas). A análise
+> completa ([doc 66](../../06_execucao/66_analise_completa_H2.md)) está na `main`, com a auditoria 52 em curso; o
+> deck não depende dela. As linhas "Estado" e "Atualização" do cabeçalho acima são de 26/10 e valem só para o deck
+> completo (registro).
 
 > [!IMPORTANT]
 > **Versão final (decisão do autor de 26/10/2026):** só o **deck curto** é

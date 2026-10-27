@@ -2399,7 +2399,7 @@
         },
         {
           "painel": "Salto do preenchimento no corte 0,300 (p.p.)",
-          "linha": "0,300 · RDD com efeito fixo de UF",
+          "linha": "0,300 · RDD com UF e raio",
           "texto": "+5,4 [−11,0; +21,8]",
           "codigos": [
             "PL_H41_300_TAU",
@@ -2432,7 +2432,7 @@
         },
         {
           "painel": "Salto do preenchimento no corte 0,400 (p.p.)",
-          "linha": "0,400 · RDD com efeito fixo de UF",
+          "linha": "0,400 · RDD com UF e raio",
           "texto": "−4,2 [−21,1; +12,6]",
           "codigos": [
             "PL_H41_400_TAU",
@@ -2457,20 +2457,22 @@
         "Corte 0,300: R$ 10 → 15 mil",
         "Sem controle (RDD)",
         "−3,7 [−21,3; +13,9]",
-        "RDD com efeito fixo de UF",
+        "RDD com UF e raio",
         "+5,4 [−11,0; +21,8]",
+        "sem controle nela: −0,4",
         "Pareados na mesma UF",
         "+16,4 [−3,8; +36,6]",
         "25 pares",
         "Corte 0,400: R$ 15 → 20 mil",
         "−2,3 [−24,0; +19,4]",
         "−4,2 [−21,1; +12,6]",
+        "sem controle nela: +1,8",
         "−6,0 [−23,2; +11,5]",
         "29 pares",
         "p.p. das vagas imediatas preenchidas na 1ª chamada",
         "Como ler",
         "ponto = lado de bolsa maior menos o de menor; barra = IC 95%. Barra que cruza o zero: não se detecta diferença.",
-        "Em 0,300, fixando a UF ou pareando municípios da mesma UF, o ponto deixa de ser negativo: anda junto com a UF.",
+        "UF e raio: UF e especialistas a 100 km; amostra menor (ao lado, sem controle nela). Em 0,300, com a UF ou pareando, o ponto fica positivo.",
         "Fontes: HI_estimativas.csv (adendo 48b; doc 57n; auditoria 38); PL_estimativas.csv (adendo 48h; doc 57w; auditoria 47). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -2536,7 +2538,7 @@
         "Vagas da mesma UF",
         "1,47 [1,15; 1,89]",
         "= 75 km a menos",
-        "Modelo base",
+        "Pré-registrado (M1)",
         "1,25 [0,98; 1,61]",
         "Ciclo 2",
         "1,90 [1,30; 2,78]",
@@ -2544,8 +2546,8 @@
         "1,79 [1,19; 2,68]",
         "razão de chances (escala log); 1 = a bolsa não muda a escolha",
         "Como ler",
-        "acima de 1: a vaga de bolsa maior é mais escolhida como 1ª opção; barra = IC 95%; verde: exclui 1.",
-        "Mesma UF: só vagas da mesma UF, vistas por médicos da mesma UF de origem. Cinza claro: modelo base.",
+        "acima de 1: a vaga de bolsa maior é mais escolhida como 1ª opção; barra = IC 95%; verde: exclui 1. Cinza: pré-registrado.",
+        "Mesma UF (adendo pós-resultado): vagas da mesma UF, a de origem ou outra, vistas por médicos da mesma UF de origem.",
         "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -2607,6 +2609,17 @@
     },
     "curto_robustez_escolha.png": {
       "linhas": [
+        {
+          "painel": "Razão de chances por +R$ 5 mil",
+          "linha": "Razão de chances por +R$ 5 mil: Pré-registrado (M1)",
+          "texto": "1,25 [0,98; 1,61]",
+          "codigos": [
+            "VLB_EMP_RC",
+            "VLB_EMP_RCI",
+            "VLB_EMP_RCS"
+          ],
+          "exclui_nulo": false
+        },
         {
           "painel": "Razão de chances por +R$ 5 mil",
           "linha": "Razão de chances por +R$ 5 mil: Ciclo 1",
@@ -2720,6 +2733,8 @@
       ],
       "textos": [
         "Razão de chances por +R$ 5 mil",
+        "Pré-registrado (M1)",
+        "1,25 [0,98; 1,61]",
         "Ciclo 1",
         "1,07 [0,69; 1,65]",
         "Ciclo 2",
@@ -2744,7 +2759,7 @@
         "escala log; 1 = a bolsa não pesa",
         "log-chance; 0 = pesam igual",
         "Como ler",
-        "Ciclo 1, 2 e 3: modelo base, um por ciclo. As três últimas: ciclos 1–3, vagas da mesma UF. Barra = IC 95%; verde: exclui o nulo.",
+        "1ª linha: pré-registrado (ciclos 1–3); depois, por ciclo. Três últimas: adendo pós-resultado, mesma UF. Verde: IC 95% exclui o nulo.",
         "Cinza claro: ciclo 2 com o quadro de vagas refeito depois do resultado (versão antiga, só referência).",
         "Fontes: VC_estimativas.csv (adendo 52c; doc 57p; auditoria 41); VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
@@ -3188,7 +3203,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_fato.png",
-      "sha256": "d0548f811d250ad48f5119f66f2bee85dbda056f4376e30b99f825c6b254ae95",
+      "sha256": "2568922a3405b57a3d754161464cb3016d4aed42a9ac656a1c94da8d805257c8",
       "natureza": "EMPIRICO",
       "descricao": "deck curto, G-A (apêndice): o fato da antiga H1 por corte, sem controle, com efeito fixo de UF e pareando municípios da mesma UF (adendos 48b e 48h)",
       "fontes": [
@@ -3203,7 +3218,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
-      "sha256": "5c209e67811b3840c3c71dd24119316864aaea29f93343ef55c739033b4b697b",
+      "sha256": "7dc343c113818fce1d6361f8aada2945c10cbadc8859e780e6de685a2a844f1b",
       "natureza": "EMPIRICO",
       "descricao": "deck curto, G-C: razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF (adendo 52e), ciclos 1–3 e ciclo 2, com a versão base em cinza",
       "fontes": [
@@ -3231,7 +3246,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_robustez_escolha.png",
-      "sha256": "d5e64d30b4cb7955ef45b99cc9a89555f60740d83f41254d286ffbb337b3a17f",
+      "sha256": "992fa7cf3be13f6ef57ca328d548677de39a1c954818609e436ff81987bdacb7",
       "natureza": "EMPIRICO",
       "descricao": "deck curto, robustez da hipótese: por ciclo, quadro do ciclo 2, distância em log, região de saúde, perto do corte; origem − bolsa por ciclo",
       "fontes": [
@@ -3265,6 +3280,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "219ca3dec4a9cba9987b70646a4616db18f357e4b76979164473a85e0780404c"
+    "sha256": "74e3e0d37481365b1c9191e5113a942e4c807316e97a3109d47ff46e997a5f0a"
   }
 }
