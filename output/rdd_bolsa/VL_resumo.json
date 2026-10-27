@@ -1,0 +1,2394 @@
+{
+  "etapa": "VL_escolha_localizacao_par",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "ADENDO_52E_POS_RESULTADO",
+  "data_execucao": "2026-10-27",
+  "script": "scripts/rdd_bolsa/50_escolha_localizacao_par.py",
+  "adendo": {
+    "arquivo": "docs/06_execucao/52e_adendo_escolha_localizacao_par.md",
+    "sha256": "3023f3ffddfe44deafcebc6bcce3c1e01d8839026081b4873bb0c2f141a862f8",
+    "commit_de_congelamento": "243160d"
+  },
+  "protocolos": {
+    "docs/06_execucao/52_protocolo_P1_escolha_dap.md": "5eb6e1dc2a04e630a962fd9f7f70c71f3cbb00aa1d0c97a283a73459a292a622",
+    "docs/06_execucao/52b_protocolo_P1h_magnitudes.md": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b",
+    "docs/06_execucao/52c_adendo_vaga_imediata_ciclo2.md": "132f3dcacc07845eeccc2980b2f8955e8a5c21c7fb2e308b1e4e893eef9d48cc",
+    "docs/06_execucao/52d_adendo_sensibilidades_ciclo2_quadro_1302.md": "154adeac93add55a8ab85134b20dfdaded93c76993d85d5ec33b8e2963cd6376"
+  },
+  "conferencias": {
+    "versao_antiga_do_conjunto": {
+      "celulas": 1547,
+      "iguais_ao_quadro_19mar": 1547
+    },
+    "quadro_1302_contra_a36": {
+      "celulas_comparadas": 1547,
+      "celulas_em_so_uma_leitura": 0,
+      "celulas_com_vagas_imediatas_diferentes": 0
+    },
+    "correcao_ciclo2": {
+      "celulas_ciclo2_no_conjunto": 1545,
+      "celulas_sem_linha_no_quadro_1302": 0,
+      "celulas_com_vagas_imediatas_diferentes": 301,
+      "imputadas": 0
+    }
+  },
+  "decisoes": [
+    {
+      "data": "2026-10-27",
+      "item": "Como o efeito fixo do par de UFs entra no logit condicional",
+      "situacao": "O §2 pede efeito fixo de UF de origem × UF da vaga; no logit condicional só entra o que varia entre as alternativas do mesmo candidato.",
+      "resolucao": "A UF de origem é constante dentro do conjunto de cada candidato. Por isso o efeito fixo do par vira, para cada UF de origem, um indicador de UF da vaga próprio daquela origem: uma coluna por par (UF de origem, UF da vaga) presente no desenho, menos uma base por componente de pares de cada origem (pares ligados por candidatos que veem os dois; em geral, uma componente por origem; depois da retirada da decisão 2 pode haver mais), porque dentro de cada candidato os indicadores da sua componente somam 1. A base é o par da própria UF (origem = vaga) quando ele está na componente e tem escolha; senão, o par mais escolhido da componente (empate: menor código). Saem os termos do M1 que o par absorve: `mesma_uf` (função do par) e as quatro macrorregiões da vaga (função da UF da vaga). Ficam todos os outros termos do M1: bolsa linear, spline do IVS, vaga imediata e log das vagas imediatas, log da população, capital, estratos, distância por 100 km, mesma região de saúde e mesmo município. Estima-se com a função `estimar` do script 25, sem alteração (Newton, sanduíche por conjunto e por candidato), com os indicadores como colunas; coluna sem variação dentro de nenhum candidato é omitida, como no 25, e, se a matriz não tiver posto completo, a linha fica NAO_CONVERGIU, sem forçar nada. Os coeficientes dos pares não são relatados um a um (só a contagem). O D_UF do P1h não é identificado e fica relatado da especificação base (VL-5), como diz o §2."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Pares de UF sem nenhuma escolha e efeitos fixos separados",
+      "situacao": "Num par (origem, UF da vaga) que nenhum candidato daquela origem escolheu, a máxima verossimilhança do efeito fixo vai a menos infinito e o Newton não converge. O mesmo acontece, para mais infinito, com um conjunto S de pares de uma origem em que todo candidato que vê algum par de S escolheu em S e algum deles também vê pares fora de S (conferido antes de estimar: acontece em algumas linhas, sobretudo no VL-3).",
+      "resolucao": "No limite, a verossimilhança dos demais parâmetros é a do conjunto sem as alternativas que ficam com probabilidade zero (é a mesma retirada de efeitos fixos separados que fixest e ppmlhdfe fazem). Então: (a) saem as alternativas dos pares sem escolha; (b) para cada par p, S é o fecho de p (junta-se o par escolhido por cada candidato que vê S até não mudar); se algum candidato que vê S também vê pares fora de S, esses candidatos perdem as alternativas fora de S e continuam escolhendo dentro de S; (c) candidato que fica com uma só alternativa sai (não contribui para nada). Repete-se até não mudar. A escolha observada nunca sai do conjunto. Alternativas e candidatos retirados são contados por linha no resumo e no doc; nenhuma escolha é imputada."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Pares de UF sem variação de bolsa",
+      "situacao": "Num par em que todas as vagas que um candidato vê têm a mesma bolsa, o par não informa o peso da bolsa.",
+      "resolucao": "Esses pares ficam no modelo: identificam os controles (distância, mesma região, mesmo município, spline, porte, tipo de vaga) e o próprio efeito fixo, e não enviesam o peso da bolsa. Mas não contribuem para ele. O doc relata, por linha: pares no desenho; pares com escolha (os que ficam); pares com variação de bolsa (há um candidato daquela origem que vê, dentro do par, vagas com bolsas diferentes); candidatos com variação de bolsa dentro de algum par do seu conjunto (são os que identificam o peso da bolsa); e candidatos cuja 1ª opção está num par com variação no seu conjunto."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Distância no VL-1",
+      "situacao": "O parêntese do VL-1 no §2 diz \"log da distância\", mas o M1 do doc 57a (script 25) usa a distância linear por 100 km, e o VL-4 pede os km equivalentes \"como no P1h\", que só existem com o termo linear.",
+      "resolucao": "Leitura mais próxima dos scripts 25 e 42: o VL-1 é o M1, com a distância linear por 100 km. Como sensibilidade (secundária, no BKY), o VL-1 com log(1 + km) no lugar da distância, como no M2 do P1, nos ciclos 1–3 e no ciclo 2."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Ciclo 2 e referência de comparação",
+      "situacao": "O §1 manda usar o tipo de vaga do ciclo 2 do quadro de 13/02/2026 (52c); o §3 compara com o M1.",
+      "resolucao": "Todas as linhas novas usam o conjunto do P1 com a correção do ciclo 2 (função `corrigir` do 42). O VL-1 do ciclo 2 é o M1 da amostra do ciclo 2 (como o M5 do P1) com o efeito fixo do par. A referência do VL-1 e do VL-2 dos ciclos 1–3 é o M1 corrigido dos ciclos 1–3; a do ciclo 2 é o M5 do ciclo 2 corrigido (o \"M1 do ciclo 2\"), ambos do `VC_estimativas.csv`."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Janela e spline do IVS no VL-2",
+      "situacao": "O §2 diz: vagas com |IVS − corte| ≤ 0,050, os dois cortes juntos, com intercepto por corte, mesmo efeito fixo.",
+      "resolucao": "Como na robustez de janelas do E9 (doc 42, script 16): ficam as células com |s − 300| ≤ 50 ou |s − 400| ≤ 50, em milésimos de IVS (s = IVS oficial × 1000 arredondado, como no E9), e os candidatos cuja 1ª opção está nessas células. O spline do IVS é o mesmo do M1 (inclinação, mudança de inclinação em 0,300 e em 0,400, contínuo), restrito à janela. O intercepto por corte é `intercepto_corte_0400` = 1 se s > 350 (a célula com IVS exatamente 0,350 fica na janela do corte 0,300); no logit condicional um intercepto comum não existe, então um indicador basta. A bolsa continua linear. Mesmo efeito fixo do par e mesma retirada de pares sem escolha (decisão 2). O VL-2 dos ciclos 1–3 é a principal; o do ciclo 2 é secundário (entra no BKY e na figura)."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "VL-3",
+      "situacao": "O §2 pede VL-1 e VL-2 com efeito fixo de região de saúde de origem × UF da vaga.",
+      "resolucao": "Região de saúde (CIR do TabNet, o mesmo mapa do script 25) do município de origem do candidato × UF da vaga, com a mesma construção da decisão 1 (base por região: o par da UF da própria região, se tiver escolha). `mesma_uf` e as macrorregiões saem; `mesma_regiao_saude` fica (varia dentro do par da UF da própria região). Quatro linhas: VL-1 e VL-2, ciclos 1–3 e ciclo 2."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Inferência e score bootstrap",
+      "situacao": "O §2 pede cluster por conjunto de escolha como no 52c e, com poucos clusters, score bootstrap de Rademacher como no doc 42.",
+      "resolucao": "Principal: sanduíche CR1 por conjunto de escolha (curso × ciclo), fator G/(G − 1), p bilateral de H0: β = 0 pela normal, como no 52c; Holm nas três principais com esse p (como no script 42). Score bootstrap de Kline–Santos como no doc 42 (funções do script 16): ajuste restrito sob H0: β = 0 (a coluna da bolsa sai; com β0 = 0 não há offset), scores e informação no ponto restrito com todos os efeitos fixos, score da bolsa projetado fora dos demais parâmetros, somado por conjunto; Rademacher por enumeração completa se G ≤ 24, senão 199.999 sorteios com a semente do script 16; Webb também. Calculado nas três principais e nas referências (M1 dos ciclos 1–3 e do ciclo 2). Holm também nos p do Rademacher, como coluna de robustez; se as duas leituras divergirem, o doc diz. O IC por inversão do score não é calculado (cada ponto exige reajustar centenas de efeitos fixos); o IC relatado é o CR1."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Famílias de testes",
+      "situacao": "O §2 pede Holm entre as principais e BKY nas secundárias.",
+      "resolucao": "Holm: VL-1 ciclos 1–3, VL-1 ciclo 2 e VL-2 ciclos 1–3 (p bilateral do β). BKY: VL-2 ciclo 2, as quatro linhas do VL-3 e as duas do VL-1 com log da distância (p bilateral do β). O VL-4 (km equivalentes) é descritivo, com IC pelo método delta e por Fieller e sem teste, como o P1h-2. As referências (VL-5) e o M4 não entram em família."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Comparação com o M1",
+      "situacao": "O §3 lê se a razão de chances do VL é \"parecida\" com a do M1; os dois modelos são estimados nos mesmos dados (o VL num subconjunto dos candidatos e das alternativas do M1), e os dois β são correlacionados.",
+      "resolucao": "Para cada principal, a diferença do log da razão de chances (VL − referência) tem IC pelo sanduíche conjunto: as funções de influência do β de cada modelo, somadas por conjunto de escolha (zero no conjunto que só um dos modelos tem), com o mesmo fator G/(G − 1). É descritiva, fora do Holm, e ajuda a ler o §3."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Leitura do §3 por regra",
+      "situacao": "O §3 não fixa o que é \"parecida\", \"perto de 1\" nem \"IC muito largo\".",
+      "resolucao": "Para cada principal, contra a sua referência: (1) se o IC 95% da razão de chances do VL contém 1 e |log RC do VL| ≤ metade do |log RC da referência|: CAI_PARA_PERTO_DE_1 (2ª linha do §3); (2) senão, se a RC do VL está dentro do IC da referência e a da referência dentro do IC do VL: PARECIDA_COM_M1 (1ª linha); (3) senão, fora do §3 e só relatado: MAIOR_QUE_M1, SINAL_OPOSTO (IC que exclui 1 do outro lado) ou MENOR_QUE_M1_SEM_CHEGAR_A_1. Para o VL-2, IC_MUITO_LARGO quando a largura do IC em log é pelo menos 2 vezes a da referência (3ª linha). VL-4: a frase \"+R$ 5 mil pesa como X km a menos de distância, comparando vagas da mesma UF\", e, se o IC do β contém 0, o doc diz que o IC dos km também contém. Leitura geral: todas as principais PARECIDA_COM_M1 → a localização não explica o peso da bolsa; algum VL-1 CAI_PARA_PERTO_DE_1 → explica em parte; outro caso → misto, linha a linha."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Portão (VL-5) e tolerância",
+      "situacao": "O §4 pede reproduzir VL-5 contra `VC_*`/`P1_*` (≤ 1e−8) antes de qualquer conta nova.",
+      "resolucao": "Antes de qualquer linha nova: M1 e P1h-1 com o tipo de vaga antigo contra `P1_estimativas.csv` e `P1h_magnitudes.csv`; M1 dos ciclos 1–3, M1 do ciclo 2 (M5) e D_UF corrigidos contra `VC_estimativas.csv`; M4 dos ciclos 1–3 e km do M1 corrigidos contra `VD_estimativas.csv` (são as referências da figura). Diferença absoluta ≤ 1e−8 se o valor gravado tem módulo até 1, relativa se maior (os CSV têm 10 algarismos significativos), como na decisão 6 do 52d. Falhou, para. O M4 do ciclo 2 não existe gravado: é estimado como apoio da figura, sem teste."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Números do doc 57x",
+      "situacao": "O pedido do autor exige números só em blocos gerados.",
+      "resolucao": "Todo número de resultado do 57x vem de `VL_*` por `--atualizar-doc`, entre marcadores `<!-- VL:... -->`; o teste confere o doc contra o gerado e que não há número de resultado fora dos blocos."
+    }
+  ],
+  "notas_de_execucao": [
+    {
+      "data": "2026-10-27",
+      "item": "Ponto de partida do Newton nas linhas com efeito fixo de par",
+      "o_que": "A decisão 1 dizia que as linhas com par seriam estimadas com a função `estimar` do script 25 sem alteração. Na 1ª execução, o Newton dela, que parte de zero, levou os indicadores de pares com pouquíssimas escolhas a valores muito negativos já no 1º passo; a informação ficou numericamente singular, e uma linha parou como NAO_CONVERGIU. Nenhuma estimativa da bolsa dessa execução foi lida ou gravada (o script parou antes de gravar qualquer saída).",
+      "mudanca": "As linhas com par usam `estimar_ef`, que repete as etapas do `estimar` do 25 (colunas sem variação, posto, `ajustar_cl` com o mesmo critério de parada, covariâncias de MV e sanduíches) e só acrescenta o ponto de partida: os termos que não são de par, ajustados sem os indicadores, e as constantes de par que igualam escolhas previstas e observadas em cada par (contração de escala). A log-verossimilhança é côncava e a matriz tem posto completo, então o máximo é o mesmo; o resumo registra o gradiente máximo e o decremento de Newton finais de cada linha. As referências (M1, M4) continuam com o `estimar` do 25, sem mudança (portão)."
+    },
+    {
+      "data": "2026-10-27",
+      "item": "Ponto de partida do ajuste restrito do score bootstrap",
+      "o_que": "Pelo mesmo motivo, o Newton do ajuste restrito (sem a bolsa) partindo de zero chegava a uma informação singular.",
+      "mudanca": "O ajuste restrito parte da estimativa irrestrita sem a bolsa. O máximo restrito não muda."
+    }
+  ],
+  "especificacoes": {
+    "M1_emp": {
+      "id_vl": "VL-5",
+      "papel": "referencia",
+      "ciclo": "empilhado",
+      "ef": "nenhum",
+      "janela": false,
+      "dist": "linear",
+      "referencia": null
+    },
+    "M1_c2": {
+      "id_vl": "VL-5",
+      "papel": "referencia",
+      "ciclo": "2",
+      "ef": "nenhum",
+      "janela": false,
+      "dist": "linear",
+      "referencia": null
+    },
+    "M4_emp": {
+      "id_vl": "apoio",
+      "papel": "referencia_figura",
+      "ciclo": "empilhado",
+      "ef": "uf_vaga",
+      "janela": false,
+      "dist": "linear",
+      "referencia": null
+    },
+    "M4_c2": {
+      "id_vl": "apoio",
+      "papel": "referencia_figura",
+      "ciclo": "2",
+      "ef": "uf_vaga",
+      "janela": false,
+      "dist": "linear",
+      "referencia": null
+    },
+    "VL1_emp": {
+      "id_vl": "VL-1",
+      "papel": "principal",
+      "ciclo": "empilhado",
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "linear",
+      "referencia": "M1_emp"
+    },
+    "VL1_c2": {
+      "id_vl": "VL-1",
+      "papel": "principal",
+      "ciclo": "2",
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "linear",
+      "referencia": "M1_c2"
+    },
+    "VL2_emp": {
+      "id_vl": "VL-2",
+      "papel": "principal",
+      "ciclo": "empilhado",
+      "ef": "uf_origem",
+      "janela": true,
+      "dist": "linear",
+      "referencia": "M1_emp"
+    },
+    "VL2_c2": {
+      "id_vl": "VL-2",
+      "papel": "secundaria",
+      "ciclo": "2",
+      "ef": "uf_origem",
+      "janela": true,
+      "dist": "linear",
+      "referencia": "M1_c2"
+    },
+    "VL3_VL1_emp": {
+      "id_vl": "VL-3",
+      "papel": "secundaria",
+      "ciclo": "empilhado",
+      "ef": "cir_origem",
+      "janela": false,
+      "dist": "linear",
+      "referencia": "M1_emp"
+    },
+    "VL3_VL1_c2": {
+      "id_vl": "VL-3",
+      "papel": "secundaria",
+      "ciclo": "2",
+      "ef": "cir_origem",
+      "janela": false,
+      "dist": "linear",
+      "referencia": "M1_c2"
+    },
+    "VL3_VL2_emp": {
+      "id_vl": "VL-3",
+      "papel": "secundaria",
+      "ciclo": "empilhado",
+      "ef": "cir_origem",
+      "janela": true,
+      "dist": "linear",
+      "referencia": "M1_emp"
+    },
+    "VL3_VL2_c2": {
+      "id_vl": "VL-3",
+      "papel": "secundaria",
+      "ciclo": "2",
+      "ef": "cir_origem",
+      "janela": true,
+      "dist": "linear",
+      "referencia": "M1_c2"
+    },
+    "VL1log_emp": {
+      "id_vl": "VL-1 (log da distância)",
+      "papel": "secundaria",
+      "ciclo": "empilhado",
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "log",
+      "referencia": "M1_emp"
+    },
+    "VL1log_c2": {
+      "id_vl": "VL-1 (log da distância)",
+      "papel": "secundaria",
+      "ciclo": "2",
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "log",
+      "referencia": "M1_c2"
+    }
+  },
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/52e_adendo_escolha_localizacao_par.md",
+      "sha256": "3023f3ffddfe44deafcebc6bcce3c1e01d8839026081b4873bb0c2f141a862f8",
+      "bytes": 4065,
+      "papel": "adendo 52e (especificação, somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-27",
+      "cobertura": "§1–§5",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52c_adendo_vaga_imediata_ciclo2.md",
+      "sha256": "132f3dcacc07845eeccc2980b2f8955e8a5c21c7fb2e308b1e4e893eef9d48cc",
+      "bytes": 1871,
+      "papel": "adendo 52c (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§3",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52d_adendo_sensibilidades_ciclo2_quadro_1302.md",
+      "sha256": "154adeac93add55a8ab85134b20dfdaded93c76993d85d5ec33b8e2963cd6376",
+      "bytes": 3544,
+      "papel": "adendo 52d (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§5",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52_protocolo_P1_escolha_dap.md",
+      "sha256": "5eb6e1dc2a04e630a962fd9f7f70c71f3cbb00aa1d0c97a283a73459a292a622",
+      "bytes": 17167,
+      "papel": "protocolo 52 (P1; somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52b_protocolo_P1h_magnitudes.md",
+      "sha256": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b",
+      "bytes": 5306,
+      "papel": "protocolo 52b (P1h; somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8",
+      "bytes": 157862,
+      "papel": "quadro do ciclo 2, retificado de 13/02/2026 (vigente na inscrição)",
+      "fonte": "Chamamento SGTES/MS nº 1/2026 (página oficial)",
+      "data_referencia": "2026-02-13",
+      "cobertura": "1547 células CNES × curso",
+      "unidade": "célula",
+      "chaves": "CNES (7 dígitos) × código do curso",
+      "filtros": "coluna TOTAL de vagas imediatas"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "bytes": 153185,
+      "papel": "quadro do ciclo 2, retificado de 19/03/2026 (lido pelo 42; versão antiga)",
+      "fonte": "idem",
+      "data_referencia": "2026-03-19",
+      "cobertura": "1547 células",
+      "unidade": "célula",
+      "chaves": "CNES × curso",
+      "filtros": "coluna TOTAL de vagas imediatas"
+    },
+    {
+      "caminho": "output/auditoria_H1/a36_celulas.csv",
+      "sha256": "9921cf98f32563de9e54c9630831fdf913cd2923944c33044cb8effce1aaf225",
+      "bytes": 974585,
+      "papel": "leitura independente da auditoria 36 (conferência do quadro de 13/02 pelo 42)",
+      "fonte": "auditoria 36",
+      "data_referencia": "2026-10-26",
+      "cobertura": "células dos ciclos 1–3",
+      "unidade": "célula",
+      "chaves": "cnes, cod_curso",
+      "filtros": "ciclo = 2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1_estimativas.csv",
+      "sha256": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+      "bytes": 159285,
+      "papel": "alvo do portão (M1 antigo)",
+      "fonte": "script 25",
+      "data_referencia": "2026-10-23",
+      "cobertura": "M1, coeficientes",
+      "unidade": "especificação × termo",
+      "chaves": "modelo, ciclo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "sha256": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
+      "bytes": 8254,
+      "papel": "alvo do portão (P1h-1 antigo)",
+      "fonte": "script 25c",
+      "data_referencia": "2026-10-26",
+      "cobertura": "P1h-1",
+      "unidade": "linha",
+      "chaves": "id_linha, modelo, ciclo, componente",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VC_estimativas.csv",
+      "sha256": "c32e5ef3ed614861dfd7976c558ebd23eeb076a59a521368385f7ad4ffb2d451",
+      "bytes": 67641,
+      "papel": "alvo do portão (M1, M5 do ciclo 2 e D_UF corrigidos)",
+      "fonte": "script 42",
+      "data_referencia": "2026-10-26",
+      "cobertura": "M1 e M5_2, corrigida",
+      "unidade": "especificação × termo",
+      "chaves": "versao, chave_modelo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VD_estimativas.csv",
+      "sha256": "3b512c0849ed9f0ef3a2345cfbc9dd12c7bc88395f60f02ee4250030634b19ef",
+      "bytes": 246582,
+      "papel": "alvo do portão (M4 e km do M1 corrigidos)",
+      "fonte": "script 48",
+      "data_referencia": "2026-10-26",
+      "cobertura": "M4 e M1, corrigida",
+      "unidade": "especificação × termo",
+      "chaves": "versao, chave_modelo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/42_escolha_vaga_imediata_c2.py",
+      "sha256": "a4f35ab12a28e4e8cb3f3dbf0a8ec30978317d70ea6af6985bdad44aa2092cb4",
+      "bytes": 69396,
+      "papel": "funções do adendo 52c (importadas sem alteração)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",
+      "sha256": "54b1127cb69c60dec55456dea30ca4395a90ad052ccf5382ac819e7b48756caa",
+      "bytes": 97648,
+      "papel": "funções do E9 (score bootstrap; importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/25_escolha_dap.py",
+      "sha256": "39ffe79eed91ece5b5fd8f63588efbc0a231f0226d140ba54953a7921d70d98d",
+      "bytes": 131512,
+      "papel": "funções do P1 (importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/25c_magnitudes_P1h.py",
+      "sha256": "36d1ce034a8777e35a70f8c5cbc92d1141b466989f0351f5cc537f34c9314ff8",
+      "bytes": 52248,
+      "papel": "funções do P1h (importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos (1ª opção)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "resultados da 1ª chamada",
+      "cobertura": "9849 linhas",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "posto 1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "bytes": 63077,
+      "papel": "conjunto de escolha principal; ciclo 2 corrigido em memória (52c)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "quadros da 1ª chamada",
+      "cobertura": "5134 células com IVS",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "como no P1"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "IVS 2010 oficial (a08)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "município de origem (G1)",
+      "fonte": "portão G1",
+      "data_referencia": "referências 202506, 202510, 202602",
+      "cobertura": "5776 candidatos",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "bytes": 166732,
+      "papel": "conferência das distâncias",
+      "fonte": "portão G1",
+      "data_referencia": "idem",
+      "cobertura": "candidato × opção",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "região de saúde (CIR), só lido",
+      "fonte": "DATASUS/TabNet",
+      "data_referencia": "2026-10-19T10:44:54Z",
+      "cobertura": "5606 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge → co_cir",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json",
+      "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+      "bytes": 1685039,
+      "papel": "centroides municipais do IBGE, só lido",
+      "fonte": "IBGE, API de malhas v3",
+      "data_referencia": "2026-10-19",
+      "cobertura": "5570 municípios",
+      "unidade": "município",
+      "chaves": "id",
+      "filtros": "centroide"
+    }
+  ],
+  "integridade": "nada simulado nem imputado; data/ só lido; IVS do a08 (o arquivo local de IVS da auditoria 16 não é lido); só agregados em output/ (sem nome, CPF, CRM nem pseudônimo de candidato); saídas E9_*, P1_*, P1h_*, VC_* e VD_* não regravadas",
+  "linguagem": "escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte e o incentivo marginal; a origem é preferência revelada, não efeito causal; não é efeito da participação no PMM-E",
+  "tempo_execucao_nao_registrado": "fora do resumo para que duas execuções deem o mesmo hash",
+  "portao": {
+    "status": "PASSOU",
+    "tolerancia": 1e-08,
+    "regra": "M1 e P1h-1 com o tipo de vaga antigo contra P1_estimativas.csv e P1h_magnitudes.csv; M1 dos ciclos 1–3, M1 do ciclo 2 (M5) e D_UF corrigidos contra VC_estimativas.csv; M4 dos ciclos 1–3 e K5, K10 do M1 corrigidos contra VD_estimativas.csv; diferença absoluta ≤ 1e−8 se o valor gravado tem módulo ≤ 1, relativa ≤ 1e−8 se maior; NaN só casa com NaN",
+    "linhas": [
+      {
+        "linha": "M1_antiga",
+        "contra": "P1_estimativas.csv (M1, ciclos 1–3, coeficientes)",
+        "casou": true,
+        "dif_max_coef": 1.970275375548772e-10,
+        "dif_max_ep_cluster_conjunto": 4.6250975271888706e-11,
+        "dif_max_ep_mle": 3.3080704842092246e-11,
+        "dif_max_ep_cluster_candidato": 4.853943635918512e-11,
+        "passou": true
+      },
+      {
+        "linha": "P1h-1_antiga",
+        "contra": "P1h_magnitudes.csv (P1h-1)",
+        "casou": true,
+        "dif_max_estimativa": 4.338992030485666e-11,
+        "dif_max_ep_cluster_conjunto": 2.6555396770433504e-11,
+        "dif_max_ep_mle": 3.4968944406799096e-11,
+        "dif_max_ep_cluster_candidato": 3.565878148314994e-11,
+        "dif_max_ic95_inf": 3.0016897006323984e-10,
+        "dif_max_ic95_sup": 1.2380010853575908e-10,
+        "dif_max_li95_unilateral": 1.425933275868428e-10,
+        "dif_max_p_unilateral": 4.39892931727428e-31,
+        "passou": true
+      },
+      {
+        "linha": "M1_emp_corrigida",
+        "contra": "VC_estimativas.csv (corrigida, M1: coeficientes, razão de chances e D_UF)",
+        "casou": true,
+        "dif_max_coef": 1.581669581257048e-10,
+        "dif_max_ep_cluster_conjunto": 4.986305812693104e-11,
+        "dif_max_ep_mle": 4.8958087583983456e-11,
+        "dif_max_ep_cluster_candidato": 4.63344362877649e-11,
+        "dif_max_rc_estimativa": 3.65443994977968e-10,
+        "dif_max_rc_ic95_inf": 1.5402124020624797e-11,
+        "dif_max_rc_ic95_sup": 2.876782335224594e-10,
+        "dif_max_rc_p": 5.174471962021698e-13,
+        "dif_max_duf_estimativa": 2.432409204508792e-10,
+        "dif_max_duf_ep_cluster_conjunto": 2.9653779431981775e-11,
+        "dif_max_duf_ic95_inf": 2.777574945833495e-10,
+        "dif_max_duf_ic95_sup": 1.4840021378735586e-10,
+        "dif_max_duf_p_unilateral": 8.626193998591764e-28,
+        "passou": true
+      },
+      {
+        "linha": "M1_c2_corrigida",
+        "contra": "VC_estimativas.csv (corrigida, M5_2: coeficientes, razão de chances e D_UF)",
+        "casou": true,
+        "dif_max_coef": 2.73642640897643e-10,
+        "dif_max_ep_cluster_conjunto": 4.8988452183706954e-11,
+        "dif_max_ep_mle": 4.993327973323858e-11,
+        "dif_max_ep_cluster_candidato": 4.387896990198925e-11,
+        "dif_max_rc_estimativa": 2.0108384319241136e-11,
+        "dif_max_rc_ic95_inf": 3.320033479566596e-10,
+        "dif_max_rc_ic95_sup": 7.252732865510257e-11,
+        "dif_max_rc_p": 8.71741914765245e-14,
+        "dif_max_duf_estimativa": 4.1048743303206086e-10,
+        "dif_max_duf_ep_cluster_conjunto": 3.768513279212016e-11,
+        "dif_max_duf_ic95_inf": 6.5782934655089775e-12,
+        "dif_max_duf_ic95_sup": 2.2517987373304184e-10,
+        "dif_max_duf_p_unilateral": 2.1747631907126364e-14,
+        "passou": true
+      },
+      {
+        "linha": "M4_emp_corrigida",
+        "contra": "VD_estimativas.csv (corrigida, M4: coeficientes e razão de chances)",
+        "casou": true,
+        "dif_max_coef": 3.456319790305566e-10,
+        "dif_max_ep_cluster_conjunto": 4.8049245138237495e-11,
+        "dif_max_ep_mle": 4.738504033596769e-11,
+        "dif_max_ep_cluster_candidato": 4.947381393449746e-11,
+        "dif_max_rc_estimativa": 2.5085290709437973e-10,
+        "dif_max_rc_ic95_inf": 6.662798889315375e-11,
+        "dif_max_rc_ic95_sup": 1.9168241020558213e-10,
+        "passou": true
+      },
+      {
+        "linha": "K5_M1_emp_corrigida",
+        "contra": "VD_estimativas.csv (corrigida, km equivalentes do M1)",
+        "casou": true,
+        "dif_max_estimativa": 1.2979733157072924e-10,
+        "dif_max_ep_cluster_conjunto": 2.505535947826806e-11,
+        "dif_max_ic95_inf": 3.633629459915048e-10,
+        "dif_max_ic95_sup": 1.4544305225683267e-10,
+        "dif_max_ic95_fieller_inf": 4.543617307219821e-10,
+        "dif_max_ic95_fieller_sup": 2.992819338298846e-12,
+        "passou": true
+      },
+      {
+        "linha": "K10_M1_emp_corrigida",
+        "contra": "VD_estimativas.csv (corrigida, km equivalentes do M1)",
+        "casou": true,
+        "dif_max_estimativa": 1.2979733157072924e-10,
+        "dif_max_ep_cluster_conjunto": 2.738178901209369e-10,
+        "dif_max_ic95_inf": 4.159014643645011e-11,
+        "dif_max_ic95_sup": 5.458382552941523e-11,
+        "dif_max_ic95_fieller_inf": 1.1222316458169346e-11,
+        "dif_max_ic95_fieller_sup": 2.992819338298846e-12,
+        "passou": true
+      }
+    ]
+  },
+  "identificacao": {
+    "VL1_emp": {
+      "identificacao": {
+        "pares_no_desenho": 729,
+        "pares_com_escolha": 281,
+        "pares_retirados": 448,
+        "alternativas_no_desenho": 932577,
+        "alternativas_retiradas": 353579,
+        "alternativas_retiradas_par_sem_escolha": 353575,
+        "alternativas_retiradas_por_separacao": 0,
+        "candidatos_com_alternativas_retiradas_por_separacao": 0,
+        "candidatos_no_desenho": 5421,
+        "candidatos_retirados_uma_so_alternativa": 4,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 254,
+        "componentes_com_base": 27,
+        "bases_no_par_da_propria_uf": 27,
+        "pares_no_modelo": 281,
+        "pares_com_variacao_de_bolsa": 260,
+        "pares_sem_variacao_de_bolsa": 21,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 5417,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 5345,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 3937,
+        "alternativas_no_modelo": 578998
+      }
+    },
+    "VL1_c2": {
+      "identificacao": {
+        "pares_no_desenho": 729,
+        "pares_com_escolha": 169,
+        "pares_retirados": 560,
+        "alternativas_no_desenho": 380022,
+        "alternativas_retiradas": 206411,
+        "alternativas_retiradas_par_sem_escolha": 206094,
+        "alternativas_retiradas_por_separacao": 297,
+        "candidatos_com_alternativas_retiradas_por_separacao": 24,
+        "candidatos_no_desenho": 2032,
+        "candidatos_retirados_uma_so_alternativa": 20,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 140,
+        "componentes_com_base": 29,
+        "bases_no_par_da_propria_uf": 27,
+        "pares_no_modelo": 169,
+        "pares_com_variacao_de_bolsa": 151,
+        "pares_sem_variacao_de_bolsa": 18,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 2012,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 1956,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 1509,
+        "alternativas_no_modelo": 173611
+      }
+    },
+    "VL2_emp": {
+      "janela": {
+        "celulas_no_conjunto": 5125,
+        "celulas_na_janela": 3374,
+        "candidatos": 5421,
+        "candidatos_com_1a_opcao_na_janela": 4329
+      },
+      "identificacao": {
+        "pares_no_desenho": 718,
+        "pares_com_escolha": 240,
+        "pares_retirados": 478,
+        "alternativas_no_desenho": 487530,
+        "alternativas_retiradas": 188030,
+        "alternativas_retiradas_par_sem_escolha": 187009,
+        "alternativas_retiradas_por_separacao": 980,
+        "candidatos_com_alternativas_retiradas_por_separacao": 66,
+        "candidatos_no_desenho": 4329,
+        "candidatos_retirados_uma_so_alternativa": 41,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 207,
+        "componentes_com_base": 33,
+        "bases_no_par_da_propria_uf": 26,
+        "pares_no_modelo": 240,
+        "pares_com_variacao_de_bolsa": 215,
+        "pares_sem_variacao_de_bolsa": 25,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 4288,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 4143,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 2935,
+        "alternativas_no_modelo": 299500
+      }
+    },
+    "VL2_c2": {
+      "janela": {
+        "celulas_no_conjunto": 1545,
+        "celulas_na_janela": 981,
+        "candidatos": 2032,
+        "candidatos_com_1a_opcao_na_janela": 1645
+      },
+      "identificacao": {
+        "pares_no_desenho": 675,
+        "pares_com_escolha": 143,
+        "pares_retirados": 532,
+        "alternativas_no_desenho": 191709,
+        "alternativas_retiradas": 103595,
+        "alternativas_retiradas_par_sem_escolha": 103317,
+        "alternativas_retiradas_por_separacao": 229,
+        "candidatos_com_alternativas_retiradas_por_separacao": 24,
+        "candidatos_no_desenho": 1645,
+        "candidatos_retirados_uma_so_alternativa": 49,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 113,
+        "componentes_com_base": 30,
+        "bases_no_par_da_propria_uf": 25,
+        "pares_no_modelo": 143,
+        "pares_com_variacao_de_bolsa": 121,
+        "pares_sem_variacao_de_bolsa": 22,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 1596,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 1543,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 1128,
+        "alternativas_no_modelo": 88114
+      }
+    },
+    "VL3_VL1_emp": {
+      "identificacao": {
+        "pares_no_desenho": 8037,
+        "pares_com_escolha": 787,
+        "pares_retirados": 7250,
+        "alternativas_no_desenho": 932577,
+        "alternativas_retiradas": 568092,
+        "alternativas_retiradas_par_sem_escolha": 566412,
+        "alternativas_retiradas_por_separacao": 1619,
+        "candidatos_com_alternativas_retiradas_por_separacao": 105,
+        "candidatos_no_desenho": 5421,
+        "candidatos_retirados_uma_so_alternativa": 61,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 444,
+        "componentes_com_base": 343,
+        "bases_no_par_da_propria_uf": 287,
+        "pares_no_modelo": 787,
+        "pares_com_variacao_de_bolsa": 692,
+        "pares_sem_variacao_de_bolsa": 95,
+        "origens_no_modelo": 316,
+        "origens_com_algum_par_com_variacao": 283,
+        "candidatos_no_modelo": 5360,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 5073,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 3937,
+        "alternativas_no_modelo": 364485
+      }
+    },
+    "VL3_VL1_c2": {
+      "identificacao": {
+        "pares_no_desenho": 5841,
+        "pares_com_escolha": 427,
+        "pares_retirados": 5414,
+        "alternativas_no_desenho": 380022,
+        "alternativas_retiradas": 276999,
+        "alternativas_retiradas_par_sem_escolha": 276054,
+        "alternativas_retiradas_por_separacao": 914,
+        "candidatos_com_alternativas_retiradas_por_separacao": 74,
+        "candidatos_no_desenho": 2032,
+        "candidatos_retirados_uma_so_alternativa": 31,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 196,
+        "componentes_com_base": 231,
+        "bases_no_par_da_propria_uf": 193,
+        "pares_no_modelo": 427,
+        "pares_com_variacao_de_bolsa": 372,
+        "pares_sem_variacao_de_bolsa": 55,
+        "origens_no_modelo": 225,
+        "origens_com_algum_par_com_variacao": 196,
+        "candidatos_no_modelo": 2001,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 1862,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 1509,
+        "alternativas_no_modelo": 103023
+      }
+    },
+    "VL3_VL2_emp": {
+      "janela": {
+        "celulas_no_conjunto": 5125,
+        "celulas_na_janela": 3374,
+        "candidatos": 5421,
+        "candidatos_com_1a_opcao_na_janela": 4329
+      },
+      "identificacao": {
+        "pares_no_desenho": 6195,
+        "pares_com_escolha": 614,
+        "pares_retirados": 5581,
+        "alternativas_no_desenho": 487530,
+        "alternativas_retiradas": 292329,
+        "alternativas_retiradas_par_sem_escolha": 290450,
+        "alternativas_retiradas_por_separacao": 1766,
+        "candidatos_com_alternativas_retiradas_por_separacao": 135,
+        "candidatos_no_desenho": 4329,
+        "candidatos_retirados_uma_so_alternativa": 113,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 330,
+        "componentes_com_base": 284,
+        "bases_no_par_da_propria_uf": 216,
+        "pares_no_modelo": 614,
+        "pares_com_variacao_de_bolsa": 538,
+        "pares_sem_variacao_de_bolsa": 76,
+        "origens_no_modelo": 261,
+        "origens_com_algum_par_com_variacao": 231,
+        "candidatos_no_modelo": 4216,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 3933,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 2935,
+        "alternativas_no_modelo": 195201
+      }
+    },
+    "VL3_VL2_c2": {
+      "janela": {
+        "celulas_no_conjunto": 1545,
+        "celulas_na_janela": 981,
+        "candidatos": 2032,
+        "candidatos_com_1a_opcao_na_janela": 1645
+      },
+      "identificacao": {
+        "pares_no_desenho": 4256,
+        "pares_com_escolha": 329,
+        "pares_retirados": 3927,
+        "alternativas_no_desenho": 191709,
+        "alternativas_retiradas": 137641,
+        "alternativas_retiradas_par_sem_escolha": 136944,
+        "alternativas_retiradas_por_separacao": 627,
+        "candidatos_com_alternativas_retiradas_por_separacao": 58,
+        "candidatos_no_desenho": 1645,
+        "candidatos_retirados_uma_so_alternativa": 70,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 146,
+        "componentes_com_base": 183,
+        "bases_no_par_da_propria_uf": 142,
+        "pares_no_modelo": 329,
+        "pares_com_variacao_de_bolsa": 276,
+        "pares_sem_variacao_de_bolsa": 53,
+        "origens_no_modelo": 177,
+        "origens_com_algum_par_com_variacao": 153,
+        "candidatos_no_modelo": 1575,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 1451,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 1128,
+        "alternativas_no_modelo": 54068
+      }
+    },
+    "VL1log_emp": {
+      "identificacao": {
+        "pares_no_desenho": 729,
+        "pares_com_escolha": 281,
+        "pares_retirados": 448,
+        "alternativas_no_desenho": 932577,
+        "alternativas_retiradas": 353579,
+        "alternativas_retiradas_par_sem_escolha": 353575,
+        "alternativas_retiradas_por_separacao": 0,
+        "candidatos_com_alternativas_retiradas_por_separacao": 0,
+        "candidatos_no_desenho": 5421,
+        "candidatos_retirados_uma_so_alternativa": 4,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 254,
+        "componentes_com_base": 27,
+        "bases_no_par_da_propria_uf": 27,
+        "pares_no_modelo": 281,
+        "pares_com_variacao_de_bolsa": 260,
+        "pares_sem_variacao_de_bolsa": 21,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 5417,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 5345,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 3937,
+        "alternativas_no_modelo": 578998
+      }
+    },
+    "VL1log_c2": {
+      "identificacao": {
+        "pares_no_desenho": 729,
+        "pares_com_escolha": 169,
+        "pares_retirados": 560,
+        "alternativas_no_desenho": 380022,
+        "alternativas_retiradas": 206411,
+        "alternativas_retiradas_par_sem_escolha": 206094,
+        "alternativas_retiradas_por_separacao": 297,
+        "candidatos_com_alternativas_retiradas_por_separacao": 24,
+        "candidatos_no_desenho": 2032,
+        "candidatos_retirados_uma_so_alternativa": 20,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 140,
+        "componentes_com_base": 29,
+        "bases_no_par_da_propria_uf": 27,
+        "pares_no_modelo": 169,
+        "pares_com_variacao_de_bolsa": 151,
+        "pares_sem_variacao_de_bolsa": 18,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 2012,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 1956,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 1509,
+        "alternativas_no_modelo": 173611
+      }
+    }
+  },
+  "score_bootstrap": {
+    "VL1_emp": {
+      "status": "EXECUTADO",
+      "g": 55,
+      "t_score": 2.2024732315652558,
+      "p_rademacher": 0.011250056250281252,
+      "metodo_rademacher": "199999 sorteios, semente 20261018",
+      "n_rademacher": 199999,
+      "p_webb": 0.011435057175285876,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 5,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    },
+    "VL1_c2": {
+      "status": "EXECUTADO",
+      "g": 16,
+      "t_score": 1.8258121551854722,
+      "p_rademacher": 0.0035400390625,
+      "metodo_rademacher": "enumeração completa dos 2^G sinais",
+      "n_rademacher": 65536,
+      "p_webb": 0.010760053800269,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 6,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    },
+    "VL2_emp": {
+      "status": "EXECUTADO",
+      "g": 55,
+      "t_score": 1.3669825936568725,
+      "p_rademacher": 0.1829559147795739,
+      "metodo_rademacher": "199999 sorteios, semente 20261018",
+      "n_rademacher": 199999,
+      "p_webb": 0.1813159065795329,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 5,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    },
+    "M1_emp": {
+      "status": "EXECUTADO",
+      "g": 56,
+      "t_score": 1.5100720152564,
+      "p_rademacher": 0.12154560772803864,
+      "metodo_rademacher": "199999 sorteios, semente 20261018",
+      "n_rademacher": 199999,
+      "p_webb": 0.12066060330301652,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 5,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    },
+    "M1_c2": {
+      "status": "EXECUTADO",
+      "g": 16,
+      "t_score": 1.7014393214110008,
+      "p_rademacher": 0.0074462890625,
+      "metodo_rademacher": "enumeração completa dos 2^G sinais",
+      "n_rademacher": 65536,
+      "p_webb": 0.015225076125380627,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 5,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    }
+  },
+  "convergencia": {
+    "M1_antiga": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 9,
+      "omitidas": [],
+      "n_efeitos_fixos": 0,
+      "grad_max": null,
+      "decremento_final": null,
+      "partida": "zero (estimar do script 25)",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "macro_centro_oeste",
+        "macro_nordeste",
+        "macro_norte",
+        "macro_sul",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "M1_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 9,
+      "omitidas": [],
+      "n_efeitos_fixos": 0,
+      "grad_max": null,
+      "decremento_final": null,
+      "partida": "zero (estimar do script 25)",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "macro_centro_oeste",
+        "macro_nordeste",
+        "macro_norte",
+        "macro_sul",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "M1_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 9,
+      "omitidas": [],
+      "n_efeitos_fixos": 0,
+      "grad_max": null,
+      "decremento_final": null,
+      "partida": "zero (estimar do script 25)",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "macro_centro_oeste",
+        "macro_nordeste",
+        "macro_norte",
+        "macro_sul",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "M4_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 10,
+      "omitidas": [],
+      "n_efeitos_fixos": 0,
+      "grad_max": null,
+      "decremento_final": null,
+      "partida": "zero (estimar do script 25)",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "uf_11",
+        "uf_12",
+        "uf_13",
+        "uf_14",
+        "uf_15",
+        "uf_16",
+        "uf_17",
+        "uf_21",
+        "uf_22",
+        "uf_23",
+        "uf_24",
+        "uf_25",
+        "uf_26",
+        "uf_27",
+        "uf_28",
+        "uf_29",
+        "uf_32",
+        "uf_33",
+        "uf_35",
+        "uf_41",
+        "uf_42",
+        "uf_43",
+        "uf_50",
+        "uf_51",
+        "uf_52",
+        "uf_53",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "M4_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 10,
+      "omitidas": [],
+      "n_efeitos_fixos": 0,
+      "grad_max": null,
+      "decremento_final": null,
+      "partida": "zero (estimar do script 25)",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "uf_11",
+        "uf_12",
+        "uf_13",
+        "uf_14",
+        "uf_15",
+        "uf_16",
+        "uf_17",
+        "uf_21",
+        "uf_22",
+        "uf_23",
+        "uf_24",
+        "uf_25",
+        "uf_26",
+        "uf_27",
+        "uf_28",
+        "uf_29",
+        "uf_32",
+        "uf_33",
+        "uf_35",
+        "uf_41",
+        "uf_42",
+        "uf_43",
+        "uf_50",
+        "uf_51",
+        "uf_52",
+        "uf_53",
+        "distancia_100km",
+        "mesma_uf",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VL1_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 254,
+      "grad_max": 7.483902386695718e-12,
+      "decremento_final": 1.7649571924040694e-25,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VL1_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 140,
+      "grad_max": 1.0402168015843927e-10,
+      "decremento_final": 4.1827211342114635e-22,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VL2_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 207,
+      "grad_max": 9.583933646695186e-11,
+      "decremento_final": 1.4271848689695917e-23,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio",
+        "intercepto_corte_0400"
+      ],
+      "nota": ""
+    },
+    "VL2_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 113,
+      "grad_max": 1.6508039379914408e-10,
+      "decremento_final": 1.1540511512780552e-22,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio",
+        "intercepto_corte_0400"
+      ],
+      "nota": ""
+    },
+    "VL3_VL1_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 444,
+      "grad_max": 3.119566827081144e-10,
+      "decremento_final": 2.232136664158601e-21,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VL3_VL1_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 196,
+      "grad_max": 1.4313909524332757e-07,
+      "decremento_final": 7.803912484510471e-16,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VL3_VL2_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 330,
+      "grad_max": 5.901679145381422e-11,
+      "decremento_final": 1.7069485720558203e-23,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio",
+        "intercepto_corte_0400"
+      ],
+      "nota": ""
+    },
+    "VL3_VL2_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 146,
+      "grad_max": 6.085603132532924e-10,
+      "decremento_final": 5.370476795563874e-22,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio",
+        "intercepto_corte_0400"
+      ],
+      "nota": ""
+    },
+    "VL1log_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 5,
+      "omitidas": [],
+      "n_efeitos_fixos": 254,
+      "grad_max": 5.697523702830054e-10,
+      "decremento_final": 7.710739479085175e-23,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "log1p_distancia_km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VL1log_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 5,
+      "omitidas": [],
+      "n_efeitos_fixos": 140,
+      "grad_max": 2.3501200985265314e-12,
+      "decremento_final": 9.073443333642655e-27,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "log1p_distancia_km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    }
+  },
+  "covariancias": {
+    "M1_emp": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf"
+      ],
+      "theta": [
+        0.04529171466374379,
+        -0.1906061691590418,
+        2.395004988109833
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0006354263243799136,
+          1.392053290261707e-05,
+          0.0006345921964918632
+        ],
+        [
+          1.3920532902617471e-05,
+          0.0001543614501083765,
+          0.000516174281986056
+        ],
+        [
+          0.0006345921964918533,
+          0.0005161742819860549,
+          0.004221798398850628
+        ]
+      ],
+      "g_conjuntos": 56
+    },
+    "M1_c2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf"
+      ],
+      "theta": [
+        0.11630044649427934,
+        -0.19227688273638668,
+        2.349917084455581
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0017023681514177524,
+          -5.503809954702132e-05,
+          0.0032083971433821204
+        ],
+        [
+          -5.5038099547016535e-05,
+          0.0003506026398225562,
+          0.0010702164777311228
+        ],
+        [
+          0.0032083971433820592,
+          0.0010702164777311202,
+          0.012119192026728842
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "M4_emp": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf"
+      ],
+      "theta": [
+        0.07781390839073975,
+        -0.20016259537223505,
+        2.478216429122409
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0006956923745565749,
+          -1.074834726935215e-05,
+          0.0006631259554154657
+        ],
+        [
+          -1.0748347269354092e-05,
+          0.00017595072145312296,
+          0.00048544476602092857
+        ],
+        [
+          0.0006631259554154552,
+          0.0004854447660209291,
+          0.005161896915222861
+        ]
+      ],
+      "g_conjuntos": 56
+    },
+    "M4_c2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km",
+        "mesma_uf"
+      ],
+      "theta": [
+        0.14229320956590888,
+        -0.20009611441842948,
+        2.4707910036542335
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0016423275896523604,
+          -0.0002236862188643554,
+          0.004530749338514462
+        ],
+        [
+          -0.00022368621886435718,
+          0.00042496500782526417,
+          0.00038287510355324006
+        ],
+        [
+          0.004530749338514459,
+          0.00038287510355324093,
+          0.01697495654950945
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "VL1_emp": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.07708067599148952,
+        -0.514481981415096
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0006484116724467981,
+          -0.0001475247623541022
+        ],
+        [
+          -0.00014752476235407842,
+          0.00042331155855292293
+        ]
+      ],
+      "g_conjuntos": 55
+    },
+    "VL1_c2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.12884112966945072,
+        -0.5526180719713697
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0014990537065086315,
+          -0.0009281322493316928
+        ],
+        [
+          -0.0009281322493316198,
+          0.0021787693698634763
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "VL2_emp": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.04933681030851956,
+        -0.49967122709761114
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.000915417451615487,
+          -0.00013298096031347007
+        ],
+        [
+          -0.0001329809603134593,
+          0.0004619723994394897
+        ]
+      ],
+      "g_conjuntos": 55
+    },
+    "VL2_c2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.07739748844668796,
+        -0.5349813211606593
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0014522694102522367,
+          -0.0008413299622522146
+        ],
+        [
+          -0.0008413299622523592,
+          0.00216877593393087
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "VL3_VL1_emp": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.07945541265680299,
+        -0.5845555605589222
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0006809814167610164,
+          -0.00020286758085285195
+        ],
+        [
+          -0.0002028675808528317,
+          0.0007517149514803566
+        ]
+      ],
+      "g_conjuntos": 55
+    },
+    "VL3_VL1_c2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.12956111927850916,
+        -0.6672588458647997
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0013581869571942014,
+          -0.0009295183717547256
+        ],
+        [
+          -0.0009295183717546274,
+          0.0029965026064261505
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "VL3_VL2_emp": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.04904313741837457,
+        -0.5493643313486528
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0008957154304175264,
+          -3.470357610607633e-05
+        ],
+        [
+          -3.470357610608741e-05,
+          0.0008509165740590398
+        ]
+      ],
+      "g_conjuntos": 55
+    },
+    "VL3_VL2_c2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.0797473613429931,
+        -0.6476023855244138
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0013363582945085848,
+          -0.0007790919141962789
+        ],
+        [
+          -0.0007790919141965114,
+          0.0019341551990087586
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "VL1log_emp": {
+      "termos": [
+        "bolsa_mil",
+        "log1p_distancia_km"
+      ],
+      "theta": [
+        0.07495068148393541,
+        -1.567405710594236
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0005582175341650406,
+          -2.9500622680930047e-05
+        ],
+        [
+          -2.950062268091628e-05,
+          0.002182452262880725
+        ]
+      ],
+      "g_conjuntos": 55
+    },
+    "VL1log_c2": {
+      "termos": [
+        "bolsa_mil",
+        "log1p_distancia_km"
+      ],
+      "theta": [
+        0.11211333586913476,
+        -1.537114774531332
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0012789789968073782,
+          -0.0011320090134459286
+        ],
+        [
+          -0.001132009013445941,
+          0.005419633469692224
+        ]
+      ],
+      "g_conjuntos": 16
+    }
+  },
+  "influencia_bolsa_por_conjunto": {
+    "M1_emp": {
+      "c1_curso01": 0.0013515300116356782,
+      "c1_curso02": 0.002172867064288504,
+      "c1_curso03": -0.00035556454381966383,
+      "c1_curso04": 0.002082341883097489,
+      "c1_curso05": -0.0003763440098968517,
+      "c1_curso06": 0.00041394967330010094,
+      "c1_curso07": -0.0013454664700333998,
+      "c1_curso08": 0.0007056178992795966,
+      "c1_curso09": -0.0005780432699692468,
+      "c1_curso10": -0.0003022509133115094,
+      "c1_curso11": -0.00025847485962926563,
+      "c1_curso12": 0.0008575311036283685,
+      "c1_curso13": -0.00015881565797484375,
+      "c1_curso14": -0.0062040316191113555,
+      "c1_curso15": 3.280133683069067e-05,
+      "c1_curso16": -0.0014752694636728748,
+      "c2_curso01": 0.01902956502830976,
+      "c2_curso02": -0.00600399647503156,
+      "c2_curso03": 0.0019019327407095083,
+      "c2_curso04": 0.0004140309793016589,
+      "c2_curso05": 0.000472996626990433,
+      "c2_curso06": -0.0008412143157933025,
+      "c2_curso07": 0.0022535711144122082,
+      "c2_curso08": 0.004053966863168157,
+      "c2_curso09": 0.00016917431340560276,
+      "c2_curso10": 0.00024081359223538984,
+      "c2_curso11": -0.00036697787652905175,
+      "c2_curso12": 0.0004967311548717234,
+      "c2_curso13": -0.0005014111959662728,
+      "c2_curso14": 0.0007018483751023563,
+      "c2_curso15": 0.002488249735327789,
+      "c2_curso16": 7.892856948272155e-05,
+      "c3_curso01": 0.004670692264908401,
+      "c3_curso02": -0.000615743781181707,
+      "c3_curso03": 0.0004244336170913466,
+      "c3_curso04": 0.0008239318727869782,
+      "c3_curso05": 0.0002530389339313615,
+      "c3_curso06": -0.0005880445176821593,
+      "c3_curso07": -0.0012510351600208151,
+      "c3_curso08": -0.004144630682252349,
+      "c3_curso09": -0.0015086641479909488,
+      "c3_curso10": -0.0018453318370078478,
+      "c3_curso11": -0.00047278039329077306,
+      "c3_curso12": -0.0011638810030548269,
+      "c3_curso13": -0.0008713754221792367,
+      "c3_curso14": -7.976457685920097e-05,
+      "c3_curso15": 0.0015602799542967344,
+      "c3_curso16": 0.0007161873635764422,
+      "c3_curso17": -0.0064997516241005375,
+      "c3_curso18": -0.00034429915401821843,
+      "c3_curso19": -0.0004860246541460838,
+      "c3_curso20": -5.067760884288206e-08,
+      "c3_curso21": -0.001139353409429902,
+      "c3_curso22": -0.0018229962739712044,
+      "c3_curso23": -0.0007918991468863763,
+      "c3_curso24": -0.005973524939555388
+    },
+    "M1_c2": {
+      "c2_curso01": 0.02826070145581719,
+      "c2_curso02": -0.026569266703027068,
+      "c2_curso03": 0.004205271178759369,
+      "c2_curso04": 0.0007074541204892883,
+      "c2_curso05": 0.00034551358685799935,
+      "c2_curso06": -0.0023524235967002285,
+      "c2_curso07": 0.0029725075124143316,
+      "c2_curso08": 0.0004071079830106642,
+      "c2_curso09": -0.0006686629766543529,
+      "c2_curso10": 0.00024296875266556983,
+      "c2_curso11": -0.00619758674832026,
+      "c2_curso12": 0.0012752700989115508,
+      "c2_curso13": -0.0014705077430138829,
+      "c2_curso14": -0.0034098190578408846,
+      "c2_curso15": 0.0020397899637539523,
+      "c2_curso16": 0.00021168216747641052
+    },
+    "M4_emp": {
+      "c1_curso01": 0.0002710810228889248,
+      "c1_curso02": 0.002066664351549486,
+      "c1_curso03": -0.000751943260275346,
+      "c1_curso04": 0.0017585933307030467,
+      "c1_curso05": -0.00037736896764908987,
+      "c1_curso06": 0.0004586220184650041,
+      "c1_curso07": -0.0009548172999731521,
+      "c1_curso08": 0.0024561513369324504,
+      "c1_curso09": -0.0018941939415736979,
+      "c1_curso10": -0.0002145628152991441,
+      "c1_curso11": 1.4055124173400064e-05,
+      "c1_curso12": 0.001601292825044393,
+      "c1_curso13": -0.00024900888918468253,
+      "c1_curso14": -0.007745590814761264,
+      "c1_curso15": -0.0010440430385311196,
+      "c1_curso16": -0.0014137620821871716,
+      "c2_curso01": 0.018471978999704736,
+      "c2_curso02": -0.008358113633352962,
+      "c2_curso03": 0.0019013101528872166,
+      "c2_curso04": 0.0003074673742203589,
+      "c2_curso05": 0.0008684497997523121,
+      "c2_curso06": -0.001045056703240409,
+      "c2_curso07": 0.0019218718326412768,
+      "c2_curso08": 0.005325335496030345,
+      "c2_curso09": 0.0007483780285253219,
+      "c2_curso10": 5.805477133018173e-05,
+      "c2_curso11": -0.00021651852906486832,
+      "c2_curso12": 0.0005801366998544724,
+      "c2_curso13": -0.000407389796327539,
+      "c2_curso14": -0.00015075491924684115,
+      "c2_curso15": 0.0026040881804402375,
+      "c2_curso16": 0.00033064118802898855,
+      "c3_curso01": 0.004419698438385215,
+      "c3_curso02": 0.0006646387513169194,
+      "c3_curso03": -5.5958238863450194e-05,
+      "c3_curso04": 0.0007906899325706811,
+      "c3_curso05": 0.0003083431988155373,
+      "c3_curso06": -0.00025552096265360567,
+      "c3_curso07": -0.0013467576125533625,
+      "c3_curso08": -0.0021328810955573317,
+      "c3_curso09": -0.0018331905187863862,
+      "c3_curso10": -0.001074983428520775,
+      "c3_curso11": -0.0005858388538353029,
+      "c3_curso12": -0.001049199825864908,
+      "c3_curso13": -0.0008089553034376425,
+      "c3_curso14": 0.00012681733540034098,
+      "c3_curso15": 0.0014023610754868299,
+      "c3_curso16": 0.0011398985796524069,
+      "c3_curso17": -0.00917670533936558,
+      "c3_curso18": -3.7793865284702e-05,
+      "c3_curso19": -0.00028870593951499087,
+      "c3_curso20": -1.1941034281623781e-08,
+      "c3_curso21": -0.0009306026044854452,
+      "c3_curso22": -0.0017308414644447798,
+      "c3_curso23": -0.0003934140582057588,
+      "c3_curso24": -0.004072134101724575
+    },
+    "M4_c2": {
+      "c2_curso01": 0.02401114987065779,
+      "c2_curso02": -0.028974978773085882,
+      "c2_curso03": 0.0029802697489281736,
+      "c2_curso04": 0.000413963546869515,
+      "c2_curso05": 0.0010645277498179866,
+      "c2_curso06": -0.003143417195876607,
+      "c2_curso07": 0.001538909568522217,
+      "c2_curso08": 0.006463669296853728,
+      "c2_curso09": 0.0015503676232682226,
+      "c2_curso10": -0.0005879235833029375,
+      "c2_curso11": -0.0036977765179648965,
+      "c2_curso12": 0.0010672003977773223,
+      "c2_curso13": -0.0009310466537513533,
+      "c2_curso14": -0.005585996684066234,
+      "c2_curso15": 0.003013701201655127,
+      "c2_curso16": 0.0008173804036968244
+    },
+    "VL1_emp": {
+      "c1_curso01": 0.0001659076383273565,
+      "c1_curso02": 0.002386203595541695,
+      "c1_curso03": -0.0006711743506361679,
+      "c1_curso04": 0.002181100502664986,
+      "c1_curso05": 2.2255321003583953e-05,
+      "c1_curso06": 0.0007113177866940495,
+      "c1_curso07": -0.0014183711263708952,
+      "c1_curso08": 0.0012964824649892074,
+      "c1_curso09": -0.0022546595865630624,
+      "c1_curso10": -0.00022452246799827122,
+      "c1_curso11": 0.00027433776449227026,
+      "c1_curso12": 0.001562155685080618,
+      "c1_curso13": -0.0003187213533120012,
+      "c1_curso14": -0.007603843193842328,
+      "c1_curso15": -0.0016953624350436933,
+      "c1_curso16": -0.0014112643880152406,
+      "c2_curso01": 0.016953078768767123,
+      "c2_curso02": -0.008773333187945636,
+      "c2_curso03": 0.0017737026138416212,
+      "c2_curso04": 0.00015537702951349424,
+      "c2_curso05": 0.00023520637163203982,
+      "c2_curso06": -0.0009961034514804892,
+      "c2_curso07": 0.0016023369447380814,
+      "c2_curso08": 0.005920991643934448,
+      "c2_curso09": 0.0006302496810982874,
+      "c2_curso10": -6.318282908646594e-05,
+      "c2_curso11": 1.0562100932242041e-05,
+      "c2_curso12": 0.0003108558887668481,
+      "c2_curso13": -0.00024189464363725988,
+      "c2_curso14": -0.0007618724101524897,
+      "c2_curso15": 0.0036215581265787848,
+      "c2_curso16": 0.0004515949859093627,
+      "c3_curso01": 0.004776813956168452,
+      "c3_curso02": 0.0008571526813129668,
+      "c3_curso03": 6.491267180704704e-05,
+      "c3_curso04": 0.0010419748583085932,
+      "c3_curso05": 3.4527456986680976e-05,
+      "c3_curso06": -0.00034676562327921455,
+      "c3_curso07": -0.0016549725550982794,
+      "c3_curso08": -0.002002014391259544,
+      "c3_curso09": -0.001733187302690789,
+      "c3_curso10": -0.0011483574368739188,
+      "c3_curso11": -0.0004484284674304509,
+      "c3_curso12": -0.0010062844628691808,
+      "c3_curso13": -0.0006363676008081001,
+      "c3_curso14": 0.0003728406608494621,
+      "c3_curso15": 0.0014128076088391823,
+      "c3_curso16": 0.0013785561262128106,
+      "c3_curso17": -0.008548293512392096,
+      "c3_curso18": 0.00012292861601338127,
+      "c3_curso19": -0.0002857843657504667,
+      "c3_curso21": -0.0007232526408005118,
+      "c3_curso22": -0.0017134018321618098,
+      "c3_curso23": -0.00014751156711897495,
+      "c3_curso24": -0.003498862368387409
+    },
+    "VL1_c2": {
+      "c2_curso01": 0.02158157583572159,
+      "c2_curso02": -0.027455818799268134,
+      "c2_curso03": 0.002977841590840275,
+      "c2_curso04": 7.858614643309111e-05,
+      "c2_curso05": 0.00020963630436276212,
+      "c2_curso06": -0.0029346232162785245,
+      "c2_curso07": 0.0019976713251005427,
+      "c2_curso08": 0.007437596029717436,
+      "c2_curso09": 0.001372687308368653,
+      "c2_curso10": -0.000837888406228155,
+      "c2_curso11": -0.0028942439185515663,
+      "c2_curso12": 0.00017789099043729272,
+      "c2_curso13": -0.0013457297834279663,
+      "c2_curso14": -0.007608878152361085,
+      "c2_curso15": 0.006071546176831609,
+      "c2_curso16": 0.0011721505683015723
+    },
+    "VL2_emp": {
+      "c1_curso01": 0.0017126177075568675,
+      "c1_curso02": 0.0009936841926964535,
+      "c1_curso03": -8.652449376872506e-05,
+      "c1_curso04": 0.002258392152279116,
+      "c1_curso05": -0.00042391709530037745,
+      "c1_curso06": -0.0012018850577206774,
+      "c1_curso07": -0.0017582704874106263,
+      "c1_curso08": 0.0021033407580882237,
+      "c1_curso09": -0.0029468764309907207,
+      "c1_curso10": -0.0009470309407311079,
+      "c1_curso11": -0.00086882204069052,
+      "c1_curso12": 0.0005645984434411087,
+      "c1_curso13": -0.00013779081650432695,
+      "c1_curso14": -0.006694792242964807,
+      "c1_curso15": -0.0006498704047544748,
+      "c1_curso16": -0.0008106585605677466,
+      "c2_curso01": 0.005392661308882693,
+      "c2_curso02": -0.007619848690384579,
+      "c2_curso03": 0.0008106812077889068,
+      "c2_curso04": 0.00044717820298331137,
+      "c2_curso05": -0.00022795859837635758,
+      "c2_curso06": -0.0017655401474912687,
+      "c2_curso07": 0.002779092673818322,
+      "c2_curso08": 0.009722577346373587,
+      "c2_curso09": 0.0007993638980303171,
+      "c2_curso10": 0.00024444767229725596,
+      "c2_curso11": -0.003341902830198573,
+      "c2_curso12": -0.0004490059956053272,
+      "c2_curso13": -0.0005826113637636035,
+      "c2_curso14": -0.0022570693243014793,
+      "c2_curso15": 0.006683207958373914,
+      "c2_curso16": -0.0004483657215696432,
+      "c3_curso01": 0.01940841969033035,
+      "c3_curso02": -0.007731777818879561,
+      "c3_curso03": 0.0006379807098216014,
+      "c3_curso04": 0.0012325053955390618,
+      "c3_curso05": -0.0002534215534594407,
+      "c3_curso06": -0.0014649454250544216,
+      "c3_curso07": -0.000996135966405551,
+      "c3_curso08": 0.002135081657417915,
+      "c3_curso09": -0.0012665569598041024,
+      "c3_curso10": -0.0027548534145748534,
+      "c3_curso11": -0.0019804814310029556,
+      "c3_curso12": -0.001702983594715429,
+      "c3_curso13": -0.0005437302007005867,
+      "c3_curso14": 0.0006567452114231144,
+      "c3_curso15": 0.0018298005182863539,
+      "c3_curso16": 0.0009138605169397272,
+      "c3_curso17": -0.008410043158735007,
+      "c3_curso18": 0.0037800836624536744,
+      "c3_curso19": -5.736346478862971e-05,
+      "c3_curso21": 0.001323622929262473,
+      "c3_curso22": -0.002210899985280735,
+      "c3_curso23": -0.0008856898278401679,
+      "c3_curso24": -0.002952319769747768
+    },
+    "VL2_c2": {
+      "c2_curso01": 0.005945361115327785,
+      "c2_curso02": -0.02126246361894078,
+      "c2_curso03": 0.0015570732053676126,
+      "c2_curso04": 0.0007734179288815705,
+      "c2_curso05": -0.001300181199514764,
+      "c2_curso06": -0.004002373757236193,
+      "c2_curso07": 0.0033195143295588433,
+      "c2_curso08": 0.02279225860954438,
+      "c2_curso09": 0.0010109509126096233,
+      "c2_curso10": -1.1660041105462276e-05,
+      "c2_curso11": -0.011624473494321918,
+      "c2_curso12": -0.0004346452281216985,
+      "c2_curso13": -0.002839204713821193,
+      "c2_curso14": -0.0059268475084766,
+      "c2_curso15": 0.011970606376787518,
+      "c2_curso16": 3.2667083461205074e-05
+    },
+    "VL3_VL1_emp": {
+      "c1_curso01": 0.00034451750009721074,
+      "c1_curso02": 0.001860657830596299,
+      "c1_curso03": -0.0008805827645702428,
+      "c1_curso04": 0.002594139199401773,
+      "c1_curso05": 0.0001425610844436149,
+      "c1_curso06": 0.001155309016362313,
+      "c1_curso07": -0.0013380412612220883,
+      "c1_curso08": 0.0012865877727163658,
+      "c1_curso09": -0.0010562964400102409,
+      "c1_curso10": -0.00015019651115167747,
+      "c1_curso11": 0.00013623463888634,
+      "c1_curso12": 0.0019018097470410427,
+      "c1_curso13": -0.0004254279996798603,
+      "c1_curso14": -0.007959239442773103,
+      "c1_curso15": -0.0012213778928235905,
+      "c1_curso16": -0.0012106824687094105,
+      "c2_curso01": 0.017488864760013687,
+      "c2_curso02": -0.009403185799556013,
+      "c2_curso03": 0.0018194148517710928,
+      "c2_curso04": 0.00033152549918857984,
+      "c2_curso05": 1.1694071965250518e-05,
+      "c2_curso06": -0.0009333118939759856,
+      "c2_curso07": 0.0013376974884036941,
+      "c2_curso08": 0.005615165421330177,
+      "c2_curso09": 0.0006139220902004706,
+      "c2_curso10": -0.00015038431073344092,
+      "c2_curso11": 6.721046176534322e-05,
+      "c2_curso12": 0.000364762547898326,
+      "c2_curso13": -9.984917873449717e-05,
+      "c2_curso14": -0.001174431067922213,
+      "c2_curso15": 0.003695829928692754,
+      "c2_curso16": 0.0005284753212087996,
+      "c3_curso01": 0.0052363169560372255,
+      "c3_curso02": -0.0003177634067107285,
+      "c3_curso03": -3.3378463256235515e-05,
+      "c3_curso04": 0.000606089078123882,
+      "c3_curso05": 3.4390295654595764e-05,
+      "c3_curso06": -0.0002675532035534881,
+      "c3_curso07": -0.0015542734355406865,
+      "c3_curso08": -0.0016193296511436254,
+      "c3_curso09": -0.0019315333799547329,
+      "c3_curso10": -0.0010275608121940005,
+      "c3_curso11": -0.0010489884207112773,
+      "c3_curso12": -0.001409339405843302,
+      "c3_curso13": -0.0002962946521379007,
+      "c3_curso14": 0.0004561215761692007,
+      "c3_curso15": 0.001947118223651754,
+      "c3_curso16": 0.0011986888014958227,
+      "c3_curso17": -0.007847988671150392,
+      "c3_curso18": 0.000396843755912967,
+      "c3_curso19": -0.00035811130148320075,
+      "c3_curso21": -0.001002349863143276,
+      "c3_curso22": -0.0017616994375052348,
+      "c3_curso23": -7.667112194699915e-05,
+      "c3_curso24": -0.004616105660893718
+    },
+    "VL3_VL1_c2": {
+      "c2_curso01": 0.01944025263783179,
+      "c2_curso02": -0.025699455783732783,
+      "c2_curso03": 0.003718634900884456,
+      "c2_curso04": 0.0006280780418755036,
+      "c2_curso05": -0.0013237438312024676,
+      "c2_curso06": -0.0027341250017456913,
+      "c2_curso07": 0.0023473697727596885,
+      "c2_curso08": 0.005838616492330121,
+      "c2_curso09": 0.001897691520148591,
+      "c2_curso10": -0.0013728552610367583,
+      "c2_curso11": -0.0031591264762220956,
+      "c2_curso12": 0.0002859655298533525,
+      "c2_curso13": -0.0002733794643732766,
+      "c2_curso14": -0.009155846294681231,
+      "c2_curso15": 0.00843455596243622,
+      "c2_curso16": 0.0011273672544605026
+    },
+    "VL3_VL2_emp": {
+      "c1_curso01": 0.001312739129410329,
+      "c1_curso02": -0.00016318392561992843,
+      "c1_curso03": -0.00017425770303174353,
+      "c1_curso04": 0.0032906607936362257,
+      "c1_curso05": -0.0003886121957381413,
+      "c1_curso06": -0.0008764836853631914,
+      "c1_curso07": -0.0016974695978318822,
+      "c1_curso08": 0.0017814205520928488,
+      "c1_curso09": -0.001060422967206467,
+      "c1_curso10": -0.0009206284159908193,
+      "c1_curso11": -0.0015744777045800227,
+      "c1_curso12": 0.0001429983397492544,
+      "c1_curso13": -6.632269628653798e-05,
+      "c1_curso14": -0.006965354384384506,
+      "c1_curso15": -0.0001840451999820514,
+      "c1_curso16": -0.0011851138477329385,
+      "c2_curso01": 0.0044770698042550265,
+      "c2_curso02": -0.005961191875903244,
+      "c2_curso03": 0.0007793340591088744,
+      "c2_curso04": 0.0005390647984905272,
+      "c2_curso05": -0.0004454588047579218,
+      "c2_curso06": -0.0017443200670514839,
+      "c2_curso07": 0.0023024517498662026,
+      "c2_curso08": 0.00992913902114396,
+      "c2_curso09": 0.000769424383966178,
+      "c2_curso10": 0.00015185622591147157,
+      "c2_curso11": -0.0031438992777033463,
+      "c2_curso12": 1.872340309724542e-05,
+      "c2_curso13": -0.00033278291525225463,
+      "c2_curso14": -0.0018201714549478405,
+      "c2_curso15": 0.006954685912301354,
+      "c2_curso16": -0.0005674388479415832,
+      "c3_curso01": 0.018710036836519353,
+      "c3_curso02": -0.008821690480266865,
+      "c3_curso03": 0.00045370349332505145,
+      "c3_curso04": 0.0006477156795493217,
+      "c3_curso05": -0.0001735280746424858,
+      "c3_curso06": -0.001041274463057247,
+      "c3_curso07": -0.0007373473893913841,
+      "c3_curso08": 0.0022920736360807384,
+      "c3_curso09": -0.0014675334838678577,
+      "c3_curso10": -0.002487100606328701,
+      "c3_curso11": -0.0027377688872642393,
+      "c3_curso12": -0.0024062342343587075,
+      "c3_curso13": -8.230401234318323e-05,
+      "c3_curso14": 0.0012102091713235628,
+      "c3_curso15": 0.002771913124741233,
+      "c3_curso16": 2.299349242517522e-05,
+      "c3_curso17": -0.00805759960723239,
+      "c3_curso18": 0.005068878433354006,
+      "c3_curso19": -8.360373752884262e-05,
+      "c3_curso21": 0.0007166474086781371,
+      "c3_curso22": -0.0019968116023540423,
+      "c3_curso23": -0.0008362331455225883,
+      "c3_curso24": -0.004143074157562157
+    },
+    "VL3_VL2_c2": {
+      "c2_curso01": 0.0024758299463127375,
+      "c2_curso02": -0.018827616722168587,
+      "c2_curso03": 0.0020459294126050982,
+      "c2_curso04": 0.001206338280066449,
+      "c2_curso05": -0.002028249930806535,
+      "c2_curso06": -0.003561869845949876,
+      "c2_curso07": 0.0023710397359093536,
+      "c2_curso08": 0.0219471766317553,
+      "c2_curso09": 0.0002998762477055131,
+      "c2_curso10": -0.0008841270699477015,
+      "c2_curso11": -0.010792902019669516,
+      "c2_curso12": 0.0010423413222913499,
+      "c2_curso13": -0.0010889902402304483,
+      "c2_curso14": -0.007638340615579274,
+      "c2_curso15": 0.014275867527639945,
+      "c2_curso16": -0.0008423026599299905
+    },
+    "VL1log_emp": {
+      "c1_curso01": -0.00027699178811219755,
+      "c1_curso02": 0.0019210554317098572,
+      "c1_curso03": -0.0003889957147317358,
+      "c1_curso04": 0.001908008220887215,
+      "c1_curso05": -0.00013885027689762867,
+      "c1_curso06": 0.0005007360432597325,
+      "c1_curso07": -0.0009712302125353327,
+      "c1_curso08": 0.0010515759632440764,
+      "c1_curso09": -0.001665449322237284,
+      "c1_curso10": -0.0002172097693366711,
+      "c1_curso11": -5.0543447543502265e-06,
+      "c1_curso12": 0.0019140262754541067,
+      "c1_curso13": -0.00034690888706035783,
+      "c1_curso14": -0.007533037568104078,
+      "c1_curso15": -0.0010262022440732056,
+      "c1_curso16": -0.0013326209322007065,
+      "c2_curso01": 0.013684115732431197,
+      "c2_curso02": -0.008496174609966827,
+      "c2_curso03": 0.0013990916054561773,
+      "c2_curso04": 1.9787585355229734e-05,
+      "c2_curso05": 0.00013554982649976554,
+      "c2_curso06": -0.0009638573305202686,
+      "c2_curso07": -0.0005392233884109147,
+      "c2_curso08": 0.0049321013175917475,
+      "c2_curso09": 0.0005209625135610099,
+      "c2_curso10": -5.778843140690988e-05,
+      "c2_curso11": -6.764146881146023e-05,
+      "c2_curso12": 0.00044697816244044895,
+      "c2_curso13": -0.0001653275996054236,
+      "c2_curso14": -0.0018918053583912198,
+      "c2_curso15": 0.0035472125999655123,
+      "c2_curso16": 0.00040470038670460353,
+      "c3_curso01": 0.008917599309119253,
+      "c3_curso02": 0.0013295791079486054,
+      "c3_curso03": 0.0003049968183659359,
+      "c3_curso04": 0.0007853010028116498,
+      "c3_curso05": 0.00017112212373497906,
+      "c3_curso06": 3.1242103324134415e-05,
+      "c3_curso07": -0.0017652844339877782,
+      "c3_curso08": -0.0014359993784402276,
+      "c3_curso09": -0.0012432622700112752,
+      "c3_curso10": -0.001184363349295566,
+      "c3_curso11": -0.0008136559593720933,
+      "c3_curso12": -0.000488959532621211,
+      "c3_curso13": -0.000688397066161143,
+      "c3_curso14": 0.00026931737566765045,
+      "c3_curso15": 0.0020517174802336816,
+      "c3_curso16": 0.001486677903892329,
+      "c3_curso17": -0.007045858640190213,
+      "c3_curso18": -0.0003894496326801774,
+      "c3_curso19": -0.00031308234124547107,
+      "c3_curso21": -0.00021217947791312973,
+      "c3_curso22": -0.0016549803570341899,
+      "c3_curso23": -0.00023539082269183266,
+      "c3_curso24": -0.004178222380852454
+    },
+    "VL1log_c2": {
+      "c2_curso01": 0.01856754767893698,
+      "c2_curso02": -0.02453217418859141,
+      "c2_curso03": 0.0021169569377447344,
+      "c2_curso04": -0.0002839976257100465,
+      "c2_curso05": -0.0001793978206589223,
+      "c2_curso06": -0.002421533724806492,
+      "c2_curso07": -0.0027145977406939957,
+      "c2_curso08": 0.010556422929634263,
+      "c2_curso09": 0.0020481525220305886,
+      "c2_curso10": -0.000941886485539062,
+      "c2_curso11": -0.0015734796663567704,
+      "c2_curso12": 0.0006408173253046492,
+      "c2_curso13": -0.0007657905165840705,
+      "c2_curso14": -0.008155871660035232,
+      "c2_curso15": 0.006897322508814137,
+      "c2_curso16": 0.0007415095265115162
+    }
+  },
+  "leitura": {
+    "linhas": {
+      "VL1_emp": {
+        "regra": "PARECIDA_COM_M1",
+        "referencia": "M1_emp",
+        "ic_contem_1": false,
+        "ic_referencia_contem_1": true,
+        "rejeita_holm_5pct": true,
+        "rejeita_holm_score_5pct": true
+      },
+      "VL1_c2": {
+        "regra": "PARECIDA_COM_M1",
+        "referencia": "M1_c2",
+        "ic_contem_1": false,
+        "ic_referencia_contem_1": false,
+        "rejeita_holm_5pct": true,
+        "rejeita_holm_score_5pct": true
+      },
+      "VL2_emp": {
+        "regra": "PARECIDA_COM_M1",
+        "referencia": "M1_emp",
+        "ic_contem_1": true,
+        "ic_referencia_contem_1": true,
+        "rejeita_holm_5pct": false,
+        "rejeita_holm_score_5pct": false,
+        "ic_muito_largo": false
+      }
+    },
+    "geral": "LOCALIZACAO_NAO_EXPLICA",
+    "holm_e_score_concordam": true,
+    "VL4": {
+      "VL1_emp": {
+        "km": 74.91095779,
+        "ic_beta_contem_0": false
+      },
+      "VL1_c2": {
+        "km": 116.5733951,
+        "ic_beta_contem_0": false
+      }
+    }
+  },
+  "inferencia": {
+    "principal": "sanduíche com cluster por conjunto de escolha (curso × ciclo), fator G/(G−1)",
+    "holm": "VL principais (adendo 52e, §2): VL-1 ciclos 1–3, VL-1 ciclo 2, VL-2 ciclos 1–3",
+    "bky": "VL secundárias (adendo 52e, §2): VL-2 ciclo 2, VL-3, VL-1 com log da distância",
+    "score_bootstrap": "Kline–Santos, H0: β = 0, Rademacher e Webb (funções do script 16)",
+    "z_bilateral_95": 1.959963984540054
+  },
+  "figura": {
+    "arquivo": "output/rdd_bolsa/VL_figuras/VL_razao_chances_e_km.png",
+    "sha256": "e4b3f1d70c3f3877bd38e492dec902f60dbed0a769c6b7590db77dff0b2342a7",
+    "titulo": "Comparando vagas da mesma UF, o peso da bolsa na escolha não diminui",
+    "como_ler": "Cada linha é um modelo da escolha da 1ª opção; o ponto é a estimativa e a barra, o IC 95% com cluster por conjunto de escolha (curso × ciclo). À esquerda, a razão de chances por +R$ 5 mil de bolsa anunciada, em escala log: acima de 1, a vaga com bolsa maior é mais escolhida; a linha vertical marca 1 (nenhum peso). Em cada bloco (ciclos 1–3 e ciclo 2): M1 é o modelo base (distância, mesma UF, mesma região e mesmo município de origem, macrorregião da vaga); M4 troca a macrorregião por efeito fixo de UF da vaga; VL-1 compara só vagas da mesma UF vistas por médicos da mesma UF de origem (efeito fixo do par de UFs); VL-2 faz o mesmo só com vagas a até 0,050 de um corte de IVS. À direita, quantos km a menos de distância pesam como +R$ 5 mil de bolsa, no M1 e no VL-1 (IC pelo método delta). Tudo é escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte, e a origem é preferência revelada, não efeito causal."
+  },
+  "como_ler": {
+    "VL_razao_chances_e_km.png": "Cada linha é um modelo da escolha da 1ª opção; o ponto é a estimativa e a barra, o IC 95% com cluster por conjunto de escolha (curso × ciclo). À esquerda, a razão de chances por +R$ 5 mil de bolsa anunciada, em escala log: acima de 1, a vaga com bolsa maior é mais escolhida; a linha vertical marca 1 (nenhum peso). Em cada bloco (ciclos 1–3 e ciclo 2): M1 é o modelo base (distância, mesma UF, mesma região e mesmo município de origem, macrorregião da vaga); M4 troca a macrorregião por efeito fixo de UF da vaga; VL-1 compara só vagas da mesma UF vistas por médicos da mesma UF de origem (efeito fixo do par de UFs); VL-2 faz o mesmo só com vagas a até 0,050 de um corte de IVS. À direita, quantos km a menos de distância pesam como +R$ 5 mil de bolsa, no M1 e no VL-1 (IC pelo método delta). Tudo é escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte, e a origem é preferência revelada, não efeito causal."
+  },
+  "saidas": {
+    "output/rdd_bolsa/VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output/rdd_bolsa/VL_figuras/VL_razao_chances_e_km.png": "e4b3f1d70c3f3877bd38e492dec902f60dbed0a769c6b7590db77dff0b2342a7"
+  }
+}
