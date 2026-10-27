@@ -26,6 +26,15 @@
 Sob o protocolo congelado, nenhum dos dois testes primários rejeita zero depois do Holm: o índice de atração-presença (P1) tem p ajustado 0,851, e a oferta de especialistas nas CBO-alvo no CNES por DiRD (P2) tem p ajustado 0,851. Com ciclos e cortes empilhados, o IC 95% convencional do preenchimento na 1ª chamada vai até +3,4 p.p., abaixo da referência de +10 p.p. do protocolo; esse descarte vale só sob a aproximação local linear, porque o IC honesto não descarta nada. O único sinal que resiste a vários testes está na escolha: no ciclo 2, a bolsa anunciada desloca a 1ª opção dos candidatos para células de bolsa maior (razão de chances 1,95 por +R$ 5 mil), mas o efeito não aparece nos ciclos 1 e 3 e o empilhado (razão 1,39) não resiste a placebos nem a um spline mais flexível. Os contrastes são o pacote do corte (RDD em nível), a bolsa mais a variação das co-políticas (DiRD) e o degrau da bolsa na escolha entre células (E9); nenhum é efeito da participação no PMM-E nem do Agora Tem Especialistas. Leitura: no corte, o degrau de R$ 5 mil não tem efeito detectável sobre preenchimento, presença ou oferta local, e o que se detecta é compatível com realocação de candidatos entre vagas, não com expansão líquida.
 <!-- E8:resposta_curta:fim -->
 
+> **Nota de 27/10/2026 (decisão do autor, delegada ao agente).** Com o tipo
+> de vaga do quadro vigente na inscrição, o ciclo 2 continua robusto a poucos
+> *clusters* e a placebos pela regra fixada antes das contas. Mas a folga do
+> corte verdadeiro sobre os cortes placebo ficou menor: ele ainda fica à
+> frente de todos, por pouco. Com *spline* cúbico, o IC continua contendo
+> zero. Números e regra no [doc 57y](57y_robustez_E9_ciclo2_quadro_1302.md);
+> conferência na [auditoria 54](../auditorias/54_auditoria_robustez_E9_ciclo2.md).
+> Os blocos gerados deste documento não mudam.
+
 ## 2. O que cada contraste identifica
 
 - **RDD em nível (E3, E6):** o **pacote do corte**. Nos cortes de IVS 0,300 e

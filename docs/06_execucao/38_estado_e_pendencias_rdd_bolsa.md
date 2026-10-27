@@ -222,6 +222,42 @@ reconciliado para o ciclo 1.
   "informado" de E2 e E4 (retirado das saídas ativas), a categoria de IVS das
   figuras da banca 1 e o diagnóstico `tema_trabalho/01`.
 
+### D4. Família BKY com um membro por hipótese — decidida em 27/10/2026 (por delegação)
+
+> **Decisão do autor, delegada ao agente em 27/10/2026.** Responde à pendência
+> 2 da [auditoria 54](../auditorias/54_auditoria_robustez_E9_ciclo2.md)
+> (achado A1). Vale para os próximos adendos. Não muda famílias já congeladas
+> nem os q já gravados.
+
+- **Regra.** Nos próximos adendos, a família BKY leva **um membro por
+  hipótese**: uma inferência por coeficiente e especificação, isto é, por
+  ciclo, modelo, conjunto de escolha, especificação e termo. Inferências
+  repetidas sobre o mesmo coeficiente entram como apoio, fora da família:
+  score bootstrap (Rademacher e Webb), CV3, CR1 com outro *cluster*, inversão
+  do score e p por posto dos placebos. O protocolo de cada adendo diz, antes de
+  rodar, qual inferência é o membro.
+- **Aplicação ao adendo 52f, só como sensibilidade.** No
+  `output/rdd_bolsa/RB_estimativas.csv`, a coluna nova `q_bky_um_por_hipotese`
+  refaz o BKY com esta regra. A coluna `q_bky` (família da decisão 9 do
+  [57y](57y_robustez_E9_ciclo2_quadro_1302.md)) fica como está e continua
+  sendo a do adendo. Escolha do membro, fixada antes de rodar:
+  1. candidatos: só as linhas da família da decisão 9 (`entra_bky`), uma
+     família por versão do quadro do ciclo 2;
+  2. hipótese = (ciclo, modelo, conjunto, especificação, termo);
+  3. a hipótese do coeficiente principal (RB-1 do ciclo 2: logit condicional,
+     conjunto principal, *spline* linear, bolsa linear) fica fora, porque a
+     principal é lida pela regra do §3 do adendo; o p por posto dos placebos
+     do ciclo 2 é apoio dela;
+  4. o membro é a primeira inferência que existir nesta ordem: CV3 com
+     *cluster* por conjunto; CR1 com *cluster* por conjunto (a referência da
+     linha); CR1 com *cluster* por curso; CV3 com *cluster* por curso; score
+     bootstrap Rademacher e depois Webb, por conjunto; os mesmos por curso;
+     p por posto dos placebos;
+  5. q pela mesma `qvalores_bky` da `rdd_lib` (Anderson, 2008).
+
+  As contagens de q < 0,05 nas duas famílias ficam num bloco gerado do 57y
+  (seção 5.6).
+
 ## 4. O que falta
 
 > **Em 19/10/2026:** o que falta é decisão do autor — a revisão da hipótese

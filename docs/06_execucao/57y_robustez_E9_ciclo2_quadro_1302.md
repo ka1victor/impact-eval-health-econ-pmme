@@ -5,7 +5,8 @@
 > **Estatuto:** `ADENDO_52F_POS_RESULTADO`. As versões com o quadro de 19/03 (doc 42) e os adendos 52c, 52d e 52e já tinham sido vistos; isto não é teste confirmatório novo. Toda linha de `RB_estimativas.csv` e o resumo têm `natureza_dos_dados = EMPIRICO`.<br>
 > **Motivo:** [auditoria 46](../auditorias/46_auditoria_sensibilidades_ciclo2.md), achados A1, A2 e A10: a frase do [doc 44](44_sintese_rdd_bolsa_multioutcome.md) de que o ciclo 2 é robusto a poucos clusters e a placebos se apoiava em robustezes ainda feitas com o quadro retificado de 19/03/2026, refeito depois do resultado preliminar ([auditoria 36](../auditorias/36_auditoria_dados_H1.md)).<br>
 > **Saídas:** `output/rdd_bolsa/RB_estimativas.csv`, `RB_resumo.json` e `RB_figuras/RB_antigo_corrigido.png`. As saídas `E9_*`, `VC_*`, `VD_*` e `VL_*` não são regravadas, e os docs 42, 44, 57, 57p e 57v não são editados.<br>
-> **Auditoria:** [auditoria 54](../auditorias/54_auditoria_robustez_E9_ciclo2.md), aprovada com correções de texto (folga dos placebos, spline cúbico e leitura do q do BKY); nenhum número mudou.
+> **Auditoria:** [auditoria 54](../auditorias/54_auditoria_robustez_E9_ciclo2.md), aprovada com correções de texto (folga dos placebos, spline cúbico e leitura do q do BKY); nenhum número mudou.<br>
+> **Decisões de 27/10/2026** (do autor, delegadas ao agente; pendências 2 e 3 da auditoria 54; [doc 38](38_estado_e_pendencias_rdd_bolsa.md), D4): o título da figura passa a trazer a folga menor sobre os placebos e o IC do spline cúbico; a coluna `q_bky_um_por_hipotese` traz o BKY com um membro por hipótese, só como sensibilidade (bloco depois do BKY da decisão 9). Nenhuma estimativa mudou; as colunas antigas de `RB_estimativas.csv` ficaram iguais byte a byte.
 
 ## 1. Resposta curta
 
@@ -267,6 +268,19 @@ Família BKY nova, uma por versão (decisão 9): toda linha secundária que test
 **Como ler o q (auditoria 54).** O BKY estima quantas hipóteses nulas são verdadeiras a partir da própria família. Quando quase todos os membros rejeitam, ele estima poucas nulas verdadeiras e afrouxa o limiar, e o q pode ficar abaixo do p. É o que acontece aqui: com o quadro de 19/03/2026, 35 dos 74 membros têm q menor que o p, e 3 têm p ≥ 0,05 e q < 0,05: RB-3, ciclo 2, condicional, conjunto principal, spline cúbico, bolsa (p = 0,083; q = 0,030); RB-3, empilhado, condicional, conjunto principal, janela ±0,025, spline linear, bolsa (p = 0,079; q = 0,029); RB-2, empilhado, cortes placebo: p por posto (p = 0,107; q = 0,036); com o quadro de 13/02/2026, 32 dos 74 membros têm q menor que o p, e 4 têm p ≥ 0,05 e q < 0,05: RB-4, ciclo 2, condicional, só vaga imediata, spline quadrático, degraus, degrau 0,400 (p = 0,060; q = 0,027); RB-3, ciclo 2, condicional, conjunto principal, janela ±0,025, spline linear, bolsa (p = 0,062; q = 0,028); RB-3, empilhado, condicional, conjunto principal, janela ±0,025, spline linear, bolsa (p = 0,086; q = 0,033); RB-2, empilhado, cortes placebo: p por posto (p = 0,107; q = 0,041). A família junta várias inferências sobre o mesmo coeficiente (score bootstrap, CV3, cluster por curso), que rejeitam juntas e empurram o limiar para cima. Por isso a contagem de q < 0,05 não é uma contagem de achados independentes, e uma linha com p ≥ 0,05 não passa a contar como significativa por causa do q. A leitura do §3 não usa o q.
 <!-- RB:bky:fim -->
 
+<!-- RB:bky_um:inicio -->
+**Sensibilidade: um membro por hipótese.** Decisão do autor, delegada ao agente em 27/10/2026 ([doc 38](38_estado_e_pendencias_rdd_bolsa.md), D4), sobre a pendência 2 da auditoria 54. A coluna `q_bky_um_por_hipotese` de `RB_estimativas.csv` refaz o BKY com uma inferência por coeficiente e especificação (ciclo, modelo, conjunto, especificação e termo), escolhida entre os membros da família da decisão 9 por uma ordem fixada antes de rodar: CV3 por conjunto, depois CR1 por conjunto, depois CR1 por curso, e as demais. As outras inferências sobre o mesmo coeficiente ficam como apoio. A hipótese do coeficiente principal fica fora, com o p por posto dos placebos do ciclo 2, porque a principal é lida pela regra do §3. A coluna `q_bky` continua sendo a do adendo; esta é só sensibilidade.
+
+| Quadro do ciclo 2 | Família | Membros | q < 0,05 | p ≥ 0,05 e q < 0,05 |
+|---|---|---|---|---|
+| 19/03/2026 | decisão 9 (a do adendo; coluna `q_bky`) | 74 | 65 | 3 |
+| 19/03/2026 | um membro por hipótese (sensibilidade; coluna `q_bky_um_por_hipotese`) | 50 | 44 | 3 |
+| 13/02/2026 | decisão 9 (a do adendo; coluna `q_bky`) | 74 | 63 | 4 |
+| 13/02/2026 | um membro por hipótese (sensibilidade; coluna `q_bky_um_por_hipotese`) | 50 | 41 | 3 |
+
+Na versão corrigida, a família de um membro por hipótese tem 50 hipóteses (CV3 por conjunto: 1; CR1 por conjunto: 48; CR1 por curso: 1). Linhas com p ≥ 0,05 e q < 0,05 nela: RB-4, ciclo 2, condicional, só vaga imediata, spline quadrático, degraus, degrau 0,400 (p = 0,060; q = 0,024); RB-3, ciclo 2, condicional, conjunto principal, janela ±0,025, spline linear, bolsa (p = 0,062; q = 0,024); RB-3, empilhado, condicional, conjunto principal, janela ±0,025, spline linear, bolsa (p = 0,086; q = 0,031). Mesmo assim, 23 dos 50 membros têm q menor que o p: a maioria das hipóteses da família rejeita, e o passo adaptativo do BKY continua a afrouxar o limiar. Das linhas com q < 0,05 na família da decisão 9, 22 ficam fora desta família (são inferências repetidas sobre um coeficiente que já tem membro, ou sobre o coeficiente principal) e 0 são membros com q ≥ 0,05 nesta. Como na família da decisão 9, a contagem de q < 0,05 não é contagem de achados independentes, e a leitura do §3 não usa o q.
+<!-- RB:bky_um:fim -->
+
 ### 5.7 O que mudou de sinal ou de significância
 
 <!-- RB:mudancas:inicio -->
@@ -284,9 +298,9 @@ Como ler: a regra conta qualquer troca de sinal, mesmo de uma estimativa perto d
 ## 6. Figura
 
 <!-- RB:figura:inicio -->
-![Com o tipo de vaga da inscrição, o ciclo 2 continua robusto a poucos clusters e a placebos](../../output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png)
+![Com o tipo de vaga da inscrição, o ciclo 2 segue à frente dos placebos, mas por pouco; com spline cúbico, o IC inclui o efeito nulo](../../output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png)
 
-Arquivo: `output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png`. Título: "Com o tipo de vaga da inscrição, o ciclo 2 continua robusto a poucos clusters e a placebos".
+Arquivo: `output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png`. Título: "Com o tipo de vaga da inscrição, o ciclo 2 segue à frente dos placebos, mas por pouco; com spline cúbico, o IC inclui o efeito nulo".
 
 **Como ler.** À esquerda, cada linha é uma peça do E9 no ciclo 2, e o eixo é a razão de chances por +R$ 5 mil de bolsa anunciada, em escala log (nos degraus, um degrau vale +R$ 5 mil). O círculo vazado cinza é a versão antiga (tipo de vaga do ciclo 2 pelo quadro de 19/03/2026, refeito depois do resultado preliminar) e o ponto azul é a corrigida (quadro de 13/02/2026, vigente na inscrição). A faixa sombreada no alto marca a peça principal (RB-1): a barra é o IC 95% com cluster por conjunto (CR1, referência do adendo 52c), pelo CV3 e pela inversão do score bootstrap. Nas demais linhas, a barra é o IC 95% com cluster por conjunto de escolha. A linha vertical marca 1: acima de 1, a célula com bolsa maior é mais escolhida como 1ª opção. À direita, os cortes placebo do ciclo 2 (RB-2): cada ponto pequeno é o |t| de um corte falso; o losango é o |t| da bolsa no corte verdadeiro. Se o losango fica à direita de todos os pontos, o corte verdadeiro está fora da distribuição dos placebos. Tudo é escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte, não a participação no PMM-E.
 <!-- RB:figura:fim -->
@@ -297,7 +311,7 @@ Arquivo: `output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png`. Título: "Com o 
 - **O quadro de 13/02 também é anúncio.** Ele mede o que estava publicado na inscrição, não a vaga que de fato seria preenchida; o remanejamento posterior fica fora do atributo, como deve ficar num controle pré-tratamento.
 - **O conjunto só com vaga imediata muda de tamanho.** Com o quadro de 13/02 ele perde as células de reserva que viraram imediatas depois do resultado e os candidatos que as escolheram; em RB-4 a comparação antiga × corrigida mistura a troca do atributo com a troca da amostra.
 - **Placebos têm piso.** Com a grade do doc 42, o menor p por posto possível é o de nenhum corte falso com |t| maior que o real; o teste não distingue efeitos maiores que isso. A fração de placebos com |t| alto mostra que o t com cluster por conjunto, com spline linear, superestima a precisão (doc 42).
-- **BKY novo.** O E9 é exploratório e não tinha família de correção múltipla; a família BKY deste adendo foi fixada na decisão 9, antes das estimativas, e junta inferências diferentes sobre o mesmo peso da bolsa.
+- **BKY novo.** O E9 é exploratório e não tinha família de correção múltipla; a família BKY deste adendo foi fixada na decisão 9, antes das estimativas, e junta inferências diferentes sobre o mesmo peso da bolsa. A coluna `q_bky_um_por_hipotese` refaz a conta com um membro por hipótese, regra que o autor adotou para os próximos adendos (doc 38, D4); aqui ela é só sensibilidade.
 - **Escolha condicional.** Tudo vale para quem se candidatou, dentro das vagas abertas do seu curso e ciclo; o conjunto de escolha supõe que o candidato viu todas as células do curso; IIA do logit condicional; o explodido supõe ainda que a 2ª opção é a melhor do que sobra.
 - **Pacote do corte.** O peso da bolsa é identificado pelos saltos nos cortes de IVS, com o IVS em spline contínua; nos mesmos cortes mudam outras regras federais (auditoria 18). Não é efeito da participação no PMM-E nem do Agora Tem Especialistas.
 - **Origem não entra.** O E9 não usa a origem do candidato. Onde ela aparece (P1, adendos 52c e 52d), é preferência revelada, não efeito causal.
