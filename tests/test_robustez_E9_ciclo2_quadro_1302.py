@@ -10,7 +10,8 @@ Partes:
    `E9_efeitos_marginais.csv` e `E9_robustez_pos_auditoria.csv`, e o resumo registra o portão aprovado.
 3. `TestNumeros`: rótulos e hashes; IC, p, razão de chances, CV3, placebos e BKY recalculados das linhas; mesma
    amostra no conjunto principal e conjunto só com vaga imediata refeito; correção conferida contra a auditoria 36;
-   leitura e mudanças refeitas; integridade.
+   leitura e mudanças refeitas; integridade. A coluna de sensibilidade `q_bky_um_por_hipotese` (doc 38, D4) é
+   refeita com a regra escrita aqui, sem a função do script, e o título da figura confere a ressalva (auditoria 54).
 4. `TestDoc57y`: o doc 57y é igual ao gerado, tem os marcadores, nenhum número de resultado fora dos blocos, a
    linguagem pedida, e o bloco de decisões é igual ao do commit de pré-registro.
 """
@@ -388,6 +389,65 @@ class TestNumeros(unittest.TestCase):
             self.assertNotIn(padrao, corpo)
         self.assertNotIn("id_candidato\":", RESUMO.read_text(encoding="utf-8"))
 
+    # Doc 38, D4 (decisão do autor delegada em 27/10/2026): BKY com um membro por hipótese, só como sensibilidade.
+    PRIORIDADE = ("cv3_cluster_conjunto", "cr1_cluster_conjunto", "cluster_curso", "cv3_cluster_curso",
+                  "score_bootstrap_rademacher_cluster_conjunto", "score_bootstrap_webb_cluster_conjunto",
+                  "score_bootstrap_rademacher_cluster_curso", "score_bootstrap_webb_cluster_curso", "placebo_cortes")
+
+    def _membros_esperados(self, v: str) -> pd.DataFrame:
+        """Regra do doc 38, D4, escrita aqui sem a função do script."""
+        f = self.est[(self.est["versao"] == v) & self.est["entra_bky"]].copy()
+        f["inf"] = np.where(f["fonte"] == "E9_estimativas", "cr1_cluster_conjunto", f["analise"])
+        f["rank"] = f["inf"].map(self.PRIORIDADE.index)
+        f["hip"] = list(zip(f["ciclo"], f["modelo"], f["conjunto"], f["especificacao"], f["termo"]))
+        f = f[f["hip"] != ("2", M.COND, "principal", M.ESPEC, B)]
+        self.assertFalse(f.duplicated(["hip", "rank"]).any())
+        return f.sort_values("rank", kind="stable").drop_duplicates("hip")
+
+    def test_coluna_q_bky_um_por_hipotese(self) -> None:
+        bruto = ler_csv(CSV)
+        self.assertEqual(list(bruto.columns), M.COLUNAS + ["q_bky_um_por_hipotese"])  # coluna nova no fim
+        self.assertEqual(M.COLUNAS_SAIDA[-1], "q_bky_um_por_hipotese")
+        col = "q_bky_um_por_hipotese"
+        bu = self.resumo["bky_um_por_hipotese"]
+        self.assertEqual(bu["estatuto"], "SENSIBILIDADE")
+        self.assertEqual(bu["decisao"]["data"], "2026-10-27")
+        self.assertEqual(bu["decisao"]["prioridade"], list(self.PRIORIDADE))
+        for v in M.VERSOES:
+            esp = self._membros_esperados(v)
+            tem = self.est[(self.est["versao"] == v) & self.est[col].notna()]
+            self.assertEqual(sorted(esp.index), sorted(tem.index), v)
+            self.assertTrue(tem["entra_bky"].all())
+            self.assertFalse(tem.duplicated(["ciclo", "modelo", "conjunto", "especificacao", "termo"]).any())
+            self.assertFalse(((tem["ciclo"] == "2") & (tem["especificacao"] == M.ESPEC) & (tem["modelo"] == M.COND) &
+                              (tem["conjunto"] == "principal") & (tem["termo"] == B)).any())   # a principal fica fora
+            np.testing.assert_allclose(tem[col].to_numpy(), M.L.qvalores_bky(tem["p"].to_numpy()), atol=1e-12)
+            f9 = self.est[(self.est["versao"] == v) & self.est["entra_bky"]]
+            r = bu["por_versao"][v]
+            for chave, f, c in (("familia_decisao_9", f9, "q_bky"), ("um_por_hipotese", tem, col)):
+                self.assertEqual(r[chave]["membros"], len(f))
+                self.assertEqual(r[chave]["q_menor_que_0_05"], int((f[c] < 0.05).sum()))
+                self.assertEqual(r[chave]["q_menor_que_p"], int((f[c] < f["p"]).sum()))
+                self.assertEqual(r[chave]["p_maior_ou_igual_0_05_e_q_menor_que_0_05"],
+                                 int(((f["p"] >= 0.05) & (f[c] < 0.05)).sum()))
+        self.assertEqual(M.P1._nan_none(M.resumo_bky_um(self.est)), bu)
+        # A coluna original não muda: mesma família e mesmos q da decisão 9 (test_bky_refeito).
+        self.assertTrue(self.est[~self.est["entra_bky"]][col].isna().all())
+
+    def test_titulo_da_figura_com_a_ressalva(self) -> None:
+        t = self.resumo["figura"]["titulo"]
+        self.assertEqual(t, M.titulo_figura(self.resumo["leitura"], self.est))
+        g = {v: {s: M._rob(self.est, v, "placebo_cortes", "2", s)["estimativa"] for s in ("t_real", "abs_t_placebo_max")}
+             for v in M.VERSOES}
+        folga = {v: abs(g[v]["t_real"]) / g[v]["abs_t_placebo_max"] for v in M.VERSOES}
+        cub = M._coef(self.est, M.CORRIGIDA, "2", M.COND, "principal", "spline_cubico__bolsa_linear")
+        if self.resumo["leitura"][M.CORRIGIDA]["regra"] == "MANTEM":
+            self.assertIn("segue à frente dos placebos", t)
+            self.assertEqual("mas por pouco" in t, folga[M.CORRIGIDA] < folga[M.ANTIGA])
+            self.assertEqual("spline cúbico, o IC inclui o efeito nulo" in t,
+                             bool(cub["ic95_inf"] <= 0 <= cub["ic95_sup"]))
+        self.assertIsNone(re.search(r"\d[,.]\d", t))  # sem número de resultado no título
+
     def test_figura_com_como_ler(self) -> None:
         self.assertTrue(FIG.exists())
         self.assertEqual(self.resumo["figura"]["sha256"], sha256(FIG))
@@ -399,7 +459,8 @@ class TestNumeros(unittest.TestCase):
 # 4. Doc 57y
 # ---------------------------------------------------------------------------
 
-BLOCOS = ("resposta", "portao", "decisoes", "correcao", "rb1", "rb2", "rb3", "rb4", "rb5", "bky", "mudancas", "figura")
+BLOCOS = ("resposta", "portao", "decisoes", "correcao", "rb1", "rb2", "rb3", "rb4", "rb5", "bky", "bky_um", "mudancas",
+          "figura")
 
 
 def _bloco(t: str, nome: str) -> str:
@@ -449,6 +510,18 @@ class TestDoc57y(unittest.TestCase):
         bky = " ".join(_bloco(DOC.read_text(encoding="utf-8"), "bky").split())
         self.assertIn("Como ler o q (auditoria 54)", bky)
         self.assertIn("A leitura do §3 não usa o q", bky)
+        # Doc 38, D4: bloco gerado da sensibilidade com um membro por hipótese, com as contagens das duas famílias.
+        um = " ".join(_bloco(DOC.read_text(encoding="utf-8"), "bky_um").split())
+        self.assertIn("Sensibilidade: um membro por hipótese", um)
+        self.assertIn("só sensibilidade", um)
+        self.assertIn("38_estado_e_pendencias_rdd_bolsa.md", um)
+        bu = M.ler_resumo()["bky_um_por_hipotese"]["por_versao"]
+        for v in M.VERSOES:
+            for chave in ("familia_decisao_9", "um_por_hipotese"):
+                x = bu[v][chave]
+                self.assertIn(f"| {x['membros']} | {x['q_menor_que_0_05']} | "
+                              f"{x['p_maior_ou_igual_0_05_e_q_menor_que_0_05']} |", um)
+        self.assertIn("> **Decisões de 27/10/2026**", t)
 
     def test_decisoes_iguais_as_do_pre_registro(self) -> None:
         t = DOC.read_text(encoding="utf-8")

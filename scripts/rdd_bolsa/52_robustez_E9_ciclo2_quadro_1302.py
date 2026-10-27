@@ -24,7 +24,9 @@ O que o script faz
    principal vêm do quadro de 13/02 (função `corrigir` do 42); o conjunto "só células com vaga imediata" e a marca da
    1ª opção dos candidatos são refeitos pela regra do script 12 (funções `sensibilidade_pela_regra` e
    `corrigir_candidatos` do 48). Nada é imputado.
-3. **RB-1 a RB-5** com a versão corrigida, lado a lado com a antiga; BKY entre as secundárias (decisão 9).
+3. **RB-1 a RB-5** com a versão corrigida, lado a lado com a antiga; BKY entre as secundárias (decisão 9) e, só como
+   sensibilidade, BKY com um membro por hipótese (`q_bky_um_por_hipotese`; doc 38, D4, decisão do autor delegada em
+   27/10/2026).
 4. **Leitura do §3** por regra fixada no código (`leitura`), sem escolha depois de ver os números.
 
 Contraste: pacote do corte e incentivo marginal da bolsa na escolha condicional a candidatar-se, dentro das vagas
@@ -149,6 +151,40 @@ COLUNAS = ["natureza_dos_dados", "estatuto", "id_rb", "papel", "peca", "versao",
            "ep_mle", "ep_cluster_candidato", "ic95_inf", "ic95_sup", "p", "p_t_g_menos_1", "g", "n_candidatos",
            "n_alternativas", "n_conjuntos", "n_reamostras", "rc_por_5mil", "rc_ic95_inf", "rc_ic95_sup", "convergiu",
            "entra_bky", "q_bky", "metodo", "nota"]
+
+# Sensibilidade decidida pelo autor, por delegação, em 27/10/2026 (doc 38, D4; auditoria 54, A1 e pendência 2): BKY
+# com um membro por hipótese. A coluna nova vai no fim, para que as colunas antigas fiquem idênticas byte a byte; a
+# coluna `q_bky` (família da decisão 9) continua sendo a do adendo.
+COL_Q_UM = "q_bky_um_por_hipotese"
+COLUNAS_SAIDA = COLUNAS + [COL_Q_UM]
+CHAVE_HIPOTESE = ["ciclo", "modelo", "conjunto", "especificacao", "termo"]
+HIPOTESE_PRINCIPAL = ("2", COND, "principal", ESPEC, B)
+# Ordem de escolha do membro (doc 38, D4, item 4); "cr1_cluster_conjunto" é a linha de E9_estimativas.
+PRIORIDADE_MEMBRO = ("cv3_cluster_conjunto", "cr1_cluster_conjunto", "cluster_curso", "cv3_cluster_curso",
+                     "score_bootstrap_rademacher_cluster_conjunto", "score_bootstrap_webb_cluster_conjunto",
+                     "score_bootstrap_rademacher_cluster_curso", "score_bootstrap_webb_cluster_curso",
+                     "placebo_cortes")
+ROT_INFERENCIA = {"cv3_cluster_conjunto": "CV3 por conjunto", "cr1_cluster_conjunto": "CR1 por conjunto",
+                  "cluster_curso": "CR1 por curso", "cv3_cluster_curso": "CV3 por curso",
+                  "score_bootstrap_rademacher_cluster_conjunto": "score bootstrap Rademacher por conjunto",
+                  "score_bootstrap_webb_cluster_conjunto": "score bootstrap Webb por conjunto",
+                  "score_bootstrap_rademacher_cluster_curso": "score bootstrap Rademacher por curso",
+                  "score_bootstrap_webb_cluster_curso": "score bootstrap Webb por curso",
+                  "placebo_cortes": "p por posto dos placebos"}
+REGRA_BKY_UM = {
+    "data": "2026-10-27",
+    "estatuto": "SENSIBILIDADE",
+    "origem": ("decisão do autor delegada ao agente em 27/10/2026 (doc 38, D4), sobre a pendência 2 da auditoria 54 "
+               "(achado A1); regra fixada e commitada antes de rodar"),
+    "regra": ("um membro por hipótese: uma inferência por coeficiente e especificação. Candidatos: as linhas da família "
+              "da decisão 9 (entra_bky), uma família por versão do quadro. Hipótese = (ciclo, modelo, conjunto, "
+              "especificação, termo). A hipótese do coeficiente principal (RB-1 do ciclo 2) fica fora, porque a "
+              "principal é lida pela regra do §3; o p por posto dos placebos do ciclo 2 é apoio dela. Membro: a "
+              "primeira inferência que existir na ordem de `prioridade`. Inferências repetidas sobre o mesmo "
+              "coeficiente ficam como apoio, fora da família. q pela qvalores_bky da rdd_lib (Anderson, 2008)"),
+    "prioridade": list(PRIORIDADE_MEMBRO),
+    "coluna_original_intacta": "q_bky",
+}
 
 COMO_LER = ("À esquerda, cada linha é uma peça do E9 no ciclo 2, e o eixo é a razão de chances por +R$ 5 mil de bolsa "
             "anunciada, em escala log (nos degraus, um degrau vale +R$ 5 mil). O círculo vazado cinza é a versão antiga "
@@ -633,6 +669,37 @@ def entra_bky(r: pd.Series) -> bool:
     return False
 
 
+def inferencia(r: pd.Series) -> str:
+    """Tipo de inferência de uma linha da família (doc 38, D4): CR1 por conjunto nas linhas de E9_estimativas."""
+    return "cr1_cluster_conjunto" if r["fonte"] == "E9_estimativas" else str(r["analise"])
+
+
+def chave_hipotese(r: pd.Series) -> tuple[str, ...]:
+    return tuple("" if pd.isna(r[c]) else str(r[c]) for c in CHAVE_HIPOTESE)
+
+
+def membros_um_por_hipotese(est: pd.DataFrame) -> pd.Series:
+    """Máscara dos membros da família de um membro por hipótese (doc 38, D4), uma família por versão."""
+    membro = pd.Series(False, index=est.index)
+    for versao in VERSOES:
+        f = est[(est["versao"] == versao) & est["entra_bky"].astype(bool)]
+        grupos: dict[tuple, list[tuple[int, object]]] = {}
+        for i, r in f.iterrows():
+            k = chave_hipotese(r)
+            if k == HIPOTESE_PRINCIPAL:
+                continue
+            inf = inferencia(r)
+            if inf not in PRIORIDADE_MEMBRO:
+                raise FalhaValidacao(f"inferência sem prioridade na família de um por hipótese: {inf}")
+            grupos.setdefault(k, []).append((PRIORIDADE_MEMBRO.index(inf), i))
+        for k, xs in grupos.items():
+            xs.sort(key=lambda x: x[0])
+            if len(xs) > 1 and xs[0][0] == xs[1][0]:
+                raise FalhaValidacao(f"dois membros com a mesma prioridade na hipótese {k}")
+            membro.loc[xs[0][1]] = True
+    return membro
+
+
 def montar(va: dict, vc: dict) -> pd.DataFrame:
     est = pd.DataFrame(linhas_rb(ANTIGA, va) + linhas_rb(CORRIGIDA, vc))[COLUNAS]
     est["entra_bky"] = est.apply(entra_bky, axis=1).astype(bool)
@@ -640,7 +707,37 @@ def montar(va: dict, vc: dict) -> pd.DataFrame:
     for versao in VERSOES:
         m = (est["versao"] == versao) & est["entra_bky"]
         est.loc[m, "q_bky"] = L.qvalores_bky(est.loc[m, "p"].to_numpy(dtype=float))
-    return est
+    # Sensibilidade (doc 38, D4): mesma conta, família com um membro por hipótese.
+    est[COL_Q_UM] = np.nan
+    membro = membros_um_por_hipotese(est)
+    for versao in VERSOES:
+        m = (est["versao"] == versao) & membro
+        est.loc[m, COL_Q_UM] = L.qvalores_bky(est.loc[m, "p"].to_numpy(dtype=float))
+    return est[COLUNAS_SAIDA]
+
+
+def resumo_bky_um(est: pd.DataFrame) -> dict:
+    """Contagens das duas famílias (decisão 9 e um membro por hipótese), por versão do quadro."""
+    def _conta(f: pd.DataFrame, col: str) -> dict:
+        return {"membros": int(len(f)), "q_menor_que_0_05": int((f[col] < ALFA).sum()),
+                "q_menor_que_p": int((f[col] < f["p"]).sum()),
+                "p_maior_ou_igual_0_05_e_q_menor_que_0_05": int(((f["p"] >= ALFA) & (f[col] < ALFA)).sum())}
+
+    por = {}
+    for v in VERSOES:
+        f9 = est[(est["versao"] == v) & est["entra_bky"]]
+        fu = est[(est["versao"] == v) & est[COL_Q_UM].notna()]
+        inf = fu.apply(inferencia, axis=1).value_counts()
+        so9 = f9[(f9["q_bky"] < ALFA) & ~(f9[COL_Q_UM] < ALFA)]
+        nome = lambda r: f"{r['id_rb']}:{_nome(r)}:{inferencia(r)}"  # noqa: E731
+        por[v] = {"familia_decisao_9": _conta(f9, "q_bky"), "um_por_hipotese": _conta(fu, COL_Q_UM),
+                  "hipoteses": int(len(fu)),
+                  "membros_por_inferencia": {k: int(inf.get(k, 0)) for k in PRIORIDADE_MEMBRO if inf.get(k, 0)},
+                  "q_menor_que_0_05_so_na_familia_decisao_9": {
+                      "fora_da_familia_um_por_hipotese": [nome(r) for _, r in so9.iterrows() if pd.isna(r[COL_Q_UM])],
+                      "membro_com_q_maior_ou_igual_0_05": [nome(r) for _, r in so9.iterrows()
+                                                           if pd.notna(r[COL_Q_UM])]}}
+    return {"estatuto": "SENSIBILIDADE", "coluna": COL_Q_UM, "decisao": REGRA_BKY_UM, "por_versao": por}
 
 
 CHAVE_RB = ["fonte", "ciclo", "modelo", "conjunto", "especificacao", "analise", "termo", "estatistica"]
@@ -875,7 +972,28 @@ def linhas_figura(est: pd.DataFrame) -> list[tuple[str, str, dict]]:
     return sel
 
 
-def titulo_figura(lei: dict) -> str:
+def folga_placebos(est: pd.DataFrame) -> dict:
+    """|t real| / maior |t placebo| no ciclo 2, por versão (auditoria 54, A2)."""
+    return {v: abs(_rob(est, v, "placebo_cortes", "2", "t_real")["estimativa"]) /
+            _rob(est, v, "placebo_cortes", "2", "abs_t_placebo_max")["estimativa"] for v in VERSOES}
+
+
+def cubico_contem_zero(est: pd.DataFrame, versao: str = CORRIGIDA) -> bool:
+    r = _coef(est, versao, "2", COND, "principal", "spline_cubico__bolsa_linear")
+    return not _exclui(r["ic95_inf"], r["ic95_sup"])
+
+
+def titulo_figura(lei: dict, est: pd.DataFrame | None = None) -> str:
+    # Auditoria 54, A5 (decisão do autor delegada em 27/10/2026): no MANTEM, o título leva a folga menor sobre os
+    # placebos e o IC do spline cúbico, quando os números da versão corrigida mostram uma das duas coisas. "Efeito nulo"
+    # porque o eixo da figura é a razão de chances: o IC do coeficiente contém 0 exatamente quando o da razão contém 1.
+    if lei[CORRIGIDA]["regra"] == "MANTEM" and est is not None:
+        f = folga_placebos(est)
+        por_pouco, cub = f[CORRIGIDA] < f[ANTIGA], cubico_contem_zero(est)
+        if por_pouco or cub:
+            return ("Com o tipo de vaga da inscrição, o ciclo 2 segue à frente dos placebos"
+                    + (", mas por pouco" if por_pouco else "")
+                    + ("; com spline cúbico, o IC inclui o efeito nulo" if cub else ""))
     return {"MANTEM": "Com o tipo de vaga da inscrição, o ciclo 2 continua robusto a poucos clusters e a placebos",
             "REBAIXAR": "Com o tipo de vaga da inscrição, a inferência robusta do ciclo 2 perde a precisão",
             "PLACEBO_NAO_CONFIRMA": "Com o tipo de vaga da inscrição, o ciclo 2 resiste a poucos clusters, mas não "
@@ -951,13 +1069,13 @@ def figura(est: pd.DataFrame, lei: dict) -> dict:
            Line2D([0], [0], marker="o", color=COR[CORRIGIDA], mfc=COR[CORRIGIDA], mec=COR[CORRIGIDA], lw=2.2,
                   label="corrigida: quadro de 13/02/2026 (vigente na inscrição)")]
     fig.legend(handles=leg, loc="upper left", bbox_to_anchor=(0.01, 0.945), ncol=2, frameon=False, fontsize=10)
-    fig.text(0.01, 0.985, titulo_figura(lei), fontsize=14.5, ha="left", va="top", color="#1f1f1d")
+    fig.text(0.01, 0.985, titulo_figura(lei, est), fontsize=14.5, ha="left", va="top", color="#1f1f1d")
     fig.text(0.01, 0.012, "Escolha da 1ª opção, condicional a se candidatar. Faixa azul: peça principal (RB-1). Bolsa: "
              "pacote do corte, não participação no PMM-E.", fontsize=9.5, color="#52514e", ha="left", va="bottom")
     fig.subplots_adjust(left=0.27, right=0.975, top=0.90, bottom=0.07, wspace=0.22)
     fig.savefig(FIG, dpi=130, metadata={"Software": None})
     plt.close(fig)
-    return {"arquivo": rel(FIG), "sha256": sha256(FIG), "titulo": titulo_figura(lei), "como_ler": COMO_LER}
+    return {"arquivo": rel(FIG), "sha256": sha256(FIG), "titulo": titulo_figura(lei, est), "como_ler": COMO_LER}
 
 
 # ---------------------------------------------------------------------------
@@ -1241,6 +1359,48 @@ def texto_bky(est: pd.DataFrame, resumo: dict) -> str:
         "0,05 não passa a contar como significativa por causa do q. A leitura do §3 não usa o q."])
 
 
+def texto_bky_um(est: pd.DataFrame, resumo: dict) -> str:
+    """Sensibilidade com um membro por hipótese (doc 38, D4): contagens das duas famílias."""
+    bu = resumo["bky_um_por_hipotese"]["por_versao"]
+    linhas = []
+    for v in VERSOES:
+        for chave, rot in (("familia_decisao_9", "decisão 9 (a do adendo; coluna `q_bky`)"),
+                           ("um_por_hipotese", "um membro por hipótese (sensibilidade; coluna `q_bky_um_por_hipotese`)")):
+            x = bu[v][chave]
+            linhas.append([QUADRO_DA_VERSAO[v], rot, _int(x["membros"]), _int(x["q_menor_que_0_05"]),
+                           _int(x["p_maior_ou_igual_0_05_e_q_menor_que_0_05"])])
+    c = bu[CORRIGIDA]
+    inf = "; ".join(f"{ROT_INFERENCIA[k]}: {_int(n)}" for k, n in c["membros_por_inferencia"].items())
+    fu = est[(est["versao"] == CORRIGIDA) & est[COL_Q_UM].notna()]
+    sub = fu[(fu["p"] >= ALFA) & (fu[COL_Q_UM] < ALFA)]
+    rots = [f"{r['id_rb']}, {'ciclo 2' if r['ciclo'] == '2' else 'empilhado'}, {rot_linha(r)} (p = {_n(r['p'], 3)}; "
+            f"q = {_p(r[COL_Q_UM])})" for _, r in sub.iterrows()]
+    so9 = c["q_menor_que_0_05_so_na_familia_decisao_9"]
+    u = c["um_por_hipotese"]
+    return "\n".join([
+        "**Sensibilidade: um membro por hipótese.** Decisão do autor, delegada ao agente em 27/10/2026 "
+        "([doc 38](38_estado_e_pendencias_rdd_bolsa.md), D4), sobre a pendência 2 da auditoria 54. A coluna "
+        "`q_bky_um_por_hipotese` de `RB_estimativas.csv` refaz o BKY com uma inferência por coeficiente e "
+        "especificação (ciclo, modelo, conjunto, especificação e termo), escolhida entre os membros da família da "
+        "decisão 9 por uma ordem fixada antes de rodar: CV3 por conjunto, depois CR1 por conjunto, depois CR1 por "
+        "curso, e as demais. As outras inferências sobre o mesmo coeficiente ficam como apoio. A hipótese do "
+        "coeficiente principal fica fora, com o p por posto dos placebos do ciclo 2, porque a principal é lida pela "
+        "regra do §3. A coluna `q_bky` continua sendo a do adendo; esta é só sensibilidade.", "",
+        _tab(["Quadro do ciclo 2", "Família", "Membros", "q < 0,05", "p ≥ 0,05 e q < 0,05"], linhas), "",
+        f"Na versão corrigida, a família de um membro por hipótese tem {_int(c['hipoteses'])} hipóteses ({inf}). "
+        + (f"Linhas com p ≥ 0,05 e q < 0,05 nela: {_lista(rots)}. " if rots else
+           "Nenhuma linha dela tem p ≥ 0,05 e q < 0,05. ")
+        + (f"Mesmo assim, {_int(u['q_menor_que_p'])} dos {_int(u['membros'])} membros têm q menor que o p: a "
+           "maioria das hipóteses da família rejeita, e o passo adaptativo do BKY continua a afrouxar o limiar. "
+           if u["q_menor_que_p"] else "")
+        + "Das linhas com "
+          f"q < 0,05 na família da decisão 9, {_int(len(so9['fora_da_familia_um_por_hipotese']))} ficam fora desta "
+          "família (são inferências repetidas sobre um coeficiente que já tem membro, ou sobre o coeficiente "
+          f"principal) e {_int(len(so9['membro_com_q_maior_ou_igual_0_05']))} são membros com q ≥ 0,05 nesta. Como na "
+          "família da decisão 9, a contagem de q < 0,05 não é contagem de achados independentes, e a leitura do §3 não "
+          "usa o q."])
+
+
 def tabela_mudancas(resumo: dict) -> str:
     linhas = []
     for m in resumo["mudancas"]:
@@ -1421,7 +1581,12 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "As saídas `E9_*`, `VC_*`, `VD_*` e `VL_*` não são regravadas, e os docs 42, 44, 57, 57p e 57v não são "
         "editados.<br>",
         "> **Auditoria:** [auditoria 54](../auditorias/54_auditoria_robustez_E9_ciclo2.md), aprovada com correções de "
-        "texto (folga dos placebos, spline cúbico e leitura do q do BKY); nenhum número mudou.",
+        "texto (folga dos placebos, spline cúbico e leitura do q do BKY); nenhum número mudou.<br>",
+        "> **Decisões de 27/10/2026** (do autor, delegadas ao agente; pendências 2 e 3 da auditoria 54; "
+        "[doc 38](38_estado_e_pendencias_rdd_bolsa.md), D4): o título da figura passa a trazer a folga menor sobre os "
+        "placebos e o IC do spline cúbico; a coluna `q_bky_um_por_hipotese` traz o BKY com um membro por hipótese, só "
+        "como sensibilidade (bloco depois do BKY da decisão 9). Nenhuma estimativa mudou; as colunas antigas de "
+        "`RB_estimativas.csv` ficaram iguais byte a byte.",
         "",
         "## 1. Resposta curta",
         "",
@@ -1467,6 +1632,8 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
             "",
             *bloco("bky", texto_bky(est, resumo)),
             "",
+            *bloco("bky_um", texto_bky_um(est, resumo)),
+            "",
             "### 5.7 O que mudou de sinal ou de significância",
             "",
             *bloco("mudancas", tabela_mudancas(resumo)),
@@ -1494,7 +1661,9 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "maior que o real; o teste não distingue efeitos maiores que isso. A fração de placebos com |t| alto mostra que "
         "o t com cluster por conjunto, com spline linear, superestima a precisão (doc 42).",
         "- **BKY novo.** O E9 é exploratório e não tinha família de correção múltipla; a família BKY deste adendo foi "
-        "fixada na decisão 9, antes das estimativas, e junta inferências diferentes sobre o mesmo peso da bolsa.",
+        "fixada na decisão 9, antes das estimativas, e junta inferências diferentes sobre o mesmo peso da bolsa. A "
+        "coluna `q_bky_um_por_hipotese` refaz a conta com um membro por hipótese, regra que o autor adotou para os "
+        "próximos adendos (doc 38, D4); aqui ela é só sensibilidade.",
         "- **Escolha condicional.** Tudo vale para quem se candidatou, dentro das vagas abertas do seu curso e ciclo; o "
         "conjunto de escolha supõe que o candidato viu todas as células do curso; IIA do logit condicional; o "
         "explodido supõe ainda que a 2ª opção é a melhor do que sobra.",
@@ -1663,6 +1832,7 @@ def main(argv: list[str] | None = None) -> int:
     resumo["bky"] = {"familia": "decisão 9", "membros_por_versao": {v: int(est[(est["versao"] == v) &
                                                                                est["entra_bky"]].shape[0])
                                                                     for v in VERSOES}}
+    resumo["bky_um_por_hipotese"] = resumo_bky_um(est)
     resumo["figura"] = figura(est, resumo["leitura"])
     resumo["como_ler"] = {FIG.name: COMO_LER}
     resumo["saidas"] = {rel(OUT_CSV): sha256(OUT_CSV), rel(FIG): resumo["figura"]["sha256"]}

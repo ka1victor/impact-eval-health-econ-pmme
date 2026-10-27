@@ -4016,17 +4016,135 @@
       "corrigida_13fev": 74
     }
   },
+  "bky_um_por_hipotese": {
+    "estatuto": "SENSIBILIDADE",
+    "coluna": "q_bky_um_por_hipotese",
+    "decisao": {
+      "data": "2026-10-27",
+      "estatuto": "SENSIBILIDADE",
+      "origem": "decisão do autor delegada ao agente em 27/10/2026 (doc 38, D4), sobre a pendência 2 da auditoria 54 (achado A1); regra fixada e commitada antes de rodar",
+      "regra": "um membro por hipótese: uma inferência por coeficiente e especificação. Candidatos: as linhas da família da decisão 9 (entra_bky), uma família por versão do quadro. Hipótese = (ciclo, modelo, conjunto, especificação, termo). A hipótese do coeficiente principal (RB-1 do ciclo 2) fica fora, porque a principal é lida pela regra do §3; o p por posto dos placebos do ciclo 2 é apoio dela. Membro: a primeira inferência que existir na ordem de `prioridade`. Inferências repetidas sobre o mesmo coeficiente ficam como apoio, fora da família. q pela qvalores_bky da rdd_lib (Anderson, 2008)",
+      "prioridade": [
+        "cv3_cluster_conjunto",
+        "cr1_cluster_conjunto",
+        "cluster_curso",
+        "cv3_cluster_curso",
+        "score_bootstrap_rademacher_cluster_conjunto",
+        "score_bootstrap_webb_cluster_conjunto",
+        "score_bootstrap_rademacher_cluster_curso",
+        "score_bootstrap_webb_cluster_curso",
+        "placebo_cortes"
+      ],
+      "coluna_original_intacta": "q_bky"
+    },
+    "por_versao": {
+      "antiga_19mar": {
+        "familia_decisao_9": {
+          "membros": 74,
+          "q_menor_que_0_05": 65,
+          "q_menor_que_p": 35,
+          "p_maior_ou_igual_0_05_e_q_menor_que_0_05": 3
+        },
+        "um_por_hipotese": {
+          "membros": 50,
+          "q_menor_que_0_05": 44,
+          "q_menor_que_p": 19,
+          "p_maior_ou_igual_0_05_e_q_menor_que_0_05": 3
+        },
+        "hipoteses": 50,
+        "membros_por_inferencia": {
+          "cv3_cluster_conjunto": 1,
+          "cr1_cluster_conjunto": 48,
+          "cluster_curso": 1
+        },
+        "q_menor_que_0_05_so_na_familia_decisao_9": {
+          "fora_da_familia_um_por_hipotese": [
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_quadratico__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_quadratico__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_linear__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_quadratico__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_rademacher_cluster_conjunto|bolsa_mil:score_bootstrap_rademacher_cluster_conjunto",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_webb_cluster_conjunto|bolsa_mil:score_bootstrap_webb_cluster_conjunto",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_rademacher_cluster_curso|bolsa_mil:score_bootstrap_rademacher_cluster_curso",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_webb_cluster_curso|bolsa_mil:score_bootstrap_webb_cluster_curso",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|cv3_cluster_curso|bolsa_mil:cv3_cluster_curso",
+            "RB-2:2|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|placebo_cortes|bolsa_mil:placebo_cortes",
+            "RB-2:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|placebo_cortes|bolsa_mil:placebo_cortes"
+          ],
+          "membro_com_q_maior_ou_igual_0_05": []
+        }
+      },
+      "corrigida_13fev": {
+        "familia_decisao_9": {
+          "membros": 74,
+          "q_menor_que_0_05": 63,
+          "q_menor_que_p": 32,
+          "p_maior_ou_igual_0_05_e_q_menor_que_0_05": 4
+        },
+        "um_por_hipotese": {
+          "membros": 50,
+          "q_menor_que_0_05": 41,
+          "q_menor_que_p": 23,
+          "p_maior_ou_igual_0_05_e_q_menor_que_0_05": 3
+        },
+        "hipoteses": 50,
+        "membros_por_inferencia": {
+          "cv3_cluster_conjunto": 1,
+          "cr1_cluster_conjunto": 48,
+          "cluster_curso": 1
+        },
+        "q_menor_que_0_05_so_na_familia_decisao_9": {
+          "fora_da_familia_um_por_hipotese": [
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_quadratico__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-5:empilhado|principal|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_quadratico__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-4:empilhado|sensibilidade|logit_condicional_1a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_linear__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_quadratico__bolsa_linear|cluster_curso|bolsa_mil:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_linear__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0300:cluster_curso",
+            "RB-5:empilhado|principal|logit_explodido_1a_2a_opcao|spline_quadratico__degraus_por_corte|cluster_curso|degrau_0400:cluster_curso",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_rademacher_cluster_conjunto|bolsa_mil:score_bootstrap_rademacher_cluster_conjunto",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_webb_cluster_conjunto|bolsa_mil:score_bootstrap_webb_cluster_conjunto",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_rademacher_cluster_curso|bolsa_mil:score_bootstrap_rademacher_cluster_curso",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|score_bootstrap_webb_cluster_curso|bolsa_mil:score_bootstrap_webb_cluster_curso",
+            "RB-1:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|cv3_cluster_curso|bolsa_mil:cv3_cluster_curso",
+            "RB-2:2|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|placebo_cortes|bolsa_mil:placebo_cortes",
+            "RB-2:empilhado|principal|logit_condicional_1a_opcao|spline_linear__bolsa_linear|placebo_cortes|bolsa_mil:placebo_cortes"
+          ],
+          "membro_com_q_maior_ou_igual_0_05": []
+        }
+      }
+    }
+  },
   "figura": {
     "arquivo": "output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png",
-    "sha256": "9fe4e13850ac367d5e793b0052a4014ab20638f8c8717edc321adaf0eb436918",
-    "titulo": "Com o tipo de vaga da inscrição, o ciclo 2 continua robusto a poucos clusters e a placebos",
+    "sha256": "5f18166511d53e7e2ba0b7c9bbb66f967fdcf9926f89ac5b10e2043809b00cd7",
+    "titulo": "Com o tipo de vaga da inscrição, o ciclo 2 segue à frente dos placebos, mas por pouco; com spline cúbico, o IC inclui o efeito nulo",
     "como_ler": "À esquerda, cada linha é uma peça do E9 no ciclo 2, e o eixo é a razão de chances por +R$ 5 mil de bolsa anunciada, em escala log (nos degraus, um degrau vale +R$ 5 mil). O círculo vazado cinza é a versão antiga (tipo de vaga do ciclo 2 pelo quadro de 19/03/2026, refeito depois do resultado preliminar) e o ponto azul é a corrigida (quadro de 13/02/2026, vigente na inscrição). A faixa sombreada no alto marca a peça principal (RB-1): a barra é o IC 95% com cluster por conjunto (CR1, referência do adendo 52c), pelo CV3 e pela inversão do score bootstrap. Nas demais linhas, a barra é o IC 95% com cluster por conjunto de escolha. A linha vertical marca 1: acima de 1, a célula com bolsa maior é mais escolhida como 1ª opção. À direita, os cortes placebo do ciclo 2 (RB-2): cada ponto pequeno é o |t| de um corte falso; o losango é o |t| da bolsa no corte verdadeiro. Se o losango fica à direita de todos os pontos, o corte verdadeiro está fora da distribuição dos placebos. Tudo é escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte, não a participação no PMM-E."
   },
   "como_ler": {
     "RB_antigo_corrigido.png": "À esquerda, cada linha é uma peça do E9 no ciclo 2, e o eixo é a razão de chances por +R$ 5 mil de bolsa anunciada, em escala log (nos degraus, um degrau vale +R$ 5 mil). O círculo vazado cinza é a versão antiga (tipo de vaga do ciclo 2 pelo quadro de 19/03/2026, refeito depois do resultado preliminar) e o ponto azul é a corrigida (quadro de 13/02/2026, vigente na inscrição). A faixa sombreada no alto marca a peça principal (RB-1): a barra é o IC 95% com cluster por conjunto (CR1, referência do adendo 52c), pelo CV3 e pela inversão do score bootstrap. Nas demais linhas, a barra é o IC 95% com cluster por conjunto de escolha. A linha vertical marca 1: acima de 1, a célula com bolsa maior é mais escolhida como 1ª opção. À direita, os cortes placebo do ciclo 2 (RB-2): cada ponto pequeno é o |t| de um corte falso; o losango é o |t| da bolsa no corte verdadeiro. Se o losango fica à direita de todos os pontos, o corte verdadeiro está fora da distribuição dos placebos. Tudo é escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte, não a participação no PMM-E."
   },
   "saidas": {
-    "output/rdd_bolsa/RB_estimativas.csv": "c97c3c9a8f15e049bf9c3355fe8649de6f03cb3ee0687bf0dd962a4a7b5a2d95",
-    "output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png": "9fe4e13850ac367d5e793b0052a4014ab20638f8c8717edc321adaf0eb436918"
+    "output/rdd_bolsa/RB_estimativas.csv": "556481c99953a3a3216d447cca1a14c2c880c5a6b3c8d1282c8a49c20ac46602",
+    "output/rdd_bolsa/RB_figuras/RB_antigo_corrigido.png": "5f18166511d53e7e2ba0b7c9bbb66f967fdcf9926f89ac5b10e2043809b00cd7"
   }
 }
