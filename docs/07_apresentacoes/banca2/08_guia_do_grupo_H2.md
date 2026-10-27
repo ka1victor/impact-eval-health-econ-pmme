@@ -2,9 +2,10 @@
 
 > **Para quem é:** para o grupo começar a acompanhar a parte empírica e montar os slides da banca 2.<br>
 > **Data:** 27/10/2026.<br>
-> **Estado:** a hipótese está decidida (doc [07](07_nova_hipotese.md)). Um agente está reconstruindo o deck e
-> outro está escrevendo a análise completa da H2 (doc 66, em `docs/06_execucao/`). Os dois entram na `main` quando
-> forem auditados. Até lá, use este guia e as figuras listadas abaixo, que já estão prontas e auditadas.<br>
+> **Estado:** a hipótese está decidida (doc [07](07_nova_hipotese.md)). A **análise completa da H2** já está na
+> `main`: [doc 66](../../06_execucao/66_analise_completa_H2.md), com 6 figuras simples em
+> `output/rdd_bolsa/H2_figuras/` (auditoria em curso; os números de estimação são cópia de saídas já auditadas).
+> O deck novo está sendo reconstruído e entra na `main` quando for auditado.<br>
 > **Regra do projeto:** todo número dos slides sai de `output/` por script. Os números abaixo servem para o grupo
 > entender a história. No slide, use a figura gerada pelo pipeline, nunca um número digitado à mão.
 
@@ -19,14 +20,14 @@ preenchimento no corte, mas essa ligação é interpretação, não teste.
 
 ## 2. A história em 6 passos (uma ideia por slide)
 
-| Passo | Mensagem | Figura pronta |
-|---|---|---|
-| 1. Motivação | no corte de IVS, não detectamos aumento do preenchimento onde a bolsa é R$ 5 mil maior | só uma linha de texto; o gráfico vai para o apêndice |
-| 2. Onde escolhem | a maioria põe a 1ª opção na mesma UF onde já trabalhava | `output/apresentacao_banca2/exp_escolha_origem.png` |
-| 3. A bolsa pesa dentro da região | comparando só vagas da mesma UF, a vaga de bolsa maior é mais escolhida | `output/rdd_bolsa/VL_figuras/VL_razao_chances_e_km.png` |
-| 4. Mas a origem pesa mais (o teste central da H2) | estar na UF de origem pesa mais que toda a diferença de bolsa | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` |
-| 5. Robustez | a leitura não muda com o quadro corrigido do ciclo 2 nem com outras variantes | `output/rdd_bolsa/VC_figuras/VC_antigo_corrigido.png`, `output/rdd_bolsa/VD_figuras/VD_antigo_corrigido.png` |
-| 6. Teoria | incentivo limitado: o custo de sair da própria região pesa mais que o degrau da bolsa | texto |
+| Passo | Mensagem | Figura simples (doc 66) | Alternativa já auditada |
+|---|---|---|---|
+| 1. Motivação | no corte de IVS, não detectamos aumento do preenchimento onde a bolsa é R$ 5 mil maior | só uma linha de texto; o gráfico vai para o apêndice | — |
+| 2. Onde escolhem | a maioria põe a 1ª opção na mesma UF onde já trabalhava | `output/rdd_bolsa/H2_figuras/H2_F1_onde_escolhem.png` | `output/apresentacao_banca2/exp_escolha_origem.png` |
+| 3. A bolsa pesa dentro da região | comparando só vagas da mesma UF, a vaga de bolsa maior é mais escolhida | `H2_F3_razao_chances_bolsa.png` (e o descritivo `H2_F2_mesma_uf_perto_do_corte.png`) | `output/rdd_bolsa/VL_figuras/VL_razao_chances_e_km.png` |
+| 4. Mas a origem pesa mais (o teste central da H2) | estar na UF de origem pesa mais que toda a diferença de bolsa | `H2_F4_origem_contra_bolsa.png` (e `H2_F5_bolsa_em_km.png`) | `output/rdd_bolsa/P1h_figuras/P1h_magnitudes.png` |
+| 5. Robustez | a leitura não muda com o quadro corrigido do ciclo 2 nem com outras variantes | `H2_F6_robustez.png` | `VC_figuras/VC_antigo_corrigido.png`, `VD_figuras/VD_antigo_corrigido.png` |
+| 6. Teoria | incentivo limitado: o custo de sair da própria região pesa mais que o degrau da bolsa | texto (doc 66, seção 10) | — |
 
 ## 3. Os números que contam a história (para entender, não para digitar)
 
@@ -69,6 +70,6 @@ Hipótese → Dados → Análise descritiva → Metodologia → Identificação 
 | a hipótese e o roteiro | [07_nova_hipotese.md](07_nova_hipotese.md) |
 | a avaliação das hipóteses (por que H2) | [`docs/06_execucao/65_avaliacao_forca_hipoteses.md`](../../06_execucao/65_avaliacao_forca_hipoteses.md) §4.6–4.8 |
 | os resultados da escolha | docs 57a, 57i, 57p, 57v, 57x em `docs/06_execucao/` |
-| a análise completa da H2 | doc 66 (em preparação) |
+| a análise completa da H2 | [`docs/06_execucao/66_analise_completa_H2.md`](../../06_execucao/66_analise_completa_H2.md) (auditoria em curso) |
 | o deck | `output/apresentacao_banca2/deck_banca2_curto.pdf` (a versão com a H2 está sendo gerada; a atual ainda é a antiga) |
 | decisões e pendências | [05_discussao_historia_empirica.md](05_discussao_historia_empirica.md) §2.16 e §4.1 |

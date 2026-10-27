@@ -8,6 +8,26 @@
 
 ---
 
+## 27/10/2026 — Análise completa da H2 (doc 66, script 51)
+
+Motivo: o autor fixou a H2 como hipótese única da banca 2 e pediu "uma análise clara e completa da hipótese 2". O doc
+66 reúne, numa só peça, a hipótese, os dados, a descritiva, o método, a identificação, os resultados, a robustez, as
+perguntas da banca e a leitura pela teoria. É síntese **pós-resultado** e **não reestima nada**: os números de
+estimação são copiados das saídas auditadas (`G1_*`, `E9_*`, `P1_*`, `P1h_*`, `VC_*`, `VD_*`, `VL_*`), e os
+descritivos novos (onde fica a 1ª opção por ciclo e por faixa; bolsa disponível × escolhida na UF de origem; lado de
+bolsa maior perto do corte) são calculados das bases de escolha versionadas e rotulados como descritivos. A redação
+segue a auditoria 50 ("não detectamos aumento"; teste central = D_UF; β pré-registrado sem Holm).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/66_analise_completa_H2.md`](06_execucao/66_analise_completa_H2.md) | análise completa da H2, com números só em blocos `<!-- H2:... -->` gerados pelo script |
+| `scripts/rdd_bolsa/51_sintese_H2.py` | lê as saídas auditadas e as bases de escolha; grava `output/rdd_bolsa/H2_sintese.csv`, `H2_resumo.json` e `H2_figuras/` (F1 a F6); `--atualizar-doc` regrava os blocos do doc 66; no `run_all.py` depois do 50 |
+| `tests/test_sintese_H2.py` | esquema, reprodução de cada número a partir da origem (≤ 1e−8), integridade (IVS, escrita só nos alvos) e doc 66 |
+
+---
+
 ## 27/10/2026 — Auditoria 51: arquivamento do IBGE, formato *fuzzy* do OC, correção da reserva no ciclo 2, registro e worktrees
 
 Motivo: auditoria independente de cinco peças que entraram na `main` sem auditoria. Vereditos:

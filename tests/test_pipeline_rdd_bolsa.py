@@ -52,6 +52,7 @@ CADEIA = [
     RDD / "42_escolha_vaga_imediata_c2.py",  # adendo 52c: importa o 25c e o 12; portão contra E9_, P1_ e P1h_
     RDD / "48_sensibilidades_ciclo2_quadro_1302.py",  # adendo 52d: importa o 42; portão contra E9_, P1_ e P1h_
     RDD / "50_escolha_localizacao_par.py",  # adendo 52e: importa o 42; portão contra P1_, P1h_, VC_ e VD_
+    RDD / "51_sintese_H2.py",  # síntese da H2: lê G1_, E9_, P1_, P1h_, VC_, VD_ e VL_; não reestima
     RDD / "32_realocacao_bolsa.py",  # realocação (protocolo 58): lê 12, a08, a06, a09 e funções do 16, 19 e 24
     RDD / "28_trajetoria_medicos.py",  # P4 (protocolo 54): lê o a16, a X1 (17, versionada), o a09 e a ponte
     RDD / "30_mecanismo_alocacao.py",  # P6 (protocolo 56), passo 0: só verificar; lê o G1 e o G2 versionados
@@ -221,6 +222,14 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                                                    RDD / "16_estimar_E9_escolha.py",
                                                    RDD / "12_construir_outcomes_funil.py",
                                                    AQ / "a08_adquirir_ivs_2010_oficial.py"],
+            # Síntese da H2 (51) lê E9_ (16), P1_ (25), P1h_ (25c), VC_ (42), VD_ (48), VL_ (50), as tabelas de escolha do
+            # 12 e o a08; o G1 é saída versionada fora do run_all.
+            RDD / "51_sintese_H2.py": [RDD / "50_escolha_localizacao_par.py",
+                                       RDD / "48_sensibilidades_ciclo2_quadro_1302.py",
+                                       RDD / "42_escolha_vaga_imediata_c2.py", RDD / "25c_magnitudes_P1h.py",
+                                       RDD / "25_escolha_dap.py", RDD / "16_estimar_E9_escolha.py",
+                                       RDD / "12_construir_outcomes_funil.py",
+                                       AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # Realocação (32) lê as células do 12, o a08, o Censo (a06) e o CNES pré (a09) e importa o 16 e o 24.
             RDD / "32_realocacao_bolsa.py": [RDD / "12_construir_outcomes_funil.py", RDD / "16_estimar_E9_escolha.py",
                                             RDD / "24_abertura_vagas_selecao.py", AQ / "a08_adquirir_ivs_2010_oficial.py",

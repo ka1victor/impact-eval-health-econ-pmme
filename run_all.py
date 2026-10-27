@@ -149,6 +149,10 @@ STEPS = [
     # (VL-2), região de saúde de origem × UF da vaga (VL-3) e km equivalentes (VL-4). Importa o 42 (e por ele o 25c, o
     # 25, o 16 e o 12); portão VL-5 contra P1_, P1h_, VC_ (42) e VD_ (48) antes de qualquer conta nova.
     ROOT / "scripts" / "rdd_bolsa" / "50_escolha_localizacao_par.py",
+    # Síntese da H2 (banca 2, pós-resultado, não reestima): lê G1_ (versionado), E9_ (16), P1_ (25), P1h_ (25c), VC_
+    # (42), VD_ (48) e VL_ (50), as tabelas de escolha do 12, a malha de regiões de saúde, o a08 e os ESC_* de
+    # output/apresentacao_banca2/numeros_banca2.json (fora do run_all); grava H2_* e os blocos do doc 66.
+    ROOT / "scripts" / "rdd_bolsa" / "51_sintese_H2.py",
     # Realocação (protocolo 58, exploratório): a bolsa das concorrentes do mesmo curso e ciclo na região de saúde
     # desloca candidatos e preenchimento? Lê as células do 12, o a08, a grade de faixas (a03, a04), a CIR e os
     # centroides brutos, o Censo 2022 (a06) e o CNES pré (a09, função do 24); importa o 16, o 17, o 19 e o 24.
