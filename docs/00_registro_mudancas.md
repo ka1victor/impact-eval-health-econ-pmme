@@ -8,6 +8,22 @@
 
 ---
 
+## 27/10/2026 — Adendos 48h (H1 pareada pela localização da unidade e dos médicos) e 52e (H2 com o par de localizações fixado)
+
+Motivo: o autor pediu rodar de novo a H1 e a H2 com pareamento pela localização da unidade e do médico, "o controle
+mais importante". O 48h pareia exato na UF e usa no escore o estoque de especialistas do curso num raio de 100 km; o
+52e põe efeito fixo de UF de origem × UF da vaga no logit da escolha e faz a comparação local no corte. Ambos
+congelados antes de rodar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/48h_adendo_pareamento_localizacao_unidade_e_medicos.md`](06_execucao/48h_adendo_pareamento_localizacao_unidade_e_medicos.md) | adendo congelado; resultados irão para o doc 57w |
+| [`06_execucao/52e_adendo_escolha_localizacao_par.md`](06_execucao/52e_adendo_escolha_localizacao_par.md) | adendo congelado; resultados irão para o doc 57x |
+
+---
+
 ## 26/10/2026 — Auditoria 46: adendo 52d (sensibilidades da escolha no ciclo 2 com o quadro de 13/02), aprovado com correções
 
 Motivo: auditoria independente da execução do adendo 52d (script 48, saídas `VD_*`, doc 57v). O recálculo próprio,
