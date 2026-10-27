@@ -6,11 +6,13 @@
   "script": "scripts/rdd_bolsa/40_h1_vagas_imediatas.py",
   "adendo": {
     "arquivo": "docs/06_execucao/48b_adendo_H1_vagas_imediatas.md",
-    "sha256": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64",
+    "sha256": "21d512b7ebf50928338670318cc6ce031c1bfa7ee2c9aa1e406d5e7a2ff4d09f",
     "commit_congelamento": "666aee1",
     "sha256_original": "383768d27bf87fc76b3ae1f5d518c318f7d7668360a28cf758a4e0e4a0b0efed",
     "commit_nota_7": "4326241",
-    "sha256_com_nota_7": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64"
+    "sha256_com_nota_7": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64",
+    "notas_27_10": "notas de 27/10/2026 (auditoria 51, achado C1), depois do cabecalho e da §1: a frase da §1 descreve o quadro de 19/03/2026, refeito depois do resultado, nao a regra; remetem a §7 e a auditoria 36. So texto; a especificacao nao muda",
+    "sha256_com_notas_27_10": "21d512b7ebf50928338670318cc6ce031c1bfa7ee2c9aa1e406d5e7a2ff4d09f"
   },
   "quadro_ciclo2": {
     "principal": "quadro do ciclo 2 retificado de 13/02/2026, vigente na inscricao (principal; adendo 48b §7)",
@@ -110,7 +112,7 @@
     },
     {
       "arquivo": "docs/06_execucao/48b_adendo_H1_vagas_imediatas.md",
-      "sha256": "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64"
+      "sha256": "21d512b7ebf50928338670318cc6ce031c1bfa7ee2c9aa1e406d5e7a2ff4d09f"
     },
     {
       "arquivo": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",

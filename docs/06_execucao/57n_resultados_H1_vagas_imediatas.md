@@ -1,7 +1,7 @@
 # 57n. Resultados da H1 só com vagas imediatas (adendo 48b)
 
 > **Data:** 26/10/2026.<br>
-> **Especificação:** [`48b_adendo_H1_vagas_imediatas.md`](48b_adendo_H1_vagas_imediatas.md), congelada antes das contas (commit `666aee1`), com a nota datada §7 (commit `4326241`: no ciclo 2, tipo de vaga pelo quadro de 13/02/2026); SHA-256 do adendo com a §7 `0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64`, conferido pelo script.<br>
+> **Especificação:** [`48b_adendo_H1_vagas_imediatas.md`](48b_adendo_H1_vagas_imediatas.md), congelada antes das contas (commit `666aee1`), com a nota datada §7 (commit `4326241`: no ciclo 2, tipo de vaga pelo quadro de 13/02/2026) e as notas de 27/10/2026 depois do cabeçalho e da §1 (só texto); SHA-256 do adendo com a §7 e as notas `21d512b7ebf50928338670318cc6ce031c1bfa7ee2c9aa1e406d5e7a2ff4d09f`, conferido pelo script.<br>
 > **Estatuto:** `ADENDO_48B_POS_RESULTADO`. Pós-resultado: as medidas que misturam vaga imediata e cadastro reserva já tinham sido vistas (docs 49, 49b e 57l). Antes da nota §7, o script chegou a rodar uma vez com o quadro de 19/03 no ciclo 2, e quem o executou viu essa versão de HI-1 e HI-2 (seção 6, "Tipo de vaga do ciclo 2"); ela é a sensibilidade SENS-19MAR. Toda linha de `HI_estimativas.csv` tem `natureza_dos_dados = EMPIRICO`.<br>
 > **Script:** `scripts/rdd_bolsa/40_h1_vagas_imediatas.py` (estimadores de `rdd_lib.py` e funções dos scripts 23 e 36).<br>
 > **Saídas:** `output/rdd_bolsa/HI_estimativas.csv`, `HI_resumo.json` (entradas com SHA-256, reprodução, decisões, contagens) e `HI_figuras/`.<br>

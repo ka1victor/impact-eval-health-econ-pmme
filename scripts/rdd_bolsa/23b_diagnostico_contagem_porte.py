@@ -105,6 +105,14 @@ NOTA_A36_C2 = ("no quadro de 19/03/2026, usado aqui, que foi refeito depois do r
                "alocados do ciclo 2 em células só de reserva (correção de 26/10/2026: "
                "[auditoria 36](../auditorias/36_auditoria_dados_H1.md); "
                "[adendo 48b, §7](48b_adendo_H1_vagas_imediatas.md))")
+# Aviso de 27/10/2026 (auditoria 51, achado C2): tirar a reserva do quadro de 19/03/2026 condiciona no resultado no
+# ciclo 2, porque esse quadro converteu em imediatas as vagas de reserva onde houve alocado. Texto, sem número.
+AVISO_SELECAO_C2 = ("Como esse quadro converteu em imediatas as vagas de reserva onde houve alocado, contar só as "
+                    "vagas imediatas dele condiciona no resultado: esse número não decompõe a queda com o tipo de "
+                    "vaga medido antes da alocação (aviso de 27/10/2026: "
+                    "[auditoria 36](../auditorias/36_auditoria_dados_H1.md); "
+                    "[adendo 48b, §7](48b_adendo_H1_vagas_imediatas.md); "
+                    "[adendo 48f](48f_adendo_selecao_tipo_de_vaga.md), seleção pelo tipo de vaga).")
 ESTATUTO = "DIAGNOSTICO_FORA_PROTOCOLO_48"
 NATUREZA = "EMPIRICO"
 CORTES = L.CORTES_MIL                 # (300, 400)
@@ -2326,7 +2334,7 @@ def secao_adendo2(est: pd.DataFrame, resumo: dict) -> str:
         f"No ciclo 2, a parte de cadastro reserva sobe no corte ({lin(fcr_c2)} p.p.), e as células só de reserva têm "
         f"{_f(al_cr_c2, 0, False)} alocados na 1ª chamada {NOTA_A36_C2}: com esse quadro, mais reserva no "
         f"denominador baixa a taxa por vaga oferecida, e contando só as vagas imediatas a queda do ciclo 2 fica em "
-        f"{lin(vi_c2)} p.p. Nos ciclos juntos isso não basta, porque no ciclo 3 a taxa só com vagas imediatas também "
+        f"{lin(vi_c2)} p.p. {AVISO_SELECAO_C2} Nos ciclos juntos isso não basta, porque no ciclo 3 a taxa só com vagas imediatas também "
         f"cai ({lin(vi_c3)} p.p., IC largo). "
         f"(3) **Peso das cidades grandes:** tirar qualquer um dos {N_TOP_VAGA} municípios com mais vagas oferecidas "
         f"muda o salto em no máximo {_f(100 * maxd, 1, False)} p.p. Trocar o peso de vaga para município leva o salto a "

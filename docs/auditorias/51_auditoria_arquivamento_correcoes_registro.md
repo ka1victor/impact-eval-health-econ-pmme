@@ -140,6 +140,12 @@ não mudaram. A última mudança deles é anterior a `515a559`. O único arquivo
   `tests/test_h1_vagas_imediatas.py`: uma nota no §1 quebraria a conferência do adendo congelado. Por isso **não
   editei**. Recomendo que o autor decida entre (a) deixar como está, com a §7 e a auditoria 38 (achado 1) como
   registro, ou (b) acrescentar uma nota e rodar de novo os scripts 40 e 41 para regravar o hash.
+  *Resolvido em 27/10/2026 (opção b, aprovada pelo autor).* Duas notas datadas em itálico, depois do cabeçalho e
+  do §1 do 48b, dizem que a frase descreve o quadro de 19/03/2026, refeito depois do resultado, e não a regra, e
+  remetem à §7 e à auditoria 36. O texto congelado não foi mudado. O hash novo do adendo (`21d512b7ebf5…`) foi
+  gravado pelo script 40 (constante, `HI_resumo.json`, doc 57n e teste) e, em cascata, pelos scripts 41
+  (`HC_resumo.json`), 45, 47 e 49 (`PM_`, `PO_` e `PL_resumo.json`, que guardam o hash do `HI_resumo.json`).
+  Todos os CSVs e figuras dessas famílias ficaram iguais byte a byte.
 - **C2 (baixo).** Pela auditoria 36 (§3, "Consequências da versão de 19/03"), o "Q2 sem as células só de CR" do ciclo
   2 e a sensibilidade "só vagas imediatas" condicionam no resultado. As frases corrigidas do 57l ("a queda vai de
   −27,8 p.p. para −12,9 p.p. sem as células só de CR do quadro de 19/03/2026") e do 49b ("com esse quadro, mais reserva
@@ -147,6 +153,12 @@ não mudaram. A última mudança deles é anterior a `515a559`. O único arquivo
   pré-tratamento. Os blocos são gerados pelos scripts 38 e 23b; a mudança não é só de registro. Fica como
   recomendação: uma oração nos dois geradores ("no ciclo 2, tirar as células só de CR do quadro de 19/03 condiciona
   no resultado; a versão com o quadro de 13/02 está no adendo 48b").
+  *Resolvido em 27/10/2026 (aprovado pelo autor).* Os scripts 38 e 23b ganharam uma frase curta, onde o 57l e o
+  49b falam da linha sem as células só de CR (resposta curta, §8 e leitura do 57l; §14 do 49b): tirar essas
+  células do quadro de 19/03 condiciona no resultado, porque ele converteu em imediatas as vagas de reserva onde
+  houve alocado; remete à auditoria 36, ao 48b §7 e ao adendo 48f. Docs regravados com `--atualizar-doc`; o
+  script 39 rodou de novo para regravar o hash do 38 em `GF_resumo.json`. `DQ_*`, `ND_*` e `GF_estimativas.csv`
+  ficaram iguais byte a byte.
 - **C3 (corrigido).** A fila do doc `07_apresentacoes/banca2/05_discussao_historia_empirica.md`, item 13 ("Documentos
   com texto errado a corrigir"), não registrava que a correção foi feita. Acrescentei "**Feito** (26/10/2026, commit
   `515a559`)…".

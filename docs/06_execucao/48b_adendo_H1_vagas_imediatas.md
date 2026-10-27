@@ -18,6 +18,12 @@
 > Este adendo **não é** uma primeira olhada. É uma correção de definição,
 > justificada pela regra de uso da reserva, e é registrada como pós-resultado.
 
+*Nota de 27/10/2026 (auditoria 51, achado C1). A "regra de uso da reserva"
+citada acima e a frase da §1 "no ciclo 2, nenhuma célula só de reserva teve
+alocado na 1ª chamada" descrevem o quadro de 19/03/2026, refeito depois do
+resultado, e não a regra. Ver a §7 deste adendo e a
+[auditoria 36](../auditorias/36_auditoria_dados_H1.md).*
+
 ## 1. Justificativa: por que só vagas imediatas
 
 A vaga de cadastro reserva é uma vaga de espera. Na 1ª chamada, ela compete de
@@ -26,6 +32,13 @@ alocado na 1ª chamada (doc 49b, §14). Comparar o preenchimento na 1ª chamada
 entre municípios com proporções diferentes de reserva mede, em parte, a
 composição do quadro, e não o preenchimento de vagas comparáveis. A comparação
 correta é entre **vagas do mesmo tipo**.
+
+*Nota de 27/10/2026 (auditoria 51, achado C1). A frase "no ciclo 2, nenhuma
+célula só de reserva teve alocado na 1ª chamada" descreve o quadro de
+19/03/2026, refeito depois do resultado, e não a regra: pelo quadro de
+13/02/2026, vigente na inscrição, havia alocados do ciclo 2 em células só de
+reserva. Ver a §7 deste adendo e a
+[auditoria 36](../auditorias/36_auditoria_dados_H1.md).*
 
 A regra de cada edital sobre o uso da reserva na 1ª chamada é verificada pela
 auditoria 36, em curso. O item de cada edital é citado no doc de resultados
