@@ -14,6 +14,12 @@
 > federais nos mesmos cortes, [auditoria 18](../auditorias/18_politicas_nos_mesmos_cortes_ivs.md)), nunca a
 > participação no PMM-E nem o Agora Tem Especialistas.
 
+> **Decisão do autor (27/10/2026) — vale sobre qualquer recomendação abaixo.** A hipótese única da versão final é
+> a **H2** (bolsa × origem), reformulada no [doc 07 da banca 2](../07_apresentacoes/banca2/07_nova_hipotese.md); as
+> antigas H1 e H3 vão para um apêndice curto. Análise completa da H2: [doc 66](66_analise_completa_H2.md) (auditoria
+> 52). A recomendação da §0 e da §4.4 (H1) fica **superada** e é mantida só como registro do raciocínio; a §4.4
+> ganhou uma nota que diz isso. Os três cuidados da nota da auditoria 50 abaixo continuam valendo para a H2.
+
 > **Estado atual (nota da [auditoria 50](../auditorias/50_auditoria_avaliacao_hipoteses.md), 27/10/2026).**
 > - **A seção mais recente é a §4.8.** Só ela conhece o 48h e o 52e. A §0 a §4.5 são de 26/10. A §4.6 e a §4.7
 >   foram escritas em 27/10, antes desses adendos.
@@ -43,6 +49,8 @@
 | **H1** bolsa maior → mais vagas preenchidas | salto no corte (lado de bolsa maior − menor) na chance de a célula com vaga imediata ser preenchida (HI-1) e nos alocados por município (HI-2); **pacote do corte**, condicional a a célula ter vaga imediata | HI-1: −3,7 p.p. [−21,3; +13,9] em 0,300 e −2,3 p.p. [−24,0; +19,4] em 0,400; HI-2: −1,13 [−2,15; −0,10] (p 0,032; **Holm 0,126**) e −0,16 [−0,99; +0,68]. Nenhuma primária passa no Holm (57n §3) | **Inconclusiva.** Não sustenta o efeito positivo proposto. Não é nulo bem estimado: TOST inconclusivo em 3 das 4 primárias; MDE da HI-1 de 25 a 31 p.p. | "No corte de IVS, não detectamos aumento do preenchimento onde a bolsa é maior. Com o IC convencional, os dados descartam só aumentos grandes, e só em parte das medidas." |
 | **H2** a bolsa pesa pouco perto da origem | no modelo de escolha da 1ª opção, D_UF = peso da vaga na UF de origem − peso de toda a amplitude da bolsa (R$ 10 → 20 mil); **comparação de pesos na utilidade**, condicional a se candidatar; a bolsa é identificada pelos cortes (pacote) e a origem é preferência revelada | D_UF = 1,98 [1,56; 2,40], p < 0,001, unilateral (57i §3); com o tipo de vaga do ciclo 2 corrigido, 1,94 [1,48; 2,40] (57p §1). O peso da bolsa sozinho não se distingue de zero: β = 0,0424 [−0,0027; 0,0874], p 0,065 (57a §4) [*auditoria 50, 27/10/2026: na versão corrigida, que é a de referência, β = 0,0453 [−0,0041; 0,0947], p de Holm 0,072 (57p §1)*] | **Moderada.** A desigualdade é forte e estável dentro do modelo, mas foi formulada depois de ver os coeficientes, e o lado da origem não é causal | "Entre quem se candidatou, toda a diferença de bolsa pesa na escolha bem menos que a vaga ficar na UF de origem do médico." |
 | **H3** a chegada soma oferta ou remaneja | no médico: horas cadastradas associadas à entrada no PMM-E (Callaway–Sant'Anna, coortes de entrada); no município: oferta de especialistas depois da chegada (CS) e comparada no corte (forma reduzida); **associação sob tendências paralelas**, não efeito da bolsa | médico: +6,6 h/sem [+5,4; +7,8] (57d §5); 51,0% já tinham vínculo no município do posto (57d §3). Município, pela chegada: sobe, mas o pré já subia e a ruptura de Rambachan–Roth é 0 (57k §5.1); no corte: nada se distingue de zero, Holm 1,000 (57q §5.1) | **Fraca a moderada.** Moderada no nível do médico (associação); inconclusiva no município, que é onde a pergunta "soma ou remaneja" se responde | "O médico que entra passa a cadastrar mais horas, cerca de metade já estava no município e parte do ganho sai de horas que ele tinha fora; no município, não dá para afirmar aumento da oferta, nem há sinal de saída dos outros especialistas." |
+
+> **Superado em 27/10/2026:** o autor escolheu a H2 (ver o topo do documento). O veredito abaixo é registro.
 
 **Veredito curto (detalhe na seção 4).** Recomendo manter a **H1 como hipótese única**, apresentada como hipótese
 testada e **não confirmada**, com o que os dados descartam e o que não descartam. Ela é a única das três derivada
@@ -407,6 +415,11 @@ O contraste não envolve o instrumento da política.
   preferência revelada, não efeito identificado.
 
 ### 4.4 Recomendação
+
+> **Superada em 27/10/2026 pela decisão do autor** (H2 como hipótese única; ver o topo do documento e o
+> [doc 07 da banca 2](../07_apresentacoes/banca2/07_nova_hipotese.md)). O texto abaixo fica como registro do
+> raciocínio de 26/10. O cuidado que ele levanta continua válido e está no deck: a H2 é dita como **formulada depois
+> de ver os dados**.
 
 **Usar a H1 como hipótese única.** Pela regra do autor, a H1 "se sustenta" como hipótese: o desenho existe, a
 regra é *sharp*, não há manipulação, e o teste foi feito e auditado. O que não se sustenta é o efeito positivo, e
