@@ -453,7 +453,7 @@ bolsa supera o degrau de custo.
 | `output/rdd_bolsa/VD_estimativas.csv` | adendo 52d: M2, M4, M7, M8, M9 e D_UF com o quadro de 13/02 | 2026-10-26 | termo × modelo × versão | `3b512c0849ed` |
 | `output/rdd_bolsa/VL_estimativas.csv` | adendo 52e: efeito fixo do par de UFs (VL-1), comparação local (VL-2), VL-3, km (VL-4), M1 e M4 | 2026-10-27 | termo × modelo | `9c99bdd080db` |
 | `output/rdd_bolsa/VL_resumo.json` | adendo 52e: contagens de identificação do VL-1 | 2026-10-27 | modelo | `eb4f4881420f` |
-| `output/apresentacao_banca2/numeros_banca2.json` | descritivos ESC_* da banca 2 (fonte dos 79%; gerado fora do run_all por scripts/apresentacao/gerar_figuras_banca2.py) | 2026-10-27 | número | `03f3844a9097` |
+| `output/apresentacao_banca2/numeros_banca2.json` | descritivos ESC_* da banca 2 (fonte dos 79%; gerado fora do run_all por scripts/apresentacao/gerar_figuras_banca2.py) | 2026-10-27 | número | `cc25e8bedc9e` |
 
 Saídas: `output/rdd_bolsa/H2_sintese.csv` (137 linhas: 81 copiadas de saídas auditadas e 56 descritivas novas), `output/rdd_bolsa/H2_resumo.json` e 6 figuras em `output/rdd_bolsa/H2_figuras/`. Todas com `natureza_dos_dados = EMPIRICO`.
 <!-- H2:fontes:fim -->

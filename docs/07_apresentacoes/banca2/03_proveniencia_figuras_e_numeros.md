@@ -1343,7 +1343,7 @@ estável, e duas execuções dão o mesmo SHA-256.
     recálculo; as etapas "ligados ao CNES" e "com município de origem" são diferenças entre o R1 e as exclusões
     registradas, e o total "com município de origem" coincide com `ESC_N` (o teste confere). Os códigos novos mudam
     o SHA-256 de `numeros_banca2.json`: o doc 66 e o `H2_resumo.json` guardam o hash de antes, como registro da
-    entrada que leram; os `ESC_*` que eles usam não mudaram. O doc 66 não foi regerado nesta revisão.
+    entrada que leram; os `ESC_*` que eles usam não mudaram. O doc 66 não foi regerado nesta revisão. *Resolvido em 27/10/2026:* o script 51 foi rodado de novo; `H2_sintese.csv` saiu idêntico e só o hash de `numeros_banca2.json` mudou no `H2_resumo.json` e no doc 66.
 
 ## 7. Reprodução
 
