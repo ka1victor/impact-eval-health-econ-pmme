@@ -8,6 +8,22 @@
 
 ---
 
+## 27/10/2026 — Auditoria 48: adendo 52e (H2 com efeito fixo do par de UFs e comparação local no corte)
+
+Motivo: auditoria independente da execução do adendo 52e (script 50, saídas `VL_*`, doc 57x). O veredito é aprovado
+com correções de texto. O recálculo próprio reproduz todas as linhas, e nenhuma estimativa mudou; a reexecução
+completa do 50 deu `VL_*` idênticos byte a byte. As correções estão nos blocos gerados do 57x (pelo script 50) e no
+cabeçalho, que passa a apontar para a auditoria: nos ciclos 1–3 o VL-1 é maior que o M1 na comparação pareada,
+embora a regra fixada o chame de "parecido"; a resposta curta ganha a frase do M4 e a da distância em log.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/48_auditoria_escolha_localizacao_par.md`](auditorias/48_auditoria_escolha_localizacao_par.md) | auditoria do adendo 52e: veredito, achados e recálculo |
+
+---
+
 ## 27/10/2026 — Doc 57x: execução do adendo 52e (H2 com efeito fixo do par de UFs e comparação local no corte)
 
 Motivo: execução do adendo 52e. O doc 57x foi aberto primeiro só com o bloco "Decisões de implementação" (como o

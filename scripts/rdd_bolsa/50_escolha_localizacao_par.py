@@ -16,8 +16,9 @@ O que o script faz
    ciclo 2, o D_UF, o M4 e os km do M1 com o tipo de vaga do ciclo 2 do quadro de 13/02/2026 (contra
    `VC_estimativas.csv` e `VD_estimativas.csv`). Diferença ≤ 1e−8 (relativa quando o valor gravado passa de 1 em
    módulo). Se falhar, a execução para (`FALHA_REPRODUCAO_<linha>`) e nada novo é estimado.
-2. **VL-1 a VL-4.** Logit condicional da 1ª opção (função `estimar` do 25, sem alteração) com efeito fixo de UF de
-   origem × UF da vaga (VL-1), restrito às vagas a até 0,050 de um corte de IVS (VL-2), com efeito fixo de região de
+2. **VL-1 a VL-4.** Logit condicional da 1ª opção (nas referências, a função `estimar` do 25, sem alteração; nas
+   linhas com par, `estimar_ef`, que repete o `estimar` e só muda o ponto de partida do Newton, nota de execução 1 do
+   doc 57x) com efeito fixo de UF de origem × UF da vaga (VL-1), restrito às vagas a até 0,050 de um corte de IVS (VL-2), com efeito fixo de região de
    saúde de origem × UF da vaga (VL-3) e os km equivalentes de +R$ 5 mil (VL-4). Holm nas principais (VL-1 ciclos
    1–3, VL-1 ciclo 2, VL-2) e BKY nas secundárias. Score bootstrap de Kline–Santos (funções do 16) nas principais.
 3. **Leitura do §3** por regra fixada no código (`regra_linha`, `leitura`), sem escolha depois de ver os números.
@@ -1359,6 +1360,20 @@ ROTULO_REGRA = {
 }
 
 
+def _correlacao(resumo: dict, chave: str, ref: str) -> float:
+    """Correlação entre os β de duas linhas, das influências por conjunto gravadas (a mesma da nota da decisão 10)."""
+    a, b = resumo["influencia_bolsa_por_conjunto"][chave], resumo["influencia_bolsa_por_conjunto"][ref]
+    cls = sorted(set(a) | set(b))
+    ia = np.array([a.get(c, 0.0) for c in cls])
+    ib = np.array([b.get(c, 0.0) for c in cls])
+    return float((ia * ib).sum() / math.sqrt((ia ** 2).sum() * (ib ** 2).sum()))
+
+
+def _perto(l: pd.Series, m: pd.Series, limite: float = 0.1) -> bool:
+    """Auditoria 48: duas razões de chances a menos de 0,1 em log uma da outra (só para a frase descritiva do M4)."""
+    return bool(abs(math.log(l["estimativa"]) - math.log(m["estimativa"])) < limite)
+
+
 def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
     lei = resumo["leitura"]
     t = []
@@ -1372,25 +1387,59 @@ def texto_resposta(est: pd.DataFrame, resumo: dict) -> str:
                                         "maior em relação à origem dos médicos** (2ª linha do §3).",
         "MISTA": "**A leitura muda conforme o recorte; vale linha a linha.**",
     }[lei["geral"]]
+    # Auditoria 48 (A1): quando a diferença pareada contra o M1 exclui zero para cima, a resposta curta o diz já aqui.
+    acima = [c for c in PRINCIPAIS if _sel(est, c, "diferenca_log_rc_contra_referencia")["ic95_inf"] > 0]
+    if lei["geral"] == "LOCALIZACAO_NAO_EXPLICA" and acima:
+        geral += (" Mais que isso: em " + " e ".join(ROTULO[c] for c in acima) + ", a comparação pareada com o M1 mostra "
+                  "a bolsa pesando mais que no modelo base, não o mesmo; \"parecida\" é o rótulo da regra fixada, que "
+                  "compara os IC lado a lado.")
     t.append(geral)
     for chave in PRINCIPAIS:
         r = _sel(est, chave, "razao_chances_por_5mil")
         ref = _sel(est, ESPECS[chave]["referencia"], "razao_chances_por_5mil")
         d = _sel(est, chave, "diferenca_log_rc_contra_referencia")
         li = lei["linhas"][chave]
+        exclui_zero = bool(d["ic95_inf"] > 0 or d["ic95_sup"] < 0)
+        # Auditoria 48 (A1): a regra fixada (decisão 11) compara os IC lado a lado e ignora que os dois β andam juntos;
+        # quando a diferença pareada (decisão 10) exclui zero, o rótulo da regra fica, mas o texto diz o que ela mostra.
+        rotulo_regra = (f"pela regra fixada, {ROTULO_REGRA[li['regra']]} (cada estimativa cai no IC da outra)"
+                        if exclui_zero and li["regra"] == "PARECIDA_COM_M1" else ROTULO_REGRA[li["regra"]])
         frase = (f"- **{ROTULO[chave]}:** razão de chances {_rc(r)} contra {_rc(ref)} no "
-                 f"{ROTULO[ESPECS[chave]['referencia']]}; {ROTULO_REGRA[li['regra']]}. p de Holm {_p(r['p_holm'])} "
+                 f"{ROTULO[ESPECS[chave]['referencia']]}; {rotulo_regra}. p de Holm {_p(r['p_holm'])} "
                  f"(score bootstrap: {_p(r['p_holm_score_rademacher'])}). Diferença de log da razão de chances "
                  f"{_n(d['estimativa'], 2)} {_ic(d['ic95_inf'], d['ic95_sup'], 2)}.")
-        if d["ic95_inf"] > 0 or d["ic95_sup"] < 0:
-            frase += (f" A diferença contra o M1 exclui zero: comparando dentro da mesma UF, a bolsa pesa "
-                      f"{'mais' if d['estimativa'] > 0 else 'menos'} que no M1 (descritivo, fora do Holm).")
+        if exclui_zero:
+            mais = "mais" if d["estimativa"] > 0 else "menos"
+            frase += (f" Essa diferença é medida nos mesmos candidatos, e os dois β andam juntos (correlação "
+                      f"{_n(_correlacao(resumo, chave, ESPECS[chave]['referencia']), 2)}); por isso ela exclui zero mesmo com os IC lado a lado se "
+                      f"sobrepondo. A leitura mais exata é que, comparando dentro da mesma UF, a bolsa pesa {mais} que no "
+                      "M1, não o mesmo (descritivo, fora do Holm).")
         else:
             frase += " A diferença contra o M1 contém zero."
         if li.get("ic_muito_largo"):
             frase += " O IC é pelo menos duas vezes mais largo que o da referência: a comparação local tem pouca " \
                      "informação (3ª linha do §3)."
         t.append(frase)
+    # Auditoria 48 (A1): de onde vem a subida contra o M1 (M4 já está na figura e na tabela 4.2; descritivo).
+    m4 = {s: _sel(est, f"M4_{s}", "razao_chances_por_5mil") for s in ("emp", "c2")}
+    vl1 = {s: _sel(est, f"VL1_{s}", "razao_chances_por_5mil") for s in ("emp", "c2")}
+    frase_m4 = (f"**De onde vem a diferença contra o M1.** O M4, que só troca a macrorregião por efeito fixo de UF da "
+                f"vaga, dá {_rc(m4['emp'])} nos ciclos 1–3 e {_rc(m4['c2'])} no ciclo 2")
+    if all(_perto(vl1[s], m4[s]) for s in ("emp", "c2")):
+        frase_m4 += (": perto do VL-1. O que muda o peso da bolsa é comparar vagas dentro da mesma UF; fixar também a "
+                     "UF de origem do médico muda pouco (descritivo, sem teste).")
+    else:
+        frase_m4 += f" (VL-1: {_rc(vl1['emp'])} e {_rc(vl1['c2'])}; descritivo, sem teste)."
+    t.append(frase_m4)
+    # Auditoria 48 (A4): o parêntese do §2 fala em log da distância; a decisão 4 manteve a distância linear do M1.
+    lg = {s: _sel(est, f"VL1log_{s}", "razao_chances_por_5mil") for s in ("emp", "c2")}
+    mesma = all(regra_linha(lg[s], _sel(est, ESPECS[f"VL1log_{s}"]["referencia"], "razao_chances_por_5mil")) ==
+                lei["linhas"][f"VL1_{s}"]["regra"] for s in ("emp", "c2"))
+    t.append(f"**Com o log da distância.** O parêntese do VL-1 no §2 do adendo fala em log da distância; a decisão 4 "
+             f"manteve a distância linear do M1 e pôs o log como secundária. Com o log, o VL-1 dá {_rc(lg['emp'])} nos "
+             f"ciclos 1–3 e {_rc(lg['c2'])} no ciclo 2 (q BKY {_p(lg['emp']['q_bky'])} e {_p(lg['c2']['q_bky'])})"
+             + ("; pela mesma regra do §3, a leitura não muda." if mesma else
+                "; pela mesma regra do §3, a leitura muda (ver a seção 4.2)."))
     if not lei["holm_e_score_concordam"]:
         t.append("Holm com o p por cluster e Holm com o p do score bootstrap **não** dão a mesma decisão em todas as "
                  "principais; ver a seção 4.1.")
@@ -1480,7 +1529,11 @@ def gerar_doc(est: pd.DataFrame | None, resumo: dict | None) -> str:
         "> **Saídas:** `output/rdd_bolsa/VL_estimativas.csv`, `VL_resumo.json` e "
         "`VL_figuras/VL_razao_chances_e_km.png`. As saídas `E9_*`, `P1_*`, `P1h_*`, `VC_*` e `VD_*` não são regravadas, "
         "e os docs 57a, 57i, 57p e 57v não são editados.<br>",
-        "> **Auditoria:** pendente.",
+        "> **Auditoria:** [48](../auditorias/48_auditoria_escolha_localizacao_par.md), aprovada com correções de texto: o "
+        "recálculo independente reproduz todas as linhas, e nenhuma estimativa mudou. A auditoria acrescentou à resposta "
+        "curta a leitura da comparação pareada com o M1, a frase do M4 e a da distância em log. A redação da resposta "
+        "curta e o título da figura foram escritos depois de ver as estimativas; as regras do §3 (`regra_linha`, "
+        "`leitura`) são as do commit das decisões.",
         "",
         "## 1. Resposta curta",
         "",
