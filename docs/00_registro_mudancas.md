@@ -8,6 +8,20 @@
 
 ---
 
+## 27/10/2026 — Auditoria 55: deck da banca 2 revisto pela rubrica
+
+Motivo: auditoria independente do deck refeito pela rubrica (11 slides no corpo e 2 no apêndice), do roteiro de 7
+minutos (doc 09) e do mapa para o grupo (doc 10). Veredito: aprovado com correções, só de redação, já aplicadas no
+doc 04, nos docs 03, 08, 09 e 10, nos testes e no deck regerado. Nenhum número mudou; nada foi reestimado.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/55_auditoria_deck_rubrica.md`](auditorias/55_auditoria_deck_rubrica.md) | auditoria do deck pela rubrica: veredito, achados por gravidade, tabela de conferência, notas prováveis por critério e o que mudou |
+
+---
+
 ## 27/10/2026 — Banca 2: deck revisto pela rubrica da banca, roteiro de fala de 7 minutos e mapa do deck anterior
 
 Motivo: véspera da banca 2. O deck curto (só a H2) foi revisto pelos nove critérios da rubrica e para cerca de 7

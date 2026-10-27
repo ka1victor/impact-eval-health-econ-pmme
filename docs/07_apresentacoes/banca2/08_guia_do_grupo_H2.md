@@ -40,7 +40,7 @@ Na ordem do deck revisto (slides 1, 4, 7, 8, 9 e 10). As figuras "No deck" estã
 | 3. A origem pesa mais (o teste central da H2) | estar na UF de origem pesa mais que toda a diferença de bolsa | `curto_origem_bolsa.png` (slide 7) | `H2_F4_origem_contra_bolsa.png` (e `H2_F5_bolsa_em_km.png`) |
 | 4. Entre vagas da mesma UF, a bolsa pesa (adendo pós-resultado) | comparando só vagas da mesma UF, a vaga de bolsa maior é mais escolhida | `curto_bolsa_mesma_uf.png` (slide 8) | `H2_F3_razao_chances_bolsa.png` (e o descritivo `H2_F2_mesma_uf_perto_do_corte.png`) |
 | 5. Robustez | a origem pesa mais em todos os ciclos; a bolsa pesa com força só no ciclo 2, e perto do corte é inconclusivo | `curto_robustez_escolha.png` (slide 9) | `H2_F6_robustez.png` |
-| 6. Teoria | incentivo limitado: a origem pesa mais que toda a bolsa (dado); os dados sugerem que o custo de sair da própria região domina (leitura), sempre sobre o pacote do corte | texto (slide 10, Conclusão; as limitações no slide 11) | doc 66, seção 10 |
+| 6. Teoria | incentivo limitado: a origem pesa mais que toda a bolsa (dado); os dados sugerem que um degrau de R$ 5 mil não compensa sair da própria UF (leitura, sem teste direto), sempre sobre o pacote do corte | texto (slide 10, Conclusão; as limitações no slide 11) | doc 66, seção 10 |
 
 ## 3. Os números que contam a história (para entender, não para digitar)
 
@@ -55,7 +55,9 @@ Na ordem do deck revisto (slides 1, 4, 7, 8, 9 e 10). As figuras "No deck" estã
 | Só vagas perto do corte | 1,28 [0,95; 1,72]: inconclusivo | 57x |
 | Ciclos 1 e 3 separados | perto de 1, IC largos: a bolsa desloca a escolha com força só no ciclo 2 | [57a](../../06_execucao/57a_resultados_P1_escolha.md), 57p |
 
-**Como ler a razão de chances:** acima de 1, a vaga de bolsa maior é preferida a uma vaga parecida.
+**Como ler a razão de chances:** acima de 1, a vaga de bolsa maior é preferida a uma vaga parecida. Ela compara
+duas vagas iguais no resto: o ×11,0 da origem quer dizer que, à mesma distância, a vaga na UF de origem tem 11,0
+vezes a chance de ser a 1ª opção que uma vaga de outra UF (auditoria 55).
 
 ## 4. O que dizer e o que não dizer
 

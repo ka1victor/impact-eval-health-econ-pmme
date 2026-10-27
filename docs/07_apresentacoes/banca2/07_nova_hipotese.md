@@ -46,8 +46,9 @@ preenchimento no corte, mas essa ligação é interpretação, não teste (audit
    - **Médico de longe:** em 0,300 não se detecta mais médico de outra UF do lado de bolsa maior; em 0,400 é
      **inconclusivo** (poucos pares, todos apontando para mais médicos de fora). Não dizer "não traz médico de longe"
      ([57w](../../06_execucao/57w_resultados_pareamento_localizacao.md), PH-5; auditoria 47).
-5. **A teoria (modelo da banca 1).** O médico aceita a vaga se a bolsa compensa o custo do lugar. O custo que
-   domina não é o do município (que a bolsa compensa), e sim o de sair da própria região. Um degrau de R$ 5 mil
+5. **A teoria (modelo da banca 1).** O médico aceita a vaga se a bolsa compensa o custo do lugar. Os dados
+   sugerem que o que mais pesa não é o custo do município (que a bolsa compensa), e sim o de sair da própria UF
+   (leitura, não teste). Um degrau de R$ 5 mil
    desloca a escolha entre vagas da mesma UF; os dados **sugerem** que ele não compensa esse custo (não testado diretamente). A leitura é a de um **incentivo limitado**, sempre sobre o pacote do corte.
    O **teste central da H2** é a comparação origem × toda a bolsa (D_UF > 0); o peso da bolsa dentro da mesma UF
    (52e) reforça que a escolha responde à bolsa, mas não testa a comparação com a origem (auditoria 50).
