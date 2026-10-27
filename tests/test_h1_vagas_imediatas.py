@@ -161,7 +161,9 @@ class TestSaidas(unittest.TestCase):
 
     def test_hashes_e_adendo_com_a_nota_7(self):
         self.assertEqual(self.res["adendo"]["sha256"], HI.sha256(ADENDO))
-        self.assertEqual(self.res["adendo"]["sha256_com_nota_7"], HI.sha256(ADENDO))
+        self.assertEqual(self.res["adendo"]["sha256_com_nota_7"], HI.SHA_ADENDO_COM_NOTA_7)
+        self.assertEqual(self.res["adendo"]["sha256_com_notas_27_10"], HI.sha256(ADENDO))
+        self.assertIn("Nota de 27/10/2026", ADENDO.read_text(encoding="utf-8"))
         self.assertIn("## 7. Nota datada", ADENDO.read_text(encoding="utf-8"))
         for e in self.res["entradas"]:
             self.assertEqual(e["sha256"], HI.sha256(ROOT / e["arquivo"]), e["arquivo"])

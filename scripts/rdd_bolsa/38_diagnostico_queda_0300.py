@@ -135,6 +135,17 @@ NOTA_A36_DF = (f"**Correção de 26/10/2026 ({REF_A36}).** Isso não mostra que 
                "chamada, como dizia a versão anterior deste parágrafo. O quadro de 19/03/2026 foi refeito depois do "
                "resultado preliminar e converteu em imediatas vagas de reserva onde houve alocado; pelo quadro de "
                "13/02/2026, vigente na inscrição, havia alocados do ciclo 2 em células só de reserva.")
+# Aviso de 27/10/2026 (auditoria 51, achado C2): como o quadro de 19/03/2026 converteu em imediatas as vagas de
+# reserva onde houve alocado, tirar dele as células só de CR do ciclo 2 condiciona no resultado. Texto, sem número.
+REF_SELECAO = (f"{REF_A36}; [adendo 48f](48f_adendo_selecao_tipo_de_vaga.md), seleção pelo tipo de vaga")
+AVISO_SELECAO_C2 = ("Como esse quadro converteu em imediatas as vagas de reserva onde houve alocado, tirar dele as "
+                    "células só de CR condiciona no resultado: essa linha não decompõe a queda com o tipo de vaga "
+                    f"medido antes da alocação (aviso de 27/10/2026: {REF_SELECAO}).")
+AVISO_SELECAO_DF = (f"*Aviso de 27/10/2026 ({REF_SELECAO}).* No ciclo 2, as linhas sem as células só de CR (nesta "
+                    "tabela, na D-b (iii) e na §10) e a linha só com vagas imediatas usam o quadro de 19/03/2026, "
+                    "refeito depois do resultado preliminar, que converteu em imediatas as vagas de reserva onde houve "
+                    "alocado. Por isso, tirar as células só de CR desse quadro condiciona no resultado, e essas linhas "
+                    "não decompõem a queda com o tipo de vaga medido antes da alocação.")
 Q = ("Q1", "Q2", "Q3")
 DESC_Q = {
     "Q1": "N1 com o controle das vagas oferecidas (S-a), ciclos 1-3 juntos",
@@ -1718,7 +1729,7 @@ def resposta_curta(est: pd.DataFrame, resumo: dict) -> str:
                f"{_fm('so_cr', fun['P_F_dado_C']['tau'])} (IC {_icm('so_cr', fun['P_F_dado_C'])}). "
              + f"No ciclo 2, a queda da taxa vai de {_pp(d2['tau_q2_ciclo2_todas'])} p.p. para "
                f"{_pp(d2['tau_q2_ciclo2_sem_so_cr'])} p.p. sem as células só de CR do {QUADRO_C2_POS}, que não "
-               f"registra alocado nelas (correção de 26/10/2026: {REF_A36}). "
+               f"registra alocado nelas (correção de 26/10/2026: {REF_A36}). {AVISO_SELECAO_C2} "
              + ("Igualar um fator entre os lados reduz a queda em 0,300 pela metade ou mais em: " + "; ".join(frases) + "."
                 if frases else "Nenhum fator, igualado entre os lados, reduz a queda pela metade."))
     de = _sel(est, explicacao="D-e", bloco="balanco", corte=RC[300])
@@ -2107,6 +2118,7 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
                                     + "), não na janela pré 202406–202506 das outras medidas; nenhuma é posterior a "
                                       "202609. Esta nota é da auditoria 33."))
     partes.append("## 8. D-f — ciclo 2 e cadastro reserva\n\n" + _bloco("df_tabela", tabela_df(est))
+                  + "\n\n" + AVISO_SELECAO_DF
                   + "\n\n" + _bloco("df_edital",
                                     "**A regra do ciclo 2 sobre o cadastro reserva na 1ª chamada.** "
                                     f"O texto do Edital nº 3/2026 não está arquivado em `data/raw/`: a cópia "
@@ -2158,7 +2170,8 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
            else "")
         + f" D-c: a maior parte é \"{lt['D-c']['maior']}\"; concentra pela regra de 2/3: "
           f"{'sim' if lt['D-c']['concentra'] else 'não'}. D-f: o salto do ciclo 2 sem as células só de CR "
-          f"{'cai pela metade ou mais' if lt['D-f']['apoia'] else 'não cai pela metade'}."))
+          f"{'cai pela metade ou mais' if lt['D-f']['apoia'] else 'não cai pela metade'}, linha que, no quadro de "
+          "19/03/2026, condiciona no resultado (§8)."))
     figtxt = []
     for f in figs:
         nome = Path(f["arquivo"]).name

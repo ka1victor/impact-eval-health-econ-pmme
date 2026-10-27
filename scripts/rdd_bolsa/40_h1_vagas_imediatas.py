@@ -114,7 +114,14 @@ NATUREZA = "EMPIRICO"
 COMMIT_CONGELAMENTO = "666aee1"
 SHA_ADENDO_ORIGINAL = "383768d27bf87fc76b3ae1f5d518c318f7d7668360a28cf758a4e0e4a0b0efed"
 COMMIT_NOTA_7 = "4326241"           # nota datada §7: tipo de vaga do ciclo 2 pelo quadro de 13/02/2026
-SHA_ADENDO_CONGELADO = "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64"   # com a §7
+SHA_ADENDO_COM_NOTA_7 = "0dc4a6737c364d411041f4733f86c0f578b742c972935ee62b8202daa7c1bb64"   # com a §7
+# Notas de 27/10/2026 (auditoria 51, achado C1): duas notas em itálico, depois do cabeçalho e da §1, dizem que a frase
+# "no ciclo 2, nenhuma célula só de reserva teve alocado na 1ª chamada" descreve o quadro de 19/03/2026, não a regra.
+# Só texto: a especificação não muda.
+NOTAS_27_10 = ("notas de 27/10/2026 (auditoria 51, achado C1), depois do cabecalho e da §1: a frase da §1 descreve o "
+               "quadro de 19/03/2026, refeito depois do resultado, nao a regra; remetem a §7 e a auditoria 36. So "
+               "texto; a especificacao nao muda")
+SHA_ADENDO_CONGELADO = "21d512b7ebf50928338670318cc6ce031c1bfa7ee2c9aa1e406d5e7a2ff4d09f"   # com a §7 e as notas de 27/10
 AUD36 = ROOT / "docs" / "auditorias" / "36_auditoria_dados_H1.md"
 ARQ_C2_13FEV = A36L.ARQ["c2_quadro_ret1"]
 VERSOES_C2 = {"13fev": "quadro do ciclo 2 retificado de 13/02/2026, vigente na inscricao (principal; adendo 48b §7)",
@@ -1466,7 +1473,8 @@ def gerar_doc(est: pd.DataFrame, resumo: dict) -> str:
         f"> **Data:** {DATA_EXECUCAO[8:10]}/{DATA_EXECUCAO[5:7]}/{DATA_EXECUCAO[:4]}.<br>\n"
         "> **Especificação:** [`48b_adendo_H1_vagas_imediatas.md`](48b_adendo_H1_vagas_imediatas.md), congelada antes "
         f"das contas (commit `{COMMIT_CONGELAMENTO}`), com a nota datada §7 (commit `{COMMIT_NOTA_7}`: no ciclo 2, tipo "
-        f"de vaga pelo quadro de 13/02/2026); SHA-256 do adendo com a §7 `{resumo['adendo']['sha256']}`, conferido pelo "
+        f"de vaga pelo quadro de 13/02/2026) e as notas de 27/10/2026 depois do cabeçalho e da §1 (só texto); SHA-256 do "
+        f"adendo com a §7 e as notas `{resumo['adendo']['sha256']}`, conferido pelo "
         "script.<br>\n"
         "> **Estatuto:** `ADENDO_48B_POS_RESULTADO`. Pós-resultado: as medidas que misturam vaga imediata e cadastro "
         "reserva já tinham sido vistas (docs 49, 49b e 57l). Antes da nota §7, o script chegou a rodar uma vez com o "
@@ -1650,7 +1658,8 @@ def montar_resumo(est: pd.DataFrame, extras: dict, dados: dict, repro: dict, con
         "script": "scripts/rdd_bolsa/40_h1_vagas_imediatas.py",
         "adendo": {"arquivo": rotulo(ADENDO), "sha256": sha256(ADENDO), "commit_congelamento": COMMIT_CONGELAMENTO,
                    "sha256_original": SHA_ADENDO_ORIGINAL, "commit_nota_7": COMMIT_NOTA_7,
-                   "sha256_com_nota_7": SHA_ADENDO_CONGELADO},
+                   "sha256_com_nota_7": SHA_ADENDO_COM_NOTA_7, "notas_27_10": NOTAS_27_10,
+                   "sha256_com_notas_27_10": SHA_ADENDO_CONGELADO},
         "quadro_ciclo2": {"principal": VERSOES_C2["13fev"], "sensibilidade_nao_usar": VERSOES_C2["19mar"],
                           "auditoria_36": rotulo(AUD36), "conferencia": conf_c2,
                           "contagem_celulas_19mar": dados_19["contagem_celulas"]["V2"],

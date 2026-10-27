@@ -514,7 +514,7 @@ linhas abaixo foram corrigidos onde estavam vencidos, com a marca "auditoria
 
 | # | Onde | Erro | Correção |
 |---|---|---|---|
-| 13 | doc 49, §2; doc 57l (§8 e "Para dizer na banca"), gerado pelo script 38; seção 2.11 deste doc (corrigida acima) | "no ciclo 2, vaga de reserva não podia ser preenchida na 1ª chamada" | é efeito do quadro refeito depois do resultado (auditoria 36); no 57l, corrigir pelo script e rodar de novo, não à mão. **Feito** (26/10/2026, commit `515a559`): docs 49 §2, 49b e 57l corrigidos, os dois últimos pelos scripts 23b e 38; conferido na auditoria 51 (27/10/2026) |
+| 13 | doc 49, §2; doc 57l (§8 e "Para dizer na banca"), gerado pelo script 38; seção 2.11 deste doc (corrigida acima) | "no ciclo 2, vaga de reserva não podia ser preenchida na 1ª chamada" | é efeito do quadro refeito depois do resultado (auditoria 36); no 57l, corrigir pelo script e rodar de novo, não à mão. **Feito** (26/10/2026, commit `515a559`): docs 49 §2, 49b e 57l corrigidos, os dois últimos pelos scripts 23b e 38; conferido na auditoria 51 (27/10/2026). **Feito** (27/10/2026, achados C1 e C2 da auditoria 51, aprovados pelo autor): notas datadas no cabeçalho e na §1 do adendo 48b (a frase descreve o quadro de 19/03, não a regra), com o hash regravado pelos scripts 40, 41, 45, 47 e 49; aviso de que tirar as células só de CR do quadro de 19/03 condiciona no resultado no 57l e no 49b, pelos scripts 38 e 23b (o 39 regravou o hash do 38). Nenhuma estimativa mudou |
 | 14 | doc 06, seção 3 | — | já corrigido pelo agente do deck (H1 central) |
 | 15 | doc 04, §3 e §8 | recomendação antiga "H3" (hoje H2) como central | mantida como registro da proposta; a decisão do autor (H1) entra no §9 do doc 04 |
 
