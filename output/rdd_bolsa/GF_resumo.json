@@ -443,8 +443,8 @@
     },
     {
       "caminho": "scripts/rdd_bolsa/38_diagnostico_queda_0300.py",
-      "sha256": "03bc52a04c85da13ef46d28f4ed914c7a876b9c74f1e4808b731fbe39f566c48",
-      "bytes": 152803,
+      "sha256": "04a19714a779ce96eb014ae81bca7084cec0198d0162201b50f6d765314df86a",
+      "bytes": 154450,
       "papel": "script 38 (carregar() importado, nao alterado)",
       "fonte": "scripts/rdd_bolsa",
       "data_referencia": "2026-10-26",

@@ -96,13 +96,13 @@ Notas da verificação:
   reserva; a cópia do edital desse ciclo no repositório é só a página do
   chamamento, sem o texto. A regra vale para todos os ciclos, e "só vagas
   imediatas" é a sensibilidade (`controle_forma_alternativa` de S-a);
-  - *correção de 26/10/2026* ([auditoria 36](../auditorias/36_auditoria_dados_H1.md);
-    [adendo 48b, §7](48b_adendo_H1_vagas_imediatas.md)): o zero do ciclo 2
+  - *correção de 26/10/2026* ([auditoria dos dados da H1](../auditorias/36_auditoria_dados_H1.md);
+    [nota §7 do adendo da H1 só com vagas imediatas](48b_adendo_H1_vagas_imediatas.md)): o zero do ciclo 2
     vale só para o quadro de 19/03/2026, usado aqui, que foi refeito
     **depois** do resultado preliminar e converteu em imediatas vagas de
     reserva onde houve alocado. Pelo quadro de 13/02/2026, vigente na
-    inscrição, 442 dos 1.057 alocados do ciclo 2 (42%) estavam em células só
-    de reserva (`output/auditoria_H1/a36_resumo.json`). Não se pode ler a
+    inscrição, uma parte grande dos alocados do ciclo 2 estava em células só
+    de reserva (contagem em `output/auditoria_H1/a36_resumo.json`). Não se pode ler a
     linha do ciclo 2 da tabela acima como "a reserva não podia ser / não foi
     preenchida na 1ª chamada";
 - no ciclo 1, N1 conta as confirmações de local na alocação sub judice, e
