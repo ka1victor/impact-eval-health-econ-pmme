@@ -8,6 +8,44 @@
 
 ---
 
+## 27/10/2026 — Auditoria 54: robustezes do E9 no ciclo 2 com o quadro de 13/02 (adendo 52f)
+
+Motivo: auditoria independente da execução do adendo 52f (script 52, saídas `RB_*`, doc 57y). Veredito: **aprovado
+com correções**. O recálculo próprio bate com o gravado (134 quantidades, diferença relativa máxima 4,9e−9), o portão
+RB-6 passa, a reexecução é idêntica byte a byte e a leitura `MANTEM` segue a regra. Nenhum número mudou. As correções
+são de texto no gerador do 57y, regravado com `--atualizar-doc`:
+- a resposta curta mostra a folga menor do corte verdadeiro sobre os placebos;
+- o spline cúbico aparece com o peso certo (nenhuma das quatro cúbicas do ciclo 2 exclui zero);
+- a seção 5.6 explica por que o q do BKY fica abaixo do p, com linhas de p ≥ 0,05 e q < 0,05;
+- o cabeçalho troca "pendente" pelo link da auditoria.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/54_auditoria_robustez_E9_ciclo2.md`](auditorias/54_auditoria_robustez_E9_ciclo2.md) | auditoria do adendo 52f: veredito, achados por gravidade, fidelidade, integridade e o que foi recalculado |
+
+### Alterado (sem mudança estrutural)
+
+`scripts/rdd_bolsa/52_robustez_E9_ciclo2_quadro_1302.py` (só texto gerado), `docs/06_execucao/57y_robustez_E9_ciclo2_quadro_1302.md`
+(regravado) e `tests/test_robustez_E9_ciclo2_quadro_1302.py` (cabeçalho e frases novas).
+
+---
+
+## 27/10/2026 — Doc 57y: resultados do adendo 52f (robustez do E9 no ciclo 2 com o quadro de 13/02)
+
+Motivo: execução do adendo 52f. O bloco de decisões de implementação (inventário de RB-1 a RB-5, função original de
+cada peça, como o quadro de 13/02 entra e sementes) foi commitado antes de qualquer estimativa; os números vêm depois,
+só em blocos gerados pelo script 52.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57y_robustez_E9_ciclo2_quadro_1302.md`](06_execucao/57y_robustez_E9_ciclo2_quadro_1302.md) | resultados do adendo 52f, gerado por `scripts/rdd_bolsa/52_robustez_E9_ciclo2_quadro_1302.py` a partir de `output/rdd_bolsa/RB_*`; auditoria pendente |
+
+---
+
 ## 27/10/2026 — Adendo 52f: robustez do E9 no ciclo 2 com o quadro de 13/02
 
 Motivo: o autor pediu refazer com o quadro de vagas vigente na inscrição as robustezes do conjunto principal da
