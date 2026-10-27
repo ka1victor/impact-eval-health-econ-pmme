@@ -25,7 +25,7 @@
 | 5 | **Identificação** | as **premissas do método** e a **aderência do nosso caso** a cada uma: regra *sharp*, sem manipulação, continuidade, pacote do corte, tendências paralelas etc., cada uma com o teste ou argumento | resultados |
 | 6 | **Resultados** | **gráficos da especificação principal** | especificações secundárias |
 | 7 | **Robustez** | **gráficos das especificações secundárias**: controles a mais, outras janelas, outras medidas, placebos, IC honesto etc. | — |
-| 8 | **Discussão** | **explicação simples em termos da teoria** (o modelo da banca 1: bolsa, custo do lugar, escolha, preenchimento) | jargão técnico novo |
+| 8 | **Discussão** | **explicação simples em termos da teoria** (o modelo da banca 1: bolsa, custo do lugar, escolha, preenchimento); desde 27/10/2026, em dois slides: **Conclusão** (retoma a pergunta e sintetiza os resultados) e **Limitações** (cada uma com a sua implicação), que a rubrica da banca avalia em separado (§4) | jargão técnico novo |
 
 ## 2. Regras que continuam valendo
 
@@ -65,22 +65,34 @@ continuam, desde que caibam nesta estrutura:
   "some"; o teste central da hipótese é origem × toda a bolsa; números da
   escolha com o quadro do ciclo 2 de 13/02/2026.
 
-## 3. Como o conteúdo atual se encaixa (versão de 27/10/2026: hipótese única)
+## 3. Como o conteúdo atual se encaixa (versão de 27/10/2026: hipótese única, revista pela rubrica)
 
 O conteúdo canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_curto.md); a hipótese e o roteiro, em
 [`07_nova_hipotese.md`](07_nova_hipotese.md). 11 slides no corpo e 2 no apêndice:
 
 | Seção | Slides | Conteúdo |
 |---|---|---|
-| Hipótese | 1 | a hipótese em destaque (o médico escolhe perto de onde trabalha; a bolsa muda qual vaga, mas pesa menos que a origem); em cinza, a motivação numa linha (no corte, não detectamos aumento do preenchimento); "formulada após ver os dados" na tela |
-| Dados | 2 | uma tabela: 1ª opção, origem do médico (vínculo anterior no CNES), vagas e bolsa, IVS 2010, distância e UF; em cinza, porte e capital |
-| Análise descritiva | 3–5 | os três ciclos em números (células, candidatos de 1ª opção, amostra com origem); a regra *sharp* bolsa × IVS, com "Como ler" na tela; onde os médicos escolhem (G-B: mesma UF, região, município; distância) |
-| Metodologia | 6 | o logit condicional da 1ª opção em palavras: a equação, a comparação (o candidato consigo mesmo) e o teste (origem × toda a bolsa); erro-padrão, efeito fixo do par de UFs e detalhes nas notas |
-| Identificação | 7 | numa tabela: bolsa por regra (*sharp*); pacote do corte; IIA em parte; localização (par de UFs fixado); origem como preferência revelada; hipótese pós-resultado |
-| Resultados | 8–9 | o teste central, origem × toda a bolsa (G-D, quadro do ciclo 2 de 13/02/2026); a bolsa dentro da mesma UF (G-C, adendo pós-resultado, com o Holm da especificação pré-registrada na tela) |
-| Robustez | 10 | uma figura: razão de chances por ciclo, ciclo 2 com o quadro refeito (cinza), distância em log, região de saúde, só perto do corte; origem − bolsa por ciclo |
-| Discussão | 11 | incentivo limitado em termos do modelo da banca 1: a teoria, o dado (a origem pesa mais que toda a bolsa) e a leitura (o custo de sair da própria região domina), separados (auditoria 53) |
-| Apêndice | 12–13 | o fato da antiga H1 (G-A: sem controle, com efeito fixo de UF e o raio, numa amostra menor, e pareando na mesma UF, por corte); a antiga H3 numa frase |
+| Hipótese | 1 | a pergunta no título (origem ou bolsa na escolha?); a hipótese em destaque; em cinza, a motivação numa linha (no corte, não detectamos aumento do preenchimento); "formulada após ver os dados" na tela |
+| Dados | 2 | dados e amostra num slide só (antes "Dados" e "Os três ciclos em números"): a figura das fontes e variáveis e do **funil da amostra por ciclo** (`curto_dados_amostra.png`); na tela, a **unidade de observação** (candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção) e o tamanho do modelo |
+| Análise descritiva | 3–4 | a regra *sharp* bolsa × IVS, com "Como ler" na tela; onde os médicos escolhem (G-B), com a linha que a liga à pergunta |
+| Metodologia | 5 | o logit condicional da 1ª opção em palavras, com a **justificativa** (escolha entre vagas; o candidato comparado consigo mesmo; a bolsa muda pela regra do IVS) e o **teste** (D_UF, unilateral, erro-padrão agrupado por conjunto de escolha) |
+| Identificação | 6 | numa tabela enxuta: bolsa por regra (*sharp*); pacote do corte; IIA em parte; localização (par de UFs fixado); conjunto de escolha |
+| Resultados | 7–8 | o teste central, origem × toda a bolsa (G-D), com a **leitura do coeficiente** na tela; a bolsa dentro da mesma UF (G-C, adendo pós-resultado), com a leitura do coeficiente e o p da especificação pré-registrada na tela |
+| Robustez | 9 | uma figura e duas linhas: o que se mantém (a origem pesa mais nos três ciclos) e o que não se mantém (o peso da bolsa: forte só no ciclo 2; perto do corte, inconclusivo) |
+| Discussão | 10–11 | **Conclusão**: retoma a pergunta e a responde em três pontos (origem; bolsa na mesma UF; a teoria, "os dados sugerem incentivo limitado"); **Limitações**: seis, cada uma com a sua implicação |
+| Apêndice | 12–13 | o fato da antiga H1 (G-A); a antiga H3 numa frase |
 
 Saíram do corpo, com o essencial nas notas ou no apêndice: a H1 como hipótese (scatter, especificação, premissas,
 resultado, robustezes e "por que o sinal sai negativo"), a H3 como plano B e os planos B em cinza.
+
+## 4. A rubrica da banca (27/10/2026)
+
+A banca dá nota a nove critérios: (1) slides, estrutura e narrativa; (2) apresentador; (3) base de dados, com a origem
+dos dados, as variáveis, a **unidade de observação** e a **construção da amostra**; (4) análise descritiva interpretada
+e ligada à pergunta; (5) modelo econométrico apresentado e **justificado**; (6) interpretação dos coeficientes e dos
+testes; (7) robustez; (8) conclusões que retomam a pergunta; (9) limitações e **as suas implicações**. As oito seções
+do §1 continuam; a rubrica pede duas partes que cabem na Discussão, a **Conclusão** e as **Limitações**, cada uma no
+seu slide. A apresentação tem cerca de 7 minutos: o corpo cabe em 10 a 11 slides de 30 a 50 s, e cada slide do
+corpo leva nas notas um roteiro de fala com tempo-alvo (`> **Roteiro (N s).**` no doc 04; roteiro inteiro no
+[doc 09](09_roteiro_fala_7min.md)). O gerador para se a soma sair de 6:30 a 7:30. O mapa do deck anterior para este
+está no [doc 10](10_mapa_deck_anterior_para_rubrica.md).

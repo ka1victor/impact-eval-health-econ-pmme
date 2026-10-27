@@ -148,6 +148,15 @@
       "chaves": "taxas_ligacao.g1_cpf_nome.<ciclo>"
     },
     {
+      "caminho": "output/rdd_bolsa/P1_resumo.json",
+      "sha256": "bddaf9ef03a4374b751f49655757d8b813d096d6af9ac219337df27273790d7d",
+      "papel": "P1 (protocolo 52): construção da amostra da escolha (funil, exclusões, pares e conjuntos)",
+      "data_referencia": "2026-10-23",
+      "cobertura": "candidatos de 1ª opção, ciclos 1–3",
+      "unidade": "candidatos; pares candidato × vaga",
+      "chaves": "amostra.r1_por_ciclo; amostra.exclusoes; amostra.p1_por_ciclo; amostra.linhas_m1"
+    },
+    {
       "caminho": "output/aquisicao/cnes_profissional/a16_manifesto_cnes_profissional.json",
       "sha256": "1f12702d8b49a216321bd484bc742072cb92c7525476388545d350358cc45d50",
       "papel": "manifesto do a16: lista de ativos do PMM-E",
@@ -2607,6 +2616,166 @@
         "10"
       ]
     },
+    "curto_dados_amostra.png": {
+      "funil": [
+        {
+          "etapa": "1ª opção numa vaga do quadro",
+          "codigos": [
+            "AM_C1_R1",
+            "AM_C2_R1",
+            "AM_C3_R1",
+            "AM_TOT_R1"
+          ],
+          "valores": [
+            "993",
+            "2.140",
+            "2.581",
+            "5.714"
+          ]
+        },
+        {
+          "etapa": "− sem ligação ao CNES",
+          "codigos": [
+            "AM_C1_NLIG",
+            "AM_C2_NLIG",
+            "AM_C3_NLIG"
+          ],
+          "valores": [
+            "55",
+            "77",
+            "69"
+          ]
+        },
+        {
+          "etapa": "Ligados ao CNES",
+          "codigos": [
+            "AM_C1_LIG",
+            "AM_C2_LIG",
+            "AM_C3_LIG",
+            "AM_TOT_LIG"
+          ],
+          "valores": [
+            "938",
+            "2.063",
+            "2.512",
+            "5.513"
+          ]
+        },
+        {
+          "etapa": "− sem vínculo médico antes da inscrição",
+          "codigos": [
+            "AM_C1_SVIN",
+            "AM_C2_SVIN",
+            "AM_C3_SVIN"
+          ],
+          "valores": [
+            "20",
+            "30",
+            "38"
+          ]
+        },
+        {
+          "etapa": "Com município de origem",
+          "codigos": [
+            "AM_C1_ORI",
+            "AM_C2_ORI",
+            "AM_C3_ORI",
+            "AM_TOT_ORI"
+          ],
+          "valores": [
+            "918",
+            "2.033",
+            "2.474",
+            "5.425"
+          ]
+        },
+        {
+          "etapa": "− sem região de saúde na tabela oficial",
+          "codigos": [
+            "AM_C1_SREG",
+            "AM_C2_SREG",
+            "AM_C3_SREG"
+          ],
+          "valores": [
+            "3",
+            "1",
+            "0"
+          ]
+        },
+        {
+          "etapa": "No modelo",
+          "codigos": [
+            "D_C1_P1",
+            "D_C2_P1",
+            "D_C3_P1",
+            "M1_N"
+          ],
+          "valores": [
+            "915",
+            "2.032",
+            "2.474",
+            "5.421"
+          ]
+        }
+      ],
+      "textos": [
+        "De onde vêm os dados",
+        "1ª opção (y)",
+        "editais SGTES/MS, ciclos 1–3",
+        "Origem do médico",
+        "CNES, vínculo antes da inscrição",
+        "Bolsa e vagas",
+        "quadros de vagas SGTES/MS",
+        "IVS 2010",
+        "Ipea, Censo 2010",
+        "Distância, UF, região",
+        "IBGE; TabNet (regiões de saúde)",
+        "Porte, capital",
+        "IBGE (controles)",
+        "Construção da amostra (candidatos)",
+        "Ciclo 1",
+        "Ciclo 2",
+        "Ciclo 3",
+        "Total",
+        "1ª opção numa vaga do quadro",
+        "993",
+        "2.140",
+        "2.581",
+        "5.714",
+        "− sem ligação ao CNES",
+        "55",
+        "77",
+        "69",
+        "Ligados ao CNES",
+        "938",
+        "2.063",
+        "2.512",
+        "5.513",
+        "− sem vínculo médico antes da inscrição",
+        "20",
+        "30",
+        "38",
+        "Com município de origem",
+        "918",
+        "2.033",
+        "2.474",
+        "5.425",
+        "− sem região de saúde na tabela oficial",
+        "3",
+        "1",
+        "0",
+        "No modelo",
+        "915",
+        "2.032",
+        "2.474",
+        "5.421",
+        "No modelo: 932.577 pares candidato × vaga, em 56 conjuntos (curso × ciclo) e 5.125 vagas.",
+        "Como ler",
+        "cada faixa é uma etapa do funil; em cinza, quem sai e por quê. Origem = vínculo médico no CNES antes da inscrição, não a residência.",
+        "Fontes: P1_resumo.json (protocolo 52; doc 57a); portão G1; tabela_fontes.csv. EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": []
+    },
     "curto_robustez_escolha.png": {
       "linhas": [
         {
@@ -3245,6 +3414,21 @@
       ]
     },
     {
+      "arquivo": "output/apresentacao_banca2/curto_dados_amostra.png",
+      "sha256": "0e4899c3b4a99a78df658ead56e8513d759f628950a4705f039e45e35b55ec48",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, Dados e amostra: variáveis e fontes; funil da amostra da escolha por ciclo (P1_resumo.json) e o tamanho do modelo em pares candidato × vaga",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/P1_resumo.json",
+        "output/rdd_bolsa/G1_resumo.json"
+      ]
+    },
+    {
       "arquivo": "output/apresentacao_banca2/curto_robustez_escolha.png",
       "sha256": "992fa7cf3be13f6ef57ca328d548677de39a1c954818609e436ff81987bdacb7",
       "natureza": "EMPIRICO",
@@ -3280,6 +3464,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "74e3e0d37481365b1c9191e5113a942e4c807316e97a3109d47ff46e997a5f0a"
+    "sha256": "cc25e8bedc9ed1fa59c5da4b0401917b43710d8c66a1713264edee878f5d2a8b"
   }
 }

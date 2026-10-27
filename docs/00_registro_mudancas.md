@@ -8,6 +8,39 @@
 
 ---
 
+## 27/10/2026 — Banca 2: deck revisto pela rubrica da banca, roteiro de fala de 7 minutos e mapa do deck anterior
+
+Motivo: véspera da banca 2. O deck curto (só a H2) foi revisto pelos nove critérios da rubrica e para cerca de 7
+minutos de fala: dados e amostra num slide, com a unidade de observação (candidato × vaga) e o funil da amostra por
+ciclo; o modelo justificado; a leitura dos coeficientes na tela; a robustez como "mantém / não se mantém"; a
+Discussão em dois slides, Conclusão e Limitações com implicações; um roteiro de fala por slide nas notas. O grupo,
+que monta outra apresentação a partir do deck anterior (`8901dea`, auditoria 53), recebe um mapa para adaptá-la.
+Nada foi reestimado; os números novos na tela são contagens da amostra lidas do `P1_resumo.json` (códigos `AM_*`).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/09_roteiro_fala_7min.md`](07_apresentacoes/banca2/09_roteiro_fala_7min.md) | roteiro de fala, slide a slide, com tempo-alvo (soma 7:00) e as três perguntas prováveis da banca; o mesmo texto dos blocos `Roteiro` do doc 04, conferido pelo teste |
+| [`07_apresentacoes/banca2/10_mapa_deck_anterior_para_rubrica.md`](07_apresentacoes/banca2/10_mapa_deck_anterior_para_rubrica.md) | mapa do deck `8901dea` para o revisto: correspondência slide a slide com o motivo pela rubrica, texto exato da tela, números que mudaram de lugar e checklist do grupo |
+| `output/apresentacao_banca2/versoes/deck_banca2_curto_8901dea.pdf` | cópia rotulada do PDF do deck anterior, extraída do commit `8901dea`, sem regerar (hash no doc 10 e no manifesto do deck curto) |
+| `output/apresentacao_banca2/curto_dados_amostra.png` | figura nova do slide de dados e amostra (fontes, variáveis e funil por ciclo), gerada por `scripts/apresentacao/gerar_figuras_banca2.py` |
+
+### Fundido
+
+| De | Para | Motivo |
+|---|---|---|
+| slides "Dados: as variáveis e de onde vêm" e "Os três ciclos em números" do doc 04 | slide "Dados e amostra: de onde vêm e quem entra no modelo" | rubrica (base de dados): unidade de observação e construção da amostra num lugar só |
+
+### Alterado (sem mudança estrutural)
+
+Docs 03, 04, 06 (§1, §3 e §4 nova, com a rubrica: Conclusão e Limitações dentro da Discussão), 08 e README da banca 2;
+`scripts/apresentacao/gerar_deck_banca2.py` (bloco `Roteiro`, notas em parágrafos, conferência dos tempos),
+`scripts/apresentacao/gerar_figuras_banca2.py` (códigos `AM_*`, seletor `soma`, figura `G32`),
+`tests/test_deck_curto_banca2.py` e `tests/test_conteudo_banca2.py`; deck curto, manifestos e `qa_render/` regerados.
+
+---
+
 ## 27/10/2026 — Auditoria 54: robustezes do E9 no ciclo 2 com o quadro de 13/02 (adendo 52f)
 
 Motivo: auditoria independente da execução do adendo 52f (script 52, saídas `RB_*`, doc 57y). Veredito: **aprovado

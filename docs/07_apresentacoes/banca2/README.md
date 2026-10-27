@@ -17,13 +17,24 @@
 > **Atualização:** 26 de outubro de 2026
 
 > [!IMPORTANT]
+> **Revisão pela rubrica da banca (27/10/2026, véspera).** O deck curto foi refeito pelos nove critérios da rubrica e
+> para cerca de 7 minutos: dados e amostra num slide (unidade de observação candidato × vaga e funil por ciclo),
+> modelo justificado, leitura dos coeficientes na tela, robustez como "mantém / não se mantém", Conclusão e
+> Limitações com implicações. Roteiro de fala com tempo por slide e perguntas prováveis:
+> [09](09_roteiro_fala_7min.md). Mapa do deck anterior (`8901dea`, auditoria 53) para o novo, com o texto exato da
+> tela e o checklist do grupo: [10](10_mapa_deck_anterior_para_rubrica.md); a cópia do PDF anterior está em
+> `output/apresentacao_banca2/versoes/deck_banca2_curto_8901dea.pdf`. A rubrica está no
+> [06](06_estrutura_obrigatoria_versao_final.md), §4.
+
+> [!IMPORTANT]
 > **Hipótese única da versão final: a H2** (decisão do autor). Comece pelo
 > [guia do grupo](08_guia_do_grupo_H2.md) e pela [nova hipótese](07_nova_hipotese.md).
 > O corpo do deck tem só a H2; as antigas H1 e H3 vão para um apêndice rápido.
 > O deck com a H2 está pronto ([04](04_conteudo_deck_curto.md); 27/10/2026) e foi auditado
 > ([auditoria 53](../../auditorias/53_auditoria_deck_H2.md): aprovado com correções, já aplicadas). A análise
-> completa ([doc 66](../../06_execucao/66_analise_completa_H2.md)) está na `main`, com a auditoria 52 em curso; o
-> deck não depende dela. As linhas "Estado" e "Atualização" do cabeçalho acima são de 26/10 e valem só para o deck
+> completa ([doc 66](../../06_execucao/66_analise_completa_H2.md)) está na `main`, auditada na
+> [auditoria 52](../../auditorias/52_auditoria_analise_H2.md). A versão auditada na 53 foi revista pela rubrica
+> (acima). As linhas "Estado" e "Atualização" do cabeçalho acima são de 26/10 e valem só para o deck
 > completo (registro).
 
 > [!IMPORTANT]
@@ -71,6 +82,10 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | [Conteúdo do deck curto](04_conteudo_deck_curto.md) | a fonte de verdade do deck curto: cada resultado com a hipótese e a ficha antes e a leitura depois |
 | [**Estrutura obrigatória da versão final**](06_estrutura_obrigatoria_versao_final.md) | decisão do autor: Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez, Discussão; toda versão futura do deck segue esta ordem |
 | [Discussão da história empírica](05_discussao_historia_empirica.md) | perguntas do autor sobre a parte empírica, respostas, decisões de apresentação e a ordem da história nos slides |
+| [Nova hipótese](07_nova_hipotese.md) | a hipótese única da versão final (a H2), o roteiro da história e o que dá e não dá para afirmar |
+| [Guia do grupo](08_guia_do_grupo_H2.md) | a H2 em uma página, com as figuras do deck por slide |
+| [**Roteiro de fala de 7 minutos**](09_roteiro_fala_7min.md) | a fala de cada slide com o tempo-alvo (soma 7:00) e as perguntas prováveis da banca; o mesmo texto das notas do deck |
+| [Mapa do deck anterior para a rubrica](10_mapa_deck_anterior_para_rubrica.md) | do deck `8901dea` (auditoria 53) para o revisto: correspondência slide a slide, texto exato da tela, números que mudaram de lugar e o checklist do grupo |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | cada figura → arquivo, script e natureza; cada número → arquivo, seletor e formato, num bloco gerado pelo script |
 | [Relatório de validação para os professores](../../../output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.pdf) | relatório curto (derivado) com o desenho, os diagnósticos e os resultados de 19/10; não é o deck |
 

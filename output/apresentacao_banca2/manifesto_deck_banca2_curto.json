@@ -10,46 +10,52 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "f49b90d68898a9ad2dbc115b641e24fd175ca170614a6b05d1dc3247196e1e04"
+      "sha256": "0ccfebddf7e16464356bd24ae8c1e2a18215b98efafaf72b908094ce5a9a0c28"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "registro dos números citados (conferido pelo teste)",
-      "sha256": "74e3e0d37481365b1c9191e5113a942e4c807316e97a3109d47ff46e997a5f0a"
+      "sha256": "cc25e8bedc9ed1fa59c5da4b0401917b43710d8c66a1713264edee878f5d2a8b"
     },
     {
       "caminho": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
-      "no_pacote": "ppt/media/curto_04_curto_bolsa_mesma_uf.png",
+      "no_pacote": "ppt/media/curto_05_curto_bolsa_mesma_uf.png",
       "papel": "figura",
       "sha256": "7dc343c113818fce1d6361f8aada2945c10cbadc8859e780e6de685a2a844f1b"
     },
     {
+      "caminho": "output/apresentacao_banca2/curto_dados_amostra.png",
+      "no_pacote": "ppt/media/curto_01_curto_dados_amostra.png",
+      "papel": "figura",
+      "sha256": "0e4899c3b4a99a78df658ead56e8513d759f628950a4705f039e45e35b55ec48"
+    },
+    {
       "caminho": "output/apresentacao_banca2/curto_fato.png",
-      "no_pacote": "ppt/media/curto_06_curto_fato.png",
+      "no_pacote": "ppt/media/curto_07_curto_fato.png",
       "papel": "figura",
       "sha256": "2568922a3405b57a3d754161464cb3016d4aed42a9ac656a1c94da8d805257c8"
     },
     {
       "caminho": "output/apresentacao_banca2/curto_origem_bolsa.png",
-      "no_pacote": "ppt/media/curto_03_curto_origem_bolsa.png",
+      "no_pacote": "ppt/media/curto_04_curto_origem_bolsa.png",
       "papel": "figura",
       "sha256": "5bd62ee2232ef4d46c072da67b4231741c822fae81a268da7d26f7b442f0fe76"
     },
     {
       "caminho": "output/apresentacao_banca2/curto_robustez_escolha.png",
-      "no_pacote": "ppt/media/curto_05_curto_robustez_escolha.png",
+      "no_pacote": "ppt/media/curto_06_curto_robustez_escolha.png",
       "papel": "figura",
       "sha256": "992fa7cf3be13f6ef57ca328d548677de39a1c954818609e436ff81987bdacb7"
     },
     {
       "caminho": "output/apresentacao_banca2/exp_escolha_origem.png",
-      "no_pacote": "ppt/media/curto_02_exp_escolha_origem.png",
+      "no_pacote": "ppt/media/curto_03_exp_escolha_origem.png",
       "papel": "figura",
       "sha256": "ced98d91e1960c882cfb636bf5e75a80de801b14d626ab4b6a44f4dcf6af9d6c"
     },
     {
       "caminho": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
-      "no_pacote": "ppt/media/curto_01_regra_bolsa_ivs_oficial.png",
+      "no_pacote": "ppt/media/curto_02_regra_bolsa_ivs_oficial.png",
       "papel": "figura",
       "sha256": "86cb89519386f64c74c2cb12961a7a1fa6090f63e6802c9e2a725b6bef20cd19"
     }
@@ -67,29 +73,25 @@
         "Formulada após ver os dados."
       ],
       "palavras": 29,
+      "palavras_faladas": 82,
       "posicao": 1,
       "secao": "Hipótese",
-      "titulo": "Hipótese: a origem pesa mais que a bolsa na escolha"
+      "tempo_s": 35,
+      "titulo": "Pergunta e hipótese: origem ou bolsa na escolha?"
     },
     {
-      "figura": null,
-      "layout": "curto_tabela",
-      "linhas": [],
-      "palavras": 25,
+      "figura": "output/apresentacao_banca2/curto_dados_amostra.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Unidade: candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção.",
+        "No modelo: 5.421 candidatos e 932.577 pares candidato × vaga."
+      ],
+      "palavras": 22,
+      "palavras_faladas": 110,
       "posicao": 2,
       "secao": "Dados",
-      "titulo": "Dados: as variáveis e de onde vêm"
-    },
-    {
-      "figura": null,
-      "layout": "curto_tabela",
-      "linhas": [
-        "Ciclo = edital: 2025, início e meio de 2026"
-      ],
-      "palavras": 29,
-      "posicao": 3,
-      "secao": "Análise descritiva",
-      "titulo": "Os três ciclos em números"
+      "tempo_s": 50,
+      "titulo": "Dados e amostra: de onde vêm e quem entra no modelo"
     },
     {
       "figura": "output/apresentacao_banca2/regra_bolsa_ivs_oficial.png",
@@ -99,41 +101,51 @@
         "Ciclos 1 e 2: reproduz 368/368 e 454/454 municípios."
       ],
       "palavras": 23,
-      "posicao": 4,
+      "palavras_faladas": 63,
+      "posicao": 3,
       "secao": "Análise descritiva",
+      "tempo_s": 25,
       "titulo": "A bolsa é função exata do IVS: a regra é sharp"
     },
     {
       "figura": "output/apresentacao_banca2/exp_escolha_origem.png",
       "layout": "curto_figura",
       "linhas": [
-        "79% põem a 1ª opção na UF de origem; mediana: 51 km (descritivo)."
+        "79% põem a 1ª opção na UF de origem; mediana: 51 km (descritivo).",
+        "Para a pergunta: a maioria fica perto; quanto pesa a bolsa?"
       ],
-      "palavras": 13,
-      "posicao": 5,
+      "palavras": 24,
+      "palavras_faladas": 76,
+      "posicao": 4,
       "secao": "Análise descritiva",
+      "tempo_s": 35,
       "titulo": "Onde escolhem: perto de onde já trabalham"
     },
     {
       "figura": null,
       "layout": "curto_espec",
       "linhas": [
-        "chance da 1ª opção = bolsa + distância + origem (UF, região, município)",
-        "Comparação o candidato consigo mesmo, entre vagas do seu curso",
-        "Teste origem pesa mais que toda a bolsa"
+        "chance da 1ª opção = bolsa + distância + origem",
+        "Por quê escolha entre vagas; candidato comparado consigo mesmo",
+        "Bolsa muda pela regra do IVS",
+        "Teste D_UF = origem − bolsa > zero; cluster por conjunto"
       ],
-      "palavras": 28,
-      "posicao": 6,
+      "palavras": 30,
+      "palavras_faladas": 112,
+      "posicao": 5,
       "secao": "Metodologia",
-      "titulo": "Metodologia: logit condicional da 1ª opção"
+      "tempo_s": 45,
+      "titulo": "Modelo: logit condicional da 1ª opção"
     },
     {
       "figura": null,
       "layout": "curto_tabela",
       "linhas": [],
-      "palavras": 28,
-      "posicao": 7,
+      "palavras": 30,
+      "palavras_faladas": 72,
+      "posicao": 6,
       "secao": "Identificação",
+      "tempo_s": 30,
       "titulo": "Identificação: as premissas e o nosso caso"
     },
     {
@@ -141,49 +153,70 @@
       "layout": "curto_figura",
       "linhas": [
         "Origem − bolsa: 1,94 [1,48; 2,40] em log-chance; p < 0,001.",
+        "Na UF de origem, chance 11,0 vezes maior; toda a bolsa: 1,57 (IC contém 1).",
         "Origem é preferência revelada, não causa."
       ],
-      "palavras": 15,
-      "posicao": 8,
+      "palavras": 30,
+      "palavras_faladas": 115,
+      "posicao": 7,
       "secao": "Resultados",
+      "tempo_s": 50,
       "titulo": "Teste central: a origem pesa mais que toda a bolsa"
     },
     {
       "figura": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
       "layout": "curto_figura",
       "linhas": [
-        "+R$ 5 mil pesam como 75 km a menos de distância.",
+        "Na mesma UF, +R$ 5 mil: chance 1,47 vez maior; vale 75 km a menos.",
         "Adendo pós-resultado; pré-registrado, sem fixar a UF: p 0,072."
       ],
-      "palavras": 20,
-      "posicao": 9,
+      "palavras": 24,
+      "palavras_faladas": 91,
+      "posicao": 8,
       "secao": "Resultados",
+      "tempo_s": 40,
       "titulo": "Dentro da mesma UF, a vaga de bolsa maior é preferida"
     },
     {
       "figura": "output/apresentacao_banca2/curto_robustez_escolha.png",
       "layout": "curto_figura",
       "linhas": [
-        "Bolsa: forte só no ciclo 2; perto do corte, inconclusivo.",
-        "Pré-registrado: IC contém 1; variantes do adendo: mesma leitura."
+        "Mantém: a origem pesa mais que a bolsa nos três ciclos.",
+        "Não se mantém: peso da bolsa: forte só no ciclo 2; perto do corte, inconclusivo.",
+        "Pré-registrado: IC contém 1."
       ],
-      "palavras": 19,
-      "posicao": 10,
+      "palavras": 30,
+      "palavras_faladas": 90,
+      "posicao": 9,
       "secao": "Robustez",
-      "titulo": "Robustez: a origem pesa mais em todos os ciclos"
+      "tempo_s": 40,
+      "titulo": "Robustez: o que se mantém e o que não se mantém"
     },
     {
       "figura": null,
       "layout": "curto_texto",
       "linhas": [
-        "Teoria aceita se a bolsa compensa o custo do lugar",
-        "Dados a origem pesa mais que toda a bolsa",
-        "Leitura os dados sugerem incentivo limitado (pacote do corte)"
+        "Origem pesa mais que toda a bolsa, nos três ciclos",
+        "Bolsa muda qual vaga, na mesma UF (adendo)",
+        "Teoria os dados sugerem incentivo limitado (pacote do corte)"
       ],
-      "palavras": 28,
+      "palavras": 27,
+      "palavras_faladas": 75,
+      "posicao": 10,
+      "secao": "Discussão",
+      "tempo_s": 30,
+      "titulo": "Conclusão: a origem pesa mais que a bolsa? Sim"
+    },
+    {
+      "figura": null,
+      "layout": "curto_tabela",
+      "linhas": [],
+      "palavras": 30,
+      "palavras_faladas": 96,
       "posicao": 11,
       "secao": "Discussão",
-      "titulo": "Discussão: um incentivo limitado"
+      "tempo_s": 40,
+      "titulo": "Limitações e o que cada uma implica"
     },
     {
       "figura": "output/apresentacao_banca2/curto_fato.png",
@@ -193,8 +226,10 @@
         "Pacote do corte; só detectaria saltos grandes."
       ],
       "palavras": 20,
+      "palavras_faladas": 0,
       "posicao": 12,
       "secao": "Apêndice",
+      "tempo_s": null,
       "titulo": "Apêndice · O fato: sem aumento detectado no corte"
     },
     {
@@ -205,24 +240,39 @@
         "Associação; vínculo cadastrado não é presença."
       ],
       "palavras": 17,
+      "palavras_faladas": 0,
       "posicao": 13,
       "secao": "Apêndice",
+      "tempo_s": null,
       "titulo": "Apêndice · H3: oferta, numa frase"
     }
   ],
   "pedido": "autor, 26/10/2026: só a parte empírica, muito menor, sem o diagrama causal da teoria; estrutura obrigatória da versão final (doc 06); no máximo cerca de 30 palavras por slide; 27/10/2026: hipótese única, a antiga H2, com gráficos simples (doc 07 da banca 2); o corpo tem só a H2, e a antiga H1 (o fato) e a antiga H3 vão para um apêndice de no máximo 2 slides",
   "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na ordem Hipótese → Dados → Análise descritiva → Metodologia → Identificação → Resultados → Robustez → Discussão; no máximo 30 palavras visíveis por slide, fora o título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama; corpo com só a H2 (no máximo 14 slides) e apêndice curto (no máximo 2 slides) depois da Discussão",
+  "roteiro": {
+    "documento": "docs/07_apresentacoes/banca2/09_roteiro_fala_7min.md",
+    "palavras_faladas": 982,
+    "regra": "um roteiro por slide do corpo, nas notas, antes do detalhe; apêndice não apresentado; soma de 6:30 a 7:30",
+    "tempo_total": "7:00",
+    "tempo_total_s": 420
+  },
   "saidas": [
     {
-      "bytes": 1596245,
+      "bytes": 1960010,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "54f03e6fc41dd04f501ed73fd72b11fe1f19047a100c562e1055ae5694367067"
+      "sha256": "94183dbf42d95ca199e767d33a5c40cddd35cea50790e297ebfe310c7d1d0289"
     },
     {
-      "bytes": 1067564,
+      "bytes": 1328502,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "66fa8369fbc68eb23456a103a9585d90c3935a2fb913e423f8cb9053a20c66df"
+      "sha256": "0f3f72a77656ffd87e62c24841a46c62c5f42dbb0e4b227c136cf3c3530b0023"
     }
   ],
-  "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)"
+  "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)",
+  "versao_anterior": {
+    "commit": "8901dea",
+    "mapa": "docs/07_apresentacoes/banca2/10_mapa_deck_anterior_para_rubrica.md",
+    "pdf": "output/apresentacao_banca2/versoes/deck_banca2_curto_8901dea.pdf",
+    "sha256": "66fa8369fbc68eb23456a103a9585d90c3935a2fb913e423f8cb9053a20c66df"
+  }
 }
