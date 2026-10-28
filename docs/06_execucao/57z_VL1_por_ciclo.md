@@ -1,0 +1,48 @@
+# 57z. Escolha da 1ª opção com o par de UFs fixado, ciclo a ciclo (adendo 52g)
+
+> **Gerado por** `scripts/rdd_bolsa/53_VL1_por_ciclo.py` a partir de `output/rdd_bolsa/VG_*`; não editar à mão (o teste `tests/test_VL1_por_ciclo.py` confere que este arquivo é igual ao gerado; `--atualizar-doc` o regrava das saídas).<br>
+> **Adendo:** [`52g_adendo_VL1_por_ciclo.md`](52g_adendo_VL1_por_ciclo.md), congelado em 28/10/2026 antes de rodar (commit `e9740a5`); SHA-256 em `adendo` de `VG_resumo.json`, conferido pelo teste. Especificação de origem: VL-1 do adendo [52e](52e_adendo_escolha_localizacao_par.md), doc [57x](57x_resultados_escolha_localizacao_par.md), com as 13 decisões de implementação de lá.<br>
+> **Estatuto:** `ADENDO_52G_POS_RESULTADO`. O VL-1 dos ciclos 1–3 e do ciclo 2 já tinha sido visto; isto é robustez por ciclo, não teste confirmatório novo. Toda linha de `VG_estimativas.csv` e o resumo têm `natureza_dos_dados = EMPIRICO`.<br>
+> **Decisão do autor (28/10/2026):** "a hipótese é simplesmente sobre o efeito bolsa → 1ª opção", com "só comparação entre municípios da mesma UF".<br>
+> **Saídas:** `output/rdd_bolsa/VG_estimativas.csv` e `VG_resumo.json`. As saídas `VL_*` não são regravadas, e o doc 57x não é editado.<br>
+> **Auditoria:** pendente. A resposta curta é escolhida por regra fixada no código (`leitura`) no commit das decisões, antes das estimativas.
+
+## 1. Resposta curta
+
+*Pendente: preenchido pelo script depois do portão de reprodução.*
+
+## 2. Portão de reprodução (VG-R)
+
+*Pendente: preenchido pelo script depois do portão de reprodução.*
+
+## 3. Resultados
+
+*Pendente: preenchido pelo script depois do portão de reprodução.*
+
+## 6. Decisões de implementação
+
+<!-- VG:decisoes:inicio -->
+Decisões de implementação onde o adendo não fixava o detalhe. Foram registradas e commitadas antes de qualquer estimativa deste adendo (o histórico do Git mostra o commit deste bloco antes do commit dos números). As 13 decisões do 57x continuam valendo; em qualquer ambiguidade nova, vale a leitura mais próxima do script 50.
+
+1. **O que é o VL-1 num ciclo** (28/10/2026). O §1 manda rodar "exatamente o VL-1 do 52e" em cada ciclo separado. *Resolução:* VG-1 e VG-3 são a especificação `VL1_c2` do script 50 com o ciclo trocado para 1 e 3: a amostra é a do P1 restrita ao ciclo (função `subconjunto` do 50, como o M5 do script 25); o efeito fixo de UF de origem × UF da vaga é montado só com os candidatos e as vagas daquele ciclo (`desenho_ef` do 50, com as decisões 1 a 3 do 57x: indicadores de par menos uma base por componente, retirada de pares sem escolha e de efeitos fixos separados até não mudar, candidato com uma só alternativa sai); a matriz é a do 50 (`matriz_vl`: M1 com distância linear por 100 km, sem `mesma_uf` e sem macrorregiões); a estimação é a `estimar_ef` do 50 (mesmo ponto de partida do Newton, nota de execução 1 do 57x). Nada é reescrito: o script 53 importa o 50.
+2. **Tipo de vaga nos ciclos 1 e 3** (28/10/2026). O 52e usa o conjunto do P1 com o tipo de vaga do ciclo 2 pelo quadro de 13/02/2026 (função `corrigir` do 42). *Resolução:* Usa-se o mesmo conjunto corrigido. A correção só muda células do ciclo 2; nos ciclos 1 e 3 o conjunto é o do P1. O resumo grava a contagem de células por ciclo para conferência.
+3. **Portão VG-R** (28/10/2026). O §1 pede reproduzir o VL-1 do ciclo 2 e dos ciclos 1–3 com diferença ≤ 1e−8 antes do resto. *Resolução:* Antes de qualquer conta nova, `estimar_linha` do 50 (sem alteração, com as chaves `VL1_c2` e `VL1_emp`) reestima as duas linhas. Compara-se com `VL_estimativas.csv`: todos os coeficientes que não são indicadores de par, com os três EP (mesmos termos, na mesma ordem); a razão de chances (estimativa, três EP, IC, p, p com t de G − 1, p de MV, p do score bootstrap Rademacher e Webb); K5 e K10 (estimativa, três EP, IC delta e Fieller); e G de conjuntos e de candidatos e o número de candidatos. Compara-se com `VL_resumo.json`: as contagens de identificação (iguais) e o resultado do score bootstrap. Diferença absoluta ≤ 1e−8 se o valor gravado tem módulo até 1, relativa se maior; NaN só casa com NaN (`_dif_rel` do 50, decisão 12 do 57x). Falhou, a execução para em `FALHA_REPRODUCAO_<linha>`, nada novo é estimado e só o resumo do portão é gravado. O portão VL-5 do 50 (M1, P1h e M4) não é refeito: o VG-R é o portão que o 52g pede.
+4. **Inferência e poucos clusters** (28/10/2026). O §1 pede inferência como no 52e e, com poucos conjuntos num ciclo, relatar o número de clusters e dar peso ao score bootstrap. O 52g não fixa família de testes. *Resolução:* Como no 52e: sanduíche CR1 por conjunto de escolha (curso × ciclo; num ciclo só, é o curso), fator G/(G − 1), IC 95% e p pela normal; também o p com t de G − 1 graus de liberdade. Score bootstrap de Kline–Santos (`score_bootstrap` do 50: ajuste restrito sob β = 0 partindo da estimativa irrestrita sem a bolsa; Rademacher por enumeração completa se G ≤ 24, senão 199.999 sorteios com a semente do 16; Webb também). Cada linha relata G de conjuntos. Não há família confirmatória nova (o 52g chama VG-1 e VG-3 de robustez por ciclo); Holm nas duas (com o p por cluster e com o p do score) vai como coluna descritiva.
+5. **Leitura do §2 por regra** (28/10/2026). O §2 lê o IC de VG-1 e VG-3 contra 1 e fala em "mesmo sinal" sem dizer de quê; e pede peso ao score bootstrap. *Resolução:* Para VG-1 e VG-3: IC 95% (CR1) que contém 1 → `IC_CONTEM_1`; IC que exclui 1 com o log da razão de chances do mesmo sinal que o do VL-1 do ciclo 2 reproduzido → `EXCLUI_1_MESMO_SINAL`; do sinal oposto → `EXCLUI_1_SINAL_OPOSTO`; sem estimativa → `SEM_ESTIMATIVA`. Leitura geral: algum `EXCLUI_1_SINAL_OPOSTO` → `DEPENDE_DA_COMPOSICAO` (3ª linha do §2); senão, algum `EXCLUI_1_MESMO_SINAL` → `APARECE_TAMBEM_EM_OUTRO_CICLO` (2ª linha, com o ciclo); senão, os dois `IC_CONTEM_1` → `FORTE_SO_NO_CICLO_2` (1ª linha); com alguma linha sem estimativa, `INCOMPLETA`. Peso ao score: para cada linha, `score_concorda` = (p do score Rademacher < 0,05) igual a (IC exclui 1). Quando não concorda, o doc diz, na resposta curta, que a classificação daquele ciclo não se confirma pelo score bootstrap; a regra não muda.
+6. **km equivalentes (VG-4)** (28/10/2026). O §1 pede os km equivalentes de +R$ 5 mil em VG-1 e VG-3, como no VL-4. *Resolução:* Como no VL-4: K5 e K10 pela função `linha_km` do 25c (100 · passo · β / (−γ)), IC pelo método delta e por Fieller, descritivos, sem teste. Se o IC do β contém zero, o doc diz que o IC dos km também contém e que os km ficam instáveis.
+7. **Quem identifica (VG-5)** (28/10/2026). O §1 pede a contagem de pares de UF e de candidatos que identificam em cada ciclo. *Resolução:* As contagens do `desenho_ef` do 50, as mesmas da seção 3 do 57x: pares no desenho e no modelo, pares com variação de bolsa, alternativas e candidatos retirados, candidatos no modelo, candidatos com variação de bolsa dentro de algum par e com a 1ª opção num par com variação, colunas de efeito fixo. Para os quatro VL-1 (ciclos 1, 2, 3 e 1–3), com G de conjuntos.
+8. **Falha de convergência** (28/10/2026). Num ciclo só há menos candidatos por par; o Newton pode não convergir ou a matriz pode perder posto. *Resolução:* Como no 50: a linha fica `NAO_CONVERGIU` com a nota da `estimar_ef`, sem trocar partida, especificação ou amostra; a leitura dela é `SEM_ESTIMATIVA`. Coluna sem variação dentro de nenhum candidato é omitida, como no 25, e a omissão vai na nota.
+9. **Saídas e figura** (28/10/2026). O §3 lista script, `VG_estimativas.csv`, `VG_resumo.json`, doc 57z e testes; não lista figura. *Resolução:* Não há figura. O CSV tem, por linha estimada, os coeficientes fora dos indicadores de par, a razão de chances por +R$ 5 mil e K5 e K10; as linhas reproduzidas (VL-1 dos ciclos 2 e 1–3) entram com `papel = reproducao_VG-R`. `VL_*` não são regravadas.
+10. **Números do doc 57z** (28/10/2026). O pedido exige números só em blocos gerados. *Resolução:* Todo número de resultado do 57z vem de `VG_*` por `--atualizar-doc`, entre marcadores `<!-- VG:... -->`; o teste confere o doc contra o gerado e que não há número de resultado fora dos blocos. A redação da resposta curta é escolhida por regra (`leitura`), sem texto escrito depois de ver os números.
+<!-- VG:decisoes:fim -->
+
+## 7. Limites
+
+- **Pós-resultado.** O VL-1 empilhado e o do ciclo 2 já eram conhecidos. O adendo foi congelado antes de rodar, mas isto é robustez por ciclo, não teste confirmatório novo.
+- **Poucos conjuntos por ciclo.** Num ciclo só, o cluster é o curso, e são poucos. O IC com cluster pode ser otimista; por isso o score bootstrap vai ao lado, e o número de conjuntos de cada linha está na tabela.
+- **Identificação estreita.** Com o par de UFs, o peso da bolsa vem só de UFs que têm vagas de faixas diferentes e de candidatos que veem essa variação (seção 3). Num ciclo só, são menos pares e menos candidatos.
+- **Pares sem escolha saem.** As vagas de pares que ninguém daquela origem escolheu naquele ciclo saem do conjunto (decisão 2 do 57x); o conjunto de escolha do modelo fica menor que o do M1.
+- **Escolha condicional.** Tudo vale para quem se candidatou, dentro das vagas abertas do seu curso e ciclo; IIA do logit condicional.
+- **Pacote do corte.** O peso da bolsa é identificado pelos saltos nos cortes de IVS, com o IVS em spline contínua; nos mesmos cortes mudam outras regras federais (auditoria 18). Não é efeito da participação no PMM-E nem do Agora Tem Especialistas.
+- **Origem não é causal.** A origem é o município do vínculo médico no CNES (G1), não a residência; o peso da origem é preferência revelada, não efeito causal.
+- **km são razões.** Com o peso da bolsa perto de zero, os km equivalentes ficam instáveis e não são preço.
