@@ -299,6 +299,7 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 - Figura: `output/apresentacao_banca2/curto_dados_amostra.png`
 - Linha: Unidade: candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção.
 - Linha: No modelo: 5.421 candidatos e 932.577 pares candidato × vaga.
+- Cautela: y = opção marcada, não ida ao município.
 
 **Slide 3. A bolsa é função exata do IVS: a regra é sharp** Seção: Análise descritiva. Tempo de fala: 25 s.
 - Figura: `output/apresentacao_banca2/regra_bolsa_ivs_oficial.png`
@@ -356,7 +357,7 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 |---|---|
 | Pós-resultado | exploratório |
 | Sem fixar UF | IC contém 1 |
-| Só candidatos | sem margem extensiva |
+| Só inscrição | ≠ ida ao município |
 | Pacote do corte | bolsa não isolada |
 | Só ciclo 2 | não generalizar |
 | Origem = CNES | ≠ residência |
@@ -410,3 +411,21 @@ Os resultados de preenchimento continuam no repositório (docs 57n e 57w; audito
 entram na apresentação. `tests/test_deck_curto_banca2.py` agora barra "preench" no doc 04 e no pptx (tela e notas).
 
 - [ ] Tirar do deck do grupo qualquer slide, linha ou fala sobre preenchimento, inclusive o apêndice.
+
+### 6.7 Ajuste de 28/10/2026: escolha marcada, não entrada no município
+
+> **Pedido do autor (28/10/2026):** deixar claro se estudamos também a entrada no município ou só a opção marcada.
+
+Estudamos **só a vaga marcada como 1ª opção na inscrição**. Não medimos se o médico foi alocado, tomou posse ou
+começou a trabalhar no município. Isso agora está:
+
+- na tela do slide 2, como cautela: "y = opção marcada, não ida ao município.";
+- na fala do slide 2: "é a vaga que ele marcou na inscrição; não medimos se ele foi alocado nem se entrou no
+  município";
+- na Conclusão (fala): "vale para a vaga que quem se candidatou marcou como 1ª opção, não para a entrada no
+  município";
+- nas Limitações: a linha "Só candidatos: sem margem extensiva" virou "Só inscrição: ≠ ida ao município" (fala: "só
+  vemos a inscrição: quem se candidatou e o que marcou, não quem entrou no município");
+- nas perguntas prováveis do doc 09: "vocês olham se o médico foi para o município?" Não.
+
+- [ ] No deck do grupo, pôr a cautela do slide 2 e a linha nova das Limitações.

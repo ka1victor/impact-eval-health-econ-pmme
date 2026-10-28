@@ -269,6 +269,9 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertEqual(rotulos(s), ["Unidade:", "No modelo:"])
         txt = tela(s)
         self.assertIn("candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção", txt)
+        # pedido do autor (28/10/2026): deixar claro que é a opção marcada, não a ida ao município
+        self.assertIn("opção marcada, não ida ao município", s["cautela"])
+        self.assertIn("não medimos se ele foi alocado nem se entrou no município", corrido(s["roteiro"]))
         self.assertIn(f"{self.v('M1_N')} candidatos e {self.v('AM_PARES')} pares candidato × vaga", txt)
         # o funil encaixa: R1 − não ligados = ligados; − sem vínculo = com origem; − sem região = modelo
         for c in "123":
@@ -490,10 +493,10 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertEqual([D.texto_puro(c) for c in lim["tabela"][0]], ["Limitação", "Implicação"])
         par = {D.texto_puro(r[0]): D.texto_puro(r[1]) for r in lim["tabela"][1:]}
         self.assertEqual(par, {"Pós-resultado": "exploratório", "Sem fixar UF": "IC contém 1",
-                               "Só candidatos": "sem margem extensiva", "Pacote do corte": "bolsa não isolada",
+                               "Só inscrição": "≠ ida ao município", "Pacote do corte": "bolsa não isolada",
                                "Só ciclo 2": "não generalizar", "Origem = CNES": "≠ residência"})
         rot = corrido(lim["roteiro"])
-        for k in ("pós-resultado", "Sem fixar a UF", "se candidatou", "quem não se inscreveu",
+        for k in ("pós-resultado", "Sem fixar a UF", "se candidatou", "não quem entrou no município",
                   "pacote do corte", "ciclo 2", "não a residência"):
             self.assertIn(k, rot, k)
         notas = corrido(lim["notas"])

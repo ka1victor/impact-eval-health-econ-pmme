@@ -94,11 +94,14 @@ atualizacao: 28 de outubro de 2026
 `Dados · fontes, unidade e funil`
 
 <!-- layout: curto_figura -->
+<!-- linhas: 3 -->
 
 ![Variáveis e fontes, à esquerda; à direita, o funil da amostra da escolha por ciclo, de quem tem 1ª opção no quadro até quem entra no modelo, com quem sai em cada etapa](../../../output/apresentacao_banca2/curto_dados_amostra.png)
 
 - **Unidade:** candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção.
 - **No modelo:** 5.421 candidatos e 932.577 pares candidato × vaga.
+
+> **y = opção marcada, não ida ao município.**
 
 **Fontes:** `output/rdd_bolsa/P1_resumo.json` (protocolo 52; doc 57a); portão G1; `output/apresentacao_banca2/tabela_fontes.csv`; `curto_dados_amostra.png`; auditorias 16, 36 e 41.
 
@@ -107,7 +110,8 @@ atualizacao: 28 de outubro de 2026
 > **Roteiro (45 s).** A 1ª opção de cada candidato vem dos editais do Ministério da Saúde, ciclos 1 a 3; a origem
 > vem do CNES: o município onde ele tinha vínculo médico antes da inscrição; bolsa e vagas, dos quadros de vagas; o
 > IVS, do Ipea; distância e UF, do IBGE. A unidade de observação é o par candidato × vaga: cada candidato aparece
-> uma vez para cada vaga aberta do seu curso e ciclo, e a variável dependente vale 1 na sua 1ª opção. O funil, à
+> uma vez para cada vaga aberta do seu curso e ciclo, e a variável dependente vale 1 na sua 1ª opção. Atenção: é a vaga que ele marcou na inscrição; não
+> medimos se ele foi alocado nem se entrou no município. O funil, à
 > direita, mostra quem sai em cada etapa: dos 5.714 candidatos com 1ª opção, 5.421 entram no modelo.
 
 > **Notas do apresentador.** 1ª opção: listas de classificação dos editais do PMM-E (SGTES/MS), ciclos 1–3, uma
@@ -393,7 +397,8 @@ atualizacao: 28 de outubro de 2026
 > **Roteiro (35 s).** Voltando à pergunta: a bolsa maior aumenta a chance de a vaga ser a 1ª opção, comparando vagas
 > da mesma UF? Sim: 1,47 vez a chance nos três ciclos juntos, e forte só no ciclo 2. Pela teoria da banca 1, o médico
 > aceita a vaga se a bolsa compensa o custo do lugar; os dados sugerem que R$ 5 mil compensam parte desse custo,
-> cerca de 75 km a menos. Isso vale para a escolha de quem se candidatou.
+> cerca de 75 km a menos. Isso vale para a vaga que quem se candidatou marcou como 1ª opção, não para a
+> entrada no município.
 
 > **Notas do apresentador.** No modelo da banca 1, o médico aceita a vaga se a bolsa compensa o custo do lugar. O
 > dado: comparando vagas da mesma UF, a vaga de bolsa maior tem mais chance de ser a 1ª opção. A leitura que os dados
@@ -417,7 +422,7 @@ atualizacao: 28 de outubro de 2026
 |---|---|
 | Pós-resultado | exploratório |
 | Sem fixar UF | IC contém 1 |
-| Só candidatos | sem margem extensiva |
+| Só inscrição | ≠ ida ao município |
 | Pacote do corte | bolsa não isolada |
 | Só ciclo 2 | não generalizar |
 | Origem = CNES | ≠ residência |
@@ -427,8 +432,8 @@ atualizacao: 28 de outubro de 2026
 **Números:** `VL1_EMP_RC`, `VL1_EMP_RCI`, `VL1_EMP_RCS`, `VL1_EMP_HOLM`, `VLB_EMP_RC`, `VLB_EMP_RCI`, `VLB_EMP_RCS`, `VC_B_HOLM`, `VG1_RC`, `VG1_RCI`, `VG1_RCS`, `VG3_RC`, `VG3_RCI`, `VG3_RCS`, `VC_DUF_EST`, `VC_DUF_INF`, `VC_DUF_SUP`
 
 > **Roteiro (45 s).** Seis limitações e o que cada uma implica. A especificação é pós-resultado: o resultado é
-> exploratório e pede dados novos. Sem fixar a UF, como no pré-registrado, o intervalo contém 1. Só vemos quem se
-> candidatou: nada diz sobre quem não se inscreveu. O contraste é o pacote do corte: vale para o pacote, não
+> exploratório e pede dados novos. Sem fixar a UF, como no pré-registrado, o intervalo contém 1. Só vemos a
+> inscrição: quem se candidatou e o que marcou, não quem entrou no município. O contraste é o pacote do corte: vale para o pacote, não
 > para os R$ 5 mil sozinhos. O efeito é forte só no ciclo 2: não dá para generalizar. E a origem é o vínculo no CNES,
 > não a residência. Obrigado.
 
@@ -439,7 +444,8 @@ atualizacao: 28 de outubro de 2026
 > se candidatar: sem a margem extensiva, nada aqui diz quantos especialistas a mais se inscreveriam com bolsa maior;
 > e o que uma vaga ganha na escolha, outra do mesmo curso perde. Pacote do corte: nos mesmos cortes
 > mudam outras regras federais (auditoria 18); a implicação de política vale para o pacote, não para os R$ 5 mil
-> sozinhos. Só ciclo 2: comparando vagas da mesma UF, ciclo a ciclo (adendo 52g), 1,15 [0,66; 2,01] no
+> sozinhos. Só inscrição: a 1ª opção é a vaga marcada na inscrição; não medimos alocação, posse nem trabalho no
+> município. Só ciclo 2: comparando vagas da mesma UF, ciclo a ciclo (adendo 52g), 1,15 [0,66; 2,01] no
 > ciclo 1 e 1,25 [0,90; 1,73] no ciclo 3, IC que contêm 1; não generalizar para o programa. Origem = vínculo no CNES: quem trabalha longe de casa aparece com a origem do trabalho; ela só define o
 > par de UFs que fica fixo. Perguntas prováveis da banca (doc 66, §8). P1, "Vocês formularam a hipótese depois de ver
 > os resultados?" Sim, e está na tela do slide 1; a especificação com o par de UFs foi congelada antes de rodar (52e;

@@ -54,7 +54,8 @@ médico escolhe. Um aviso honesto, que está na tela: formulamos esta hipótese 
 A 1ª opção de cada candidato vem dos editais do Ministério da Saúde, ciclos 1 a 3; a origem vem do CNES: o município
 onde ele tinha vínculo médico antes da inscrição; bolsa e vagas, dos quadros de vagas; o IVS, do Ipea; distância e UF,
 do IBGE. A unidade de observação é o par candidato × vaga: cada candidato aparece uma vez para cada vaga aberta do seu
-curso e ciclo, e a variável dependente vale 1 na sua 1ª opção. O funil, à direita, mostra quem sai em cada etapa: dos
+curso e ciclo, e a variável dependente vale 1 na sua 1ª opção. Atenção: é a vaga que ele marcou na inscrição; não
+medimos se ele foi alocado nem se entrou no município. O funil, à direita, mostra quem sai em cada etapa: dos
 5.714 candidatos com 1ª opção, 5.421 entram no modelo.
 
 ## 3. A bolsa é função exata do IVS: a regra é sharp (25 s)
@@ -113,13 +114,13 @@ sabemos.
 Voltando à pergunta: a bolsa maior aumenta a chance de a vaga ser a 1ª opção, comparando vagas da mesma UF? Sim: 1,47
 vez a chance nos três ciclos juntos, e forte só no ciclo 2. Pela teoria da banca 1, o médico aceita a vaga se a bolsa
 compensa o custo do lugar; os dados sugerem que R$ 5 mil compensam parte desse custo, cerca de 75 km a menos. Isso
-vale para a escolha de quem se candidatou.
+vale para a vaga que quem se candidatou marcou como 1ª opção, não para a entrada no município.
 
 ## 11. Limitações e o que cada uma implica (45 s)
 
 Seis limitações e o que cada uma implica. A especificação é pós-resultado: o resultado é exploratório e pede dados
-novos. Sem fixar a UF, como no pré-registrado, o intervalo contém 1. Só vemos quem se candidatou: nada diz sobre quem
-não se inscreveu. O contraste é o pacote do corte: vale para o pacote, não para os R$ 5 mil sozinhos. O efeito
+novos. Sem fixar a UF, como no pré-registrado, o intervalo contém 1. Só vemos a inscrição: quem se
+candidatou e o que marcou, não quem entrou no município. O contraste é o pacote do corte: vale para o pacote, não para os R$ 5 mil sozinhos. O efeito
 é forte só no ciclo 2: não dá para generalizar. E a origem é o vínculo no CNES, não a residência. Obrigado.
 
 ## Perguntas prováveis da banca (doc 66, §8)
@@ -144,7 +145,8 @@ detalhe está nas notas do slide de Limitações.
 
 Outras, com resposta no doc 66, §8: "origem é onde ele mora?" (não: vínculo médico no CNES antes da inscrição); "por
 que só o ciclo 2?" (não sabemos; leituras candidatas sem teste); "e quem não se candidatou?" (correto: tudo é condicional a
-se candidatar). Com resposta no doc 66, §5: "a 1ª opção é a preferência verdadeira, se a alocação é por nota?" (é uma
+se candidatar); "vocês olham se o médico foi para o município?" (não: só a vaga marcada como 1ª opção na
+inscrição; alocação, posse e trabalho no município ficam fora). Com resposta no doc 66, §5: "a 1ª opção é a preferência verdadeira, se a alocação é por nota?" (é uma
 premissa que não se testa com estes dados: supomos que o candidato viu todas as vagas do seu curso e listou sem
 estratégia; por isso "suposto" na tabela de Identificação); "o que quer dizer o 1,47?" (é a razão de chances entre
 duas vagas parecidas da mesma UF, uma com bolsa R$ 5 mil maior; no logit condicional, é a razão entre as
