@@ -283,7 +283,7 @@ apêndice, interpreta o coeficiente da origem: saem o ×11,0, o D_UF e "a origem
 | 9 | Robustez: o que se mantém e o que não se mantém | 9 | Robustez: sempre comparando vagas da mesma UF | alterado: só variantes dentro da mesma UF, com o VL-1 por ciclo (adendo 52g) |
 | 10 | Conclusão: a origem pesa mais que toda a bolsa? Sim | 10 | Conclusão: a bolsa maior aumenta a 1ª opção? Sim | alterado: responde a nova pergunta |
 | 11 | Limitações e o que cada uma implica | 11 | Limitações e o que cada uma implica | alterado: entram "sem fixar UF" e "escolha ≠ preenchimento"; sai "preferência revelada" |
-| 12 | Apêndice · O fato: sem aumento detectado no corte | 12 | Apêndice · O fato: pareando municípios da mesma UF | alterado: só a comparação de municípios pareados na mesma UF; sai a RDD sem controle |
+| 12 | Apêndice · O fato: sem aumento detectado no corte | — | — | **saiu** (seção 6.6: nada de preenchimento) |
 | 13 | Apêndice · H3: oferta, numa frase | — | — | **saiu** |
 
 ### 6.3 Texto exato da tela (deck de 28/10)
@@ -292,7 +292,7 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 
 **Slide 1. Pergunta e hipótese: a bolsa maior muda a 1ª opção?** Seção: Hipótese. Tempo de fala: 35 s.
 - Linha: Hipótese comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a 1ª opção
-- Linha (cinza): Motivação no corte, preenchimento sem aumento detectado
+- Linha (cinza): Motivação a bolsa sobe com o IVS
 - Cautela: Formulada após ver os dados.
 
 **Slide 2. Dados e amostra: de onde vêm e quem entra no modelo** Seção: Dados. Tempo de fala: 45 s.
@@ -356,15 +356,12 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 |---|---|
 | Pós-resultado | exploratório |
 | Sem fixar UF | IC contém 1 |
-| Só candidatos | escolha ≠ preenchimento |
+| Só candidatos | sem margem extensiva |
 | Pacote do corte | bolsa não isolada |
 | Só ciclo 2 | não generalizar |
-| Origem = CNES | não é residência |
+| Origem = CNES | ≠ residência |
 
-**Slide 12. Apêndice · O fato: pareando municípios da mesma UF** (não apresentado)
-- Figura: `output/apresentacao_banca2/curto_fato_pareado.png`
-- Linha: Sem aumento detectado do preenchimento nos dois cortes.
-- Cautela: Pacote do corte; poucos pares.
+Sem apêndice (seção 6.6).
 
 ### 6.4 Números que entram, saem ou mudam de lugar
 
@@ -379,7 +376,7 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 | 1,25 [0,98; 1,61], p 0,072 | `VLB_EMP_*`, `VC_B_HOLM` | figura do slide 8 (cinza) e cautela | fora das figuras; na cautela do slide 8 ("sem fixar a UF: IC contém 1"), na Identificação, nas Limitações e nas notas |
 | ×11,0; ×1,57; 1,94 | `VC_THETAX_EST`, `VC_B10X_EST`, `VC_DUF_EST` | slide 7 (teste central) | **fora da tela**; o D_UF só numa linha das notas do slide 11 (pergunta P4) |
 | 1,07 e 1,00 por ciclo (modelo base) | `VC_M5C1_RC`, `VC_M5C3_RC` | figura da robustez | fora: o por ciclo agora é o VL-1 (adendo 52g) |
-| +16,4 e −6,0 (pareados) | `PL_FRAC_300_TAU`, `PL_FRAC_400_TAU` | figura do apêndice, junto com a RDD | figura do apêndice, sozinhos |
+| +16,4 e −6,0 (pareados) | `PL_FRAC_300_TAU`, `PL_FRAC_400_TAU` | figura do apêndice, junto com a RDD | **fora** (seção 6.6) |
 
 ### 6.5 Checklist para o grupo
 
@@ -394,3 +391,22 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 - [ ] Conclusão e Limitações como na seção 6.3; o roteiro de fala novo está no [doc 09](09_roteiro_fala_7min.md).
 - [ ] Ressalvas na fala: pós-resultado; sem fixar a UF, o IC contém 1; escolha não é preenchimento; pacote do corte;
   forte só no ciclo 2; origem = vínculo no CNES.
+
+### 6.6 Ajuste de 28/10/2026: nada de preenchimento
+
+> **Decisão do autor (28/10/2026):** "não é para ter nada de preenchimento, só escolha na primeira opção".
+
+O deck fala só da escolha da 1ª opção. Saíram:
+
+- a motivação pelo preenchimento no corte (slide 1): a linha "Motivação" agora é "a bolsa sobe com o IVS", e a fala
+  diz que o programa paga bolsa maior onde o IVS do município é maior;
+- a limitação "Só candidatos: escolha ≠ preenchimento", que virou "Só candidatos: sem margem extensiva" (na fala:
+  "só vemos quem se candidatou: nada diz sobre quem não se inscreveu"); "Origem = CNES" ficou com "≠ residência",
+  para caber em 30 palavras;
+- o apêndice inteiro (o fato da antiga H1, pareando municípios da mesma UF): o deck tem 11 slides e nenhum apêndice;
+- as menções a preenchimento no roteiro e nas notas da Hipótese, da Conclusão e das Limitações.
+
+Os resultados de preenchimento continuam no repositório (docs 57n e 57w; auditorias 38 e 47), como registro; só não
+entram na apresentação. `tests/test_deck_curto_banca2.py` agora barra "preench" no doc 04 e no pptx (tela e notas).
+
+- [ ] Tirar do deck do grupo qualquer slide, linha ou fala sobre preenchimento, inclusive o apêndice.

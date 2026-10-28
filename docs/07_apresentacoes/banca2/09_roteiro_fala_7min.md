@@ -3,14 +3,15 @@
 > **Data:** 28/10/2026, dia da banca 2 (versão anterior: 27/10/2026, no histórico do Git, commit `33d15d9`).<br>
 > **Decisão do autor (28/10/2026):** "a hipótese é simplesmente sobre o efeito bolsa → 1ª opção", com "só comparação
 > entre municípios da mesma UF"; "UF, origem etc. é tudo controle/pareamento". A fala não interpreta a origem: nada de
-> "a origem pesa mais", ×11,0 ou D_UF (este só como resposta de reserva, pergunta 4).<br>
+> "a origem pesa mais", ×11,0 ou D_UF (este só como resposta de reserva, pergunta 4). Ajuste do mesmo dia: nada de
+> preenchimento; só a escolha da 1ª opção (o deck não tem mais apêndice).<br>
 > **Fonte da verdade:** os blocos `> **Roteiro (N s).**` do [doc 04](04_conteudo_deck_curto.md). Este documento repete
 > o mesmo texto, slide a slide, para ensaiar sem abrir o deck; o deck leva o roteiro nas notas do apresentador, no
 > primeiro parágrafo ("FALA"), antes do detalhe para perguntas. Divergência entre este doc e o doc 04 é erro deste
 > doc: `tests/test_deck_curto_banca2.py` confere que são iguais.<br>
 > **Regras:** todo número falado é o valor de um código de `output/apresentacao_banca2/numeros_banca2.json`, listado na
-> linha `**Números:**` do slide no doc 04; os tempos são metas de fala, não resultados. O apêndice não é apresentado.
-> Redação: "não detectamos aumento"; o VL-1 compara "vagas da mesma UF (a de origem ou outra)" e é pós-resultado;
+> linha `**Números:**` do slide no doc 04; os tempos são metas de fala, não resultados. 
+> Redação: o VL-1 compara "vagas da mesma UF (a de origem ou outra)" e é pós-resultado;
 > sem fixar a UF (o pré-registrado), o IC contém 1; forte só no ciclo 2; "os dados sugerem"; pacote do corte;
 > condicional a se candidatar.
 
@@ -45,8 +46,8 @@ slide 9, "Por que o ciclo 2? Não sabemos" (vai para as perguntas).
 
 Nossa pergunta é simples: quando o médico especialista escolhe uma vaga do PMM-E, a bolsa maior muda qual vaga ele põe
 em 1ª opção? A hipótese: comparando vagas da mesma UF, a vaga de bolsa maior tem mais chance de ser a 1ª opção. A
-motivação vem do corte de IVS: onde a bolsa é R$ 5 mil maior, não detectamos aumento do preenchimento; então olhamos
-um passo antes, a escolha. Um aviso honesto, que está na tela: formulamos esta hipótese depois de ver os dados.
+motivação: o programa paga bolsa maior onde o IVS do município é maior; queremos saber se isso muda a vaga que o
+médico escolhe. Um aviso honesto, que está na tela: formulamos esta hipótese depois de ver os dados.
 
 ## 2. Dados e amostra: de onde vêm e quem entra no modelo (45 s)
 
@@ -112,13 +113,13 @@ sabemos.
 Voltando à pergunta: a bolsa maior aumenta a chance de a vaga ser a 1ª opção, comparando vagas da mesma UF? Sim: 1,47
 vez a chance nos três ciclos juntos, e forte só no ciclo 2. Pela teoria da banca 1, o médico aceita a vaga se a bolsa
 compensa o custo do lugar; os dados sugerem que R$ 5 mil compensam parte desse custo, cerca de 75 km a menos. Isso
-vale para a escolha de quem se candidatou, não para o preenchimento.
+vale para a escolha de quem se candidatou.
 
 ## 11. Limitações e o que cada uma implica (45 s)
 
 Seis limitações e o que cada uma implica. A especificação é pós-resultado: o resultado é exploratório e pede dados
-novos. Sem fixar a UF, como no pré-registrado, o intervalo contém 1. Só vemos quem se candidatou: mudar a escolha não
-é mudar o preenchimento. O contraste é o pacote do corte: vale para o pacote, não para os R$ 5 mil sozinhos. O efeito
+novos. Sem fixar a UF, como no pré-registrado, o intervalo contém 1. Só vemos quem se candidatou: nada diz sobre quem
+não se inscreveu. O contraste é o pacote do corte: vale para o pacote, não para os R$ 5 mil sozinhos. O efeito
 é forte só no ciclo 2: não dá para generalizar. E a origem é o vínculo no CNES, não a residência. Obrigado.
 
 ## Perguntas prováveis da banca (doc 66, §8)
@@ -142,7 +143,7 @@ detalhe está nas notas do slide de Limitações.
    (D_UF) dá 1,94 [1,48; 2,40] em log-chance (doc 57p); não o interpretamos aqui.
 
 Outras, com resposta no doc 66, §8: "origem é onde ele mora?" (não: vínculo médico no CNES antes da inscrição); "por
-que só o ciclo 2?" (não sabemos; leituras candidatas sem teste); "escolha não é preenchimento" (correto: condicional a
+que só o ciclo 2?" (não sabemos; leituras candidatas sem teste); "e quem não se candidatou?" (correto: tudo é condicional a
 se candidatar). Com resposta no doc 66, §5: "a 1ª opção é a preferência verdadeira, se a alocação é por nota?" (é uma
 premissa que não se testa com estes dados: supomos que o candidato viu todas as vagas do seu curso e listou sem
 estratégia; por isso "suposto" na tabela de Identificação); "o que quer dizer o 1,47?" (é a razão de chances entre

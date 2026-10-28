@@ -7,6 +7,10 @@
 > central origem × toda a bolsa (D_UF), do corpo e do apêndice. A UF de origem, a UF da vaga, a região de saúde, o
 > município e a distância passam a ser só controle e pareamento: nenhum coeficiente deles é interpretado. O resultado
 > principal é o VL-1 do adendo 52e; a robustez fica toda dentro da mesma UF, com os ciclos 1 e 3 do adendo 52g.<br>
+> **Ajuste do mesmo dia (28/10/2026), decisão do autor:** "não é para ter nada de preenchimento, só escolha na
+> primeira opção". A apresentação não fala de preenchimento: saíram a motivação pelo preenchimento, a limitação
+> "escolha ≠ preenchimento" e o apêndice (o deck tem 11 slides). As menções a preenchimento abaixo são registro do
+> raciocínio, não conteúdo do deck; detalhe no [doc 10](10_mapa_deck_anterior_para_rubrica.md), §6.6.<br>
 > **Estatuto:** a hipótese foi formulada **depois** de ver os resultados do preenchimento no corte e os coeficientes
 > do modelo de escolha, e a especificação com o par de UFs fixado também é pós-resultado (adendo 52e, congelado antes
 > de rodar, depois de ver o modelo base). Isso é dito na apresentação. Nenhum número deste documento é novo.<br>
@@ -71,7 +75,6 @@
 | 5 | F2 do doc 66 (`output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png`) | "descritivo: perto do corte, a bolsa maior é mais escolhida que oferecida" |
 | 8 | VL-1, ciclos 1–3 e ciclo 2, sem o modelo base (`curto_bolsa_mesma_uf.png`) | "comparando vagas da mesma UF, a bolsa maior é preferida" |
 | 9 | robustez dentro da mesma UF e por ciclo (`curto_robustez_escolha.png`) | "mantém com distância em log e região; forte só no ciclo 2" |
-| 12 (apêndice) | o fato pareado na mesma UF (`curto_fato_pareado.png`) | "não detectamos aumento do preenchimento" |
 
 Todos gerados por script a partir de `output/`: `scripts/apresentacao/gerar_figuras_banca2.py`, e a F2 por
 `scripts/rdd_bolsa/51_sintese_H2.py`, usada sem redesenho.

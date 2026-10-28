@@ -85,8 +85,7 @@ SEQUENCIA = [  # (seção, título, layout); versão de 28/10/2026 (decisão do 
     ("Robustez", T_ROB, "curto_figura"),
     ("Discussão", T_CONC, "curto_texto"),
     ("Discussão", "Limitações e o que cada uma implica", "curto_tabela"),
-    ("Apêndice", T_FATO, "curto_figura"),
-]
+]  # sem apêndice (decisão do autor de 28/10/2026: nada de preenchimento)
 FIGURAS = {  # título → figura de output/ (caminho a partir de output/)
     "Dados e amostra: de onde vêm e quem entra no modelo": "apresentacao_banca2/curto_dados_amostra.png",
     "A bolsa é função exata do IVS: a regra é sharp": "apresentacao_banca2/regra_bolsa_ivs_oficial.png",
@@ -94,7 +93,6 @@ FIGURAS = {  # título → figura de output/ (caminho a partir de output/)
     T_F2: "rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png",  # F2 do doc 66 (script 51), sem redesenho
     T_RES: "apresentacao_banca2/curto_bolsa_mesma_uf.png",
     T_ROB: "apresentacao_banca2/curto_robustez_escolha.png",
-    T_FATO: "apresentacao_banca2/curto_fato_pareado.png",
 }
 # Redação das auditorias 49 e 50: "não detectado" não é "não muda"; o sinal negativo "anda junto com a UF", não
 # "some"; nada de números vencidos (quadro de 19/03 do ciclo 2, km de 112) nem da nota de reestimação já feita
@@ -199,9 +197,9 @@ class TestConteudoCurto(unittest.TestCase):
         """Decisões do autor de 26 e 27/10/2026: no máximo 14 slides no corpo e 2 no apêndice, que vem no fim."""
         self.assertEqual((D.MAX_SLIDES_CURTO, D.MAX_APENDICE_CURTO), (MAX_SLIDES, MAX_APENDICE))
         corpo = [s for s in self.slides if not s["apendice"]]
-        apend = [s for s in self.slides if s["apendice"]]
+        self.assertEqual([s for s in self.slides if s["apendice"]], [])  # sem apêndice desde 28/10/2026
+        apend = [dict(corpo[-1], apendice=True, roteiro=None, tempo_s=None)]  # apêndice fictício, só para a regra
         self.assertLessEqual(len(corpo), MAX_SLIDES)
-        self.assertLessEqual(len(apend), MAX_APENDICE)
         with self.assertRaises(SystemExit):  # corpo com 15 slides
             D.conferir_estrutura(corpo + [corpo[-1]] * (MAX_SLIDES + 1 - len(corpo)) + apend)
         with self.assertRaises(SystemExit):  # apêndice com 3 slides
@@ -228,7 +226,7 @@ class TestConteudoCurto(unittest.TestCase):
             sl = self.por_titulo[tit]
             self.assertTrue(sl["imagem"].as_posix().endswith(f"output/{rel}"), tit)
         novas = self.man_fig["figuras_novas"]
-        for nome in ("curto_fato_pareado.png", "curto_bolsa_mesma_uf.png", "curto_robustez_escolha.png",
+        for nome in ("curto_bolsa_mesma_uf.png", "curto_robustez_escolha.png",
                      "exp_escolha_origem.png", "curto_dados_amostra.png"):
             self.assertTrue(any(t.startswith("Como ler") for t in novas[nome]["textos"]), nome)
         regra = self.por_titulo["A bolsa é função exata do IVS: a regra é sharp"]
@@ -250,7 +248,7 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertIn("bolsa maior", frase)
         self.assertIn("1ª opção", frase)
         self.assertNotIn("origem", frase)
-        self.assertIn("sem aumento detectado", tela(hip))
+        self.assertIn("a bolsa sobe com o IVS", tela(hip))
         notas = corrido(hip["notas"])
         for k in ("pós-resultado", "interpretação, não teste", "pacote do corte", "condicional a se candidatar",
                   "controle e pareamento", "28/10/2026"):
@@ -487,16 +485,15 @@ class TestConteudoCurto(unittest.TestCase):
         self.assertIn("Voltando à pergunta", conc["roteiro"])
         self.assertIn("comparando vagas da mesma UF? Sim", corrido(conc["roteiro"]))
         notas = corrido(conc["notas"])
-        for k in ("modelo da banca 1", "interpretação, não teste", "Não dá para afirmar", "que a bolsa reduz o "
-                  "preenchimento", "pacote do corte"):
+        for k in ("modelo da banca 1", "interpretação, não teste", "Não dá para afirmar", "pacote do corte"):
             self.assertIn(k, notas, k)
         self.assertEqual([D.texto_puro(c) for c in lim["tabela"][0]], ["Limitação", "Implicação"])
         par = {D.texto_puro(r[0]): D.texto_puro(r[1]) for r in lim["tabela"][1:]}
         self.assertEqual(par, {"Pós-resultado": "exploratório", "Sem fixar UF": "IC contém 1",
-                               "Só candidatos": "escolha ≠ preenchimento", "Pacote do corte": "bolsa não isolada",
-                               "Só ciclo 2": "não generalizar", "Origem = CNES": "não é residência"})
+                               "Só candidatos": "sem margem extensiva", "Pacote do corte": "bolsa não isolada",
+                               "Só ciclo 2": "não generalizar", "Origem = CNES": "≠ residência"})
         rot = corrido(lim["roteiro"])
-        for k in ("pós-resultado", "Sem fixar a UF", "se candidatou", "não é mudar o preenchimento",
+        for k in ("pós-resultado", "Sem fixar a UF", "se candidatou", "quem não se inscreveu",
                   "pacote do corte", "ciclo 2", "não a residência"):
             self.assertIn(k, rot, k)
         notas = corrido(lim["notas"])
@@ -572,27 +569,15 @@ class TestConteudoCurto(unittest.TestCase):
 
     # ---- apêndice ------------------------------------------------------------------------------------------------
 
-    def test_apendice_o_fato_pareado_na_mesma_UF(self) -> None:
-        """O fato da antiga H1 só com a comparação de municípios pareados na mesma UF (adendo 48h, PH-1; auditoria
-        47), sem a RDD sem controle; nenhuma linha exclui zero; médico de outra UF em 0,400 é inconclusivo."""
-        apend = [s for s in self.slides if s["apendice"]]
-        self.assertEqual([s["titulo"] for s in apend], [T_FATO])
-        s = apend[0]
-        self.assertIn("Sem aumento detectado", tela(s))
-        self.assertIn("Pacote do corte", s["cautela"])
-        reg = self.man_fig["figuras_novas"]["curto_fato_pareado.png"]
-        self.assertEqual([ln["codigos"][0] for ln in reg["linhas"]], ["PL_FRAC_300_TAU", "PL_FRAC_400_TAU"])
-        for ln in reg["linhas"]:
-            self.assertFalse(ln["exclui_nulo"], ln["linha"])
-        self.assertFalse(any(c.startswith("HI") for ln in reg["linhas"] for c in ln["codigos"]))
-        self.assertTrue(self.b("PL_OUT_400_INF") <= 0.0 < self.b("PL_OUT_400_SUP"))
-        notas = corrido(s["notas"])
-        for k in (self.ic("PL_FRAC_300", "TAU", "INF", "SUP"), self.ic("PL_FRAC_400", "TAU", "INF", "SUP"),
-                  "inconclusivo", "não mostra que a bolsa reduz o preenchimento", "auditoria 47"):
-            self.assertIn(k, notas, k)
-        for c in ("PL_FRAC_300_TAU", "PL_OUT_400_TAU"):
-            self.assertIn("auditoria 47", self.todos[c]["auditoria"], c)
-        self.assertNotIn("HI1_", deck_doc04())
+    def test_sem_preenchimento_e_sem_apendice(self) -> None:
+        """Decisão do autor de 28/10/2026 ("não é pra ter nada de preenchimento, só escolha na primeira opção"): o
+        deck não tem apêndice, e nem a tela, nem o roteiro, nem as notas falam de preenchimento."""
+        self.assertFalse(any(s["apendice"] for s in self.slides))
+        self.assertNotIn("preench", deck_doc04().lower())
+        with zipfile.ZipFile(CURTO) as z:
+            for n in z.namelist():
+                if n.startswith(("ppt/slides/slide", "ppt/notesSlides/")) and n.endswith(".xml"):
+                    self.assertNotIn("preench", unescape(z.read(n).decode("utf-8")).lower(), n)
 
     # ---- redação e números --------------------------------------------------------------------------------------
 
@@ -601,8 +586,7 @@ class TestConteudoCurto(unittest.TestCase):
         for frase in PROIBIDAS:
             self.assertNotIn(frase, texto, frase)
         self.assertIsNone(re.search(r"\bsome\b", texto))
-        for frase in ("não detectamos aumento", "sem aumento detectado", "inconclusivo"):
-            self.assertIn(frase, texto, frase)
+        self.assertIn("inconclusivo", texto)  # sem preenchimento desde 28/10/2026: "não detectamos aumento" saiu
         # guardas restauradas (auditoria 53): redação da auditoria 36, SOCR, "em auditoria", termos técnicos na tela
         for frase in PROIBIDAS_A36:
             self.assertNotIn(frase, texto, frase)
@@ -639,8 +623,7 @@ class TestConteudoCurto(unittest.TestCase):
         for frase in ("pacote do corte", "Formulada após ver os dados", "pós-resultado", "preferência revelada",
                       "vínculo anterior no CNES", "condicional a se candidatar", "participação no PMM-E",
                       "interpretação, não teste", "escolha não é expansão", "comparando vagas da mesma UF",
-                      "IC contém 1", "sem fixar a UF", "não mostra que a bolsa reduz o preenchimento",
-                      "não quer dizer que o efeito seja zero"):
+                      "IC contém 1", "sem fixar a UF"):
             self.assertIn(frase.lower(), texto, frase)
         self.assertNotIn("bolsa não funciona", texto)
         self.assertEqual(texto.count("a bolsa reduz"), texto.count("que a bolsa reduz"))

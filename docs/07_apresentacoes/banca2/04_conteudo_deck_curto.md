@@ -1,9 +1,9 @@
 ---
 documento: Conteúdo do deck curto — banca 2 (parte empírica)
 papel: fonte de verdade do deck curto, o único usado na versão final; o deck é derivado
-escopo: estrutura obrigatória da versão final (doc 06) — Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez e Discussão — com uma hipótese só, o efeito da bolsa na 1ª opção comparando vagas da mesma UF (decisão do autor de 28/10/2026); depois, um apêndice de um slide com o fato da antiga H1 pareando municípios da mesma UF; sem os slides do grupo, sem divisórias e sem o diagrama da teoria
-slides: 12
-estado: em produção; versão de 28/10/2026 (dia da banca), ajustada à decisão do autor "a hipótese é simplesmente sobre o efeito bolsa → 1ª opção", com "só comparação entre municípios da mesma UF", e ao reforço "pode deixar TUDO na mesma UF. UF, origem etc. é tudo controle/pareamento"; corpo: pergunta e hipótese; dados e amostra; regra sharp; onde escolhem (motivação para comparar dentro da UF); a descritiva da hipótese (F2 do doc 66); modelo (logit condicional com efeito fixo do par de UFs; teste β > zero); identificação (o que mantemos fixo; especificação pós-resultado); resultado principal (VL-1); robustez só dentro da mesma UF; conclusão; limitações; apêndice com o fato pareado na mesma UF; versão anterior (33d15d9, 27/10/2026) no histórico do Git e mapa no doc 10, §6
+escopo: estrutura obrigatória da versão final (doc 06) — Hipótese, Dados, Análise descritiva, Metodologia, Identificação, Resultados, Robustez e Discussão — com uma hipótese só, o efeito da bolsa na 1ª opção comparando vagas da mesma UF (decisão do autor de 28/10/2026); sem apêndice (decisão do autor de 28/10/2026: nada de preenchimento, só a escolha da 1ª opção); sem os slides do grupo, sem divisórias e sem o diagrama da teoria
+slides: 11
+estado: em produção; versão de 28/10/2026 (dia da banca), ajustada à decisão do autor "a hipótese é simplesmente sobre o efeito bolsa → 1ª opção", com "só comparação entre municípios da mesma UF", e ao reforço "pode deixar TUDO na mesma UF. UF, origem etc. é tudo controle/pareamento"; corpo: pergunta e hipótese; dados e amostra; regra sharp; onde escolhem (motivação para comparar dentro da UF); a descritiva da hipótese (F2 do doc 66); modelo (logit condicional com efeito fixo do par de UFs; teste β > zero); identificação (o que mantemos fixo; especificação pós-resultado); resultado principal (VL-1); robustez só dentro da mesma UF; conclusão; limitações; sem apêndice; versão anterior (33d15d9, 27/10/2026) no histórico do Git e mapa no doc 10, §6
 atualizacao: 28 de outubro de 2026
 ---
 
@@ -24,9 +24,10 @@ atualizacao: 28 de outubro de 2026
 > - **Robustez:** só variantes dentro da mesma UF (distância em log, região de saúde de origem × UF da vaga, só vagas
 >   perto do corte) e o VL-1 por ciclo, com os ciclos 1 e 3 do adendo 52g (`VG_estimativas.csv`, doc 57z, auditoria
 >   pendente): forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1 (leitura fixada no adendo, `FORTE_SO_NO_CICLO_2`).
-> - **Apêndice:** um slide, o fato da antiga H1 só pareando municípios da mesma UF (adendo 48h); a RDD sem controle e a
->   antiga H3 saíram.
-> - Continuam: 11 slides no corpo e no máximo 2 no apêndice; até 30 palavras por slide; as oito seções; roteiro de
+> - **Sem preenchimento** (decisão do autor de 28/10/2026, "não é pra ter nada de preenchimento, só escolha na
+>   primeira opção"): saíram a motivação pelo preenchimento no corte, a limitação "escolha ≠ preenchimento" e o
+>   apêndice com o fato da antiga H1. O deck não tem apêndice.
+> - Continuam: 11 slides no corpo (o apêndice, se voltar, tem no máximo 2); até 30 palavras por slide; as oito seções; roteiro de
 >   cerca de 7 minutos (doc 09); a regra dos números; as frases proibidas das auditorias 49, 50, 52, 53 e 55, mais
 >   "origem pesa", "×11" e "D_UF" na tela.
 >
@@ -61,27 +62,26 @@ atualizacao: 28 de outubro de 2026
 <!-- layout: curto_hipotese -->
 
 - **Hipótese** comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a 1ª opção
-- **Motivação** no corte, preenchimento sem aumento detectado
+- **Motivação** a bolsa sobe com o IVS
 
 > **Formulada após ver os dados.**
 
-**Fontes:** doc 07 da banca 2 (decisão do autor de 28/10/2026); adendos 52e e 52g; doc 57x; auditoria 48; doc 57w (apêndice).
+**Fontes:** doc 07 da banca 2 (decisão do autor de 28/10/2026); adendos 52e e 52g; doc 57x; auditoria 48.
 
 **Números:** nenhum
 
 > **Roteiro (35 s).** Nossa pergunta é simples: quando o médico especialista escolhe uma vaga do PMM-E, a bolsa maior
 > muda qual vaga ele põe em 1ª opção? A hipótese: comparando vagas da mesma UF, a vaga de bolsa maior tem mais chance
-> de ser a 1ª opção. A motivação vem do corte de IVS: onde a bolsa é R$ 5 mil maior, não detectamos aumento do
-> preenchimento; então olhamos um passo antes, a escolha. Um aviso honesto, que está na tela: formulamos esta
+> de ser a 1ª opção. A motivação: o programa paga bolsa maior onde o IVS do município é maior; queremos saber se
+> isso muda a vaga que o médico escolhe. Um aviso honesto, que está na tela: formulamos esta
 > hipótese depois de ver os dados.
 
 > **Notas do apresentador.** Hipótese única desta versão (decisão do autor de 28/10/2026; doc 07 da banca 2): "a
 > hipótese é simplesmente sobre o efeito bolsa → 1ª opção", com "só comparação entre municípios da mesma UF". A UF de
 > origem, a UF da vaga, a região de saúde, o município e a distância entram só como controle e pareamento, nunca como
-> resultado. Foi formulada depois de ver os resultados do preenchimento no corte e os coeficientes do modelo de
-> escolha: é pós-resultado, e isso é dito aqui. Motivação: onde a bolsa é R$ 5 mil maior, não detectamos aumento do
-> preenchimento comparando municípios pareados na mesma UF (apêndice). Ligar a hipótese a esse fato é interpretação,
-> não teste (auditoria 50). O contraste da bolsa é o pacote do corte (a bolsa e as outras regras federais que mudam
+> resultado. Foi formulada depois de ver outros resultados do projeto no corte e os coeficientes do modelo de
+> escolha: é pós-resultado, e isso é dito aqui. A leitura pela teoria da banca 1 é interpretação, não teste
+> (auditoria 50). O contraste da bolsa é o pacote do corte (a bolsa e as outras regras federais que mudam
 > nos mesmos cortes de IVS, auditoria 18), não a participação no PMM-E nem o Agora Tem Especialistas. Tudo é
 > condicional a se candidatar.
 
@@ -393,16 +393,15 @@ atualizacao: 28 de outubro de 2026
 > **Roteiro (35 s).** Voltando à pergunta: a bolsa maior aumenta a chance de a vaga ser a 1ª opção, comparando vagas
 > da mesma UF? Sim: 1,47 vez a chance nos três ciclos juntos, e forte só no ciclo 2. Pela teoria da banca 1, o médico
 > aceita a vaga se a bolsa compensa o custo do lugar; os dados sugerem que R$ 5 mil compensam parte desse custo,
-> cerca de 75 km a menos. Isso vale para a escolha de quem se candidatou, não para o preenchimento.
+> cerca de 75 km a menos. Isso vale para a escolha de quem se candidatou.
 
 > **Notas do apresentador.** No modelo da banca 1, o médico aceita a vaga se a bolsa compensa o custo do lugar. O
 > dado: comparando vagas da mesma UF, a vaga de bolsa maior tem mais chance de ser a 1ª opção. A leitura que os dados
 > sugerem, sem teste direto: a bolsa compensa parte do custo do lugar, e R$ 5 mil valem cerca de 75 km a menos de
-> distância na escolha. É interpretação, não teste (auditoria 50). Não testamos se isso aumenta o preenchimento; no
-> corte, comparando municípios pareados na mesma UF, não detectamos aumento (apêndice). Dá para afirmar: entre quem se
+> distância na escolha. É interpretação, não teste (auditoria 50). Dá para afirmar: entre quem se
 > candidatou, a vaga de bolsa maior é preferida a uma vaga parecida da mesma UF, com força só no ciclo 2 (nos ciclos 1 e 3, separados, o IC contém 1). Não dá para
-> afirmar: que a bolsa causa mais médicos no município; que o efeito no preenchimento é zero; que a bolsa reduz o
-> preenchimento; que o efeito vale fora do pacote do corte. O contraste é o pacote do corte, não a participação no
+> afirmar: que a bolsa causa mais médicos no município; nada sobre quem não se candidatou; que o efeito vale fora
+> do pacote do corte. O contraste é o pacote do corte, não a participação no
 > PMM-E. Próximos passos: a auditoria do adendo 52g, o ciclo 3 com a competência 202703 madura e
 > o universo de inscritos.
 
@@ -418,10 +417,10 @@ atualizacao: 28 de outubro de 2026
 |---|---|
 | Pós-resultado | exploratório |
 | Sem fixar UF | IC contém 1 |
-| Só candidatos | escolha ≠ preenchimento |
+| Só candidatos | sem margem extensiva |
 | Pacote do corte | bolsa não isolada |
 | Só ciclo 2 | não generalizar |
-| Origem = CNES | não é residência |
+| Origem = CNES | ≠ residência |
 
 **Fontes:** doc 66 (§0, §5 e §8); doc 07 da banca 2 (§3 e §4); docs 57p, 57x e 57z; auditorias 18, 48, 50 e 52.
 
@@ -429,7 +428,7 @@ atualizacao: 28 de outubro de 2026
 
 > **Roteiro (45 s).** Seis limitações e o que cada uma implica. A especificação é pós-resultado: o resultado é
 > exploratório e pede dados novos. Sem fixar a UF, como no pré-registrado, o intervalo contém 1. Só vemos quem se
-> candidatou: mudar a escolha não é mudar o preenchimento. O contraste é o pacote do corte: vale para o pacote, não
+> candidatou: nada diz sobre quem não se inscreveu. O contraste é o pacote do corte: vale para o pacote, não
 > para os R$ 5 mil sozinhos. O efeito é forte só no ciclo 2: não dá para generalizar. E a origem é o vínculo no CNES,
 > não a residência. Obrigado.
 
@@ -438,7 +437,7 @@ atualizacao: 28 de outubro de 2026
 > protocolo congelado aplicado a dados novos (o universo de inscritos, novos ciclos). Sem fixar a UF: a especificação
 > pré-registrada (P1a) dá 1,25 [0,98; 1,61], IC que contém 1 (p 0,072; família de um teste, Holm = p). Condicional a
 > se candidatar: sem a margem extensiva, nada aqui diz quantos especialistas a mais se inscreveriam com bolsa maior;
-> escolha não é preenchimento, e o que uma vaga ganha, outra do mesmo curso perde. Pacote do corte: nos mesmos cortes
+> e o que uma vaga ganha na escolha, outra do mesmo curso perde. Pacote do corte: nos mesmos cortes
 > mudam outras regras federais (auditoria 18); a implicação de política vale para o pacote, não para os R$ 5 mil
 > sozinhos. Só ciclo 2: comparando vagas da mesma UF, ciclo a ciclo (adendo 52g), 1,15 [0,66; 2,01] no
 > ciclo 1 e 1,25 [0,90; 1,73] no ciclo 3, IC que contêm 1; não generalizar para o programa. Origem = vínculo no CNES: quem trabalha longe de casa aparece com a origem do trabalho; ela só define o
@@ -451,34 +450,6 @@ atualizacao: 28 de outubro de 2026
 > (auditoria 35); em 0,400 fica aberta a ajuda de custo do PMMB; nos dois cortes, o serviço do município pode mudar. P4, "E a
 > origem?" Não é a pergunta desta hipótese: a UF de origem é controle. Se insistirem: no modelo base, sem fixar a UF,
 > o teste origem × toda a bolsa (D_UF) dá 1,94 [1,48; 2,40] em log-chance (doc 57p); não é interpretado aqui.
-
----
-
-# Apêndice
-
-## Apêndice · O fato: pareando municípios da mesma UF
-
-`Apêndice · antiga H1`
-
-<!-- layout: curto_figura -->
-
-![O fato, por corte: diferença no preenchimento das vagas imediatas entre municípios pareados na mesma UF e condição de capital, com IC 95% de permutação](../../../output/apresentacao_banca2/curto_fato_pareado.png)
-
-- Sem aumento detectado do preenchimento nos dois cortes.
-
-> **Pacote do corte; poucos pares.**
-
-**Fontes:** `output/rdd_bolsa/PL_estimativas.csv` (adendo 48h; doc 57w; auditoria 47); `output/apresentacao_banca2/curto_fato_pareado.png`.
-
-**Números:** `PL_FRAC_300_TAU`, `PL_FRAC_300_INF`, `PL_FRAC_300_SUP`, `PL_FRAC_300_NPAR`, `PL_FRAC_400_TAU`, `PL_FRAC_400_INF`, `PL_FRAC_400_SUP`, `PL_FRAC_400_NPAR`, `PL_OUT_300_TAU`, `PL_OUT_300_INF`, `PL_OUT_300_SUP`, `PL_OUT_400_TAU`, `PL_OUT_400_INF`, `PL_OUT_400_SUP`
-
-> **Notas do apresentador.** Antiga H1, só como motivação, e só com a comparação dentro da mesma UF (decisão do autor
-> de 28/10/2026; adendo 48h, doc 57w, auditoria 47). Pareando municípios da mesma UF e condição de capital, a fração
-> das células com vaga imediata preenchidas na 1ª chamada difere em +16,4 [−3,8; +36,6] p.p. em 0,300, com 25 pares,
-> e −6,0 [−23,2; +11,5] em 0,400, com 29 pares (IC de permutação); o ponto não deve ser lido como tamanho de efeito.
-> Não detectamos aumento; isso não quer dizer que o efeito seja zero, e não mostra que a bolsa reduz o
-> preenchimento. Médico de outra UF por vaga imediata: +0,02 [−0,01; +0,06] em 0,300 e +0,16 [+0,00; +0,35] em
-> 0,400, inconclusivo, com poucos pares. Pacote do corte.
 
 <!-- deck:fim -->
 

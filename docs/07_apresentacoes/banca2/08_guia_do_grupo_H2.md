@@ -7,6 +7,10 @@
 > origem; o teste origem × toda a bolsa (D_UF, ×11,0 contra ×1,57) **saiu do deck**. O que mudou slide a slide e o
 > texto exato da tela estão no [doc 10](10_mapa_deck_anterior_para_rubrica.md), **§6**; a fala, no
 > [doc 09](09_roteiro_fala_7min.md).<br>
+> **Ajuste do mesmo dia (28/10/2026), decisão do autor:** "não é para ter nada de preenchimento, só escolha na
+> primeira opção". A apresentação não fala de preenchimento: saíram a motivação pelo preenchimento, a limitação
+> "escolha ≠ preenchimento" e o apêndice (o deck tem 11 slides). As menções a preenchimento abaixo são registro do
+> raciocínio, não conteúdo do deck; detalhe no [doc 10](10_mapa_deck_anterior_para_rubrica.md), §6.6.<br>
 > **Regra do projeto:** todo número dos slides sai de `output/` por script. Os números abaixo servem para o grupo
 > entender a história. No slide, use a figura gerada pelo pipeline, nunca um número digitado à mão.
 
@@ -22,7 +26,7 @@
 
 | Passo | Mensagem | Slide e figura (em `output/`) |
 |---|---|---|
-| 1. Motivação | no corte, comparando municípios pareados na mesma UF, não detectamos aumento do preenchimento | slide 1 (uma linha); figura no apêndice, `apresentacao_banca2/curto_fato_pareado.png` (slide 12) |
+| 1. Motivação | o programa paga bolsa maior onde o IVS é maior: isso muda a vaga que o médico escolhe? | slide 1 (uma linha: "a bolsa sobe com o IVS") |
 | 2. Por que dentro da UF | a maioria põe a 1ª opção na própria UF: por isso comparamos dentro dela | slide 4, `apresentacao_banca2/exp_escolha_origem.png` |
 | 3. Descritiva da hipótese | perto do corte, na UF de origem, o lado de bolsa maior recebe mais 1ªs opções do que tem de vagas | slide 5, `rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png` |
 | 4. Modelo | logit condicional com efeito fixo de UF de origem × UF da vaga; teste β > zero | slide 6 (texto) |
@@ -54,12 +58,12 @@ a 1ª opção.
 | "comparando vagas da mesma UF, a vaga de bolsa maior é mais escolhida como 1ª opção" | "a bolsa traz mais médicos" |
 | "forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1" | "a bolsa funciona em todos os ciclos" |
 | "sem fixar a UF, como no pré-registrado, o IC contém 1" | esconder que a especificação é pós-resultado |
-| "no corte, não detectamos aumento do preenchimento" | "a bolsa não encheu mais vagas" ou "a bolsa reduz o preenchimento" |
+| "isso vale para a escolha de quem se candidatou" | qualquer frase sobre preenchimento de vagas |
 | "a UF é controle: comparamos dentro dela" | "a origem pesa mais que a bolsa", "×11", "D_UF" |
 | "o contraste da bolsa é o pacote de regras que muda no corte" | "o efeito do PMM-E" |
 
-**Ressalvas obrigatórias:** (1) pós-resultado; (2) sem fixar a UF, o IC contém 1; (3) condicional a se candidatar:
-escolha não é preenchimento; (4) pacote do corte; (5) forte só no ciclo 2; (6) origem = vínculo no CNES, não a
+**Ressalvas obrigatórias:** (1) pós-resultado; (2) sem fixar a UF, o IC contém 1; (3) condicional a se candidatar
+(sem margem extensiva); (4) pacote do corte; (5) forte só no ciclo 2; (6) origem = vínculo no CNES, não a
 residência.
 
 ## 5. Estrutura obrigatória do deck (8 seções, até 14 slides + apêndice)
