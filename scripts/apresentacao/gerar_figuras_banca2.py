@@ -604,6 +604,8 @@ VL_EST = "output/rdd_bolsa/VL_estimativas.csv"
 VC_EST = "output/rdd_bolsa/VC_estimativas.csv"
 H2_SIN = "output/rdd_bolsa/H2_sintese.csv"
 VG_EST = "output/rdd_bolsa/VG_estimativas.csv"
+VK_EST = "output/rdd_bolsa/VK_estimativas.csv"
+VK_PRE = "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): "
 VG_PRE = "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): "
 H2_PRE = "Síntese da H2 (doc 66, §3; auditoria 52; descritivo, sem teste): "
 P1_RES = "output/rdd_bolsa/P1_resumo.json"
@@ -619,6 +621,7 @@ AUDITORIA_POR_PREFIXO = (("CL_", "auditoria 40 (adendo 48d, doc 57r): aprovado c
                          ("VL", "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto"),
                          ("H2D_", "auditoria 52 (doc 66, §3): aprovado com correções de redação e de rótulo"),
                          ("VG", "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"),
+                         ("VK", "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"),
                          ("VC_", "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto"))
 CORTES_LONGO = (("300", "0.300"), ("400", "0.400"))
 
@@ -1325,6 +1328,21 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
        _c(VG_EST, {"chave_modelo": ch, "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, "g_conjuntos"),
        "int", VG_PRE + f"{dm}: conjuntos de escolha (clusters)")
       for pre, ch, dm in (("VG1", "VG1", "VG-1"), ("VG3", "VG3", "VG-3"))],
+    # Efeito por corte com o par de UFs fixado (adendo 52h; VK-1 e VK-2): um degrau de +R$ 5 mil por corte e a razão
+    # entre eles (teste de igualdade), lidos do VK_estimativas.csv
+    *[(f"{pre}_{c}_{s}", "EMPIRICO",
+       _c(VK_EST, {"chave_modelo": ch, "tipo_linha": "razao_chances_degrau", "termo": f"degrau_0{c}"}, col), "d2",
+       VK_PRE + f"{dm}: razão de chances da 1ª opção no degrau de {c[0]},{c[1:]} (+R$ 5 mil), {ds}")
+      for pre, ch, dm in (("VK1", "VK1", "VK-1 (ciclos 1–3, par de UFs)"), ("VK2", "VK2", "VK-2 (ciclo 2, par de UFs)"))
+      for c in ("300", "400")
+      for s, col, ds in (("RC", "estimativa", "estimativa"), ("RCI", "ic95_inf", "IC 95% inferior"),
+                         ("RCS", "ic95_sup", "IC 95% superior"))],
+    *[(f"{pre}_D_{s}", "EMPIRICO",
+       _c(VK_EST, {"chave_modelo": ch, "tipo_linha": "razao_razoes_chances", "termo": "degrau_0300_menos_0400"}, col),
+       fm, VK_PRE + f"{dm}: razão entre as razões de chances dos degraus 0,300 e 0,400, {ds}")
+      for pre, ch, dm in (("VK1", "VK1", "VK-1"), ("VK2", "VK2", "VK-2"))
+      for s, col, fm, ds in (("RC", "estimativa", "d2", "estimativa"), ("RCI", "ic95_inf", "d2", "IC 95% inferior"),
+                             ("RCS", "ic95_sup", "d2", "IC 95% superior"), ("P", "p", "p3", "p (Wald, cluster)"))],
 ]
 
 
@@ -3093,11 +3111,11 @@ def figura_robustez_escolha(num: dict, destino: Path) -> dict:
     direita, o VL-1 por ciclo (ciclos 1 e 3 do adendo 52g; ciclo 2 do 52e). Razão de chances por +R$ 5 mil. Nada
     sobre a origem."""
     reg = Registro()
-    W, H = 12.3, 4.5
+    W, H = 12.3, 5.5
     fig = plt.figure(figsize=(W, H))
     rot = ("VL-1 (principal)", "Distância em log", "Região de saúde × UF", "Perto do corte, mesma UF",
-           "Perto do corte, UF + região")
-    pref = ("VL1_EMP", "VLLOG_EMP", "VL3_EMP", "VL2_EMP", "VL3P_EMP")
+           "Perto do corte, UF + região", "Degrau 0,300 (10 → 15 mil)", "Degrau 0,400 (15 → 20 mil)")
+    pref = ("VL1_EMP", "VLLOG_EMP", "VL3_EMP", "VL2_EMP", "VL3P_EMP", "VK1_300", "VK1_400")
     esq = [dict(rot=r, est=f"{p}_RC", inf=f"{p}_RCI", sup=f"{p}_RCS") for r, p in zip(rot, pref)]
     rot2 = ("Ciclo 1", "Ciclo 2", "Ciclo 3")
     dir_ = [dict(rot=r, est=f"{p}_RC", inf=f"{p}_RCI", sup=f"{p}_RCS") for r, p in zip(rot2, ("VG1", "VL1_C2", "VG3"))]
@@ -3121,10 +3139,11 @@ def figura_robustez_escolha(num: dict, destino: Path) -> dict:
           fontsize=11.5, color=TINTA2, va="center")
     _caixa_como_ler(fig, reg, W, ["todas comparam vagas da mesma UF (adendos pós-resultado). Verde: IC 95% exclui 1; "
                                   "cinza: contém 1 (inconclusivo).",
-                                  "Perto do corte: só vagas a até 0,050 de um corte de IVS. Ciclos 1 e 3: adendo 52g."],
+                                  "Perto do corte: só vagas a até 0,050 de um corte de IVS. Ciclos 1 e 3: adendo 52g. "
+                                  "Degraus: um efeito por corte (adendo 52h)."],
                     0.28)
-    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48); VG_estimativas.csv "
-          "(adendo 52g; doc 57z; auditoria pendente). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VL_estimativas.csv (adendo 52e; auditoria 48); VG_ e VK_estimativas.csv (adendos 52g "
+          "e 52h; auditoria pendente). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
     _salvar(fig, destino)
     return {"linhas": r1 + r2, "textos": reg.textos, "eixos": reg.eixos}
 
@@ -3553,6 +3572,9 @@ ENTRADAS = [
      "versao + chave_modelo + tipo_linha + termo"),
     (RAIZ / VG_EST, "adendo 52g (doc 57z; auditoria pendente): VL-1 nos ciclos 1 e 3 separados", "2026-10-28",
      "candidatos de 1ª opção, ciclos 1 e 3", "razão de chances por +R$ 5 mil; km", "chave_modelo + tipo_linha + termo"),
+    (RAIZ / VK_EST, "adendo 52h (doc 57za; auditoria pendente): VL-1 com um degrau por corte", "2026-10-28",
+     "candidatos de 1ª opção, ciclos 1–3 e ciclo 2", "razão de chances por degrau (+R$ 5 mil)",
+     "chave_modelo + tipo_linha + termo"),
     (RAIZ / H2_SIN, "síntese da H2 (script 51; doc 66; auditoria 52): descritiva da F2 (perto do corte, na UF de "
      "origem)", "2026-10-27", "candidatos de 1ª opção, ciclos 1–3", "fração", "id"),
     (RAIZ / NA_EST, "família A (protocolo 48): A3 por ciclo e por corte", "2026-10-19",
@@ -3733,7 +3755,7 @@ def main() -> int:
                      + ([RAIZ / HI_EST, RAIZ / PL_EST] if nome == "curto_fato.png" else [])
                      + ([RAIZ / PL_EST] if nome == "curto_fato_pareado.png" else [])
                      + ([RAIZ / VL_EST] if nome in ("curto_bolsa_mesma_uf.png", "curto_robustez_escolha.png") else [])
-                     + ([RAIZ / VG_EST] if nome == "curto_robustez_escolha.png" else [])
+                     + ([RAIZ / VG_EST, RAIZ / VK_EST] if nome == "curto_robustez_escolha.png" else [])
                      + ([RAIZ / VC_EST] if nome == "curto_origem_bolsa.png" else [])
                      + ([RAIZ / P1_RES, RAIZ / G1_RES] if nome == "curto_dados_amostra.png" else [])})
     t_desc = linhas_tabela_descritiva(num)

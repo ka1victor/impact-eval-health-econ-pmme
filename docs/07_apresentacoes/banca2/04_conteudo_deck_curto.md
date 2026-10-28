@@ -350,17 +350,17 @@ atualizacao: 28 de outubro de 2026
 
 ![Robustez dentro da mesma UF: razão de chances da 1ª opção por +R$ 5 mil no VL-1, com a distância em log, com a região de saúde de origem × UF da vaga e só com vagas perto do corte (ciclos 1–3); à direita, o VL-1 em cada ciclo](../../../output/apresentacao_banca2/curto_robustez_escolha.png)
 
-- **Mantém:** log da distância; região × UF; score bootstrap (p 0,011).
+- **Mantém:** log da distância; região × UF; por degrau; score bootstrap.
 - **Por ciclo:** forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1.
 - **Perto do corte:** inconclusivo.
 
-**Fontes:** `output/rdd_bolsa/VL_estimativas.csv` (adendo 52e; doc 57x; auditoria 48); `output/rdd_bolsa/VG_estimativas.csv` (adendo 52g; doc 57z; auditoria pendente); `output/apresentacao_banca2/curto_robustez_escolha.png`.
+**Fontes:** `output/rdd_bolsa/VL_estimativas.csv` (adendo 52e; doc 57x; auditoria 48); `output/rdd_bolsa/VG_estimativas.csv` (adendo 52g; doc 57z) e `VK_estimativas.csv` (adendo 52h; doc 57za), auditoria pendente; `output/apresentacao_banca2/curto_robustez_escolha.png`.
 
-**Números:** `VL1_EMP_RC`, `VL1_EMP_RCI`, `VL1_EMP_RCS`, `VL1_C2_RC`, `VL1_C2_RCI`, `VL1_C2_RCS`, `VLLOG_EMP_RC`, `VLLOG_EMP_RCI`, `VLLOG_EMP_RCS`, `VLLOG_C2_RC`, `VLLOG_C2_RCI`, `VLLOG_C2_RCS`, `VL3_EMP_RC`, `VL3_EMP_RCI`, `VL3_EMP_RCS`, `VL3_C2_RC`, `VL3_C2_RCI`, `VL3_C2_RCS`, `VL2_EMP_RC`, `VL2_EMP_RCI`, `VL2_EMP_RCS`, `VL2_EMP_HOLM`, `VL2_C2_RC`, `VL2_C2_RCI`, `VL2_C2_RCS`, `VL3P_EMP_RC`, `VL3P_EMP_RCI`, `VL3P_EMP_RCS`, `VL3P_C2_RC`, `VL3P_C2_RCI`, `VL3P_C2_RCS`, `VG1_RC`, `VG1_RCI`, `VG1_RCS`, `VG1_NCONJ`, `VG3_RC`, `VG3_RCI`, `VG3_RCS`, `VG3_NCONJ`, `VL1_EMP_PSR`, `VL1_C2_PSR`
+**Números:** `VL1_EMP_RC`, `VL1_EMP_RCI`, `VL1_EMP_RCS`, `VL1_C2_RC`, `VL1_C2_RCI`, `VL1_C2_RCS`, `VLLOG_EMP_RC`, `VLLOG_EMP_RCI`, `VLLOG_EMP_RCS`, `VLLOG_C2_RC`, `VLLOG_C2_RCI`, `VLLOG_C2_RCS`, `VL3_EMP_RC`, `VL3_EMP_RCI`, `VL3_EMP_RCS`, `VL3_C2_RC`, `VL3_C2_RCI`, `VL3_C2_RCS`, `VL2_EMP_RC`, `VL2_EMP_RCI`, `VL2_EMP_RCS`, `VL2_EMP_HOLM`, `VL2_C2_RC`, `VL2_C2_RCI`, `VL2_C2_RCS`, `VL3P_EMP_RC`, `VL3P_EMP_RCI`, `VL3P_EMP_RCS`, `VL3P_C2_RC`, `VL3P_C2_RCI`, `VL3P_C2_RCS`, `VK1_300_RC`, `VK1_300_RCI`, `VK1_300_RCS`, `VK1_400_RC`, `VK1_400_RCI`, `VK1_400_RCS`, `VK2_300_RC`, `VK2_400_RC`, `VK1_D_RC`, `VK1_D_RCI`, `VK1_D_RCS`, `VK1_D_P`, `VG1_RC`, `VG1_RCI`, `VG1_RCS`, `VG1_NCONJ`, `VG3_RC`, `VG3_RCI`, `VG3_RCS`, `VG3_NCONJ`, `VL1_EMP_PSR`, `VL1_C2_PSR`
 
 > **Roteiro (40 s).** A robustez fica sempre dentro da mesma UF. À esquerda, o peso da bolsa se mantém com a
-> distância em log e com a região de saúde de origem no lugar da UF de origem. Com poucos grupos, o p do score
-> bootstrap continua 0,011. Só com vagas perto do corte, comparando na mesma UF ou na mesma UF e
+> distância em log e com a região de saúde de origem no lugar da UF de origem. Com poucos grupos, o p do score bootstrap continua 0,011. Separando os
+> dois degraus, 0,300 e 0,400, o efeito aparece nos dois e não difere entre eles. Só com vagas perto do corte, comparando na mesma UF ou na mesma UF e
 > região, o intervalo contém 1: inconclusivo. À direita, ciclo a ciclo: o efeito é forte só no ciclo 2; nos ciclos 1 e 3, o
 > intervalo contém 1. Por que o ciclo 2? Não sabemos.
 
@@ -370,7 +370,10 @@ atualizacao: 28 de outubro de 2026
 > com vagas a até 0,050 de um corte (VL-2), 1,28 [0,95; 1,72], p de Holm 0,103: inconclusivo, a comparação local tem
 > pouca informação. Perto do corte com a região de saúde de origem × UF da vaga (VL-3 sobre o VL-2): 1,28 [0,95;
 > 1,71], também inconclusivo. No ciclo 2, perto do corte: 1,47 [1,01; 2,14] com o par de UFs e 1,49 [1,04; 2,13]
-> com a região, IC que exclui 1. Inferência com poucos *clusters* (conjuntos de escolha): p do score bootstrap de Rademacher
+> com a região, IC que exclui 1. Por degrau, com o par de UFs fixado (adendo 52h; doc 57za; pós-resultado;
+> auditoria pendente): 0,300, 1,41 [1,03; 1,93]; 0,400, 1,52 [1,16; 1,99]; razão entre os dois 0,93 [0,69; 1,26],
+> p 0,633, sem diferença detectada (no ciclo 2: 1,99 e 1,84). No degrau 0,300 dos ciclos 1–3, o score bootstrap não
+> confirma ao nível de 5%; no 0,400, confirma. Inferência com poucos *clusters* (conjuntos de escolha): p do score bootstrap de Rademacher
 > 0,011 nos ciclos 1–3 e 0,004 no ciclo 2, sem ajuste (doc 57x). Por ciclo, com o par de UFs fixado (adendo 52g; doc 57z; pós-resultado; auditoria pendente):
 > ciclo 1, 1,15 [0,66; 2,01], com 16 conjuntos de escolha; ciclo 2, 1,90 [1,30; 2,78]; ciclo 3, 1,25 [0,90; 1,73], com
 > 23 conjuntos. A leitura fixada no adendo antes de rodar: forte só no ciclo 2, como na especificação base. Os km dos

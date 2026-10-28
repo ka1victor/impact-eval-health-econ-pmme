@@ -454,6 +454,15 @@
       "chaves": "chave_modelo + tipo_linha + termo"
     },
     {
+      "caminho": "output/rdd_bolsa/VK_estimativas.csv",
+      "sha256": "d2f502652fb55e527d278f6fcf95ebfe85c2a5d4e5bf11e792177f67833088e2",
+      "papel": "adendo 52h (doc 57za; auditoria pendente): VL-1 com um degrau por corte",
+      "data_referencia": "2026-10-28",
+      "cobertura": "candidatos de 1ª opção, ciclos 1–3 e ciclo 2",
+      "unidade": "razão de chances por degrau (+R$ 5 mil)",
+      "chaves": "chave_modelo + tipo_linha + termo"
+    },
+    {
       "caminho": "output/rdd_bolsa/H2_sintese.csv",
       "sha256": "42308e104e2a5b4ea1f790cc9196ade89e200c993fe944d446be3de100f0d335",
       "papel": "síntese da H2 (script 51; doc 66; auditoria 52): descritiva da F2 (perto do corte, na UF de origem)",
@@ -2877,6 +2886,28 @@
           "exclui_nulo": false
         },
         {
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
+          "linha": "Ciclos 1–3 · Degrau 0,300 (10 → 15 mil)",
+          "texto": "1,41 [1,03; 1,93]",
+          "codigos": [
+            "VK1_300_RC",
+            "VK1_300_RCI",
+            "VK1_300_RCS"
+          ],
+          "exclui_nulo": true
+        },
+        {
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
+          "linha": "Ciclos 1–3 · Degrau 0,400 (15 → 20 mil)",
+          "texto": "1,52 [1,16; 1,99]",
+          "codigos": [
+            "VK1_400_RC",
+            "VK1_400_RCI",
+            "VK1_400_RCS"
+          ],
+          "exclui_nulo": true
+        },
+        {
           "painel": "Razão de chances por +R$ 5 mil, mesma UF, por ciclo",
           "linha": "Por ciclo · Ciclo 1",
           "texto": "1,15 [0,66; 2,01]",
@@ -2923,6 +2954,10 @@
         "1,28 [0,95; 1,72]",
         "Perto do corte, UF + região",
         "1,28 [0,95; 1,71]",
+        "Degrau 0,300 (10 → 15 mil)",
+        "1,41 [1,03; 1,93]",
+        "Degrau 0,400 (15 → 20 mil)",
+        "1,52 [1,16; 1,99]",
         "Ciclo 1",
         "1,15 [0,66; 2,01]",
         "Ciclo 2",
@@ -2932,8 +2967,8 @@
         "razão de chances (escala log); 1 = a bolsa não muda a escolha",
         "Como ler",
         "todas comparam vagas da mesma UF (adendos pós-resultado). Verde: IC 95% exclui 1; cinza: contém 1 (inconclusivo).",
-        "Perto do corte: só vagas a até 0,050 de um corte de IVS. Ciclos 1 e 3: adendo 52g.",
-        "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48); VG_estimativas.csv (adendo 52g; doc 57z; auditoria pendente). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+        "Perto do corte: só vagas a até 0,050 de um corte de IVS. Ciclos 1 e 3: adendo 52g. Degraus: um efeito por corte (adendo 52h).",
+        "Fontes: VL_estimativas.csv (adendo 52e; auditoria 48); VG_ e VK_estimativas.csv (adendos 52g e 52h; auditoria pendente). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
         "0,75",
@@ -3448,7 +3483,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_robustez_escolha.png",
-      "sha256": "66b75912e897624800faf473c54769b65c9c47c6fc72439826a7aa6ca8356fb4",
+      "sha256": "2d87f5c5ea0ae735bb9a0f4a4bfedd7739e06d63f88f400dde80723616095904",
       "natureza": "EMPIRICO",
       "descricao": "deck curto, robustez da hipótese de 28/10/2026: só variantes que comparam vagas da mesma UF (distância em log, região de saúde × UF da vaga, perto do corte) e o VL-1 por ciclo (adendos 52e e 52g)",
       "fontes": [
@@ -3458,7 +3493,8 @@
         "output/rdd_bolsa/CA_estimativas.csv",
         "output/rdd_bolsa/E8_resumo.json",
         "output/rdd_bolsa/VL_estimativas.csv",
-        "output/rdd_bolsa/VG_estimativas.csv"
+        "output/rdd_bolsa/VG_estimativas.csv",
+        "output/rdd_bolsa/VK_estimativas.csv"
       ]
     },
     {
@@ -3482,6 +3518,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "5bc9b64a3509041ddcc6f1c763b8d68e972ad43f988b76f14b095acbcdcec84e"
+    "sha256": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00"
   }
 }

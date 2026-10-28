@@ -17805,6 +17805,366 @@
       "formato": "int",
       "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-3: conjuntos de escolha (clusters)",
       "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VK1_300_RC": {
+      "valor": "1,41",
+      "valor_bruto": 1.411627583,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0300"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1 (ciclos 1–3, par de UFs): razão de chances da 1ª opção no degrau de 3,00 (+R$ 5 mil), estimativa",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_300_RCI": {
+      "valor": "1,03",
+      "valor_bruto": 1.031523109,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0300"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1 (ciclos 1–3, par de UFs): razão de chances da 1ª opção no degrau de 3,00 (+R$ 5 mil), IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_300_RCS": {
+      "valor": "1,93",
+      "valor_bruto": 1.93179621,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0300"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1 (ciclos 1–3, par de UFs): razão de chances da 1ª opção no degrau de 3,00 (+R$ 5 mil), IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_400_RC": {
+      "valor": "1,52",
+      "valor_bruto": 1.519058211,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0400"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1 (ciclos 1–3, par de UFs): razão de chances da 1ª opção no degrau de 4,00 (+R$ 5 mil), estimativa",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_400_RCI": {
+      "valor": "1,16",
+      "valor_bruto": 1.157540947,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0400"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1 (ciclos 1–3, par de UFs): razão de chances da 1ª opção no degrau de 4,00 (+R$ 5 mil), IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_400_RCS": {
+      "valor": "1,99",
+      "valor_bruto": 1.993482697,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0400"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1 (ciclos 1–3, par de UFs): razão de chances da 1ª opção no degrau de 4,00 (+R$ 5 mil), IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_300_RC": {
+      "valor": "1,99",
+      "valor_bruto": 1.988415192,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0300"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2 (ciclo 2, par de UFs): razão de chances da 1ª opção no degrau de 3,00 (+R$ 5 mil), estimativa",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_300_RCI": {
+      "valor": "1,38",
+      "valor_bruto": 1.378393254,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0300"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2 (ciclo 2, par de UFs): razão de chances da 1ª opção no degrau de 3,00 (+R$ 5 mil), IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_300_RCS": {
+      "valor": "2,87",
+      "valor_bruto": 2.868408536,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0300"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2 (ciclo 2, par de UFs): razão de chances da 1ª opção no degrau de 3,00 (+R$ 5 mil), IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_400_RC": {
+      "valor": "1,84",
+      "valor_bruto": 1.84269057,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0400"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2 (ciclo 2, par de UFs): razão de chances da 1ª opção no degrau de 4,00 (+R$ 5 mil), estimativa",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_400_RCI": {
+      "valor": "1,20",
+      "valor_bruto": 1.203353108,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0400"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2 (ciclo 2, par de UFs): razão de chances da 1ª opção no degrau de 4,00 (+R$ 5 mil), IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_400_RCS": {
+      "valor": "2,82",
+      "valor_bruto": 2.821705876,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_chances_degrau",
+          "termo": "degrau_0400"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2 (ciclo 2, par de UFs): razão de chances da 1ª opção no degrau de 4,00 (+R$ 5 mil), IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_D_RC": {
+      "valor": "0,93",
+      "valor_bruto": 0.9292781359,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1: razão entre as razões de chances dos degraus 0,300 e 0,400, estimativa",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_D_RCI": {
+      "valor": "0,69",
+      "valor_bruto": 0.6878872602,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1: razão entre as razões de chances dos degraus 0,300 e 0,400, IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_D_RCS": {
+      "valor": "1,26",
+      "valor_bruto": 1.255377013,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1: razão entre as razões de chances dos degraus 0,300 e 0,400, IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK1_D_P": {
+      "valor": "0,633",
+      "valor_bruto": 0.6326892031,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK1",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "p"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-1: razão entre as razões de chances dos degraus 0,300 e 0,400, p (Wald, cluster)",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_D_RC": {
+      "valor": "1,08",
+      "valor_bruto": 1.079082524,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2: razão entre as razões de chances dos degraus 0,300 e 0,400, estimativa",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_D_RCI": {
+      "valor": "0,83",
+      "valor_bruto": 0.8288422562,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2: razão entre as razões de chances dos degraus 0,300 e 0,400, IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_D_RCS": {
+      "valor": "1,40",
+      "valor_bruto": 1.404874191,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2: razão entre as razões de chances dos degraus 0,300 e 0,400, IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
+    },
+    "VK2_D_P": {
+      "valor": "0,572",
+      "valor_bruto": 0.5717967353,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VK_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VK_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VK2",
+          "tipo_linha": "razao_razoes_chances",
+          "termo": "degrau_0300_menos_0400"
+        },
+        "coluna": "p"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52h (doc 57za; auditoria pendente; pós-resultado; efeito por corte da hipótese de 28/10/2026): VK-2: razão entre as razões de chances dos degraus 0,300 e 0,400, p (Wald, cluster)",
+      "auditoria": "sem auditoria (adendo 52h, doc 57za): auditoria pendente em 28/10/2026"
     }
   },
   "failure_mode": {

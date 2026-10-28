@@ -342,7 +342,7 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 
 **Slide 9. Robustez: sempre comparando vagas da mesma UF** Seção: Robustez. Tempo de fala: 40 s.
 - Figura: `output/apresentacao_banca2/curto_robustez_escolha.png`
-- Linha: Mantém: log da distância; região × UF; score bootstrap (p 0,011).
+- Linha: Mantém: log da distância; região × UF; por degrau; score bootstrap.
 - Linha: Por ciclo: forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1.
 - Linha: Perto do corte: inconclusivo.
 
@@ -447,3 +447,24 @@ saúde de origem × UF da vaga). Nada foi reestimado; a figura da robustez (slid
 Leitura: nos ciclos 1–3, inconclusivo nas duas (IC contém 1), com o ponto um pouco abaixo do VL-1; no ciclo 2, IC
 que exclui 1 nas duas. A tela do slide 9 continua "Perto do corte: inconclusivo."; a fala diz "comparando na mesma
 UF ou na mesma UF e região".
+
+### 6.9 Efeito por corte (28/10/2026, adendo 52h)
+
+> **Pedido do autor (28/10/2026):** "faz aí a análise nova p termos ctz", sobre separar o efeito por corte (comentário
+> do grupo: "devia separar por corte (0,3 e 0,4)").
+
+Adendo 52h (doc 57za; congelado antes de rodar; pós-resultado; **auditoria pendente**): o mesmo VL-1, comparando vagas
+da mesma UF, com um degrau de +R$ 5 mil por corte no lugar da bolsa linear.
+
+| Degrau | Ciclos 1–3 | Ciclo 2 |
+|---|---|---|
+| 0,300 (R$ 10 → 15 mil) (`VK1_300_*`, `VK2_300_RC`) | 1,41 [1,03; 1,93] | 1,99 |
+| 0,400 (R$ 15 → 20 mil) (`VK1_400_*`, `VK2_400_RC`) | 1,52 [1,16; 1,99] | 1,84 |
+| razão 0,300 ÷ 0,400 (`VK1_D_*`) | 0,93 [0,69; 1,26], p 0,633 | — |
+
+Leitura pré-registrada: **o efeito vale nos dois cortes e não se detecta diferença entre eles**; o efeito linear por
++R$ 5 mil é adequado. Ressalva: no degrau 0,300 dos ciclos 1–3, o score bootstrap não confirma ao nível de 5%.
+
+Na tela (slide 9): a figura ganhou as linhas "Degrau 0,300 (10 → 15 mil)" e "Degrau 0,400 (15 → 20 mil)"; a linha
+"Mantém" passou a "log da distância; região × UF; por degrau; score bootstrap." (o p 0,011 foi para a fala e as
+notas). Na fala: "Separando os dois degraus, 0,300 e 0,400, o efeito aparece nos dois e não difere entre eles."
