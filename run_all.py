@@ -158,6 +158,10 @@ STEPS = [
     # (VG-1, VG-3), km (VG-4) e contagens (VG-5). Importa o 50 (e por ele o 42, o 25c, o 25, o 16 e o 12); portão VG-R
     # contra VL_ (50) antes de qualquer conta nova.
     ROOT / "scripts" / "rdd_bolsa" / "53_VL1_por_ciclo.py",
+    # Adendo 52h (pós-resultado): VL-1 do 52e com um degrau por corte (0,300 e 0,400) no lugar da bolsa linear (VK-1,
+    # VK-2), igualdade dos degraus (VK-D), região de saúde de origem (VK-3) e quem identifica (VK-5). Importa o 53 (e
+    # por ele o 50, o 42, o 25c, o 25, o 16 e o 12); portão VK-R contra VL_ (50) pela função do 53.
+    ROOT / "scripts" / "rdd_bolsa" / "54_VL1_por_corte.py",
     # Síntese da H2 (banca 2, pós-resultado, não reestima): lê G1_ (versionado), E9_ (16), P1_ (25), P1h_ (25c), VC_
     # (42), VD_ (48) e VL_ (50), as tabelas de escolha do 12, a malha de regiões de saúde, o a08 e os ESC_* de
     # output/apresentacao_banca2/numeros_banca2.json (fora do run_all); grava H2_* e os blocos do doc 66.
