@@ -10,18 +10,18 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "bac2e81388844cb572ea9558f02882a34a0480dc1c4a313ca0c667359deab413"
+      "sha256": "085a6657a2f6b285e2e734f548f17140d1946e5632bc9e43cf75541771e12fa8"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "registro dos números citados (conferido pelo teste)",
-      "sha256": "cc25e8bedc9ed1fa59c5da4b0401917b43710d8c66a1713264edee878f5d2a8b"
+      "sha256": "7d8377d6cc7f0806fa3dcb0cbefddcf6b2a6409b0a404d34b780ef624e00c540"
     },
     {
       "caminho": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
       "no_pacote": "ppt/media/curto_05_curto_bolsa_mesma_uf.png",
       "papel": "figura",
-      "sha256": "7dc343c113818fce1d6361f8aada2945c10cbadc8859e780e6de685a2a844f1b"
+      "sha256": "35cf7c4e356c81d1f0961e5193a6b91614ca2dd5f7efa7ceaf935b201018e9d0"
     },
     {
       "caminho": "output/apresentacao_banca2/curto_dados_amostra.png",
@@ -30,22 +30,16 @@
       "sha256": "0e4899c3b4a99a78df658ead56e8513d759f628950a4705f039e45e35b55ec48"
     },
     {
-      "caminho": "output/apresentacao_banca2/curto_fato.png",
-      "no_pacote": "ppt/media/curto_07_curto_fato.png",
+      "caminho": "output/apresentacao_banca2/curto_fato_pareado.png",
+      "no_pacote": "ppt/media/curto_07_curto_fato_pareado.png",
       "papel": "figura",
-      "sha256": "2568922a3405b57a3d754161464cb3016d4aed42a9ac656a1c94da8d805257c8"
-    },
-    {
-      "caminho": "output/apresentacao_banca2/curto_origem_bolsa.png",
-      "no_pacote": "ppt/media/curto_04_curto_origem_bolsa.png",
-      "papel": "figura",
-      "sha256": "5bd62ee2232ef4d46c072da67b4231741c822fae81a268da7d26f7b442f0fe76"
+      "sha256": "beeb5b7cebdbbc766ce4df97903474e42032d660923637a2f65a65545e7b5d0a"
     },
     {
       "caminho": "output/apresentacao_banca2/curto_robustez_escolha.png",
       "no_pacote": "ppt/media/curto_06_curto_robustez_escolha.png",
       "papel": "figura",
-      "sha256": "992fa7cf3be13f6ef57ca328d548677de39a1c954818609e436ff81987bdacb7"
+      "sha256": "2500bfe7f75a1a948d7dc98cf2b1600f5c3ae879c88f749c71ccb92fa8459df4"
     },
     {
       "caminho": "output/apresentacao_banca2/exp_escolha_origem.png",
@@ -58,6 +52,12 @@
       "no_pacote": "ppt/media/curto_02_regra_bolsa_ivs_oficial.png",
       "papel": "figura",
       "sha256": "86cb89519386f64c74c2cb12961a7a1fa6090f63e6802c9e2a725b6bef20cd19"
+    },
+    {
+      "caminho": "output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png",
+      "no_pacote": "ppt/media/curto_04_H2_F2_mesma_uf_perto_do_corte.png",
+      "papel": "figura",
+      "sha256": "19196d2405bd9585a61c3da9bb09a4660eb304d5122ca8f4b45c1de11d30917c"
     }
   ],
   "natureza_dos_dados": "EMPIRICO",
@@ -68,16 +68,16 @@
       "figura": null,
       "layout": "curto_hipotese",
       "linhas": [
-        "Hipótese médico escolhe perto de onde trabalha; bolsa muda qual vaga, mas pesa menos que a origem",
+        "Hipótese comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a 1ª opção",
         "Motivação no corte, preenchimento sem aumento detectado",
         "Formulada após ver os dados."
       ],
-      "palavras": 29,
-      "palavras_faladas": 82,
+      "palavras": 30,
+      "palavras_faladas": 86,
       "posicao": 1,
       "secao": "Hipótese",
       "tempo_s": 35,
-      "titulo": "Pergunta e hipótese: origem ou bolsa na escolha?"
+      "titulo": "Pergunta e hipótese: a bolsa maior muda a 1ª opção?"
     },
     {
       "figura": "output/apresentacao_banca2/curto_dados_amostra.png",
@@ -90,7 +90,7 @@
       "palavras_faladas": 101,
       "posicao": 2,
       "secao": "Dados",
-      "tempo_s": 50,
+      "tempo_s": 45,
       "titulo": "Dados e amostra: de onde vêm e quem entra no modelo"
     },
     {
@@ -112,160 +112,147 @@
       "layout": "curto_figura",
       "linhas": [
         "79% põem a 1ª opção na UF de origem; mediana: 51 km (descritivo).",
-        "Para a pergunta: a maioria fica perto; quanto pesa a bolsa?"
+        "Por isso: comparamos só vagas da mesma UF."
       ],
-      "palavras": 24,
-      "palavras_faladas": 70,
+      "palavras": 21,
+      "palavras_faladas": 61,
       "posicao": 4,
       "secao": "Análise descritiva",
+      "tempo_s": 30,
+      "titulo": "Onde escolhem: a maioria fica na própria UF"
+    },
+    {
+      "figura": "output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png",
+      "layout": "curto_figura",
+      "linhas": [
+        "Bolsa maior: 52,5% das vagas, 60,8% das 1ªs opções.",
+        "Quem: na UF de origem, a até 0,050 de um corte; 1.568 candidatos.",
+        "Descritivo: sem teste e sem controlar a distância."
+      ],
+      "palavras": 30,
+      "palavras_faladas": 70,
+      "posicao": 5,
+      "secao": "Análise descritiva",
       "tempo_s": 35,
-      "titulo": "Onde escolhem: perto de onde já trabalham"
+      "titulo": "Descritivo: perto do corte, a bolsa maior é mais escolhida"
     },
     {
       "figura": null,
       "layout": "curto_espec",
       "linhas": [
-        "U = β·bolsa + γ·distância + θ·origem; P(j) = e^Uj/Σe^U",
-        "Por quê escolha entre vagas; candidato comparado consigo mesmo",
-        "Bolsa muda pela regra do IVS",
-        "Teste D_UF = θ − 10β > zero; cluster por conjunto"
+        "U = β·bolsa + γ·distância + EF(UF origem × UF vaga) + …; P(j) = e^Uj/Σe^U",
+        "Por quê candidato consigo mesmo, vagas da mesma UF",
+        "Bolsa regra do IVS (sharp)",
+        "Teste β > zero; cluster por conjunto"
       ],
       "palavras": 28,
-      "palavras_faladas": 111,
-      "posicao": 5,
+      "palavras_faladas": 80,
+      "posicao": 6,
       "secao": "Metodologia",
-      "tempo_s": 45,
+      "tempo_s": 35,
       "titulo": "Modelo: logit condicional da 1ª opção"
     },
     {
       "figura": null,
       "layout": "curto_tabela",
       "linhas": [],
-      "palavras": 29,
-      "palavras_faladas": 72,
-      "posicao": 6,
-      "secao": "Identificação",
-      "tempo_s": 30,
-      "titulo": "Identificação: as premissas e o nosso caso"
-    },
-    {
-      "figura": "output/apresentacao_banca2/curto_origem_bolsa.png",
-      "layout": "curto_figura",
-      "linhas": [
-        "Origem − bolsa: 1,94 [1,48; 2,40] em log-chance; p < 0,001.",
-        "UF de origem vs. outra UF: chance ×11,0; toda a bolsa: ×1,57 (IC contém 1).",
-        "Origem é preferência revelada, não causa."
-      ],
       "palavras": 30,
-      "palavras_faladas": 101,
+      "palavras_faladas": 93,
       "posicao": 7,
-      "secao": "Resultados",
-      "tempo_s": 50,
-      "titulo": "Teste central: a origem pesa mais que toda a bolsa"
+      "secao": "Identificação",
+      "tempo_s": 45,
+      "titulo": "Identificação: as premissas e o nosso caso"
     },
     {
       "figura": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
       "layout": "curto_figura",
       "linhas": [
-        "Na mesma UF, +R$ 5 mil: chance ×1,47; vale 75 km a menos.",
-        "Adendo pós-resultado; pré-registrado, sem fixar a UF: p 0,072."
+        "Mesma UF, +R$ 5 mil: chance ×1,47 [1,15; 1,89]; ciclo 2: ×1,90.",
+        "Em km: vale 75 km a menos.",
+        "Adendo pós-resultado; pré-registrado, sem fixar a UF: IC contém 1."
       ],
-      "palavras": 22,
-      "palavras_faladas": 91,
+      "palavras": 29,
+      "palavras_faladas": 101,
       "posicao": 8,
       "secao": "Resultados",
-      "tempo_s": 40,
+      "tempo_s": 50,
       "titulo": "Dentro da mesma UF, a vaga de bolsa maior é preferida"
     },
     {
       "figura": "output/apresentacao_banca2/curto_robustez_escolha.png",
       "layout": "curto_figura",
       "linhas": [
-        "Mantém: origem pesa mais que toda a bolsa nos três ciclos.",
-        "Não se mantém: peso da bolsa, forte só no ciclo 2; perto do corte, inconclusivo.",
-        "Pré-registrado: IC contém 1."
+        "Mantém: distância em log; região de saúde × UF.",
+        "Por ciclo: forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1.",
+        "Perto do corte: inconclusivo."
       ],
-      "palavras": 30,
-      "palavras_faladas": 90,
+      "palavras": 28,
+      "palavras_faladas": 75,
       "posicao": 9,
       "secao": "Robustez",
       "tempo_s": 40,
-      "titulo": "Robustez: o que se mantém e o que não se mantém"
+      "titulo": "Robustez: sempre comparando vagas da mesma UF"
     },
     {
       "figura": null,
       "layout": "curto_texto",
       "linhas": [
-        "Origem pesa mais que toda a bolsa, nos três ciclos",
-        "Bolsa muda qual vaga, na mesma UF (adendo)",
-        "Teoria os dados sugerem incentivo limitado (pacote do corte)"
+        "Resposta sim, comparando vagas da mesma UF: chance ×1,47",
+        "Força forte só no ciclo 2 (×1,90)",
+        "Teoria os dados sugerem: bolsa compensa parte do custo do lugar"
       ],
       "palavras": 27,
-      "palavras_faladas": 76,
+      "palavras_faladas": 84,
       "posicao": 10,
       "secao": "Discussão",
-      "tempo_s": 30,
-      "titulo": "Conclusão: a origem pesa mais que toda a bolsa? Sim"
+      "tempo_s": 35,
+      "titulo": "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
     },
     {
       "figura": null,
       "layout": "curto_tabela",
       "linhas": [],
       "palavras": 30,
-      "palavras_faladas": 94,
+      "palavras_faladas": 86,
       "posicao": 11,
       "secao": "Discussão",
-      "tempo_s": 40,
+      "tempo_s": 45,
       "titulo": "Limitações e o que cada uma implica"
     },
     {
-      "figura": "output/apresentacao_banca2/curto_fato.png",
+      "figura": "output/apresentacao_banca2/curto_fato_pareado.png",
       "layout": "curto_figura",
       "linhas": [
-        "O negativo em 0,300 nunca passou no Holm; anda junto com a UF.",
-        "Pacote do corte; só detectaria saltos grandes."
+        "Sem aumento detectado do preenchimento nos dois cortes.",
+        "Pacote do corte; poucos pares."
       ],
-      "palavras": 20,
+      "palavras": 13,
       "palavras_faladas": 0,
       "posicao": 12,
       "secao": "Apêndice",
       "tempo_s": null,
-      "titulo": "Apêndice · O fato: sem aumento detectado no corte"
-    },
-    {
-      "figura": null,
-      "layout": "curto_capa",
-      "linhas": [
-        "O médico que chega cadastra +6,6 h/sem; metade já estava lá",
-        "Associação; vínculo cadastrado não é presença."
-      ],
-      "palavras": 17,
-      "palavras_faladas": 0,
-      "posicao": 13,
-      "secao": "Apêndice",
-      "tempo_s": null,
-      "titulo": "Apêndice · H3: oferta, numa frase"
+      "titulo": "Apêndice · O fato: pareando municípios da mesma UF"
     }
   ],
   "pedido": "autor, 26/10/2026: só a parte empírica, muito menor, sem o diagrama causal da teoria; estrutura obrigatória da versão final (doc 06); no máximo cerca de 30 palavras por slide; 27/10/2026: hipótese única, a antiga H2, com gráficos simples (doc 07 da banca 2); o corpo tem só a H2, e a antiga H1 (o fato) e a antiga H3 vão para um apêndice de no máximo 2 slides",
   "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na ordem Hipótese → Dados → Análise descritiva → Metodologia → Identificação → Resultados → Robustez → Discussão; no máximo 30 palavras visíveis por slide, fora o título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama; corpo com só a H2 (no máximo 14 slides) e apêndice curto (no máximo 2 slides) depois da Discussão",
   "roteiro": {
     "documento": "docs/07_apresentacoes/banca2/09_roteiro_fala_7min.md",
-    "palavras_faladas": 944,
+    "palavras_faladas": 893,
     "regra": "um roteiro por slide do corpo, nas notas, antes do detalhe; apêndice não apresentado; soma de 6:30 a 7:30",
     "tempo_total": "7:00",
     "tempo_total_s": 420
   },
   "saidas": [
     {
-      "bytes": 1959982,
+      "bytes": 1748441,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "a0b945a1aaa152d00ce69e66870c207390f93b8e60d6238e10d8b23d8ed7c5e8"
+      "sha256": "56ba733eee7267119b9955ff627a98b18fa129495ce6179765f3fcc879b9defb"
     },
     {
-      "bytes": 1332034,
+      "bytes": 1171730,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "71ac11e77b6fa2cbf701fb3176c0ec0fdd0a800728e3faf6b0e2dd08698b35e3"
+      "sha256": "d0155b1762c69e43f7b05813d04c0ced7b447bc7b7e98a3c4496d13194869faf"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)",

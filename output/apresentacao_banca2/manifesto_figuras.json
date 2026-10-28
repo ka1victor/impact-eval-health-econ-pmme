@@ -445,6 +445,24 @@
       "chaves": "versao + chave_modelo + tipo_linha + termo"
     },
     {
+      "caminho": "output/rdd_bolsa/VG_estimativas.csv",
+      "sha256": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636",
+      "papel": "adendo 52g (doc 57z; auditoria pendente): VL-1 nos ciclos 1 e 3 separados",
+      "data_referencia": "2026-10-28",
+      "cobertura": "candidatos de 1ª opção, ciclos 1 e 3",
+      "unidade": "razão de chances por +R$ 5 mil; km",
+      "chaves": "chave_modelo + tipo_linha + termo"
+    },
+    {
+      "caminho": "output/rdd_bolsa/H2_sintese.csv",
+      "sha256": "42308e104e2a5b4ea1f790cc9196ade89e200c993fe944d446be3de100f0d335",
+      "papel": "síntese da H2 (script 51; doc 66; auditoria 52): descritiva da F2 (perto do corte, na UF de origem)",
+      "data_referencia": "2026-10-27",
+      "cobertura": "candidatos de 1ª opção, ciclos 1–3",
+      "unidade": "fração",
+      "chaves": "id"
+    },
+    {
       "caminho": "output/rdd_bolsa/NA_estimativas.csv",
       "sha256": "9f737d4c2a2850ddff6647dfb67ba7d7276758bf84b773ee0701a8d890000374",
       "papel": "família A (protocolo 48): A3 por ciclo e por corte",
@@ -2495,6 +2513,56 @@
         "+40"
       ]
     },
+    "curto_fato_pareado.png": {
+      "linhas": [
+        {
+          "painel": "Preenchimento, pareados na mesma UF, corte 0,300 (p.p.)",
+          "linha": "0,300 · pareados na mesma UF",
+          "texto": "+16,4 [−3,8; +36,6]",
+          "codigos": [
+            "PL_FRAC_300_TAU",
+            "PL_FRAC_300_INF",
+            "PL_FRAC_300_SUP"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Preenchimento, pareados na mesma UF, corte 0,400 (p.p.)",
+          "linha": "0,400 · pareados na mesma UF",
+          "texto": "−6,0 [−23,2; +11,5]",
+          "codigos": [
+            "PL_FRAC_400_TAU",
+            "PL_FRAC_400_INF",
+            "PL_FRAC_400_SUP"
+          ],
+          "exclui_nulo": false
+        }
+      ],
+      "textos": [
+        "Corte 0,300: R$ 10 → 15 mil",
+        "Pareados na mesma UF",
+        "+16,4 [−3,8; +36,6]",
+        "25 pares",
+        "Corte 0,400: R$ 15 → 20 mil",
+        "−6,0 [−23,2; +11,5]",
+        "29 pares",
+        "p.p. das vagas imediatas preenchidas na 1ª chamada",
+        "Como ler",
+        "ponto = média das diferenças entre municípios pareados (mesma UF e condição de capital), lado de bolsa maior menos o de menor.",
+        "Barra = IC 95% de permutação; barra que cruza o zero: não se detecta diferença.",
+        "Fontes: PL_estimativas.csv (adendo 48h; doc 57w; auditoria 47). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+      ],
+      "eixos": [
+        "−20",
+        "0",
+        "+20",
+        "+40",
+        "−20",
+        "0",
+        "+20",
+        "+40"
+      ]
+    },
     "curto_bolsa_mesma_uf.png": {
       "linhas": [
         {
@@ -2509,17 +2577,6 @@
           "exclui_nulo": true
         },
         {
-          "painel": "Razão de chances da 1ª opção por +R$ 5 mil, ciclos 1–3",
-          "linha": "Ciclos 1–3 · base",
-          "texto": "1,25 [0,98; 1,61]",
-          "codigos": [
-            "VLB_EMP_RC",
-            "VLB_EMP_RCI",
-            "VLB_EMP_RCS"
-          ],
-          "exclui_nulo": false
-        },
-        {
           "painel": "Razão de chances da 1ª opção por +R$ 5 mil, ciclo 2",
           "linha": "Ciclo 2 · mesma UF",
           "texto": "1,90 [1,30; 2,78]",
@@ -2529,17 +2586,6 @@
             "VL1_C2_RCS"
           ],
           "exclui_nulo": true
-        },
-        {
-          "painel": "Razão de chances da 1ª opção por +R$ 5 mil, ciclo 2",
-          "linha": "Ciclo 2 · base",
-          "texto": "1,79 [1,19; 2,68]",
-          "codigos": [
-            "VLB_C2_RC",
-            "VLB_C2_RCI",
-            "VLB_C2_RCS"
-          ],
-          "exclui_nulo": true
         }
       ],
       "textos": [
@@ -2547,16 +2593,13 @@
         "Vagas da mesma UF",
         "1,47 [1,15; 1,89]",
         "= 75 km a menos",
-        "Pré-registrado (M1)",
-        "1,25 [0,98; 1,61]",
         "Ciclo 2",
         "1,90 [1,30; 2,78]",
         "= 117 km a menos",
-        "1,79 [1,19; 2,68]",
         "razão de chances (escala log); 1 = a bolsa não muda a escolha",
         "Como ler",
-        "acima de 1: a vaga de bolsa maior é mais escolhida como 1ª opção; barra = IC 95%; verde: exclui 1. Cinza: pré-registrado.",
-        "Mesma UF (adendo pós-resultado): vagas da mesma UF, a de origem ou outra, vistas por médicos da mesma UF de origem.",
+        "acima de 1: a vaga de bolsa R$ 5 mil maior é mais escolhida como 1ª opção; barra = IC 95%; verde: exclui 1.",
+        "Vagas da mesma UF (a de origem ou outra), vistas por médicos da mesma UF de origem; adendo pós-resultado.",
         "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
@@ -2779,63 +2822,19 @@
     "curto_robustez_escolha.png": {
       "linhas": [
         {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Pré-registrado (M1)",
-          "texto": "1,25 [0,98; 1,61]",
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
+          "linha": "Ciclos 1–3 · VL-1 (principal)",
+          "texto": "1,47 [1,15; 1,89]",
           "codigos": [
-            "VLB_EMP_RC",
-            "VLB_EMP_RCI",
-            "VLB_EMP_RCS"
-          ],
-          "exclui_nulo": false
-        },
-        {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Ciclo 1",
-          "texto": "1,07 [0,69; 1,65]",
-          "codigos": [
-            "VC_M5C1_RC",
-            "VC_M5C1_RCI",
-            "VC_M5C1_RCS"
-          ],
-          "exclui_nulo": false
-        },
-        {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Ciclo 2",
-          "texto": "1,79 [1,19; 2,68]",
-          "codigos": [
-            "VC_M5C2_RC",
-            "VC_M5C2_RCI",
-            "VC_M5C2_RCS"
+            "VL1_EMP_RC",
+            "VL1_EMP_RCI",
+            "VL1_EMP_RCS"
           ],
           "exclui_nulo": true
         },
         {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Ciclo 3",
-          "texto": "1,00 [0,72; 1,39]",
-          "codigos": [
-            "VC_M5C3_RC",
-            "VC_M5C3_RCI",
-            "VC_M5C3_RCS"
-          ],
-          "exclui_nulo": false
-        },
-        {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Ciclo 2, quadro refeito",
-          "texto": "1,70 [1,22; 2,37]",
-          "codigos": [
-            "VC_M5C2A_RC",
-            "VC_M5C2A_RCI",
-            "VC_M5C2A_RCS"
-          ],
-          "exclui_nulo": true
-        },
-        {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Distância em log",
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
+          "linha": "Ciclos 1–3 · Distância em log",
           "texto": "1,45 [1,15; 1,83]",
           "codigos": [
             "VLLOG_EMP_RC",
@@ -2845,8 +2844,8 @@
           "exclui_nulo": true
         },
         {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Região de saúde fixada",
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
+          "linha": "Ciclos 1–3 · Região de saúde × UF",
           "texto": "1,49 [1,15; 1,92]",
           "codigos": [
             "VL3_EMP_RC",
@@ -2856,8 +2855,8 @@
           "exclui_nulo": true
         },
         {
-          "painel": "Razão de chances por +R$ 5 mil",
-          "linha": "Razão de chances por +R$ 5 mil: Só vagas perto do corte",
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
+          "linha": "Ciclos 1–3 · Só vagas perto do corte",
           "texto": "1,28 [0,95; 1,72]",
           "codigos": [
             "VL2_EMP_RC",
@@ -2867,70 +2866,61 @@
           "exclui_nulo": false
         },
         {
-          "painel": "Origem − toda a bolsa",
-          "linha": "Origem − toda a bolsa: Ciclo 1",
-          "texto": "2,34 [1,45; 3,24]",
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, por ciclo",
+          "linha": "Por ciclo · Ciclo 1",
+          "texto": "1,15 [0,66; 2,01]",
           "codigos": [
-            "VC_DUF_C1_EST",
-            "VC_DUF_C1_INF",
-            "VC_DUF_C1_SUP"
+            "VG1_RC",
+            "VG1_RCI",
+            "VG1_RCS"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, por ciclo",
+          "linha": "Por ciclo · Ciclo 2",
+          "texto": "1,90 [1,30; 2,78]",
+          "codigos": [
+            "VL1_C2_RC",
+            "VL1_C2_RCI",
+            "VL1_C2_RCS"
           ],
           "exclui_nulo": true
         },
         {
-          "painel": "Origem − toda a bolsa",
-          "linha": "Origem − toda a bolsa: Ciclo 2",
-          "texto": "1,19 [0,51; 1,86]",
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, por ciclo",
+          "linha": "Por ciclo · Ciclo 3",
+          "texto": "1,25 [0,90; 1,73]",
           "codigos": [
-            "VC_DUF_C2_EST",
-            "VC_DUF_C2_INF",
-            "VC_DUF_C2_SUP"
+            "VG3_RC",
+            "VG3_RCI",
+            "VG3_RCS"
           ],
-          "exclui_nulo": true
-        },
-        {
-          "painel": "Origem − toda a bolsa",
-          "linha": "Origem − toda a bolsa: Ciclo 3",
-          "texto": "2,37 [1,75; 3,00]",
-          "codigos": [
-            "VC_DUF_C3_EST",
-            "VC_DUF_C3_INF",
-            "VC_DUF_C3_SUP"
-          ],
-          "exclui_nulo": true
+          "exclui_nulo": false
         }
       ],
       "textos": [
-        "Razão de chances por +R$ 5 mil",
-        "Pré-registrado (M1)",
-        "1,25 [0,98; 1,61]",
-        "Ciclo 1",
-        "1,07 [0,69; 1,65]",
-        "Ciclo 2",
-        "1,79 [1,19; 2,68]",
-        "Ciclo 3",
-        "1,00 [0,72; 1,39]",
-        "Ciclo 2, quadro refeito",
-        "1,70 [1,22; 2,37]",
+        "Ciclos 1–3",
+        "Por ciclo",
+        "VL-1 (principal)",
+        "1,47 [1,15; 1,89]",
         "Distância em log",
         "1,45 [1,15; 1,83]",
-        "Região de saúde fixada",
+        "Região de saúde × UF",
         "1,49 [1,15; 1,92]",
         "Só vagas perto do corte",
         "1,28 [0,95; 1,72]",
-        "Origem − toda a bolsa",
         "Ciclo 1",
-        "2,34 [1,45; 3,24]",
+        "1,15 [0,66; 2,01]",
         "Ciclo 2",
-        "1,19 [0,51; 1,86]",
+        "1,90 [1,30; 2,78]",
         "Ciclo 3",
-        "2,37 [1,75; 3,00]",
-        "escala log; 1 = a bolsa não pesa",
-        "log-chance; 0 = pesam igual",
+        "1,25 [0,90; 1,73]",
+        "razão de chances (escala log); 1 = a bolsa não muda a escolha",
         "Como ler",
-        "1ª linha: pré-registrado (ciclos 1–3); depois, por ciclo. Três últimas: adendo pós-resultado, mesma UF. Verde: IC 95% exclui o nulo.",
-        "Cinza claro: ciclo 2 com o quadro de vagas refeito depois do resultado (versão antiga, só referência).",
-        "Fontes: VC_estimativas.csv (adendo 52c; doc 57p; auditoria 41); VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+        "todas comparam vagas da mesma UF (adendos pós-resultado). Verde: IC 95% exclui 1; cinza: contém 1 (inconclusivo).",
+        "Perto do corte: só vagas a até 0,050 de um corte de IVS. Ciclos 1 e 3: adendo 52g.",
+        "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48); VG_estimativas.csv (adendo 52g; doc 57z; auditoria pendente). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
       ],
       "eixos": [
         "0,75",
@@ -2938,10 +2928,11 @@
         "1,5",
         "2",
         "3",
-        "0",
-        "+1",
-        "+2",
-        "+3"
+        "0,75",
+        "1",
+        "1,5",
+        "2",
+        "3"
       ]
     },
     "tabela_descritiva_ciclos.png": {
@@ -3386,10 +3377,24 @@
       ]
     },
     {
-      "arquivo": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
-      "sha256": "7dc343c113818fce1d6361f8aada2945c10cbadc8859e780e6de685a2a844f1b",
+      "arquivo": "output/apresentacao_banca2/curto_fato_pareado.png",
+      "sha256": "beeb5b7cebdbbc766ce4df97903474e42032d660923637a2f65a65545e7b5d0a",
       "natureza": "EMPIRICO",
-      "descricao": "deck curto, G-C: razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF (adendo 52e), ciclos 1–3 e ciclo 2, com a versão base em cinza",
+      "descricao": "deck curto, apêndice (28/10/2026): o fato da antiga H1 só pareando municípios da mesma UF (adendo 48h, PH-1), por corte",
+      "fontes": [
+        "output/rdd_bolsa/S57_resumo.json",
+        "output/rdd_bolsa/N_estimativas.csv",
+        "output/rdd_bolsa/P1_estimativas.csv",
+        "output/rdd_bolsa/CA_estimativas.csv",
+        "output/rdd_bolsa/E8_resumo.json",
+        "output/rdd_bolsa/PL_estimativas.csv"
+      ]
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
+      "sha256": "35cf7c4e356c81d1f0961e5193a6b91614ca2dd5f7efa7ceaf935b201018e9d0",
+      "natureza": "EMPIRICO",
+      "descricao": "deck curto, resultado principal (28/10/2026): razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF (VL-1, adendo 52e), ciclos 1–3 e ciclo 2, sem o modelo base",
       "fontes": [
         "output/rdd_bolsa/S57_resumo.json",
         "output/rdd_bolsa/N_estimativas.csv",
@@ -3430,9 +3435,9 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_robustez_escolha.png",
-      "sha256": "992fa7cf3be13f6ef57ca328d548677de39a1c954818609e436ff81987bdacb7",
+      "sha256": "2500bfe7f75a1a948d7dc98cf2b1600f5c3ae879c88f749c71ccb92fa8459df4",
       "natureza": "EMPIRICO",
-      "descricao": "deck curto, robustez da hipótese: por ciclo, quadro do ciclo 2, distância em log, região de saúde, perto do corte; origem − bolsa por ciclo",
+      "descricao": "deck curto, robustez da hipótese de 28/10/2026: só variantes que comparam vagas da mesma UF (distância em log, região de saúde × UF da vaga, perto do corte) e o VL-1 por ciclo (adendos 52e e 52g)",
       "fontes": [
         "output/rdd_bolsa/S57_resumo.json",
         "output/rdd_bolsa/N_estimativas.csv",
@@ -3440,7 +3445,7 @@
         "output/rdd_bolsa/CA_estimativas.csv",
         "output/rdd_bolsa/E8_resumo.json",
         "output/rdd_bolsa/VL_estimativas.csv",
-        "output/rdd_bolsa/VC_estimativas.csv"
+        "output/rdd_bolsa/VG_estimativas.csv"
       ]
     },
     {
@@ -3464,6 +3469,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "cc25e8bedc9ed1fa59c5da4b0401917b43710d8c66a1713264edee878f5d2a8b"
+    "sha256": "7d8377d6cc7f0806fa3dcb0cbefddcf6b2a6409b0a404d34b780ef624e00c540"
   }
 }

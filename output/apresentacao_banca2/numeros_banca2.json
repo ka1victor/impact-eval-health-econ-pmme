@@ -17404,6 +17404,198 @@
       "formato": "int",
       "descricao": "M1: vagas (células estabelecimento × curso) nos conjuntos de escolha, ciclos 1–3",
       "hipotese_apresentacao": "H2"
+    },
+    "H2D_DISP": {
+      "valor": "52,5",
+      "valor_bruto": 0.5254474724,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/H2_sintese.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/H2_sintese.csv",
+        "filtro": {
+          "id": "D_LADO_DISP_EMP"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "pct1",
+      "descricao": "Síntese da H2 (doc 66, §3; auditoria 52; descritivo, sem teste): perto do corte, na UF de origem: parte do lado de bolsa maior nas vagas disponíveis (%), ciclos 1–3",
+      "auditoria": "auditoria 52 (doc 66, §3): aprovado com correções de redação e de rótulo"
+    },
+    "H2D_ESC": {
+      "valor": "60,8",
+      "valor_bruto": 0.6084183673,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/H2_sintese.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/H2_sintese.csv",
+        "filtro": {
+          "id": "D_LADO_ESC_EMP"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "pct1",
+      "descricao": "Síntese da H2 (doc 66, §3; auditoria 52; descritivo, sem teste): perto do corte, na UF de origem: parte do lado de bolsa maior nas 1ªs opções (%), ciclos 1–3",
+      "auditoria": "auditoria 52 (doc 66, §3): aprovado com correções de redação e de rótulo"
+    },
+    "H2D_N": {
+      "valor": "1.568",
+      "valor_bruto": 1568.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/H2_sintese.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/H2_sintese.csv",
+        "filtro": {
+          "id": "D_LADO_ESC_EMP"
+        },
+        "coluna": "n_candidatos"
+      },
+      "formato": "int",
+      "descricao": "Síntese da H2 (doc 66, §3; auditoria 52; descritivo, sem teste): candidatos com 1ª opção na UF de origem a até 0,050 de um corte, ciclos 1–3",
+      "auditoria": "auditoria 52 (doc 66, §3): aprovado com correções de redação e de rótulo"
+    },
+    "VG1_RC": {
+      "valor": "1,15",
+      "valor_bruto": 1.148166121,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG1",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-1 (VL-1 no ciclo 1, par de UFs): razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VG1_RCI": {
+      "valor": "0,66",
+      "valor_bruto": 0.6561561737,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG1",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-1 (VL-1 no ciclo 1, par de UFs): razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VG1_RCS": {
+      "valor": "2,01",
+      "valor_bruto": 2.009103157,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG1",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-1 (VL-1 no ciclo 1, par de UFs): razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VG3_RC": {
+      "valor": "1,25",
+      "valor_bruto": 1.247811219,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG3",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-3 (VL-1 no ciclo 3, par de UFs): razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VG3_RCI": {
+      "valor": "0,90",
+      "valor_bruto": 0.9003040255,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG3",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-3 (VL-1 no ciclo 3, par de UFs): razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VG3_RCS": {
+      "valor": "1,73",
+      "valor_bruto": 1.729452268,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG3",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-3 (VL-1 no ciclo 3, par de UFs): razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VG1_NCONJ": {
+      "valor": "16",
+      "valor_bruto": 16.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG1",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "g_conjuntos"
+      },
+      "formato": "int",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-1: conjuntos de escolha (clusters)",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
+    },
+    "VG3_NCONJ": {
+      "valor": "23",
+      "valor_bruto": 23.0,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VG_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VG_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VG3",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "g_conjuntos"
+      },
+      "formato": "int",
+      "descricao": "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): VG-3: conjuntos de escolha (clusters)",
+      "auditoria": "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"
     }
   },
   "failure_mode": {
