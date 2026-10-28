@@ -54,6 +54,7 @@ CADEIA = [
     RDD / "52_robustez_E9_ciclo2_quadro_1302.py",  # adendo 52f: importa o 48; portão contra E9_; confere VC_ e VD_
     RDD / "50_escolha_localizacao_par.py",  # adendo 52e: importa o 42; portão contra P1_, P1h_, VC_ e VD_
     RDD / "53_VL1_por_ciclo.py",  # adendo 52g: importa o 50; portão VG-R contra VL_
+    RDD / "54_VL1_por_corte.py",  # adendo 52h: importa o 53 (e o 50); portão VK-R contra VL_
     RDD / "51_sintese_H2.py",  # síntese da H2: lê G1_, E9_, P1_, P1h_, VC_, VD_ e VL_; não reestima
     RDD / "32_realocacao_bolsa.py",  # realocação (protocolo 58): lê 12, a08, a06, a09 e funções do 16, 19 e 24
     RDD / "28_trajetoria_medicos.py",  # P4 (protocolo 54): lê o a16, a X1 (17, versionada), o a09 e a ponte
@@ -234,6 +235,13 @@ class TestCadeiaRddBolsa(unittest.TestCase):
                                                    AQ / "a08_adquirir_ivs_2010_oficial.py"],
             # Adendo 52g (53) importa o 50 (e por ele o 42, o 25c, o 25, o 16 e o 12); portão VG-R contra VL_ (50).
             RDD / "53_VL1_por_ciclo.py": [RDD / "50_escolha_localizacao_par.py",
+                                          RDD / "42_escolha_vaga_imediata_c2.py", RDD / "25c_magnitudes_P1h.py",
+                                          RDD / "25_escolha_dap.py", RDD / "16_estimar_E9_escolha.py",
+                                          RDD / "12_construir_outcomes_funil.py",
+                                          AQ / "a08_adquirir_ivs_2010_oficial.py"],
+            # Adendo 52h (54) importa o 53 (e por ele o 50, o 42, o 25c, o 25, o 16 e o 12); portão VK-R contra VL_
+            # (50); confere que VG_ (53) não muda.
+            RDD / "54_VL1_por_corte.py": [RDD / "53_VL1_por_ciclo.py", RDD / "50_escolha_localizacao_par.py",
                                           RDD / "42_escolha_vaga_imediata_c2.py", RDD / "25c_magnitudes_P1h.py",
                                           RDD / "25_escolha_dap.py", RDD / "16_estimar_E9_escolha.py",
                                           RDD / "12_construir_outcomes_funil.py",

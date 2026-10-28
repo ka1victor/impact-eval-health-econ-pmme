@@ -9,15 +9,126 @@
 
 ## 1. Resposta curta
 
-*Pendente: preenchido pelo script depois do portão de reprodução.*
+<!-- VK:resposta:inicio -->
+**Comparando só vagas da mesma UF, nos ciclos 1–3 (VK-1) o efeito por +R$ 5 mil aparece nos dois cortes, sem diferença detectável entre eles; no ciclo 2 (VK-2), o efeito por +R$ 5 mil aparece nos dois cortes, sem diferença detectável entre eles.**
+
+- **VK-1 (ciclos 1–3):** degrau 0,300, razão de chances 1,41 [1,03; 1,93] (p 0,031, Holm 0,031); degrau 0,400, 1,52 [1,16; 1,99] (p 0,003, Holm 0,008); razão entre eles 0,93 [0,69; 1,26] (p 0,633); 55 conjuntos de escolha. Leitura: `VALE_NOS_DOIS_CORTES` (1ª linha do §4: o efeito por +R$ 5 mil vale nos dois cortes; o efeito linear é adequado). O score bootstrap não confirma a classificação do IC em: 0,300 (com poucos conjuntos, ele merece mais peso).
+
+- **VK-2 (ciclo 2):** degrau 0,300, razão de chances 1,99 [1,38; 2,87] (p < 0,001, Holm < 0,001); degrau 0,400, 1,84 [1,20; 2,82] (p 0,005, Holm 0,010); razão entre eles 1,08 [0,83; 1,40] (p 0,572); 16 conjuntos de escolha. Leitura: `VALE_NOS_DOIS_CORTES` (1ª linha do §4: o efeito por +R$ 5 mil vale nos dois cortes; o efeito linear é adequado).
+
+- **VK-3 (região de saúde, ciclos 1–3):** degrau 0,300, razão de chances 1,42 [1,04; 1,95] (p 0,029); degrau 0,400, 1,54 [1,17; 2,04] (p 0,002); razão entre eles 0,92 [0,69; 1,24] (p 0,587); 55 conjuntos de escolha. Leitura: `VALE_NOS_DOIS_CORTES` (1ª linha do §4: o efeito por +R$ 5 mil vale nos dois cortes; o efeito linear é adequado). *(sensibilidade, fora do Holm)*
+
+- Para comparar, VL-1 (ciclos 1–3) com a bolsa linear: razão de chances por +R$ 5 mil 1,47 [1,15; 1,89].
+
+- Para comparar, VL-1 (ciclo 2) com a bolsa linear: razão de chances por +R$ 5 mil 1,90 [1,30; 2,78].
+
+**Em linguagem simples.** A pergunta do grupo era se o peso da bolsa na escolha vale nos dois cortes de IVS ou só num deles. Aqui cada corte tem o seu peso, e se compara vaga com vaga dentro da mesma UF. Cada degrau é o pacote do corte (bolsa e outras regras federais que mudam no mesmo ponto), não a participação no PMM-E; mede a vaga marcada como 1ª opção na inscrição, não a ida ao município; vale para quem se candidatou, dentro das vagas abertas; e é pós-resultado: o VL-1 já era conhecido antes deste adendo.
+<!-- VK:resposta:fim -->
 
 ## 2. Portão de reprodução (VK-R)
 
-*Pendente: preenchido pelo script depois do portão de reprodução.*
+<!-- VK:portao:inicio -->
+**Portão de reprodução (VK-R): PASSOU.** Antes de qualquer conta nova, as funções do script 50 e o portão do script 53, importados sem alteração, reproduzem o VL-1 já gravado. A coluna mostra a maior diferença entre todas as quantidades comparadas da linha (absoluta quando o valor gravado tem módulo até 1, relativa acima disso); a lista completa está em `portao` de `VK_resumo.json`.
 
-## 3. Resultados
+| Linha | Dif. máx. | Contagens de identificação iguais | Portão |
+|---|---|---|---|
+| VL-1, ciclo 2 (bolsa linear, reproduzido) | 3,4e−10 | sim | passou |
+| VL-1, ciclos 1–3 (bolsa linear, reproduzido) | 3,2e−10 | sim | passou |
 
-*Pendente: preenchido pelo script depois do portão de reprodução.*
+**Degraus conferidos (decisão 2).** Nas 5125 células do conjunto, os degraus do E9 batem com a regra do IVS oficial (bruto e em milésimos) e com bolsa = 10 + 5·degraus: 0 discordâncias. O desenho de VK-1 e VK-2 é o do VL-1: contagens de identificação iguais às de `VL_resumo.json`.
+<!-- VK:portao:fim -->
+
+## 3. Quem identifica cada degrau (VK-5)
+
+<!-- VK:identificacao:inicio -->
+**Quem identifica cada degrau (VK-5).** O peso de um degrau vem só de candidatos que veem, dentro do mesmo par (UF de origem, UF da vaga), vagas dos dois lados daquele corte: no VK-1 (ciclos 1–3), 5245 candidatos veem vagas dos dois lados de 0,300 e 4968 dos dois lados de 0,400 (de 5417), em 52 e 41 conjuntos de escolha; no VK-2 (ciclo 2), 1931 candidatos veem vagas dos dois lados de 0,300 e 1690 dos dois lados de 0,400 (de 2012), em 16 e 10 conjuntos de escolha.
+
+Colunas: conjuntos de escolha (clusters), pares (origem, UF da vaga), UFs (ou regiões de saúde, no VK-3) de origem e candidatos com o critério em algum par, sobre o total do modelo; e candidatos cuja 1ª opção está num par com o critério. "Faixas vizinhas" separa quem compara vagas com só aquele corte entre elas; quem compara a faixa até 0,300 com a acima de 0,400 passa os dois cortes de uma vez.
+
+| Modelo | Critério | Conjuntos | Pares | Origens | Candidatos | 1ª opção no par |
+|---|---|---|---|---|---|---|
+| VK-1 (ciclos 1–3) | dois lados de 0,300 | 52 de 55 | 203 de 281 | 27 de 27 | 5245 de 5417 | 2782 |
+| VK-1 (ciclos 1–3) | faixas 3 e 2 (só 0,300) | 52 de 55 | 198 de 281 | 26 de 27 | 5213 de 5417 | 2598 |
+| VK-1 (ciclos 1–3) | dois lados de 0,400 | 41 de 55 | 206 de 281 | 27 de 27 | 4968 de 5417 | 3011 |
+| VK-1 (ciclos 1–3) | faixas 2 e 1 (só 0,400) | 38 de 55 | 201 de 281 | 27 de 27 | 4850 de 5417 | 2827 |
+| VK-1 (ciclos 1–3) | as três faixas | 32 de 55 | 144 de 281 | 26 de 27 | 4273 de 5417 | 1672 |
+| VK-2 (ciclo 2) | dois lados de 0,300 | 16 de 16 | 119 de 169 | 26 de 27 | 1931 de 2012 | 1322 |
+| VK-2 (ciclo 2) | faixas 3 e 2 (só 0,300) | 16 de 16 | 117 de 169 | 26 de 27 | 1930 de 2012 | 1296 |
+| VK-2 (ciclo 2) | dois lados de 0,400 | 10 de 16 | 111 de 169 | 25 de 27 | 1690 de 2012 | 1097 |
+| VK-2 (ciclo 2) | faixas 2 e 1 (só 0,400) | 10 de 16 | 109 de 169 | 25 de 27 | 1676 de 2012 | 1071 |
+| VK-2 (ciclo 2) | as três faixas | 9 de 16 | 77 de 169 | 24 de 27 | 1616 de 2012 | 884 |
+| VK-3 (região de saúde, ciclos 1–3) | dois lados de 0,300 | 52 de 55 | 574 de 787 | 269 de 316 | 4836 de 5360 | 2782 |
+| VK-3 (região de saúde, ciclos 1–3) | faixas 3 e 2 (só 0,300) | 52 de 55 | 561 de 787 | 263 de 316 | 4761 de 5360 | 2598 |
+| VK-3 (região de saúde, ciclos 1–3) | dois lados de 0,400 | 41 de 55 | 540 de 787 | 234 de 316 | 4488 de 5360 | 3011 |
+| VK-3 (região de saúde, ciclos 1–3) | faixas 2 e 1 (só 0,400) | 38 de 55 | 529 de 787 | 231 de 316 | 4373 de 5360 | 2827 |
+| VK-3 (região de saúde, ciclos 1–3) | as três faixas | 32 de 55 | 408 de 787 | 209 de 316 | 3647 de 5360 | 1672 |
+<!-- VK:identificacao:fim -->
+
+## 4. Resultados
+
+### 4.1 Razão de chances por degrau (VK-1, VK-2, VK-3)
+
+<!-- VK:principais:inicio -->
+Razão de chances da 1ª opção por degrau de bolsa (+R$ 5 mil no corte), comparando só vagas da mesma UF vistas por médicos da mesma UF de origem (no VK-3, da mesma região de saúde de origem), com o IVS em spline contínua. IC 95% e p (H0: δ = 0) com cluster por conjunto de escolha (curso × ciclo); p com t de G − 1; p do score bootstrap (Kline–Santos, Rademacher), que pesa mais quando G é pequeno; Holm nos quatro degraus de VK-1 e VK-2 (decisão 4). As linhas do VL-1 são as do 57x, reproduzidas pelo portão, para comparar.
+
+| Modelo | Termo | Candidatos | Conjuntos (G) | RC [IC 95%] | p | p (t, G − 1) | p score (Rademacher) | p Holm | p Holm (score) |
+|---|---|---|---|---|---|---|---|---|---|
+| VK-1 (ciclos 1–3) | degrau 0,300 | 5417 | 55 | 1,41 [1,03; 1,93] | 0,031 | 0,036 | 0,064 | 0,031 | 0,098 |
+| VK-1 (ciclos 1–3) | degrau 0,400 | 5417 | 55 | 1,52 [1,16; 1,99] | 0,003 | 0,004 | 0,015 | 0,008 | 0,046 |
+| VL-1 (ciclos 1–3) | bolsa linear (+R$ 5 mil) | 5417 | 55 | 1,47 [1,15; 1,89] | 0,002 | 0,004 | 0,011 | — | — |
+| VK-2 (ciclo 2) | degrau 0,300 | 2012 | 16 | 1,99 [1,38; 2,87] | < 0,001 | 0,002 | 0,005 | < 0,001 | 0,021 |
+| VK-2 (ciclo 2) | degrau 0,400 | 2012 | 16 | 1,84 [1,20; 2,82] | 0,005 | 0,013 | 0,049 | 0,010 | 0,098 |
+| VL-1 (ciclo 2) | bolsa linear (+R$ 5 mil) | 2012 | 16 | 1,90 [1,30; 2,78] | < 0,001 | 0,005 | 0,004 | — | — |
+| VK-3 (região de saúde, ciclos 1–3) | degrau 0,300 | 5360 | 55 | 1,42 [1,04; 1,95] | 0,029 | 0,033 | — | — | — |
+| VK-3 (região de saúde, ciclos 1–3) | degrau 0,400 | 5360 | 55 | 1,54 [1,17; 2,04] | 0,002 | 0,003 | — | — | — |
+<!-- VK:principais:fim -->
+
+### 4.2 Teste de igualdade dos degraus (VK-D)
+
+<!-- VK:igualdade:inicio -->
+VK-D: razão das razões de chances, RC(0,300) ÷ RC(0,400) = exp(δ300 − δ400). Igual a 1 quer dizer o mesmo efeito nos dois cortes (o VL-1). Wald com cluster por conjunto (qui-quadrado com 1 gl); p com t de G − 1; p do score bootstrap da igualdade (decisão 5, descritivo).
+
+| Modelo | Razão [IC 95%] | Wald (χ², 1 gl) | p | p (t, G − 1) | p score (Rademacher) | Conjuntos (G) |
+|---|---|---|---|---|---|---|
+| VK-1 (ciclos 1–3) | 0,93 [0,69; 1,26] | 0,23 | 0,633 | 0,635 | 0,635 | 55 |
+| VK-2 (ciclo 2) | 1,08 [0,83; 1,40] | 0,32 | 0,572 | 0,580 | 0,585 | 16 |
+| VK-3 (região de saúde, ciclos 1–3) | 0,92 [0,69; 1,24] | 0,30 | 0,587 | 0,589 | — | 55 |
+<!-- VK:igualdade:fim -->
+
+### 4.3 Os outros pesos do modelo
+
+<!-- VK:controles:inicio -->
+Os coeficientes que não são indicadores de par (log-chance; IC 95% com cluster por conjunto). "—" é termo omitido. Todas as linhas estão em `VK_estimativas.csv`.
+
+| Termo | VK-1 (ciclos 1–3) | VK-2 (ciclo 2) | VK-3 (região de saúde, ciclos 1–3) |
+|---|---|---|---|
+| `degrau_0300` | 0,345 [0,031; 0,658] | 0,687 [0,321; 1,054] | 0,352 [0,037; 0,667] |
+| `degrau_0400` | 0,418 [0,146; 0,690] | 0,611 [0,185; 1,037] | 0,434 [0,156; 0,712] |
+| `ivs_inclinacao` | −0,139 [−0,460; 0,183] | −0,491 [−0,816; −0,166] | −0,114 [−0,432; 0,204] |
+| `ivs_mudanca_inclinacao_0300` | 0,404 [−0,009; 0,818] | 0,939 [0,253; 1,625] | 0,376 [−0,036; 0,787] |
+| `ivs_mudanca_inclinacao_0400` | −0,445 [−0,758; −0,131] | −0,580 [−1,211; 0,051] | −0,433 [−0,752; −0,114] |
+| `tem_vaga_imediata` | 0,255 [0,044; 0,466] | 0,472 [0,185; 0,759] | 0,281 [0,062; 0,501] |
+| `log_vagas_imediatas_mais_1` | 0,488 [0,241; 0,736] | 0,601 [0,326; 0,876] | 0,473 [0,213; 0,733] |
+| `log_populacao_2022` | 0,139 [0,082; 0,197] | 0,102 [0,013; 0,190] | 0,159 [0,099; 0,219] |
+| `capital` | −0,314 [−0,655; 0,026] | 0,111 [−0,418; 0,639] | −0,361 [−0,729; 0,007] |
+| `estrato_interior_remoto` | −0,189 [−0,379; 0,000] | −0,377 [−0,621; −0,134] | −0,177 [−0,361; 0,006] |
+| `estrato_metropolitano` | 0,105 [−0,047; 0,256] | 0,205 [−0,006; 0,415] | 0,120 [−0,026; 0,265] |
+| `distancia_100km` | −0,515 [−0,555; −0,474] | −0,552 [−0,645; −0,460] | −0,585 [−0,639; −0,531] |
+| `mesma_regiao_saude` | 1,099 [0,845; 1,353] | 0,929 [0,695; 1,163] | 1,023 [0,752; 1,293] |
+| `mesmo_municipio` | 0,590 [0,321; 0,859] | 0,788 [0,310; 1,267] | 0,573 [0,305; 0,841] |
+<!-- VK:controles:fim -->
+
+## 5. Leitura do §4 por regra
+
+<!-- VK:leitura:inicio -->
+Regra fixada no código antes de rodar (decisão 8). Sinal de referência: o do VL-1 reproduzido na mesma amostra. Leitura geral: VK-1 `VALE_NOS_DOIS_CORTES`; VK-2 `VALE_NOS_DOIS_CORTES`; VK-3 é descritivo.
+
+| Modelo | Degrau 0,300 | Degrau 0,400 | IC da razão contém 1 | Regra | Score concorda (0,300 / 0,400 / razão) |
+|---|---|---|---|---|---|
+| VK-1 (ciclos 1–3) | `EXCLUI_1_MESMO_LADO` | `EXCLUI_1_MESMO_LADO` | sim | `VALE_NOS_DOIS_CORTES` | **não** / sim / sim |
+| VK-2 (ciclo 2) | `EXCLUI_1_MESMO_LADO` | `EXCLUI_1_MESMO_LADO` | sim | `VALE_NOS_DOIS_CORTES` | sim / sim / sim |
+| VK-3 (região de saúde, ciclos 1–3) | `EXCLUI_1_MESMO_LADO` | `EXCLUI_1_MESMO_LADO` | sim | `VALE_NOS_DOIS_CORTES` | — / — / — |
+<!-- VK:leitura:fim -->
 
 ## 6. Decisões de implementação
 
