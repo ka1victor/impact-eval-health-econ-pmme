@@ -429,3 +429,21 @@ começou a trabalhar no município. Isso agora está:
 - nas perguntas prováveis do doc 09: "vocês olham se o médico foi para o município?" Não.
 
 - [ ] No deck do grupo, pôr a cautela do slide 2 e a linha nova das Limitações.
+
+### 6.8 Robustez a mais (28/10/2026): perto do corte, na mesma UF e na mesma UF + região
+
+> **Pedido do autor (28/10/2026):** "uma robustez a mais analisando só vagas perto do corte e na mesma UF, e outra
+> perto do corte e na mesma UF + região".
+
+As duas já estavam no adendo 52e, congeladas antes de rodar e auditadas (auditoria 48): o VL-2 (vagas a até 0,050 de
+um corte, efeito fixo de UF de origem × UF da vaga) e o VL-3 sobre o VL-2 (o mesmo, com efeito fixo de região de
+saúde de origem × UF da vaga). Nada foi reestimado; a figura da robustez (slide 9) ganhou a segunda linha.
+
+| Linha | Ciclos 1–3 | Ciclo 2 |
+|---|---|---|
+| Perto do corte, mesma UF (`VL2_*`) | 1,28 [0,95; 1,72] | 1,47 [1,01; 2,14] |
+| Perto do corte, UF + região (`VL3P_*`) | 1,28 [0,95; 1,71] | 1,49 [1,04; 2,13] |
+
+Leitura: nos ciclos 1–3, inconclusivo nas duas (IC contém 1), com o ponto um pouco abaixo do VL-1; no ciclo 2, IC
+que exclui 1 nas duas. A tela do slide 9 continua "Perto do corte: inconclusivo."; a fala diz "comparando na mesma
+UF ou na mesma UF e região".

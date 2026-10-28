@@ -15902,6 +15902,177 @@
       "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
       "hipotese_apresentacao": "H2"
     },
+    "VL2_C2_RC": {
+      "valor": "1,47",
+      "valor_bruto": 1.472537999,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL2_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-2 (só vagas perto do corte, par de UFs), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL2_C2_RCI": {
+      "valor": "1,01",
+      "valor_bruto": 1.013621446,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL2_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-2 (só vagas perto do corte, par de UFs), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL2_C2_RCS": {
+      "valor": "2,14",
+      "valor_bruto": 2.13922877,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL2_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-2 (só vagas perto do corte, par de UFs), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3P_EMP_RC": {
+      "valor": "1,28",
+      "valor_bruto": 1.277896909,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL2_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 sobre o VL-2 (perto do corte, região de saúde de origem × UF da vaga), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3P_EMP_RCI": {
+      "valor": "0,95",
+      "valor_bruto": 0.9530591829,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL2_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 sobre o VL-2 (perto do corte, região de saúde de origem × UF da vaga), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3P_EMP_RCS": {
+      "valor": "1,71",
+      "valor_bruto": 1.713451316,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL2_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 sobre o VL-2 (perto do corte, região de saúde de origem × UF da vaga), ciclos 1–3: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3P_C2_RC": {
+      "valor": "1,49",
+      "valor_bruto": 1.489941424,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL2_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "estimativa"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 sobre o VL-2 (perto do corte, região de saúde de origem × UF da vaga), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, estimativa",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3P_C2_RCI": {
+      "valor": "1,04",
+      "valor_bruto": 1.041323281,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL2_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_inf"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 sobre o VL-2 (perto do corte, região de saúde de origem × UF da vaga), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% inferior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL3P_C2_RCS": {
+      "valor": "2,13",
+      "valor_bruto": 2.131831189,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL3_VL2_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "ic95_sup"
+      },
+      "formato": "d2",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-3 sobre o VL-2 (perto do corte, região de saúde de origem × UF da vaga), ciclo 2: razão de chances da 1ª opção por +R$ 5 mil, IC 95% superior",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
     "VL1_EMP_HOLM": {
       "valor": "0,005",
       "valor_bruto": 0.004939004264,

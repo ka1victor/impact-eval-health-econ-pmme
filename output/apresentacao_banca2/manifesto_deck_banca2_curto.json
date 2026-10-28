@@ -10,12 +10,12 @@
     {
       "caminho": "docs/07_apresentacoes/banca2/04_conteudo_deck_curto.md",
       "papel": "texto dos slides e notas",
-      "sha256": "83305711649eee1443d881e72429f9e05c025d963fb5c38018793680115192de"
+      "sha256": "f0bc170b4f9dd7ab990d403ce4ab0d7a485426c0df41141220f8fdef0dbf68d1"
     },
     {
       "caminho": "output/apresentacao_banca2/numeros_banca2.json",
       "papel": "registro dos números citados (conferido pelo teste)",
-      "sha256": "3d2e4c287e36ee2d663e74554254f82f4eb8468beb2c449a4aac9acaf1e2f26b"
+      "sha256": "5bc9b64a3509041ddcc6f1c763b8d68e972ad43f988b76f14b095acbcdcec84e"
     },
     {
       "caminho": "output/apresentacao_banca2/curto_bolsa_mesma_uf.png",
@@ -33,7 +33,7 @@
       "caminho": "output/apresentacao_banca2/curto_robustez_escolha.png",
       "no_pacote": "ppt/media/curto_06_curto_robustez_escolha.png",
       "papel": "figura",
-      "sha256": "2500bfe7f75a1a948d7dc98cf2b1600f5c3ae879c88f749c71ccb92fa8459df4"
+      "sha256": "66b75912e897624800faf473c54769b65c9c47c6fc72439826a7aa6ca8356fb4"
     },
     {
       "caminho": "output/apresentacao_banca2/exp_escolha_origem.png",
@@ -182,7 +182,7 @@
         "Perto do corte: inconclusivo."
       ],
       "palavras": 30,
-      "palavras_faladas": 85,
+      "palavras_faladas": 95,
       "posicao": 9,
       "secao": "Robustez",
       "tempo_s": 40,
@@ -219,21 +219,21 @@
   "regra": "nada estimado; nada lido de data/; texto lido do doc 04; figuras de output/ como imagem; seções na ordem Hipótese → Dados → Análise descritiva → Metodologia → Identificação → Resultados → Robustez → Discussão; no máximo 30 palavras visíveis por slide, fora o título, a figura e a linha de fontes; sem slides do grupo, sem divisórias, sem diagrama; corpo com só a H2 (no máximo 14 slides) e apêndice curto (no máximo 2 slides) depois da Discussão",
   "roteiro": {
     "documento": "docs/07_apresentacoes/banca2/09_roteiro_fala_7min.md",
-    "palavras_faladas": 953,
+    "palavras_faladas": 963,
     "regra": "um roteiro por slide do corpo, nas notas, antes do detalhe; apêndice não apresentado; soma de 6:30 a 7:30",
     "tempo_total": "7:00",
     "tempo_total_s": 420
   },
   "saidas": [
     {
-      "bytes": 1567058,
+      "bytes": 1582674,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "46afb88d519047889e5fef698734f6ea1712792a6005f34d3f9b956858d25a69"
+      "sha256": "bf20fabd403e6d00eb785bfd9ffa2c4dc1e2662a7e77ef437052fabc0fbda7aa"
     },
     {
-      "bytes": 1026413,
+      "bytes": 1038571,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "84a4531082c0c07006d5ccfa05d4abed0cd7f1869c5bc1d5f713800bb88dd6e9"
+      "sha256": "78ea668f06802ef6c8ac16f081f7e74b481c9c25f8dc499cd91921d4912b6845"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)",

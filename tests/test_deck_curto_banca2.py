@@ -451,7 +451,8 @@ class TestConteudoCurto(unittest.TestCase):
             self.assertGreater(self.b(f"{k}_RCI"), 1.0, k)
         reg = self.man_fig["figuras_novas"]["curto_robustez_escolha.png"]
         self.assertEqual([ln["codigos"][0] for ln in reg["linhas"]],
-                         ["VL1_EMP_RC", "VLLOG_EMP_RC", "VL3_EMP_RC", "VL2_EMP_RC", "VG1_RC", "VL1_C2_RC", "VG3_RC"])
+                         ["VL1_EMP_RC", "VLLOG_EMP_RC", "VL3_EMP_RC", "VL2_EMP_RC", "VL3P_EMP_RC", "VG1_RC", "VL1_C2_RC",
+                          "VG3_RC"])
         self.assertFalse(any(c.startswith("VC_") for ln in reg["linhas"] for c in ln["codigos"]))
         self.assertNotIn(" km", txt)  # os km dos ciclos 1 e 3 têm IC com zero: fora da tela
         notas = corrido(s["notas"])

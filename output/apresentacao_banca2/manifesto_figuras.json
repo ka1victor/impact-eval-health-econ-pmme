@@ -2856,12 +2856,23 @@
         },
         {
           "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
-          "linha": "Ciclos 1–3 · Só vagas perto do corte",
+          "linha": "Ciclos 1–3 · Perto do corte, mesma UF",
           "texto": "1,28 [0,95; 1,72]",
           "codigos": [
             "VL2_EMP_RC",
             "VL2_EMP_RCI",
             "VL2_EMP_RCS"
+          ],
+          "exclui_nulo": false
+        },
+        {
+          "painel": "Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3",
+          "linha": "Ciclos 1–3 · Perto do corte, UF + região",
+          "texto": "1,28 [0,95; 1,71]",
+          "codigos": [
+            "VL3P_EMP_RC",
+            "VL3P_EMP_RCI",
+            "VL3P_EMP_RCS"
           ],
           "exclui_nulo": false
         },
@@ -2908,8 +2919,10 @@
         "1,45 [1,15; 1,83]",
         "Região de saúde × UF",
         "1,49 [1,15; 1,92]",
-        "Só vagas perto do corte",
+        "Perto do corte, mesma UF",
         "1,28 [0,95; 1,72]",
+        "Perto do corte, UF + região",
+        "1,28 [0,95; 1,71]",
         "Ciclo 1",
         "1,15 [0,66; 2,01]",
         "Ciclo 2",
@@ -3435,7 +3448,7 @@
     },
     {
       "arquivo": "output/apresentacao_banca2/curto_robustez_escolha.png",
-      "sha256": "2500bfe7f75a1a948d7dc98cf2b1600f5c3ae879c88f749c71ccb92fa8459df4",
+      "sha256": "66b75912e897624800faf473c54769b65c9c47c6fc72439826a7aa6ca8356fb4",
       "natureza": "EMPIRICO",
       "descricao": "deck curto, robustez da hipótese de 28/10/2026: só variantes que comparam vagas da mesma UF (distância em log, região de saúde × UF da vaga, perto do corte) e o VL-1 por ciclo (adendos 52e e 52g)",
       "fontes": [
@@ -3469,6 +3482,6 @@
   ],
   "numeros": {
     "arquivo": "output/apresentacao_banca2/numeros_banca2.json",
-    "sha256": "3d2e4c287e36ee2d663e74554254f82f4eb8468beb2c449a4aac9acaf1e2f26b"
+    "sha256": "5bc9b64a3509041ddcc6f1c763b8d68e972ad43f988b76f14b095acbcdcec84e"
   }
 }

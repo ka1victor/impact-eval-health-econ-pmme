@@ -1210,7 +1210,13 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
                              ("VLLOG", "EMP", "VL1log_emp", "VL-1 com log da distância, ciclos 1–3"),
                              ("VLLOG", "C2", "VL1log_c2", "VL-1 com log da distância, ciclo 2"),
                              ("VL3", "EMP", "VL3_VL1_emp", "VL-3 (região de saúde de origem × UF da vaga), ciclos 1–3"),
-                             ("VL3", "C2", "VL3_VL1_c2", "VL-3 (região de saúde de origem × UF da vaga), ciclo 2"))
+                             ("VL3", "C2", "VL3_VL1_c2", "VL-3 (região de saúde de origem × UF da vaga), ciclo 2"),
+                             # perto do corte (|IVS − corte| ≤ 0,050), mesma UF e mesma UF + região (52e, VL-2 e VL-3)
+                             ("VL2", "C2", "VL2_c2", "VL-2 (só vagas perto do corte, par de UFs), ciclo 2"),
+                             ("VL3P", "EMP", "VL3_VL2_emp", "VL-3 sobre o VL-2 (perto do corte, região de saúde de "
+                              "origem × UF da vaga), ciclos 1–3"),
+                             ("VL3P", "C2", "VL3_VL2_c2", "VL-3 sobre o VL-2 (perto do corte, região de saúde de "
+                              "origem × UF da vaga), ciclo 2"))
       for s, col, ds in (("RC", "estimativa", "estimativa"), ("RCI", "ic95_inf", "IC 95% inferior"),
                          ("RCS", "ic95_sup", "IC 95% superior"))],
     *[(f"{pre}_{k}_HOLM", "EMPIRICO",
@@ -3082,14 +3088,16 @@ def figura_dados_amostra(num: dict, destino: Path) -> dict:
 
 def figura_robustez_escolha(num: dict, destino: Path) -> dict:
     """Robustez da hipótese de 28/10/2026, só com variantes que comparam vagas da mesma UF: à esquerda, ciclos 1–3 (o
-    VL-1, a distância em log, a região de saúde de origem × UF da vaga e só vagas perto do corte; adendo 52e); à
+    VL-1, a distância em log, a região de saúde de origem × UF da vaga e só vagas perto do corte, com o par de UFs e
+    com a região de saúde de origem × UF da vaga; adendo 52e, VL-2 e VL-3); à
     direita, o VL-1 por ciclo (ciclos 1 e 3 do adendo 52g; ciclo 2 do 52e). Razão de chances por +R$ 5 mil. Nada
     sobre a origem."""
     reg = Registro()
-    W, H = 12.3, 4.0
+    W, H = 12.3, 4.5
     fig = plt.figure(figsize=(W, H))
-    rot = ("VL-1 (principal)", "Distância em log", "Região de saúde × UF", "Só vagas perto do corte")
-    pref = ("VL1_EMP", "VLLOG_EMP", "VL3_EMP", "VL2_EMP")
+    rot = ("VL-1 (principal)", "Distância em log", "Região de saúde × UF", "Perto do corte, mesma UF",
+           "Perto do corte, UF + região")
+    pref = ("VL1_EMP", "VLLOG_EMP", "VL3_EMP", "VL2_EMP", "VL3P_EMP")
     esq = [dict(rot=r, est=f"{p}_RC", inf=f"{p}_RCI", sup=f"{p}_RCS") for r, p in zip(rot, pref)]
     rot2 = ("Ciclo 1", "Ciclo 2", "Ciclo 3")
     dir_ = [dict(rot=r, est=f"{p}_RC", inf=f"{p}_RCI", sup=f"{p}_RCS") for r, p in zip(rot2, ("VG1", "VL1_C2", "VG3"))]
