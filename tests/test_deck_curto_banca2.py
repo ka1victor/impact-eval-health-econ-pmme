@@ -407,8 +407,10 @@ class TestConteudoCurto(unittest.TestCase):
         km; a figura não tem a linha do modelo base; a especificação pré-registrada fica na cautela e nas notas."""
         s = self.por_titulo[T_RES]
         txt = tela(s)
-        self.assertIn(f"chance ×{self.rc('VL1_EMP')}; ciclo 2: ×{self.v('VL1_C2_RC')}", txt)
-        self.assertIn(f"vale {self.v('VL1_EMP_K5')} km a menos", txt)
+        self.assertIn(f"chance ×{self.rc('VL1_EMP')}.", txt)
+        # leitura simples na tela (pedido do autor, 28/10); o ciclo 2 fica na figura e nas notas
+        self.assertIn(f"o médico aceita vaga {self.v('VL1_EMP_K5')} km mais longe", txt)
+        self.assertIn(self.v("VL1_C2_RC"), corrido(s["notas"]))
         self.assertNotIn(self.v("VLB_EMP_K5"), txt)  # 75 km na tela, não os 119 do M1 (auditoria 53)
         self.assertIn("pós-resultado", s["cautela"])
         self.assertIn("sem fixar a UF: IC contém 1", s["cautela"])

@@ -94,7 +94,8 @@ Quinto, supomos que o candidato viu todas as vagas do seu curso.
 
 Este é o resultado principal. Comparando só vagas da mesma UF, a de origem ou outra, vistas por médicos da mesma UF de
 origem, a vaga com bolsa R$ 5 mil maior tem 1,47 vez a chance de ser a 1ª opção, nos ciclos 1 a 3 juntos; o intervalo
-vai de 1,15 a 1,89. No ciclo 2, 1,90. Em km: na escolha, R$ 5 mil a mais valem o mesmo que 75 km a menos de distância.
+vai de 1,15 a 1,89. No ciclo 2, 1,90. Em palavras: entre duas vagas parecidas da mesma UF, a de bolsa maior tem cerca de uma vez e meia
+a chance de ser a escolhida; ou, por R$ 5 mil a mais, o médico aceita uma vaga 75 km mais longe.
 Duas ressalvas, na tela: é uma especificação escolhida depois do resultado; e a pré-registrada, sem fixar a UF, tem
 intervalo que contém 1.
 

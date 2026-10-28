@@ -334,9 +334,10 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 
 **Slide 8. Dentro da mesma UF, a vaga de bolsa maior é preferida** Seção: Resultados. Tempo de fala: 50 s.
 - Figura: `output/apresentacao_banca2/curto_bolsa_mesma_uf.png` (só o VL-1, sem o modelo base)
-- Linha: Mesma UF, +R$ 5 mil: chance ×1,47 [1,15; 1,89]; ciclo 2: ×1,90.
-- Linha: Em km: vale 75 km a menos.
+- Linha: +R$ 5 mil: chance ×1,47 [1,15; 1,89].
+- Linha: Leitura: por +R$ 5 mil, o médico aceita vaga 75 km mais longe.
 - Cautela: Adendo pós-resultado; pré-registrado, sem fixar a UF: IC contém 1.
+- O ×1,90 do ciclo 2 fica na figura (pedido do autor, 28/10: interpretação simples na tela, dentro de 30 palavras).
 
 **Slide 9. Robustez: sempre comparando vagas da mesma UF** Seção: Robustez. Tempo de fala: 40 s.
 - Figura: `output/apresentacao_banca2/curto_robustez_escolha.png`
