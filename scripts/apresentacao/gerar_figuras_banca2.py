@@ -1218,6 +1218,11 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
        VL_PRE + f"{dm}: p de Holm (três principais do 52e)")
       for pre, k, ch, dm in (("VL1", "EMP", "VL1_emp", "VL-1, ciclos 1–3"), ("VL1", "C2", "VL1_c2", "VL-1, ciclo 2"),
                              ("VL2", "EMP", "VL2_emp", "VL-2, ciclos 1–3"))],
+    # robustez de inferência com poucos clusters: p do score bootstrap de Rademacher, sem ajuste (doc 57x)
+    *[(f"VL1_{k}_PSR", "EMPIRICO",
+       _c(VL_EST, {"chave_modelo": ch, "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"},
+          "p_score_rademacher"), "p3", VL_PRE + f"{dm}: p do score bootstrap de Rademacher, sem ajuste")
+      for k, ch, dm in (("EMP", "VL1_emp", "VL-1, ciclos 1–3"), ("C2", "VL1_c2", "VL-1, ciclo 2"))],
     *[(f"{pre}_{k}_{s}", "EMPIRICO",
        _c(VL_EST, {"chave_modelo": ch, "tipo_linha": "km_equivalentes", "termo": "K5"}, col), "d0",
        VL_PRE + f"{dm}: km a menos de distância que pesam como +R$ 5 mil (K5), {ds}")

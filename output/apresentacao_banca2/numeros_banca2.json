@@ -15959,6 +15959,44 @@
       "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
       "hipotese_apresentacao": "H2"
     },
+    "VL1_EMP_PSR": {
+      "valor": "0,011",
+      "valor_bruto": 0.01125005625,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_emp",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "p_score_rademacher"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1, ciclos 1–3: p do score bootstrap de Rademacher, sem ajuste",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
+    "VL1_C2_PSR": {
+      "valor": "0,004",
+      "valor_bruto": 0.003540039062,
+      "natureza": "EMPIRICO",
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "seletor": {
+        "csv": "output/rdd_bolsa/VL_estimativas.csv",
+        "filtro": {
+          "chave_modelo": "VL1_c2",
+          "tipo_linha": "razao_chances_por_5mil",
+          "termo": "bolsa_mil"
+        },
+        "coluna": "p_score_rademacher"
+      },
+      "formato": "p3",
+      "descricao": "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): VL-1, ciclo 2: p do score bootstrap de Rademacher, sem ajuste",
+      "auditoria": "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto",
+      "hipotese_apresentacao": "H2"
+    },
     "VL1_EMP_K5": {
       "valor": "75",
       "valor_bruto": 74.91095779,

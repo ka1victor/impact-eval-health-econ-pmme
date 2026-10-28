@@ -341,7 +341,7 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 
 **Slide 9. Robustez: sempre comparando vagas da mesma UF** Seção: Robustez. Tempo de fala: 40 s.
 - Figura: `output/apresentacao_banca2/curto_robustez_escolha.png`
-- Linha: Mantém: distância em log; região de saúde × UF.
+- Linha: Mantém: log da distância; região × UF; score bootstrap (p 0,011).
 - Linha: Por ciclo: forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1.
 - Linha: Perto do corte: inconclusivo.
 
@@ -375,6 +375,7 @@ Copie daqui. As figuras estão em `output/` e são geradas por script; não as r
 | 52,5% e 60,8%; 1.568 candidatos | `H2D_DISP`, `H2D_ESC`, `H2D_N` (`H2_sintese.csv`, doc 66) | só no doc 66 | slide 5 (novo) |
 | 1,15 [0,66; 2,01] e 1,25 [0,90; 1,73] | `VG1_*`, `VG3_*` (`VG_estimativas.csv`, adendo 52g) | não existiam | slide 9 (figura) e notas; os km desses ciclos têm IC com zero e ficam fora |
 | 1,45; 1,49; 1,28 | `VLLOG_EMP_RC`, `VL3_EMP_RC`, `VL2_EMP_RC` | slide 9 | slide 9 (figura, só variantes dentro da mesma UF) |
+| p 0,011 (score bootstrap) | `VL1_EMP_PSR` (`VL_estimativas.csv`, coluna `p_score_rademacher`) | só no doc 57x | slide 9 (tela): a inferência se mantém com poucos *clusters*; ciclo 2, 0,004 (`VL1_C2_PSR`), nas notas |
 | 1,25 [0,98; 1,61], p 0,072 | `VLB_EMP_*`, `VC_B_HOLM` | figura do slide 8 (cinza) e cautela | fora das figuras; na cautela do slide 8 ("sem fixar a UF: IC contém 1"), na Identificação, nas Limitações e nas notas |
 | ×11,0; ×1,57; 1,94 | `VC_THETAX_EST`, `VC_B10X_EST`, `VC_DUF_EST` | slide 7 (teste central) | **fora da tela**; o D_UF só numa linha das notas do slide 11 (pergunta P4) |
 | 1,07 e 1,00 por ciclo (modelo base) | `VC_M5C1_RC`, `VC_M5C3_RC` | figura da robustez | fora: o por ciclo agora é o VL-1 (adendo 52g) |

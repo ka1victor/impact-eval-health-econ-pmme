@@ -102,7 +102,8 @@ intervalo que contém 1.
 ## 9. Robustez: sempre comparando vagas da mesma UF (40 s)
 
 A robustez fica sempre dentro da mesma UF. À esquerda, o peso da bolsa se mantém com a distância em log e com a região
-de saúde de origem no lugar da UF de origem. Só com vagas perto do corte, o intervalo contém 1: inconclusivo. À
+de saúde de origem no lugar da UF de origem. Com poucos grupos, o p do score bootstrap continua 0,011. Só com vagas
+perto do corte, o intervalo contém 1: inconclusivo. À
 direita, ciclo a ciclo: o efeito é forte só no ciclo 2; nos ciclos 1 e 3, o intervalo contém 1. Por que o ciclo 2? Não
 sabemos.
 
