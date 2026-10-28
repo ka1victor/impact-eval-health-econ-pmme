@@ -8,6 +8,20 @@
 
 ---
 
+## 28/10/2026 — Doc 57za: resultados do adendo 52h (VL-1 com um degrau por corte)
+
+Motivo: execução do adendo 52h. O doc 57za nasce com o bloco "Decisões de implementação" commitado antes de qualquer
+estimativa; os números entram depois, só em blocos gerados pelo script 54 a partir de `output/rdd_bolsa/VK_*`.
+Auditoria pendente.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57za_VL1_por_corte.md`](06_execucao/57za_VL1_por_corte.md) | resultados do adendo 52h (VK-R, VK-1, VK-2, VK-D, VK-3, VK-5), gerado por `scripts/rdd_bolsa/54_VL1_por_corte.py` |
+
+---
+
 ## 28/10/2026 — Adendo 52h: escolha com o par de UFs fixado, degrau por degrau
 
 Motivo: o grupo perguntou se o efeito da bolsa vale nos dois cortes; o autor pediu separar o efeito por corte (0,300
