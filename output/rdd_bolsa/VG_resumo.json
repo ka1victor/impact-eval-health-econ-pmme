@@ -1,0 +1,954 @@
+{
+  "etapa": "VG_VL1_por_ciclo",
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "ADENDO_52G_POS_RESULTADO",
+  "data_execucao": "2026-10-28",
+  "script": "scripts/rdd_bolsa/53_VL1_por_ciclo.py",
+  "adendo": {
+    "arquivo": "docs/06_execucao/52g_adendo_VL1_por_ciclo.md",
+    "sha256": "a48a8ba1da0d16ecdfd55955d849c713c2b8367bc4b63259d8674e31e8047a65",
+    "commit_de_congelamento": "e9740a5"
+  },
+  "protocolos": {
+    "docs/06_execucao/52e_adendo_escolha_localizacao_par.md": "3023f3ffddfe44deafcebc6bcce3c1e01d8839026081b4873bb0c2f141a862f8",
+    "docs/06_execucao/52_protocolo_P1_escolha_dap.md": "5eb6e1dc2a04e630a962fd9f7f70c71f3cbb00aa1d0c97a283a73459a292a622",
+    "docs/06_execucao/52b_protocolo_P1h_magnitudes.md": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b",
+    "docs/06_execucao/52c_adendo_vaga_imediata_ciclo2.md": "132f3dcacc07845eeccc2980b2f8955e8a5c21c7fb2e308b1e4e893eef9d48cc"
+  },
+  "conferencias": {
+    "versao_antiga_do_conjunto": {
+      "celulas": 1547,
+      "iguais_ao_quadro_19mar": 1547
+    },
+    "quadro_1302_contra_a36": {
+      "celulas_comparadas": 1547,
+      "celulas_em_so_uma_leitura": 0,
+      "celulas_com_vagas_imediatas_diferentes": 0
+    },
+    "correcao_ciclo2": {
+      "celulas_ciclo2_no_conjunto": 1545,
+      "celulas_sem_linha_no_quadro_1302": 0,
+      "celulas_com_vagas_imediatas_diferentes": 301,
+      "imputadas": 0
+    },
+    "celulas_por_ciclo_no_conjunto_do_P1": {
+      "1": 1289,
+      "2": 1545,
+      "3": 2291
+    }
+  },
+  "decisoes": [
+    {
+      "data": "2026-10-28",
+      "item": "O que é o VL-1 num ciclo",
+      "situacao": "O §1 manda rodar \"exatamente o VL-1 do 52e\" em cada ciclo separado.",
+      "resolucao": "VG-1 e VG-3 são a especificação `VL1_c2` do script 50 com o ciclo trocado para 1 e 3: a amostra é a do P1 restrita ao ciclo (função `subconjunto` do 50, como o M5 do script 25); o efeito fixo de UF de origem × UF da vaga é montado só com os candidatos e as vagas daquele ciclo (`desenho_ef` do 50, com as decisões 1 a 3 do 57x: indicadores de par menos uma base por componente, retirada de pares sem escolha e de efeitos fixos separados até não mudar, candidato com uma só alternativa sai); a matriz é a do 50 (`matriz_vl`: M1 com distância linear por 100 km, sem `mesma_uf` e sem macrorregiões); a estimação é a `estimar_ef` do 50 (mesmo ponto de partida do Newton, nota de execução 1 do 57x). Nada é reescrito: o script 53 importa o 50."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Tipo de vaga nos ciclos 1 e 3",
+      "situacao": "O 52e usa o conjunto do P1 com o tipo de vaga do ciclo 2 pelo quadro de 13/02/2026 (função `corrigir` do 42).",
+      "resolucao": "Usa-se o mesmo conjunto corrigido. A correção só muda células do ciclo 2; nos ciclos 1 e 3 o conjunto é o do P1. O resumo grava a contagem de células por ciclo para conferência."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Portão VG-R",
+      "situacao": "O §1 pede reproduzir o VL-1 do ciclo 2 e dos ciclos 1–3 com diferença ≤ 1e−8 antes do resto.",
+      "resolucao": "Antes de qualquer conta nova, `estimar_linha` do 50 (sem alteração, com as chaves `VL1_c2` e `VL1_emp`) reestima as duas linhas. Compara-se com `VL_estimativas.csv`: todos os coeficientes que não são indicadores de par, com os três EP (mesmos termos, na mesma ordem); a razão de chances (estimativa, três EP, IC, p, p com t de G − 1, p de MV, p do score bootstrap Rademacher e Webb); K5 e K10 (estimativa, três EP, IC delta e Fieller); e G de conjuntos e de candidatos e o número de candidatos. Compara-se com `VL_resumo.json`: as contagens de identificação (iguais) e o resultado do score bootstrap. Diferença absoluta ≤ 1e−8 se o valor gravado tem módulo até 1, relativa se maior; NaN só casa com NaN (`_dif_rel` do 50, decisão 12 do 57x). Falhou, a execução para em `FALHA_REPRODUCAO_<linha>`, nada novo é estimado e só o resumo do portão é gravado. O portão VL-5 do 50 (M1, P1h e M4) não é refeito: o VG-R é o portão que o 52g pede."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Inferência e poucos clusters",
+      "situacao": "O §1 pede inferência como no 52e e, com poucos conjuntos num ciclo, relatar o número de clusters e dar peso ao score bootstrap. O 52g não fixa família de testes.",
+      "resolucao": "Como no 52e: sanduíche CR1 por conjunto de escolha (curso × ciclo; num ciclo só, é o curso), fator G/(G − 1), IC 95% e p pela normal; também o p com t de G − 1 graus de liberdade. Score bootstrap de Kline–Santos (`score_bootstrap` do 50: ajuste restrito sob β = 0 partindo da estimativa irrestrita sem a bolsa; Rademacher por enumeração completa se G ≤ 24, senão 199.999 sorteios com a semente do 16; Webb também). Cada linha relata G de conjuntos. Não há família confirmatória nova (o 52g chama VG-1 e VG-3 de robustez por ciclo); Holm nas duas (com o p por cluster e com o p do score) vai como coluna descritiva."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Leitura do §2 por regra",
+      "situacao": "O §2 lê o IC de VG-1 e VG-3 contra 1 e fala em \"mesmo sinal\" sem dizer de quê; e pede peso ao score bootstrap.",
+      "resolucao": "Para VG-1 e VG-3: IC 95% (CR1) que contém 1 → `IC_CONTEM_1`; IC que exclui 1 com o log da razão de chances do mesmo sinal que o do VL-1 do ciclo 2 reproduzido → `EXCLUI_1_MESMO_SINAL`; do sinal oposto → `EXCLUI_1_SINAL_OPOSTO`; sem estimativa → `SEM_ESTIMATIVA`. Leitura geral: algum `EXCLUI_1_SINAL_OPOSTO` → `DEPENDE_DA_COMPOSICAO` (3ª linha do §2); senão, algum `EXCLUI_1_MESMO_SINAL` → `APARECE_TAMBEM_EM_OUTRO_CICLO` (2ª linha, com o ciclo); senão, os dois `IC_CONTEM_1` → `FORTE_SO_NO_CICLO_2` (1ª linha); com alguma linha sem estimativa, `INCOMPLETA`. Peso ao score: para cada linha, `score_concorda` = (p do score Rademacher < 0,05) igual a (IC exclui 1). Quando não concorda, o doc diz, na resposta curta, que a classificação daquele ciclo não se confirma pelo score bootstrap; a regra não muda."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "km equivalentes (VG-4)",
+      "situacao": "O §1 pede os km equivalentes de +R$ 5 mil em VG-1 e VG-3, como no VL-4.",
+      "resolucao": "Como no VL-4: K5 e K10 pela função `linha_km` do 25c (100 · passo · β / (−γ)), IC pelo método delta e por Fieller, descritivos, sem teste. Se o IC do β contém zero, o doc diz que o IC dos km também contém e que os km ficam instáveis."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Quem identifica (VG-5)",
+      "situacao": "O §1 pede a contagem de pares de UF e de candidatos que identificam em cada ciclo.",
+      "resolucao": "As contagens do `desenho_ef` do 50, as mesmas da seção 3 do 57x: pares no desenho e no modelo, pares com variação de bolsa, alternativas e candidatos retirados, candidatos no modelo, candidatos com variação de bolsa dentro de algum par e com a 1ª opção num par com variação, colunas de efeito fixo. Para os quatro VL-1 (ciclos 1, 2, 3 e 1–3), com G de conjuntos."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Falha de convergência",
+      "situacao": "Num ciclo só há menos candidatos por par; o Newton pode não convergir ou a matriz pode perder posto.",
+      "resolucao": "Como no 50: a linha fica `NAO_CONVERGIU` com a nota da `estimar_ef`, sem trocar partida, especificação ou amostra; a leitura dela é `SEM_ESTIMATIVA`. Coluna sem variação dentro de nenhum candidato é omitida, como no 25, e a omissão vai na nota."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Saídas e figura",
+      "situacao": "O §3 lista script, `VG_estimativas.csv`, `VG_resumo.json`, doc 57z e testes; não lista figura.",
+      "resolucao": "Não há figura. O CSV tem, por linha estimada, os coeficientes fora dos indicadores de par, a razão de chances por +R$ 5 mil e K5 e K10; as linhas reproduzidas (VL-1 dos ciclos 2 e 1–3) entram com `papel = reproducao_VG-R`. `VL_*` não são regravadas."
+    },
+    {
+      "data": "2026-10-28",
+      "item": "Números do doc 57z",
+      "situacao": "O pedido exige números só em blocos gerados.",
+      "resolucao": "Todo número de resultado do 57z vem de `VG_*` por `--atualizar-doc`, entre marcadores `<!-- VG:... -->`; o teste confere o doc contra o gerado e que não há número de resultado fora dos blocos. A redação da resposta curta é escolhida por regra (`leitura`), sem texto escrito depois de ver os números."
+    }
+  ],
+  "especificacoes": {
+    "VL1_c2": {
+      "id_vl": "VL-1",
+      "papel": "principal",
+      "ciclo": "2",
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "linear",
+      "referencia": "M1_c2"
+    },
+    "VL1_emp": {
+      "id_vl": "VL-1",
+      "papel": "principal",
+      "ciclo": "empilhado",
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "linear",
+      "referencia": "M1_emp"
+    },
+    "VG1": {
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "linear",
+      "id_vg": "VG-1",
+      "papel": "robustez_por_ciclo",
+      "ciclo": "1"
+    },
+    "VG3": {
+      "ef": "uf_origem",
+      "janela": false,
+      "dist": "linear",
+      "id_vg": "VG-3",
+      "papel": "robustez_por_ciclo",
+      "ciclo": "3"
+    }
+  },
+  "entradas": [
+    {
+      "caminho": "docs/06_execucao/52g_adendo_VL1_por_ciclo.md",
+      "sha256": "a48a8ba1da0d16ecdfd55955d849c713c2b8367bc4b63259d8674e31e8047a65",
+      "bytes": 2469,
+      "papel": "adendo 52g (especificação, somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-28",
+      "cobertura": "§1–§4",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VL_estimativas.csv",
+      "sha256": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+      "bytes": 96921,
+      "papel": "alvo do portão VG-R (VL-1 dos ciclos 2 e 1–3)",
+      "fonte": "script 50",
+      "data_referencia": "2026-10-27",
+      "cobertura": "VL1_c2, VL1_emp",
+      "unidade": "especificação × termo",
+      "chaves": "chave_modelo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VL_resumo.json",
+      "sha256": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
+      "bytes": 92755,
+      "papel": "alvo do portão VG-R (identificação e score bootstrap)",
+      "fonte": "script 50",
+      "data_referencia": "2026-10-27",
+      "cobertura": "VL1_c2, VL1_emp",
+      "unidade": "linha",
+      "chaves": "identificacao, score_bootstrap",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/50_escolha_localizacao_par.py",
+      "sha256": "2f9d42656c760408e91c4f09843eda572d3f5ffbb070118a185ec63f25aac456",
+      "bytes": 112925,
+      "papel": "funções do adendo 52e (importadas sem alteração)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52e_adendo_escolha_localizacao_par.md",
+      "sha256": "3023f3ffddfe44deafcebc6bcce3c1e01d8839026081b4873bb0c2f141a862f8",
+      "bytes": 4065,
+      "papel": "adendo 52e (especificação, somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-27",
+      "cobertura": "§1–§5",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52c_adendo_vaga_imediata_ciclo2.md",
+      "sha256": "132f3dcacc07845eeccc2980b2f8955e8a5c21c7fb2e308b1e4e893eef9d48cc",
+      "bytes": 1871,
+      "papel": "adendo 52c (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§3",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52d_adendo_sensibilidades_ciclo2_quadro_1302.md",
+      "sha256": "154adeac93add55a8ab85134b20dfdaded93c76993d85d5ec33b8e2963cd6376",
+      "bytes": 3544,
+      "papel": "adendo 52d (somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§5",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52_protocolo_P1_escolha_dap.md",
+      "sha256": "5eb6e1dc2a04e630a962fd9f7f70c71f3cbb00aa1d0c97a283a73459a292a622",
+      "bytes": 17167,
+      "papel": "protocolo 52 (P1; somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-19",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "docs/06_execucao/52b_protocolo_P1h_magnitudes.md",
+      "sha256": "56ea12a638cd77a5a26f402fdd9c61aa67d6ad54127693b952718d82cd4eb63b",
+      "bytes": 5306,
+      "papel": "protocolo 52b (P1h; somente lido)",
+      "fonte": "repositório",
+      "data_referencia": "2026-10-26",
+      "cobertura": "§1–§6",
+      "unidade": "documento",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/vagas/2026_ciclo2_chamada1_vagas_e_servicos_retificado.xlsx",
+      "sha256": "3393473cfe5c3163056a0314c3cad4779e8c9c957ba9ea714c29d6a2c77697f8",
+      "bytes": 157862,
+      "papel": "quadro do ciclo 2, retificado de 13/02/2026 (vigente na inscrição)",
+      "fonte": "Chamamento SGTES/MS nº 1/2026 (página oficial)",
+      "data_referencia": "2026-02-13",
+      "cobertura": "1547 células CNES × curso",
+      "unidade": "célula",
+      "chaves": "CNES (7 dígitos) × código do curso",
+      "filtros": "coluna TOTAL de vagas imediatas"
+    },
+    {
+      "caminho": "data/raw/pmm_e/2026_ciclo2_chamada1_vagas_retificadas.xlsx",
+      "sha256": "a47b0b0204fe80bdd15249bcb8e4b6686d8bc9b981c277a6c240f4d2ea97425b",
+      "bytes": 153185,
+      "papel": "quadro do ciclo 2, retificado de 19/03/2026 (lido pelo 42; versão antiga)",
+      "fonte": "idem",
+      "data_referencia": "2026-03-19",
+      "cobertura": "1547 células",
+      "unidade": "célula",
+      "chaves": "CNES × curso",
+      "filtros": "coluna TOTAL de vagas imediatas"
+    },
+    {
+      "caminho": "output/auditoria_H1/a36_celulas.csv",
+      "sha256": "9921cf98f32563de9e54c9630831fdf913cd2923944c33044cb8effce1aaf225",
+      "bytes": 974585,
+      "papel": "leitura independente da auditoria 36 (conferência do quadro de 13/02 pelo 42)",
+      "fonte": "auditoria 36",
+      "data_referencia": "2026-10-26",
+      "cobertura": "células dos ciclos 1–3",
+      "unidade": "célula",
+      "chaves": "cnes, cod_curso",
+      "filtros": "ciclo = 2"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1_estimativas.csv",
+      "sha256": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+      "bytes": 159285,
+      "papel": "alvo do portão (M1 antigo)",
+      "fonte": "script 25",
+      "data_referencia": "2026-10-23",
+      "cobertura": "M1, coeficientes",
+      "unidade": "especificação × termo",
+      "chaves": "modelo, ciclo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/P1h_magnitudes.csv",
+      "sha256": "934d3931a7ad14047aa6764b19b1b7b7814e9a814417cd6e4ca9779861e5b89d",
+      "bytes": 8254,
+      "papel": "alvo do portão (P1h-1 antigo)",
+      "fonte": "script 25c",
+      "data_referencia": "2026-10-26",
+      "cobertura": "P1h-1",
+      "unidade": "linha",
+      "chaves": "id_linha, modelo, ciclo, componente",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VC_estimativas.csv",
+      "sha256": "c32e5ef3ed614861dfd7976c558ebd23eeb076a59a521368385f7ad4ffb2d451",
+      "bytes": 67641,
+      "papel": "alvo do portão (M1, M5 do ciclo 2 e D_UF corrigidos)",
+      "fonte": "script 42",
+      "data_referencia": "2026-10-26",
+      "cobertura": "M1 e M5_2, corrigida",
+      "unidade": "especificação × termo",
+      "chaves": "versao, chave_modelo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VD_estimativas.csv",
+      "sha256": "3b512c0849ed9f0ef3a2345cfbc9dd12c7bc88395f60f02ee4250030634b19ef",
+      "bytes": 246582,
+      "papel": "alvo do portão (M4 e km do M1 corrigidos)",
+      "fonte": "script 48",
+      "data_referencia": "2026-10-26",
+      "cobertura": "M4 e M1, corrigida",
+      "unidade": "especificação × termo",
+      "chaves": "versao, chave_modelo, tipo_linha, termo",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/42_escolha_vaga_imediata_c2.py",
+      "sha256": "a4f35ab12a28e4e8cb3f3dbf0a8ec30978317d70ea6af6985bdad44aa2092cb4",
+      "bytes": 69396,
+      "papel": "funções do adendo 52c (importadas sem alteração)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/16_estimar_E9_escolha.py",
+      "sha256": "54b1127cb69c60dec55456dea30ca4395a90ad052ccf5382ac819e7b48756caa",
+      "bytes": 97648,
+      "papel": "funções do E9 (score bootstrap; importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/25_escolha_dap.py",
+      "sha256": "39ffe79eed91ece5b5fd8f63588efbc0a231f0226d140ba54953a7921d70d98d",
+      "bytes": 131512,
+      "papel": "funções do P1 (importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "scripts/rdd_bolsa/25c_magnitudes_P1h.py",
+      "sha256": "36d1ce034a8777e35a70f8c5cbc92d1141b466989f0351f5cc537f34c9314ff8",
+      "bytes": 52248,
+      "papel": "funções do P1h (importadas sem alteração, pelo 42)",
+      "fonte": "repositório",
+      "data_referencia": "-",
+      "cobertura": "-",
+      "unidade": "código",
+      "chaves": "-",
+      "filtros": "-"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_candidatos.parquet",
+      "sha256": "ce5ab8a73a557d225f6513f934cda10947bb9c2acc8e05f9fbae3cffe356991e",
+      "bytes": 128788,
+      "papel": "escolhas dos candidatos (1ª opção)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "resultados da 1ª chamada",
+      "cobertura": "9849 linhas",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "posto 1"
+    },
+    {
+      "caminho": "output/rdd_bolsa/outcomes/escolhas_conjunto_principal.parquet",
+      "sha256": "ad655dbce17753a996594213f6f9b9dff18e42af6556e48d0ee20df858bfca22",
+      "bytes": 63077,
+      "papel": "conjunto de escolha principal; ciclo 2 corrigido em memória (52c)",
+      "fonte": "tarefa B (script 12)",
+      "data_referencia": "quadros da 1ª chamada",
+      "cobertura": "5134 células com IVS",
+      "unidade": "célula CNES × curso × ciclo",
+      "chaves": "ciclo, co_cnes_7d, cod_curso",
+      "filtros": "como no P1"
+    },
+    {
+      "caminho": "output/aquisicao/a08_ivs_2010_oficial_municipio.csv",
+      "sha256": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+      "bytes": 499753,
+      "papel": "IVS 2010 oficial (a08)",
+      "fonte": "Ipea (a08)",
+      "data_referencia": "Censo 2010",
+      "cobertura": "5565 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge",
+      "filtros": "co_ibge, ivs"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_candidatos_origem.parquet",
+      "sha256": "6be4393a9ec3fb0e5b8f4873314b28f525767eee206dbf540bc5a1c0bfee5444",
+      "bytes": 107325,
+      "papel": "município de origem (G1)",
+      "fonte": "portão G1",
+      "data_referencia": "referências 202506, 202510, 202602",
+      "cobertura": "5776 candidatos",
+      "unidade": "candidato",
+      "chaves": "ciclo, id_candidato",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "output/rdd_bolsa/G1_distancias_opcoes.parquet",
+      "sha256": "8faf60ed277beae815d1a13ac54d2dd70ab65a4c1a38d796aa8b361898e02a78",
+      "bytes": 166732,
+      "papel": "conferência das distâncias",
+      "fonte": "portão G1",
+      "data_referencia": "idem",
+      "cobertura": "candidato × opção",
+      "unidade": "candidato × opção",
+      "chaves": "ciclo, id_candidato, opcao_rank",
+      "filtros": "regra_ligacao = g1_cpf_nome"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/datasus_tabnet_br_regsaud.cnv",
+      "sha256": "df0f635ae830af40abde4059732883f561c9ad608308c69c3a6a65b79614d9ba",
+      "bytes": 383336,
+      "papel": "região de saúde (CIR), só lido",
+      "fonte": "DATASUS/TabNet",
+      "data_referencia": "2026-10-19T10:44:54Z",
+      "cobertura": "5606 municípios",
+      "unidade": "município",
+      "chaves": "co_ibge → co_cir",
+      "filtros": "-"
+    },
+    {
+      "caminho": "data/raw/aquisicao/territorio/ibge_api_v3_malhas_metadados_municipios.json",
+      "sha256": "2ce2914973e5b464ca1c6faa159b4c35e613de01b586a67b5707200759b2bfdd",
+      "bytes": 1685039,
+      "papel": "centroides municipais do IBGE, só lido",
+      "fonte": "IBGE, API de malhas v3",
+      "data_referencia": "2026-10-19",
+      "cobertura": "5570 municípios",
+      "unidade": "município",
+      "chaves": "id",
+      "filtros": "centroide"
+    }
+  ],
+  "integridade": "nada simulado nem imputado; data/ só lido; IVS do a08 (o arquivo local de IVS da auditoria 16 não é lido); só agregados em output/ (sem nome, CPF, CRM nem pseudônimo de candidato); saídas VL_* e demais não regravadas",
+  "linguagem": "escolha condicional a se candidatar, dentro das vagas abertas; a bolsa mede o pacote do corte e o incentivo marginal; a origem é preferência revelada, não efeito causal; não é efeito da participação no PMM-E",
+  "tempo_execucao_nao_registrado": "fora do resumo para que duas execuções deem o mesmo hash",
+  "portao": {
+    "status": "PASSOU",
+    "tolerancia": 1e-08,
+    "regra": "VL-1 do ciclo 2 e dos ciclos 1–3 reestimados com a estimar_linha do 50 contra VL_estimativas.csv (coeficientes fora dos pares e três EP; razão de chances com IC, p, p com t de G − 1, p de MV e p do score bootstrap; K5 e K10 com delta e Fieller; G e candidatos) e VL_resumo.json (contagens de identificação iguais; score bootstrap); diferença absoluta ≤ 1e−8 se o valor gravado tem módulo ≤ 1, relativa se maior; NaN só casa com NaN",
+    "linhas": [
+      {
+        "linha": "VL1_c2",
+        "contra": "VL_estimativas.csv (coeficientes, razão de chances, K5, K10) e VL_resumo.json (identificação, score bootstrap)",
+        "casou": true,
+        "identificacao_igual": true,
+        "metodo_score_igual": true,
+        "dif_max_coeficiente_estimativa": 4.750483340032474e-11,
+        "dif_max_coeficiente_ep_cluster_conjunto": 3.7060521318466044e-11,
+        "dif_max_coeficiente_ep_mle": 4.1299852426845973e-11,
+        "dif_max_coeficiente_ep_cluster_candidato": 3.629152534045943e-11,
+        "dif_max_razao_chances_por_5mil_estimativa": 2.623442356951867e-10,
+        "dif_max_razao_chances_por_5mil_ep_cluster_conjunto": 1.7185919354290036e-11,
+        "dif_max_razao_chances_por_5mil_ep_mle": 1.5925538665584327e-11,
+        "dif_max_razao_chances_por_5mil_ep_cluster_candidato": 3.836281292635135e-11,
+        "dif_max_razao_chances_por_5mil_ic95_inf": 1.2560557248359806e-10,
+        "dif_max_razao_chances_por_5mil_ic95_sup": 1.4939950357705464e-10,
+        "dif_max_razao_chances_por_5mil_p": 1.4496650407869183e-14,
+        "dif_max_razao_chances_por_5mil_p_t_g_menos_1": 4.085022251021364e-13,
+        "dif_max_razao_chances_por_5mil_p_mle": 3.708283773299725e-19,
+        "dif_max_razao_chances_por_5mil_p_score_rademacher": 5.000002148425331e-13,
+        "dif_max_razao_chances_por_5mil_p_score_webb": 2.690000999727715e-13,
+        "dif_max_razao_chances_por_5mil_g_conjuntos": 0.0,
+        "dif_max_razao_chances_por_5mil_g_candidatos": 0.0,
+        "dif_max_razao_chances_por_5mil_n_candidatos": 0.0,
+        "dif_max_km_equivalentes_estimativa": 1.3339467715883604e-10,
+        "dif_max_km_equivalentes_ep_cluster_conjunto": 2.2505519176168962e-11,
+        "dif_max_km_equivalentes_ep_mle": 1.814936650943754e-10,
+        "dif_max_km_equivalentes_ep_cluster_candidato": 1.6723477127598242e-10,
+        "dif_max_km_equivalentes_ic95_inf": 3.3987537521921547e-10,
+        "dif_max_km_equivalentes_ic95_sup": 2.1268212065641286e-10,
+        "dif_max_km_equivalentes_ic95_fieller_inf": 1.314603527606579e-10,
+        "dif_max_km_equivalentes_ic95_fieller_sup": 5.376012622056569e-11,
+        "dif_max_score_g": 0.0,
+        "dif_max_score_t_score": 0.0,
+        "dif_max_score_p_rademacher": 0.0,
+        "dif_max_score_p_webb": 0.0,
+        "dif_max_score_n_rademacher": 0.0,
+        "dif_max_score_n_webb": 0.0,
+        "passou": true
+      },
+      {
+        "linha": "VL1_emp",
+        "contra": "VL_estimativas.csv (coeficientes, razão de chances, K5, K10) e VL_resumo.json (identificação, score bootstrap)",
+        "casou": true,
+        "identificacao_igual": true,
+        "metodo_score_igual": true,
+        "dif_max_coeficiente_estimativa": 4.818179188958993e-11,
+        "dif_max_coeficiente_ep_cluster_conjunto": 4.738573422535808e-11,
+        "dif_max_coeficiente_ep_mle": 3.996361574998275e-11,
+        "dif_max_coeficiente_ep_cluster_candidato": 2.6395496899311865e-11,
+        "dif_max_razao_chances_por_5mil_estimativa": 1.081234993769655e-11,
+        "dif_max_razao_chances_por_5mil_ep_cluster_conjunto": 4.654157614858434e-11,
+        "dif_max_razao_chances_por_5mil_ep_mle": 3.4613423238738505e-12,
+        "dif_max_razao_chances_por_5mil_ep_cluster_candidato": 1.1157047508092433e-12,
+        "dif_max_razao_chances_por_5mil_ic95_inf": 6.745134680256374e-11,
+        "dif_max_razao_chances_por_5mil_ic95_sup": 5.383359749623337e-11,
+        "dif_max_razao_chances_por_5mil_p": 1.5222241869783382e-13,
+        "dif_max_razao_chances_por_5mil_p_t_g_menos_1": 3.740974544030884e-13,
+        "dif_max_razao_chances_por_5mil_p_mle": 2.82685665617547e-19,
+        "dif_max_razao_chances_por_5mil_p_score_rademacher": 2.812524518835957e-13,
+        "dif_max_razao_chances_por_5mil_p_score_webb": 4.714123189031305e-12,
+        "dif_max_razao_chances_por_5mil_g_conjuntos": 0.0,
+        "dif_max_razao_chances_por_5mil_g_candidatos": 0.0,
+        "dif_max_razao_chances_por_5mil_n_candidatos": 0.0,
+        "dif_max_km_equivalentes_estimativa": 7.529494081780532e-11,
+        "dif_max_km_equivalentes_ep_cluster_conjunto": 5.591465081551311e-11,
+        "dif_max_km_equivalentes_ep_mle": 2.447983159069473e-10,
+        "dif_max_km_equivalentes_ep_cluster_candidato": 2.2634395022686654e-10,
+        "dif_max_km_equivalentes_ic95_inf": 1.6949762338719173e-10,
+        "dif_max_km_equivalentes_ic95_sup": 1.3580660478724826e-10,
+        "dif_max_km_equivalentes_ic95_fieller_inf": 3.3932395934979325e-11,
+        "dif_max_km_equivalentes_ic95_fieller_sup": 3.19087632682439e-10,
+        "dif_max_score_g": 0.0,
+        "dif_max_score_t_score": 0.0,
+        "dif_max_score_p_rademacher": 0.0,
+        "dif_max_score_p_webb": 0.0,
+        "dif_max_score_n_rademacher": 0.0,
+        "dif_max_score_n_webb": 0.0,
+        "passou": true
+      }
+    ]
+  },
+  "identificacao": {
+    "VL1_c2": {
+      "identificacao": {
+        "pares_no_desenho": 729,
+        "pares_com_escolha": 169,
+        "pares_retirados": 560,
+        "alternativas_no_desenho": 380022,
+        "alternativas_retiradas": 206411,
+        "alternativas_retiradas_par_sem_escolha": 206094,
+        "alternativas_retiradas_por_separacao": 297,
+        "candidatos_com_alternativas_retiradas_por_separacao": 24,
+        "candidatos_no_desenho": 2032,
+        "candidatos_retirados_uma_so_alternativa": 20,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 140,
+        "componentes_com_base": 29,
+        "bases_no_par_da_propria_uf": 27,
+        "pares_no_modelo": 169,
+        "pares_com_variacao_de_bolsa": 151,
+        "pares_sem_variacao_de_bolsa": 18,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 2012,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 1956,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 1509,
+        "alternativas_no_modelo": 173611
+      }
+    },
+    "VL1_emp": {
+      "identificacao": {
+        "pares_no_desenho": 729,
+        "pares_com_escolha": 281,
+        "pares_retirados": 448,
+        "alternativas_no_desenho": 932577,
+        "alternativas_retiradas": 353579,
+        "alternativas_retiradas_par_sem_escolha": 353575,
+        "alternativas_retiradas_por_separacao": 0,
+        "candidatos_com_alternativas_retiradas_por_separacao": 0,
+        "candidatos_no_desenho": 5421,
+        "candidatos_retirados_uma_so_alternativa": 4,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 254,
+        "componentes_com_base": 27,
+        "bases_no_par_da_propria_uf": 27,
+        "pares_no_modelo": 281,
+        "pares_com_variacao_de_bolsa": 260,
+        "pares_sem_variacao_de_bolsa": 21,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 5417,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 5345,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 3937,
+        "alternativas_no_modelo": 578998
+      }
+    },
+    "VG1": {
+      "identificacao": {
+        "pares_no_desenho": 713,
+        "pares_com_escolha": 140,
+        "pares_retirados": 573,
+        "alternativas_no_desenho": 80522,
+        "alternativas_retiradas": 46178,
+        "alternativas_retiradas_par_sem_escolha": 45926,
+        "alternativas_retiradas_por_separacao": 227,
+        "candidatos_com_alternativas_retiradas_por_separacao": 6,
+        "candidatos_no_desenho": 915,
+        "candidatos_retirados_uma_so_alternativa": 25,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 111,
+        "componentes_com_base": 29,
+        "bases_no_par_da_propria_uf": 26,
+        "pares_no_modelo": 140,
+        "pares_com_variacao_de_bolsa": 127,
+        "pares_sem_variacao_de_bolsa": 13,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 27,
+        "candidatos_no_modelo": 890,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 869,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 660,
+        "alternativas_no_modelo": 34344
+      }
+    },
+    "VG3": {
+      "identificacao": {
+        "pares_no_desenho": 701,
+        "pares_com_escolha": 185,
+        "pares_retirados": 516,
+        "alternativas_no_desenho": 472033,
+        "alternativas_retiradas": 242436,
+        "alternativas_retiradas_par_sem_escolha": 242108,
+        "alternativas_retiradas_por_separacao": 318,
+        "candidatos_com_alternativas_retiradas_por_separacao": 16,
+        "candidatos_no_desenho": 2474,
+        "candidatos_retirados_uma_so_alternativa": 10,
+        "iteracoes_da_retirada": 2,
+        "colunas_de_efeito_fixo": 155,
+        "componentes_com_base": 30,
+        "bases_no_par_da_propria_uf": 25,
+        "pares_no_modelo": 185,
+        "pares_com_variacao_de_bolsa": 167,
+        "pares_sem_variacao_de_bolsa": 18,
+        "origens_no_modelo": 27,
+        "origens_com_algum_par_com_variacao": 26,
+        "candidatos_no_modelo": 2464,
+        "candidatos_com_variacao_de_bolsa_em_algum_par": 2345,
+        "candidatos_com_1a_opcao_em_par_com_variacao": 1768,
+        "alternativas_no_modelo": 229597
+      }
+    }
+  },
+  "score_bootstrap": {
+    "VG1": {
+      "status": "EXECUTADO",
+      "g": 16,
+      "t_score": 0.4965511319394541,
+      "p_rademacher": 0.634857177734375,
+      "metodo_rademacher": "enumeração completa dos 2^G sinais",
+      "n_rademacher": 65536,
+      "p_webb": 0.6450632253161266,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 4,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    },
+    "VL1_c2": {
+      "status": "EXECUTADO",
+      "g": 16,
+      "t_score": 1.8258121551854722,
+      "p_rademacher": 0.0035400390625,
+      "metodo_rademacher": "enumeração completa dos 2^G sinais",
+      "n_rademacher": 65536,
+      "p_webb": 0.010760053800269,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 6,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    },
+    "VG3": {
+      "status": "EXECUTADO",
+      "g": 23,
+      "t_score": 1.0408787154351027,
+      "p_rademacher": 0.36286067962646484,
+      "metodo_rademacher": "enumeração completa dos 2^G sinais",
+      "n_rademacher": 8388608,
+      "p_webb": 0.35900179500897506,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 5,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    },
+    "VL1_emp": {
+      "status": "EXECUTADO",
+      "g": 55,
+      "t_score": 2.2024732315652558,
+      "p_rademacher": 0.011250056250281252,
+      "metodo_rademacher": "199999 sorteios, semente 20261018",
+      "n_rademacher": 199999,
+      "p_webb": 0.011435057175285876,
+      "metodo_webb": "199999 sorteios, semente 20261018",
+      "n_webb": 199999,
+      "iteracoes_ajuste_restrito": 5,
+      "partida_ajuste_restrito": "estimativa irrestrita sem a bolsa"
+    }
+  },
+  "convergencia": {
+    "VL1_c2": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 140,
+      "grad_max": 1.0402168015843927e-10,
+      "decremento_final": 4.1827211342114635e-22,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VL1_emp": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 254,
+      "grad_max": 7.483902386695718e-12,
+      "decremento_final": 1.7649571924040694e-25,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VG1": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 111,
+      "grad_max": 4.778399897986674e-13,
+      "decremento_final": 7.509221236949938e-27,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    },
+    "VG3": {
+      "ok": true,
+      "status": "EXECUTADO",
+      "iteracoes": 6,
+      "omitidas": [],
+      "n_efeitos_fixos": 155,
+      "grad_max": 1.6722800921797898e-10,
+      "decremento_final": 1.818085683630102e-22,
+      "partida": "termos sem par ajustados sem os indicadores + contração",
+      "termos_sem_efeito_fixo": [
+        "bolsa_mil",
+        "ivs_inclinacao",
+        "ivs_mudanca_inclinacao_0300",
+        "ivs_mudanca_inclinacao_0400",
+        "tem_vaga_imediata",
+        "log_vagas_imediatas_mais_1",
+        "log_populacao_2022",
+        "capital",
+        "estrato_interior_remoto",
+        "estrato_metropolitano",
+        "distancia_100km",
+        "mesma_regiao_saude",
+        "mesmo_municipio"
+      ],
+      "nota": ""
+    }
+  },
+  "covariancias": {
+    "VL1_c2": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.12884112966945072,
+        -0.5526180719713697
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0014990537065086315,
+          -0.0009281322493316928
+        ],
+        [
+          -0.0009281322493316198,
+          0.0021787693698634763
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "VL1_emp": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.07708067599148952,
+        -0.514481981415096
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0006484116724467981,
+          -0.0001475247623541022
+        ],
+        [
+          -0.00014752476235407842,
+          0.00042331155855292293
+        ]
+      ],
+      "g_conjuntos": 55
+    },
+    "VG1": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.027633198342621085,
+        -0.5856433453964254
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0032598590886278307,
+          0.0009761376837660906
+        ],
+        [
+          0.0009761376837662445,
+          0.00122974882233226
+        ]
+      ],
+      "g_conjuntos": 16
+    },
+    "VG3": {
+      "termos": [
+        "bolsa_mil",
+        "distancia_100km"
+      ],
+      "theta": [
+        0.04427819838645819,
+        -0.48186693955126797
+      ],
+      "V_cluster_conjunto": [
+        [
+          0.0011094320851177128,
+          0.0001015445100782677
+        ],
+        [
+          0.00010154451007827973,
+          0.0006101944923339409
+        ]
+      ],
+      "g_conjuntos": 23
+    }
+  },
+  "leitura": {
+    "linhas": {
+      "VG1": {
+        "regra": "IC_CONTEM_1",
+        "ciclo": "1",
+        "ic_contem_1": true,
+        "score_concorda": true,
+        "g_conjuntos": 16
+      },
+      "VG3": {
+        "regra": "IC_CONTEM_1",
+        "ciclo": "3",
+        "ic_contem_1": true,
+        "score_concorda": true,
+        "g_conjuntos": 23
+      }
+    },
+    "geral": "FORTE_SO_NO_CICLO_2",
+    "referencia_do_sinal": "VL1_c2",
+    "ciclos_que_excluem_1_mesmo_sinal": [],
+    "VG4": {
+      "VG1": {
+        "km": 23.59217309,
+        "ic_beta_contem_0": true
+      },
+      "VG3": {
+        "km": 45.94442444,
+        "ic_beta_contem_0": true
+      }
+    }
+  },
+  "inferencia": {
+    "principal": "sanduíche com cluster por conjunto de escolha (curso × ciclo), fator G/(G−1)",
+    "holm": "VG por ciclo (adendo 52g, decisão 4): VG-1 (ciclo 1) e VG-3 (ciclo 3); coluna descritiva",
+    "score_bootstrap": "Kline–Santos, H0: β = 0, Rademacher e Webb (funções do script 50/16)",
+    "z_bilateral_95": 1.959963984540054
+  },
+  "vl_nao_regravado": {
+    "output/rdd_bolsa/VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output/rdd_bolsa/VL_resumo.json": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf"
+  },
+  "saidas": {
+    "output/rdd_bolsa/VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636"
+  }
+}

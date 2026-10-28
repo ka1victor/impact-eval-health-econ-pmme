@@ -8,6 +8,20 @@
 
 ---
 
+## 28/10/2026 — Doc 57z: resultados do adendo 52g (VL-1 nos ciclos 1 e 3)
+
+Motivo: execução do adendo 52g. O doc 57z nasce com o bloco "Decisões de implementação" commitado antes de qualquer
+estimativa; os números entram depois, só em blocos gerados pelo script 53 a partir de `output/rdd_bolsa/VG_*`.
+Auditoria pendente.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/57z_VL1_por_ciclo.md`](06_execucao/57z_VL1_por_ciclo.md) | resultados do adendo 52g (VG-R, VG-1, VG-3, VG-4, VG-5), gerado por `scripts/rdd_bolsa/53_VL1_por_ciclo.py` |
+
+---
+
 ## 28/10/2026 — Adendo 52g: escolha com o par de UFs fixado, ciclo a ciclo
 
 Motivo: o autor fixou a hipótese no efeito da bolsa sobre a 1ª opção, só comparando vagas da mesma UF (VL-1 do
