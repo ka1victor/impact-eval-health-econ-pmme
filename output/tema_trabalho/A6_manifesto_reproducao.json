@@ -67,6 +67,7 @@
     ".venv/bin/python scripts/rdd_bolsa/52_robustez_E9_ciclo2_quadro_1302.py",
     ".venv/bin/python scripts/rdd_bolsa/50_escolha_localizacao_par.py",
     ".venv/bin/python scripts/rdd_bolsa/53_VL1_por_ciclo.py",
+    ".venv/bin/python scripts/rdd_bolsa/54_VL1_por_corte.py",
     ".venv/bin/python scripts/rdd_bolsa/51_sintese_H2.py",
     ".venv/bin/python scripts/rdd_bolsa/32_realocacao_bolsa.py",
     ".venv/bin/python scripts/rdd_bolsa/28_trajetoria_medicos.py",
