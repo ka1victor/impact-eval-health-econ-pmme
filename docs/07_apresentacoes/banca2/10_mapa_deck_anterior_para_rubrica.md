@@ -1,6 +1,7 @@
 # 10. Mapa do deck anterior (8901dea) para o deck revisto pela rubrica
 
 > **Data:** 27/10/2026, véspera da banca 2.<br>
+> **Mudança de 28/10/2026 (dia da banca):** a hipótese passou a ser só bolsa → 1ª opção, comparando vagas da mesma UF, e nada da origem é resultado. **O deck vigente está na [seção 6](#6-mudança-de-28102026-dia-da-banca-a-hipótese-é-só-bolsa--1ª-opção-dentro-da-mesma-uf)**; as seções 0 a 5 descrevem a passagem de `8901dea` para o deck de 27/10/2026 (`33d15d9`) e ficam como registro.<br>
 > **Para quem é:** o grupo, que está montando outra apresentação a partir do deck que estava na `main` (commit
 > `8901dea`, 11 slides no corpo e 2 no apêndice, auditado na [auditoria 53](../../auditorias/53_auditoria_deck_H2.md))
 > e vai adaptá-la ao deck novo.<br>
@@ -248,3 +249,146 @@ Só redação; nenhum número, figura ou conclusão mudou. Quem já copiou a se�
 | 11 | Só ciclo 2: "bolsa instável" | "não generalizar" | é a implicação, não a descrição |
 | roteiro 2, 3, 4, 7, 11 | mais números falados | menos números falados (ficam na tela); slide 7 com "entre duas vagas iguais no resto, inclusive na distância"; slide 11 com a implicação de cada limitação | caber nos 7 minutos; o número dito em voz alta vale várias palavras |
 | roteiro 5 | "como idade, nota ou família" | "como idade ou nota" | a família tem lugar: a distância até ela varia entre vagas e não sai da conta |
+
+## 6. Mudança de 28/10/2026 (dia da banca): a hipótese é só bolsa → 1ª opção, dentro da mesma UF
+
+> **Decisão do autor (28/10/2026):** "a hipótese é simplesmente sobre o efeito bolsa → 1ª opção", com "só comparação
+> entre municípios da mesma UF". Reforço do mesmo dia: "pode deixar TUDO na mesma UF. UF, origem etc. é tudo
+> controle/pareamento".<br>
+> **Para o grupo:** as seções 1 a 5 acima descrevem o deck de 27/10/2026 (commit `33d15d9`) e ficam só como registro.
+> **O deck vigente é o desta seção.** Quem copiou o texto da tela do deck de 27/10 troca tudo pelo que está aqui.
+> Nada foi reestimado para esta versão além do adendo 52g (ciclos 1 e 3 separados, doc 57z, auditoria pendente);
+> os outros números são os mesmos, só mudaram de lugar.
+
+### 6.1 O que muda, em uma frase
+
+Antes, a hipótese comparava a origem com a bolsa ("a bolsa pesa menos que a origem"). Agora ela é só sobre a bolsa:
+**comparando vagas da mesma UF, a vaga de bolsa maior tem mais chance de ser a 1ª opção**. A UF de origem, a UF da
+vaga, a região de saúde, o município e a distância entram **só como controle e pareamento**. Nenhum slide, nem do
+apêndice, interpreta o coeficiente da origem: saem o ×11,0, o D_UF e "a origem pesa mais".
+
+### 6.2 Correspondência slide a slide (deck de 27/10 → deck de 28/10)
+
+| 27/10 | Título em 27/10 | 28/10 | Título em 28/10 | O que aconteceu |
+|---|---|---|---|---|
+| 1 | Pergunta e hipótese: origem ou bolsa na escolha? | 1 | Pergunta e hipótese: a bolsa maior muda a 1ª opção? | alterado: a hipótese é só sobre a bolsa, dentro da mesma UF; "formulada após ver os dados" continua |
+| 2 | Dados e amostra: de onde vêm e quem entra no modelo | 2 | Dados e amostra: de onde vêm e quem entra no modelo | mantido (fala um pouco mais curta) |
+| 3 | A bolsa é função exata do IVS: a regra é sharp | 3 | A bolsa é função exata do IVS: a regra é sharp | mantido |
+| 4 | Onde escolhem: perto de onde já trabalham | 4 | Onde escolhem: a maioria fica na própria UF | alterado: os 79% viram a **motivação para comparar dentro da UF**, não resultado |
+| — | — | 5 | Descritivo: perto do corte, a bolsa maior é mais escolhida | novo: a F2 do doc 66, descritiva da hipótese |
+| 5 | Modelo: logit condicional da 1ª opção | 6 | Modelo: logit condicional da 1ª opção | alterado: equação com o efeito fixo do par de UFs; teste β > zero |
+| 6 | Identificação: as premissas e o nosso caso | 7 | Identificação: as premissas e o nosso caso | alterado: "Mantido fixo" e "Especificação: pós-resultado" no lugar de IIA e Localização |
+| 7 | Teste central: a origem pesa mais que toda a bolsa | — | — | **saiu** (corpo e apêndice); o D_UF fica numa linha das notas do slide 11, para pergunta da banca |
+| 8 | Dentro da mesma UF, a vaga de bolsa maior é preferida | 8 | Dentro da mesma UF, a vaga de bolsa maior é preferida | alterado: é o **resultado principal**; figura sem a linha do modelo base |
+| 9 | Robustez: o que se mantém e o que não se mantém | 9 | Robustez: sempre comparando vagas da mesma UF | alterado: só variantes dentro da mesma UF, com o VL-1 por ciclo (adendo 52g) |
+| 10 | Conclusão: a origem pesa mais que toda a bolsa? Sim | 10 | Conclusão: a bolsa maior aumenta a 1ª opção? Sim | alterado: responde a nova pergunta |
+| 11 | Limitações e o que cada uma implica | 11 | Limitações e o que cada uma implica | alterado: entram "sem fixar UF" e "escolha ≠ preenchimento"; sai "preferência revelada" |
+| 12 | Apêndice · O fato: sem aumento detectado no corte | 12 | Apêndice · O fato: pareando municípios da mesma UF | alterado: só a comparação de municípios pareados na mesma UF; sai a RDD sem controle |
+| 13 | Apêndice · H3: oferta, numa frase | — | — | **saiu** |
+
+### 6.3 Texto exato da tela (deck de 28/10)
+
+Copie daqui. As figuras estão em `output/` e são geradas por script; não as redesenhe.
+
+**Slide 1. Pergunta e hipótese: a bolsa maior muda a 1ª opção?** Seção: Hipótese. Tempo de fala: 35 s.
+- Linha: Hipótese comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a 1ª opção
+- Linha (cinza): Motivação no corte, preenchimento sem aumento detectado
+- Cautela: Formulada após ver os dados.
+
+**Slide 2. Dados e amostra: de onde vêm e quem entra no modelo** Seção: Dados. Tempo de fala: 45 s.
+- Figura: `output/apresentacao_banca2/curto_dados_amostra.png`
+- Linha: Unidade: candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção.
+- Linha: No modelo: 5.421 candidatos e 932.577 pares candidato × vaga.
+
+**Slide 3. A bolsa é função exata do IVS: a regra é sharp** Seção: Análise descritiva. Tempo de fala: 25 s.
+- Figura: `output/apresentacao_banca2/regra_bolsa_ivs_oficial.png`
+- Linha: Como ler: um ponto por município do ciclo 1; a bolsa salta nos cortes.
+- Linha: Ciclos 1 e 2: reproduz 368/368 e 454/454 municípios.
+
+**Slide 4. Onde escolhem: a maioria fica na própria UF** Seção: Análise descritiva. Tempo de fala: 30 s.
+- Figura: `output/apresentacao_banca2/exp_escolha_origem.png`
+- Linha: 79% põem a 1ª opção na UF de origem; mediana: 51 km (descritivo).
+- Linha: Por isso: comparamos só vagas da mesma UF.
+
+**Slide 5. Descritivo: perto do corte, a bolsa maior é mais escolhida** Seção: Análise descritiva. Tempo de fala: 35 s.
+- Figura: `output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png` (F2 do doc 66)
+- Linha: Bolsa maior: 52,5% das vagas, 60,8% das 1ªs opções.
+- Linha: Quem: na UF de origem, a até 0,050 de um corte; 1.568 candidatos.
+- Cautela: Descritivo: sem teste e sem controlar a distância.
+
+**Slide 6. Modelo: logit condicional da 1ª opção** Seção: Metodologia. Tempo de fala: 35 s.
+- Equação: U = β·bolsa + γ·distância + EF(UF origem × UF vaga) + …; P(j) = e^Uj/Σe^U
+- Linha: Por quê candidato consigo mesmo, vagas da mesma UF
+- Linha: Bolsa regra do IVS (sharp)
+- Linha: Teste β > zero; cluster por conjunto
+
+**Slide 7. Identificação: as premissas e o nosso caso** Seção: Identificação. Tempo de fala: 45 s.
+
+| Premissa | Aderência |
+|---|---|
+| Bolsa por regra | sharp: 368/368, 454/454 |
+| Mantido fixo | candidato, par de UFs, distância |
+| Só a bolsa? | não: pacote do corte |
+| Especificação | pós-resultado (adendo 52e) |
+| Conjunto | suposto: todas vistas |
+
+**Slide 8. Dentro da mesma UF, a vaga de bolsa maior é preferida** Seção: Resultados. Tempo de fala: 50 s.
+- Figura: `output/apresentacao_banca2/curto_bolsa_mesma_uf.png` (só o VL-1, sem o modelo base)
+- Linha: Mesma UF, +R$ 5 mil: chance ×1,47 [1,15; 1,89]; ciclo 2: ×1,90.
+- Linha: Em km: vale 75 km a menos.
+- Cautela: Adendo pós-resultado; pré-registrado, sem fixar a UF: IC contém 1.
+
+**Slide 9. Robustez: sempre comparando vagas da mesma UF** Seção: Robustez. Tempo de fala: 40 s.
+- Figura: `output/apresentacao_banca2/curto_robustez_escolha.png`
+- Linha: Mantém: distância em log; região de saúde × UF.
+- Linha: Por ciclo: forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1.
+- Linha: Perto do corte: inconclusivo.
+
+**Slide 10. Conclusão: a bolsa maior aumenta a 1ª opção? Sim** Seção: Discussão. Tempo de fala: 35 s.
+- Linha: Resposta sim, comparando vagas da mesma UF: chance ×1,47
+- Linha: Força forte só no ciclo 2 (×1,90)
+- Linha: Teoria os dados sugerem: bolsa compensa parte do custo do lugar
+
+**Slide 11. Limitações e o que cada uma implica** Seção: Discussão. Tempo de fala: 45 s.
+
+| Limitação | Implicação |
+|---|---|
+| Pós-resultado | exploratório |
+| Sem fixar UF | IC contém 1 |
+| Só candidatos | escolha ≠ preenchimento |
+| Pacote do corte | bolsa não isolada |
+| Só ciclo 2 | não generalizar |
+| Origem = CNES | não é residência |
+
+**Slide 12. Apêndice · O fato: pareando municípios da mesma UF** (não apresentado)
+- Figura: `output/apresentacao_banca2/curto_fato_pareado.png`
+- Linha: Sem aumento detectado do preenchimento nos dois cortes.
+- Cautela: Pacote do corte; poucos pares.
+
+### 6.4 Números que entram, saem ou mudam de lugar
+
+| Número | Código | Em 27/10 | Em 28/10 |
+|---|---|---|---|
+| 1,47 [1,15; 1,89] e 1,90 [1,30; 2,78] | `VL1_EMP_*`, `VL1_C2_*` (`VL_estimativas.csv`) | slide 8, adendo | slide 8, **resultado principal**; também na Conclusão |
+| 75 km | `VL1_EMP_K5` | slide 8 | slide 8 e fala da Conclusão |
+| 52,5% e 60,8%; 1.568 candidatos | `H2D_DISP`, `H2D_ESC`, `H2D_N` (`H2_sintese.csv`, doc 66) | só no doc 66 | slide 5 (novo) |
+| 1,15 [0,66; 2,01] e 1,25 [0,90; 1,73] | `VG1_*`, `VG3_*` (`VG_estimativas.csv`, adendo 52g) | não existiam | slide 9 (figura) e notas; os km desses ciclos têm IC com zero e ficam fora |
+| 1,45; 1,49; 1,28 | `VLLOG_EMP_RC`, `VL3_EMP_RC`, `VL2_EMP_RC` | slide 9 | slide 9 (figura, só variantes dentro da mesma UF) |
+| 1,25 [0,98; 1,61], p 0,072 | `VLB_EMP_*`, `VC_B_HOLM` | figura do slide 8 (cinza) e cautela | fora das figuras; na cautela do slide 8 ("sem fixar a UF: IC contém 1"), na Identificação, nas Limitações e nas notas |
+| ×11,0; ×1,57; 1,94 | `VC_THETAX_EST`, `VC_B10X_EST`, `VC_DUF_EST` | slide 7 (teste central) | **fora da tela**; o D_UF só numa linha das notas do slide 11 (pergunta P4) |
+| 1,07 e 1,00 por ciclo (modelo base) | `VC_M5C1_RC`, `VC_M5C3_RC` | figura da robustez | fora: o por ciclo agora é o VL-1 (adendo 52g) |
+| +16,4 e −6,0 (pareados) | `PL_FRAC_300_TAU`, `PL_FRAC_400_TAU` | figura do apêndice, junto com a RDD | figura do apêndice, sozinhos |
+
+### 6.5 Checklist para o grupo
+
+- [ ] Trocar a hipótese do slide 1 pela frase nova; manter "formulada após ver os dados" na tela.
+- [ ] Tirar o slide "Teste central" e qualquer menção a ×11,0, D_UF ou "a origem pesa mais" da tela e da fala.
+- [ ] No slide 4, dizer que os 79% são o motivo de comparar dentro da UF, não o resultado.
+- [ ] Pôr a F2 do doc 66 como slide 5, com "Descritivo" na tela.
+- [ ] No Modelo, a equação com o efeito fixo do par de UFs e o teste β > zero, com cluster por conjunto de escolha.
+- [ ] Na Identificação, "Mantido fixo" e "Especificação: pós-resultado (adendo 52e)".
+- [ ] O resultado principal é o VL-1 (slide 8), com a figura sem o modelo base.
+- [ ] Na robustez, "forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1"; os km dos ciclos 1 e 3 não vão à tela.
+- [ ] Conclusão e Limitações como na seção 6.3; o roteiro de fala novo está no [doc 09](09_roteiro_fala_7min.md).
+- [ ] Ressalvas na fala: pós-resultado; sem fixar a UF, o IC contém 1; escolha não é preenchimento; pacote do corte;
+  forte só no ciclo 2; origem = vínculo no CNES.

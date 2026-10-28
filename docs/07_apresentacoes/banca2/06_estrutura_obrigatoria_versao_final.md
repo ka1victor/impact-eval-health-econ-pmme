@@ -7,6 +7,12 @@
 > (`scripts/apresentacao/gerar_deck_banca2.py`), não à mão.<br>
 > **Estatuto:** regra de apresentação. Não muda protocolo nem resultado.
 
+> [!IMPORTANT]
+> **Hipótese de 28/10/2026** (decisão do autor; [doc 07](07_nova_hipotese.md)): "a hipótese é simplesmente sobre o
+> efeito bolsa → 1ª opção", com "só comparação entre municípios da mesma UF"; "UF, origem etc. é tudo
+> controle/pareamento". Nenhum slide, nem do apêndice, interpreta o coeficiente da origem; o D_UF sai da tela. A
+> estrutura das oito seções, os tetos e a rubrica não mudam; o encaixe vigente está no §3.
+
 > [!NOTE]
 > **Hipótese única a partir de 27/10/2026** ([doc 07](07_nova_hipotese.md)): o corpo do deck tem só a antiga H2
 > (bolsa × origem), formulada depois de ver os dados e dita assim no slide de Hipótese. A antiga H1 (preenchimento
@@ -62,28 +68,33 @@ continuam, desde que caibam nesta estrutura:
   também é aplicado pelo gerador e pelo teste;
 - **redação das auditorias 49 e 50**: "não detectamos aumento", nunca "não
   muda" ou "não encheu"; o sinal negativo em 0,300 "anda junto com a UF", não
-  "some"; o teste central da hipótese é origem × toda a bolsa; números da
-  escolha com o quadro do ciclo 2 de 13/02/2026.
+  "some"; números da escolha com o quadro do ciclo 2 de 13/02/2026. Desde
+  28/10/2026, o resultado principal é o peso da bolsa comparando vagas da
+  mesma UF (VL-1, adendo 52e), dito como pós-resultado, com a especificação
+  pré-registrada (sem fixar a UF, IC que contém 1) nas limitações; na tela,
+  nada de "origem pesa", "×11" ou "D_UF".
 
-## 3. Como o conteúdo atual se encaixa (versão de 27/10/2026: hipótese única, revista pela rubrica)
+## 3. Como o conteúdo atual se encaixa (versão de 28/10/2026: bolsa → 1ª opção, dentro da mesma UF)
 
-O conteúdo canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_curto.md); a hipótese e o roteiro, em
-[`07_nova_hipotese.md`](07_nova_hipotese.md). 11 slides no corpo e 2 no apêndice:
+O conteúdo canônico está em [`04_conteudo_deck_curto.md`](04_conteudo_deck_curto.md); a hipótese, em
+[`07_nova_hipotese.md`](07_nova_hipotese.md); o roteiro, no [doc 09](09_roteiro_fala_7min.md). 11 slides no corpo e 1
+no apêndice:
 
 | Seção | Slides | Conteúdo |
 |---|---|---|
-| Hipótese | 1 | a pergunta no título (origem ou bolsa na escolha?); a hipótese em destaque; em cinza, a motivação numa linha (no corte, não detectamos aumento do preenchimento); "formulada após ver os dados" na tela |
-| Dados | 2 | dados e amostra num slide só (antes "Dados" e "Os três ciclos em números"): a figura das fontes e variáveis e do **funil da amostra por ciclo** (`curto_dados_amostra.png`); na tela, a **unidade de observação** (candidato × vaga do seu curso e ciclo; y = 1 na 1ª opção) e o tamanho do modelo |
-| Análise descritiva | 3–4 | a regra *sharp* bolsa × IVS, com "Como ler" na tela; onde os médicos escolhem (G-B), com a linha que a liga à pergunta |
-| Metodologia | 5 | o logit condicional da 1ª opção em palavras, com a **justificativa** (escolha entre vagas; o candidato comparado consigo mesmo; a bolsa muda pela regra do IVS) e o **teste** (D_UF, unilateral, erro-padrão agrupado por conjunto de escolha) |
-| Identificação | 6 | numa tabela enxuta: bolsa por regra (*sharp*); pacote do corte; IIA em parte; localização (par de UFs fixado); conjunto de escolha |
-| Resultados | 7–8 | o teste central, origem × toda a bolsa (G-D), com a **leitura do coeficiente** na tela; a bolsa dentro da mesma UF (G-C, adendo pós-resultado), com a leitura do coeficiente e o p da especificação pré-registrada na tela |
-| Robustez | 9 | uma figura e duas linhas: o que se mantém (a origem pesa mais nos três ciclos) e o que não se mantém (o peso da bolsa: forte só no ciclo 2; perto do corte, inconclusivo) |
-| Discussão | 10–11 | **Conclusão**: retoma a pergunta e a responde em três pontos (origem; bolsa na mesma UF; a teoria, "os dados sugerem incentivo limitado"); **Limitações**: seis, cada uma com a sua implicação |
-| Apêndice | 12–13 | o fato da antiga H1 (G-A); a antiga H3 numa frase |
+| Hipótese | 1 | a pergunta no título (a bolsa maior muda a 1ª opção?); a hipótese em destaque ("comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a 1ª opção"); em cinza, a motivação (no corte, preenchimento sem aumento detectado); "formulada após ver os dados" na tela |
+| Dados | 2 | fontes e variáveis, unidade de observação (candidato × vaga) e funil da amostra por ciclo |
+| Análise descritiva | 3–5 | a regra *sharp* bolsa × IVS; onde escolhem (79% na própria UF), como **motivação para comparar dentro da UF**; a F2 do doc 66, descritiva da hipótese (perto do corte, na UF de origem, o lado de bolsa maior recebe mais 1ªs opções do que tem de vagas) |
+| Metodologia | 6 | logit condicional com efeito fixo de UF de origem × UF da vaga; o candidato comparado consigo mesmo, entre vagas da mesma UF; teste β > zero, erro-padrão agrupado por conjunto de escolha |
+| Identificação | 7 | bolsa por regra (*sharp*); o que fica fixo (candidato, par de UFs, distância); pacote do corte; especificação pós-resultado (adendo 52e); conjunto de escolha suposto |
+| Resultados | 8 | o VL-1: ciclos 1–3 e ciclo 2, com os km equivalentes; a pré-registrada, sem fixar a UF, na cautela |
+| Robustez | 9 | só dentro da mesma UF: distância em log, região de saúde × UF, só vagas perto do corte (inconclusiva) e o VL-1 por ciclo (forte só no ciclo 2; nos ciclos 1 e 3 o IC contém 1; adendo 52g) |
+| Discussão | 10–11 | **Conclusão** (a bolsa maior aumenta a 1ª opção, comparando vagas da mesma UF? Sim, forte só no ciclo 2; a leitura pela teoria como "os dados sugerem"); **Limitações** (pós-resultado; sem fixar a UF, IC contém 1; escolha ≠ preenchimento; pacote do corte; só ciclo 2; origem = CNES) |
+| Apêndice | 12 | o fato da antiga H1 só pareando municípios da mesma UF |
 
-Saíram do corpo, com o essencial nas notas ou no apêndice: a H1 como hipótese (scatter, especificação, premissas,
-resultado, robustezes e "por que o sinal sai negativo"), a H3 como plano B e os planos B em cinza.
+Saíram em 28/10/2026: o teste central origem × toda a bolsa (D_UF, ×11,0 contra ×1,57), do corpo e do apêndice (fica
+numa linha das notas do slide de Limitações); a RDD sem controle do apêndice; a antiga H3. A versão de 27/10/2026 está
+no histórico (commit `33d15d9`) e o mapa, no [doc 10](10_mapa_deck_anterior_para_rubrica.md), §6.
 
 ## 4. A rubrica da banca (27/10/2026)
 

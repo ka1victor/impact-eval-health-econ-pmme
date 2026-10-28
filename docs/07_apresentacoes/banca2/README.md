@@ -143,10 +143,12 @@ só** (`deck_banca2.pptx`: slides do grupo, parte empírica e apêndice), o
 manifesto do deck e as imagens de conferência em `qa_render/`, com a grade de
 miniaturas da parte empírica (`grade_empirica.png`), e o deck curto
 (`deck_banca2_curto.pptx` e `.pdf`, com o manifesto e a grade
-`qa_render/grade_curto.png`), com as figuras da hipótese única
-(`curto_origem_bolsa.png`, `curto_bolsa_mesma_uf.png`,
-`curto_robustez_escolha.png` e, no apêndice, `curto_fato.png`), além da regra
-e de `exp_escolha_origem.png`. As figuras antigas do curto continuam geradas e
+`qa_render/grade_curto.png`), com as figuras da hipótese de 28/10/2026, bolsa
+→ 1ª opção dentro da mesma UF (`curto_bolsa_mesma_uf.png`,
+`curto_robustez_escolha.png` e, no apêndice, `curto_fato_pareado.png`), além
+da regra, de `exp_escolha_origem.png` e da F2 do doc 66
+(`output/rdd_bolsa/H2_figuras/H2_F2_mesma_uf_perto_do_corte.png`, sem
+redesenho). As figuras antigas do curto continuam geradas e
 registradas, mas não entram no deck. Os geradores não estão no `run_all.py`; a
 inclusão fica para o coordenador do pipeline.
 

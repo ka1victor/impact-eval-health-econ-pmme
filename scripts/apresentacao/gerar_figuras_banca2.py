@@ -602,6 +602,10 @@ OC_PRE = "Protocolo 64 (doc 57q; auditoria 39; pacote do corte): "
 PL_EST = "output/rdd_bolsa/PL_estimativas.csv"
 VL_EST = "output/rdd_bolsa/VL_estimativas.csv"
 VC_EST = "output/rdd_bolsa/VC_estimativas.csv"
+H2_SIN = "output/rdd_bolsa/H2_sintese.csv"
+VG_EST = "output/rdd_bolsa/VG_estimativas.csv"
+VG_PRE = "Adendo 52g (doc 57z; auditoria pendente; pós-resultado; robustez por ciclo da hipótese de 28/10/2026): "
+H2_PRE = "Síntese da H2 (doc 66, §3; auditoria 52; descritivo, sem teste): "
 P1_RES = "output/rdd_bolsa/P1_resumo.json"
 PL_PRE = "Adendo 48h (doc 57w; auditoria 47; robustez pós-resultado do fato, antiga H1): "
 VL_PRE = "Adendo 52e (doc 57x; auditoria 48; pós-resultado; hipótese da banca 2): "
@@ -613,6 +617,8 @@ AUDITORIA_POR_PREFIXO = (("CL_", "auditoria 40 (adendo 48d, doc 57r): aprovado c
                          ("OC_", "auditoria 39 (protocolo 64, doc 57q): aprovado com correções de texto"),
                          ("PL_", "auditoria 47 (adendo 48h, doc 57w): aprovado com correções de texto"),
                          ("VL", "auditoria 48 (adendo 52e, doc 57x): aprovado com correções de texto"),
+                         ("H2D_", "auditoria 52 (doc 66, §3): aprovado com correções de redação e de rótulo"),
+                         ("VG", "sem auditoria (adendo 52g, doc 57z): auditoria pendente em 28/10/2026"),
                          ("VC_", "auditoria 41 (adendo 52c, doc 57p): aprovado com correções de texto"))
 CORTES_LONGO = (("300", "0.300"), ("400", "0.400"))
 
@@ -1288,6 +1294,26 @@ NUMEROS_NOVOS: list[tuple[str, str, dict, str, str]] = [
      "M1: conjuntos de escolha (curso × ciclo), ciclos 1–3"),
     ("AM_VAGAS", "EMPIRICO", _j(P1_RES, "amostra", "celulas_p1"), "int",
      "M1: vagas (células estabelecimento × curso) nos conjuntos de escolha, ciclos 1–3"),
+    # Descritiva da hipótese de 28/10/2026 (F2 do doc 66): perto do corte, na UF de origem, a parte do lado de bolsa
+    # maior nas vagas disponíveis e nas 1ªs opções; lida do H2_sintese.csv (script 51), sem recálculo
+    ("H2D_DISP", "EMPIRICO", _c(H2_SIN, {"id": "D_LADO_DISP_EMP"}, "estimativa"), "pct1",
+     H2_PRE + "perto do corte, na UF de origem: parte do lado de bolsa maior nas vagas disponíveis (%), ciclos 1–3"),
+    ("H2D_ESC", "EMPIRICO", _c(H2_SIN, {"id": "D_LADO_ESC_EMP"}, "estimativa"), "pct1",
+     H2_PRE + "perto do corte, na UF de origem: parte do lado de bolsa maior nas 1ªs opções (%), ciclos 1–3"),
+    ("H2D_N", "EMPIRICO", _c(H2_SIN, {"id": "D_LADO_ESC_EMP"}, "n_candidatos"), "int",
+     H2_PRE + "candidatos com 1ª opção na UF de origem a até 0,050 de um corte, ciclos 1–3"),
+    # Robustez por ciclo com o par de UFs fixado (adendo 52g; VG-1 e VG-3), lida do VG_estimativas.csv
+    *[(f"{pre}_{s}", "EMPIRICO",
+       _c(VG_EST, {"chave_modelo": ch, "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, col), "d2",
+       VG_PRE + f"{dm}: razão de chances da 1ª opção por +R$ 5 mil, {ds}")
+      for pre, ch, dm in (("VG1", "VG1", "VG-1 (VL-1 no ciclo 1, par de UFs)"),
+                          ("VG3", "VG3", "VG-3 (VL-1 no ciclo 3, par de UFs)"))
+      for s, col, ds in (("RC", "estimativa", "estimativa"), ("RCI", "ic95_inf", "IC 95% inferior"),
+                         ("RCS", "ic95_sup", "IC 95% superior"))],
+    *[(f"{pre}_NCONJ", "EMPIRICO",
+       _c(VG_EST, {"chave_modelo": ch, "tipo_linha": "razao_chances_por_5mil", "termo": "bolsa_mil"}, "g_conjuntos"),
+       "int", VG_PRE + f"{dm}: conjuntos de escolha (clusters)")
+      for pre, ch, dm in (("VG1", "VG1", "VG-1"), ("VG3", "VG3", "VG-3"))],
 ]
 
 
@@ -2873,12 +2899,14 @@ def figura_fato(num: dict, destino: Path) -> dict:
 
 
 def figura_bolsa_mesma_uf(num: dict, destino: Path) -> dict:
-    """G-C: razão de chances da 1ª opção por +R$ 5 mil, comparando vagas da mesma UF (VL-1, par de UFs), nos ciclos
-    1–3 e no ciclo 2, com a versão base (M1, quadro do ciclo 2 corrigido) ao lado, em cinza claro."""
+    """G-C, resultado principal desde 28/10/2026 (decisão do autor: "a hipótese é simplesmente sobre o efeito bolsa
+    → 1ª opção", "só comparação entre municípios da mesma UF"): razão de chances da 1ª opção por +R$ 5 mil no VL-1
+    (adendo 52e; par de UFs fixado), nos ciclos 1–3 e no ciclo 2. Sem a linha do modelo base (sem fixar a UF), que
+    fica nas notas e nas limitações."""
     reg = Registro()
-    W, H = 12.3, 3.5
+    W, H = 12.3, 2.9
     fig = plt.figure(figsize=(W, H))
-    cods = [f"{p}_{k}_{s}" for p in ("VL1", "VLB") for k in ("EMP", "C2") for s in ("RCI", "RCS")]
+    cods = [f"VL1_{k}_{s}" for k in ("EMP", "C2") for s in ("RCI", "RCS")]
     xlim = _escala_log(num, cods)
     registro = []
     y_top, w_rot, w_plot, w_val = H - 0.06, 2.55, 2.7, 2.0
@@ -2887,24 +2915,22 @@ def figura_bolsa_mesma_uf(num: dict, destino: Path) -> dict:
     y_fim = y_top
     for k, x, wr in blocos:
         linhas = [dict(rot="Vagas da mesma UF" if wr else " ", est=f"VL1_{k}_RC", inf=f"VL1_{k}_RCI",
-                       sup=f"VL1_{k}_RCS", nota=f"= {_val(num, f'VL1_{k}_K5')} km a menos"),
-                  dict(rot="Pré-registrado (M1)" if wr else " ", est=f"VLB_{k}_RC", inf=f"VLB_{k}_RCI",
-                       sup=f"VLB_{k}_RCS", base=True)]
+                       sup=f"VL1_{k}_RCS", nota=f"= {_val(num, f'VL1_{k}_K5')} km a menos")]
         reg.t(fig, (x + wr) / W, (y_top - 0.02) / H, tit[k], fontsize=13.5, weight="bold", color=VERDE_ESC,
               va="top")
         y, r = _bloco_log(fig, reg, num, W, H, x, y_top - 0.36, wr + w_plot + w_val, "", linhas, xlim,
-                          max(wr, 0.01), w_val, alt=0.72,
+                          max(wr, 0.01), w_val, alt=0.8,
                           painel=f"Razão de chances da 1ª opção por +R$ 5 mil, {tit[k].lower()}")
-        registro += [dict(e, linha=f"{tit[k]} · {rot}") for e, rot in zip(r, ("mesma UF", "base"))]
+        registro += [dict(e, linha=f"{tit[k]} · mesma UF") for e in r]
         y_fim = min(y_fim, y)
     xl = blocos[1][1] - 0.08
     fig.add_artist(plt.Line2D([xl / W] * 2, [(y_fim - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
     reg.t(fig, (0.1 + w_rot) / W, (y_fim - 0.36) / H, "razão de chances (escala log); 1 = a bolsa não muda a escolha",
           fontsize=11.5, color=TINTA2, va="center")
-    _caixa_como_ler(fig, reg, W, ["acima de 1: a vaga de bolsa maior é mais escolhida como 1ª opção; barra = IC 95%; "
-                                  "verde: exclui 1. Cinza: pré-registrado.",
-                                  "Mesma UF (adendo pós-resultado): vagas da mesma UF, a de origem ou outra, vistas "
-                                  "por médicos da mesma UF de origem."], 0.28)
+    _caixa_como_ler(fig, reg, W, ["acima de 1: a vaga de bolsa R$ 5 mil maior é mais escolhida como 1ª opção; barra = "
+                                  "IC 95%; verde: exclui 1.",
+                                  "Vagas da mesma UF (a de origem ou outra), vistas por médicos da mesma UF de origem; "
+                                  "adendo pós-resultado."], 0.28)
     reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48). " + FONTE_FIG,
           fontsize=8.5, color=MUDO, va="bottom")
     _salvar(fig, destino)
@@ -3050,43 +3076,81 @@ def figura_dados_amostra(num: dict, destino: Path) -> dict:
 
 
 def figura_robustez_escolha(num: dict, destino: Path) -> dict:
-    """Robustez da hipótese: à esquerda, a razão de chances por +R$ 5 mil por ciclo (modelo base), no ciclo 2 com o
-    quadro refeito (antigo, cinza claro), com distância em log, com região de saúde de origem e só perto do corte; à
-    direita, origem − toda a bolsa (D_UF) por ciclo."""
+    """Robustez da hipótese de 28/10/2026, só com variantes que comparam vagas da mesma UF: à esquerda, ciclos 1–3 (o
+    VL-1, a distância em log, a região de saúde de origem × UF da vaga e só vagas perto do corte; adendo 52e); à
+    direita, o VL-1 por ciclo (ciclos 1 e 3 do adendo 52g; ciclo 2 do 52e). Razão de chances por +R$ 5 mil. Nada
+    sobre a origem."""
     reg = Registro()
-    W, H = 12.3, 5.25
+    W, H = 12.3, 4.0
     fig = plt.figure(figsize=(W, H))
-    esq = [dict(rot="Pré-registrado (M1)", est="VLB_EMP_RC", inf="VLB_EMP_RCI", sup="VLB_EMP_RCS"),
-           dict(rot="Ciclo 1", est="VC_M5C1_RC", inf="VC_M5C1_RCI", sup="VC_M5C1_RCS"),
-           dict(rot="Ciclo 2", est="VC_M5C2_RC", inf="VC_M5C2_RCI", sup="VC_M5C2_RCS"),
-           dict(rot="Ciclo 3", est="VC_M5C3_RC", inf="VC_M5C3_RCI", sup="VC_M5C3_RCS"),
-           dict(rot="Ciclo 2, quadro refeito", est="VC_M5C2A_RC", inf="VC_M5C2A_RCI", sup="VC_M5C2A_RCS", base=True),
-           dict(rot="Distância em log", est="VLLOG_EMP_RC", inf="VLLOG_EMP_RCI", sup="VLLOG_EMP_RCS"),
-           dict(rot="Região de saúde fixada", est="VL3_EMP_RC", inf="VL3_EMP_RCI", sup="VL3_EMP_RCS"),
-           dict(rot="Só vagas perto do corte", est="VL2_EMP_RC", inf="VL2_EMP_RCI", sup="VL2_EMP_RCS")]
-    xlim = _escala_log(num, [ln[s] for ln in esq for s in ("inf", "sup")])
+    rot = ("VL-1 (principal)", "Distância em log", "Região de saúde × UF", "Só vagas perto do corte")
+    pref = ("VL1_EMP", "VLLOG_EMP", "VL3_EMP", "VL2_EMP")
+    esq = [dict(rot=r, est=f"{p}_RC", inf=f"{p}_RCI", sup=f"{p}_RCS") for r, p in zip(rot, pref)]
+    rot2 = ("Ciclo 1", "Ciclo 2", "Ciclo 3")
+    dir_ = [dict(rot=r, est=f"{p}_RC", inf=f"{p}_RCI", sup=f"{p}_RCS") for r, p in zip(rot2, ("VG1", "VL1_C2", "VG3"))]
+    xlim = _escala_log(num, [ln[s] for ln in esq + dir_ for s in ("inf", "sup")])
     y_top = H - 0.06
-    w_esq = 7.3
-    y1, r1 = _bloco_log(fig, reg, num, W, H, 0.1, y_top, w_esq, "Razão de chances por +R$ 5 mil", esq, xlim,
-                        2.55, 1.95, alt=0.4)
-    dir_ = [dict(rot=f"Ciclo {c}", est=f"VC_DUF_C{c}_EST", inf=f"VC_DUF_C{c}_INF", sup=f"VC_DUF_C{c}_SUP")
-            for c in (1, 2, 3)]
-    xlim2 = _escala(num, [ln[s] for ln in dir_ for s in ("inf", "sup")], extra=(0.0,))
-    y2, r2 = _bloco_log(fig, reg, num, W, H, w_esq + 0.35, y_top, W - w_esq - 0.45, "Origem − toda a bolsa", dir_,
-                        xlim2, 0.85, 1.75, alt=0.4, nulo=0.0, log=False)
-    fig.add_artist(plt.Line2D([(w_esq + 0.22) / W] * 2, [(y1 - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
-    reg.t(fig, (0.1 + 2.55) / W, (y1 - 0.33) / H, "escala log; 1 = a bolsa não pesa", fontsize=11.5, color=TINTA2,
-          va="center")
-    reg.t(fig, (w_esq + 0.35 + 0.85) / W, (y2 - 0.33) / H, "log-chance; 0 = pesam igual", fontsize=11.5,
-          color=TINTA2, va="center")
-    _caixa_como_ler(fig, reg, W, ["1ª linha: pré-registrado (ciclos 1–3); depois, por ciclo. Três últimas: adendo "
-                                  "pós-resultado, mesma UF. Verde: IC 95% exclui o nulo.",
-                                  "Cinza claro: ciclo 2 com o quadro de vagas refeito depois do resultado (versão "
-                                  "antiga, só referência)."], 0.28)
-    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VC_estimativas.csv (adendo 52c; doc 57p; auditoria 41); VL_estimativas.csv "
-          "(adendo 52e; doc 57x; auditoria 48). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
+    w_rot, w_plot, w_val = 2.75, 2.3, 1.95
+    x2 = 0.1 + w_rot + w_plot + w_val + 0.15
+    w_rot2, w_plot2 = 0.95, 2.0
+    reg.t(fig, (0.1 + w_rot) / W, (y_top - 0.02) / H, "Ciclos 1–3", fontsize=13.5, weight="bold", color=VERDE_ESC,
+          va="top")
+    reg.t(fig, (x2 + w_rot2) / W, (y_top - 0.02) / H, "Por ciclo", fontsize=13.5, weight="bold", color=VERDE_ESC,
+          va="top")
+    y1, r1 = _bloco_log(fig, reg, num, W, H, 0.1, y_top - 0.36, w_rot + w_plot + w_val, "", esq, xlim, w_rot, w_val,
+                        alt=0.5, painel="Razão de chances por +R$ 5 mil, mesma UF, ciclos 1–3")
+    y2, r2 = _bloco_log(fig, reg, num, W, H, x2, y_top - 0.36, w_rot2 + w_plot2 + w_val, "", dir_, xlim, w_rot2,
+                        w_val, alt=0.5, painel="Razão de chances por +R$ 5 mil, mesma UF, por ciclo")
+    r1 = [dict(e, linha=f"Ciclos 1–3 · {r}") for e, r in zip(r1, rot)]
+    r2 = [dict(e, linha=f"Por ciclo · {r}") for e, r in zip(r2, rot2)]
+    fig.add_artist(plt.Line2D([(x2 - 0.08) / W] * 2, [(y1 - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    reg.t(fig, (0.1 + w_rot) / W, (y1 - 0.33) / H, "razão de chances (escala log); 1 = a bolsa não muda a escolha",
+          fontsize=11.5, color=TINTA2, va="center")
+    _caixa_como_ler(fig, reg, W, ["todas comparam vagas da mesma UF (adendos pós-resultado). Verde: IC 95% exclui 1; "
+                                  "cinza: contém 1 (inconclusivo).",
+                                  "Perto do corte: só vagas a até 0,050 de um corte de IVS. Ciclos 1 e 3: adendo 52g."],
+                    0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: VL_estimativas.csv (adendo 52e; doc 57x; auditoria 48); VG_estimativas.csv "
+          "(adendo 52g; doc 57z; auditoria pendente). " + FONTE_FIG, fontsize=8.5, color=MUDO, va="bottom")
     _salvar(fig, destino)
     return {"linhas": r1 + r2, "textos": reg.textos, "eixos": reg.eixos}
+
+
+def figura_fato_pareado(num: dict, destino: Path) -> dict:
+    """Apêndice desde 28/10/2026 (reforço do autor: "pode deixar TUDO na mesma UF"): o fato da antiga H1 só com a
+    comparação de municípios pareados na mesma UF e condição de capital (PH-1 do adendo 48h), por corte, sem a RDD
+    sem controle. Fração das células com vaga imediata preenchidas na 1ª chamada (p.p.)."""
+    reg = Registro()
+    W, H = 12.3, 2.9
+    fig = plt.figure(figsize=(W, H))
+    faixa = {"300": "Corte 0,300: R$ 10 → 15 mil", "400": "Corte 0,400: R$ 15 → 20 mil"}
+    xlim = _escala(num, [f"PL_FRAC_{c}_{s}" for c, _ in CORTES_TXT for s in ("INF", "SUP")])
+    registro = []
+    y_top, w_val, w_plot, w_rot = H - 0.06, 2.1, 2.5, 2.75
+    blocos = (("300", 0.1, w_rot), ("400", 0.1 + w_rot + w_plot + w_val + 0.15, 0.0))
+    y_fim = y_top
+    for c, x, wr in blocos:
+        linhas = [dict(rot="Pareados na mesma UF" if wr else " ", est=f"PL_FRAC_{c}_TAU", inf=f"PL_FRAC_{c}_INF",
+                       sup=f"PL_FRAC_{c}_SUP", nota=f"{_val(num, f'PL_FRAC_{c}_NPAR')} pares")]
+        reg.t(fig, (x + wr) / W, (y_top - 0.02) / H, faixa[c], fontsize=13.5, weight="bold", color=VERDE_ESC,
+              va="top")
+        y, r = _bloco_log(fig, reg, num, W, H, x, y_top - 0.36, wr + w_plot + w_val, "", linhas, xlim,
+                          max(wr, 0.01), w_val, alt=0.8, nulo=0.0, log=False,
+                          painel=f"Preenchimento, pareados na mesma UF, corte 0,{c} (p.p.)")
+        registro += [dict(e, linha=f"0,{c} · pareados na mesma UF") for e in r]
+        y_fim = min(y_fim, y)
+    xl = blocos[1][1] - 0.08
+    fig.add_artist(plt.Line2D([xl / W] * 2, [(y_fim - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
+    reg.t(fig, (0.1 + w_rot) / W, (y_fim - 0.36) / H, "p.p. das vagas imediatas preenchidas na 1ª chamada",
+          fontsize=11.5, color=TINTA2, va="center")
+    _caixa_como_ler(fig, reg, W, ["ponto = média das diferenças entre municípios pareados (mesma UF e condição de "
+                                  "capital), lado de bolsa maior menos o de menor.",
+                                  "Barra = IC 95% de permutação; barra que cruza o zero: não se detecta diferença."],
+                    0.28)
+    reg.t(fig, 0.1 / W, 0.04 / H, "Fontes: PL_estimativas.csv (adendo 48h; doc 57w; auditoria 47). " + FONTE_FIG,
+          fontsize=8.5, color=MUDO, va="bottom")
+    _salvar(fig, destino)
+    return {"linhas": registro, "textos": reg.textos, "eixos": reg.eixos}
 
 
 def figura_h3_horas(num: dict, destino: Path) -> dict:
@@ -3474,6 +3538,10 @@ ENTRADAS = [
     (RAIZ / VC_EST, "adendo 52c (doc 57p; auditoria 41): escolha com o quadro do ciclo 2 de 13/02/2026", "2026-10-26",
      "candidatos de 1ª opção, ciclos 1–3 e por ciclo", "log-chance; razão de chances",
      "versao + chave_modelo + tipo_linha + termo"),
+    (RAIZ / VG_EST, "adendo 52g (doc 57z; auditoria pendente): VL-1 nos ciclos 1 e 3 separados", "2026-10-28",
+     "candidatos de 1ª opção, ciclos 1 e 3", "razão de chances por +R$ 5 mil; km", "chave_modelo + tipo_linha + termo"),
+    (RAIZ / H2_SIN, "síntese da H2 (script 51; doc 66; auditoria 52): descritiva da F2 (perto do corte, na UF de "
+     "origem)", "2026-10-27", "candidatos de 1ª opção, ciclos 1–3", "fração", "id"),
     (RAIZ / NA_EST, "família A (protocolo 48): A3 por ciclo e por corte", "2026-10-19",
      "células abertas, ciclos 1, 2, 3 e juntos, cortes 0,300 e 0,400", "fração (x100 = p.p.)",
      "outcome_id + populacao + ciclo + corte + especificacao + variante"),
@@ -3623,9 +3691,12 @@ def main() -> int:
                            ("curto_fato.png", figura_fato,
                             "deck curto, G-A (apêndice): o fato da antiga H1 por corte, sem controle, com efeito fixo "
                             "de UF e pareando municípios da mesma UF (adendos 48b e 48h)"),
+                           ("curto_fato_pareado.png", figura_fato_pareado,
+                            "deck curto, apêndice (28/10/2026): o fato da antiga H1 só pareando municípios da mesma UF "
+                            "(adendo 48h, PH-1), por corte"),
                            ("curto_bolsa_mesma_uf.png", figura_bolsa_mesma_uf,
-                            "deck curto, G-C: razão de chances da 1ª opção por +R$ 5 mil comparando vagas da mesma UF "
-                            "(adendo 52e), ciclos 1–3 e ciclo 2, com a versão base em cinza"),
+                            "deck curto, resultado principal (28/10/2026): razão de chances da 1ª opção por +R$ 5 mil "
+                            "comparando vagas da mesma UF (VL-1, adendo 52e), ciclos 1–3 e ciclo 2, sem o modelo base"),
                            ("curto_origem_bolsa.png", figura_origem_bolsa,
                             "deck curto, G-D: quanto a UF de origem e toda a bolsa multiplicam a chance da 1ª opção "
                             "(M1 com o quadro do ciclo 2 corrigido, adendo 52c)"),
@@ -3633,8 +3704,9 @@ def main() -> int:
                             "deck curto, Dados e amostra: variáveis e fontes; funil da amostra da escolha por ciclo "
                             "(P1_resumo.json) e o tamanho do modelo em pares candidato × vaga"),
                            ("curto_robustez_escolha.png", figura_robustez_escolha,
-                            "deck curto, robustez da hipótese: por ciclo, quadro do ciclo 2, distância em log, região "
-                            "de saúde, perto do corte; origem − bolsa por ciclo")):
+                            "deck curto, robustez da hipótese de 28/10/2026: só variantes que comparam vagas da mesma "
+                            "UF (distância em log, região de saúde × UF da vaga, perto do corte) e o VL-1 por ciclo "
+                            "(adendos 52e e 52g)")):
         p = SAIDA / nome
         novas[nome] = fn(num, p)
         figs.append({"arquivo": p, "natureza": "EMPIRICO", "descricao": desc,
@@ -3646,8 +3718,10 @@ def main() -> int:
                      + ([RAIZ / CL_EST, RAIZ / PM_EST] if nome == "curto_h1_parecidos.png" else [])
                      + ([RAIZ / HI_EST] if nome == "curto_tost_hi.png" else [])
                      + ([RAIZ / HI_EST, RAIZ / PL_EST] if nome == "curto_fato.png" else [])
+                     + ([RAIZ / PL_EST] if nome == "curto_fato_pareado.png" else [])
                      + ([RAIZ / VL_EST] if nome in ("curto_bolsa_mesma_uf.png", "curto_robustez_escolha.png") else [])
-                     + ([RAIZ / VC_EST] if nome in ("curto_origem_bolsa.png", "curto_robustez_escolha.png") else [])
+                     + ([RAIZ / VG_EST] if nome == "curto_robustez_escolha.png" else [])
+                     + ([RAIZ / VC_EST] if nome == "curto_origem_bolsa.png" else [])
                      + ([RAIZ / P1_RES, RAIZ / G1_RES] if nome == "curto_dados_amostra.png" else [])})
     t_desc = linhas_tabela_descritiva(num)
     t_font = linhas_tabela_fontes(num)
