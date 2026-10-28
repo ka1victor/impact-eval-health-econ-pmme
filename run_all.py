@@ -154,6 +154,10 @@ STEPS = [
     # (VL-2), região de saúde de origem × UF da vaga (VL-3) e km equivalentes (VL-4). Importa o 42 (e por ele o 25c, o
     # 25, o 16 e o 12); portão VL-5 contra P1_, P1h_, VC_ (42) e VD_ (48) antes de qualquer conta nova.
     ROOT / "scripts" / "rdd_bolsa" / "50_escolha_localizacao_par.py",
+    # Adendo 52g (pós-resultado): VL-1 do 52e (efeito fixo de UF de origem × UF da vaga) nos ciclos 1 e 3 separados
+    # (VG-1, VG-3), km (VG-4) e contagens (VG-5). Importa o 50 (e por ele o 42, o 25c, o 25, o 16 e o 12); portão VG-R
+    # contra VL_ (50) antes de qualquer conta nova.
+    ROOT / "scripts" / "rdd_bolsa" / "53_VL1_por_ciclo.py",
     # Síntese da H2 (banca 2, pós-resultado, não reestima): lê G1_ (versionado), E9_ (16), P1_ (25), P1h_ (25c), VC_
     # (42), VD_ (48) e VL_ (50), as tabelas de escolha do 12, a malha de regiões de saúde, o a08 e os ESC_* de
     # output/apresentacao_banca2/numeros_banca2.json (fora do run_all); grava H2_* e os blocos do doc 66.
