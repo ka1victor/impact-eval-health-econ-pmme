@@ -8,6 +8,20 @@
 
 ---
 
+## 28/10/2026 — Adendo 52h: escolha com o par de UFs fixado, degrau por degrau
+
+Motivo: o grupo perguntou se o efeito da bolsa vale nos dois cortes; o autor pediu separar o efeito por corte (0,300
+e 0,400), comparando só vagas da mesma UF. O VL-1 do 52e com dois degraus no lugar da bolsa linear. Congelado antes
+de rodar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/52h_adendo_VL1_por_corte.md`](06_execucao/52h_adendo_VL1_por_corte.md) | adendo congelado; resultados irão para o doc 57za |
+
+---
+
 ## 28/10/2026 — Doc 57z: resultados do adendo 52g (VL-1 nos ciclos 1 e 3)
 
 Motivo: execução do adendo 52g. O doc 57z nasce com o bloco "Decisões de implementação" commitado antes de qualquer
