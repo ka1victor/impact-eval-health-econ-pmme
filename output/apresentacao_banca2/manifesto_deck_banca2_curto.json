@@ -245,14 +245,14 @@
   },
   "saidas": [
     {
-      "bytes": 1748441,
+      "bytes": 1748451,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
-      "sha256": "56ba733eee7267119b9955ff627a98b18fa129495ce6179765f3fcc879b9defb"
+      "sha256": "4f1adbe96e62ac353ee7ec397d57e4b8a80f044fae4d50d1e0d2eeb75a3f547e"
     },
     {
-      "bytes": 1171730,
+      "bytes": 1171845,
       "caminho": "output/apresentacao_banca2/deck_banca2_curto.pdf",
-      "sha256": "d0155b1762c69e43f7b05813d04c0ced7b447bc7b7e98a3c4496d13194869faf"
+      "sha256": "6ebb921219471b561f17839472c6735b1740a4efe7733c0511b3020b9a576b4c"
     }
   ],
   "script": "scripts/apresentacao/gerar_deck_banca2.py (modo padrão: deck curto)",

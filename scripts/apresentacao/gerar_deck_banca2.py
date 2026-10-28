@@ -1319,13 +1319,15 @@ def montar_curto(sl: dict, rid_img: str | None) -> str:
                                 "l", linha=102)])
             y += h_i + gap
     elif lay == "curto_espec":
-        # especificação (pedido do autor: "texto demais"): a equação em palavras numa linha grande, no centro, e
+        # especificação (pedido do autor: "texto demais"): a equação em palavras numa linha grande (se longa,
+        # quebrada no "; " em duas linhas de 26 pt), no centro, e
         # embaixo as linhas curtas rotuladas (outcome, amostra ou comparação, cuidado); o resto vai para as notas
         eq, rotuladas = linhas[0][0], [re.match(r"\*\*(.+?)\*\*\s*(.*)", t_).groups() for t_, _ in linhas[1:]]
         y_fim = Y_FONTES - 0.1
         h_eq = 1.75
         s.forma("Equação em palavras", X0, Y0 + 0.05, W, h_eq, adj=8000, fill=VERDE_ESCURO, anchor="ctr",
-                ins=(0.4, 0.08, 0.4, 0.08), paras=[para(runs_md(eq, 28, BRANCO, cor_neg="DDEFE0"), "ctr")])
+                ins=(0.4, 0.08, 0.4, 0.08), paras=[para(runs_md(e_, 28 if len(eq) <= 60 else 26, BRANCO, cor_neg="DDEFE0"), "ctr")
+                       for e_ in ([eq] if len(eq) <= 60 else eq.replace("; ", ";\n").split("\n"))])
         gap, w_rot, sz = 0.2, 2.4, 20.0
         y = Y0 + 0.05 + h_eq + 0.3
         h_i = (y_fim - y - gap * (len(rotuladas) - 1)) / len(rotuladas)
