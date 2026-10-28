@@ -8,6 +8,19 @@
 
 ---
 
+## 28/10/2026 — Adendo 52g: escolha com o par de UFs fixado, ciclo a ciclo
+
+Motivo: o autor fixou a hipótese no efeito da bolsa sobre a 1ª opção, só comparando vagas da mesma UF (VL-1 do
+52e). Faltam os ciclos 1 e 3 separados para a robustez por ciclo. Congelado antes de rodar.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`06_execucao/52g_adendo_VL1_por_ciclo.md`](06_execucao/52g_adendo_VL1_por_ciclo.md) | adendo congelado; resultados irão para o doc 57z |
+
+---
+
 ## 27/10/2026 — Auditoria 55: deck da banca 2 revisto pela rubrica
 
 Motivo: auditoria independente do deck refeito pela rubrica (11 slides no corpo e 2 no apêndice), do roteiro de 7
