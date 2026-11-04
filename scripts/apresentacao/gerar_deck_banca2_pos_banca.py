@@ -400,12 +400,79 @@ def rodape(sl, texto: str):
     caixa(sl, 0.2, 7.0, 12.4, 0.22, ["Fontes: " + texto], size=8, color=MUDO, anchor=MSO_ANCHOR.MIDDLE)
 
 
-def notas(sl, texto: str):
+ROTEIROS = {  # fala de cada slide do corpo e tempo-alvo (s); o gerador para se a soma sair de 6:30 a 7:30 (doc 06, §4)
+    "motiv": (35, lambda N, c: "O Mais Médicos Especialistas paga ao especialista uma bolsa mensal que depende da "
+              "vulnerabilidade do município da vaga: até IVS 0,300, R$ 10 mil; de 0,300 a 0,400, R$ 15 mil; acima, "
+              "R$ 20 mil. O município não escolhe a bolsa: é a regra do edital. Nossa pergunta: quando o médico "
+              "escolhe entre as vagas, a bolsa maior faz uma vaga ser a sua 1ª opção?"),
+    "hip": (45, lambda N, c: "A hipótese é sobre escolha entre vagas, não sobre o município ao longo do tempo. Pegue "
+            "um candidato e duas vagas do curso dele, na mesma UF, parecidas em tudo, mas uma paga R$ 5 mil a mais "
+            "porque o município está do outro lado de um corte de IVS. A hipótese: a vaga de bolsa maior tem mais "
+            "chance de ser a 1ª opção. Medimos com a razão de chances, e a hipótese é que ela passe de 1. Não falamos "
+            "de médicos chegando ao município. E, com honestidade: formulamos a hipótese depois de ver os dados."),
+    "dados": (45, lambda N, c: "A base tem uma linha para cada par candidato × vaga que ele podia escolher: todas "
+              "as vagas do seu curso e ciclo. A variável dependente vale 1 na vaga marcada em 1º lugar. A bolsa vem da "
+              "faixa do IVS do município da vaga. O local de trabalho anterior é onde o médico tinha vínculo no CNES "
+              "antes de se inscrever, não onde mora; dele saem a distância e o par de UFs. No modelo principal ficam "
+              f"{br(c['n_cand'], 0)} candidatos, cerca de {br(c['n_lin'] / c['n_cand'], 0)} vagas cada."),
+    "descr": (30, lambda N, c: f"Antes do modelo, os dados crus: {N('ESC_UF')}% põem a 1ª opção na UF onde já "
+              f"trabalhavam, e a distância mediana é {N('ESC_DIST_P50')} km. Isso não é resultado: é o motivo do "
+              "desenho. Comparar uma vaga do Amazonas com uma de São Paulo misturaria a bolsa com a UF; por isso o "
+              "modelo só compara vagas da mesma UF."),
+    "modelo": (45, lambda N, c: "O médico escolhe uma entre as vagas do seu curso: é uma escolha discreta. No logit "
+               "condicional, cada vaga tem uma atratividade U, e a probabilidade de ser a 1ª opção é exp(U) dividido "
+               "pela soma sobre as vagas daquele candidato. O termo testado é β: e elevado a 5β diz quanto R$ 5 mil a "
+               "mais multiplicam a chance. α, o efeito fixo do par de UFs, faz a comparação só entre vagas da mesma "
+               "UF. O IVS entra como curva contínua, sem salto: no corte, só a bolsa salta. Distância e atributos da "
+               "vaga são controles."),
+    "porque": (45, lambda N, c: "A referência mais próxima é Bobba et al., com professores no Peru. Lá, como aqui, o "
+               "salário salta em cortes de uma variável do lugar, e eles identificam o peso do salário só por esses "
+               "saltos, controlando a variável do corte de forma contínua, como fazemos com o IVS. Também fixam o "
+               "lugar e usam a distância. A diferença: lá o professor escolhe na sua vez e pode sair do setor; por "
+               "isso usam um logit mais rico. Aqui o médico lista as opções na inscrição, e o logit condicional basta. "
+               "A RDD por vaga, mais simples, foi feita e não distingue o efeito de zero."),
+    "ident": (45, lambda N, c: "O que o software mantém fixo? O candidato: o logit calcula a probabilidade dentro "
+              "das vagas de cada um, e tudo o que é do médico se cancela; é o efeito fixo de indivíduo. E o par de UFs, "
+              "com uma dummy por combinação. Não há efeito fixo de município: a bolsa é a mesma no município inteiro e "
+              "seria absorvida. Distância e região são controles. As premissas: a bolsa segue a regra; no corte mudam "
+              "outras regras, então medimos o pacote; e supomos que o médico viu todas as vagas do curso."),
+    "result": (50, lambda N, c: "Este é o resultado, e a tabela mostra a estimação. O coeficiente da bolsa é "
+               f"{br(c['beta'], 3)} por mil reais, em log-chance. Para R$ 5 mil, vezes 5: {br(c['cinco_beta'], 3)}. "
+               f"Exponenciando: {N('VL1_EMP_RC')}. Entre duas vagas iguais exceto a bolsa, a de R$ 5 mil a mais tem "
+               f"{N('VL1_EMP_RC')} vez a probabilidade de ser a 1ª opção, com intervalo de {N('VL1_EMP_RCI')} a "
+               f"{N('VL1_EMP_RCS')}. Como régua, a distância pesa {br(c['dist'], 3)} por 100 km: R$ 5 mil valem uma "
+               f"vaga {N('VL1_EMP_K5')} km mais perto. No ciclo 2, {N('VL1_C2_RC')}. Ressalva: a especificação veio "
+               "depois dos dados, e a pré-registrada, sem o par de UFs, tem intervalo que contém 1."),
+    "robus": (40, lambda N, c: "Todas as variantes comparam vagas da mesma UF. Com a distância em log, com a região "
+              "de saúde no lugar da UF ou com cada degrau separado, o efeito fica no mesmo lugar, e o bootstrap para "
+              f"poucos grupos dá p {N('VL1_EMP_PSR')}. Só com vagas perto do corte, há menos dados e o intervalo "
+              "contém 1: inconclusivo. Por ciclo, o efeito é forte só no ciclo 2; nos ciclos 1 e 3, o intervalo "
+              "contém 1. Por que o ciclo 2, não sabemos."),
+    "concl": (30, lambda N, c: "Voltando à pergunta: sim. Entre vagas da mesma UF, R$ 5 mil a mais multiplicam por "
+              f"{N('VL1_EMP_RC')} a chance de a vaga ser a 1ª opção, com força só no ciclo 2. Pela teoria da banca 1, "
+              f"os dados sugerem que a bolsa compensa parte do custo do lugar: uns {N('VL1_EMP_K5')} km. Para a "
+              "política: a bolsa reordena a escolha; não mostramos mais médicos chegando ao município."),
+    "limit": (40, lambda N, c: "Seis limitações e o que cada uma implica. A especificação veio depois dos dados: o "
+              "resultado é exploratório. Sem o par de UFs, como no pré-registrado, o intervalo contém 1. Só vemos a "
+              "inscrição, não quem foi trabalhar no município. O corte muda um pacote de regras: medimos o pacote. O "
+              "efeito é forte só no ciclo 2: não dá para generalizar. E o local de trabalho anterior vem do CNES, não "
+              "é a residência. Obrigado."),
+}
+CTX: dict = {}
+TEMPOS: dict = {}
+
+
+def notas(sl, texto: str, chave: str | None = None):
     ns = sl.notes_slide
     if ns.notes_text_frame is None:  # página de notas sem o corpo: copia o corpo de uma página de notas do deck
         modelo = next(s.notes_slide.notes_placeholder for s in sl.part.package.presentation_part.presentation.slides
                       if s.has_notes_slide and s.notes_slide.notes_placeholder is not None)
         ns.shapes._spTree.append(copy.deepcopy(modelo._element))
+    if chave is not None:  # o roteiro vem de ROTEIROS; o resto do texto é o detalhe para perguntas
+        seg, fala = ROTEIROS[chave]
+        detalhe = texto.split("\n\n", 1)[1] if "\n\n" in texto else ""
+        texto = f"Roteiro ({seg} s). {fala(CTX['N'], CTX['c'])}" + (f"\n\n{detalhe}" if detalhe else "")
+        TEMPOS[chave] = seg
     ns.notes_text_frame.text = texto
 
 
@@ -441,15 +508,27 @@ def cautela(sl, texto, y=6.5, h=0.42):
 # Slides
 # ---------------------------------------------------------------------------
 
+def s_capa(sl):
+    """Título vira a pergunta: sem a comparação com a origem (fora desde 28/10/2026), "incentivo limitado" não é mais
+    o que o deck mostra, e a conclusão responde "sim"."""
+    tit = por_id(sl, 7)[0]
+    trocar(tit, ["A bolsa maior atrai a 1ª opção?", "Um modelo de escolha para o", "Programa Mais Médicos Especialistas"])
+    notas(sl, "Título revisto em 04/11/2026 (doc 12): a versão apresentada, 'Remuneração como incentivo limitado', "
+              "vinha da comparação origem × toda a bolsa, que saiu do deck por decisão do autor de 28/10/2026.")
+
+
 def s_motivacao(sl, N):
     titulo(sl, "A bolsa do PMM-E é maior onde o município é mais vulnerável")
     remover(sl, por_id(sl, 47, 45, 46, 10, 11, 12, 15, 16, 17))
-    for sh in sl.shapes:  # typo do grupo no título da notícia do MS
+    for sh in sl.shapes:  # typo do grupo no título da notícia do MS; legenda do 4º cartão cabe no cartão
         for sub in getattr(sh, "shapes", []):
             if sub.has_text_frame:
                 for p in sub.text_frame.paragraphs:
                     for r in p.runs:
                         r.text = r.text.replace("medicos", "médicos")
+                if sub.name == "Manchete" and "prorroga" in sub.text_frame.text:
+                    for r in sub.text_frame.paragraphs[0].runs:
+                        r.font.size = Pt(12.5)
     cabecalho(sl, 0.35, 3.85, 7.9, "I. A regra: a bolsa mensal cresce com o IVS do município da vaga",
               "IVS = Índice de Vulnerabilidade Social (Ipea, Censo 2010)")
     faixas = (("IVS até 0,300", "R$ 10 mil", TINTA, VERDE), ("IVS de 0,300 a 0,400", "R$ 15 mil", CLARO, VERDE),
@@ -469,13 +548,10 @@ def s_motivacao(sl, N):
                "27/08/2026; editais do PMM-E (SGTES/MS), faixas da bolsa; Ipea, IVS 2010.")
     navbar(sl, "Motivação")
     limpar_rels(sl)
-    notas(sl, "Roteiro (40 s). O Mais Médicos Especialistas paga uma bolsa mensal ao especialista, e o valor depende "
-              "da vulnerabilidade do município da vaga: até IVS 0,300, R$ 10 mil; de 0,300 a 0,400, R$ 15 mil; acima, "
-              "R$ 20 mil. O município não escolhe: é a regra do edital. Nossa pergunta: quando o médico escolhe entre "
-              "as vagas, a bolsa maior faz uma vaga ser a sua 1ª opção?\n\nDetalhe: o IVS é o IVS 2010 oficial do "
+    notas(sl, "\n\nDetalhe: o IVS é o IVS 2010 oficial do "
               "Ipea; ele reproduz a faixa de todos os municípios dos ciclos 1 e 2 (apêndice A1). Nos mesmos cortes "
               "mudam outras regras federais: o contraste é o pacote do corte, não a bolsa sozinha nem a participação "
-              "no PMM-E.")
+              "no PMM-E.", "motiv")
 
 
 def s_hipotese(sl, N):
@@ -518,16 +594,11 @@ def s_hipotese(sl, N):
                 "no mesmo corte de IVS (pacote).", y=6.42)
     fontes(sl, f"doc 07 da banca 2 (decisão do autor de 28/10/2026); adendo 52e; doc 57x; auditoria 48. {DOC12}.")
     navbar(sl, "Hipótese")
-    notas(sl, "Roteiro (50 s). A hipótese é sobre escolha, não sobre o município ao longo do tempo. Pegue um "
-              "candidato e duas vagas do curso dele, na mesma UF, parecidas em tudo — mas uma paga R$ 5 mil a mais "
-              "por mês porque o município está do outro lado de um corte de IVS. A hipótese: a vaga de bolsa maior "
-              "tem mais chance de ser a 1ª opção dele. Medimos isso como razão de chances; a hipótese é que ela seja "
-              "maior que 1. Não dizemos nada sobre mais médicos chegando ao município: só sobre a vaga que quem se "
-              "inscreveu marcou em 1º lugar. E um aviso honesto: formulamos a hipótese depois de ver os dados.\n\n"
+    notas(sl, "\n\n"
               "Por que a versão anterior confundia: 'um aumento na remuneração eleva a probabilidade' sugeria uma "
               "bolsa que sobe no tempo e um efeito no município; não há aumento no tempo — a variação é entre vagas, "
               "pela regra do IVS — e a comparação é só entre vagas da mesma UF. O contraste é o pacote do corte "
-              "(auditoria 18), não a participação no PMM-E. Exemplo ilustrativo: não são dados reais.")
+              "(auditoria 18), não a participação no PMM-E. Exemplo ilustrativo: não são dados reais.", "hip")
 
 
 def s_dados(sl, N, c):
@@ -569,19 +640,13 @@ def s_dados(sl, N, c):
     fontes(sl, "editais e quadros de vagas do PMM-E (SGTES/MS), ciclos 1–3; CNES/DATASUS (portão G1); Ipea, IVS 2010; "
                "IBGE; TabNet. P1_resumo.json; VL_estimativas.csv (VL-1).")
     navbar(sl, "Dados")
-    notas(sl, "Roteiro (55 s). A base de estimação tem uma linha para cada par candidato × vaga que ele podia "
-              "escolher: todas as vagas do seu curso e ciclo no quadro da 1ª chamada. A variável dependente vale 1 "
-              "na vaga que ele marcou em 1º lugar e 0 nas demais. A bolsa vem da faixa do IVS do município da vaga. O "
-              "local de trabalho anterior é o município onde o médico tinha vínculo no CNES antes de se inscrever — "
-              "não é onde mora. Dele saem a distância até cada vaga e o par de UFs: UF de trabalho anterior × UF da "
-              f"vaga. No modelo principal ficam {br(c['n_cand'], 0)} candidatos e {br(c['n_lin'], 0)} linhas, cerca "
-              f"de {br(c['n_lin'] / c['n_cand'], 0)} vagas por candidato.\n\n"
+    notas(sl, f"\n\n"
               f"Funil (P1_resumo.json): {N('AM_TOT_R1')} candidatos com 1ª opção numa vaga do quadro; "
               f"{N('AM_TOT_LIG')} ligados ao CNES (CPF e nome); {N('AM_TOT_ORI')} com município de vínculo anterior; "
               f"{N('M1_N')} no modelo base, depois de tirar quem tem a vaga ou a origem sem região de saúde na tabela "
               f"oficial; {br(c['n_cand'], 0)} no VL-1, depois de tirar os pares de UF que ninguém escolheu (a dummy "
               f"deles iria a menos infinito). {br(c['n_conj'], 0)} conjuntos de escolha (curso × ciclo). A tabela da "
-              "direita é ilustrativa. Dados pessoais só em memória ou em cache fora do Git.")
+              "direita é ilustrativa. Dados pessoais só em memória ou em cache fora do Git.", "dados")
 
 
 def s_descritiva(sl, N):
@@ -611,14 +676,9 @@ def s_descritiva(sl, N):
                "municipal do IBGE. G1_distancias_opcoes.parquet.")
     navbar(sl, "Análise Descritiva")
     limpar_rels(sl)
-    notas(sl, f"Roteiro (35 s). Antes do modelo, os dados crus. Dos {N('ESC_N')} candidatos, {N('ESC_UF')}% põem a "
-              f"1ª opção na UF onde já trabalhavam, {N('ESC_REG')}% na mesma região de saúde e {N('ESC_MUN')}% no "
-              f"próprio município; a distância mediana é {N('ESC_DIST_P50')} km. Isso é descritivo e não é o nosso "
-              "resultado: é o motivo do desenho. Como quase todos escolhem dentro da própria UF, comparar uma vaga "
-              "do Amazonas com uma de São Paulo misturaria a bolsa com a UF; por isso o modelo só compara vagas da "
-              "mesma UF.\n\nO local de trabalho anterior é o município do vínculo médico no CNES antes da inscrição, "
+    notas(sl, "\n\nO local de trabalho anterior é o município do vínculo médico no CNES antes da inscrição, "
               "não a residência. Saíram deste slide (pedido da banca, enxugar): os cartões repetidos, o histograma "
-              "das distâncias e o slide 'perto do corte', que criava expectativa de RDD.")
+              "das distâncias e o slide 'perto do corte', que criava expectativa de RDD.", "descr")
 
 
 def _eq(p, partes, size=20):
@@ -652,7 +712,8 @@ def s_modelo(sl, N, c):
     p.alignment = PP_ALIGN.CENTER
     p.space_before = Pt(6)
     r = p.add_run()
-    r.text = "i: candidato · v: vaga do seu curso e ciclo · X: região de saúde, município, porte, capital, vaga imediata"
+    r.text = ("i: candidato · v: vaga do seu curso e ciclo · X: mesma região de saúde, mesmo município, porte, "
+              "capital, vaga imediata")
     _fonte(r.font, 10.5, False, CINZA)
     caixa(sl, 9.15, 1.25, 3.95, 1.85,
           [[("O QUE SE ESTIMA", {"size": 10.5, "bold": True, "color": CLARO})],
@@ -682,66 +743,60 @@ def s_modelo(sl, N, c):
     fontes(sl, "McFadden (1974); protocolo 52; adendos 52c e 52e; docs 57a e 57x; scripts/rdd_bolsa/25_escolha_dap.py "
                "e 50_escolha_localizacao_par.py.")
     navbar(sl, "Metodologia")
-    notas(sl, "Roteiro (50 s). O médico escolhe uma entre as vagas do seu curso: é uma escolha discreta. No logit "
-              "condicional, cada vaga tem uma atratividade U; a probabilidade de ser a 1ª opção é e elevado a U "
-              "dividido pela soma sobre as vagas daquele candidato. O termo testado é β, o peso da bolsa: e elevado "
-              "a 5β diz quanto R$ 5 mil a mais multiplicam a chance. α é o efeito fixo do par de UFs: faz a "
-              "comparação só entre vagas da mesma UF. O IVS entra como curva contínua, sem salto: no corte, só a "
-              "bolsa salta. Distância e atributos da vaga são controles.\n\nDetalhe (VL-1, adendo 52e): bolsa linear "
+    notas(sl, "\n\nDetalhe (VL-1, adendo 52e): bolsa linear "
               "por R$ 1 mil; spline do IVS com dobras em 0,300 e 0,400; distância por 100 km; mesma região de saúde "
               "e mesmo município do local de trabalho anterior; porte (log da população 2022), capital, estrato, "
               "vaga imediata; efeito fixo do par (UF de trabalho anterior, UF da vaga). Estimação por máxima "
               "verossimilhança (Newton–Raphson próprio, conferido contra o ConditionalLogit do statsmodels no doc "
               f"42). Erro-padrão agrupado por conjunto de escolha (curso × ciclo; {br(c['n_conj'], 0)} grupos), Holm "
-              "nas três principais do adendo e score bootstrap de Rademacher para poucos grupos.")
+              "nas três principais do adendo e score bootstrap de Rademacher para poucos grupos.", "modelo")
 
 
 def s_por_que(sl, N):
-    titulo(sl, "Por que logit condicional, e não só uma RDD por vaga")
-    cabecalho(sl, 0.25, 0.85, 7.9, "I. A literatura de escolha de local usa a família logit")
-    linhas = [["Estudo", "Contexto e método", "Por que precisam disso"],
-              ["Bobba et al. (2026), NBER", "professores no Peru: adicional salarial por regra num corte + "
-                                             "modelo de escolha de vagas", "escolhe na sua vez; pode recusar todas"],
-              ["Costa, Nunes e Sanches (2024), REStat", "médicos no Brasil: logit de coeficientes aleatórios + "
-                                                         "instrumento", "salário de mercado é endógeno"],
-              ["Nós (PMM-E)", "logit condicional + efeito fixo do par de UFs",
-               "bolsa por regra; opções listadas na inscrição"]]
-    tabela(sl, 0.25, 1.3, [2.2, 3.2, 2.5], linhas, size=12, alt=1.05, destaque=(3,), alt_cab=0.5)
-    caixa(sl, 0.25, 5.0, 7.9, 0.9,
-          [[("Referência forte: ", {"bold": True, "color": VERDE}),
-            ("Bobba et al. têm o desenho mais parecido — salário por regra num corte — e também combinam a RDD por "
-             "vaga com um modelo de escolha.", {})]], size=12.5, fill=TINTA, margem=0.15, anchor=MSO_ANCHOR.MIDDLE,
-          forma=MSO_SHAPE.ROUNDED_RECTANGLE)
-    cabecalho(sl, 8.5, 0.85, 4.6, "II. Por que não algo mais simples?")
-    alt = (("RDD por vaga", "compara vagas dos dois lados do corte, uma observação por vaga. Feita: IC contém zero.",
-            BRANCO, TEXTO),
-           ("Logit condicional", "compara, para o mesmo médico, ≈ 107 vagas com bolsas diferentes: usa a variação "
-                                 "dentro do candidato.", VERDE, BRANCO),
-           ("Poisson com efeito fixo", "dá o mesmo β (Guimarães, Figueiredo e Woodward, 2003): o logit condicional "
-                                       "já é o simples da família.", BRANCO, TEXTO))
-    for k, (rot, txt, fill, cor) in enumerate(alt):
-        caixa(sl, 8.5, 1.3 + k * 1.62, 4.6, 1.47, [[(rot, {"bold": True, "size": 14})], [(txt, {"size": 11.5})]],
-              color=cor, fill=fill, line=LINHA, margem=0.18, espaco=3, anchor=MSO_ANCHOR.MIDDLE,
-              forma=MSO_SHAPE.ROUNDED_RECTANGLE)
+    titulo(sl, "Por que este modelo: o desenho de Bobba et al. (2026)")
+    cabecalho(sl, 0.25, 0.85, 8.3, "I. Referência forte: professores no Peru (NBER WP 29068)")
+    linhas = [["", "Bobba et al. (2026)", "Nós: PMM-E"],
+              ["Incentivo", "bônus salarial que salta em cortes de população e tempo de viagem (+13%)",
+               "bolsa que salta nos cortes de IVS (+R$ 5 mil)"],
+              ["Escolha", "professor escolhe na sua vez, entre as vagas que restam; pode sair do setor",
+               "médico lista as opções na inscrição; usamos a 1ª"],
+              ["Modelo", "logit multinomial com cardápio personalizado e coeficientes aleatórios",
+               "logit condicional com o cardápio do curso e ciclo"],
+              ["Peso do salário", "só os saltos nos cortes, com polinômios da população e do tempo de viagem",
+               "só os saltos nos cortes, com curva contínua do IVS"],
+              ["Lugar e distância", "efeito fixo de província; distância até a casa do professor",
+               "efeito fixo do par de UFs; distância até o trabalho anterior"]]
+    tabela(sl, 0.25, 1.25, [1.75, 3.35, 3.2], linhas, size=11.5, alt=0.8, alt_cab=0.45, destaque=(4,))
+    cabecalho(sl, 8.9, 0.85, 4.2, "II. E as alternativas?")
+    alt = (("Por que não só uma RDD por vaga?",
+            "Compara vagas, uma observação por vaga; foi feita e o IC contém zero. O logit vê o mesmo médico "
+            "diante de ≈ 107 vagas."),
+           ("Por que não coeficientes aleatórios?",
+            "Eles observam a saída do setor e dois concursos por professor; nós, não. No modelo base, o logit misto "
+            "dá peso da bolsa parecido: fica como sensibilidade."))
+    for k, (rot, txt) in enumerate(alt):
+        caixa(sl, 8.9, 1.25 + k * 2.3, 4.2, 2.1, [[(rot, {"bold": True, "size": 13.5, "color": VERDE})],
+                                                [(txt, {"size": 12})]],
+              fill=TINTA, margem=0.2, espaco=4, anchor=MSO_ANCHOR.MIDDLE, forma=MSO_SHAPE.ROUNDED_RECTANGLE)
     cautela(sl, "trocar o estimador depois de ver o resultado seria escolha pós-resultado; alternativas entram só "
                 "como robustez rotulada.", y=6.4)
-    fontes(sl, "Bobba et al., NBER WP 29068 (rev. 2026); Costa, Nunes e Sanches (2024), REStat; Guimarães, "
-               "Figueiredo e Woodward (2003), REStat; doc 03_literatura_empirica/20; doc 44 (F1.1); doc 11 da banca 2.")
+    fontes(sl, "Bobba, Ederer, León-Ciliotta, Neilson e Nieddu, NBER WP 29068, rev. jan. 2026, seções 3.1 e 4.1, "
+               "nota 13; doc 03_literatura_empirica/20 (A1); doc 44 (F1.1); doc 57a (M8).")
     navbar(sl, "Metodologia")
-    notas(sl, "Roteiro (45 s). Por que esse modelo? A literatura de escolha de local de trabalho usa a família "
-              "logit. A referência mais próxima é Bobba et al., com professores no Peru: o salário também muda por "
-              "regra num corte, e eles combinam a RDD por vaga com um modelo de escolha. Costa, Nunes e Sanches, com "
-              "médicos no Brasil, precisam de logit com coeficientes aleatórios e instrumento porque o salário de "
-              "mercado é endógeno; no PMM-E a bolsa vem de regra, e o candidato lista as opções na inscrição, então o "
-              "logit condicional basta. A alternativa mais simples, a RDD por vaga, foi feita: compara vagas e usa "
-              "uma observação por vaga, e o IC contém zero. O logit usa muito mais informação: o mesmo médico "
-              "vendo cerca de 107 vagas com bolsas diferentes.\n\nDetalhe: RDD por célula, F1.1 (doc 44): +0,063 "
-              "[−0,511; +0,636]. Bobba et al. usam logit multinomial com cardápio personalizado (escolhem na vez "
-              "deles, com opção de não aceitar). MQO com efeito fixo do candidato faria a mesma comparação, mas cada "
-              "vaga tem probabilidade perto de 1% e o modelo linear sai de [0, 1]; não está no protocolo. A Poisson "
-              "das contagens com efeito fixo de cada grupo com o mesmo cardápio e a mesma origem dá exatamente o β "
-              "do logit condicional (Guimarães et al., 2003). Logit misto (M8) e aninhado por região (M9) estão no "
-              "protocolo 52 como sensibilidade do modelo base; não foram refeitos com o par de UFs.")
+    notas(sl, "\n\nDetalhe (texto de Bobba et al., rev. jan. 2026): RDD em torno de "
+              "um aumento salarial de 13% (corte de 500 habitantes, com tempo de viagem até a capital da província); "
+              "seção 4.1: a alocação estável vira 'a multinomial logit model with personalized choice sets (Fack et "
+              "al., 2019)', com coeficientes aleatórios no salário e na opção de fora; nota 13: 'Conditional on z_jt, "
+              "the residual variation in wages w_jt stems from the discrete changes at the thresholds induced by the "
+              "rural wage policy', onde z_jt inclui polinômios da população e do tempo de viagem; efeito fixo de "
+              "província κ_c(j); splines da distância até a casa do professor. Outras referências: Costa, Nunes e "
+              "Sanches (2024, REStat), médicos no Brasil, usam logit de coeficientes aleatórios com instrumento porque "
+              "o salário de mercado é endógeno; no PMM-E a bolsa vem de regra. RDD por célula, F1.1 (doc 44): +0,063 "
+              "[−0,511; +0,636]. Logit misto (M8) e aninhado por região de saúde (M9), no modelo base (doc 57a, "
+              "quadro do ciclo 2 anterior à correção do adendo 52c): peso da bolsa positivo, IC que exclui zero, "
+              "perto do M1; não foram refeitos com o par de UFs. A Poisson das contagens com efeito fixo de cada grupo "
+              "com o mesmo cardápio e a mesma origem dá o mesmo β do logit condicional (Guimarães, Figueiredo e "
+              "Woodward, 2003).", "porque")
 
 
 def s_identificacao(sl, N, c):
@@ -774,21 +829,14 @@ def s_identificacao(sl, N, c):
     fontes(sl, "portao_r1_ivs_oficial.json; auditorias 16, 18 e 48; adendo 52e; VL_resumo.json; "
                "scripts/rdd_bolsa/25_escolha_dap.py (_estat) e 50_escolha_localizacao_par.py (matriz_vl).")
     navbar(sl, "Identificação")
-    notas(sl, "Roteiro (50 s). O que o software de fato mantém fixo? Primeiro, o candidato: o logit condicional "
-              "calcula a probabilidade dentro das vagas de cada um, então tudo o que é do médico se cancela — é o "
-              "efeito fixo de indivíduo. Segundo, o par de UFs: uma dummy para cada combinação de UF de trabalho "
-              "anterior e UF da vaga. Terceiro, e importante: não há efeito fixo de município nem de vaga, porque a "
-              "bolsa é a mesma no município inteiro; um efeito fixo de município absorveria a bolsa. A distância e a "
-              "região entram como controles, não como pareamento. As premissas: a bolsa segue a regra do IVS sem "
-              "exceção; no corte mudam outras regras, então medimos o pacote; e supomos que o médico viu todas as "
-              "vagas do seu curso.\n\nConferência no código: scripts/rdd_bolsa/25_escolha_dap.py, função _estat — a "
+    notas(sl, "\n\nConferência no código: scripts/rdd_bolsa/25_escolha_dap.py, função _estat — a "
               "soma do denominador é feita por candidato (np.add.reduceat nos inícios de cada grupo), então "
               "constantes do candidato saem da verossimilhança; colunas sem variação dentro de nenhum candidato são "
               "retiradas. scripts/rdd_bolsa/50_escolha_localizacao_par.py: uma coluna 0/1 por par, base no par da "
               f"própria UF ({c['n_ef']} colunas); mesma_uf e macrorregiões saem porque o par as absorve; pares que "
               "ninguém escolheu saem do modelo. Pares sem variação de bolsa ficam e só ajudam os controles. IIA: no "
               "modelo base, o logit aninhado por região de saúde a rejeita em parte e o peso da bolsa fica perto do "
-              "mesmo valor (docs 57a e 57v); não foi refeito com o par de UFs.")
+              "mesmo valor (docs 57a e 57v); não foi refeito com o par de UFs.", "ident")
 
 
 def s_resultados(sl, N, c):
@@ -811,8 +859,8 @@ def s_resultados(sl, N, c):
     cabecalho(sl, 7.5, 0.85, 5.6, "II. Da estimativa à leitura")
     passos = ((f"5 × {br(c['beta'], 3)} = {br(c['cinco_beta'], 3)}", "log-chance de +R$ 5 mil por mês"),
               ([("e", {}), (br(c['cinco_beta'], 3), {"sup": True}), (f" = {N('VL1_EMP_RC')}", {})],
-               f"a vaga com +R$ 5 mil tem {N('VL1_EMP_RC')} vez a chance de ser a 1ª opção (IC 95%: "
-               f"{N('VL1_EMP_RCI')} a {N('VL1_EMP_RCS')}; p de Holm {N('VL1_EMP_HOLM')})"),
+               f"entre duas vagas iguais exceto a bolsa, a de +R$ 5 mil tem {N('VL1_EMP_RC')} vez a probabilidade "
+               f"de ser a 1ª opção (IC 95%: {N('VL1_EMP_RCI')} a {N('VL1_EMP_RCS')}; p de Holm {N('VL1_EMP_HOLM')})"),
               (f"{br(c['cinco_beta'], 3)} ÷ {br(-c['dist'], 3)} × 100 km = {N('VL1_EMP_K5')} km",
                f"+R$ 5 mil pesam como uma vaga {N('VL1_EMP_K5')} km mais perto"))
     for k, (conta, leitura) in enumerate(passos):
@@ -831,21 +879,14 @@ def s_resultados(sl, N, c):
                 f"[{N('VLB_EMP_RCI')}; {N('VLB_EMP_RCS')}], IC que contém 1.", y=6.3, h=0.5)
     fontes(sl, "VL_estimativas.csv (VL-1, adendo 52e; doc 57x; auditoria 48); VC_estimativas.csv (P1a, adendo 52c).")
     navbar(sl, "Resultados")
-    notas(sl, "Roteiro (55 s). Este é o resultado principal, e a tabela mostra a estimação de fato. O coeficiente da "
-              f"bolsa é {br(c['beta'], 3)} por mil reais, em log-chance. Para um degrau de R$ 5 mil, multiplicamos "
-              f"por 5: {br(c['cinco_beta'], 3)}. Exponenciando, {N('VL1_EMP_RC')}: entre duas vagas da mesma UF, "
-              f"a de bolsa R$ 5 mil maior tem {N('VL1_EMP_RC')} vez a chance de ser a 1ª opção, com intervalo de "
-              f"{N('VL1_EMP_RCI')} a {N('VL1_EMP_RCS')}. Para ter uma régua: a distância pesa {br(c['dist'], 3)} por "
-              f"100 km; dividindo, R$ 5 mil valem uma vaga {N('VL1_EMP_K5')} km mais perto. No ciclo 2 sozinho, "
-              f"{N('VL1_C2_RC')}. Ressalva na tela: a especificação foi escolhida depois de ver os dados, e a "
-              f"pré-registrada, sem o par de UFs, tem intervalo que contém 1.\n\nDetalhe: razão de chances = razão "
+    notas(sl, f"\n\nDetalhe: razão de chances = razão "
               "entre as probabilidades de escolher duas vagas iguais em tudo menos a bolsa; como cada vaga tem "
               f"probabilidade pequena (≈ {br(c['n_lin'] / c['n_cand'], 0)} vagas por candidato), é perto da razão de "
               f"probabilidades. IC dos km: [{N('VL1_EMP_K5I')}; {N('VL1_EMP_K5S')}] (método delta). p de Holm na "
               "família das três principais do adendo 52e. Pré-registrada (P1a, M1 sem o par): p "
               f"{N('VC_B_HOLM')} (família de um teste). Os coeficientes dos controles descrevem quais vagas os "
               "candidatos escolhem; não são efeitos causais e não são interpretados. Pacote do corte; condicional a "
-              "se candidatar.")
+              "se candidatar.", "result")
 
 
 def s_robustez(sl, N, c, fig_rob):
@@ -855,7 +896,7 @@ def s_robustez(sl, N, c, fig_rob):
     faixa = (brutos[0][1], brutos[-1][1])
     pic = sl.shapes.add_picture(str(fig_rob), Inches(0.2), Inches(0.85), height=Inches(4.25))
     pic.name = "Figura robustez"
-    conteudo = (("MANTÉM", "Distância em log, região de saúde e cada degrau separado; bootstrap para poucos grupos: "
+    conteudo = (("MANTÉM", "Distância em log, região anterior e cada degrau separado; bootstrap para poucos grupos: "
                            f"p {N('VL1_EMP_PSR')}.", CLARO, VERDE),
                 ("POR CICLO", "Forte só no ciclo 2; nos ciclos 1 e 3, o IC contém 1.", LINHA, CINZA),
                 ("IVS A ±0,05", "Só vagas perto do corte: menos dados, IC contém 1 (inconclusivo).", LINHA, CINZA))
@@ -875,12 +916,7 @@ def s_robustez(sl, N, c, fig_rob):
                "52h; auditoria pendente); final_robustez_escolha.png (scripts/apresentacao/gerar_figuras_banca2.py).")
     navbar(sl, "Robustez")
     limpar_rels(sl)
-    notas(sl, "Roteiro (45 s). Todas as variantes comparam vagas da mesma UF. Medindo a distância em log, usando a "
-              "região de saúde no lugar da UF de trabalho anterior, ou estimando cada degrau separado — R$ 10 para "
-              f"15 mil e 15 para 20 mil —, o efeito fica entre {faixa[0]} e {faixa[1]}. Com poucos "
-              f"grupos, o bootstrap dá p {N('VL1_EMP_PSR')}. Só com vagas de IVS a até 0,05 de um corte, há menos "
-              "dados e o intervalo contém 1: inconclusivo, não 'efeito menor'. Ciclo a ciclo, o efeito é forte só no "
-              "ciclo 2; nos ciclos 1 e 3, o intervalo contém 1. Por que o ciclo 2, não sabemos.\n\n"
+    notas(sl, "\n\n"
               f"Números: principal {N('VL1_EMP_RC')} [{N('VL1_EMP_RCI')}; {N('VL1_EMP_RCS')}]; distância em log "
               f"{N('VLLOG_EMP_RC')} [{N('VLLOG_EMP_RCI')}; {N('VLLOG_EMP_RCS')}]; região de saúde × UF da vaga (VL-3) "
               f"{N('VL3_EMP_RC')} [{N('VL3_EMP_RCI')}; {N('VL3_EMP_RCS')}]; IVS a ±0,05 (VL-2) {N('VL2_EMP_RC')} "
@@ -893,7 +929,7 @@ def s_robustez(sl, N, c, fig_rob):
               f"Rademacher: p {N('VL1_EMP_PSR')} (ciclos 1–3) e {N('VL1_C2_PSR')} (ciclo 2). Adendos 52g e 52h: "
               "auditoria pendente. Tudo pós-resultado, condicional a se candidatar; pacote do corte. Os nomes das "
               "linhas da figura foram trocados a pedido da banca (o 'perto do corte' virou 'IVS a ±0,05 de um "
-              "corte'); as estimativas são as mesmas do deck anterior.")
+              "corte'); as estimativas são as mesmas do deck anterior.", "robus")
 
 
 def s_conclusao(sl, N, c):
@@ -917,15 +953,10 @@ def s_conclusao(sl, N, c):
     rodape(sl, "VL_estimativas.csv (VL-1, adendo 52e; auditoria 48); VG_estimativas.csv (adendo 52g; auditoria "
                "pendente); modelo da banca 1; auditoria 50.")
     navbar(sl, "Discussão")
-    notas(sl, f"Roteiro (35 s). Voltando à pergunta: sim. Entre vagas da mesma UF, R$ 5 mil a mais multiplicam por "
-              f"{N('VL1_EMP_RC')} a chance de a vaga ser a 1ª opção, e o efeito é forte só no ciclo 2. Pela teoria "
-              "da banca 1, o médico aceita a vaga se a bolsa compensa o custo do lugar; os dados sugerem que R$ 5 mil "
-              f"compensam parte desse custo, o equivalente a uma vaga {N('VL1_EMP_K5')} km mais perto. Para a "
-              "política: a bolsa reordena a escolha entre vagas da mesma UF; isso não mostra mais médicos chegando "
-              "ao município.\n\nA leitura pela teoria é interpretação, não teste (auditoria 50). Saiu do deck a "
+    notas(sl, "\n\nA leitura pela teoria é interpretação, não teste (auditoria 50). Saiu do deck a "
               "comparação origem × toda a bolsa (×11 contra ×1,57): ela compara a UF de trabalho anterior com outras "
               "UFs, fora da hipótese de 28/10/2026, e vinha do modelo base, não do VL-1. Contraste: pacote do corte, "
-              "não participação no PMM-E. Condicional a se candidatar.")
+              "não participação no PMM-E. Condicional a se candidatar.", "concl")
 
 
 def s_limitacoes(sl, N):
@@ -939,6 +970,8 @@ def s_limitacoes(sl, N):
     trocar_ultima(g["Implicação 2"], "Não dá para descartar efeito nulo nessa versão.")
     trocar(g["Problema 5"], [f"No 2º ciclo, ×{N('VL1_C2_RC')}; no 1º (×{N('VG1_RC')}) e no 3º (×{N('VG3_RC')}), o IC "
                              "contém 1."])
+    trocar(g["Problema 4"], ["Quando o município passa do corte de IVS, outras regras federais mudam junto com a "
+                             "bolsa."])
     trocar(g["Título 6"], ["Local de trabalho anterior vem do CNES"])
     trocar(g["Problema 6"], ["É onde o médico tinha vínculo antes da inscrição, não onde mora; só define o par de UFs "
                              "fixado."])
@@ -949,18 +982,14 @@ def s_limitacoes(sl, N):
     rodape(sl, "VL_estimativas.csv (VL-1 e M1, adendo 52e); VG_estimativas.csv (adendo 52g); auditorias 18 e 48; "
                "portão G1.")
     navbar(sl, "Discussão")
-    notas(sl, "Roteiro (45 s). Seis limitações e o que cada uma implica. A especificação é pós-resultado: o "
-              "resultado é exploratório e pede dados novos. Sem o par de UFs, como no pré-registrado, o intervalo "
-              "contém 1. Só vemos a inscrição: a vaga marcada, não quem foi trabalhar no município. O corte muda um "
-              "pacote de regras: medimos o pacote, não os R$ 5 mil sozinhos. O efeito é forte só no ciclo 2: não dá "
-              "para generalizar. E o local de trabalho anterior vem do CNES, não é a residência. Obrigado.\n\n"
+    notas(sl, "\n\n"
               f"Pré-registrada (P1a, M1 sem o par): ×{N('VLB_EMP_RC')} [{N('VLB_EMP_RCI')}; {N('VLB_EMP_RCS')}], "
               f"p {N('VC_B_HOLM')} (família de um teste). Por ciclo (adendo 52g, auditoria pendente): ciclo 1 "
               f"{N('VG1_RC')} [{N('VG1_RCI')}; {N('VG1_RCS')}], ciclo 3 {N('VG3_RC')} [{N('VG3_RCI')}; "
               f"{N('VG3_RCS')}]. Correção em relação ao deck de 04/11: os '+7% e 0%' dos ciclos 1 e 3 eram do modelo "
               "base, não do VL-1. Se perguntarem pela origem: no modelo base, sem o par, o teste origem × toda a bolsa "
               f"(D_UF) dá {N('VC_DUF_EST')} [{N('VC_DUF_INF')}; {N('VC_DUF_SUP')}] em log-chance (doc 57p); não é "
-              "interpretado aqui.")
+              "interpretado aqui.", "limit")
 
 
 def s_qa(sl):
@@ -980,28 +1009,6 @@ def s_apendice_regra(sl, N):
               "ciclo 1; até 0,300, R$ 10 mil; até 0,400, R$ 15 mil; acima, R$ 20 mil. No ciclo 3, 747 de 748: o que "
               "falta foi criado depois de 2010. Saiu do corpo do deck a pedido da banca: o gráfico criava expectativa "
               "de uma RDD, e o desenho é um modelo de escolha; a regra está no slide de motivação.")
-
-
-def s_apendice_h3(sl):
-    titulo(sl, "Apêndice A2: metade de quem entra já estava no município")
-    trocar(achar(sl, "Antiga H3"), ["Descritivo, fora da hipótese"])
-    # sai o 3º cartão (ligava o fato ao "×11" da origem) e a cautela repetida; os dois cartões restantes alargam
-    remover(sl, por_id(sl, 82, 83, 84, 85, 86, 87, 88))
-    d = Inches(2.1)
-    for sh in por_id(sl, 72, 75, 76):
-        sh.width = sh.width + d
-    for sh in por_id(sl, 77, 78, 79, 80, 81):
-        sh.left = sh.left + d
-    for sh in por_id(sl, 77, 80, 81):
-        sh.width = sh.width + d
-    navbar(sl, None)
-    numero(sl, "A2")
-    limpar_rels(sl)
-    notas(sl, "Apêndice (antiga H3, fora do corpo por decisão do autor de 27/10/2026). As horas cadastradas do médico "
-              "do PMM-E sobem +6,6 h/sem [+5,4; +7,8] depois da entrada, e 51,0% [48,4; 53,7] já tinham vínculo no "
-              "município do posto. Descritivo: o mesmo médico antes e depois, sem grupo de comparação; não é efeito "
-              "da bolsa nem da participação no PMM-E. Horas cadastradas não são presença. Saiu o cartão que ligava "
-              "isso ao '×11' da origem, que não está mais no deck.")
 
 
 # ---------------------------------------------------------------------------
@@ -1026,11 +1033,12 @@ def figura_robustez(N) -> dict:
     spec = importlib.util.spec_from_file_location("gfb2", RAIZ / "scripts" / "apresentacao" / "gerar_figuras_banca2.py")
     g = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(g)
-    rot = ("Principal: vagas da mesma UF", "Distância em log, não em km", "Região de saúde × UF da vaga",
-           "Só IVS a ±0,05 de um corte", "Idem, com região de saúde", "Só o degrau R$ 10 → 15 mil",
+    rot = ("Principal: vagas da mesma UF", "Distância em log, não em km", "Região anterior × UF da vaga",
+           "Só IVS a ±0,05 de um corte", "±0,05, região anterior × UF", "Só o degrau R$ 10 → 15 mil",
            "Só o degrau R$ 15 → 20 mil")
     ler = ["todas comparam vagas da mesma UF. Verde: IC 95% exclui 1; cinza: contém 1 (inconclusivo).",
-           "±0,05: só municípios com IVS a até 0,05 de um corte (menos vagas, IC mais largo)."]
+           "Região anterior: região de saúde do local de trabalho anterior no lugar da UF. ±0,05: só municípios com "
+           "IVS a até 0,05 de um corte."]
     return g.figura_robustez_escolha(N.reg, FIG_ROB, rotulos=rot, como_ler=ler)
 
 
@@ -1043,6 +1051,7 @@ def main() -> int:
         raise SystemExit("ERRO: o deck do grupo não é o apresentado em 04/11/2026 (hash diferente)")
     N = Numeros()
     c = N.conferir()
+    CTX.update(N=N, c=c)
     reg_fig = figura_robustez(N)
 
     prs = Presentation(str(args.deck_grupo))
@@ -1053,6 +1062,7 @@ def main() -> int:
     modelo = ident
     novos = {k: nova_lamina(prs, modelo) for k in ("hip", "dados", "modelo", "porque", "ident", "result")}
 
+    s_capa(capa)
     s_motivacao(motiv, N)
     s_hipotese(novos["hip"], N)
     s_dados(novos["dados"], N, c)
@@ -1066,14 +1076,16 @@ def main() -> int:
     s_limitacoes(limit, N)
     s_qa(qa)
     s_apendice_regra(regra, N)
-    s_apendice_h3(h3)
 
     ordem = [capa, motiv, novos["hip"], novos["dados"], descr, novos["modelo"], novos["porque"], novos["ident"],
-             novos["result"], robus, concl, limit, qa, regra, h3]
-    sai = [dados_ant, perto, metod, ident, result, incent]
+             novos["result"], robus, concl, limit, qa, regra]
+    sai = [dados_ant, perto, metod, ident, result, incent, h3]  # h3: antiga H3, fora da hipótese (doc 12, §4)
     for k, s in enumerate(ordem[1:13], start=2):
         numero(s, str(k))
 
+    total = sum(TEMPOS.values())
+    if set(TEMPOS) != set(ROTEIROS) or not 390 <= total <= 450:
+        raise SystemExit(f"ERRO: roteiro de {total // 60}:{total % 60:02d} ou slide sem roteiro (alvo 6:30 a 7:30)")
     lst = prs.slides._sldIdLst
     por_parte = {}
     for sid in list(lst):
@@ -1115,6 +1127,7 @@ def main() -> int:
         "figura_robustez": {"arquivo": str(FIG_ROB.relative_to(RAIZ)), "sha256": sha256(FIG_ROB),
                             "textos": reg_fig["textos"]},
         "slides": [{"n": k + 1, "titulo": t} for k, t in enumerate(titulos)],
+        "roteiro_segundos": {"por_slide": TEMPOS, "total": total},
         "deck": {"arquivo": str(DECK.relative_to(RAIZ)), "sha256": sha256(DECK)},
         "pdf": ({"arquivo": str(PDF.relative_to(RAIZ)), "sha256": sha256(PDF)} if com_pdf else None),
     }

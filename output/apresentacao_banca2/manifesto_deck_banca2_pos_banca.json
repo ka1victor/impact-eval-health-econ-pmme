@@ -40,9 +40,7 @@
     "AM_TOT_R1",
     "ESC_DIST_P50",
     "ESC_DIST_P75",
-    "ESC_MUN",
     "ESC_N",
-    "ESC_REG",
     "ESC_UF",
     "M1_N",
     "R_C1_MUN",
@@ -99,7 +97,7 @@
   ],
   "figura_robustez": {
     "arquivo": "output/apresentacao_banca2/final_robustez_escolha.png",
-    "sha256": "9030d16d765e206585f062c18694e79f24d2fd979bf03c0ebd82d57f969cd0c5",
+    "sha256": "70cf5cb0888442af21c55d9aaab70d9c79cb5bf74b585ed96a0b1c0c3918becf",
     "textos": [
       "Ciclos 1–3",
       "Por ciclo",
@@ -107,11 +105,11 @@
       "1,47 [1,15; 1,89]",
       "Distância em log, não em km",
       "1,45 [1,15; 1,83]",
-      "Região de saúde × UF da vaga",
+      "Região anterior × UF da vaga",
       "1,49 [1,15; 1,92]",
       "Só IVS a ±0,05 de um corte",
       "1,28 [0,95; 1,72]",
-      "Idem, com região de saúde",
+      "±0,05, região anterior × UF",
       "1,28 [0,95; 1,71]",
       "Só o degrau R$ 10 → 15 mil",
       "1,41 [1,03; 1,93]",
@@ -126,7 +124,7 @@
       "razão de chances (escala log); 1 = a bolsa não muda a escolha",
       "Como ler",
       "todas comparam vagas da mesma UF. Verde: IC 95% exclui 1; cinza: contém 1 (inconclusivo).",
-      "±0,05: só municípios com IVS a até 0,05 de um corte (menos vagas, IC mais largo).",
+      "Região anterior: região de saúde do local de trabalho anterior no lugar da UF. ±0,05: só municípios com IVS a até 0,05 de um corte.",
       "Fontes: VL_estimativas.csv (adendo 52e; auditoria 48); VG_ e VK_estimativas.csv (adendos 52g e 52h; auditoria pendente). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
     ]
   },
@@ -157,7 +155,7 @@
     },
     {
       "n": 7,
-      "titulo": "Por que logit condicional, e não só uma RDD por vaga"
+      "titulo": "Por que este modelo: o desenho de Bobba et al. (2026)"
     },
     {
       "n": 8,
@@ -186,18 +184,30 @@
     {
       "n": 14,
       "titulo": "Apêndice A1: a bolsa segue exatamente o IVS"
-    },
-    {
-      "n": 15,
-      "titulo": "Apêndice A2: metade de quem entra já estava no município"
     }
   ],
+  "roteiro_segundos": {
+    "por_slide": {
+      "motiv": 35,
+      "hip": 45,
+      "dados": 45,
+      "descr": 30,
+      "modelo": 45,
+      "porque": 45,
+      "ident": 45,
+      "result": 50,
+      "robus": 40,
+      "concl": 30,
+      "limit": 40
+    },
+    "total": 450
+  },
   "deck": {
     "arquivo": "output/apresentacao_banca2/deck_banca2_pos_banca.pptx",
-    "sha256": "5d8ac92c2f6b3d67747879c3eb8611673c8dfdb1bb193cfa76b3e19ef636842c"
+    "sha256": "f931500229c9274dd1da45da743f42915ea7c2c2f547640e92f98178a5a8c4b3"
   },
   "pdf": {
     "arquivo": "output/apresentacao_banca2/deck_banca2_pos_banca.pdf",
-    "sha256": "fcfdd9ed13850e8e36874db8225e42e764ef893e6f1dca8b77a3fb1f51e1c98a"
+    "sha256": "6fbae2bd1446fb8c3f1ec22fe6c5cf3ee126f66355bf5cb81a59efac2e8b6f1b"
   }
 }
