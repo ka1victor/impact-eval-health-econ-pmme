@@ -1,7 +1,7 @@
 # 11. Slides de apoio: como ler e como foi feito o logit condicional com o par de UFs
 
-> **Finalidade:** onze slides de apoio para responder a perguntas da banca sobre o resultado "na mesma UF, a vaga de
-> bolsa maior é preferida" (VL-1 do adendo 52e). Eles explicam a razão de chances, o log, o modelo, a base, os coeficientes da especificação principal, o efeito
+> **Finalidade:** doze slides de apoio para responder a perguntas da banca sobre o resultado "na mesma UF, a vaga de
+> bolsa maior é preferida" (VL-1 do adendo 52e). Eles explicam a razão de chances, o log, o modelo, onde ele é usado e as alternativas mais simples, a base, os coeficientes da especificação principal, o efeito
 > fixo do par, o que é fixo e o que é controle, o código e por que a conta perto do corte dá menos.<br>
 > **Estatuto:** material de apoio, fora do deck curto (que continua com no máximo 14 slides). Não traz resultado novo:
 > todo número vem de `output/rdd_bolsa/VL_estimativas.csv` e `VL_resumo.json` (adendo 52e, doc 57x, auditoria 48),
@@ -78,21 +78,35 @@ nessa posição do arquivo.
 | Interior remoto | −0,188 | [−0,379; 0,003] | 0,054 |
 | Metropolitano | 0,104 | [−0,050; 0,258] | 0,186 |
 
-## Referências do método
+## Onde esse modelo é usado
 
 - secao: Metodologia
 - layout: ficha
-- cautela: O efeito fixo do par vem do adendo 52e (pós-resultado), não de um artigo
-- fontes: protocolo 40 (E9); docs 03_literatura_empirica/19 e 20; docs 42, 57x.
-- notas: McFadden (1974) é a referência do estimador. Dal Bó, Finan e Rossi (2013) motivam olhar as candidaturas: salário anunciado sorteado entre vagas, com a resposta medida nas candidaturas. Costa, Nunes e Sanches (2024) é a aplicação mais próxima, escolha de local de médicos no Brasil por escolha discreta. Holmes (2005) usa logit multinomial do local em programa de provimento. Kline e Santos (2012) dão o score bootstrap para poucos clusters. O efeito fixo do par de UFs foi pedido pelo autor em 27/10/2026 e formalizado no adendo 52e, depois do resultado do modelo base.
+- cautela: O nosso é a versão mais simples da família; os mais parecidos usam variantes mais ricas
+- fontes: Bobba et al., NBER WP 29068, rev. 22/01/2026, seção 4.1, eqs. 2, 5 e 6; doc 03_literatura_empirica/20 (A1, B5, C1, D3, D4); protocolo 40 §12.
+- notas: O mais parecido com o nosso desenho é Bobba et al., sobre professores no Peru: concurso centralizado, adicional de salário fixado por regra com corte, e um logit multinomial das escolhas com cardápio personalizado (só as vagas ainda abertas na vez do professor), opção de fora e coeficiente aleatório no salário. A nota 13 deles diz que, condicional aos atributos da escola, a variação de salário que sobra vem dos degraus da regra nos cortes, que é a nossa identificação. Costa, Nunes e Sanches estimam a escolha de local de médicos no Brasil com logit de coeficientes aleatórios e salário instrumentado. Holmes usa logit multinomial do local. Os experimentos de escolha com médicos (Miranda et al.; Kurniati et al., com especialistas) usam logit condicional, mas com vagas hipotéticas; o nosso usa escolhas reais. McFadden (1974) é a referência do estimador. Dal Bó, Finan e Rossi (2013) motivaram olhar as candidaturas, mas usam experimento, não logit. O efeito fixo do par de UFs vem do adendo 52e, depois do resultado.
 
-| Papel | Referência |
-|---|---|
-| Estimador: logit condicional | McFadden (1974) |
-| Olhar candidaturas, não só alocados | Dal Bó, Finan e Rossi (2013), *QJE* |
-| Escolha de local de médicos no Brasil | Costa, Nunes e Sanches (2024), *REStat* |
-| Logit do local em programa de provimento | Holmes (2005), *Labour Economics* |
-| Inferência com poucos clusters | Kline e Santos (2012), score bootstrap |
+| Contexto | Estudo | Modelo |
+|---|---|---|
+| Professores, concurso com adicional por regra | Bobba et al. (2026), NBER WP 29068 | logit multinomial, cardápio personalizado, coeficiente aleatório |
+| Médicos, escolha de local no Brasil | Costa, Nunes e Sanches (2024), *REStat* | logit de coeficientes aleatórios |
+| Médicos, programa de provimento (EUA) | Holmes (2005), *Labour Economics* | logit multinomial |
+| Médicos, vagas hipotéticas (DCE) | Miranda et al. (2012); Kurniati et al. (2024) | logit condicional |
+| Estimador | McFadden (1974) | logit condicional |
+
+## Por que não um método mais simples?
+
+- secao: Metodologia
+- layout: ficha
+- cautela: Trocar de estimador agora seria escolha pós-resultado: só como robustez
+- fontes: doc 44 (F1.1); doc 57a §9 (P1g); Guimarães, Figueiredo e Woodward (2003), *REStat* 85(1).
+- notas: A alternativa mais usual na avaliação de política seria a RDD por vaga, com o número de candidatos de 1ª opção como outcome. Ela foi feita (F1.1, e a ponte P1g do protocolo 52) e o IC contém zero: só usa a variação entre vagas e perde a informação de que o mesmo candidato viu vagas com bolsas diferentes. Um MQO com efeito fixo do candidato (modelo de probabilidade linear) faz a mesma comparação dentro do candidato, mas a probabilidade de cada vaga é perto de 1% e o modelo prevê probabilidades fora de [0, 1]; não está no protocolo. A Poisson das contagens de escolhas, com efeito fixo de cada grupo de candidatos com o mesmo cardápio e a mesma origem, dá exatamente o mesmo β do logit condicional (Guimarães, Figueiredo e Woodward, 2003); é o atalho usual na literatura de localização de firmas. Ou seja: o logit condicional já é o modelo simples dessa família; os papers mais parecidos usam versões mais ricas. Pelas regras do projeto, não se troca o estimador depois de ver o resultado; uma alternativa entraria só como robustez rotulada.
+
+| Alternativa | O que compara | Por que não é a principal |
+|---|---|---|
+| RDD por vaga (nº de 1ªs opções) | vagas dos dois lados do corte | feita: IC contém zero; perde a variação dentro do candidato |
+| MQO com efeito fixo do candidato | vagas do mesmo candidato, em p.p. | probabilidade ≈ 1% por vaga; fora do protocolo |
+| Poisson das contagens com efeito fixo | vagas do mesmo cardápio e origem | dá o mesmo β do logit condicional |
 
 ## A base: uma linha por candidato × vaga do cardápio
 

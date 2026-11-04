@@ -5,7 +5,7 @@
   "entradas": [
     {
       "arquivo": "docs/07_apresentacoes/banca2/11_explicacoes_metodo_logit.md",
-      "sha256": "16d1fea85580831f513bea048afe3a9e29310f6a3d3701de70b0cbb0cb288661"
+      "sha256": "dfe7eb452aed01a82ff0b251133b242267e0bbea7b614ba65d687831a51758fc"
     },
     {
       "arquivo": "output/apresentacao_banca2/deck_banca2_curto.pptx",
@@ -100,42 +100,48 @@
     },
     {
       "posicao": 5,
-      "titulo": "Referências do método",
+      "titulo": "Onde esse modelo é usado",
       "secao": "Metodologia",
       "layout": "ficha"
     },
     {
       "posicao": 6,
+      "titulo": "Por que não um método mais simples?",
+      "secao": "Metodologia",
+      "layout": "ficha"
+    },
+    {
+      "posicao": 7,
       "titulo": "A base: uma linha por candidato × vaga do cardápio",
       "secao": "Dados",
       "layout": "ficha"
     },
     {
-      "posicao": 7,
+      "posicao": 8,
       "titulo": "De onde vem cada coluna da base",
       "secao": "Dados",
       "layout": "ficha"
     },
     {
-      "posicao": 8,
+      "posicao": 9,
       "titulo": "Efeito fixo do par: uma dummy por origem × UF da vaga",
       "secao": "Identificação",
       "layout": "tabela_cartoes"
     },
     {
-      "posicao": 9,
+      "posicao": 10,
       "titulo": "Fixo por construção ou controlado?",
       "secao": "Identificação",
       "layout": "ficha"
     },
     {
-      "posicao": 10,
+      "posicao": 11,
       "titulo": "No código, o par é só mais uma coluna da matriz X",
       "secao": "Metodologia",
       "layout": "codigo"
     },
     {
-      "posicao": 11,
+      "posicao": 12,
       "titulo": "Perto do corte, o salto é medido contra outra reta",
       "secao": "Robustez",
       "layout": "ficha"
@@ -144,11 +150,11 @@
   "saidas": [
     {
       "arquivo": "output/apresentacao_banca2/slides_explicacoes_logit.pptx",
-      "sha256": "52a94d3e428bc8c90296b5aa435f3b4012943b9fb6e0f7b17a6cfcaa69af142f"
+      "sha256": "45060f4ee6f6fa17764703d90380dac690920f421a6856ab297b2c9f46537c2f"
     },
     {
       "arquivo": "output/apresentacao_banca2/slides_explicacoes_logit.pdf",
-      "sha256": "91896d0fb4ac51f3e193ffcbe540632c7f28df8796f66d0f6435bc9577827017"
+      "sha256": "1b794443b3f11b64e9126f34e4f1ebd0339fd84cecc191df32fb0b5bc6e36aca"
     }
   ],
   "nota_pdf": null
