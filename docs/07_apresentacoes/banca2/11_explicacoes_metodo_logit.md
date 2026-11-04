@@ -1,7 +1,7 @@
 # 11. Slides de apoio: como ler e como foi feito o logit condicional com o par de UFs
 
-> **Finalidade:** dez slides de apoio para responder a perguntas da banca sobre o resultado "na mesma UF, a vaga de
-> bolsa maior é preferida" (VL-1 do adendo 52e). Eles explicam a razão de chances, o log, o modelo, a base, o efeito
+> **Finalidade:** onze slides de apoio para responder a perguntas da banca sobre o resultado "na mesma UF, a vaga de
+> bolsa maior é preferida" (VL-1 do adendo 52e). Eles explicam a razão de chances, o log, o modelo, a base, os coeficientes da especificação principal, o efeito
 > fixo do par, o que é fixo e o que é controle, o código e por que a conta perto do corte dá menos.<br>
 > **Estatuto:** material de apoio, fora do deck curto (que continua com no máximo 14 slides). Não traz resultado novo:
 > todo número vem de `output/rdd_bolsa/VL_estimativas.csv` e `VL_resumo.json` (adendo 52e, doc 57x, auditoria 48),
@@ -52,6 +52,31 @@ nessa posição do arquivo.
 - cartao: **Erro-padrão** com cluster por conjunto de escolha (curso × ciclo): 55
 - fontes: scripts/rdd_bolsa/25_escolha_dap.py (_estat, ajustar_cl); protocolo 52; adendo 52e; doc 57x.
 - notas: Cada candidato i tem um cardápio: as vagas (CNES × curso) do seu curso e ciclo no quadro da 1ª chamada. Cada vaga j recebe uma atratividade V_ij: bolsa (linear, por R$ 1 mil), curva contínua do IVS (spline com dobras em 0,300 e 0,400, sem salto), distância por 100 km, mesma região de saúde e mesmo município da origem, porte, capital, estrato, vaga imediata e o efeito fixo do par (UF de origem, UF da vaga). A probabilidade de j ser a 1ª opção é e^V_ij dividido pela soma sobre o cardápio. O software escolhe os parâmetros que maximizam a soma, sobre os candidatos, do log da probabilidade da vaga de fato escolhida (Newton–Raphson próprio, conferido contra o ConditionalLogit do statsmodels no doc 42). Como a soma do denominador é dentro de cada candidato, o que é constante entre as vagas dele se cancela. O número do slide é exp(5β).
+
+## Especificação principal: coeficientes do VL-1
+
+- secao: Resultados
+- layout: coeficientes
+- modelo: VL1_emp
+- cautela: Mais 254 dummies do par, não mostradas; estrato-base: interior perto de polo
+- fontes: VL_estimativas.csv (VL-1, ciclos 1–3, tipo_linha = coeficiente); doc 57x §4.4; auditoria 48.
+- notas: Especificação principal do adendo 52e (pós-resultado): logit condicional da 1ª opção, ciclos 1–3, 5.417 candidatos, com efeito fixo do par (UF de origem, UF da vaga). Cada coeficiente é o peso do termo na utilidade, em log-chance, por unidade do termo; exp(coeficiente) é a razão de chances entre duas vagas do mesmo cardápio que só diferem nesse termo. A bolsa pesa 0,077 por R$ 1 mil; vezes 5 dá 0,385, a razão de chances de 1,47 por +R$ 5 mil. A distância pesa −0,514 por 100 km. IC 95% e p bilaterais com cluster por conjunto de escolha (55 conjuntos), sem correção para múltiplos testes; o p de Holm da bolsa, na família das três principais do 52e, é 0,005. As dobras do IVS mudam a inclinação da curva contínua nos cortes, sem salto: o salto nos cortes é o da bolsa. Os controles são preferência revelada entre vagas, não efeitos causais: mesmo município, mesma região, porte e vaga imediata descrevem quais vagas os candidatos escolhem.
+
+| Termo | Coeficiente (log-chance) | IC 95% | p |
+|---|---|---|---|
+| Bolsa (por R$ 1 mil/mês) | 0,077 | [0,027; 0,127] | 0,002 |
+| IVS: inclinação | −0,170 | [−0,410; 0,071] | 0,166 |
+| IVS: dobra em 0,300 | 0,435 | [0,085; 0,786] | 0,015 |
+| IVS: dobra em 0,400 | −0,426 | [−0,724; −0,128] | 0,005 |
+| Distância (por 100 km) | −0,514 | [−0,555; −0,474] | < 0,001 |
+| Mesma região de saúde | 1,103 | [0,845; 1,361] | < 0,001 |
+| Mesmo município | 0,587 | [0,314; 0,860] | < 0,001 |
+| Tem vaga imediata | 0,254 | [0,043; 0,465] | 0,018 |
+| log(vagas imediatas + 1) | 0,491 | [0,247; 0,734] | < 0,001 |
+| log(população 2022) | 0,140 | [0,081; 0,198] | < 0,001 |
+| Capital | −0,313 | [−0,654; 0,028] | 0,072 |
+| Interior remoto | −0,188 | [−0,379; 0,003] | 0,054 |
+| Metropolitano | 0,104 | [−0,050; 0,258] | 0,186 |
 
 ## Referências do método
 
@@ -194,4 +219,5 @@ acima não trouxer exatamente o valor recalculado.
 | 1,28 [0,95; 1,72]; 4.288 | `VL2_emp`, `razao_chances_por_5mil` |
 | 0,44; −0,43; 0,12; 0,30 | `VL1_emp` e `VL2_emp`, `ivs_mudanca_inclinacao_0300` e `_0400` |
 | 5.417; 578.998; 55; ≈ 107 | `VL1_emp`: `n_candidatos`, `n_linhas_candidato_celula`, `n_conjuntos` e a razão linhas ÷ candidatos |
+| Tabela de coeficientes | `VL1_emp`, `tipo_linha = coeficiente`: conferida célula a célula |
 | 729 → 281; 260; 254; 5.345 | `VL_resumo.json`, `identificacao.VL1_emp` |

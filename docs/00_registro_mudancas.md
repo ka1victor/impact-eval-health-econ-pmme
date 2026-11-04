@@ -18,7 +18,7 @@ menos). O conteúdo canônico vive no doc 11; o deck é derivado e não traz est
 
 | Arquivo | O que é |
 |---|---|
-| [`07_apresentacoes/banca2/11_explicacoes_metodo_logit.md`](07_apresentacoes/banca2/11_explicacoes_metodo_logit.md) | conteúdo canônico de dez slides de apoio sobre o VL-1 (adendo 52e); deck gerado por `scripts/apresentacao/gerar_slides_explicacoes_logit.py` em `output/apresentacao_banca2/slides_explicacoes_logit.pptx` e `.pdf` |
+| [`07_apresentacoes/banca2/11_explicacoes_metodo_logit.md`](07_apresentacoes/banca2/11_explicacoes_metodo_logit.md) | conteúdo canônico de onze slides de apoio sobre o VL-1 (adendo 52e); deck gerado por `scripts/apresentacao/gerar_slides_explicacoes_logit.py` em `output/apresentacao_banca2/slides_explicacoes_logit.pptx` e `.pdf` |
 
 ---
 

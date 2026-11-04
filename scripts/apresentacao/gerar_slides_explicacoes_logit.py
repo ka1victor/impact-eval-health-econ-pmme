@@ -61,8 +61,17 @@ Slide, para, run, runs_md = G.Slide, G.para, G.run, G.runs_md
 X0, X1, Y0, Y_FONTES = G.X0, G.X1, G.Y0, G.Y_FONTES
 VERDE_ESCURO, VERDE, TEXTO, BRANCO, MUDO = G.VERDE_ESCURO, G.VERDE, G.TEXTO, G.BRANCO, G.MUDO
 FONTE_CODIGO = "Courier New"
-LAYOUTS = ("espec", "ficha", "tabela_cartoes", "codigo")
-CAMPOS = ("secao", "layout", "equacao", "cartao", "cautela", "fontes", "notas")
+LAYOUTS = ("espec", "ficha", "tabela_cartoes", "codigo", "coeficientes")
+CAMPOS = ("secao", "layout", "modelo", "equacao", "cartao", "cautela", "fontes", "notas")
+# Rótulos legíveis dos termos da utilidade (scripts 25 e 50), na ordem da tabela de coeficientes
+ROTULOS_TERMOS = {"bolsa_mil": "Bolsa (por R$ 1 mil/mês)", "ivs_inclinacao": "IVS: inclinação",
+                  "ivs_mudanca_inclinacao_0300": "IVS: dobra em 0,300", "ivs_mudanca_inclinacao_0400": "IVS: dobra em 0,400",
+                  "distancia_100km": "Distância (por 100 km)", "mesma_regiao_saude": "Mesma região de saúde",
+                  "mesmo_municipio": "Mesmo município", "tem_vaga_imediata": "Tem vaga imediata",
+                  "log_vagas_imediatas_mais_1": "log(vagas imediatas + 1)", "log_populacao_2022": "log(população 2022)",
+                  "capital": "Capital", "estrato_interior_remoto": "Interior remoto",
+                  "estrato_metropolitano": "Metropolitano"}
+CABECALHO_COEF = ["Termo", "Coeficiente (log-chance)", "IC 95%", "p"]
 
 
 class Falha(SystemExit):
@@ -200,6 +209,40 @@ def numeros_esperados() -> dict[str, str]:
     }
 
 
+def _p(x: float) -> str:
+    return "< 0,001" if x < 0.001 else _n(x, 3)
+
+
+def tabela_coeficientes(chave: str) -> list[list[str]]:
+    """Todos os coeficientes que não são dummies de par, na ordem de ROTULOS_TERMOS, de VL_estimativas.csv."""
+    est = pd.read_csv(VL_EST)
+    s = est[(est.chave_modelo == chave) & (est.tipo_linha == "coeficiente")].set_index("termo")
+    if (s["status"] != "EXECUTADO").any():
+        raise Falha(f"ERRO: {chave} com coeficiente não executado")
+    if set(s.index) != set(ROTULOS_TERMOS):
+        raise Falha(f"ERRO: termos de {chave} diferentes dos rotulados: {sorted(set(s.index) ^ set(ROTULOS_TERMOS))}")
+    linhas = [CABECALHO_COEF]
+    for termo, rot in ROTULOS_TERMOS.items():
+        r = s.loc[termo]
+        linhas.append([rot, _n(r.estimativa, 3), f"[{_n(r.ic95_inf, 3)}; {_n(r.ic95_sup, 3)}]", _p(r.p)])
+    return linhas
+
+
+def conferir_coeficientes(slides: list[dict]) -> dict[str, int]:
+    """A tabela do doc tem de ser, célula a célula, a recalculada de output/ (negrito e itálico ignorados)."""
+    out = {}
+    for sl in slides:
+        if sl["layout"] != "coeficientes":
+            continue
+        esperada = tabela_coeficientes(sl["modelo"])
+        doc = [[G.texto_puro(c) for c in r] for r in sl["tabela"]]
+        if doc != esperada:
+            dif = [(a, b) for a, b in zip(doc, esperada) if a != b] or [("linhas", f"{len(doc)} != {len(esperada)}")]
+            raise Falha(f"ERRO: tabela de coeficientes de {sl['titulo']!r} diverge de output/: {dif[:3]}")
+        out[sl["modelo"]] = len(esperada) - 1
+    return out
+
+
 def conferir_numeros(slides: list[dict]) -> dict[str, str]:
     """Cada número esperado tem de aparecer, igual, no texto dos slides do doc (tela, tabela ou notas)."""
     texto = DOC.read_text(encoding="utf-8")
@@ -282,6 +325,8 @@ def montar(sl: dict) -> str:
     elif lay == "ficha":
         G.tabela(s, sl["tabela"], X0, Y0 + 0.05, W, y_fim - Y0 - 0.05, sz_max=22, sz_min=G.SZ_TAB_CORPO,
                  onde=sl["titulo"])
+    elif lay == "coeficientes":
+        G.tabela(s, sl["tabela"], X0, Y0 + 0.05, W, y_fim - Y0 - 0.05, sz_max=18, sz_min=12.0, onde=sl["titulo"])
     elif lay == "tabela_cartoes":
         w_t = 5.2
         G.tabela(s, sl["tabela"], X0, Y0 + 0.05, w_t, y_fim - Y0 - 0.05, sz_max=22, sz_min=G.SZ_TAB_CORPO,
@@ -375,6 +420,7 @@ def main() -> int:
     slides = ler_slides()
     numeros = conferir_numeros(slides)
     codigo = conferir_codigo(slides)
+    coeficientes = conferir_coeficientes(slides)
     SAIDA.mkdir(parents=True, exist_ok=True)
     ordem = construir(slides, SAIDA)
     com_pdf = G.converter_pdf(SAIDA / ARQ, SAIDA / ARQ_PDF)
@@ -386,6 +432,7 @@ def main() -> int:
            "estatuto": "material de apoio da banca 2; nenhuma estimativa nova (adendo 52e, doc 57x, auditoria 48)",
            "script": "scripts/apresentacao/gerar_slides_explicacoes_logit.py",
            "entradas": entradas, "codigo_conferido": codigo, "numeros_conferidos": numeros,
+           "tabelas_de_coeficientes_conferidas": coeficientes,
            "slides": ordem, "saidas": saidas,
            "nota_pdf": None if com_pdf else "LibreOffice ausente: PDF não gerado"}
     (SAIDA / ARQ_MANIF).write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
