@@ -78,21 +78,21 @@ nessa posição do arquivo.
 | Interior remoto | −0,188 | [−0,379; 0,003] | 0,054 |
 | Metropolitano | 0,104 | [−0,050; 0,258] | 0,186 |
 
-## Onde esse modelo é usado
+## Literatura: logits mais ricos; nós usamos o mais simples
 
 - secao: Metodologia
 - layout: ficha
-- cautela: O nosso é a versão mais simples da família; os mais parecidos usam variantes mais ricas
-- fontes: Bobba et al., NBER WP 29068, rev. 22/01/2026, seção 4.1, eqs. 2, 5 e 6; doc 03_literatura_empirica/20 (A1, B5, C1, D3, D4); protocolo 40 §12.
-- notas: O mais parecido com o nosso desenho é Bobba et al., sobre professores no Peru: concurso centralizado, adicional de salário fixado por regra com corte, e um logit multinomial das escolhas com cardápio personalizado (só as vagas ainda abertas na vez do professor), opção de fora e coeficiente aleatório no salário. A nota 13 deles diz que, condicional aos atributos da escola, a variação de salário que sobra vem dos degraus da regra nos cortes, que é a nossa identificação. Costa, Nunes e Sanches estimam a escolha de local de médicos no Brasil com logit de coeficientes aleatórios e salário instrumentado. Holmes usa logit multinomial do local. Os experimentos de escolha com médicos (Miranda et al.; Kurniati et al., com especialistas) usam logit condicional, mas com vagas hipotéticas; o nosso usa escolhas reais. McFadden (1974) é a referência do estimador. Dal Bó, Finan e Rossi (2013) motivaram olhar as candidaturas, mas usam experimento, não logit. O efeito fixo do par de UFs vem do adendo 52e, depois do resultado.
+- cautela: A bolsa vem de regra: o degrau já identifica, sem instrumento nem equilíbrio
+- fontes: doc 03_literatura_empirica/20 (A1, B5, C1, D3, D4); Bobba et al., NBER WP 29068, rev. 22/01/2026, seção 4.1 e nota 13; protocolo 52 (M8, M9); doc 57a.
+- notas: A nossa literatura empírica de escolha de local usa a família logit, quase sempre em versões mais ricas que a nossa, e cada uma por um motivo. Bobba et al., o desenho mais parecido, usam logit multinomial com cardápio personalizado porque lá o professor escolhe na sua vez, vendo só as vagas que restam, e incluem a opção de não aceitar nenhuma. Costa, Nunes e Sanches usam logit de coeficientes aleatórios com instrumento porque o salário de mercado é endógeno: é alto onde a vaga é ruim. Holmes usa logit multinomial com correção de seleção porque mede a participação num programa. Os experimentos de escolha (Miranda; Kurniati) usam logit condicional, mas com vagas hipotéticas. No PMM-E a bolsa é fixada por regra com corte, a vulnerabilidade entra como curva contínua e o candidato lista as opções na inscrição, antes do resultado. Por isso o logit condicional, o mais simples da família, basta para identificar o peso da bolsa: é a mesma lógica da nota 13 de Bobba et al. O logit misto (M8) e o aninhado por região de saúde (M9) entram como sensibilidade no protocolo 52; não foram refeitos com o par de UFs. McFadden (1974) é a referência do estimador.
 
-| Contexto | Estudo | Modelo |
+| Estudo | Método | Por que precisam disso |
 |---|---|---|
-| Professores, concurso com adicional por regra | Bobba et al. (2026), NBER WP 29068 | logit multinomial, cardápio personalizado, coeficiente aleatório |
-| Médicos, escolha de local no Brasil | Costa, Nunes e Sanches (2024), *REStat* | logit de coeficientes aleatórios |
-| Médicos, programa de provimento (EUA) | Holmes (2005), *Labour Economics* | logit multinomial |
-| Médicos, vagas hipotéticas (DCE) | Miranda et al. (2012); Kurniati et al. (2024) | logit condicional |
-| Estimador | McFadden (1974) | logit condicional |
+| Bobba et al. (2026) | logit multinomial, cardápio personalizado | escolhe na sua vez; pode recusar tudo |
+| Costa, Nunes e Sanches (2024) | logit de coeficientes aleatórios + instrumento | salário de mercado é endógeno |
+| Holmes (2005) | logit multinomial com seleção | mede participação no programa |
+| Miranda (2012); Kurniati (2024) | logit condicional | vagas hipotéticas (DCE) |
+| **Nós (VL-1)** | **logit condicional + efeito fixo do par** | **bolsa por regra; opções listadas na inscrição** |
 
 ## Por que não um método mais simples?
 

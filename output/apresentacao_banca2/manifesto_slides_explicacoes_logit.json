@@ -5,7 +5,7 @@
   "entradas": [
     {
       "arquivo": "docs/07_apresentacoes/banca2/11_explicacoes_metodo_logit.md",
-      "sha256": "dfe7eb452aed01a82ff0b251133b242267e0bbea7b614ba65d687831a51758fc"
+      "sha256": "9b8381247d0627ea4a0363b67214a4c1d24296d1a9a5da5670bbd47e2c718bee"
     },
     {
       "arquivo": "output/apresentacao_banca2/deck_banca2_curto.pptx",
@@ -100,7 +100,7 @@
     },
     {
       "posicao": 5,
-      "titulo": "Onde esse modelo é usado",
+      "titulo": "Literatura: logits mais ricos; nós usamos o mais simples",
       "secao": "Metodologia",
       "layout": "ficha"
     },
@@ -150,11 +150,11 @@
   "saidas": [
     {
       "arquivo": "output/apresentacao_banca2/slides_explicacoes_logit.pptx",
-      "sha256": "45060f4ee6f6fa17764703d90380dac690920f421a6856ab297b2c9f46537c2f"
+      "sha256": "231a894610cc86a8c31c6a71d395e7485c766dc0c68cf156fc1df69ba3353fd0"
     },
     {
       "arquivo": "output/apresentacao_banca2/slides_explicacoes_logit.pdf",
-      "sha256": "1b794443b3f11b64e9126f34e4f1ebd0339fd84cecc191df32fb0b5bc6e36aca"
+      "sha256": "e2ed5103dd66011d40b8c47b7eb134a69e6a164d09de3af9addcdd33f69b652b"
     }
   ],
   "nota_pdf": null
