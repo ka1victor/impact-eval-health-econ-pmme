@@ -8,6 +8,21 @@
 
 ---
 
+## 04/11/2026 — Banca 2: deck revisto depois da banca (pedidos dos professores)
+
+Motivo: pedido do autor de 04/11/2026 para corrigir o deck apresentado e ajustar o que os professores pediram
+(hipótese, metodologia justificada, exemplo de estimação, construção da base, efeitos fixos no software, deck mais
+enxuto). O conteúdo canônico e o mapa pedido → ajuste vivem no doc 12; o deck é derivado e não traz estimativa nova.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca2/12_revisao_pos_banca_0411.md`](07_apresentacoes/banca2/12_revisao_pos_banca_0411.md) | feedback da banca de 04/11/2026, ajuste de cada ponto e conteúdo canônico do deck revisto; deck gerado por `scripts/apresentacao/gerar_deck_banca2_pos_banca.py` em `output/apresentacao_banca2/deck_banca2_pos_banca.pptx` e `.pdf` |
+| [`07_apresentacoes/banca2/apresentada/deck_grupo_banca2_0411.pptx`](07_apresentacoes/banca2/apresentada/deck_grupo_banca2_0411.pptx) | cópia sem alteração do deck que o grupo apresentou em 04/11/2026; insumo do gerador, conferido pelo hash |
+
+---
+
 ## 04/11/2026 — Banca 2: slides de apoio sobre o logit condicional com o par de UFs
 
 Motivo: perguntas do autor durante a banca 2 (o que é a razão de chances, onde entra o log, o que é o efeito fixo do

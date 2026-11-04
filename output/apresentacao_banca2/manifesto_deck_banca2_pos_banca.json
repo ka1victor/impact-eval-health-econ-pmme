@@ -1,0 +1,203 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "script": "scripts/apresentacao/gerar_deck_banca2_pos_banca.py",
+  "pedido": "autor, 04/11/2026: corrigir o deck apresentado e ajustar o que os professores pediram na banca 2 (registro em docs/07_apresentacoes/banca2/12_revisao_pos_banca_0411.md)",
+  "regra": "nada estimado; números lidos de output/ (numeros_banca2.json, VL_estimativas.csv, VL_resumo.json); contas de leitura conferidas contra VL1_EMP_RC e VL1_EMP_K5; figura de robustez do pipeline",
+  "entradas": [
+    {
+      "caminho": "docs/07_apresentacoes/banca2/apresentada/deck_grupo_banca2_0411.pptx",
+      "sha256": "c63bb043387d0d2cf45d62758672cdb5487786e283e825c6f6a8cd8a536ae7f2"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/numeros_banca2.json",
+      "sha256": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VL_estimativas.csv",
+      "sha256": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8"
+    },
+    {
+      "caminho": "output/rdd_bolsa/VL_resumo.json",
+      "sha256": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf"
+    }
+  ],
+  "contas_de_leitura": {
+    "beta": 0.077081,
+    "cinco_beta": 0.385403,
+    "rc": 1.470207,
+    "dist": -0.514482,
+    "km": 74.910958,
+    "n_cand": 5417,
+    "n_lin": 578998,
+    "n_conj": 55,
+    "n_ef": 254,
+    "pares_var": 260,
+    "cand_var": 5345
+  },
+  "codigos_usados": [
+    "AM_TOT_LIG",
+    "AM_TOT_ORI",
+    "AM_TOT_R1",
+    "ESC_DIST_P50",
+    "ESC_DIST_P75",
+    "ESC_MUN",
+    "ESC_N",
+    "ESC_REG",
+    "ESC_UF",
+    "M1_N",
+    "R_C1_MUN",
+    "R_C1_REPR",
+    "R_C2_MUN",
+    "R_C2_REPR",
+    "VC_B_HOLM",
+    "VC_DUF_EST",
+    "VC_DUF_INF",
+    "VC_DUF_SUP",
+    "VG1_RC",
+    "VG1_RCI",
+    "VG1_RCS",
+    "VG3_RC",
+    "VG3_RCI",
+    "VG3_RCS",
+    "VK1_300_RC",
+    "VK1_300_RCI",
+    "VK1_300_RCS",
+    "VK1_400_RC",
+    "VK1_400_RCI",
+    "VK1_400_RCS",
+    "VK1_D_P",
+    "VK1_D_RC",
+    "VL1_C2_K5",
+    "VL1_C2_PSR",
+    "VL1_C2_RC",
+    "VL1_C2_RCI",
+    "VL1_C2_RCS",
+    "VL1_EMP_HOLM",
+    "VL1_EMP_K5",
+    "VL1_EMP_K5I",
+    "VL1_EMP_K5S",
+    "VL1_EMP_PSR",
+    "VL1_EMP_RC",
+    "VL1_EMP_RCI",
+    "VL1_EMP_RCS",
+    "VL2_EMP_HOLM",
+    "VL2_EMP_RC",
+    "VL2_EMP_RCI",
+    "VL2_EMP_RCS",
+    "VL3P_EMP_RC",
+    "VL3P_EMP_RCI",
+    "VL3P_EMP_RCS",
+    "VL3_EMP_RC",
+    "VL3_EMP_RCI",
+    "VL3_EMP_RCS",
+    "VLB_EMP_RC",
+    "VLB_EMP_RCI",
+    "VLB_EMP_RCS",
+    "VLLOG_EMP_RC",
+    "VLLOG_EMP_RCI",
+    "VLLOG_EMP_RCS"
+  ],
+  "figura_robustez": {
+    "arquivo": "output/apresentacao_banca2/final_robustez_escolha.png",
+    "sha256": "9030d16d765e206585f062c18694e79f24d2fd979bf03c0ebd82d57f969cd0c5",
+    "textos": [
+      "Ciclos 1–3",
+      "Por ciclo",
+      "Principal: vagas da mesma UF",
+      "1,47 [1,15; 1,89]",
+      "Distância em log, não em km",
+      "1,45 [1,15; 1,83]",
+      "Região de saúde × UF da vaga",
+      "1,49 [1,15; 1,92]",
+      "Só IVS a ±0,05 de um corte",
+      "1,28 [0,95; 1,72]",
+      "Idem, com região de saúde",
+      "1,28 [0,95; 1,71]",
+      "Só o degrau R$ 10 → 15 mil",
+      "1,41 [1,03; 1,93]",
+      "Só o degrau R$ 15 → 20 mil",
+      "1,52 [1,16; 1,99]",
+      "Ciclo 1",
+      "1,15 [0,66; 2,01]",
+      "Ciclo 2",
+      "1,90 [1,30; 2,78]",
+      "Ciclo 3",
+      "1,25 [0,90; 1,73]",
+      "razão de chances (escala log); 1 = a bolsa não muda a escolha",
+      "Como ler",
+      "todas comparam vagas da mesma UF. Verde: IC 95% exclui 1; cinza: contém 1 (inconclusivo).",
+      "±0,05: só municípios com IVS a até 0,05 de um corte (menos vagas, IC mais largo).",
+      "Fontes: VL_estimativas.csv (adendo 52e; auditoria 48); VG_ e VK_estimativas.csv (adendos 52g e 52h; auditoria pendente). EMPIRICO · scripts/apresentacao/gerar_figuras_banca2.py"
+    ]
+  },
+  "slides": [
+    {
+      "n": 1,
+      "titulo": ""
+    },
+    {
+      "n": 2,
+      "titulo": "A bolsa do PMM-E é maior onde o município é mais vulnerável"
+    },
+    {
+      "n": 3,
+      "titulo": "Hipótese: na mesma UF, a bolsa maior atrai a 1ª opção"
+    },
+    {
+      "n": 4,
+      "titulo": "Base: uma linha por candidato × vaga possível"
+    },
+    {
+      "n": 5,
+      "titulo": "79% escolhem uma vaga na UF onde já trabalhavam"
+    },
+    {
+      "n": 6,
+      "titulo": "Modelo: logit condicional da 1ª opção"
+    },
+    {
+      "n": 7,
+      "titulo": "Por que logit condicional, e não só uma RDD por vaga"
+    },
+    {
+      "n": 8,
+      "titulo": "Identificação: o que fica fixo e o que supomos"
+    },
+    {
+      "n": 9,
+      "titulo": "Na mesma UF, +R$ 5 mil multiplicam a chance por 1,47"
+    },
+    {
+      "n": 10,
+      "titulo": "Robustez: sempre comparando vagas da mesma UF"
+    },
+    {
+      "n": 11,
+      "titulo": "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
+    },
+    {
+      "n": 12,
+      "titulo": "Limitações e o que cada uma implica"
+    },
+    {
+      "n": 13,
+      "titulo": ""
+    },
+    {
+      "n": 14,
+      "titulo": "Apêndice A1: a bolsa segue exatamente o IVS"
+    },
+    {
+      "n": 15,
+      "titulo": "Apêndice A2: metade de quem entra já estava no município"
+    }
+  ],
+  "deck": {
+    "arquivo": "output/apresentacao_banca2/deck_banca2_pos_banca.pptx",
+    "sha256": "5d8ac92c2f6b3d67747879c3eb8611673c8dfdb1bb193cfa76b3e19ef636842c"
+  },
+  "pdf": {
+    "arquivo": "output/apresentacao_banca2/deck_banca2_pos_banca.pdf",
+    "sha256": "fcfdd9ed13850e8e36874db8225e42e764ef893e6f1dca8b77a3fb1f51e1c98a"
+  }
+}
