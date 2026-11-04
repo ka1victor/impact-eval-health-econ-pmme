@@ -88,6 +88,7 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | [Guia do grupo](08_guia_do_grupo_H2.md) | a H2 em uma página, com as figuras do deck por slide |
 | [**Roteiro de fala de 7 minutos**](09_roteiro_fala_7min.md) | a fala de cada slide com o tempo-alvo (soma 7:00) e as perguntas prováveis da banca; o mesmo texto das notas do deck |
 | [Mapa do deck anterior para a rubrica](10_mapa_deck_anterior_para_rubrica.md) | do deck `8901dea` (auditoria 53) para o revisto: correspondência slide a slide, texto exato da tela, números que mudaram de lugar e o checklist do grupo |
+| [Slides de apoio: logit condicional com o par de UFs](11_explicacoes_metodo_logit.md) | dez slides para perguntas da banca: razão de chances, log, modelo, referências, base, efeito fixo do par, fixo × controlado, código e a conta perto do corte; deck derivado `output/apresentacao_banca2/slides_explicacoes_logit.pptx`, números conferidos contra `output/rdd_bolsa/VL_*` |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | cada figura → arquivo, script e natureza; cada número → arquivo, seletor e formato, num bloco gerado pelo script |
 | [Relatório de validação para os professores](../../../output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.pdf) | relatório curto (derivado) com o desenho, os diagnósticos e os resultados de 19/10; não é o deck |
 
