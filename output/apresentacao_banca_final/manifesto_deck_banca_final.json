@@ -1,0 +1,257 @@
+{
+  "script": "scripts/apresentacao/gerar_deck_banca_final.py",
+  "conteudo_canonico": "docs/07_apresentacoes/banca_final/02_deck_banca_final.md",
+  "natureza_dos_dados": "EMPIRICO (slides da banca 2) e teoria (parte da banca 1); nada estimado aqui",
+  "regra": "lê só de output/; slides da banca 2 copiados sem mudar texto; slides do grupo com as trocas listadas em 'adaptacoes', cada uma conferida contra o texto antigo",
+  "nota_pdf": "o PDF é renderizado pelo LibreOffice e não é byte a byte determinístico",
+  "entradas": [
+    {
+      "caminho": "output/apresentacao_banca_final/deck_proposta_reorganizada.pptx",
+      "sha256": "9712bee04059d8823b4207211899059f85705c62598898c4cc3ea28d2c98ae4e"
+    },
+    {
+      "caminho": "output/apresentacao_banca2/deck_banca2_curto.pptx",
+      "sha256": "178a3826c015146743e528b1ac25fc770b0f27215b1002e8b20c21fe0336bb92"
+    },
+    {
+      "caminho": "output/apresentacao_banca1/especialistas_por_uf_extremos.png",
+      "sha256": "3333890e0e5515b47c872ee5315ff4827fe848e71c3111ae6e0a05bfbeecd1ae"
+    },
+    {
+      "caminho": "output/apresentacao_banca1/vagas_ciclo1_por_regiao.png",
+      "sha256": "de2db255da0933559530b0b9ca963c83f96df3bf830bd5795429c62c320fe98b"
+    }
+  ],
+  "saidas": [
+    {
+      "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
+      "sha256": "c824490584a234208653f8cf3b097d9da7d58f68d7a9014e423516b66a130c01"
+    },
+    {
+      "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
+      "sha256": "453e2784727c5d60ef9a0d795369caea5fd9ed3f9e7418d64996cd6ba0f8ceb6"
+    }
+  ],
+  "slides_do_grupo_fora": {
+    "4": "oculto; figura de UF do grupo sem fonte reproduzível (P6)",
+    "5": "animação parcial do slide 7",
+    "6": "animação parcial do slide 7",
+    "8": "oculto; versão antiga do mapa do IVS",
+    "9": "crescimento por faixa que não se reproduz (P12) e distribuição regional com diferença sem origem (P13)",
+    "10": "oculto; rodapé antigo",
+    "11": "oculto; 'indícios de efetividade' (antes/depois sem comparação; errata E6, P12)",
+    "14": "oculto; tabela de inclinações que não se reproduz (P8)",
+    "20": "marcador 'X' do grupo, substituído pelos slides da banca 2",
+    "22": "marcador 'X' do grupo, substituído pelos slides da banca 2",
+    "24": "marcador 'X' do grupo, substituído pelos slides da banca 2",
+    "32": "oculto; versão anterior do slide 29",
+    "33": "hipótese antiga (preenchimento) sobreposta às derivadas",
+    "34": "EXEMPLO de outro trabalho",
+    "35": "EXEMPLO de outro trabalho",
+    "36": "viabilidade empírica da banca 1, substituída pelos dados da banca 2 (erratas E4 e E5)",
+    "37": "viabilidade empírica da banca 1, substituída pelos dados da banca 2 (erratas E4 e E5)"
+  },
+  "ordem": [
+    {
+      "posicao": 1,
+      "origem": "grupo 1",
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 2,
+      "origem": "grupo 2",
+      "secao": "Motivação",
+      "titulo": "Sumário (Motivação)"
+    },
+    {
+      "posicao": 3,
+      "origem": "grupo 3",
+      "secao": "Motivação",
+      "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
+    },
+    {
+      "posicao": 4,
+      "origem": "grupo 7",
+      "secao": "Motivação",
+      "titulo": "A vulnerabilidade social define a faixa da bolsa do PMM-E"
+    },
+    {
+      "posicao": 5,
+      "origem": "grupo 12",
+      "secao": "Pergunta",
+      "titulo": "Sumário (Pergunta)"
+    },
+    {
+      "posicao": 6,
+      "origem": "grupo 13",
+      "secao": "Pergunta",
+      "titulo": ""
+    },
+    {
+      "posicao": 7,
+      "origem": "grupo 15",
+      "secao": "Literatura",
+      "titulo": "Sumário (Literatura)"
+    },
+    {
+      "posicao": 8,
+      "origem": "grupo 16",
+      "secao": "Literatura",
+      "titulo": "Da regra da bolsa à saúde: teoria da mudança"
+    },
+    {
+      "posicao": 9,
+      "origem": "grupo 17",
+      "secao": "Hipótese",
+      "titulo": "Sumário (Hipótese)"
+    },
+    {
+      "posicao": 10,
+      "origem": "banca 2 1",
+      "secao": "Hipótese",
+      "titulo": "Pergunta e hipótese: a bolsa maior muda a 1ª opção?"
+    },
+    {
+      "posicao": 11,
+      "origem": "grupo 18",
+      "secao": "Hipótese",
+      "titulo": "A hipótese e onde a identificação é fraca"
+    },
+    {
+      "posicao": 12,
+      "origem": "grupo 19",
+      "secao": "Base de Dados",
+      "titulo": "Sumário (Base de Dados)"
+    },
+    {
+      "posicao": 13,
+      "origem": "banca 2 2",
+      "secao": "Base de Dados",
+      "titulo": "Dados e amostra: de onde vêm e quem entra no modelo"
+    },
+    {
+      "posicao": 14,
+      "origem": "banca 2 3",
+      "secao": "Base de Dados",
+      "titulo": "A bolsa é função exata do IVS: a regra é sharp"
+    },
+    {
+      "posicao": 15,
+      "origem": "banca 2 4",
+      "secao": "Base de Dados",
+      "titulo": "Onde escolhem: a maioria fica na própria UF"
+    },
+    {
+      "posicao": 16,
+      "origem": "banca 2 5",
+      "secao": "Base de Dados",
+      "titulo": "Descritivo: perto do corte, a bolsa maior é mais escolhida"
+    },
+    {
+      "posicao": 17,
+      "origem": "grupo 21",
+      "secao": "Metodologia",
+      "titulo": "Sumário (Metodologia)"
+    },
+    {
+      "posicao": 18,
+      "origem": "banca 2 6",
+      "secao": "Metodologia",
+      "titulo": "Modelo: logit condicional da 1ª opção"
+    },
+    {
+      "posicao": 19,
+      "origem": "banca 2 7",
+      "secao": "Metodologia",
+      "titulo": "Identificação: as premissas e o nosso caso"
+    },
+    {
+      "posicao": 20,
+      "origem": "grupo 23",
+      "secao": "Resultados",
+      "titulo": "Sumário (Resultados)"
+    },
+    {
+      "posicao": 21,
+      "origem": "banca 2 8",
+      "secao": "Resultados",
+      "titulo": "Dentro da mesma UF, a vaga de bolsa maior é preferida"
+    },
+    {
+      "posicao": 22,
+      "origem": "banca 2 9",
+      "secao": "Resultados",
+      "titulo": "Robustez: sempre comparando vagas da mesma UF"
+    },
+    {
+      "posicao": 23,
+      "origem": "banca 2 10",
+      "secao": "Resultados",
+      "titulo": "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
+    },
+    {
+      "posicao": 24,
+      "origem": "banca 2 11",
+      "secao": "Resultados",
+      "titulo": "Limitações e o que cada uma implica"
+    },
+    {
+      "posicao": 25,
+      "origem": "grupo 25",
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 26,
+      "origem": "grupo 26",
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 27,
+      "origem": "grupo 27",
+      "secao": null,
+      "titulo": "O modelo combina três elementos da teoria"
+    },
+    {
+      "posicao": 28,
+      "origem": "grupo 28",
+      "secao": null,
+      "titulo": "A escolha locacional maximiza a utilidade"
+    },
+    {
+      "posicao": 29,
+      "origem": "grupo 30",
+      "secao": null,
+      "titulo": "A escolha locacional maximiza a renda real líquida"
+    },
+    {
+      "posicao": 30,
+      "origem": "grupo 31",
+      "secao": null,
+      "titulo": "Literatura divide o custo em dois tipos: geográfico e laboral"
+    },
+    {
+      "posicao": 31,
+      "origem": "grupo 29",
+      "secao": null,
+      "titulo": "Da escolha individual ao preenchimento agregado"
+    },
+    {
+      "posicao": 32,
+      "origem": "grupo 38",
+      "secao": null,
+      "titulo": "O IVS mede a vulnerabilidade social dos territórios brasileiros"
+    }
+  ],
+  "adaptacoes": [
+    "slide 3: figuras do pipeline (UFs com valor citado; vagas do ciclo 1 por região)",
+    "slide 7: faixas da bolsa pela regra aplicada (até 0,300; 0,301–0,400; acima de 0,400)",
+    "slide 13: pergunta nova, sem o fundo com números não reproduzíveis",
+    "slide 18: hipótese da escolha (1ª opção), colchete só no passo 2",
+    "slide 28: 'decide qual vaga o médico escolhe'",
+    "slide 29: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'",
+    "slide 38: 'transporte' (errata E8)"
+  ]
+}

@@ -8,6 +8,21 @@
 
 ---
 
+## 09/11/2026 — Banca final: deck que junta a banca 1 adaptada e a banca 2
+
+Motivo: pedido do autor para juntar os slides da banca 2 com os da banca 1, adaptados às mudanças da banca 2
+(hipótese da escolha da 1ª opção na mesma UF; erratas da banca 1), para a banca final.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca_final/02_deck_banca_final.md`](07_apresentacoes/banca_final/02_deck_banca_final.md) | conteúdo canônico do deck final: ordem, adaptações da banca 1, textos novos, decisões em aberto |
+| `scripts/apresentacao/gerar_deck_banca_final.py` | gerador do deck final, a partir de `output/` |
+| `tests/test_deck_banca_final.py` | testes do deck final |
+
+---
+
 ## 09/11/2026 — Revisão 56: deck da banca 2 na versão de 28/10
 
 Motivo: pedido do autor para revisar os slides da banca 2. A versão de 28/10 (hipótese bolsa → 1ª opção na mesma UF)
