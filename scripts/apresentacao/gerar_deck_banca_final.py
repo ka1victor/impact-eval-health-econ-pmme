@@ -38,7 +38,13 @@ from pptx.opc.packuri import PackURI
 from pptx.util import Inches
 
 ROOT = Path(__file__).resolve().parents[2]
-ENT_GRUPO = ROOT / "output/apresentacao_banca_final/deck_proposta_reorganizada.pptx"
+# Deck atual do grupo (09/11/2026), guardado sem alteração; é a base do design
+ENT_GRUPO = ROOT / "docs/07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_0911.pptx"
+SHA_GRUPO = "b5ed0d74807526e6288d7f15837c71c76f9be236116cef151430857baf15ce42"
+N_GRUPO = 35
+# Deck do grupo reorganizado de 26/10, só para o slide do diagrama da teoria da mudança (gerar_diagrama_banca_final.py)
+ENT_DIAG = ROOT / "output/apresentacao_banca_final/deck_proposta_reorganizada.pptx"
+N_DIAG_SLIDE = 16
 ENT_PB = ROOT / "output/apresentacao_banca2/deck_banca2_pos_banca.pptx"
 FIG_UF = ROOT / "output/apresentacao_banca1/especialistas_por_uf_extremos.png"
 FIG_VAGAS = ROOT / "output/apresentacao_banca1/vagas_ciclo1_por_regiao.png"
@@ -65,7 +71,7 @@ ORDEM = [
     ("G", 1, None),                  # capa, com o título da pergunta
     ("G", 3, "Motivação"),           # escassez de especialistas (figuras do pipeline)
     ("PB", 2, "Motivação"),          # a bolsa por faixa de IVS e a pergunta
-    ("G", 16, "Literatura"),         # diagrama A: teoria da mudança
+    ("D", N_DIAG_SLIDE, "Literatura"),  # diagrama A: teoria da mudança
     ("PB", 3, "Hipótese"),
     ("PB", 4, "Dados"),
     ("PB", 5, "Análise Descritiva"),
@@ -76,20 +82,20 @@ ORDEM = [
     ("PB", 10, "Robustez"),
     ("PB", 11, "Discussão"),
     ("PB", 12, "Discussão"),
-    ("G", 25, None),                 # Q&A
-    ("G", 26, None),                 # divisor Apêndice
+    ("G", 31, None),                 # Q&A
+    ("G", 32, None),                 # divisor Apêndice
     ("PB", 14, None),                # A1: a bolsa segue exatamente o IVS
-    ("G", 27, None),                 # três elementos da teoria
-    ("G", 28, None),                 # escolha locacional maximiza a utilidade
-    ("G", 30, None),                 # renda real líquida
-    ("G", 31, None),                 # custo geográfico e laboral
-    ("G", 29, None),                 # da escolha individual ao agregado
-    ("G", 38, None),                 # o IVS
+    ("G", 16, None),                 # três elementos da teoria
+    ("G", 17, None),                 # escolha locacional maximiza a utilidade
+    ("G", 19, None),                 # renda real líquida
+    ("G", 20, None),                 # custo geográfico e laboral
+    ("G", 18, None),                 # da escolha individual ao agregado
+    ("G", 35, None),                 # o IVS
 ]
 SUMARIO = "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica"
 # Slides do deck do grupo que saem, com o motivo (vão para o manifesto e para o doc 02)
 FORA_G = {
-    2: SUMARIO, 12: SUMARIO, 15: SUMARIO, 17: SUMARIO, 19: SUMARIO, 21: SUMARIO, 23: SUMARIO,
+    2: SUMARIO, 12: SUMARIO, 15: SUMARIO, 22: SUMARIO, 24: SUMARIO, 26: SUMARIO, 28: SUMARIO,
     4: "oculto; figura de UF do grupo sem fonte reproduzível (P6)",
     5: "animação parcial do slide 7",
     6: "animação parcial do slide 7",
@@ -102,15 +108,16 @@ FORA_G = {
     13: "pergunta antiga (preenchimento) sobre fundo com números que não se reproduzem; a pergunta está no "
         "slide pós-banca 2",
     14: "oculto; tabela de inclinações que não se reproduz (P8)",
-    18: "diagrama B (hipótese antiga e pontos frágeis): a hipótese tem slide próprio (pós-banca 3) e os pontos "
-        "frágeis estão na Identificação e nas Limitações; sai pelo pedido 'menos slides'",
-    20: "marcador 'X' do grupo", 22: "marcador 'X' do grupo", 24: "marcador 'X' do grupo",
-    32: "oculto; versão anterior do slide 29",
-    33: "hipótese antiga (preenchimento) sobreposta às derivadas",
-    34: "EXEMPLO de outro trabalho", 35: "EXEMPLO de outro trabalho",
-    36: "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)",
-    37: "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)",
+    21: "oculto; versão anterior do slide 18",
+    23: "hipótese na redação que a banca de 04/11 apontou como errada (bolsa que 'aumenta' e efeito no "
+        "município), sobreposta às derivadas; a hipótese vigente está no slide pós-banca 3",
+    25: "dados: o slide pós-banca 4 traz a mesma base com a construção das variáveis e o funil até o modelo "
+        "principal (5.417); o do grupo tem números sobrepostos e o 5.421 do modelo base",
+    27: "marcador 'X' do grupo", 29: "EXEMPLO de outro trabalho (limitações)", 30: "EXEMPLO de outro trabalho",
+    33: "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)",
+    34: "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)",
 }
+ORIGENS = {"G": "deck do grupo", "D": "diagrama (deck reorganizado)", "PB": "banca 2 pós-banca"}
 FORA_PB = {
     1: "capa da banca 2: a capa é a do grupo, com o mesmo título novo",
     13: "Q&A da banca 2: o Q&A é o do grupo",
@@ -290,32 +297,25 @@ def adaptar_grupo(prs) -> list[str]:
     notas(sl, NOTAS[3])
     feitas.append("slide 3: figuras do pipeline (UFs com valor citado; vagas do ciclo 1 por região)")
 
-    # Slide 16 (diagrama A): "origem" sai da tela (doc 12, §1.2); a nota diz qual elo a hipótese testa
-    sl = s[15]
-    trocar_paragrafo(por_nome(sl, "A_no_A4"), A4_DIAGRAMA, 2,
-                     antigo="Moradia, deslocamento, amenidades e distância da origem.")
-    notas(sl, NOTAS[16])
-    feitas.append("slide 16: 'distância de casa' no lugar de 'distância da origem'")
-
     # Slide 28: a soma das três variáveis decide a escolha, não o preenchimento
-    c = por_nome(s[27], "cText")
+    c = por_nome(s[16], "cText")
     trocar_forma(c, CTEXT_UTILIDADE, c.text_frame.text)
-    feitas.append("slide 28: 'decide qual vaga o médico escolhe'")
+    feitas.append("slide 17: 'decide qual vaga o médico escolhe'")
 
     # Slide 29: a cadeia até o preenchimento é do modelo, não a hipótese testada
-    trocar_paragrafo(por_nome(s[28], "hyplab"), ROTULO_CADEIA, 0, antigo="HIPÓTESE")
-    feitas.append("slide 29: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'")
+    trocar_paragrafo(por_nome(s[17], "hyplab"), ROTULO_CADEIA, 0, antigo="HIPÓTESE")
+    feitas.append("slide 18: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'")
 
-    # Slide 31: a referência "slide 11" era a numeração da banca 1; no deck final, a equação vem no slide anterior
-    c = por_nome(s[30], "cText")
+    # Slide 20: a referência "slide 11" era a numeração da banca 1; no deck final, a equação vem no slide anterior
+    c = por_nome(s[19], "cText")
     r0 = c.text_frame.paragraphs[0].runs[0]
     if r0.text.strip() != "Adições ao modelo do slide 11:":
-        raise SystemExit(f"ERRO: texto antigo não confere no slide 31: {r0.text!r}")
+        raise SystemExit(f"ERRO: texto antigo não confere no slide 20: {r0.text!r}")
     r0.text = ADICOES + "  "
-    feitas.append("slide 31: 'Adições ao modelo do slide anterior' (a numeração mudou)")
+    feitas.append("slide 20: 'Adições ao modelo do slide anterior' (a numeração mudou)")
 
-    # Slide 38: grafia (errata E8)
-    t = por_texto(s[37], "Vulnerabilidade social: fragilidades", inicio=True)
+    # Slide 35: grafia (errata E8)
+    t = por_texto(s[34], "Vulnerabilidade social: fragilidades", inicio=True)
     achou = False
     for p in t.text_frame.paragraphs:
         for r in p.runs:
@@ -323,8 +323,8 @@ def adaptar_grupo(prs) -> list[str]:
                 r.text = r.text.replace("trasnporte", "transporte")
                 achou = True
     if not achou:
-        raise SystemExit("ERRO: 'trasnporte' não encontrado no slide 38")
-    feitas.append("slide 38: 'transporte' (errata E8)")
+        raise SystemExit("ERRO: 'trasnporte' não encontrado no slide 35")
+    feitas.append("slide 35: 'transporte' (errata E8)")
     return feitas
 
 
@@ -398,31 +398,42 @@ def copiar_slide(origem, destino_prs, layout, sufixo: str):
 
 
 def construir(saida: Path) -> dict:
+    if sha256(ENT_GRUPO) != SHA_GRUPO:
+        raise SystemExit("ERRO: o deck do grupo não é o guardado em 09/11/2026 (SHA-256 diferente)")
     prs = Presentation(str(ENT_GRUPO))
     pb = Presentation(str(ENT_PB))
-    if len(prs.slides) != 38 or len(pb.slides) != 14:
-        raise SystemExit(f"ERRO: esperava 38 slides no deck do grupo e 14 no pós-banca; "
+    diag = Presentation(str(ENT_DIAG))
+    if len(prs.slides) != N_GRUPO or len(pb.slides) != 14:
+        raise SystemExit(f"ERRO: esperava {N_GRUPO} slides no deck do grupo e 14 no pós-banca; "
                          f"vieram {len(prs.slides)} e {len(pb.slides)}")
     usados_g = {n for o, n, _ in ORDEM if o == "G"}
     usados_pb = {n for o, n, _ in ORDEM if o == "PB"}
-    if usados_g | set(FORA_G) != set(range(1, 39)) or usados_g & set(FORA_G):
-        raise SystemExit("ERRO: ORDEM e FORA_G precisam cobrir os 38 slides do grupo, sem repetição")
+    if usados_g | set(FORA_G) != set(range(1, N_GRUPO + 1)) or usados_g & set(FORA_G):
+        raise SystemExit(f"ERRO: ORDEM e FORA_G precisam cobrir os {N_GRUPO} slides do grupo, sem repetição")
     if usados_pb | set(FORA_PB) != set(range(1, 15)) or usados_pb & set(FORA_PB):
         raise SystemExit("ERRO: ORDEM e FORA_PB precisam cobrir os 14 slides do pós-banca, sem repetição")
     feitas = adaptar_grupo(prs)
+    # Diagrama da teoria da mudança: "origem" sai da tela (doc 12, §1.2); a nota diz qual elo a hipótese testa
+    sd = diag.slides[N_DIAG_SLIDE - 1]
+    trocar_paragrafo(por_nome(sd, "A_no_A4"), A4_DIAGRAMA, 2,
+                     antigo="Moradia, deslocamento, amenidades e distância da origem.")
+    notas(sd, NOTAS[16])
+    feitas.append("diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'")
     layout = prs.slides[2].slide_layout
-    if layout.name != "1_Title Slide":
+    if layout.name != "1_Title Slide" or sd.slide_layout.name != "1_Title Slide":
         raise SystemExit(f"ERRO: layout inesperado {layout.name!r}")
     ids_grupo = list(prs.slides._sldIdLst)
-    ids_pb = {}
+    ids_novos = {}
+    copiar_slide(sd, prs, layout, "diag")
+    ids_novos[("D", N_DIAG_SLIDE)] = prs.slides._sldIdLst[-1]
     for n in sorted(usados_pb):
         copiar_slide(pb.slides[n - 1], prs, layout, f"pb{n}")
-        ids_pb[n] = prs.slides._sldIdLst[-1]
+        ids_novos[("PB", n)] = prs.slides._sldIdLst[-1]
     lista = prs.slides._sldIdLst
     for el in list(lista):
         lista.remove(el)
     for o, n, _ in ORDEM:
-        lista.append(ids_grupo[n - 1] if o == "G" else ids_pb[n])
+        lista.append(ids_grupo[n - 1] if o == "G" else ids_novos[(o, n)])
     for n in FORA_G:
         prs.part.drop_rel(ids_grupo[n - 1].get(QN_RID))
     ordem_saida = []
@@ -434,7 +445,7 @@ def construir(saida: Path) -> dict:
         titulo = next((" ".join(sh.text_frame.text.split()) for sh in formas(sl.shapes)
                        if sh.has_text_frame and sh.is_placeholder
                        and "TITLE" in str(sh.placeholder_format.type)), "")
-        ordem_saida.append({"posicao": pos, "origem": f"{'banca 1 (grupo)' if o == 'G' else 'banca 2 pós-banca'} {n}",
+        ordem_saida.append({"posicao": pos, "origem": f"{ORIGENS[o]} {n}",
                             "secao": secao, "titulo": titulo})
     saida.mkdir(parents=True, exist_ok=True)
     prs.save(str(saida / ARQ_DECK))
@@ -460,7 +471,7 @@ def main(argv=None) -> int:
     resumo = construir(SAIDA)
     com_pdf = not a.sem_pdf and converter_pdf(SAIDA / ARQ_DECK, SAIDA / ARQ_PDF)
     entradas = [{"caminho": p.relative_to(ROOT).as_posix(), "sha256": sha256(p)}
-                for p in (ENT_GRUPO, ENT_PB, FIG_UF, FIG_VAGAS)]
+                for p in (ENT_GRUPO, ENT_DIAG, ENT_PB, FIG_UF, FIG_VAGAS)]
     saidas = [{"caminho": (SAIDA / n).relative_to(ROOT).as_posix(), "sha256": sha256(SAIDA / n)}
               for n in (ARQ_DECK, ARQ_PDF) if (SAIDA / n).exists() and (n != ARQ_PDF or com_pdf)]
     man = {

@@ -92,7 +92,7 @@ class TestDeckBancaFinal(unittest.TestCase):
         for pos, (o, n, secao) in enumerate(G.ORDEM):
             rod = [sh for sh in G.formas(self.prs.slides[pos].shapes)
                    if sh.has_text_frame and eh_rodape(sh.text_frame.text)]
-            if o == "G" and n in (1, 25, 26):
+            if o == "G" and n in (1, 31, 32):
                 continue  # capa, Q&A e divisor não têm rodapé
             self.assertEqual(len(rod), 1, f"slide {pos + 1}")
             self.assertEqual(norm(rod[0].text_frame.text), norm("  |  ".join(G.SECOES)))
@@ -111,7 +111,7 @@ class TestDeckBancaFinal(unittest.TestCase):
         pb = [n for o, n, _ in G.ORDEM if o == "PB"]
         self.assertEqual(len(g), len(set(g)))
         self.assertEqual(len(pb), len(set(pb)))
-        self.assertEqual(set(g) | set(G.FORA_G), set(range(1, 39)))
+        self.assertEqual(set(g) | set(G.FORA_G), set(range(1, G.N_GRUPO + 1)))
         self.assertEqual(set(pb) | set(G.FORA_PB), set(range(1, 15)))
 
 

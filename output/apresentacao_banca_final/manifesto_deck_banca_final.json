@@ -7,6 +7,10 @@
   "nota_pdf": "o PDF é renderizado pelo LibreOffice e não é byte a byte determinístico",
   "entradas": [
     {
+      "caminho": "docs/07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_0911.pptx",
+      "sha256": "b5ed0d74807526e6288d7f15837c71c76f9be236116cef151430857baf15ce42"
+    },
+    {
       "caminho": "output/apresentacao_banca_final/deck_proposta_reorganizada.pptx",
       "sha256": "9712bee04059d8823b4207211899059f85705c62598898c4cc3ea28d2c98ae4e"
     },
@@ -26,11 +30,11 @@
   "saidas": [
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
-      "sha256": "277d357c1644bccc52c450e28f656ab8510b67a33c320899034518a1d7724bf8"
+      "sha256": "3b0ea5bfd86b9df1ad84538072d2dd90bf55f7890b12e22537367264c74ac36d"
     },
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
-      "sha256": "da027937468b3e6833f1845fce4cf005112df05c39d16468341f23af59cdef71"
+      "sha256": "22eb4fde153253ab634dfca2d5434d2912407283b28b5add6bc0d5814c32fb58"
     }
   ],
   "slides_do_grupo_fora": {
@@ -47,20 +51,18 @@
     "13": "pergunta antiga (preenchimento) sobre fundo com números que não se reproduzem; a pergunta está no slide pós-banca 2",
     "14": "oculto; tabela de inclinações que não se reproduz (P8)",
     "15": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
-    "17": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
-    "18": "diagrama B (hipótese antiga e pontos frágeis): a hipótese tem slide próprio (pós-banca 3) e os pontos frágeis estão na Identificação e nas Limitações; sai pelo pedido 'menos slides'",
-    "19": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
-    "20": "marcador 'X' do grupo",
-    "21": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
-    "22": "marcador 'X' do grupo",
-    "23": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
-    "24": "marcador 'X' do grupo",
-    "32": "oculto; versão anterior do slide 29",
-    "33": "hipótese antiga (preenchimento) sobreposta às derivadas",
-    "34": "EXEMPLO de outro trabalho",
-    "35": "EXEMPLO de outro trabalho",
-    "36": "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)",
-    "37": "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)"
+    "21": "oculto; versão anterior do slide 18",
+    "22": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
+    "23": "hipótese na redação que a banca de 04/11 apontou como errada (bolsa que 'aumenta' e efeito no município), sobreposta às derivadas; a hipótese vigente está no slide pós-banca 3",
+    "24": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
+    "25": "dados: o slide pós-banca 4 traz a mesma base com a construção das variáveis e o funil até o modelo principal (5.417); o do grupo tem números sobrepostos e o 5.421 do modelo base",
+    "26": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
+    "27": "marcador 'X' do grupo",
+    "28": "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica",
+    "29": "EXEMPLO de outro trabalho (limitações)",
+    "30": "EXEMPLO de outro trabalho",
+    "33": "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)",
+    "34": "viabilidade empírica da banca 1, substituída pela banca 2 (erratas E4 e E5)"
   },
   "slides_do_pos_banca_fora": {
     "1": "capa da banca 2: a capa é a do grupo, com o mesmo título novo",
@@ -69,13 +71,13 @@
   "ordem": [
     {
       "posicao": 1,
-      "origem": "banca 1 (grupo) 1",
+      "origem": "deck do grupo 1",
       "secao": null,
       "titulo": ""
     },
     {
       "posicao": 2,
-      "origem": "banca 1 (grupo) 3",
+      "origem": "deck do grupo 3",
       "secao": "Motivação",
       "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
     },
@@ -87,7 +89,7 @@
     },
     {
       "posicao": 4,
-      "origem": "banca 1 (grupo) 16",
+      "origem": "diagrama (deck reorganizado) 16",
       "secao": "Literatura",
       "titulo": "Da regra da bolsa à saúde: teoria da mudança"
     },
@@ -153,13 +155,13 @@
     },
     {
       "posicao": 15,
-      "origem": "banca 1 (grupo) 25",
+      "origem": "deck do grupo 31",
       "secao": null,
       "titulo": ""
     },
     {
       "posicao": 16,
-      "origem": "banca 1 (grupo) 26",
+      "origem": "deck do grupo 32",
       "secao": null,
       "titulo": ""
     },
@@ -171,37 +173,37 @@
     },
     {
       "posicao": 18,
-      "origem": "banca 1 (grupo) 27",
+      "origem": "deck do grupo 16",
       "secao": null,
       "titulo": "O modelo combina três elementos da teoria"
     },
     {
       "posicao": 19,
-      "origem": "banca 1 (grupo) 28",
+      "origem": "deck do grupo 17",
       "secao": null,
       "titulo": "A escolha locacional maximiza a utilidade"
     },
     {
       "posicao": 20,
-      "origem": "banca 1 (grupo) 30",
+      "origem": "deck do grupo 19",
       "secao": null,
       "titulo": "A escolha locacional maximiza a renda real líquida"
     },
     {
       "posicao": 21,
-      "origem": "banca 1 (grupo) 31",
+      "origem": "deck do grupo 20",
       "secao": null,
       "titulo": "Literatura divide o custo em dois tipos: geográfico e laboral"
     },
     {
       "posicao": 22,
-      "origem": "banca 1 (grupo) 29",
+      "origem": "deck do grupo 18",
       "secao": null,
       "titulo": "Da escolha individual ao preenchimento agregado"
     },
     {
       "posicao": 23,
-      "origem": "banca 1 (grupo) 38",
+      "origem": "deck do grupo 35",
       "secao": null,
       "titulo": "O IVS mede a vulnerabilidade social dos territórios brasileiros"
     }
@@ -209,10 +211,10 @@
   "adaptacoes": [
     "capa: título pela pergunta, como no deck pós-banca",
     "slide 3: figuras do pipeline (UFs com valor citado; vagas do ciclo 1 por região)",
-    "slide 16: 'distância de casa' no lugar de 'distância da origem'",
-    "slide 28: 'decide qual vaga o médico escolhe'",
-    "slide 29: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'",
-    "slide 31: 'Adições ao modelo do slide anterior' (a numeração mudou)",
-    "slide 38: 'transporte' (errata E8)"
+    "slide 17: 'decide qual vaga o médico escolhe'",
+    "slide 18: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'",
+    "slide 20: 'Adições ao modelo do slide anterior' (a numeração mudou)",
+    "slide 35: 'transporte' (errata E8)",
+    "diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'"
   ]
 }

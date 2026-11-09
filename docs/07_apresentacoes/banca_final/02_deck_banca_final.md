@@ -16,6 +16,13 @@
 > banca (`output/apresentacao_banca2/deck_banca2_pos_banca.pptx`, doc 12); duas figuras do pipeline da banca 1
 > (`output/apresentacao_banca1/especialistas_por_uf_extremos.png` e `vagas_ciclo1_por_regiao.png`).
 
+> [!IMPORTANT]
+> **Versão 3 (09/11/2026): a base passou a ser o deck atual do grupo** (`grupo/deck_grupo_banca_final_0911.pptx`,
+> "PEE - Modelo econômico", 35 slides), no design do grupo. O diagrama da teoria vem do deck reorganizado e a banca 2
+> do deck pós-banca. A ordem e os textos das seções 1 a 3 continuam valendo; os números dos slides do grupo citados
+> abaixo são os do deck antigo. A correspondência nova (e o motivo de cada slide que sai) está no gerador (`ORDEM`,
+> `FORA_G`) e no manifesto. Em andamento: dois slides novos com o método passo a passo e a revisão do modelo teórico.
+
 ## 1. O feedback de 04/11 aplicado à parte da banca 1
 
 | Pedido da banca (doc 12, §1.2 e §1.3) | Na parte da banca 1 |

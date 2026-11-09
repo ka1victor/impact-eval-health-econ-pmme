@@ -8,6 +8,20 @@
 
 ---
 
+## 09/11/2026 — Banca final v3: base no deck atual do grupo
+
+Motivo: o autor indicou que o deck em uso pelo grupo é o `PEE - Modelo econômico` de 09/11/2026; o deck final passa a
+partir dele (design do grupo), com o diagrama da teoria e a banca 2 pós-banca. A cópia sem alteração fica guardada e o
+gerador confere o SHA-256.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_0911.pptx` | cópia sem alteração do deck do grupo de 09/11/2026 (SHA-256 `b5ed0d74…5ce42`); base do deck final |
+
+---
+
 ## 09/11/2026 — Banca final: deck que junta a banca 1 adaptada e a banca 2
 
 Motivo: pedido do autor para juntar os slides da banca 2 com os da banca 1, adaptados às mudanças da banca 2
