@@ -2,7 +2,7 @@
   "etapa": "X6_poder_descartes",
   "natureza_dos_dados": "EMPIRICO",
   "estatuto": "EXPLORATORIO_POS_SINTESE",
-  "data_execucao": "2026-10-19",
+  "data_execucao": "2026-11-09",
   "script": "scripts/rdd_bolsa/20_poder_descartes.py",
   "protocolo": {
     "texto": "docs/06_execucao/45_protocolo_exploratorio_pos_sintese.md",
@@ -122,8 +122,8 @@
     },
     {
       "caminho": "docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md",
-      "sha256": "0ac000f5be5ae0caab35a8f7058ad10203ca10318c9205da80e46fba319e2bd8",
-      "bytes": 107414,
+      "sha256": "6359cb120403587e2a2551e86ea6c9d9895f779023e53b21fded150f9953f5ad",
+      "bytes": 107884,
       "papel": "magnitudes da literatura (texto, nao resultado)",
       "fonte": "docs/03_literatura_empirica/20",
       "data_referencia": "2026-10-05",
