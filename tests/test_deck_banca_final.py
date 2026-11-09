@@ -18,10 +18,11 @@ _spec = importlib.util.spec_from_file_location("gerar_deck_banca_final",
 G = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(G)
 
-# Texto da banca 1 que não pode voltar (erratas E8 e E10, hipótese antiga, slides de exemplo e P12)
+# Na tela, não pode voltar: erratas E8 e E10 da banca 1, hipótese antiga, slides de exemplo, P12, título antigo,
+# "origem" (doc 12 da banca 2, §1.2) e referência à numeração da banca 1
 PROIBIDAS = ("piso", "renumeração", "trasnporte", "buito", "PMEE", "EXEMPLO", "indícios de efetividade",
              "Viabilidade Empírica", "BOLSA → PREENCHIMENTO", "maior probabilidade de preenchimento de vagas",
-             "Municípios com maior remuneração", "REGIC")
+             "Municípios com maior remuneração", "REGIC", "incentivo limitado", "origem", "slide 11", "Sumário")
 
 
 def sha256(p: Path) -> str:
@@ -30,6 +31,10 @@ def sha256(p: Path) -> str:
 
 def norm(t: str) -> str:
     return " ".join(t.split())
+
+
+def eh_rodape(t: str) -> bool:
+    return "|" in t and t.startswith(("Motivação", "Hipótese"))
 
 
 @unittest.skipUnless(DECK.exists() and MANIF.exists(), "deck da banca final ausente")
@@ -53,49 +58,61 @@ class TestDeckBancaFinal(unittest.TestCase):
                 continue  # o PDF do LibreOffice não é determinístico
             self.assertEqual(sha256(ROOT / e["caminho"]), e["sha256"], e["caminho"])
 
-    def test_sem_texto_proibido(self):
-        tudo = " ".join(" ".join(t) for t in self.textos)
-        for f in PROIBIDAS:
-            self.assertNotIn(f, tudo, f)
+    def test_sem_texto_proibido_na_tela(self):
+        for pos, ts in enumerate(self.textos, start=1):
+            tudo = " ".join(ts)
+            for f in PROIBIDAS:
+                self.assertNotIn(f, tudo, f"slide {pos}: {f}")
 
     def test_textos_novos_na_tela_e_no_doc(self):
         doc = norm(DOC.read_text(encoding="utf-8"))
         tudo = " ".join(" ".join(t) for t in self.textos)
-        novos = [G.PERGUNTA, G.HIPOTESE, G.ROTULO_HIPOTESE, G.TITULO_IVS, G.SUB_IVS, G.SUB2_IVS, G.NOTA_IVS,
-                 G.FONTES_IVS, G.SUB_VAGAS, G.SUB2_VAGAS, G.SUB2_UF, G.FONTES_ESCASSEZ, G.CTEXT_UTILIDADE,
-                 G.ROTULO_CADEIA, *G.FAIXAS_IVS.values()]
+        novos = [*G.TITULO_CAPA, G.SUB2_UF, G.SUB_VAGAS, G.SUB2_VAGAS, G.FONTES_ESCASSEZ, G.A4_DIAGRAMA,
+                 G.CTEXT_UTILIDADE, G.ROTULO_CADEIA, G.ADICOES]
         for t in novos:
             self.assertIn(norm(t), tudo, t)
             self.assertIn(norm(t).replace("|", "\\|"), doc, f"não está no doc 02: {t}")
 
-    def test_slides_da_banca2_sem_mudanca_de_texto(self):
+    def test_slides_do_pos_banca_sem_mudanca_de_texto(self):
         from pptx import Presentation
-        b2 = Presentation(str(G.ENT_B2))
+        pb = Presentation(str(G.ENT_PB))
         for pos, (o, n, _) in enumerate(G.ORDEM):
-            if o != "B2":
+            if o != "PB":
                 continue
-            antes = [norm(sh.text_frame.text) for sh in G.formas(b2.slides[n - 1].shapes)
-                     if sh.has_text_frame and not sh.text_frame.text.startswith("Hipótese  |")]
-            depois = [t for t in self.textos[pos] if not t.startswith("Motivação |")]
-            self.assertEqual(antes, depois, f"banca 2, slide {n}")
-            self.assertEqual(norm(b2.slides[n - 1].notes_slide.notes_text_frame.text),
-                             norm(self.prs.slides[pos].notes_slide.notes_text_frame.text))
+            def filtrar(ts):
+                return [t for t in ts if not eh_rodape(t) and not t.isdigit()]
+            antes = filtrar([norm(sh.text_frame.text) for sh in G.formas(pb.slides[n - 1].shapes)
+                             if sh.has_text_frame])
+            self.assertEqual(antes, filtrar(self.textos[pos]), f"pós-banca, slide {n}")
+            if pb.slides[n - 1].has_notes_slide:
+                self.assertEqual(norm(pb.slides[n - 1].notes_slide.notes_text_frame.text),
+                                 norm(self.prs.slides[pos].notes_slide.notes_text_frame.text))
 
-    def test_rodape_marca_a_secao(self):
+    def test_rodape_igual_em_todos_e_marca_a_secao(self):
         for pos, (o, n, secao) in enumerate(G.ORDEM):
             rod = [sh for sh in G.formas(self.prs.slides[pos].shapes)
-                   if sh.has_text_frame and sh.text_frame.text.startswith("Motivação") and "|" in sh.text_frame.text]
-            if not rod:
-                continue
+                   if sh.has_text_frame and eh_rodape(sh.text_frame.text)]
+            if o == "G" and n in (1, 25, 26):
+                continue  # capa, Q&A e divisor não têm rodapé
+            self.assertEqual(len(rod), 1, f"slide {pos + 1}")
             self.assertEqual(norm(rod[0].text_frame.text), norm("  |  ".join(G.SECOES)))
             negrito = [r.text for r in rod[0].text_frame.paragraphs[0].runs if r.font.bold]
             self.assertEqual(negrito, [secao] if secao else [], f"slide {pos + 1}")
 
-    def test_ordem_e_fora_cobrem_o_deck_do_grupo(self):
-        usados = [n for o, n, _ in G.ORDEM if o == "G"]
-        self.assertEqual(len(usados), len(set(usados)))
-        self.assertEqual(set(usados) | set(G.FORA), set(range(1, 39)))
-        self.assertEqual(sorted(n for o, n, _ in G.ORDEM if o == "B2"), list(range(1, 12)))
+    def test_numero_da_pagina(self):
+        for pos, s in enumerate(self.prs.slides, start=1):
+            for sh in G.formas(s.shapes):
+                t = sh.text_frame.text.strip() if sh.has_text_frame else ""
+                if t.isdigit() and sh.left is not None and sh.left > 12 * 914400 and sh.top > 6.8 * 914400:
+                    self.assertEqual(int(t), pos, f"slide {pos}")
+
+    def test_ordem_e_fora_cobrem_as_entradas(self):
+        g = [n for o, n, _ in G.ORDEM if o == "G"]
+        pb = [n for o, n, _ in G.ORDEM if o == "PB"]
+        self.assertEqual(len(g), len(set(g)))
+        self.assertEqual(len(pb), len(set(pb)))
+        self.assertEqual(set(g) | set(G.FORA_G), set(range(1, 39)))
+        self.assertEqual(set(pb) | set(G.FORA_PB), set(range(1, 15)))
 
 
 if __name__ == "__main__":

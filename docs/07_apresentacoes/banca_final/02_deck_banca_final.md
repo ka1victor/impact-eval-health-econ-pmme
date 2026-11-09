@@ -1,112 +1,88 @@
-# 02 — Deck da banca final: banca 1 adaptada + banca 2
+# 02 — Deck da banca final: banca 1 ajustada + banca 2 pós-banca
 
-> **Pedido do autor (09/11/2026):** juntar os slides da banca 2 com os da banca 1, "adaptados pras mudanças que
-> fizemos no trabalho pra banca 2", para apresentar na banca final.<br>
-> **Estatuto:** conteúdo canônico do deck da banca final, **versão 1 (proposta)**. O `.pptx` é derivado: divergência
-> entre o deck e este documento é erro do deck (`CLAUDE.md`).<br>
+> **Pedido do autor (09/11/2026):** juntar os slides da banca 2 com os da banca 1, adaptados às mudanças do trabalho
+> para a banca 2; em seguida, "coloca na main, e ajusta os slides da banca 1 já com base neles": a banca 2 entra na
+> versão revista depois da banca de 04/11/2026 ([doc 12 da banca 2](../banca2/12_revisao_pos_banca_0411.md)), e o
+> feedback dessa banca vale também para a parte da banca 1.<br>
+> **Estatuto:** conteúdo canônico do deck da banca final, **versão 2 (proposta)**. O `.pptx` é derivado: divergência
+> entre o deck e este documento é erro do deck (`CLAUDE.md`). A versão 1 (32 slides, com o deck curto de 28/10) fica
+> no histórico do Git (commit `1f72330`).<br>
 > **Deck:** `output/apresentacao_banca_final/deck_banca_final.pptx` e `.pdf`, gerados por
 > [`scripts/apresentacao/gerar_deck_banca_final.py`](../../../scripts/apresentacao/gerar_deck_banca_final.py), com o
-> manifesto `manifesto_deck_banca_final.json` (hashes das entradas e das saídas, ordem e adaptações).
-> Conferido por `tests/test_deck_banca_final.py`.<br>
+> manifesto `manifesto_deck_banca_final.json` (hashes das entradas e das saídas, ordem, adaptações e slides que
+> saíram, com o motivo). Conferido por `tests/test_deck_banca_final.py`.<br>
 > **Entradas (só `output/`):** o deck do grupo reorganizado com o diagrama da teoria da mudança
-> (`deck_proposta_reorganizada.pptx`, doc [01](01_diagrama_teoria_mudanca.md)); o deck curto da banca 2
-> (`output/apresentacao_banca2/deck_banca2_curto.pptx`, conteúdo no
-> [doc 04 da banca 2](../banca2/04_conteudo_deck_curto.md)); duas figuras do pipeline da banca 1
+> (`deck_proposta_reorganizada.pptx`, doc [01](01_diagrama_teoria_mudanca.md)); o deck da banca 2 revisto depois da
+> banca (`output/apresentacao_banca2/deck_banca2_pos_banca.pptx`, doc 12); duas figuras do pipeline da banca 1
 > (`output/apresentacao_banca1/especialistas_por_uf_extremos.png` e `vagas_ciclo1_por_regiao.png`).
 
-## 1. O que muda da banca 1 para a banca final
+## 1. O feedback de 04/11 aplicado à parte da banca 1
 
-A banca 2 trocou a hipótese: de "municípios com maior remuneração têm maior preenchimento de vagas" para a escolha da
-1ª opção, comparando vagas da mesma UF (decisão do autor de 28/10/2026, [doc 07 da banca 2](../banca2/07_nova_hipotese.md)).
-A parte da banca 1 foi adaptada a isso e às erratas da [versão apresentada](../banca1/04_versao_apresentada.md), §3:
+| Pedido da banca (doc 12, §1.2 e §1.3) | Na parte da banca 1 |
+|---|---|
+| Menos slides, menos conteúdo | saem os sete sumários do grupo; sai o slide do IVS e da bolsa (a regra em três faixas está no slide 3, do pós-banca; o IVS em detalhe vai para o apêndice); sai o slide separado da pergunta (ela está em destaque no slide 3); sai o diagrama B (a hipótese tem slide próprio; os pontos frágeis estão na Identificação e nas Limitações) |
+| Navegação só com as seções que existem, igual em todos os slides | o rodapé de todos os slides passa a ser "Motivação \| Literatura \| Hipótese \| Dados \| Análise Descritiva \| Metodologia \| Identificação \| Resultados \| Robustez \| Discussão", com a seção corrente em negrito; "Literatura" entra porque agora tem slide (o diagrama); na capa, no Q&A e no apêndice nenhuma seção fica marcada |
+| Trocar "origem" na tela | diagrama da teoria: "distância da origem" vira "distância de casa" (a casa do médico, como em Moehling et al.) |
+| Capa: "incentivo limitado" saiu | capa do grupo com o título do pós-banca: "A bolsa maior atrai a 1ª opção? Um modelo de escolha para o Programa Mais Médicos Especialistas" |
+| Tirar o gráfico que cria expectativa de RDD | o gráfico bolsa × IVS fica só no apêndice (A1), como no pós-banca |
 
-| Tema | Banca 1 (apresentada) | Banca final |
-|---|---|---|
-| Pergunta | "Um aumento na remuneração do PMM-E consegue atrair especialistas para municípios mais vulneráveis?" | **"Uma bolsa maior do PMM-E muda a vaga que o especialista escolhe como 1ª opção?"** — a margem que os dados medem |
-| Hipótese | preenchimento de vagas | **"Comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a 1ª opção do especialista (formulada após ver os dados)."** |
-| Regra da bolsa | "o IVS é o piso"; R$ 20 mil só em vulnerabilidade muito alta (grade do FAQ) | regra aplicada, com o IVS 2010 oficial: até 0,300, R$ 10 mil; de 0,301 a 0,400, R$ 15 mil; acima de 0,400, R$ 20 mil (errata E10, auditoria 16) |
-| Motivação com números | figura de 16 UFs (P6), deslocamento por região (P7), crescimento por faixa (P12), distribuição regional (P13) | só o que se reproduz: as UFs com valor citado na Demografia Médica 2025 e as vagas do ciclo 1 por região, do quadro de vagas |
-| "Há indícios de efetividade" | antes/depois sem comparação (errata E6) | sai |
-| Viabilidade empírica | o desafio de separar bolsa e vulnerabilidade; 35,6% e 30% (erratas E4, E5) | substituída pelos dados, descritivas, método, identificação e resultados da banca 2 |
-| Teoria | equações no corpo | diagrama da teoria da mudança no corpo; equações no apêndice (doc 01) |
-| Hipótese no diagrama | "BOLSA → PREENCHIMENTO", colchete nos passos 2 e 3 | **"HIPÓTESE: BOLSA → 1ª OPÇÃO"**, colchete só no passo 2 (escolha); os passos seguintes ficam como cadeia não testada |
+E, como na versão 1, as erratas da [versão apresentada da banca 1](../banca1/04_versao_apresentada.md), §3: os
+gráficos do grupo sem fonte reproduzível (P6, P7, P8, P12, P13) saem ou são trocados por figuras do pipeline; o
+"piso" e a grade do FAQ (E10) não aparecem; "transporte" (E8).
 
-## 2. Ordem do deck (32 slides)
-
-O rodapé usa as sete seções do deck do grupo; as oito seções da banca 2 entram nelas: Dados e Análise descritiva em
-**Base de Dados**; Metodologia e Identificação em **Metodologia**; Resultados, Robustez e Discussão em
-**Resultados**. No apêndice, nenhuma seção fica marcada.
+## 2. Ordem do deck (23 slides)
 
 | # | Origem | Seção | Slide |
 |:---:|---|---|---|
-| 1 | grupo 1 | — | Capa: "Remuneração como incentivo limitado: um modelo de escolha racional para o Programa Mais Médicos Especialistas" |
-| 2 | grupo 2 | Motivação | Sumário |
-| 3 | grupo 3 | Motivação | A escassez de especialistas já é tratada como urgência sanitária (figuras do pipeline) |
-| 4 | grupo 7 | Motivação | A vulnerabilidade social define a faixa da bolsa do PMM-E |
-| 5 | grupo 12 | Pergunta | Sumário |
-| 6 | grupo 13 | Pergunta | a pergunta |
-| 7 | grupo 15 | Literatura | Sumário |
-| 8 | grupo 16 | Literatura | Da regra da bolsa à saúde: teoria da mudança |
-| 9 | grupo 17 | Hipótese | Sumário |
-| 10 | banca 2, 1 | Hipótese | Pergunta e hipótese: a bolsa maior muda a 1ª opção? |
-| 11 | grupo 18 | Hipótese | A hipótese e onde a identificação é fraca |
-| 12 | grupo 19 | Base de Dados | Sumário |
-| 13–16 | banca 2, 2–5 | Base de Dados | dados e amostra; regra *sharp*; onde escolhem; descritivo perto do corte |
-| 17 | grupo 21 | Metodologia | Sumário |
-| 18–19 | banca 2, 6–7 | Metodologia | modelo; identificação |
-| 20 | grupo 23 | Resultados | Sumário |
-| 21–24 | banca 2, 8–11 | Resultados | resultado principal; robustez; conclusão; limitações |
-| 25 | grupo 25 | — | Q&A |
-| 26 | grupo 26 | — | Apêndice |
-| 27–31 | grupo 27, 28, 30, 31, 29 | — | equações: três elementos da teoria; escolha locacional (utilidade e renda real líquida); custo geográfico e laboral; da escolha individual ao agregado |
-| 32 | grupo 38 | — | O IVS mede a vulnerabilidade social dos territórios brasileiros |
+| 1 | grupo 1 | — | Capa: "A bolsa maior atrai a 1ª opção? Um modelo de escolha para o Programa Mais Médicos Especialistas" |
+| 2 | grupo 3 | Motivação | A escassez de especialistas já é tratada como urgência sanitária (figuras do pipeline) |
+| 3 | pós-banca 2 | Motivação | A bolsa do PMM-E é maior onde o município é mais vulnerável (notícias, a regra em três faixas e a pergunta) |
+| 4 | grupo 16 | Literatura | Da regra da bolsa à saúde: teoria da mudança |
+| 5 | pós-banca 3 | Hipótese | Hipótese: na mesma UF, a bolsa maior atrai a 1ª opção |
+| 6 | pós-banca 4 | Dados | Base: uma linha por candidato × vaga possível |
+| 7 | pós-banca 5 | Análise Descritiva | 79% escolhem uma vaga na UF onde já trabalhavam |
+| 8 | pós-banca 6 | Metodologia | Modelo: logit condicional da 1ª opção |
+| 9 | pós-banca 7 | Metodologia | Por que este modelo: o desenho de Bobba et al. (2026) |
+| 10 | pós-banca 8 | Identificação | Identificação: o que fica fixo e o que supomos |
+| 11 | pós-banca 9 | Resultados | Na mesma UF, +R$ 5 mil multiplicam a chance por 1,47 |
+| 12 | pós-banca 10 | Robustez | Robustez: sempre comparando vagas da mesma UF |
+| 13 | pós-banca 11 | Discussão | Conclusão: a bolsa maior aumenta a 1ª opção? Sim |
+| 14 | pós-banca 12 | Discussão | Limitações e o que cada uma implica |
+| 15 | grupo 25 | — | Q&A |
+| 16 | grupo 26 | — | Apêndice |
+| 17 | pós-banca 14 | — | Apêndice A1: a bolsa segue exatamente o IVS |
+| 18–22 | grupo 27, 28, 30, 31, 29 | — | equações: três elementos da teoria; escolha locacional (utilidade e renda real líquida); custo geográfico e laboral; da escolha individual ao agregado |
+| 23 | grupo 38 | — | O IVS mede a vulnerabilidade social dos territórios brasileiros |
 
-Saem do deck do grupo reorganizado: 4, 5, 6, 8, 9, 10, 11, 14, 20, 22, 24, 32, 33, 34, 35, 36 e 37 (motivo de cada
-um no manifesto, `slides_do_grupo_fora`). Os números digitados à mão nos slides do grupo passam a ser a posição no
-deck final.
+Do pós-banca saem a capa (1) e o Q&A (13): ficam os do grupo. Do deck do grupo reorganizado, o manifesto
+(`slides_do_grupo_fora`) traz cada slide que saiu e o motivo. Os números digitados à mão nos slides passam a ser a
+posição no deck final.
 
 ## 3. Textos novos na tela
 
-Cada troca confere o texto antigo antes de trocar; se ele não estiver lá, o gerador para.
+Cada troca confere o texto antigo antes de trocar; se ele não estiver lá, o gerador para. Os slides do pós-banca
+entram **sem mudança de texto**, só com o rodapé e o número de página do deck final; as notas (roteiro de fala) vão
+junto.
 
 | Slide | Antes | Depois |
 |:---:|---|---|
-| 3 | gráfico de 16 UFs (sem fonte reproduzível, P6) | figura `especialistas_por_uf_extremos.png`, subtítulo "Especialistas por 100 mil habitantes, as duas maiores e as duas menores UFs – dez/2024" |
-| 3 | "II. Serviços especializados exigem longos deslocamentos", gráfico de deslocamento (P7) | "II. O ciclo 1 do PMM-E abriu vagas nas cinco regiões"; "Células estabelecimento × curso e vagas imediatas, ciclo 1, 1ª chamada"; figura `vagas_ciclo1_por_regiao.png` |
-| 3 | fontes com REGIC 2018 | "Fontes: Medicina S/A; Amado Mundo; Agência Câmara; Scheffer et al., Demografia Médica no Brasil 2025 (FMUSP/AMB), só as UFs com valor citado; quadro de vagas do Edital SGTES/MS nº 3/2025." |
-| 4 | "A vulnerabilidade social define o piso da bolsa do PMM-E" | "A vulnerabilidade social define a faixa da bolsa do PMM-E" |
-| 4 | "III. O IVS define a renumeração do PMM-E" | "III. O IVS define a faixa da bolsa do PMM-E" |
-| 4 | "Bolsa-formação mensal por categoria do Índice de Vulnerabilidade Social" | "Bolsa-formação mensal por faixa do IVS 2010 oficial (Ipea)" |
-| 4 | R$ 20 mil: "Vulnerabilidade: Muito alta" | "IVS acima de 0,400: alta e muito alta" |
-| 4 | R$ 15 mil: "Vulnerabilidade: Alta" | "IVS de 0,301 a 0,400: média" |
-| 4 | R$ 10 mil: "Vulnerabilidade: Média, baixa e buito baixa" | "IVS até 0,300: baixa e muito baixa" |
-| 4 | "… é fixada, por regra, sobre a categoria de IVS do município." | "Instrumento da política. A bolsa de R$ 10 mil, R$ 15 mil ou R$ 20 mil é fixada por regra sobre o IVS 2010 do município, com cortes em 0,300 e 0,400." |
-| 4 | fontes com o item 11.1.4 do edital (a grade do FAQ) | "Fontes: Ipea, Atlas da Vulnerabilidade Social (IVS 2010); quadros de vagas SGTES/MS; auditoria 16." |
-| 6 | pergunta sobre preenchimento, sobre o fundo do slide 9 (números que não se reproduzem) | "Uma bolsa maior do PMM-E muda a vaga que o especialista escolhe como 1ª opção?", sem o fundo |
-| 11 | "Municípios com maior remuneração oferecida pelo PMM-E têm maior probabilidade de preenchimento de vagas." | "Comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a 1ª opção do especialista (formulada após ver os dados)." |
-| 11 | "HIPÓTESE: BOLSA → PREENCHIMENTO", colchete nos passos 2 e 3 | "HIPÓTESE: BOLSA → 1ª OPÇÃO", colchete só no passo 2 |
-| 28 | "… é a soma das três variáveis que determina se a vaga é preenchida." | "A política mexe em apenas uma variável: eleva E(w\|B) pela bolsa (B). Preços e custo do local continuam contra, e é a soma das três variáveis que decide qual vaga o médico escolhe." |
-| 31 | rótulo "HIPÓTESE" na cadeia B ↑ → V ↑ → π ↑ → Pr(Y = 1) ↑ | "CADEIA DO MODELO" |
-| 32 | "trasnporte" | "transporte" (errata E8) |
+| 1 | "Remuneração como incentivo limitado: um modelo de escolha racional para o Programa Mais Médicos Especialistas" | "A bolsa maior atrai a 1ª opção?" / "Um modelo de escolha para o" / "Programa Mais Médicos Especialistas" |
+| 2 | gráfico de 16 UFs (sem fonte reproduzível, P6) | figura `especialistas_por_uf_extremos.png`, subtítulo "Especialistas por 100 mil habitantes, as duas maiores e as duas menores UFs – dez/2024" |
+| 2 | "II. Serviços especializados exigem longos deslocamentos", gráfico de deslocamento (P7) | "II. O ciclo 1 do PMM-E abriu vagas nas cinco regiões"; "Células estabelecimento × curso e vagas imediatas, ciclo 1, 1ª chamada"; figura `vagas_ciclo1_por_regiao.png` |
+| 2 | fontes com REGIC 2018 | "Fontes: Medicina S/A; Amado Mundo; Agência Câmara; Scheffer et al., Demografia Médica no Brasil 2025 (FMUSP/AMB), só as UFs com valor citado; quadro de vagas do Edital SGTES/MS nº 3/2025." |
+| 4 | "Moradia, deslocamento, amenidades e distância da origem." | "Moradia, deslocamento, amenidades e distância de casa." |
+| 19 | "… é a soma das três variáveis que determina se a vaga é preenchida." | "A política mexe em apenas uma variável: eleva E(w\|B) pela bolsa (B). Preços e custo do local continuam contra, e é a soma das três variáveis que decide qual vaga o médico escolhe." |
+| 21 | "Adições ao modelo do slide 11:" | "Adições ao modelo do slide anterior:" |
+| 22 | rótulo "HIPÓTESE" na cadeia B ↑ → V ↑ → π ↑ → Pr(Y = 1) ↑ | "CADEIA DO MODELO" |
+| 23 | "trasnporte" | "transporte" (errata E8) |
 
-Os 11 slides da banca 2 entram **sem mudança de texto**, só com o rodapé das sete seções; as notas (roteiro de fala)
-vão junto. As propostas da [revisão 56](../../auditorias/56_revisao_deck_banca2_28out.md) ainda não foram aplicadas.
+Notas reescritas: slide 2 (por que os gráficos do grupo saíram) e slide 4 (a hipótese testa só o elo da escolha; o
+resto da cadeia não é testado aqui).
 
-## 4. Notas do apresentador reescritas
+## 4. Em aberto (decisão do autor)
 
-Os slides 3, 4, 6 e 11 tinham notas sobre o conteúdo antigo ("valor mínimo pago", preenchimento). As notas novas
-estão no gerador (`NOTAS`) e dizem, em resumo: slide 3, que os gráficos do grupo saíram por falta de fonte
-reproduzível; slide 4, que a regra é o IVS 2010 oficial e que o "piso" da banca 1 vinha de um arquivo de IVS errado;
-slide 6, que a pergunta passou a ser a margem medida (a 1ª opção marcada, não a ida ao município); slide 11, que a
-hipótese fica só no passo 2 e foi formulada depois de ver os dados.
-
-## 5. Em aberto (decisão do autor)
-
-1. **Título do trabalho.** "Remuneração como incentivo limitado" foi mantido. Ele combina com a leitura da
-   Conclusão (a bolsa compensa só parte do custo do lugar), mas a conclusão diz "Sim": decidir se o título fica.
-2. **Revisão 56.** Aplicar ou não as propostas aos slides da banca 2 (identificação com o IVS na tela, "Sim" com
-   "exploratório", "aceita vaga", "por degrau"). Os adendos 52g e 52h do slide 22 seguem sem auditoria.
-3. **Duração.** O corpo tem 24 slides com 7 sumários; a banca 2 sozinha cabia em 7 minutos. Falta saber o tempo da
-   banca final para decidir se os sumários ficam.
-4. **Slide da pergunta.** Ficou sobre fundo neutro; o grupo pode trocar o fundo, desde que sem números que não se
-   reproduzem.
+1. **Tempo.** O corpo tem 14 slides (capa a Limitações); a banca 2 sozinha tinha roteiro de 7:30. Falta saber o
+   tempo da banca final para escrever o roteiro de fala dos slides da banca 1 (capa, motivação e teoria).
+2. **Diagrama B.** Saiu pelo pedido de menos slides; volta pondo `("G", 18, "Hipótese")` na `ORDEM` do gerador,
+   depois do slide da hipótese (a hipótese dele teria de ser trocada, como na versão 1).
+3. **Adendos 52g e 52h** (por ciclo e por degrau, no slide de robustez) seguem sem auditoria.
