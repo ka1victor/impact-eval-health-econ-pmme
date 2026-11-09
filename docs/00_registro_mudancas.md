@@ -8,6 +8,20 @@
 
 ---
 
+## 09/11/2026 — Revisão 56: deck da banca 2 na versão de 28/10
+
+Motivo: pedido do autor para revisar os slides da banca 2. A versão de 28/10 (hipótese bolsa → 1ª opção na mesma UF)
+não tinha revisão; a auditoria 55 cobriu a de 27/10. O deck não foi alterado. Os READMEs da banca 2 e de
+`07_apresentacoes/` passam a apontar para a versão de 28/10 como vigente.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`auditorias/56_revisao_deck_banca2_28out.md`](auditorias/56_revisao_deck_banca2_28out.md) | revisão do deck curto de 28/10: números conferidos, achados de identificação e redação, propostas para o autor |
+
+---
+
 ## 28/10/2026 — Doc 57za: resultados do adendo 52h (VL-1 com um degrau por corte)
 
 Motivo: execução do adendo 52h. O doc 57za nasce com o bloco "Decisões de implementação" commitado antes de qualquer

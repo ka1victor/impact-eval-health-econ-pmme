@@ -17,6 +17,17 @@
 > **Atualização:** 26 de outubro de 2026
 
 > [!IMPORTANT]
+> **Estado em 09/11/2026.** O deck vigente é o curto de **28/10/2026** (`output/apresentacao_banca2/deck_banca2_curto.pptx`
+> e `.pdf`, commit `2fe85cd`): hipótese única "comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a
+> 1ª opção" ([07](07_nova_hipotese.md)), formulada após ver os dados; resultado principal o VL-1 do adendo 52e; 11
+> slides, **sem apêndice** e sem nada de preenchimento ou de origem como resultado. Conteúdo canônico:
+> [04](04_conteudo_deck_curto.md); fala: [09](09_roteiro_fala_7min.md); mudanças de 28/10: [10](10_mapa_deck_anterior_para_rubrica.md), §6.
+> Os resultados por ciclo (adendo 52g) e por degrau (adendo 52h) do slide 9 seguem **sem auditoria**. Revisão desta
+> versão: [revisão 56](../../auditorias/56_revisao_deck_banca2_28out.md) (números corretos; propostas de texto para
+> o autor decidir, ainda não aplicadas). Os quadros abaixo são registro das versões de 26 e 27/10: onde falam de
+> bolsa × origem, teste central ou apêndice de 2 slides, valem só para essas versões.
+
+> [!IMPORTANT]
 > **Revisão pela rubrica da banca (27/10/2026, véspera).** O deck curto foi refeito pelos nove critérios da rubrica e
 > para cerca de 7 minutos: dados e amostra num slide (unidade de observação candidato × vaga e funil por ciclo),
 > modelo justificado, leitura dos coeficientes na tela, robustez como "mantém / não se mantém", Conclusão e
