@@ -483,7 +483,7 @@ R$ 5 mil, não se detecta efeito no preenchimento.
 | `output/rdd_bolsa/E9_resumo.json` | `fff0ca8da645a478…` | E9: mapa faixa -> bolsa e natureza |
 | `docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md` | `85f11f309e033516…` | protocolo congelado (texto canonico) |
 | `output/rdd_bolsa/protocolo_E6_multioutcome.json` | `a66fe6183562f8a2…` | protocolo congelado (maquina) |
-| `docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md` | `0ac000f5be5ae0ca…` | citacoes de magnitude da literatura (texto, nao resultado) |
+| `docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md` | `6359cb120403587e…` | citacoes de magnitude da literatura (texto, nao resultado) |
 <!-- E8:entradas:fim -->
 
 ## 11. Reprodução

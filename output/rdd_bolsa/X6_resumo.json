@@ -110,7 +110,7 @@
     },
     {
       "caminho": "output/rdd_bolsa/E8_resumo.json",
-      "sha256": "2a5a3eb7fc42eaa37b67e7f38e64fc589f6b2d9d465d41ff520738672b951d2e",
+      "sha256": "3d14340fe0fd68c7e05478dcfad0a589989ba4db6a697f3c95e57f440de7980b",
       "bytes": 69817,
       "papel": "E8: degrau relativo da bolsa por corte (grades dos editais)",
       "fonte": "15_sintese_E8.py",
