@@ -17,15 +17,17 @@
 > **Atualização:** 26 de outubro de 2026
 
 > [!IMPORTANT]
-> **Estado em 09/11/2026.** O deck vigente é o curto de **28/10/2026** (`output/apresentacao_banca2/deck_banca2_curto.pptx`
-> e `.pdf`, commit `2fe85cd`): hipótese única "comparando vagas da mesma UF, a de bolsa maior tem mais chance de ser a
-> 1ª opção" ([07](07_nova_hipotese.md)), formulada após ver os dados; resultado principal o VL-1 do adendo 52e; 11
-> slides, **sem apêndice** e sem nada de preenchimento ou de origem como resultado. Conteúdo canônico:
-> [04](04_conteudo_deck_curto.md); fala: [09](09_roteiro_fala_7min.md); mudanças de 28/10: [10](10_mapa_deck_anterior_para_rubrica.md), §6.
-> Os resultados por ciclo (adendo 52g) e por degrau (adendo 52h) do slide 9 seguem **sem auditoria**. Revisão desta
-> versão: [revisão 56](../../auditorias/56_revisao_deck_banca2_28out.md) (números corretos; propostas de texto para
-> o autor decidir, ainda não aplicadas). Os quadros abaixo são registro das versões de 26 e 27/10: onde falam de
-> bolsa × origem, teste central ou apêndice de 2 slides, valem só para essas versões.
+> **Depois da banca de 04/11/2026** ([doc 12](12_revisao_pos_banca_0411.md)): o deck vigente é o
+> `output/apresentacao_banca2/deck_banca2_pos_banca.pptx`, gerado por
+> `scripts/apresentacao/gerar_deck_banca2_pos_banca.py` a partir do deck que o grupo apresentou
+> ([`apresentada/deck_grupo_banca2_0411.pptx`](apresentada/deck_grupo_banca2_0411.pptx)). Ele responde aos pedidos
+> da banca (hipótese num slide próprio, método justificado contra a literatura, exemplo de estimação com os
+> coeficientes, construção da base, o que o software mantém fixo) e corrige erros do deck apresentado (ciclos 1 e 3
+> com números do modelo base, ×11 da origem na tela). Hipótese e números não mudam.
+> A versão de 28/10 (deck curto, `deck_banca2_curto.pptx`) fica como registro; a
+> [revisão 56](../../auditorias/56_revisao_deck_banca2_28out.md), de 09/11, foi feita sobre ela, e a maior parte
+> das propostas já está atendida no deck pós-banca. Os adendos 52g e 52h seguem **sem auditoria**. O deck da banca
+> final usa o deck pós-banca ([banca final, doc 02](../banca_final/02_deck_banca_final.md)).
 
 > [!IMPORTANT]
 > **Revisão pela rubrica da banca (27/10/2026, véspera).** O deck curto foi refeito pelos nove critérios da rubrica e
@@ -99,6 +101,8 @@ valendo para o E9, o E7 e a literatura de magnitude.
 | [Guia do grupo](08_guia_do_grupo_H2.md) | a H2 em uma página, com as figuras do deck por slide |
 | [**Roteiro de fala de 7 minutos**](09_roteiro_fala_7min.md) | a fala de cada slide com o tempo-alvo (soma 7:00) e as perguntas prováveis da banca; o mesmo texto das notas do deck |
 | [Mapa do deck anterior para a rubrica](10_mapa_deck_anterior_para_rubrica.md) | do deck `8901dea` (auditoria 53) para o revisto: correspondência slide a slide, texto exato da tela, números que mudaram de lugar e o checklist do grupo |
+| [Slides de apoio: logit condicional com o par de UFs](11_explicacoes_metodo_logit.md) | doze slides para perguntas da banca: razão de chances, log, modelo, coeficientes da especificação principal, onde o modelo é usado e alternativas mais simples, base, efeito fixo do par, fixo × controlado, código e a conta perto do corte; deck derivado `output/apresentacao_banca2/slides_explicacoes_logit.pptx`, números conferidos contra `output/rdd_bolsa/VL_*` |
+| [**Revisão pós-banca de 04/11/2026**](12_revisao_pos_banca_0411.md) | pedidos dos professores (hipótese, justificativa do método, exemplo de estimação, construção da base, efeitos fixos no software; deck mais enxuto) e o ajuste de cada um; conteúdo canônico do deck revisto, derivado em `output/apresentacao_banca2/deck_banca2_pos_banca.pptx` a partir do deck do grupo guardado em [`apresentada/`](apresentada/) |
 | [Proveniência de figuras e números](03_proveniencia_figuras_e_numeros.md) | cada figura → arquivo, script e natureza; cada número → arquivo, seletor e formato, num bloco gerado pelo script |
 | [Relatório de validação para os professores](../../../output/apresentacao_validacao/relatorio_validacao_rdd_bolsa.pdf) | relatório curto (derivado) com o desenho, os diagnósticos e os resultados de 19/10; não é o deck |
 

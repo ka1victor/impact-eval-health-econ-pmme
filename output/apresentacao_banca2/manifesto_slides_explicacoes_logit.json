@@ -1,0 +1,161 @@
+{
+  "natureza_dos_dados": "EMPIRICO",
+  "estatuto": "material de apoio da banca 2; nenhuma estimativa nova (adendo 52e, doc 57x, auditoria 48)",
+  "script": "scripts/apresentacao/gerar_slides_explicacoes_logit.py",
+  "entradas": [
+    {
+      "arquivo": "docs/07_apresentacoes/banca2/11_explicacoes_metodo_logit.md",
+      "sha256": "9b8381247d0627ea4a0363b67214a4c1d24296d1a9a5da5670bbd47e2c718bee"
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/deck_banca2_curto.pptx",
+      "sha256": "178a3826c015146743e528b1ac25fc770b0f27215b1002e8b20c21fe0336bb92"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/VL_estimativas.csv",
+      "sha256": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8"
+    },
+    {
+      "arquivo": "output/rdd_bolsa/VL_resumo.json",
+      "sha256": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf"
+    }
+  ],
+  "codigo_conferido": [
+    {
+      "arquivo": "scripts/rdd_bolsa/50_escolha_localizacao_par.py",
+      "linhas": [
+        525,
+        540
+      ],
+      "sha256": "2f9d42656c760408e91c4f09843eda572d3f5ffbb070118a185ec63f25aac456"
+    },
+    {
+      "arquivo": "scripts/rdd_bolsa/50_escolha_localizacao_par.py",
+      "linhas": [
+        616,
+        619,
+        621
+      ],
+      "sha256": "2f9d42656c760408e91c4f09843eda572d3f5ffbb070118a185ec63f25aac456"
+    },
+    {
+      "arquivo": "scripts/rdd_bolsa/25_escolha_dap.py",
+      "linhas": [
+        490,
+        493,
+        494,
+        495
+      ],
+      "sha256": "39ffe79eed91ece5b5fd8f63588efbc0a231f0226d140ba54953a7921d70d98d"
+    }
+  ],
+  "numeros_conferidos": {
+    "razão de chances do VL-1": "1,47 [1,15; 1,89]",
+    "5β": "0,385",
+    "meia largura do IC em log": "± 0,25",
+    "aumento ≈ %": "≈ 47%",
+    "peso da distância": "−0,514 por 100 km",
+    "km equivalentes": "75 km",
+    "km na razão": "0,385 ÷ 0,514 × 100 km",
+    "log da distância": "1,45 [1,15; 1,83]",
+    "VL-2": "1,28 [0,95; 1,72]",
+    "dobras": "| 0,44 | | | −0,43 | | | 0,12 | | | 0,30 |",
+    "candidatos VL-1": "5.417",
+    "linhas VL-1": "578.998",
+    "conjuntos VL-1": "55",
+    "vagas por candidato": "≈ 107 vagas",
+    "candidatos VL-2": "4.288",
+    "pares": "729 → 281 pares",
+    "pares com variação": "260 pares",
+    "dummies": "254 dummies",
+    "candidatos com variação": "5.345 candidatos"
+  },
+  "tabelas_de_coeficientes_conferidas": {
+    "VL1_emp": 13
+  },
+  "slides": [
+    {
+      "posicao": 1,
+      "titulo": "Razão de chances: vaga A contra vaga B, no mesmo cardápio",
+      "secao": "Metodologia",
+      "layout": "espec"
+    },
+    {
+      "posicao": 2,
+      "titulo": "O log está no modelo e no eixo, não na bolsa",
+      "secao": "Metodologia",
+      "layout": "espec"
+    },
+    {
+      "posicao": 3,
+      "titulo": "Logit condicional: cada médico comparado consigo mesmo",
+      "secao": "Metodologia",
+      "layout": "espec"
+    },
+    {
+      "posicao": 4,
+      "titulo": "Especificação principal: coeficientes do VL-1",
+      "secao": "Resultados",
+      "layout": "coeficientes"
+    },
+    {
+      "posicao": 5,
+      "titulo": "Literatura: logits mais ricos; nós usamos o mais simples",
+      "secao": "Metodologia",
+      "layout": "ficha"
+    },
+    {
+      "posicao": 6,
+      "titulo": "Por que não um método mais simples?",
+      "secao": "Metodologia",
+      "layout": "ficha"
+    },
+    {
+      "posicao": 7,
+      "titulo": "A base: uma linha por candidato × vaga do cardápio",
+      "secao": "Dados",
+      "layout": "ficha"
+    },
+    {
+      "posicao": 8,
+      "titulo": "De onde vem cada coluna da base",
+      "secao": "Dados",
+      "layout": "ficha"
+    },
+    {
+      "posicao": 9,
+      "titulo": "Efeito fixo do par: uma dummy por origem × UF da vaga",
+      "secao": "Identificação",
+      "layout": "tabela_cartoes"
+    },
+    {
+      "posicao": 10,
+      "titulo": "Fixo por construção ou controlado?",
+      "secao": "Identificação",
+      "layout": "ficha"
+    },
+    {
+      "posicao": 11,
+      "titulo": "No código, o par é só mais uma coluna da matriz X",
+      "secao": "Metodologia",
+      "layout": "codigo"
+    },
+    {
+      "posicao": 12,
+      "titulo": "Perto do corte, o salto é medido contra outra reta",
+      "secao": "Robustez",
+      "layout": "ficha"
+    }
+  ],
+  "saidas": [
+    {
+      "arquivo": "output/apresentacao_banca2/slides_explicacoes_logit.pptx",
+      "sha256": "231a894610cc86a8c31c6a71d395e7485c766dc0c68cf156fc1df69ba3353fd0"
+    },
+    {
+      "arquivo": "output/apresentacao_banca2/slides_explicacoes_logit.pdf",
+      "sha256": "e2ed5103dd66011d40b8c47b7eb134a69e6a164d09de3af9addcdd33f69b652b"
+    }
+  ],
+  "nota_pdf": null
+}

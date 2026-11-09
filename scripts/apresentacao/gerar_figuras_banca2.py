@@ -3104,7 +3104,8 @@ def figura_dados_amostra(num: dict, destino: Path) -> dict:
     return {"funil": linhas, "textos": reg.textos, "eixos": reg.eixos}
 
 
-def figura_robustez_escolha(num: dict, destino: Path) -> dict:
+def figura_robustez_escolha(num: dict, destino: Path, rotulos: tuple[str, ...] | None = None,
+                            como_ler: list[str] | None = None) -> dict:
     """Robustez da hipótese de 28/10/2026, só com variantes que comparam vagas da mesma UF: à esquerda, ciclos 1–3 (o
     VL-1, a distância em log, a região de saúde de origem × UF da vaga e só vagas perto do corte, com o par de UFs e
     com a região de saúde de origem × UF da vaga; adendo 52e, VL-2 e VL-3); à
@@ -3115,6 +3116,10 @@ def figura_robustez_escolha(num: dict, destino: Path) -> dict:
     fig = plt.figure(figsize=(W, H))
     rot = ("VL-1 (principal)", "Distância em log", "Região de saúde × UF", "Perto do corte, mesma UF",
            "Perto do corte, UF + região", "Degrau 0,300 (10 → 15 mil)", "Degrau 0,400 (15 → 20 mil)")
+    if rotulos is not None:  # só os nomes das linhas mudam (deck pós-banca, doc 12); estimativas e ordem iguais
+        if len(rotulos) != len(rot):
+            raise ValueError("rotulos: esperado um nome por especificação")
+        rot = tuple(rotulos)
     pref = ("VL1_EMP", "VLLOG_EMP", "VL3_EMP", "VL2_EMP", "VL3P_EMP", "VK1_300", "VK1_400")
     esq = [dict(rot=r, est=f"{p}_RC", inf=f"{p}_RCI", sup=f"{p}_RCS") for r, p in zip(rot, pref)]
     rot2 = ("Ciclo 1", "Ciclo 2", "Ciclo 3")
@@ -3137,7 +3142,7 @@ def figura_robustez_escolha(num: dict, destino: Path) -> dict:
     fig.add_artist(plt.Line2D([(x2 - 0.08) / W] * 2, [(y1 - 0.1) / H, y_top / H], color=LINHA_CLARA, lw=1))
     reg.t(fig, (0.1 + w_rot) / W, (y1 - 0.33) / H, "razão de chances (escala log); 1 = a bolsa não muda a escolha",
           fontsize=11.5, color=TINTA2, va="center")
-    _caixa_como_ler(fig, reg, W, ["todas comparam vagas da mesma UF (adendos pós-resultado). Verde: IC 95% exclui 1; "
+    _caixa_como_ler(fig, reg, W, como_ler or ["todas comparam vagas da mesma UF (adendos pós-resultado). Verde: IC 95% exclui 1; "
                                   "cinza: contém 1 (inconclusivo).",
                                   "Perto do corte: só vagas a até 0,050 de um corte de IVS. Ciclos 1 e 3: adendo 52g. "
                                   "Degraus: um efeito por corte (adendo 52h)."],
