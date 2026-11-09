@@ -106,6 +106,27 @@ class TestDeckBancaFinal(unittest.TestCase):
                 if t.isdigit() and sh.left is not None and sh.left > 12 * 914400 and sh.top > 6.8 * 914400:
                     self.assertEqual(int(t), pos, f"slide {pos}")
 
+    def test_slides_do_metodo(self):
+        pos = [k for k, (o, _, _) in enumerate(G.ORDEM) if o == "M"]
+        self.assertEqual(len(pos), 2)
+        prox = G.ORDEM[pos[-1] + 1]
+        self.assertEqual(prox[:2], ("PB", 6), "os slides do método vêm antes da equação do modelo")
+        v = G.pesos_vl1()
+        t1, t2 = " ".join(self.textos[pos[0]]), " ".join(self.textos[pos[1]])
+        self.assertIn(G.TITULO_M1, t1)
+        self.assertIn("McFadden", t1)
+        self.assertIn(G.TITULO_M2, t2)
+        rc = G._virgula(v["rc"], 2)
+        self.assertEqual(rc, "1,47")
+        self.assertEqual(round(v["km"]), 75)
+        self.assertIn(f"= {rc}", t2)
+        self.assertIn("ilustrativo", t2)
+        pa, pb, pc = v["prob"]
+        self.assertAlmostEqual(pb / pa, v["rc"], places=9)   # a razão das chances do exemplo é e^(5β)
+        self.assertAlmostEqual(pc / pa, 1, places=2)          # 75 km a mais comem os R$ 5 mil
+        ex = self.man["exemplo_metodo"]
+        self.assertAlmostEqual(ex["e_5beta"], v["rc"], places=12)
+
     def test_ordem_e_fora_cobrem_as_entradas(self):
         g = [n for o, n, _ in G.ORDEM if o == "G"]
         pb = [n for o, n, _ in G.ORDEM if o == "PB"]

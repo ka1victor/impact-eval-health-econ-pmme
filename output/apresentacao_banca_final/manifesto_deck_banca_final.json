@@ -30,11 +30,11 @@
   "saidas": [
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
-      "sha256": "3b0ea5bfd86b9df1ad84538072d2dd90bf55f7890b12e22537367264c74ac36d"
+      "sha256": "3691c69684ca493b9824e34d1f4b44d333df3ce7504ba37bfb9da0138be5333a"
     },
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
-      "sha256": "22eb4fde153253ab634dfca2d5434d2912407283b28b5add6bc0d5814c32fb58"
+      "sha256": "d19fbda1a5226d2a3a759e78b7f054ac7d0ba9c8fddc842716f91adaaccf47d7"
     }
   ],
   "slides_do_grupo_fora": {
@@ -113,96 +113,108 @@
     },
     {
       "posicao": 8,
+      "origem": "novo, método passo a passo 1",
+      "secao": "Metodologia",
+      "titulo": "Método passo a passo: como medimos o peso da bolsa"
+    },
+    {
+      "posicao": 9,
+      "origem": "novo, método passo a passo 2",
+      "secao": "Metodologia",
+      "titulo": "Exemplo: um candidato, três vagas do mesmo curso em MG"
+    },
+    {
+      "posicao": 10,
       "origem": "banca 2 pós-banca 6",
       "secao": "Metodologia",
       "titulo": "Modelo: logit condicional da 1ª opção"
     },
     {
-      "posicao": 9,
+      "posicao": 11,
       "origem": "banca 2 pós-banca 7",
       "secao": "Metodologia",
       "titulo": "Por que este modelo: o desenho de Bobba et al. (2026)"
     },
     {
-      "posicao": 10,
+      "posicao": 12,
       "origem": "banca 2 pós-banca 8",
       "secao": "Identificação",
       "titulo": "Identificação: o que fica fixo e o que supomos"
     },
     {
-      "posicao": 11,
+      "posicao": 13,
       "origem": "banca 2 pós-banca 9",
       "secao": "Resultados",
       "titulo": "Na mesma UF, +R$ 5 mil multiplicam a chance por 1,47"
     },
     {
-      "posicao": 12,
+      "posicao": 14,
       "origem": "banca 2 pós-banca 10",
       "secao": "Robustez",
       "titulo": "Robustez: sempre comparando vagas da mesma UF"
     },
     {
-      "posicao": 13,
+      "posicao": 15,
       "origem": "banca 2 pós-banca 11",
       "secao": "Discussão",
       "titulo": "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
     },
     {
-      "posicao": 14,
+      "posicao": 16,
       "origem": "banca 2 pós-banca 12",
       "secao": "Discussão",
       "titulo": "Limitações e o que cada uma implica"
     },
     {
-      "posicao": 15,
+      "posicao": 17,
       "origem": "deck do grupo 31",
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 16,
+      "posicao": 18,
       "origem": "deck do grupo 32",
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 17,
+      "posicao": 19,
       "origem": "banca 2 pós-banca 14",
       "secao": null,
       "titulo": "Apêndice A1: a bolsa segue exatamente o IVS"
     },
     {
-      "posicao": 18,
+      "posicao": 20,
       "origem": "deck do grupo 16",
       "secao": null,
       "titulo": "O modelo combina três elementos da teoria"
     },
     {
-      "posicao": 19,
+      "posicao": 21,
       "origem": "deck do grupo 17",
       "secao": null,
       "titulo": "A escolha locacional maximiza a utilidade"
     },
     {
-      "posicao": 20,
+      "posicao": 22,
       "origem": "deck do grupo 19",
       "secao": null,
       "titulo": "A escolha locacional maximiza a renda real líquida"
     },
     {
-      "posicao": 21,
+      "posicao": 23,
       "origem": "deck do grupo 20",
       "secao": null,
       "titulo": "Literatura divide o custo em dois tipos: geográfico e laboral"
     },
     {
-      "posicao": 22,
+      "posicao": 24,
       "origem": "deck do grupo 18",
       "secao": null,
       "titulo": "Da escolha individual ao preenchimento agregado"
     },
     {
-      "posicao": 23,
+      "posicao": 25,
       "origem": "deck do grupo 35",
       "secao": null,
       "titulo": "O IVS mede a vulnerabilidade social dos territórios brasileiros"
@@ -215,6 +227,19 @@
     "slide 18: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'",
     "slide 20: 'Adições ao modelo do slide anterior' (a numeração mudou)",
     "slide 35: 'transporte' (errata E8)",
-    "diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'"
-  ]
+    "diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'",
+    "slides novos do método passo a passo (4 passos; exemplo com três vagas e os pesos do VL-1)"
+  ],
+  "exemplo_metodo": {
+    "peso_bolsa_por_mil": 0.07708067599,
+    "peso_distancia_por_100km": -0.5144819814,
+    "e_5beta": 1.470207253973154,
+    "km_equivalentes": 74.91095779511006,
+    "chances_ilustrativas_A_B_C": [
+      0.2882052641690349,
+      0.42372147001456434,
+      0.2880732658164007
+    ],
+    "natureza": "ILUSTRATIVO: vagas inventadas; pesos estimados (VL-1)"
+  }
 }
