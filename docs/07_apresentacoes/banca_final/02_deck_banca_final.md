@@ -59,9 +59,20 @@ casa"; "o saldo" (E/p − c não é soma); "E(w | B)". As equações em OMML tê
 PDF mostram); as três que mudaram foram redesenhadas pelo gerador em `output/apresentacao_banca_final/equacoes/`. A
 referência de Burdett, Shi & Wright (2001) entrou no `modelo_micro.md`, §5.
 
-Fica para o autor: pôr o choque ε na tela (é ele que liga a teoria ao logit); marcar na tela o elo testado (diagrama e
-cadeia do modelo); as colisões α (par de UFs × altruísmo) e β (bolsa × parcela da moradia); a ressalva de que a 1ª
-opção só é o argmax se a lista for sincera; atualizar o doc 01 e o gerador do diagrama para "distância de casa".
+**Decisões do autor (11/11/2026):**
+1. O choque ε **não** entra na equação teórica.
+2. Testamos o **elo da remuneração**: a nota do diagrama da teoria diz isso na tela ("Testamos o elo da remuneração: a
+   bolsa eleva o valor da vaga e muda a 1ª opção; o resto da cadeia não é estimado"), e a nota do slide da agregação
+   também ("Testamos só o elo da remuneração: B ↑ → V ↑ → π ↑ (a 1ª opção)").
+3. O altruísmo **não aparece mais como equação**: Choné & Ma fica U = R − C(q; L, K); sai o chip "B(q): benefício ao
+   paciente" (entra "L, K: equipe e capital") e a frase do altruísmo (α). Com isso, α fica só para o par de UFs. A
+   menção verbal ao altruísmo no diagrama ("esforço e altruísmo do médico") continua.
+4. A lista sincera entra como premissa, porque a grade de Limitações (6 cartões) está cheia: no slide de Identificação,
+   "Conjunto de escolha: supomos que viu todas as vagas do curso e listou sem estratégia" (SUPOSTO); nas notas das
+   Limitações, o que ela implica (com estratégia, o ×1,47 mistura preferência e chance de ser alocado).
+
+Segue em aberto: a colisão de β (bolsa × parcela da moradia 1 − β em Redding & Rossi-Hansberg); atualizar o doc 01 e
+o gerador do diagrama para "distância de casa".
 
 ## 1. O feedback de 04/11 aplicado à parte da banca 1
 

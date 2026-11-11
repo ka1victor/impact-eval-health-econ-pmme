@@ -143,6 +143,12 @@ CTEXT_UTILIDADE = ("A política mexe em apenas uma variável: eleva E(w|B) pela 
                    "continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe.")
 ROTULO_CADEIA = "CADEIA DO MODELO"
 ADICOES = "Adições ao modelo do slide anterior:"
+A_NOTA_DIAGRAMA = ("Diagrama teórico. Testamos o elo da remuneração: a bolsa eleva o valor da vaga e muda a 1ª opção; "
+                   "o resto da cadeia não é estimado.")
+PREMISSA_LISTA = "supomos que viu todas as vagas do curso e listou sem estratégia"
+NOTA_LISTA = ("Lista sincera (decisão do autor de 11/11/2026; premissa no slide de Identificação): a 1ª opção só é a vaga "
+              "preferida se o médico listou as vagas pela preferência, sem estratégia (por exemplo, pôr em 1º onde acha "
+              "que passa). Se houver estratégia, o ×1,47 mistura preferência e chance de ser alocado.")
 
 # ---- Slides novos do método (pedido do autor, 09/11/2026: a banca não entendeu o método e nunca tinha ouvido falar) --
 VL_EST = ROOT / "output/rdd_bolsa/VL_estimativas.csv"
@@ -347,7 +353,7 @@ TROCAS_TEORIA = (
      "Aumenta com equipe e equipamentos ruins", "Equipe ruim, poucas amenidades, longe de casa"),
     (17, "dtxt0", "Custo não monetário de exercer ali; o altruísmo do médico (α) compensa em parte.", 0, 0,
      "Custo não monetário de exercer ali; o altruísmo do médico (α) compensa em parte.",
-     "Custo não monetário de viver e exercer ali; o altruísmo (α) compensa em parte."),
+     "Custo não monetário de viver e exercer ali."),
     (17, "dsrc0", "CHONÉ & MA (2011)", 0, 0, "CHONÉ & MA (2011)", "CHONÉ & MA (2011) · R&RH (2017)"),
     (18, "rd1", None, 0, 0, "Especialidade, vínculos e preferências variam: π", "Curso, vínculos e preferências variam: π"),
     (18, "rd0", None, 0, 5, ".", ": na inscrição, a 1ª opção."),
@@ -374,6 +380,15 @@ TROCAS_TEORIA = (
     (20, "impact1", None, 0, 2, "it", "mt"),
     (20, "impact1", None, 0, 4, "o custo não pecuniário de exercer ali", "a parte laboral de c: o custo de exercer ali"),
     (20, "chip1_1", None, 0, 0, "Q ", "q "),
+    # decisão do autor (11/11/2026): o altruísmo não aparece mais como equação
+    (20, "chip1_3", None, 0, 0, "B(q) ", "L, K "),
+    (20, "chip1_3", None, 0, 2, " benefício ao paciente", " equipe e capital"),
+    (20, "frase1", None, 0, 11, "esforço cai quando há mais equipe (L) e capital (K), ",
+     "esforço cai quando há mais equipe (L) e capital (K). "),
+    (20, "frase1", None, 0, 12, "e valoriza o benefício ao paciente na medida do seu altruísmo (α). ", ""),
+    # decisão do autor (11/11/2026): testamos o elo da remuneração
+    (18, "note", None, 1, 3, " comum entre médicos; é simplificação teórica, não equação estimada.",
+     " comum entre médicos; é simplificação teórica. Testamos só o elo da remuneração: B ↑ → V ↑ → π ↑ (a 1ª opção)."),
 )
 # Equações em OMML: (slide do grupo, nome da forma, sequência antiga de m:t, sequência nova)
 TROCAS_OMML = (
@@ -384,6 +399,9 @@ TROCAS_OMML = (
     (20, "TextBox 4",
      ["𝒖", "𝒏𝒊𝒐", "=", "𝒁", "𝒏𝒊𝒐", "𝑩", "𝒏", "𝑾", "𝒊", "𝒌", "𝒏𝒊", "𝑸", "𝒏", "𝟏", "−", "𝜷"],
      ["𝒖", "𝒏𝒊𝒐", "=", "𝒛", "𝒏𝒊𝒐", "𝑩", "𝒏", "𝒘", "𝒊", "𝜿", "𝒏𝒊", "𝑸", "𝒏", "𝟏", "−", "𝜷"]),
+    (20, "TextBox 2",
+     ["𝑼", "=", "𝑹", "−", "𝑪", "𝒒", ";", "𝑳", ",", "𝑲", "+", "𝜶", "𝑩", "(", "𝒒", ")"],
+     ["𝑼", "=", "𝑹", "−", "𝑪", "𝒒", ";", "𝑳", ",", "𝑲", "", "", "", "", "", ""]),
 )
 
 
@@ -434,6 +452,8 @@ FALLBACKS = (
      r"\frac{\mathbb{E}(\mathbfit{w}_{\mathbfit{mt(s)}})}{\mathbfit{p}_{\mathbfit{mt}}} - \mathbfit{c}_{\mathbfit{mt(s)}}\right]$"),
     (19, "Retângulo: Cantos Arredondados 38", "gera_m.png", "caixa",
      (r"Gera $\mathit{m}^{*}$:", ("a localidade que maximiza a renda real líquida", "esperada ao longo da carreira"))),
+    (20, "TextBox 2", "chone_ma.png", "eq",
+     r"$\mathbfit{U} = \mathbfit{R} - \mathbfit{C}(\mathbfit{q};\,\mathbfit{L},\mathbfit{K})$"),
     (20, "TextBox 4", "redding_rossi_hansberg.png", "eq",
      r"$\mathbfit{u}_{\mathbfit{nio}} = \frac{\mathbfit{z}_{\mathbfit{nio}}\,\mathbfit{B}_{\mathbfit{n}}\,\mathbfit{w}_{\mathbfit{i}}}"
      r"{\mathbfit{\kappa}_{\mathbfit{ni}}\,\mathbfit{Q}_{\mathbfit{n}}^{\mathbf{1}-\mathbfit{\beta}}}$"),
@@ -455,7 +475,12 @@ def desenhar_fallback(arquivo: str, tipo: str, conteudo, cx: int, cy: int) -> Pa
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     if tipo == "eq":
-        ax.text(0.5, 0.5, conteudo, ha="center", va="center", fontsize=h_in * 72 * 0.36, color="black")
+        txt = ax.text(0.5, 0.5, conteudo, ha="center", va="center", fontsize=h_in * 72 * 0.36, color="black")
+        # ajusta o tamanho para a equação ocupar a caixa (como a imagem original), sem distorcer
+        fig.canvas.draw()
+        caixa = txt.get_window_extent(renderer=fig.canvas.get_renderer())
+        fator = min(0.94 * w_in * dpi / caixa.width, 0.82 * h_in * dpi / caixa.height)
+        txt.set_fontsize(txt.get_fontsize() * fator)
     else:
         raio = 0.1 * h_in  # cantos arredondados como os do grupo, em polegadas
         ax.set_xlim(0, w_in)
@@ -781,6 +806,14 @@ def slides_metodo(prs, layout, modelo_rodape) -> list:
     notas(s2, NOTAS_M[2])
     return [s1, s2], v
 
+def slide_por_titulo(prs, titulo: str):
+    achados = [s for s in prs.slides if any(x.has_text_frame and " ".join(x.text_frame.text.split()) == titulo
+                                            for x in s.shapes)]
+    if len(achados) != 1:
+        raise SystemExit(f"ERRO: esperava 1 slide com o título {titulo!r}; achei {len(achados)}")
+    return achados[0]
+
+
 def construir(saida: Path) -> dict:
     if sha256(ENT_GRUPO) != SHA_GRUPO:
         raise SystemExit("ERRO: o deck do grupo não é o guardado em 09/11/2026 (SHA-256 diferente)")
@@ -802,6 +835,9 @@ def construir(saida: Path) -> dict:
     trocar_paragrafo(por_nome(sd, "A_no_A4"), A4_DIAGRAMA, 2,
                      antigo="Moradia, deslocamento, amenidades e distância da origem.")
     notas(sd, NOTAS[16])
+    trocar_paragrafo(por_nome(sd, "A_nota"), A_NOTA_DIAGRAMA, 0,
+                     antigo="Diagrama teórico: as setas dizem o que o modelo prevê, não o que foi estimado.")
+    feitas.append("diagrama da teoria: a nota diz qual elo é testado (o da remuneração)")
     feitas.append("diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'")
     layout = prs.slides[2].slide_layout
     if layout.name != "1_Title Slide" or sd.slide_layout.name != "1_Title Slide":
@@ -829,6 +865,13 @@ def construir(saida: Path) -> dict:
         if trocados != 1:
             raise SystemExit(f"ERRO: esperava 1 'δ' em {nome} do slide do modelo; achei {trocados}")
     feitas.append("slide do modelo: γ para a distância (δ é o desconto da teoria)")
+    # decisão do autor (11/11/2026): a lista sincera entra como premissa (a grade de limitações está cheia)
+    ident = slide_por_titulo(prs, "Identificação: o que fica fixo e o que supomos")
+    trocar_paragrafo(por_nome(ident, "Rounded Rectangle 53"), PREMISSA_LISTA, 1,
+                     antigo="supomos que o médico viu todas as vagas do seu curso")
+    lim = slide_por_titulo(prs, "Limitações e o que cada uma implica")
+    notas(lim, lim.notes_slide.notes_text_frame.text.rstrip() + "\n\n" + NOTA_LISTA)
+    feitas.append("identificação: 'listou sem estratégia' na premissa do conjunto de escolha; nota nas limitações")
     modelo_rodape = next(sh for sh in prs.slides[2].shapes if sh.has_text_frame
                          and sh.text_frame.text.startswith("Motivação") and "|" in sh.text_frame.text)
     novos_m, pesos = slides_metodo(prs, layout, modelo_rodape)

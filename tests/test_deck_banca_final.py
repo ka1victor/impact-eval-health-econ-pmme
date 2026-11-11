@@ -25,7 +25,7 @@ PROIBIDAS = ("piso", "renumeração", "trasnporte", "buito", "PMEE", "EXEMPLO", 
              "Municípios com maior remuneração", "REGIC", "incentivo limitado", "origem", "slide 11", "Sumário",
              # revisão do modelo de 11/11/2026: sobrenome, papel de p e de c, notação
              "ROSSI, 2017", "Nível de amenidades da cidade", "Custo laboral :", "δ·dist", "δ · distância",
-             "Especialidade, vínculos")
+             "Especialidade, vínculos", "altruísmo (α)", "B(q)")
 
 
 def sha256(p: Path) -> str:
@@ -86,10 +86,13 @@ class TestDeckBancaFinal(unittest.TestCase):
                 return [t for t in ts if not eh_rodape(t) and not t.isdigit()]
             antes = filtrar([norm(sh.text_frame.text) for sh in G.formas(pb.slides[n - 1].shapes)
                              if sh.has_text_frame])
-            if n == 6:  # única troca no pós-banca: a distância vira γ (δ é o desconto da teoria)
+            if n == 6:  # troca no pós-banca: a distância vira γ (δ é o desconto da teoria)
                 antes = [a.replace("δ", "γ") for a in antes]
+            if n == 8:  # troca no pós-banca: a premissa da lista sincera (decisão do autor de 11/11/2026)
+                antes = [a.replace("supomos que o médico viu todas as vagas do seu curso", G.PREMISSA_LISTA)
+                         for a in antes]
             self.assertEqual(antes, filtrar(self.textos[pos]), f"pós-banca, slide {n}")
-            if pb.slides[n - 1].has_notes_slide:
+            if pb.slides[n - 1].has_notes_slide and n != 12:
                 self.assertEqual(norm(pb.slides[n - 1].notes_slide.notes_text_frame.text),
                                  norm(self.prs.slides[pos].notes_slide.notes_text_frame.text))
 

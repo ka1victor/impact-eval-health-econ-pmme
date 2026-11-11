@@ -30,23 +30,27 @@
   "saidas": [
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
-      "sha256": "ffdebb512661e70315360218d9eedeb59f4936cd4458c9dcf5dbf297eebd4d08"
+      "sha256": "234fa4b90d1868287441806ee7b56f173200153d6e818f6590ff60c4d2026386"
     },
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
-      "sha256": "42af0144c149c61eb729379bc821a10fa8277a7f7230543d554e7c91776f0a8d"
+      "sha256": "31abdfb2dd7ea8b30ec527a589f33396828c812bce1686ac4bffb8a45a4626e5"
     },
     {
       "caminho": "output/apresentacao_banca_final/equacoes/renda_real_liquida.png",
-      "sha256": "b994904b57b171740e9b935141ce9a43959026fe9e86a14ed7a95fd13261426d"
+      "sha256": "af4f85a9414a630edb81521d17270065ce00d0daa023d1d258dd6c332dfc3738"
     },
     {
       "caminho": "output/apresentacao_banca_final/equacoes/gera_m.png",
       "sha256": "0866868739bbcf45adc534d78a6645a6ac4238db854563e65c5cbb6efa804717"
     },
     {
+      "caminho": "output/apresentacao_banca_final/equacoes/chone_ma.png",
+      "sha256": "9ba45cd71084ce23b7ba82ad7cdcd9e0b4f11acf9a854e3c38a592a7bdb313fc"
+    },
+    {
       "caminho": "output/apresentacao_banca_final/equacoes/redding_rossi_hansberg.png",
-      "sha256": "97403f89a2beb0f315bba46e49de47d27a3b7ca476c0a54d6be9f696bddf5555"
+      "sha256": "482ea36574798bff91d37216a02d9c376907c91bdf47ac1728d8ae2712370097"
     }
   ],
   "slides_do_grupo_fora": {
@@ -239,13 +243,16 @@
     "slide 18: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'",
     "slide 20: 'Adições ao modelo do slide anterior' (a numeração mudou)",
     "slide 35: 'transporte' (errata E8)",
-    "modelo teórico: 30 trocas de texto (p é o custo de vida; c tem parte geográfica e laboral; Rossi-Hansberg; 'curso'; a 1ª opção como o argmax do cardápio)",
+    "modelo teórico: 35 trocas de texto (p é o custo de vida; c tem parte geográfica e laboral; Rossi-Hansberg; 'curso'; a 1ª opção como o argmax do cardápio)",
     "equações: arg max e m (localidade) no slide da renda real líquida; z, w e κ em Redding & Rossi-Hansberg, como no modelo_micro",
     "slide 19: imagem de reserva de 'TextBox 1' redesenhada (output/apresentacao_banca_final/equacoes/renda_real_liquida.png)",
     "slide 19: imagem de reserva de 'Retângulo: Cantos Arredondados 38' redesenhada (output/apresentacao_banca_final/equacoes/gera_m.png)",
+    "slide 20: imagem de reserva de 'TextBox 2' redesenhada (output/apresentacao_banca_final/equacoes/chone_ma.png)",
     "slide 20: imagem de reserva de 'TextBox 4' redesenhada (output/apresentacao_banca_final/equacoes/redding_rossi_hansberg.png)",
+    "diagrama da teoria: a nota diz qual elo é testado (o da remuneração)",
     "diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'",
     "slide do modelo: γ para a distância (δ é o desconto da teoria)",
+    "identificação: 'listou sem estratégia' na premissa do conjunto de escolha; nota nas limitações",
     "slides novos do método passo a passo (4 passos; exemplo com três vagas e os pesos do VL-1)"
   ],
   "exemplo_metodo": {
