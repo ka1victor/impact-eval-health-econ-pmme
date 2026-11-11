@@ -1,0 +1,98 @@
+{
+  "etapa": "exemplo_logit_real_banca_final",
+  "natureza_dos_dados": "EMPIRICO",
+  "script": "scripts/apresentacao/gerar_exemplo_logit_real.py",
+  "modelo": "VL-1, ciclos 1–3 (logit condicional da 1ª opção com efeito fixo do par de UFs)",
+  "regra_de_escolha_do_exemplo": "Escolhe o exemplo por regra fixa, sem olhar a escolha do candidato: entre todos os candidatos e todos os pares de vagas da UF onde o candidato trabalhava com bolsas que diferem em R$ 5 mil, o par mais parecido em todo o resto (soma de |diferença| de IVS × 10, distância em 100 km, vaga imediata, log das vagas imediatas, log da população, capital, estratos, mesma região, mesmo município). Empate: ciclo, curso, município de origem, vagas.",
+  "portao": "coeficientes reproduzem VL_estimativas.csv (tolerância 1e-08)",
+  "candidato": {
+    "ciclo": 2,
+    "curso": "CIRURGIA GERAL MINIMAMENTE INVASIVA",
+    "uf_de_trabalho_anterior": "MG",
+    "vagas_no_cardapio": 222,
+    "nota": "sem município de origem nem identificador"
+  },
+  "vaga_a": {
+    "municipio": "Araçuaí (MG)",
+    "co_ibge": "310340",
+    "ivs": 0.397,
+    "bolsa_mil": 15.0,
+    "km": 169.2,
+    "populacao_2022": 34297,
+    "chance_modelo": 0.02533599557762306
+  },
+  "vaga_b": {
+    "municipio": "Itamarandiba (MG)",
+    "co_ibge": "313250",
+    "ivs": 0.401,
+    "bolsa_mil": 20.0,
+    "km": 174.8,
+    "populacao_2022": 32948,
+    "chance_modelo": 0.03621622823861828
+  },
+  "vaga_escolhida": {
+    "municipio": "Brasília de Minas (MG)",
+    "co_ibge": "310860",
+    "ivs": 0.405,
+    "bolsa_mil": 20.0,
+    "km": 103.8,
+    "populacao_2022": 32025,
+    "chance_modelo": 0.11412002094307665
+  },
+  "dissimilaridade": 0.13627338209,
+  "conta": {
+    "beta_bolsa_por_mil": 0.07708067599148952,
+    "log_razao_por_termo": {
+      "bolsa_mil": 0.38540337995744756,
+      "distancia_100km": -0.02888613433455111,
+      "ivs": 0.006362014700298229,
+      "log_populacao_2022": -0.005598082747855687,
+      "outros": 0.0
+    },
+    "rotulos": {
+      "bolsa_mil": "bolsa",
+      "ivs": "curva do IVS",
+      "distancia_100km": "distância",
+      "log_populacao_2022": "porte (população)",
+      "outros": "demais controles"
+    },
+    "razao_por_termo": {
+      "bolsa_mil": 1.4702072539841036,
+      "distancia_100km": 0.9715270817463949,
+      "ivs": 1.0063822953015045,
+      "log_populacao_2022": 0.9944175573189643,
+      "outros": 1.0
+    },
+    "log_razao_total": 0.357281177575339,
+    "razao_total": 1.4294377391905102,
+    "razao_so_bolsa": 1.4702072539841036,
+    "chance_b_entre_as_duas": 0.5883821248560993,
+    "efeito_fixo_do_par": "o mesmo nas duas vagas: se cancela na razão"
+  },
+  "linhas": {
+    "candidatos_modelo": 5417,
+    "linhas_modelo": 578998,
+    "linhas_por_candidato": {
+      "media": 106.88536090086764,
+      "mediana": 82.0,
+      "minimo": 2,
+      "maximo": 438
+    },
+    "candidatos_desenho_completo": 5421,
+    "linhas_desenho_completo": 932577,
+    "linhas_por_candidato_desenho_completo": {
+      "media": 172.03043718871058,
+      "mediana": 121.0,
+      "minimo": 4,
+      "maximo": 438
+    },
+    "alternativas_retiradas_par_sem_escolha": 353575,
+    "candidatos_retirados_uma_so_alternativa": 4
+  },
+  "entradas": {
+    "output/rdd_bolsa/VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output/aquisicao/a08_ivs_2010_oficial_municipio.csv": "0632a7a313e1179ffd2f0096769143794907ccfcedfec560f6043ed9b2db31fe",
+    "output/aquisicao/quadro_vagas_consolidado.parquet": "47cf61e4018b17759a088b320757b0269557c808721089a2490a3ce830b642db",
+    "scripts/rdd_bolsa/50_escolha_localizacao_par.py": "2f9d42656c760408e91c4f09843eda572d3f5ffbb070118a185ec63f25aac456"
+  }
+}

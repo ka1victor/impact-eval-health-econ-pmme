@@ -8,6 +8,26 @@
 
 ---
 
+## 11/11/2026 — Banca final sobre a versão do grupo de 11/11
+
+Motivo: o autor pediu para comunicar melhor o trabalho a partir do deck atual do grupo (`PEE - BANCA FINAL`, 11/11),
+seção por seção: cadeia causal, hipótese, linhas candidato × vaga, logit condicional no lugar da equação da utilidade
+(erro corrigido), método passo a passo com exemplo real, identificação só com as premissas do logit, resultados em
+gráfico, robustez com conclusão, discussão, conclusão e limitações condensadas. O deck do doc 02 continua como está.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`07_apresentacoes/banca_final/03_deck_banca_final_grupo.md`](07_apresentacoes/banca_final/03_deck_banca_final_grupo.md) | conteúdo canônico do deck: o que estimamos (§1), ordem, textos, decisões do grupo |
+| `07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1111.pptx` | cópia sem alteração do deck do grupo de 11/11/2026 (SHA-256 `4f645142…44cd5`) |
+| `scripts/apresentacao/gerar_deck_banca_final_grupo.py` | gerador do deck (32 slides) |
+| `scripts/apresentacao/gerar_exemplo_logit_real.py` | exemplo real do logit (VL-1 reestimado, par de vagas por regra fixa) |
+| `scripts/apresentacao/gerar_figuras_banca_final.py` | figuras de coeficientes e de robustez |
+| `tests/test_deck_banca_final_grupo.py` | testes do deck |
+
+---
+
 ## 09/11/2026 — Banca final v3: base no deck atual do grupo
 
 Motivo: o autor indicou que o deck em uso pelo grupo é o `PEE - Modelo econômico` de 09/11/2026; o deck final passa a

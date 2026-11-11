@@ -1,0 +1,139 @@
+{
+  "etapa": "figuras_banca_final",
+  "natureza_dos_dados": "EMPIRICO",
+  "script": "scripts/apresentacao/gerar_figuras_banca_final.py",
+  "entradas": {
+    "output/rdd_bolsa/VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output/rdd_bolsa/VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636"
+  },
+  "coeficientes_vl1": {
+    "arquivo": "output/apresentacao_banca_final/figuras/coeficientes_vl1.png",
+    "linhas": [
+      {
+        "termo": "bolsa_mil",
+        "multiplo": 5,
+        "rotulo": "+R$ 5 mil de bolsa",
+        "coef": 0.38540337995,
+        "x": 1.470207253973154,
+        "x_inf": 1.1455231849124543,
+        "x_sup": 1.8869189185098618
+      },
+      {
+        "termo": "distancia_100km",
+        "multiplo": 1,
+        "rotulo": "+100 km de distância",
+        "coef": -0.5144819814,
+        "x": 0.597810191221237,
+        "x_inf": 0.5741828770343419,
+        "x_sup": 0.6224097565188443
+      },
+      {
+        "termo": "mesma_regiao_saude",
+        "multiplo": 1,
+        "rotulo": "Na mesma região de saúde de onde trabalhava",
+        "coef": 1.103023378,
+        "x": 3.0132624975215254,
+        "x_inf": 2.3287270723263545,
+        "x_sup": 3.8990189062950433
+      },
+      {
+        "termo": "mesmo_municipio",
+        "multiplo": 1,
+        "rotulo": "No mesmo município (além da região)",
+        "coef": 0.5870628101,
+        "x": 1.798697532811621,
+        "x_inf": 1.368758810969574,
+        "x_sup": 2.3636836443455262
+      }
+    ]
+  },
+  "robustez_vl1": {
+    "arquivo": "output/apresentacao_banca_final/figuras/robustez_vl1.png",
+    "linhas": [
+      {
+        "fonte": "VL",
+        "chave": "VL1_emp",
+        "rotulo": "Principal: ciclos 1–3",
+        "na_mesma_uf": true,
+        "rc": 1.470207254,
+        "inf": 1.145523185,
+        "sup": 1.886918919,
+        "exclui_1": true
+      },
+      {
+        "fonte": "VL",
+        "chave": "VL1log_emp",
+        "rotulo": "Distância em log",
+        "na_mesma_uf": true,
+        "rc": 1.454632669,
+        "inf": 1.153979855,
+        "sup": 1.833616239,
+        "exclui_1": true
+      },
+      {
+        "fonte": "VL",
+        "chave": "VL3_VL1_emp",
+        "rotulo": "Região anterior × UF da vaga",
+        "na_mesma_uf": true,
+        "rc": 1.487768079,
+        "inf": 1.152051977,
+        "sup": 1.921314229,
+        "exclui_1": true
+      },
+      {
+        "fonte": "VL",
+        "chave": "VL2_emp",
+        "rotulo": "Só vagas perto do corte (±0,050)",
+        "na_mesma_uf": true,
+        "rc": 1.279774706,
+        "inf": 0.9514025728,
+        "sup": 1.72148294,
+        "exclui_1": false
+      },
+      {
+        "fonte": "VG",
+        "chave": "VG1",
+        "rotulo": "Só o ciclo 1",
+        "na_mesma_uf": true,
+        "rc": 1.148166121,
+        "inf": 0.6561561737,
+        "sup": 2.009103157,
+        "exclui_1": false
+      },
+      {
+        "fonte": "VG",
+        "chave": "VL1_c2",
+        "rotulo": "Só o ciclo 2",
+        "na_mesma_uf": true,
+        "rc": 1.904473606,
+        "inf": 1.303144245,
+        "sup": 2.78328338,
+        "exclui_1": true
+      },
+      {
+        "fonte": "VG",
+        "chave": "VG3",
+        "rotulo": "Só o ciclo 3",
+        "na_mesma_uf": true,
+        "rc": 1.247811219,
+        "inf": 0.9003040255,
+        "sup": 1.729452268,
+        "exclui_1": false
+      },
+      {
+        "fonte": "VL",
+        "chave": "M1_emp",
+        "rotulo": "Pré-registrado: sem fixar a UF",
+        "na_mesma_uf": false,
+        "rc": 1.254150653,
+        "inf": 0.9796381653,
+        "sup": 1.605586549,
+        "exclui_1": false
+      }
+    ]
+  },
+  "saidas": {
+    "output/apresentacao_banca_final/figuras/coeficientes_vl1.png": "669dd6ccc934f972b1ca2ec5d4d17d583fbffaefbbed65e1d5b139465a5f04b0",
+    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "afa060fb444bd42b009902edee5fd2d72f9893ac7f42659ac970b30960c88d17"
+  }
+}

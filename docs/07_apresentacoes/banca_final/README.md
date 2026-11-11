@@ -1,6 +1,9 @@
 # Banca final — conteúdo canônico
 
-> **Estado (11/11/2026):** deck da banca final de volta à versão de 09/11 (25 slides, 16 no corpo,
+> **Estado (11/11/2026, noite):** deck sobre a versão do grupo de 11/11 (`PEE - BANCA FINAL`), 32 slides, com
+> cadeia causal, logit condicional corrigido, método passo a passo com exemplo real e resultados em gráfico
+> ([03](03_deck_banca_final_grupo.md); `output/apresentacao_banca_final/deck_banca_final_grupo.pptx` e `.pdf`).<br>
+> **Antes (11/11/2026):** deck da banca final de volta à versão de 09/11 (25 slides, 16 no corpo,
 > com os dois slides do método detalhados), mais a revisão do modelo teórico e as decisões do autor
 > de 11/11 ([02](02_deck_banca_final.md), nota do topo).<br>
 > **Versão 2 (09/11/2026):** deck da banca final, 23 slides: a
@@ -20,6 +23,7 @@
 | Documento | Função |
 |---|---|
 | [`01_diagrama_teoria_mudanca.md`](01_diagrama_teoria_mudanca.md) | **fonte de verdade**: cada caixa e seta do diagrama, a literatura de cada elo, a ligação com as equações do apêndice e a nova ordem dos slides de teoria |
+| [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo de 11/11**: o que estimamos e por que a razão de chances (§1), ordem dos 32 slides, texto de cada slide novo, o que o grupo decide |
 | [`02_deck_banca_final.md`](02_deck_banca_final.md) | **fonte de verdade do deck final**: ordem dos slides (25 na versão vigente), o feedback de 04/11 aplicado à parte da banca 1, cada texto novo e o que fica para o autor decidir |
 
 ## Derivados (o deck é derivado deste conteúdo)
@@ -34,6 +38,7 @@ em [`output/apresentacao_banca_final/`](../../../output/apresentacao_banca_final
 | `deck_proposta_reorganizada.pptx` | o deck do grupo com o diagrama na seção de teoria e os slides de equações no apêndice (**proposta**; o deck original não é alterado) |
 | `manifesto_diagrama.json` | SHA-256 do deck de entrada e das saídas, ordem dos slides |
 | `qa_render/` | imagens dos 2 slides novos, só para conferência visual |
+| `deck_banca_final_grupo.pptx` e `.pdf` | **deck sobre a versão do grupo de 11/11** (doc 03), gerado por `scripts/apresentacao/gerar_deck_banca_final_grupo.py` a partir de `grupo/deck_grupo_banca_final_1111.pptx`; usa `exemplo_logit_real.json` e `figuras/` (scripts `gerar_exemplo_logit_real.py` e `gerar_figuras_banca_final.py`); manifesto em `manifesto_deck_banca_final_grupo.json` |
 | `deck_banca_final.pptx` e `.pdf` | **o deck da banca final** (doc 02), gerado por `scripts/apresentacao/gerar_deck_banca_final.py` a partir do `deck_proposta_reorganizada.pptx` e do deck pós-banca da banca 2; manifesto em `manifesto_deck_banca_final.json` |
 
 O diagrama é teoria e hipótese. Não traz número de resultado nem diz que a bolsa
@@ -52,4 +57,13 @@ Deck final (não precisa do deck do grupo; lê só de `output/`):
 ```bash
 python3 scripts/apresentacao/gerar_deck_banca_final.py
 python3 -m unittest tests.test_deck_banca_final
+```
+
+Deck sobre a versão do grupo de 11/11 (doc 03):
+
+```bash
+python3 scripts/apresentacao/gerar_exemplo_logit_real.py      # ≈ 30 s: reestima o VL-1 e confere com o gravado
+python3 scripts/apresentacao/gerar_figuras_banca_final.py
+python3 scripts/apresentacao/gerar_deck_banca_final_grupo.py
+python3 -m unittest tests.test_deck_banca_final_grupo
 ```

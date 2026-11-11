@@ -1,0 +1,296 @@
+{
+  "etapa": "deck_banca_final_grupo",
+  "natureza_dos_dados": "EMPIRICO",
+  "script": "scripts/apresentacao/gerar_deck_banca_final_grupo.py",
+  "doc_conteudo": "docs/07_apresentacoes/banca_final/03_deck_banca_final_grupo.md",
+  "entradas": {
+    "docs/07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1111.pptx": "4f645142053adb33cbac43173b291cff2af94ac86bcd1a161b1bed53e9044cd5",
+    "output/rdd_bolsa/VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output/rdd_bolsa/VL_resumo.json": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
+    "output/rdd_bolsa/VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636",
+    "output/rdd_bolsa/P1_resumo.json": "bddaf9ef03a4374b751f49655757d8b813d096d6af9ac219337df27273790d7d",
+    "output/rdd_bolsa/P1_estimativas.csv": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+    "output/rdd_bolsa/S57_resumo.json": "67801270c9d4c1313554dfe007f207b1b444440d46b8721fc60971c3a7a43389",
+    "output/rdd_bolsa/portao_r1_ivs_oficial.json": "cdf4579ff9897e98f27aaa393ab05318e2398ff43f779dc2df0d5eb66fe750f0",
+    "output/apresentacao_banca_final/exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
+    "output/apresentacao_banca_final/figuras/coeficientes_vl1.png": "669dd6ccc934f972b1ca2ec5d4d17d583fbffaefbbed65e1d5b139465a5f04b0",
+    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "afa060fb444bd42b009902edee5fd2d72f9893ac7f42659ac970b30960c88d17"
+  },
+  "slides": [
+    {
+      "posicao": 1,
+      "origem": "grupo 11/11",
+      "slide_origem": 1,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 2,
+      "origem": "grupo 11/11",
+      "slide_origem": 2,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 3,
+      "origem": "grupo 11/11",
+      "slide_origem": 3,
+      "secao": "Motivação",
+      "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
+    },
+    {
+      "posicao": 4,
+      "origem": "grupo 11/11",
+      "slide_origem": 4,
+      "secao": "Motivação",
+      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+    },
+    {
+      "posicao": 5,
+      "origem": "grupo 11/11",
+      "slide_origem": 5,
+      "secao": "Motivação",
+      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+    },
+    {
+      "posicao": 6,
+      "origem": "grupo 11/11",
+      "slide_origem": 6,
+      "secao": "Motivação",
+      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+    },
+    {
+      "posicao": 7,
+      "origem": "grupo 11/11",
+      "slide_origem": 7,
+      "secao": "Motivação",
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "posicao": 8,
+      "origem": "grupo 11/11",
+      "slide_origem": 8,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 9,
+      "origem": "grupo 11/11",
+      "slide_origem": 9,
+      "secao": null,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "posicao": 10,
+      "origem": "grupo 11/11",
+      "slide_origem": 10,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 11,
+      "origem": "grupo 11/11",
+      "slide_origem": 11,
+      "secao": "Literatura",
+      "titulo": "O modelo combina dois elementos da teoria"
+    },
+    {
+      "posicao": 12,
+      "origem": "novo",
+      "slide_origem": "cadeia1",
+      "secao": "Literatura",
+      "titulo": "Cadeia causal: da bolsa aos desfechos na saúde"
+    },
+    {
+      "posicao": 13,
+      "origem": "novo",
+      "slide_origem": "cadeia2",
+      "secao": "Literatura",
+      "titulo": "Cadeia causal: da bolsa aos desfechos na saúde"
+    },
+    {
+      "posicao": 14,
+      "origem": "grupo 11/11",
+      "slide_origem": 13,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 15,
+      "origem": "novo",
+      "slide_origem": "hipotese",
+      "secao": "Hipótese",
+      "titulo": "Maior remuneração, maior chance de ser escolhida"
+    },
+    {
+      "posicao": 16,
+      "origem": "grupo 11/11",
+      "slide_origem": 15,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 17,
+      "origem": "grupo 11/11",
+      "slide_origem": 16,
+      "secao": "Base de Dados",
+      "titulo": "Os dados ligam os editais do PMM-E ao CNES"
+    },
+    {
+      "posicao": 18,
+      "origem": "novo",
+      "slide_origem": "linhas",
+      "secao": "Base de Dados",
+      "titulo": "Cada candidato vira uma linha por vaga que podia escolher"
+    },
+    {
+      "posicao": 19,
+      "origem": "grupo 11/11",
+      "slide_origem": 17,
+      "secao": "Análise Descritiva",
+      "titulo": "3 em 4 escolhem uma vaga a até 189 km"
+    },
+    {
+      "posicao": 20,
+      "origem": "grupo 11/11",
+      "slide_origem": 18,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 21,
+      "origem": "novo",
+      "slide_origem": "modelo",
+      "secao": "Metodologia",
+      "titulo": "Modelo: logit condicional da 1ª opção"
+    },
+    {
+      "posicao": 22,
+      "origem": "novo",
+      "slide_origem": "passos",
+      "secao": "Metodologia",
+      "titulo": "Método passo a passo: da escolha à razão de chances"
+    },
+    {
+      "posicao": 23,
+      "origem": "novo",
+      "slide_origem": "identificacao",
+      "secao": "Identificação",
+      "titulo": "Identificação: as premissas do logit condicional"
+    },
+    {
+      "posicao": 24,
+      "origem": "grupo 11/11",
+      "slide_origem": 23,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 25,
+      "origem": "novo",
+      "slide_origem": "resultados",
+      "secao": "Resultados",
+      "titulo": "Resultados: +R$ 5 mil multiplicam a chance por 1,47"
+    },
+    {
+      "posicao": 26,
+      "origem": "novo",
+      "slide_origem": "robustez",
+      "secao": "Robustez",
+      "titulo": "Robustez: o ×1,47 se mantém nas variantes com mais dados"
+    },
+    {
+      "posicao": 27,
+      "origem": "novo",
+      "slide_origem": "metade",
+      "secao": "Discussão",
+      "titulo": "Metade de quem ocupa a vaga já trabalhava no município"
+    },
+    {
+      "posicao": 28,
+      "origem": "novo",
+      "slide_origem": "conclusao",
+      "secao": "Discussão",
+      "titulo": "Conclusão: a bolsa pesa na escolha, mas pouco"
+    },
+    {
+      "posicao": 29,
+      "origem": "novo",
+      "slide_origem": "limitacoes",
+      "secao": "Discussão",
+      "titulo": "Limitações"
+    },
+    {
+      "posicao": 30,
+      "origem": "grupo 11/11",
+      "slide_origem": 31,
+      "secao": null,
+      "titulo": ""
+    },
+    {
+      "posicao": 31,
+      "origem": "grupo 11/11",
+      "slide_origem": 32,
+      "secao": null,
+      "titulo": "Anexo 1: Literatura Teórica - Equação"
+    },
+    {
+      "posicao": 32,
+      "origem": "grupo 11/11",
+      "slide_origem": 33,
+      "secao": null,
+      "titulo": "A bolsa segue exatamente o IVS do município"
+    }
+  ],
+  "fora_do_deck": {
+    "12": "rascunho em branco do grupo (só o título)",
+    "14": "hipótese em sobreposição: trocada pelo slide novo de hipótese (pedido de 11/11)",
+    "19": "modelo com a equação da utilidade: trocado pelo logit condicional (erro corrigido, pedido de 11/11)",
+    "20": "duplicata do 19 com marcas de edição",
+    "21": "slide oculto do grupo ('As premissas aplicadas ao nosso caso'), rascunho da identificação",
+    "22": "identificação: trocada pela versão só com as premissas do logit condicional",
+    "24": "resultado com cautela e anotação do grupo: trocado pelo slide de resultados com gráfico",
+    "25": "'incentivo limitado': fundido na conclusão (pedido: menos blocos)",
+    "26": "tabela de coeficientes: trocada por gráfico (pedido de 11/11)",
+    "27": "'metade de quem chega': refeito na discussão (anotação do grupo: estética)",
+    "28": "robustez: refeita com a conclusão explícita (anotação do grupo) e a leitura do ×",
+    "29": "conclusão: refeita com menos blocos",
+    "30": "limitações: refeitas em duas caixas"
+  },
+  "correcoes_e_retiradas": [
+    "slide 4 do grupo: '(item 11.1.4)' → ''",
+    "slide 4 do grupo: 'renumeração' → 'remuneração'",
+    "slide 4 do grupo: 'por categoria do Índice de Vulnerabilidade Social' → 'pela faixa do IVS 2010 do município'",
+    "slide 4 do grupo: 'Vulnerabilidade: Muito alta' → 'IVS acima de 0,400'",
+    "slide 4 do grupo: 'Vulnerabilidade: Alta' → 'IVS de 0,301 a 0,400'",
+    "slide 4 do grupo: 'Vulnerabilidade: Média,' → 'IVS até 0,300'",
+    "slide 4 do grupo: 'baixa e buito baixa' → ''",
+    "slide 4 do grupo: 'sobre a categoria de IVS do município.' → 'pelo IVS 2010 do município: cortes em 0,300 e 0,400.'",
+    "slide 5 do grupo: '(item 11.1.4)' → ''",
+    "slide 5 do grupo: 'renumeração' → 'remuneração'",
+    "slide 5 do grupo: 'por categoria do Índice de Vulnerabilidade Social' → 'pela faixa do IVS 2010 do município'",
+    "slide 5 do grupo: 'Vulnerabilidade: Muito alta' → 'IVS acima de 0,400'",
+    "slide 5 do grupo: 'Vulnerabilidade: Alta' → 'IVS de 0,301 a 0,400'",
+    "slide 5 do grupo: 'Vulnerabilidade: Média,' → 'IVS até 0,300'",
+    "slide 5 do grupo: 'baixa e buito baixa' → ''",
+    "slide 5 do grupo: 'sobre a categoria de IVS do município.' → 'pelo IVS 2010 do município: cortes em 0,300 e 0,400.'",
+    "slide 6 do grupo: '(item 11.1.4)' → ''",
+    "slide 6 do grupo: 'renumeração' → 'remuneração'",
+    "slide 6 do grupo: 'por categoria do Índice de Vulnerabilidade Social' → 'pela faixa do IVS 2010 do município'",
+    "slide 6 do grupo: 'Vulnerabilidade: Muito alta' → 'IVS acima de 0,400'",
+    "slide 6 do grupo: 'Vulnerabilidade: Alta' → 'IVS de 0,301 a 0,400'",
+    "slide 6 do grupo: 'Vulnerabilidade: Média,' → 'IVS até 0,300'",
+    "slide 6 do grupo: 'baixa e buito baixa' → ''",
+    "slide 6 do grupo: 'sobre a categoria de IVS do município.' → 'pelo IVS 2010 do município: cortes em 0,300 e 0,400.'",
+    "slide 17 do grupo: 'Os médicos escolhem vagas perto de onde já trabalham' → '3 em 4 escolhem uma vaga a até 189 km'",
+    "slide 21 do grupo: 'Esse tá ruim, não dá pra entender oque estamos falando'",
+    "slide 24 do grupo: 'Esse tá ruim (estética) e modo de passar a mensagem'",
+    "slide 25 do grupo: 'Escolha das palavras está ruim, não dá pra entender oque o s'",
+    "slide 27 do grupo: 'Estética ruim'",
+    "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'"
+  ],
+  "saidas": {
+    "output/apresentacao_banca_final/deck_banca_final_grupo.pptx": "06a204841ddacbf3d08138c2f73f00b336cc7480d02385477884e2fee56ea0a6",
+    "output/apresentacao_banca_final/deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
+  }
+}
