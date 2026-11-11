@@ -13,8 +13,8 @@
     "output/rdd_bolsa/S57_resumo.json": "67801270c9d4c1313554dfe007f207b1b444440d46b8721fc60971c3a7a43389",
     "output/rdd_bolsa/portao_r1_ivs_oficial.json": "cdf4579ff9897e98f27aaa393ab05318e2398ff43f779dc2df0d5eb66fe750f0",
     "output/apresentacao_banca_final/exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
-    "output/apresentacao_banca_final/figuras/coeficientes_vl1.png": "669dd6ccc934f972b1ca2ec5d4d17d583fbffaefbbed65e1d5b139465a5f04b0",
-    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "afa060fb444bd42b009902edee5fd2d72f9893ac7f42659ac970b30960c88d17"
+    "output/apresentacao_banca_final/figuras/coeficientes_vl1.png": "a56834c7f359e21cd87884cd0fa0cbc746fd138ea653310eb471a43d69fc5bf8",
+    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "936161a11b27d9b0085b7050f250edfc93a72668bbcab37ed5b0cf92d04851f7"
   },
   "slides": [
     {
@@ -43,21 +43,21 @@
       "origem": "grupo 11/11",
       "slide_origem": 4,
       "secao": "Motivação",
-      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+      "titulo": "A vulnerabilidade social define o valor da bolsa do PMM-E"
     },
     {
       "posicao": 5,
       "origem": "grupo 11/11",
       "slide_origem": 5,
       "secao": "Motivação",
-      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+      "titulo": "A vulnerabilidade social define o valor da bolsa do PMM-E"
     },
     {
       "posicao": 6,
       "origem": "grupo 11/11",
       "slide_origem": 6,
       "secao": "Motivação",
-      "titulo": "A vulnerabilidade social define o piso da bolsa do PMM-E"
+      "titulo": "A vulnerabilidade social define o valor da bolsa do PMM-E"
     },
     {
       "posicao": 7,
@@ -282,7 +282,12 @@
     "slide 6 do grupo: 'Vulnerabilidade: Média,' → 'IVS até 0,300'",
     "slide 6 do grupo: 'baixa e buito baixa' → ''",
     "slide 6 do grupo: 'sobre a categoria de IVS do município.' → 'pelo IVS 2010 do município: cortes em 0,300 e 0,400.'",
+    "slide 4 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
+    "slide 5 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
+    "slide 6 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
     "slide 17 do grupo: 'Os médicos escolhem vagas perto de onde já trabalham' → '3 em 4 escolhem uma vaga a até 189 km'",
+    "slide 9 do grupo: 'Um aumento na remuneração\\xa0do PMM-E eleva a probabilidade de preenchimento das vagas em municípios mais vulneráveis?' → 'Uma bolsa maior aumenta a chance de uma vaga\\nser a 1ª opção do médico?'",
+    "slide 32 do grupo: índice da soma i → t (OMML e imagem de reserva)",
     "slide 21 do grupo: 'Esse tá ruim, não dá pra entender oque estamos falando'",
     "slide 24 do grupo: 'Esse tá ruim (estética) e modo de passar a mensagem'",
     "slide 25 do grupo: 'Escolha das palavras está ruim, não dá pra entender oque o s'",
@@ -290,7 +295,7 @@
     "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'"
   ],
   "saidas": {
-    "output/apresentacao_banca_final/deck_banca_final_grupo.pptx": "06a204841ddacbf3d08138c2f73f00b336cc7480d02385477884e2fee56ea0a6",
+    "output/apresentacao_banca_final/deck_banca_final_grupo.pptx": "a2d27a231ea4373f01d66c697842886881106c072bd15484937b7a7ab9418d89",
     "output/apresentacao_banca_final/deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

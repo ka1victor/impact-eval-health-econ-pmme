@@ -43,9 +43,9 @@ observado**, a 1ª opção como **observada**, e a métrica (×1,47 ≈ 75 km) a
 |---|---|---|---|---|
 | 1–2 | grupo 1–2 | — | capa; sumário | nada |
 | 3 | grupo 3 | Motivação | escassez | nada |
-| 4–6 | grupo 4–6 | Motivação | IVS e bolsa (3 etapas) | faixas pelo IVS efetivo (§3.1); "remuneração"; sem item 11.1.4 |
+| 4–6 | grupo 4–6 | Motivação | a vulnerabilidade social define o valor da bolsa (3 etapas) | título ("valor", não "piso"); faixas pelo IVS efetivo (§3.1); "remuneração"; sem item 11.1.4 |
 | 7 | grupo 7 | Motivação | política direciona incentivos | nada |
-| 8–10 | grupo 8–10 | — | sumário; pergunta; sumário | nada (ver §4, ponto 1) |
+| 8–10 | grupo 8–10 | — | sumário; pergunta; sumário | pergunta nova (§3.1a) |
 | 11 | grupo 11 | Literatura | o modelo combina dois elementos | nada |
 | 12–13 | novos | Literatura | cadeia causal (etapas 1–2; depois 1–3) | §3.2 |
 | 14 | grupo 13 | — | sumário | nada |
@@ -63,7 +63,7 @@ observado**, a 1ª opção como **observada**, e a métrica (×1,47 ≈ 75 km) a
 | 27 | novo | Discussão | metade de quem ocupa a vaga já trabalhava no município | §3.10 |
 | 28 | novo | Discussão | conclusão: a bolsa pesa na escolha, mas pouco | §3.11 |
 | 29 | novo | Discussão | limitações (duas caixas) | §3.12 |
-| 30–32 | grupo 31–33 | — | Q&A; anexo 1; a bolsa segue o IVS | nada |
+| 30–32 | grupo 31–33 | — | Q&A; anexo 1; a bolsa segue o IVS | anexo: índice da soma t = 0 (era i = 0, com δ^t) |
 
 **Fora** (slides do grupo): 12 (rascunho em branco), 14 (hipótese em sobreposição), 19–20 (equação da utilidade e
 duplicata), 21 (oculto), 22 (identificação), 24–26 (resultados, "incentivo limitado", tabela), 27 (metade, refeito),
@@ -79,12 +79,16 @@ de 0,301 a 0,400 / até 0,300": a legenda do mapa no mesmo slide chama 0,301–0
 (portão R1) tem cortes em 0,300 e 0,400. A nota: "fixada, por regra, pelo IVS 2010 do município: cortes em 0,300 e
 0,400". Sai "(item 11.1.4)" das fontes (é a grade do FAQ, não a aplicada; errata E10).
 
+### 3.1a Pergunta (9)
+
+"Uma bolsa maior aumenta a chance de uma vaga ser a 1ª opção do médico?" (decisão do autor de 11/11/2026: a pergunta
+fala da escolha, que é o que testamos, e não de "municípios mais vulneráveis", para olhar a bolsa isoladamente).
+
 ### 3.2 Cadeia causal (12–13)
 
 Título: "Cadeia causal: da bolsa aos desfechos na saúde". Sem notação. Etapas:
 1. **Regra:** IVS do município → bolsa (até 0,300: R$ 10 mil; 0,301–0,400: R$ 15 mil; acima de 0,400: R$ 20 mil).
-2. **Escolha do médico:** primeiro o que reduz o valor — custo de viver ali (**deslocamento**, moradia e distância
-   de casa; Redding & Rossi-Hansberg, 2017) e custo de trabalhar ali (**esforço**: equipe e equipamentos que faltam;
+2. **Escolha do médico:** primeiro o que reduz o valor — custo de viver ali (**deslocamento** e distância de casa; Redding & Rossi-Hansberg, 2017) e custo de trabalhar ali (**esforço**: falta equipe e equipamento;
    Choné & Ma, 2011) — e depois o que eleva — remuneração (**bolsa** maior: salário esperado maior; Moehling et al.,
    2020). As três setas chegam ao **valor da vaga para o médico** (a utilidade; NÃO OBSERVADO) → **1ª opção**
    (OBSERVADA). Faixa: "O que estimamos: o peso da bolsa no valor da vaga, lido nas escolhas. +R$ 5 mil = chance ×1,47
@@ -172,8 +176,6 @@ resultado" (comparação pós-resultado; sem fixar a UF ×1,25; só o ciclo 2 fo
 
 ## 4. Para o grupo decidir
 
-1. **Pergunta (slide 9):** fala em "probabilidade de preenchimento das vagas"; o que testamos é a chance de a vaga
-   ser a 1ª opção. Sugestão: "Uma bolsa maior aumenta a chance de uma vaga em município mais vulnerável ser a 1ª
-   opção do médico?". Não foi trocada (o pedido era manter a motivação).
+1. ~~Pergunta (slide 9)~~: trocada em 11/11 (§3.1a).
 2. **Descritiva (slide 19):** o cartão "3 em 4…" repete o novo título; pode virar outro número.
 3. **Slide 17:** "Amostra do modelo: 5.421" é a do modelo base; o principal tem 5.417 (explicado no slide 18).

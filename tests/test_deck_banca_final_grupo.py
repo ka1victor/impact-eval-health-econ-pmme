@@ -18,7 +18,7 @@ DOC = ROOT / "docs/07_apresentacoes/banca_final/03_deck_banca_final_grupo.md"
 
 # Não pode aparecer na tela: erros de digitação e faixas do FAQ do grupo, a equação antiga da utilidade, anotações
 PROIBIDAS = ("buito", "renumeração", "11.1.4", "Vulnerabilidade: Alta", "Vulnerabilidade: Muito alta", "+ ε",
-             "U_iv", "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela")
+             "U_iv", "piso da bolsa", "preenchimento das vagas", "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela")
 
 
 def sha256(p: Path) -> str:
@@ -87,6 +87,9 @@ class TestDeck(unittest.TestCase):
         self.assertIn("P(i escolhe v) =", t)
         self.assertIn("exp(V", t)
         self.assertIn("cardápio de i", t)
+
+    def test_pergunta_nova(self):
+        self.assertIn("Uma bolsa maior aumenta a chance de uma vaga ser a 1ª opção do médico?", self.txt[8])
 
     def test_doc_cita_o_deck(self):
         doc = DOC.read_text(encoding="utf-8")

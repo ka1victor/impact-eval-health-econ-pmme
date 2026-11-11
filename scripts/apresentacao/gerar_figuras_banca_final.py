@@ -80,7 +80,7 @@ def figura_coeficientes() -> dict:
         b, lo, hi = (float(c.loc[termo, x]) * k for x in ("estimativa", "ic95_inf", "ic95_sup"))
         linhas.append({"termo": termo, "multiplo": k, "rotulo": rot.replace("\n", " "), "coef": b,
                        "x": math.exp(b), "x_inf": math.exp(lo), "x_sup": math.exp(hi)})
-    fig, ax = plt.subplots(figsize=(7.4, 3.9), dpi=200)
+    fig, ax = plt.subplots(figsize=(7.4, 4.5), dpi=200)
     estilo(ax)
     ys = list(range(len(linhas)))[::-1]
     for y, l, (_, _, rot) in zip(ys, linhas, COEFS):
@@ -117,7 +117,7 @@ def figura_robustez() -> dict:
         r = r.iloc[0]
         linhas.append({"fonte": arq, "chave": chave, "rotulo": rot, "na_mesma_uf": princ, "rc": float(r.estimativa),
                        "inf": float(r.ic95_inf), "sup": float(r.ic95_sup), "exclui_1": bool(r.ic95_inf > 1)})
-    fig, ax = plt.subplots(figsize=(7.6, 4.4), dpi=200)
+    fig, ax = plt.subplots(figsize=(7.6, 5.3), dpi=200)
     estilo(ax)
     ys = [7.6, 6.6, 5.6, 4.6, 3.3, 2.3, 1.3, 0.0]
     for y, l in zip(ys, linhas):

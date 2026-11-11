@@ -113,7 +113,13 @@ _FAIXAS = (
     ("sobre a categoria de IVS do município.", "pelo IVS 2010 do município: cortes em 0,300 e 0,400."),
 )
 CORRECOES = [(n, a, b) for n in (4, 5, 6) for a, b in _FAIXAS] + [
+    # a bolsa não é piso: é o valor fixado pela faixa (errata da banca 1)
+    (n, "define o piso da bolsa", "define o valor da bolsa") for n in (4, 5, 6)
+] + [
     (17, "Os médicos escolhem vagas perto de onde já trabalham", "3 em 4 escolhem uma vaga a até 189 km"),
+    # pergunta alinhada ao que testamos (escolha da 1ª opção, efeito da bolsa isolado); decisão do autor de 11/11
+    (9, "Um aumento na remuneração\xa0do PMM-E eleva a probabilidade de preenchimento das vagas em municípios mais "
+        "vulneráveis?", "Uma bolsa maior aumenta a chance de uma vaga\nser a 1ª opção do médico?"),
 ]
 
 
@@ -440,9 +446,9 @@ def s_cadeia(M, prs, n, etapa: int):
               fill=BRANCO, line=BORDA, align=PP_ALIGN.CENTER, margem=0.04)
     # 2. Escolha do médico: primeiro o que reduz, depois o que eleva
     rotulo(2.05, 2, "ESCOLHA DO MÉDICO")
-    cart = (("reduz", "REDUZ O VALOR", "Custo de viver ali", "**Deslocamento**, moradia e distância de casa",
+    cart = (("reduz", "REDUZ O VALOR", "Custo de viver ali", "**Deslocamento** e distância de casa",
              "Redding & Rossi-Hansberg (2017)", False),
-            ("reduz", "REDUZ O VALOR", "Custo de trabalhar ali", "**Esforço**: equipe e equipamentos que faltam",
+            ("reduz", "REDUZ O VALOR", "Custo de trabalhar ali", "**Esforço**: falta equipe e equipamento",
              "Choné & Ma (2011)", False),
             ("eleva", "ELEVA O VALOR", "Remuneração", "**Bolsa** maior: salário esperado maior",
              "Moehling et al. (2020)", True))
@@ -591,15 +597,16 @@ def s_linhas(M, prs, n):
     funil = ((mil(n["r1"]), "com 1ª opção nos editais (ciclos 1–3)"),
              (mil(n["com_cnes"]), "com local de trabalho anterior achado no CNES"),
              (mil(n["m1_cand"]), "com região de saúde do local anterior e da vaga"),
-             (mil(n["n_cand"]), f"no modelo principal ({n['ret_uma']} ficaram com uma só vaga possível)"))
+             (mil(n["n_cand"]), "no modelo principal"))
     for k, (num, rot) in enumerate(funil):
         y = 2.88 + k * 0.48
         caixa(sl, 7.9, y, 1.05, 0.4, [[(num, 13, True, BRANCO)]], fill=VERDE if k == 3 else MEDIO,
               align=PP_ALIGN.CENTER, margem=0.02)
         texto(sl, 9.05, y, 4.03, 0.4, [[(rot, 10.5, k == 3, TEXTO)]])
     texto(sl, 7.9, 4.83, 5.18, 0.45,
-          [[("CNES: ", 10, True, CINZA), ("o local de trabalho anterior dá o ponto de partida da distância; quem não "
-                                         "tinha vínculo médico no CNES fica fora.", 10, False, CINZA)]],
+          [[("CNES: ", 10, True, CINZA), ("o local de trabalho anterior dá o ponto de partida da distância. "
+                                         f"No modelo principal, {n['ret_uma']} saem por ficar com uma só vaga "
+                                         "possível.", 10, False, CINZA)]],
           anchor=MSO_ANCHOR.TOP)
     caixa(sl, 0.25, 5.45, 12.83, 1.1,
           [[("MEDIDA", 11, True, "B9E4B1")],
@@ -645,8 +652,7 @@ def s_modelo(M, prs, n):
           [eq("P(A) ÷ P(B) = exp[ β·(bolsa_{A} − bolsa_{B}) + γ·(dist_{A} − dist_{B}) + … ]", 15)
            + [("   o cardápio se cancela", 10.5, True, VERDE2)]],
           fill=CLARO, align=PP_ALIGN.CENTER, nome="Razão")
-    termos = (("β · bolsa", "testado", "TESTADO", f"+R$ 1 mil multiplica a chance relativa da vaga por e^β; "
-                                                  f"+R$ 5 mil, por e^(5β)"),
+    termos = (("β · bolsa", "testado", "TESTADO", "+R$ 5 mil multiplicam a chance da vaga, contra outra igual, por e^(5β)"),
               ("γ · distância", "controle", "CONTROLE", "quanto cada 100 km a mais de onde trabalhava multiplica a chance"),
               ("f(IVS)", "controle", "CONTROLE", "curva contínua do IVS: a bolsa salta no corte; a vulnerabilidade, não"),
               ("α · par de UFs", "pareamento", "PAREAMENTO", "compara só vagas da mesma UF, vistas por médicos da mesma UF"),
@@ -669,9 +675,8 @@ def s_modelo(M, prs, n):
     refs = (("McFadden (1974)", "o método; Nobel de Economia de 2000"),
             ("Bobba et al. (2026, NBER)", "professores no Peru escolhem vagas com bônus que salta em cortes"),
             ("Costa, Nunes & Sanches (2024, REStat)", "escolha de local por médicos no Brasil"),
-            ("Holmes (2005, Labour Econ)", "logit da escolha de local de médicos nos EUA"),
             ("Scott et al. (2013); Kolstad (2011)", "experimentos de escolha com médicos"))
-    texto(sl, 9.18, 4.98, 3.75, 1.8, [[(a, 10, True, VERDE), (f": {b}", 10, False, TEXTO)] for a, b in refs],
+    texto(sl, 9.18, 5.08, 3.75, 1.7, [[(a, 10, True, VERDE), (f": {b}", 10, False, TEXTO)] for a, b in refs],
           anchor=MSO_ANCHOR.TOP, esp=2)
     fontes(sl, "Fontes: McFadden (1974); Bobba et al. (NBER WP 29068, rev. 2026); docs/03_literatura_empirica/19 e 20; "
                "protocolo 52 e adendo 52e (VL-1).")
@@ -804,11 +809,11 @@ def s_resultados(M, prs, n):
     sl = M.novo(prs, f"Resultados: +R$ 5 mil multiplicam a chance por {v(n['rc'])}")
     subtitulo(sl, 0.25, 0.85, 7.9, "I. O que cada coeficiente faz com a chance de uma vaga",
               "contra outra igual no resto; ponto = estimativa, barra = IC 95%; VL-1, ciclos 1–3")
-    sl.shapes.add_picture(str(FIG_COEF), Inches(0.2), Inches(1.55), width=Inches(7.95))
-    texto(sl, 0.25, 5.8, 7.9, 0.75,
+    sl.shapes.add_picture(str(FIG_COEF), Inches(0.2), Inches(1.5), width=Inches(7.95))
+    texto(sl, 0.25, 6.05, 7.9, 0.75,
           [[("Leitura: ", 11, True, VERDE2),
-            (f"coeficiente → ×: e^coef. A bolsa: β = {v(n['b'], 3)} por R$ 1 mil; 5β = {v(n['b5'], 3)}; "
-             f"e^{v(n['b5'], 3)} = {v(n['rc'])}. Os outros coeficientes são controles: dizem o que mais pesa.",
+            (f"cada × é e^coeficiente. Bolsa: β = {v(n['b'], 3)} por R$ 1 mil; 5β = {v(n['b5'], 3)}; "
+             f"e^{v(n['b5'], 3)} = {v(n['rc'])}. Os outros são controles e mostram o que mais pesa.",
              11, False, TEXTO)]], anchor=MSO_ANCHOR.TOP)
     cards = ((f"×{v(n['rc'])}", "+R$ 5 mil, vagas da mesma UF",
               f"IC 95%: {v(n['rc_inf'])} a {v(n['rc_sup'])}; p de Holm {v(n['p_holm'], 3)}", True),
@@ -832,7 +837,7 @@ def s_resultados(M, prs, n):
 
 def s_robustez(M, prs, n):
     sl = M.novo(prs, "Robustez: o ×1,47 se mantém nas variantes com mais dados".replace("1,47", v(n["rc"])))
-    sl.shapes.add_picture(str(FIG_ROB), Inches(0.15), Inches(0.95), width=Inches(8.0))
+    sl.shapes.add_picture(str(FIG_ROB), Inches(0.15), Inches(0.92), width=Inches(8.1))
     lo, hi = min(n["rc"], n["rc_log"], n["rc_vl3"]), max(n["rc"], n["rc_log"], n["rc_vl3"])
     caixa(sl, 8.4, 0.95, 4.68, 2.3,
           [[("CONCLUSÃO", 10.5, True, "B9E4B1")],
@@ -909,10 +914,10 @@ def s_conclusao(M, prs, n):
                                           "Que o efeito vale em todo ciclo: só o ciclo 2 é forte.")))
     for k, (tit, itens) in enumerate(blocos):
         x = 0.25 + k * 6.5
-        caixa(sl, x, 2.62, 6.33, 2.85, [[(tit, 17, True, VERDE if k == 0 else "7A1C17")]] +
-              [[("•  " + it, 14, False, TEXTO)] for it in itens],
-              fill=CLARO if k == 0 else BRANCO, line=BORDA, anchor=MSO_ANCHOR.TOP, nome=tit, margem=0.25, esp=8)
-    caixa(sl, 0.25, 5.67, 12.83, 0.85,
+        caixa(sl, x, 2.62, 6.33, 2.75, [[(tit, 17, True, VERDE if k == 0 else "7A1C17")]] +
+              [[("•  " + it, 14.5, False, TEXTO)] for it in itens],
+              fill=CLARO if k == 0 else BRANCO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome=tit, margem=0.3, esp=10)
+    caixa(sl, 0.25, 5.57, 12.83, 0.95,
           [[("Para a política: ", 14, True, "B9E4B1"),
             ("pagar mais reordena a escolha entre vagas próximas; não mostramos que tire o médico da sua região.", 14,
              False, BRANCO)]],
@@ -980,6 +985,17 @@ def corrigir(prs) -> list[str]:
                     r._r.getparent().remove(r._r)
                 for br in par._p.findall("a:br", NS):
                     par._p.remove(br)
+                if "\n" in runs[0].text:  # quebra de linha pedida: <a:br/> e um segundo run com a mesma formatação
+                    t1, t2 = runs[0].text.split("\n", 1)
+                    runs[0].text = t1
+                    br = etree.Element("{%s}br" % NS["a"])
+                    rpr = runs[0]._r.find("a:rPr", NS)
+                    if rpr is not None:
+                        br.append(copy.deepcopy(rpr))
+                    r2 = copy.deepcopy(runs[0]._r)
+                    r2.find("a:t", NS).text = t2
+                    runs[0]._r.addnext(br)
+                    br.addnext(r2)
                 if not runs[0].text.strip() and len(sh.text_frame.paragraphs) > 1:
                     par._p.getparent().remove(par._p)
                 achou += 1
@@ -987,6 +1003,44 @@ def corrigir(prs) -> list[str]:
             raise SystemExit(f"ERRO: esperava 1 {antigo!r} no slide {num} do grupo; achei {achou}")
         feitas.append(f"slide {num} do grupo: {antigo.strip()!r} → {novo!r}")
     return feitas
+
+
+QN_MT = "{http://schemas.openxmlformats.org/officeDocument/2006/math}t"
+DIR_EQ = OUT / "equacoes"
+
+
+def corrigir_anexo(prs) -> list[str]:
+    """Slide 32 do grupo: a soma corre em t (δ^t), não em i. Troca o índice no OMML e redesenha a imagem de reserva."""
+    s = prs.slides[31]
+    ts = [t for t in s._element.iter(QN_MT) if t.text == "𝑖"]
+    if len(ts) != 1:
+        raise SystemExit(f"ERRO: anexo: esperava 1 índice 𝑖 na equação; achei {len(ts)}")
+    ts[0].text = "𝑡"
+    fb = [f for f in s._element.iter("{http://schemas.openxmlformats.org/markup-compatibility/2006}Fallback")
+          if f.find(".//a:blip", NS) is not None]
+    if len(fb) != 1:
+        raise SystemExit("ERRO: anexo: esperava 1 imagem de reserva da equação")
+    ext = fb[0].find(".//a:xfrm/a:ext", NS)
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    matplotlib.rcParams.update({"mathtext.fontset": "stix"})
+    w, h, dpi = int(ext.get("cx")) / 914400, int(ext.get("cy")) / 914400, 200
+    fig = plt.figure(figsize=(w, h), dpi=dpi)
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_axis_off()
+    txt = ax.text(0.5, 0.5, r"$\sum_{t=0}^{T}\delta^{t}\left[\frac{E(w_{mt}^{(s)})}{p_{mt}} - c_{mt}^{(s)}\right]$",
+                  ha="center", va="center", fontsize=20)
+    fig.canvas.draw()
+    bb = txt.get_window_extent(renderer=fig.canvas.get_renderer())
+    txt.set_fontsize(20 * min(0.94 * w * dpi / bb.width, 0.9 * h * dpi / bb.height))
+    DIR_EQ.mkdir(parents=True, exist_ok=True)
+    img = DIR_EQ / "anexo_moehling_indice_t.png"
+    fig.savefig(img, dpi=dpi, transparent=True, metadata={"Software": None})
+    plt.close(fig)
+    _, rid = s.part.get_or_add_image_part(str(img))
+    fb[0].find(".//a:blip", NS).set("{%s}embed" % NS["r"], rid)
+    return ["slide 32 do grupo: índice da soma i → t (OMML e imagem de reserva)"]
 
 
 def tirar_anotacoes(prs) -> list[str]:
@@ -1006,7 +1060,7 @@ def construir() -> dict:
     if len(prs.slides) != N_ENT:
         raise SystemExit(f"ERRO: esperava {N_ENT} slides no deck do grupo")
     n = numeros()
-    feitas = corrigir(prs) + tirar_anotacoes(prs)
+    feitas = corrigir(prs) + corrigir_anexo(prs) + tirar_anotacoes(prs)
     grupo = list(prs.slides)
     M = Modelo(prs)
     novos = {nome: f(M, prs, n) for nome, f in NOVOS.items()}

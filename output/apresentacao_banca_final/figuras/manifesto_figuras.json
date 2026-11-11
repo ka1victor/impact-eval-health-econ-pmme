@@ -133,7 +133,7 @@
     ]
   },
   "saidas": {
-    "output/apresentacao_banca_final/figuras/coeficientes_vl1.png": "669dd6ccc934f972b1ca2ec5d4d17d583fbffaefbbed65e1d5b139465a5f04b0",
-    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "afa060fb444bd42b009902edee5fd2d72f9893ac7f42659ac970b30960c88d17"
+    "output/apresentacao_banca_final/figuras/coeficientes_vl1.png": "a56834c7f359e21cd87884cd0fa0cbc746fd138ea653310eb471a43d69fc5bf8",
+    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "936161a11b27d9b0085b7050f250edfc93a72668bbcab37ed5b0cf92d04851f7"
   }
 }
