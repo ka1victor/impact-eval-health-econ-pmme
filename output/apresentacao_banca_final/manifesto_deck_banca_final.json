@@ -30,11 +30,11 @@
   "saidas": [
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
-      "sha256": "46666c6aefe70113c6f7fede9ead37b9154c75f99f07ddddedd7a9026b856b6c"
+      "sha256": "b9960500c47fe46e6da4f7c0b3174d82c94cbf09f67f4314e2e9cee65e7f8362"
     },
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
-      "sha256": "9025667c525e9155ad680df300bd808c5bd39408f6a2df3aab0a49d6955bb29d"
+      "sha256": "3d82e749b91afb81738d53d83d8b0af013fdaa47a785151aa0d72f8587c07238"
     },
     {
       "caminho": "output/apresentacao_banca_final/equacoes/renda_real_liquida.png",
@@ -131,100 +131,106 @@
       "posicao": 8,
       "origem": "novo, método passo a passo 1",
       "secao": "Metodologia",
-      "titulo": "Método passo a passo: logit condicional"
+      "titulo": "Método passo a passo: como medimos o peso da bolsa"
     },
     {
       "posicao": 9,
+      "origem": "novo, método passo a passo 2",
+      "secao": "Metodologia",
+      "titulo": "Exemplo: um candidato, três vagas do mesmo curso em MG"
+    },
+    {
+      "posicao": 10,
       "origem": "banca 2 pós-banca 6",
       "secao": "Metodologia",
       "titulo": "Modelo: logit condicional da 1ª opção"
     },
     {
-      "posicao": 10,
+      "posicao": 11,
       "origem": "banca 2 pós-banca 7",
       "secao": "Metodologia",
       "titulo": "Por que este modelo: o desenho de Bobba et al. (2026)"
     },
     {
-      "posicao": 11,
+      "posicao": 12,
       "origem": "banca 2 pós-banca 8",
       "secao": "Identificação",
       "titulo": "Identificação: o que fica fixo e o que supomos"
     },
     {
-      "posicao": 12,
+      "posicao": 13,
       "origem": "banca 2 pós-banca 9",
       "secao": "Resultados",
       "titulo": "Na mesma UF, +R$ 5 mil multiplicam a chance por 1,47"
     },
     {
-      "posicao": 13,
+      "posicao": 14,
       "origem": "banca 2 pós-banca 10",
       "secao": "Robustez",
       "titulo": "Robustez: sempre comparando vagas da mesma UF"
     },
     {
-      "posicao": 14,
+      "posicao": 15,
       "origem": "banca 2 pós-banca 11",
       "secao": "Discussão",
       "titulo": "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
     },
     {
-      "posicao": 15,
+      "posicao": 16,
       "origem": "banca 2 pós-banca 12",
       "secao": "Discussão",
       "titulo": "Limitações e o que cada uma implica"
     },
     {
-      "posicao": 16,
+      "posicao": 17,
       "origem": "deck do grupo 31",
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 17,
+      "posicao": 18,
       "origem": "deck do grupo 32",
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 18,
+      "posicao": 19,
       "origem": "banca 2 pós-banca 14",
       "secao": null,
       "titulo": "Apêndice A1: a bolsa segue exatamente o IVS"
     },
     {
-      "posicao": 19,
+      "posicao": 20,
       "origem": "deck do grupo 16",
       "secao": null,
       "titulo": "O modelo combina três elementos da teoria"
     },
     {
-      "posicao": 20,
+      "posicao": 21,
       "origem": "deck do grupo 17",
       "secao": null,
       "titulo": "A escolha locacional maximiza a utilidade"
     },
     {
-      "posicao": 21,
+      "posicao": 22,
       "origem": "deck do grupo 19",
       "secao": null,
       "titulo": "A escolha locacional maximiza a renda real líquida"
     },
     {
-      "posicao": 22,
+      "posicao": 23,
       "origem": "deck do grupo 20",
       "secao": null,
       "titulo": "Literatura divide o custo em dois tipos: geográfico e laboral"
     },
     {
-      "posicao": 23,
+      "posicao": 24,
       "origem": "deck do grupo 18",
       "secao": null,
       "titulo": "Da escolha individual ao preenchimento agregado"
     },
     {
-      "posicao": 24,
+      "posicao": 25,
       "origem": "deck do grupo 35",
       "secao": null,
       "titulo": "O IVS mede a vulnerabilidade social dos territórios brasileiros"
@@ -247,10 +253,9 @@
     "diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'",
     "slide do modelo: γ para a distância (δ é o desconto da teoria)",
     "identificação: 'listou sem estratégia' na premissa do conjunto de escolha; nota nas limitações",
-    "slide novo do método: 4 passos e o exemplo com três vagas e os pesos do VL-1, num slide só",
-    "enxugamento: 97 trocas de texto e 2 grupos removidos (doc 02, §0.2)",
-    "redesenho: 13 formas fora (exemplo da hipótese, formato longo da base, ciclo 2 do resultado) e 4 linhas de controle fora da tabela do resultado",
-    "notas do divisor 'Apêndice' limpas (resposta de chat colada no deck do grupo)"
+    "slides novos do método passo a passo (4 passos; exemplo com três vagas e os pesos do VL-1)",
+    "revisão de 11/11/2026: 'IVS de 0,300 a 0,400' → 'IVS de 0,301 a 0,400'",
+    "revisão de 11/11/2026: sai '(item 11.1.4)'"
   ],
   "exemplo_metodo": {
     "peso_bolsa_por_mil": 0.07708067599,

@@ -24,37 +24,29 @@
 > `FORA_G`) e no manifesto. Em andamento: dois slides novos com o método passo a passo e a revisão do modelo teórico.
 
 > [!IMPORTANT]
-> **Versão de 11/11/2026 (tarde): 24 slides, 15 no corpo.** Pedido do autor: "coloca de volta e não tira os que foram
-> colocados pelo meu grupo; ao invés disso, condensa os seus, inclusive para deixar menos espaços em branco". Voltaram
-> a escassez de especialistas (corpo) e a renda real líquida (apêndice), slides do grupo; a equação do modelo e Bobba
-> et al. voltaram ao corpo (Metodologia). Os slides novos do método viraram **um só**: à esquerda, os quatro passos;
-> à direita, o exemplo das três vagas com o ×1,47 e os 75 km. Redesenho (`REMOVER_FORMAS`, `redesenhar`): a hipótese
-> sem o exemplo A/B (está no slide do método), com a frase e os cartões maiores; a base sem o "formato longo", com a
-> tabela na largura toda; o resultado só com bolsa e distância, tabela e caixas maiores e sem a caixa do ciclo 2. Do
-> deck do grupo continuam fora só os slides com erro (o "piso" do IVS com a grade do FAQ, números que não se
-> reproduzem, a hipótese antiga, o slide de dados com números sobrepostos), os marcadores "X", os "EXEMPLO" de outro
-> trabalho, as versões ocultas e os sumários (a decidir). As seções 1 a 3 abaixo descrevem versões anteriores; a
-> ordem vigente está no gerador (`ORDEM`) e no manifesto.
-
-> [!NOTE]
-> **Revisão de 11/11/2026 (versão de 24 slides).** Corrigido: a faixa do meio da regra no slide da bolsa dizia
-> "0,300 a 0,400" e o diagrama dizia "0,301 a 0,400" (o certo é 0,301: 0,300 fica em R$ 10 mil); a tabela de variáveis
-> da base, alargada, tinha letra de ~9 pt (agora 15 pt); no apêndice, a legenda da equação da utilidade e o cartão do
-> custo não pecuniário estouravam a caixa; o rótulo "CUSTO GEOGRÁFICO (REDDING & ROSSI-HANSBERG, 2017)" quebrava em
-> duas linhas (agora "GEOGRÁFICO (…)" e "LABORAL (…)"); a fonte do slide do IVS citava o item 11.1.4 do edital, que é a
-> grade do FAQ (errata E10). Conferido: números da tela contra `output/`, cautelas obrigatórias, navegação, número de
-> página e notas de fala ("origem" só nas notas, onde o termo técnico é permitido).
+> **Versão vigente (11/11/2026, noite): de volta à versão de 09/11 (commit `2c2d813`, 25 slides, 16 no corpo).**
+> Pedido do autor: "restaura pro que tínhamos feito nessa versão" (o PDF de 09/11, 15:40). Volta tudo o que estava na
+> tela naquela versão: os dois slides do método detalhados (os quatro passos com a faixa do McFadden e o exemplo das
+> três vagas com "Como se lê o β"), os textos dos slides do pós-banca sem enxugamento, a hipótese com o exemplo, a base
+> com o formato longo, o resultado com as linhas de controle. Ficam desfeitos o enxugamento (`TROCAS_ENXUGAR`), os
+> cortes de slides e o slide único do método (commits `01a6e58`, `5921cc8`, `a268f59`, `e1240f6`; continuam no
+> histórico do Git). **Continuam** a revisão do modelo teórico e as decisões do autor de 11/11 (§0.1), porque corrigem
+> erros e são decisões do autor, e três correções da revisão de 11/11 que valem para esta versão: a faixa do meio da
+> regra é "IVS de 0,301 a 0,400" (0,300 fica em R$ 10 mil, como no diagrama); a fonte do slide do IVS não cita mais o
+> item 11.1.4 do edital (grade do FAQ, errata E10); no apêndice, a legenda da equação ("1ª opção de r · cardápio de
+> r"), o cartão do custo ("Equipe ruim, longe de casa") e os rótulos "GEOGRÁFICO (…)" e "LABORAL (…)" cabem na caixa.
+> As correções factuais estão no gerador (`CORRECOES`).
 
 ## 0. O método passo a passo (pedido do autor de 09/11/2026)
 
 A banca de 04/11 não entendeu o método e disse nunca ter ouvido falar dele. Por isso, a seção de Metodologia abre com
-dois slides novos, **antes** da equação, com pouco texto e no estilo visual do deck do grupo (pedido do autor de 11/11/2026: "texto demais; se inspira no que o grupo mandou") (slide "Modelo: logit condicional da 1ª opção"), no design do grupo e gerados
+dois slides novos, **antes** da equação (slide "Modelo: logit condicional da 1ª opção"), no design do grupo e gerados
 pelo script (`slides_metodo`):
 
 | Slide | Título | Na tela |
 |---|---|---|
-| novo 1 | "Método passo a passo: logit condicional" | no estilo do grupo, quase sem frase: "I. Como o modelo lê cada escolha" (McFadden, 1974, Nobel de 2000; o mesmo modelo de Bobba et al.) com quatro linhas — 1 Cardápio (todas as vagas do curso no ciclo, ≈ 107), 2 Escolha (1ª opção = 1; as outras = 0), 3 Pontuação (β·bolsa + γ·distância + par de UFs), 4 Chance (e^pontuação ÷ soma do cardápio); "II. O que sai": caixa escura "β = 0,077 por R$ 1 mil/mês" e "Condicional: só compara vagas do mesmo médico". O resto da explicação vai para as notas de fala |
-| novo 2 | "Exemplo: um candidato, três vagas" | "I. Mesmo curso, mesma UF (MG)", com o rótulo "ilustrativo: vagas inventadas, pesos estimados"; tabela A (R$ 10 mil, 50 km, 28,8%), B (R$ 15 mil, 50 km, 42,4%), C (R$ 15 mil, 125 km, 28,8%); "II. O que o exemplo mostra": caixas "B contra A ×1,47" (o resultado) e "C contra A 75 km" (a distância come os R$ 5 mil) |
+| novo 1 | "Método passo a passo: como medimos o peso da bolsa" | faixa: logit condicional (McFadden, 1974; Nobel de Economia de 2000), o modelo padrão de escolha entre várias opções, o mesmo de Bobba et al.; quatro passos — 1 o cardápio (≈ 107 vagas por candidato), 2 a escolha (uma linha por candidato × vaga, 1 na 1ª opção), 3 a pontuação (peso × bolsa + peso × distância + par de UFs + controles; chance = e^pontuação ÷ soma do cardápio), 4 os pesos (máxima verossimilhança; o peso da bolsa é o β); por que "condicional"; cautela: mede a vaga marcada na inscrição, não a ida ao município |
+| novo 2 | "Exemplo: um candidato, três vagas do mesmo curso em MG" | três vagas **ilustrativas** (A: R$ 10 mil, 50 km; B: R$ 15 mil, 50 km; C: R$ 15 mil, 125 km), com a pontuação e a chance calculadas com os pesos estimados do VL-1 (0,077 por R$ 1 mil; −0,514 por 100 km): A 28,8%, B 42,4%, C 28,8%; B contra A = 1,47 (o resultado); C contra A ≈ 1 (os "75 km"); como se lê o β |
 
 Os pesos, o 1,47, os 75 km e as chances do exemplo são calculados pelo gerador a partir de
 `output/rdd_bolsa/VL_estimativas.csv` (o gerador para se e^(5β) não reproduzir a razão de chances gravada) e ficam no
@@ -74,7 +66,7 @@ o texto antigo:
 | Papel de p e de c trocado: amenidades e segurança no cartão do deflator; c era "viver ali" num slide e "exercer ali" no outro; R&RH "gera só p" | p = custo de vida ("Moradia e custo de vida", "Nível de preços da cidade"); c = custo não pecuniário de viver **e** trabalhar ali; R&RH gera p e a parte geográfica de c; Choné & Ma, a parte laboral |
 | "max" no lugar de "arg max"; i = localidade, mas i = candidato no modelo empírico | arg max e m para a localidade (equação, rótulos e "Gera m*") |
 | "MOEHLING et al. (2020), EQ. 1" sobre uma equação adaptada (com B, r, I_r) | "ADAPTADO DE MOEHLING et al. (2020), EQ. 1, P. 184" |
-| δ = desconto na teoria e δ = distância no modelo empírico | distância vira γ no slide do método e no do modelo |
+| δ = desconto na teoria e δ = distância no modelo empírico | distância vira γ no slide do modelo |
 
 Também: legenda da equação liga m*_r à 1ª opção e I_r ao cardápio; "Curso" no lugar de "Especialidade"; "distância de
 casa"; "o saldo" (E/p − c não é soma); "E(w | B)". As equações em OMML têm uma imagem de reserva (que o LibreOffice e o
@@ -83,7 +75,8 @@ referência de Burdett, Shi & Wright (2001) entrou no `modelo_micro.md`, §5.
 
 **Decisões do autor (11/11/2026):**
 1. O choque ε **não** entra na equação teórica.
-2. Testamos o **elo da remuneração**: a nota do diagrama da teoria diz isso na tela ("Diagrama teórico: testamos só o elo da remuneração (bolsa → valor da vaga → 1ª opção)."), e a nota do slide da agregação
+2. Testamos o **elo da remuneração**: a nota do diagrama da teoria diz isso na tela ("Testamos o elo da remuneração: a
+   bolsa eleva o valor da vaga e muda a 1ª opção; o resto da cadeia não é estimado"), e a nota do slide da agregação
    também ("Testamos só o elo da remuneração: B ↑ → V ↑ → π ↑ (a 1ª opção)").
 3. O altruísmo **não aparece mais como equação**: Choné & Ma fica U = R − C(q; L, K); sai o chip "B(q): benefício ao
    paciente" (entra "L, K: equipe e capital") e a frase do altruísmo (α). Com isso, α fica só para o par de UFs. A
@@ -94,34 +87,6 @@ referência de Burdett, Shi & Wright (2001) entrou no `modelo_micro.md`, §5.
 
 Segue em aberto: a colisão de β (bolsa × parcela da moradia 1 − β em Redding & Rossi-Hansberg); atualizar o doc 01 e
 o gerador do diagrama para "distância de casa".
-
-## 0.2 Enxugamento do texto (11/11/2026)
-
-Pedido do autor: "texto demais"; um agente revisor escreveu a mensagem de cada slide e propôs cortes. As trocas estão no
-gerador (`TROCAS_ENXUGAR`, `REMOVER_GRUPOS`), cada uma conferindo o trecho antigo; o detalhe cortado fica nas notas de
-fala. As cautelas obrigatórias ficam (exploratório; pacote do corte; vaga marcada, não ida ao município; forte só no
-ciclo 2; sem o par de UFs, IC contém 1; local de trabalho anterior = vínculo no CNES). No diagrama da teoria, saem as
-linhas descritivas dos nós e a faixa "elos da política" vira "Cadeia do programa: não estimada aqui". Nas Limitações,
-o texto de cada cartão foi encurtado, sem apagar cartão. As notas do divisor "Apêndice" estavam com uma resposta de
-chat colada (do deck do grupo) e foram limpas. O slide da equação continua no corpo (a banca pediu a especificação),
-enxugado.
-
-| # | Slide | Mensagem |
-|:---:|---|---|
-| 2 | Escassez | faltam especialistas, de forma desigual entre UFs; o PMM-E abriu vagas nas cinco regiões |
-| 3 | A bolsa e a regra | a bolsa sai de uma regra (R$ 10, 15 ou 20 mil pelo IVS); a pergunta: a bolsa maior faz a vaga ser a 1ª opção? |
-| 4 | Teoria da mudança | a bolsa eleva o valor da vaga contra o custo do lugar; testamos só o elo da remuneração |
-| 5 | Hipótese | entre duas vagas do mesmo curso e da mesma UF, a de R$ 5 mil a mais tem mais chance de ser a 1ª opção (exploratória) |
-| 6 | Base | uma linha por candidato × vaga possível: 5.417 candidatos, 578.998 linhas |
-| 7 | Descritiva | 79% escolhem na UF onde já trabalhavam; por isso o modelo compara só vagas da mesma UF |
-| 8–9 | Método e exemplo | cardápio, escolha, pontuação, chance; +R$ 5 mil = ×1,47 = 75 km |
-| 10 | Modelo | a bolsa é testada; o par de UFs é pareamento; IVS contínuo e distância são controles |
-| 11 | Bobba et al. | a referência forte usa o mesmo desenho |
-| 12 | Identificação | o β aprende só com vagas do mesmo par de UFs com bolsas diferentes; mede o pacote do corte |
-| 13 | Resultado | +R$ 5 mil multiplicam por 1,47 a chance da 1ª opção (IC 1,15 a 1,89); exploratório |
-| 14 | Robustez | ×1,41 a ×1,52 com todos os dados; com menos dados, o IC contém 1 |
-| 15 | Conclusão | sim, ×1,47; forte só no ciclo 2; reordena a 1ª opção, não mostra mais médicos no município |
-| 16 | Limitações | as seis cautelas e o que cada uma implica |
 
 ## 1. O feedback de 04/11 aplicado à parte da banca 1
 
@@ -174,7 +139,7 @@ junto.
 | Slide | Antes | Depois |
 |:---:|---|---|
 | 1 | "Remuneração como incentivo limitado: um modelo de escolha racional para o Programa Mais Médicos Especialistas" | "A bolsa maior atrai a 1ª opção?" / "Um modelo de escolha para o" / "Programa Mais Médicos Especialistas" |
-| 2 | gráfico de 16 UFs (sem fonte reproduzível, P6) | figura `especialistas_por_uf_extremos.png`, subtítulo "Especialistas por 100 mil hab., as duas maiores e as duas menores UFs, dez/2024" |
+| 2 | gráfico de 16 UFs (sem fonte reproduzível, P6) | figura `especialistas_por_uf_extremos.png`, subtítulo "Especialistas por 100 mil habitantes, as duas maiores e as duas menores UFs – dez/2024" |
 | 2 | "II. Serviços especializados exigem longos deslocamentos", gráfico de deslocamento (P7) | "II. O ciclo 1 do PMM-E abriu vagas nas cinco regiões"; "Células estabelecimento × curso e vagas imediatas, ciclo 1, 1ª chamada"; figura `vagas_ciclo1_por_regiao.png` |
 | 2 | fontes com REGIC 2018 | "Fontes: Medicina S/A; Amado Mundo; Agência Câmara; Scheffer et al., Demografia Médica no Brasil 2025 (FMUSP/AMB), só as UFs com valor citado; quadro de vagas do Edital SGTES/MS nº 3/2025." |
 | 4 | "Moradia, deslocamento, amenidades e distância da origem." | "Moradia, deslocamento, amenidades e distância de casa." |

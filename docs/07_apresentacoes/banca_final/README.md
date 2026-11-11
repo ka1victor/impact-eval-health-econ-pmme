@@ -1,6 +1,9 @@
 # Banca final — conteúdo canônico
 
-> **Estado (09/11/2026):** deck da banca final, versão 2 (proposta), 23 slides: a
+> **Estado (11/11/2026):** deck da banca final de volta à versão de 09/11 (25 slides, 16 no corpo,
+> com os dois slides do método detalhados), mais a revisão do modelo teórico e as decisões do autor
+> de 11/11 ([02](02_deck_banca_final.md), nota do topo).<br>
+> **Versão 2 (09/11/2026):** deck da banca final, 23 slides: a
 > parte da banca 1 (motivação e teoria) ajustada pelo feedback da banca de 04/11,
 > o deck da banca 2 revisto depois dessa banca (doc 12 da banca 2) e o apêndice de
 > teoria ([02](02_deck_banca_final.md); `output/apresentacao_banca_final/deck_banca_final.pptx`
@@ -17,7 +20,7 @@
 | Documento | Função |
 |---|---|
 | [`01_diagrama_teoria_mudanca.md`](01_diagrama_teoria_mudanca.md) | **fonte de verdade**: cada caixa e seta do diagrama, a literatura de cada elo, a ligação com as equações do apêndice e a nova ordem dos slides de teoria |
-| [`02_deck_banca_final.md`](02_deck_banca_final.md) | **fonte de verdade do deck final**: ordem dos 23 slides, o feedback de 04/11 aplicado à parte da banca 1, cada texto novo e o que fica para o autor decidir |
+| [`02_deck_banca_final.md`](02_deck_banca_final.md) | **fonte de verdade do deck final**: ordem dos slides (25 na versão vigente), o feedback de 04/11 aplicado à parte da banca 1, cada texto novo e o que fica para o autor decidir |
 
 ## Derivados (o deck é derivado deste conteúdo)
 

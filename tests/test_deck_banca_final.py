@@ -25,7 +25,9 @@ PROIBIDAS = ("piso", "renumeração", "trasnporte", "buito", "PMEE", "EXEMPLO", 
              "Municípios com maior remuneração", "REGIC", "incentivo limitado", "origem", "slide 11", "Sumário",
              # revisão do modelo de 11/11/2026: sobrenome, papel de p e de c, notação
              "ROSSI, 2017", "Nível de amenidades da cidade", "Custo laboral :", "δ·dist", "δ · distância",
-             "Especialidade, vínculos", "altruísmo (α)", "B(q)")
+             "Especialidade, vínculos", "altruísmo (α)", "B(q)",
+             # revisão de 11/11/2026: faixa do meio e item da grade do FAQ
+             "IVS de 0,300 a 0,400", "11.1.4")
 
 
 def sha256(p: Path) -> str:
@@ -70,7 +72,7 @@ class TestDeckBancaFinal(unittest.TestCase):
     def test_textos_novos_na_tela_e_no_doc(self):
         doc = norm(DOC.read_text(encoding="utf-8"))
         tudo = " ".join(" ".join(t) for t in self.textos)
-        novos = [*G.TITULO_CAPA, G.A_NOTA_DIAGRAMA, G.SUB2_UF, G.SUB_VAGAS, G.SUB2_VAGAS, G.FONTES_ESCASSEZ,
+        novos = [*G.TITULO_CAPA, G.SUB2_UF, G.SUB_VAGAS, G.SUB2_VAGAS, G.FONTES_ESCASSEZ, G.A4_DIAGRAMA,
                  G.CTEXT_UTILIDADE, G.ROTULO_CADEIA, G.ADICOES]
         for t in novos:
             self.assertIn(norm(t), tudo, t)
@@ -84,30 +86,12 @@ class TestDeckBancaFinal(unittest.TestCase):
                 continue
             def filtrar(ts):
                 return [t for t in ts if not eh_rodape(t) and not t.isdigit()]
-            removidos = {(x.name, x.text_frame.text) for titulo, txt in G.REMOVER_GRUPOS
-                         for gr in pb.slides[n - 1].shapes
-                         if gr.shape_type == 6 and any(y.has_text_frame and y.text_frame.text.strip() == txt
-                                                       for y in G.formas(gr.shapes))
-                         for x in G.formas(gr.shapes) if x.has_text_frame}
-            titulo_pb = next((sh.text_frame.text for sh in pb.slides[n - 1].shapes if sh.has_text_frame
-                              and sh.is_placeholder and "TITLE" in str(sh.placeholder_format.type)), "")
-            fora = {nome for tit, nome in G.REMOVER_FORMAS if tit == " ".join(titulo_pb.split())}
-            brutos = []
-            for sh in G.formas(pb.slides[n - 1].shapes):
-                if not sh.has_text_frame or (sh.name, sh.text_frame.text) in removidos or sh.name in fora:
-                    continue
-                tx = sh.text_frame.text
-                for _, nome, trecho, novo in G.TROCAS_ENXUGAR:  # o enxugamento de 11/11/2026 (doc 02, §0.2)
-                    if nome != sh.name or trecho not in tx:
-                        continue
-                    if novo is None:
-                        tx = "\n".join(l for l in tx.split("\n") if trecho not in l)
-                    else:
-                        tx = tx.replace(trecho, novo)
-                brutos.append(norm(tx))
-            antes = filtrar(brutos)
+            antes = filtrar([norm(sh.text_frame.text) for sh in G.formas(pb.slides[n - 1].shapes)
+                             if sh.has_text_frame])
             if n == 6:  # troca no pós-banca: a distância vira γ (δ é o desconto da teoria)
                 antes = [a.replace("δ", "γ") for a in antes]
+            if n == 2:  # correção da revisão de 11/11/2026: a faixa do meio começa em 0,301
+                antes = [a.replace("IVS de 0,300 a 0,400", "IVS de 0,301 a 0,400") for a in antes]
             if n == 8:  # troca no pós-banca: a premissa da lista sincera (decisão do autor de 11/11/2026)
                 antes = [a.replace("supomos que o médico viu todas as vagas do seu curso", G.PREMISSA_LISTA)
                          for a in antes]
@@ -136,18 +120,18 @@ class TestDeckBancaFinal(unittest.TestCase):
 
     def test_slides_do_metodo(self):
         pos = [k for k, (o, _, _) in enumerate(G.ORDEM) if o == "M"]
-        self.assertEqual(len(pos), 1)
+        self.assertEqual(len(pos), 2)
         prox = G.ORDEM[pos[-1] + 1]
-        self.assertEqual(prox[:2], ("PB", 6), "depois do método vem a equação do modelo")
+        self.assertEqual(prox[:2], ("PB", 6), "os slides do método vêm antes da equação do modelo")
         v = G.pesos_vl1()
-        t1 = t2 = " ".join(self.textos[pos[0]])
+        t1, t2 = " ".join(self.textos[pos[0]]), " ".join(self.textos[pos[1]])
         self.assertIn(G.TITULO_M1, t1)
         self.assertIn("McFadden", t1)
+        self.assertIn(G.TITULO_M2, t2)
         rc = G._virgula(v["rc"], 2)
         self.assertEqual(rc, "1,47")
         self.assertEqual(round(v["km"]), 75)
-        self.assertIn(f"×{rc}", t2)
-        self.assertIn("75 km", t2)
+        self.assertIn(f"= {rc}", t2)
         self.assertIn("ilustrativo", t2)
         pa, pb, pc = v["prob"]
         self.assertAlmostEqual(pb / pa, v["rc"], places=9)   # a razão das chances do exemplo é e^(5β)
@@ -160,6 +144,7 @@ class TestDeckBancaFinal(unittest.TestCase):
         with zipfile.ZipFile(DECK) as z:
             xml = "".join(z.read(n).decode("utf-8") for n in z.namelist()
                           if n.startswith("ppt/slides/slide") and n.endswith(".xml"))
+        self.assertIn("𝐚𝐫𝐠", xml)
         self.assertIn("𝜿", xml)
         self.assertNotIn("𝑾", xml)
         for f in G.FALLBACKS:
