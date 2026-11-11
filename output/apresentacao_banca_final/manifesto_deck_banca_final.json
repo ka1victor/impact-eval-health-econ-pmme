@@ -30,11 +30,11 @@
   "saidas": [
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
-      "sha256": "3691c69684ca493b9824e34d1f4b44d333df3ce7504ba37bfb9da0138be5333a"
+      "sha256": "e011d19cdf5fb58c0cd8034508243348b40abeb3c216de024c4f842bc499fbe5"
     },
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
-      "sha256": "d19fbda1a5226d2a3a759e78b7f054ac7d0ba9c8fddc842716f91adaaccf47d7"
+      "sha256": "586fa54c4c873ab9ceae02858f06f7d1aee61f92829d8161d2b165c18ee7aa1e"
     }
   ],
   "slides_do_grupo_fora": {
@@ -115,13 +115,13 @@
       "posicao": 8,
       "origem": "novo, método passo a passo 1",
       "secao": "Metodologia",
-      "titulo": "Método passo a passo: como medimos o peso da bolsa"
+      "titulo": "Método passo a passo: logit condicional"
     },
     {
       "posicao": 9,
       "origem": "novo, método passo a passo 2",
       "secao": "Metodologia",
-      "titulo": "Exemplo: um candidato, três vagas do mesmo curso em MG"
+      "titulo": "Exemplo: um candidato, três vagas"
     },
     {
       "posicao": 10,

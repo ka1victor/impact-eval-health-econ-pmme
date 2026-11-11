@@ -119,7 +119,8 @@ class TestDeckBancaFinal(unittest.TestCase):
         rc = G._virgula(v["rc"], 2)
         self.assertEqual(rc, "1,47")
         self.assertEqual(round(v["km"]), 75)
-        self.assertIn(f"= {rc}", t2)
+        self.assertIn(f"×{rc}", t2)
+        self.assertIn("75 km", t2)
         self.assertIn("ilustrativo", t2)
         pa, pb, pc = v["prob"]
         self.assertAlmostEqual(pb / pa, v["rc"], places=9)   # a razão das chances do exemplo é e^(5β)

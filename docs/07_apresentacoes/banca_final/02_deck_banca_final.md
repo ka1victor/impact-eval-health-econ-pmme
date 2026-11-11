@@ -26,13 +26,13 @@
 ## 0. O método passo a passo (pedido do autor de 09/11/2026)
 
 A banca de 04/11 não entendeu o método e disse nunca ter ouvido falar dele. Por isso, a seção de Metodologia abre com
-dois slides novos, **antes** da equação (slide "Modelo: logit condicional da 1ª opção"), no design do grupo e gerados
+dois slides novos, **antes** da equação, com pouco texto e no estilo visual do deck do grupo (pedido do autor de 11/11/2026: "texto demais; se inspira no que o grupo mandou") (slide "Modelo: logit condicional da 1ª opção"), no design do grupo e gerados
 pelo script (`slides_metodo`):
 
 | Slide | Título | Na tela |
 |---|---|---|
-| novo 1 | "Método passo a passo: como medimos o peso da bolsa" | faixa: logit condicional (McFadden, 1974; Nobel de Economia de 2000), o modelo padrão de escolha entre várias opções, o mesmo de Bobba et al.; quatro passos — 1 o cardápio (≈ 107 vagas por candidato), 2 a escolha (uma linha por candidato × vaga, 1 na 1ª opção), 3 a pontuação (peso × bolsa + peso × distância + par de UFs + controles; chance = e^pontuação ÷ soma do cardápio), 4 os pesos (máxima verossimilhança; o peso da bolsa é o β); por que "condicional"; cautela: mede a vaga marcada na inscrição, não a ida ao município |
-| novo 2 | "Exemplo: um candidato, três vagas do mesmo curso em MG" | três vagas **ilustrativas** (A: R$ 10 mil, 50 km; B: R$ 15 mil, 50 km; C: R$ 15 mil, 125 km), com a pontuação e a chance calculadas com os pesos estimados do VL-1 (0,077 por R$ 1 mil; −0,514 por 100 km): A 28,8%, B 42,4%, C 28,8%; B contra A = 1,47 (o resultado); C contra A ≈ 1 (os "75 km"); como se lê o β |
+| novo 1 | "Método passo a passo: logit condicional" | no estilo do grupo, quase sem frase: "I. Como o modelo lê cada escolha" (McFadden, 1974, Nobel de 2000; o mesmo modelo de Bobba et al.) com quatro linhas — 1 Cardápio (todas as vagas do curso no ciclo, ≈ 107), 2 Escolha (1ª opção = 1; as outras = 0), 3 Pontuação (β·bolsa + δ·distância + par de UFs), 4 Chance (e^pontuação ÷ soma do cardápio); "II. O que sai": caixa escura "β = 0,077 por R$ 1 mil/mês" e "Condicional: só compara vagas do mesmo médico". O resto da explicação vai para as notas de fala |
+| novo 2 | "Exemplo: um candidato, três vagas" | "I. Mesmo curso, mesma UF (MG)", com o rótulo "ilustrativo: vagas inventadas, pesos estimados no VL-1"; tabela A (R$ 10 mil, 50 km, 28,8%), B (R$ 15 mil, 50 km, 42,4%), C (R$ 15 mil, 125 km, 28,8%); "II. O que o exemplo mostra": caixas "B contra A ×1,47" (o resultado) e "C contra A 75 km" (a distância come os R$ 5 mil) |
 
 Os pesos, o 1,47, os 75 km e as chances do exemplo são calculados pelo gerador a partir de
 `output/rdd_bolsa/VL_estimativas.csv` (o gerador para se e^(5β) não reproduzir a razão de chances gravada) e ficam no

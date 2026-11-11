@@ -146,26 +146,25 @@ ADICOES = "Adições ao modelo do slide anterior:"
 
 # ---- Slides novos do método (pedido do autor, 09/11/2026: a banca não entendeu o método e nunca tinha ouvido falar) --
 VL_EST = ROOT / "output/rdd_bolsa/VL_estimativas.csv"
-TITULO_M1 = "Método passo a passo: como medimos o peso da bolsa"
-FAIXA_M1 = ("Logit condicional (McFadden, 1974; Nobel de Economia de 2000): o modelo padrão para quem escolhe uma "
-            "opção entre várias. É o que Bobba et al. usam para professores escolhendo vagas no Peru.")
+TITULO_M1 = "Método passo a passo: logit condicional"
+SUB_M1 = ("I. Como o modelo lê cada escolha", "McFadden (1974), Nobel de 2000; o mesmo modelo de Bobba et al. (2026)")
 PASSOS_M1 = (
-    ("1", "O cardápio", "Cada candidato vê todas as vagas abertas do seu curso no ciclo: ≈ {cardapio} vagas, em média."),
-    ("2", "A escolha", "Na base, uma linha por candidato × vaga. A vaga que ele marcou como 1ª opção vale 1; as outras, 0."),
-    ("3", "A pontuação", "Cada vaga ganha uma pontuação: peso × bolsa + peso × distância + par de UFs + controles. "
-                         "Chance de ser a escolhida = e^pontuação ÷ soma do cardápio."),
-    ("4", "Os pesos", "O computador escolhe os pesos que deixam as 1ªs opções observadas o mais prováveis possível "
-                      "(máxima verossimilhança). O peso da bolsa é o β."),
+    ("Cardápio", "todas as vagas do curso no ciclo (≈ {cardapio})"),
+    ("Escolha", "1ª opção = 1; as outras = 0"),
+    ("Pontuação", "β·bolsa + δ·distância + par de UFs"),
+    ("Chance", "e^pontuação ÷ soma do cardápio"),
 )
-RODAPE_M1 = ("Por que \"condicional\": a conta compara vagas do mesmo cardápio, para o mesmo médico. O que é do médico "
-             "(nota, idade, perfil) é igual em todas as vagas e se cancela.")
-CAUTELA_M1 = "Mede a vaga marcada na inscrição, não a ida ao município."
-FONTES_M1 = ("Fontes: McFadden (1974); Bobba et al. (NBER WP 29068, rev. jan. 2026), seção 4.1; "
+SUB2_M1 = ("II. O que sai", "os pesos que melhor explicam as escolhas observadas")
+CAIXA_M1 = ("PESO DA BOLSA", "β = {b}", "por R$ 1 mil/mês")
+CONDICIONAL_M1 = ("Condicional:", "só compara vagas do mesmo médico")
+FONTES_M1 = ("Fontes: McFadden (1974); Bobba et al. (NBER WP 29068, rev. jan. 2026); "
              "output/rdd_bolsa/VL_estimativas.csv (VL-1, adendo 52e): {cand} candidatos, {linhas} linhas.")
-TITULO_M2 = "Exemplo: um candidato, três vagas do mesmo curso em MG"
+TITULO_M2 = "Exemplo: um candidato, três vagas"
+SUB_M2 = ("I. Mesmo curso, mesma UF (MG)", "ilustrativo: vagas inventadas, pesos estimados no VL-1")
 VAGAS_M2 = (("A", 10, 50), ("B", 15, 50), ("C", 15, 125))  # ilustrativo: bolsa (R$ mil/mês) e distância (km)
-NOTA_M2 = ("Ilustrativo: três vagas inventadas, iguais no resto; pontuação só com a bolsa e a distância, com os pesos "
-           "estimados no VL-1 ({b} por R$ 1 mil; {d} por 100 km). Na base real, cada candidato tem ≈ {cardapio} vagas.")
+SUB2_M2 = ("II. O que o exemplo mostra", "B e C pagam R$ 5 mil a mais que A")
+CAIXAS_M2 = (("B CONTRA A", "×{rc}", "mesma distância: é o resultado"),
+             ("C CONTRA A", "{km} km", "a distância come os R$ 5 mil"))
 FONTES_M2 = "Fontes: output/rdd_bolsa/VL_estimativas.csv (VL-1, ciclos 1–3, adendo 52e; doc 57x; auditoria 48)."
 NOTAS_M = {
     1: ("Este é o slide que a banca pediu: o método em quatro passos, sem equação. (1) Cada candidato tem um "
@@ -531,81 +530,79 @@ def _fontes(sl, texto: str) -> None:
     _caixa(sl, 0.2, 6.92, 12.3, 0.28, [[(texto, 8, False, CINZA)]], forma=MSO_SHAPE.RECTANGLE, nome="Fontes")
 
 
+def _cabecalho(sl, x, y, w, titulo: str, sub: str) -> None:
+    """Cabeçalho no estilo do grupo: "I. Título" em negrito e subtítulo cinza pequeno."""
+    _caixa(sl, x, y, w, 0.34, [[(titulo, 15, True, TEXTO)]], forma=MSO_SHAPE.RECTANGLE, nome="Cabeçalho")
+    _caixa(sl, x, y + 0.34, w, 0.28, [[(sub, 9, False, CINZA)]], forma=MSO_SHAPE.RECTANGLE, nome="Subtítulo")
+
+
+def _linha(sl, x, y, w, h, rotulo: str, texto: str, num: int) -> None:
+    """Linha no estilo do grupo: barra verde à esquerda, rótulo em negrito, texto curto."""
+    barra = sl.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(x), Inches(y + 0.12), Inches(0.07), Inches(h - 0.24))
+    barra.fill.solid()
+    barra.fill.fore_color.rgb = RGBColor.from_string(VERDE)
+    barra.line.fill.background()
+    barra.name = "Barra"
+    _caixa(sl, x + 0.18, y, 2.3, h, [[(f"{num}  ", 16, True, "A8C8A3"), (rotulo, 16, True, TEXTO)]],
+           forma=MSO_SHAPE.RECTANGLE, nome=f"Passo {num}")
+    _caixa(sl, x + 2.5, y, w - 2.5, h, [[(texto, 15, False, TEXTO)]], forma=MSO_SHAPE.RECTANGLE,
+           nome=f"Passo {num} texto")
+    sep = sl.shapes.add_connector(1, Inches(x), Inches(y + h), Inches(x + w), Inches(y + h))
+    sep.line.color.rgb = RGBColor.from_string(BORDA)
+    sep.name = "Separador"
+
+
+def _numero(sl, x, y, w, h, rotulo: str, grande: str, texto: str, nome: str, fill=VERDE) -> None:
+    """Caixa escura com número grande, como a "Amostra do modelo" do grupo."""
+    _caixa(sl, x, y, w, h, [[(rotulo, 11, True, "A8C8A3")], [(grande, 36, True, BRANCO)], [(texto, 13, False, BRANCO)]],
+           fill=fill, forma=MSO_SHAPE.RECTANGLE, nome=nome)
+
+
 def slides_metodo(prs, layout, modelo_rodape) -> list:
     v = pesos_vl1()
     car = str(v["cardapio"])
     # ---- 1: o método em quatro passos
     s1 = _slide_base(prs, layout, TITULO_M1, modelo_rodape)
-    _caixa(s1, 0.25, 0.9, 12.83, 0.78, [[(FAIXA_M1, 14, False, BRANCO)]], fill=VERDE, nome="Faixa McFadden")
-    larg, x0, gap = 2.95, 0.25, 0.343
-    for k, (num, tit, corpo) in enumerate(PASSOS_M1):
-        x = x0 + k * (larg + gap)
-        _caixa(s1, x, 1.88, larg, 3.12,
-               [[(num, 30, True, VERDE)], [(tit, 17, True, VERDE)], [("", 6, False, TEXTO)],
-                [(corpo.format(cardapio=car), 13, False, TEXTO)]],
-               fill=CLARO, line=BORDA, anchor=MSO_ANCHOR.TOP, nome=f"Passo {num}")
-        if k < len(PASSOS_M1) - 1:
-            _caixa(s1, x + larg - 0.02, 3.2, gap + 0.04, 0.5, [[("→", 22, True, VERDE)]],
-                   forma=MSO_SHAPE.RECTANGLE, align=PP_ALIGN.CENTER, nome="Seta")
-    i = RODAPE_M1.index(":") + 1
-    _caixa(s1, 0.25, 5.18, 12.83, 0.78, [[(RODAPE_M1[:i] + " ", 14, True, VERDE), (RODAPE_M1[i:].strip(), 14, False, TEXTO)]],
-           fill=CLARO, line=BORDA, nome="Condicional")
-    _caixa(s1, 0.25, 6.1, 12.83, 0.5, [[("Cautela: ", 13, True, VERDE), (CAUTELA_M1, 13, False, TEXTO)]],
-           fill=CLARO, nome="Cautela")
+    _cabecalho(s1, 0.3, 0.95, 7.4, *SUB_M1)
+    for k, (rot, txt) in enumerate(PASSOS_M1):
+        _linha(s1, 0.3, 1.75 + k * 1.05, 7.4, 1.05, rot, txt.format(cardapio=car), k + 1)
+    _cabecalho(s1, 8.25, 0.95, 4.8, *SUB2_M1)
+    r, g, tx = CAIXA_M1
+    _numero(s1, 8.25, 1.75, 4.8, 2.3, r, g.format(b=_virgula(v["b"], 3)), tx, "Peso da bolsa")
+    c1, c2 = CONDICIONAL_M1
+    _caixa(s1, 8.25, 4.25, 4.8, 1.7, [[(c1 + " ", 15, True, VERDE), (c2, 15, False, TEXTO)]],
+           fill=CLARO, forma=MSO_SHAPE.RECTANGLE, nome="Condicional")
     _fontes(s1, FONTES_M1.format(cand=f"{v['n_cand']:,}".replace(",", "."), linhas=f"{v['n_lin']:,}".replace(",", ".")))
     notas(s1, NOTAS_M[1])
     # ---- 2: exemplo com três vagas
     s2 = _slide_base(prs, layout, TITULO_M2, modelo_rodape)
-    linhas, cols = len(VAGAS_M2) + 1, 5
-    tab = s2.shapes.add_table(linhas, cols, Inches(0.25), Inches(0.95), Inches(7.6), Inches(2.7)).table
-    cab = ("Vaga", "Bolsa", "Distância", "Pontuação", "Chance de ser a 1ª opção")
-    larguras = (0.9, 1.35, 1.35, 1.5, 2.5)
-    for j, wj in enumerate(larguras):
+    _cabecalho(s2, 0.3, 0.95, 7.4, *SUB_M2)
+    tab = s2.shapes.add_table(len(VAGAS_M2) + 1, 4, Inches(0.3), Inches(1.75), Inches(7.4), Inches(3.4)).table
+    cab = ("Vaga", "Bolsa", "Distância", "Chance de ser a 1ª opção")
+    for j, wj in enumerate((1.1, 1.7, 1.7, 2.9)):
         tab.columns[j].width = Inches(wj)
-    corpo = [[n, f"R$ {bolsa} mil", f"{km} km", _virgula(u, 2), _virgula(100 * pr, 1) + "%"]
-             for (n, bolsa, km), u, pr in zip(VAGAS_M2, v["pont"], v["prob"])]
+    corpo = [[n, f"R$ {bolsa} mil", f"{km} km", _virgula(100 * pr, 1) + "%"]
+             for (n, bolsa, km), pr in zip(VAGAS_M2, v["prob"])]
     for i_, linha in enumerate([cab] + corpo):
         for j, txt in enumerate(linha):
             c = tab.cell(i_, j)
             c.fill.solid()
             c.fill.fore_color.rgb = RGBColor.from_string(VERDE if i_ == 0 else (CLARO if i_ % 2 else BRANCO))
             c.text = txt
-            r = c.text_frame.paragraphs[0].runs[0]
-            r.font.size = Pt(13 if i_ == 0 else 16)
-            r.font.bold = i_ == 0 or j == 4
-            r.font.name = "Montserrat"
-            r.font.color.rgb = RGBColor.from_string(BRANCO if i_ == 0 else TEXTO)
+            rr = c.text_frame.paragraphs[0].runs[0]
+            rr.font.size = Pt(14 if i_ == 0 else 20)
+            rr.font.bold = i_ == 0 or j in (0, 3)
+            rr.font.name = "Montserrat"
+            rr.font.color.rgb = RGBColor.from_string(BRANCO if i_ == 0 else (VERDE if j == 3 else TEXTO))
             c.text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
             c.vertical_anchor = MSO_ANCHOR.MIDDLE
-    _caixa(s2, 0.25, 3.75, 7.6, 0.9,
-           [[(NOTA_M2.format(b=_virgula(v["b"], 3), d=_virgula(v["dist"], 3), cardapio=car), 10, False, CINZA)]],
-           forma=MSO_SHAPE.RECTANGLE, anchor=MSO_ANCHOR.TOP, nome="Nota ilustrativo")
-    pa, pb_, pc = (100 * x for x in v["prob"])
+    _cabecalho(s2, 8.25, 0.95, 4.8, *SUB2_M2)
     rc, km = _virgula(v["rc"], 2), str(round(v["km"]))
-    _caixa(s2, 8.1, 0.95, 4.98, 1.75,
-           [[("B CONTRA A", 11, True, "A8C8A3")],
-            [(f"{_virgula(pb_, 1)}% ÷ {_virgula(pa, 1)}% = {rc}", 22, True, BRANCO)],
-            [(f"R$ 5 mil a mais, o resto igual: é o ×{rc} do resultado.", 12, False, BRANCO)]],
-           fill=VERDE, nome="B contra A")
-    _caixa(s2, 8.1, 2.88, 4.98, 1.77,
-           [[("C CONTRA A", 11, True, "A8C8A3")],
-            [(f"{_virgula(pc, 1)}% ≈ {_virgula(pa, 1)}%", 22, True, BRANCO)],
-            [(f"R$ 5 mil a mais, mas {km} km mais longe: a distância come o ganho. "
-              f"Daí \"R$ 5 mil valem cerca de {km} km\".", 12, False, BRANCO)]],
-           fill=VERDE, nome="C contra A")
-    _caixa(s2, 0.25, 4.85, 12.83, 1.05,
-           [[("Como se lê o β: ", 14, True, VERDE),
-             (f"o peso da bolsa é {_virgula(v['b'], 3)} por R$ 1 mil; para R$ 5 mil, e^(5 × {_virgula(v['b'], 3)}) = {rc}. "
-              f"Entre duas vagas do mesmo cardápio, a de bolsa R$ 5 mil maior tem {rc} vez a chance da outra de ser a "
-              f"1ª opção.", 14, False, TEXTO)]],
-           fill=CLARO, line=BORDA, nome="Leitura do beta")
-    _caixa(s2, 0.25, 6.05, 12.83, 0.5, [[("Cautela: ", 13, True, VERDE),
-                                          ("exemplo ilustrativo: as vagas são inventadas; os pesos são os estimados.",
-                                           13, False, TEXTO)]], fill=CLARO, nome="Cautela")
+    for k, (rot, grande, txt) in enumerate(CAIXAS_M2):
+        _numero(s2, 8.25, 1.75 + k * 1.8, 4.8, 1.62, rot, grande.format(rc=rc, km=km), txt, rot.title())
     _fontes(s2, FONTES_M2)
     notas(s2, NOTAS_M[2])
     return [s1, s2], v
-
 
 def construir(saida: Path) -> dict:
     if sha256(ENT_GRUPO) != SHA_GRUPO:
