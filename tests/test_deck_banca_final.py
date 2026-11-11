@@ -70,7 +70,7 @@ class TestDeckBancaFinal(unittest.TestCase):
     def test_textos_novos_na_tela_e_no_doc(self):
         doc = norm(DOC.read_text(encoding="utf-8"))
         tudo = " ".join(" ".join(t) for t in self.textos)
-        novos = [*G.TITULO_CAPA, G.SUB2_UF, G.SUB_VAGAS, G.SUB2_VAGAS, G.FONTES_ESCASSEZ, G.A4_DIAGRAMA,
+        novos = [*G.TITULO_CAPA, G.SUB2_UF, G.SUB_VAGAS, G.SUB2_VAGAS, G.FONTES_ESCASSEZ, G.A_NOTA_DIAGRAMA,
                  G.CTEXT_UTILIDADE, G.ROTULO_CADEIA, G.ADICOES]
         for t in novos:
             self.assertIn(norm(t), tudo, t)
@@ -84,8 +84,25 @@ class TestDeckBancaFinal(unittest.TestCase):
                 continue
             def filtrar(ts):
                 return [t for t in ts if not eh_rodape(t) and not t.isdigit()]
-            antes = filtrar([norm(sh.text_frame.text) for sh in G.formas(pb.slides[n - 1].shapes)
-                             if sh.has_text_frame])
+            removidos = {(x.name, x.text_frame.text) for titulo, txt in G.REMOVER_GRUPOS
+                         for gr in pb.slides[n - 1].shapes
+                         if gr.shape_type == 6 and any(y.has_text_frame and y.text_frame.text.strip() == txt
+                                                       for y in G.formas(gr.shapes))
+                         for x in G.formas(gr.shapes) if x.has_text_frame}
+            brutos = []
+            for sh in G.formas(pb.slides[n - 1].shapes):
+                if not sh.has_text_frame or (sh.name, sh.text_frame.text) in removidos:
+                    continue
+                tx = sh.text_frame.text
+                for _, nome, trecho, novo in G.TROCAS_ENXUGAR:  # o enxugamento de 11/11/2026 (doc 02, §0.2)
+                    if nome != sh.name or trecho not in tx:
+                        continue
+                    if novo is None:
+                        tx = "\n".join(l for l in tx.split("\n") if trecho not in l)
+                    else:
+                        tx = tx.replace(trecho, novo)
+                brutos.append(norm(tx))
+            antes = filtrar(brutos)
             if n == 6:  # troca no pós-banca: a distância vira γ (δ é o desconto da teoria)
                 antes = [a.replace("δ", "γ") for a in antes]
             if n == 8:  # troca no pós-banca: a premissa da lista sincera (decisão do autor de 11/11/2026)

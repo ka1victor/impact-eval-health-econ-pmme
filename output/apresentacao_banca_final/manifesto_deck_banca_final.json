@@ -30,11 +30,11 @@
   "saidas": [
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
-      "sha256": "234fa4b90d1868287441806ee7b56f173200153d6e818f6590ff60c4d2026386"
+      "sha256": "3a833c3ea27f32b8c05157296260cc0906d1eb2257da0fa81b97959005f422bc"
     },
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
-      "sha256": "31abdfb2dd7ea8b30ec527a589f33396828c812bce1686ac4bffb8a45a4626e5"
+      "sha256": "4784bde35a56f1c533a4abd7bb93e87422eb4fdf379d09403ade912937188bf2"
     },
     {
       "caminho": "output/apresentacao_banca_final/equacoes/renda_real_liquida.png",
@@ -253,7 +253,9 @@
     "diagrama da teoria: 'distância de casa' no lugar de 'distância da origem'",
     "slide do modelo: γ para a distância (δ é o desconto da teoria)",
     "identificação: 'listou sem estratégia' na premissa do conjunto de escolha; nota nas limitações",
-    "slides novos do método passo a passo (4 passos; exemplo com três vagas e os pesos do VL-1)"
+    "slides novos do método passo a passo (4 passos; exemplo com três vagas e os pesos do VL-1)",
+    "enxugamento: 100 trocas de texto e 2 grupos removidos (doc 02, §0.2)",
+    "notas do divisor 'Apêndice' limpas (resposta de chat colada no deck do grupo)"
   ],
   "exemplo_metodo": {
     "peso_bolsa_por_mil": 0.07708067599,

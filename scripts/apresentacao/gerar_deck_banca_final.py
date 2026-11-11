@@ -133,7 +133,7 @@ FORA_PB = {
 # Textos novos (os mesmos do doc 02; o teste confere)
 # --------------------------------------------------------------------------------------------------------------
 TITULO_CAPA = ("A bolsa maior atrai a 1ª opção?", "Um modelo de escolha para o", "Programa Mais Médicos Especialistas")
-SUB2_UF = "Especialistas por 100 mil habitantes, as duas maiores e as duas menores UFs – dez/2024"
+SUB2_UF = "Especialistas por 100 mil hab., as duas maiores e as duas menores UFs, dez/2024"
 SUB_VAGAS = "II. O ciclo 1 do PMM-E abriu vagas nas cinco regiões"
 SUB2_VAGAS = "Células estabelecimento × curso e vagas imediatas, ciclo 1, 1ª chamada"
 FONTES_ESCASSEZ = ("Fontes: Medicina S/A; Amado Mundo; Agência Câmara; Scheffer et al., Demografia Médica no Brasil "
@@ -143,8 +143,7 @@ CTEXT_UTILIDADE = ("A política mexe em apenas uma variável: eleva E(w|B) pela 
                    "continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe.")
 ROTULO_CADEIA = "CADEIA DO MODELO"
 ADICOES = "Adições ao modelo do slide anterior:"
-A_NOTA_DIAGRAMA = ("Diagrama teórico. Testamos o elo da remuneração: a bolsa eleva o valor da vaga e muda a 1ª opção; "
-                   "o resto da cadeia não é estimado.")
+A_NOTA_DIAGRAMA = "Diagrama teórico: testamos só o elo da remuneração (bolsa → valor da vaga → 1ª opção)."
 PREMISSA_LISTA = "supomos que viu todas as vagas do curso e listou sem estratégia"
 NOTA_LISTA = ("Lista sincera (decisão do autor de 11/11/2026; premissa no slide de Identificação): a 1ª opção só é a vaga "
               "preferida se o médico listou as vagas pela preferência, sem estratégia (por exemplo, pôr em 1º onde acha "
@@ -166,7 +165,7 @@ CONDICIONAL_M1 = ("Condicional:", "só compara vagas do mesmo médico")
 FONTES_M1 = ("Fontes: McFadden (1974); Bobba et al. (NBER WP 29068, rev. jan. 2026); "
              "output/rdd_bolsa/VL_estimativas.csv (VL-1, adendo 52e): {cand} candidatos, {linhas} linhas.")
 TITULO_M2 = "Exemplo: um candidato, três vagas"
-SUB_M2 = ("I. Mesmo curso, mesma UF (MG)", "ilustrativo: vagas inventadas, pesos estimados no VL-1")
+SUB_M2 = ("I. Mesmo curso, mesma UF (MG)", "ilustrativo: vagas inventadas, pesos estimados")
 VAGAS_M2 = (("A", 10, 50), ("B", 15, 50), ("C", 15, 125))  # ilustrativo: bolsa (R$ mil/mês) e distância (km)
 SUB2_M2 = ("II. O que o exemplo mostra", "B e C pagam R$ 5 mil a mais que A")
 CAIXAS_M2 = (("B CONTRA A", "×{rc}", "mesma distância: é o resultado"),
@@ -806,6 +805,228 @@ def slides_metodo(prs, layout, modelo_rodape) -> list:
     notas(s2, NOTAS_M[2])
     return [s1, s2], v
 
+
+# --------------------------------------------------------------------------------------------------------------
+# Enxugamento do texto (pedido do autor de 11/11/2026: "texto demais"; mensagem de cada slide no doc 02, §0.2).
+# (título do slide, nome da forma, trecho de um run, texto novo). Texto novo None apaga o parágrafo do trecho.
+# Cada trecho tem de estar em exatamente um run da forma; as cautelas obrigatórias ficam.
+# --------------------------------------------------------------------------------------------------------------
+T_ESC = "A escassez de especialistas já é tratada como urgência sanitária"
+T_BOL = "A bolsa do PMM-E é maior onde o município é mais vulnerável"
+T_DIA = "Da regra da bolsa à saúde: teoria da mudança"
+T_HIP = "Hipótese: na mesma UF, a bolsa maior atrai a 1ª opção"
+T_BAS = "Base: uma linha por candidato × vaga possível"
+T_DES = "79% escolhem uma vaga na UF onde já trabalhavam"
+T_MOD = "Modelo: logit condicional da 1ª opção"
+T_BOB = "Por que este modelo: o desenho de Bobba et al. (2026)"
+T_IDE = "Identificação: o que fica fixo e o que supomos"
+T_RES = "Na mesma UF, +R$ 5 mil multiplicam a chance por 1,47"
+T_ROB = "Robustez: sempre comparando vagas da mesma UF"
+T_CON = "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
+T_LIM = "Limitações e o que cada uma implica"
+TROCAS_ENXUGAR = (
+    (T_ESC, "Text Placeholder 7", "I. Escassez de especialistas é concentrada territorialmente",
+     "I. A escassez é desigual entre UFs"),
+    (T_BOL, "Manchete", "Do total de profissionais, 72% serão destinados", None),
+    (T_BOL, "Manchete", "1.480 especialistas do PMM-E em atividade hoje", None),
+    (T_BOL, "TextBox 44", "I. A regra: a bolsa mensal cresce com o IVS do município da vaga", "I. A regra da bolsa"),
+    (T_BOL, "TextBox 45", "IVS = Índice de Vulnerabilidade Social (Ipea, Censo 2010)",
+     "pelo IVS 2010 (Ipea) do município da vaga"),
+    (T_BOL, "TextBox 49", "O município não escolhe a bolsa: ela sai da regra.", "Regra do edital: o município não escolhe."),
+    (T_BOL, "Rounded Rectangle 50",
+     "Quando o médico escolhe entre as vagas do PMM-E, a bolsa maior faz uma vaga ser a sua 1ª opção?",
+     "A bolsa maior faz a vaga ser a 1ª opção do médico?"),
+    (T_DIA, "A_no_IVS", "Vulnerabilidade social do município.", None),
+    (T_DIA, "A_no_faixa", "  ·  Cortes do IVS em 0,300 e 0,400.", ""),
+    (T_DIA, "A_no_A3", "E(w | B) sobe com a faixa. Rende mais onde a vida é barata.", None),
+    (T_DIA, "A_no_A4", "Moradia, deslocamento, amenidades e distância de casa.", None),
+    (T_DIA, "A_no_A5", "Equipe, capital, esforço e altruísmo do médico.", None),
+    (T_DIA, "A_no_A6", "   ·   Valor presente da renda real menos o custo do lugar.", ""),
+    (T_DIA, "A_no_A7", "Médicos diferem em curso, vínculos e preferências.", None),
+    (T_DIA, "A_no_A8", "Chance de a vaga receber ao menos um médico.", None),
+    (T_DIA, "A_no_A9", "Vínculos e horas de especialistas.", None),
+    (T_DIA, "A_no_A10", "Consultas, exames e cirurgias.", None),
+    (T_DIA, "A_no_A11", "Espera e internações dos moradores.", None),
+    (T_DIA, "A_grupo_G2", "ELOS DA POLÍTICA: DO PROVIMENTO À SAÚDE", "CADEIA DO PROGRAMA: NÃO ESTIMADA AQUI"),
+    (T_HIP, "TextBox 46", "I. Exemplo: o que a hipótese compara", "I. O que a hipótese compara"),
+    (T_HIP, "Rounded Rectangle 48", "cardiologista que trabalhava em Minas Gerais", "trabalhava em MG"),
+    (T_HIP, "Rounded Rectangle 53", "mesmo curso, mesma UF e o resto igual: distância, porte, IVS em curva contínua",
+     "resto igual: distância, porte, IVS"),
+    (T_HIP, "Rounded Rectangle 54", "vagas diferentes, para o mesmo médico, num mesmo momento",
+     "duas vagas, o mesmo médico"),
+    (T_HIP, "Rounded Rectangle 55", "razão de chances da 1ª opção por +R$ 5 mil: hipótese > 1", "razão de chances > 1"),
+    (T_HIP, "Rounded Rectangle 56", "que mais médicos cheguem ao município: só a escolha de quem se inscreveu",
+     "a ida ao município: só a vaga marcada"),
+    (T_HIP, "Rectangle 57", "formulada depois de ver os dados: o resultado é exploratório. A bolsa muda junto com outras "
+     "regras no mesmo corte de IVS (pacote).", "formulada depois de ver os dados (exploratória); no corte muda um pacote."),
+    (T_BAS, "TextBox 45", "I. Variáveis: como cada uma é construída", "I. Variáveis"),
+    (T_BAS, "Table 46", "1 na vaga marcada em 1º lugar; 0 nas outras vagas do curso e ciclo", "1 na 1ª opção; 0 nas outras"),
+    (T_BAS, "Table 46", "Editais PMM-E (SGTES/MS)", "Editais PMM-E"),
+    (T_BAS, "Table 46", "R$ 10, 15 ou 20 mil/mês pela faixa do IVS do município da vaga", "faixa do IVS da vaga"),
+    (T_BAS, "Table 46", "município do vínculo médico no CNES antes da inscrição (não é a residência)",
+     "vínculo no CNES antes da inscrição, não a residência"),
+    (T_BAS, "Table 46", "km entre os centros do município anterior e do município da vaga", "km até a vaga"),
+    (T_BAS, "Table 46", "curva do IVS; mesma região de saúde; mesmo município; porte; capital; vaga imediata",
+     "IVS contínuo, região, porte, capital"),
+    (T_BAS, "Table 46", "Ipea; TabNet; IBGE; quadros", "Ipea; IBGE"),
+    (T_BAS, "TextBox 48", "linhas ilustrativas, não dados reais", "ilustrativo"),
+    (T_BAS, "TextBox 50", "Cada candidato vê todas as vagas do seu curso e ciclo; y = 1 numa só.", ""),
+    (T_BAS, "TextBox 57", "linhas candidato × vaga (≈ 107 por candidato)", "linhas (≈ 107 vagas por candidato)"),
+    (T_DES, "Text 18", "I. Onde fica a 1ª opção, em relação ao local de trabalho anterior", "I. Onde fica a 1ª opção"),
+    (T_DES, "Text 19", "% dos 5.425 candidatos com 1ª opção e local de trabalho anterior identificado",
+     "% dos 5.425 candidatos, em relação ao local de trabalho anterior"),
+    (T_DES, "Text 23", "Descritivo: mostra onde escolhem, não por quê. Local de trabalho anterior = vínculo no CNES, "
+     "não a residência.", "Descritivo: onde escolhem, não por quê."),
+    (T_DES, "Rounded Rectangle 30", "é a distância mediana até a 1ª opção", "distância mediana"),
+    (T_DES, "Rounded Rectangle 31", "escolhem uma vaga a até 189 km", "a até 189 km"),
+    (T_DES, "Rounded Rectangle 32", "O modelo compara só vagas da mesma UF: a UF entra como pareamento, não como resultado.",
+     "O modelo compara só vagas da mesma UF."),
+    (T_MOD, "TextBox 47", "i: candidato · v: vaga do seu curso e ciclo · X: mesma região de saúde", None),
+    (T_MOD, "Rounded Rectangle 48", ": quanto +R$ 5 mil multiplicam a chance de a vaga ser a 1ª opção",
+     ": efeito de +R$ 5 mil na chance da 1ª opção"),
+    (T_MOD, "Rounded Rectangle 48", "máxima verossimilhança; erro-padrão agrupado por curso × ciclo", None),
+    (T_MOD, "TextBox 53", "salta nos cortes de IVS (R$ 10 → 15 → 20 mil)", "salta nos cortes de IVS"),
+    (T_MOD, "TextBox 57", "efeito fixo: só compara vagas da mesma UF, vistas por médicos da mesma UF",
+     "só compara vagas da mesma UF"),
+    (T_MOD, "TextBox 61", "curva contínua do IVS, sem salto: no corte, só a bolsa salta", "contínua: no corte, só a bolsa salta"),
+    (T_MOD, "TextBox 65", "atributos da vaga e da distância; não interpretados", "não interpretados"),
+    (T_MOD, "Rounded Rectangle 66", "a probabilidade é calculada dentro das vagas de cada candidato. O que é do médico "
+     "(idade, nota, especialidade) é igual em todas as vagas dele e se cancela: cada médico é comparado consigo mesmo.",
+     "cada médico é comparado consigo mesmo; o que é dele se cancela."),
+    (T_BOB, "Table 46", "bônus salarial que salta em cortes de população e tempo de viagem (+13%)",
+     "bônus que salta em cortes (+13%)"),
+    (T_BOB, "Table 46", "bolsa que salta nos cortes de IVS (+R$ 5 mil)", "bolsa que salta nos cortes de IVS"),
+    (T_BOB, "Table 46", "professor escolhe na sua vez, entre as vagas que restam; pode sair do setor",
+     "escolhe na sua vez; pode sair do setor"),
+    (T_BOB, "Table 46", "médico lista as opções na inscrição; usamos a 1ª", "lista na inscrição; usamos a 1ª"),
+    (T_BOB, "Table 46", "logit multinomial com cardápio personalizado e coeficientes aleatórios",
+     "logit com coeficientes aleatórios"),
+    (T_BOB, "Table 46", "logit condicional com o cardápio do curso e ciclo", "logit condicional"),
+    (T_BOB, "Table 46", "só os saltos nos cortes, com polinômios da população e do tempo de viagem",
+     "saltos nos cortes; variável do corte contínua"),
+    (T_BOB, "Table 46", "só os saltos nos cortes, com curva contínua do IVS", "saltos nos cortes; IVS contínuo"),
+    (T_BOB, "Table 46", "efeito fixo de província; distância até a casa do professor", "província fixa; distância até a casa"),
+    (T_BOB, "Table 46", "efeito fixo do par de UFs; distância até o trabalho anterior",
+     "par de UFs fixo; distância até o trabalho anterior"),
+    (T_BOB, "Rounded Rectangle 48", "Por que não só uma RDD por vaga?", "RDD por vaga?"),
+    (T_BOB, "Rounded Rectangle 48", "Compara vagas, uma observação por vaga; foi feita e o IC contém zero. O logit vê o "
+     "mesmo médico diante de ≈ 107 vagas.", "Feita: IC contém zero."),
+    (T_BOB, "Rounded Rectangle 49", "Por que não coeficientes aleatórios?", "Coeficientes aleatórios?"),
+    (T_BOB, "Rounded Rectangle 49", "Eles observam a saída do setor e dois concursos por professor; nós, não. No modelo "
+     "base, o logit misto dá peso da bolsa parecido: fica como sensibilidade.",
+     "Sem saída do setor nos dados; logit misto dá peso parecido (sensibilidade)."),
+    (T_BOB, "Rectangle 50", "trocar o estimador depois de ver o resultado seria escolha pós-resultado; alternativas "
+     "entram só como robustez rotulada.", "alternativas só como robustez rotulada."),
+    (T_IDE, "TextBox 45", "I. O que o software mantém fixo no cálculo", "I. O que fica fixo"),
+    (T_IDE, "Table 46", "verossimilhança dentro das vagas de cada um: o que é dele se cancela", "o que é do médico se cancela"),
+    (T_IDE, "Table 46", "254 dummies: UF de trabalho anterior × UF da vaga", "254 dummies (UF anterior × UF da vaga)"),
+    (T_IDE, "Table 46", "não entra: a bolsa é a mesma no município inteiro e seria absorvida", "absorveria a bolsa"),
+    (T_IDE, "Table 46", "controles na utilidade (distância: −0,514 por 100 km)", "controles"),
+    (T_IDE, "TextBox 48", "II. Premissas e aderência", "II. Premissas"),
+    (T_IDE, "Rounded Rectangle 49", "o IVS reproduz a faixa de 368/368 municípios (ciclo 1) e 454/454 (ciclo 2)",
+     "368/368 e 454/454 municípios"),
+    (T_IDE, "Rounded Rectangle 51", "não: outras regras federais mudam junto; medimos esse pacote", "não: medimos o pacote"),
+    (T_IDE, "Rectangle 55", "a especificação com o par de UFs foi escolhida depois de ver o modelo base: é exploratória.",
+     "par de UFs escolhido depois de ver os dados: exploratório."),
+    (T_RES, "TextBox 47", "Também na equação: curva do IVS, estrato, vaga imediata e 254 dummies do par. Controles: não "
+     "interpretados. 5.417 candidatos; EP agrupado por curso × ciclo (55 grupos).",
+     "5.417 candidatos; EP agrupado por curso × ciclo."),
+    (T_RES, "Rounded Rectangle 49", "log-chance de +R$ 5 mil por mês", "log-chance de +R$ 5 mil"),
+    (T_RES, "Rounded Rectangle 50", "entre duas vagas iguais exceto a bolsa, a de +R$ 5 mil tem 1,47 vez a probabilidade de "
+     "ser a 1ª opção (IC 95%: 1,15 a 1,89; p de Holm 0,005)", "IC 95%: 1,15 a 1,89; p de Holm 0,005"),
+    (T_RES, "Rounded Rectangle 51", "+R$ 5 mil pesam como uma vaga 75 km mais perto", "= uma vaga 75 km mais perto"),
+    (T_RES, "Rectangle 53", "especificação escolhida após ver os dados. A pré-registrada, sem o par de UFs: ×1,25 "
+     "[0,98; 1,61], IC que contém 1.", "exploratório. Sem o par de UFs (pré-registrada): ×1,25 [0,98; 1,61], IC contém 1."),
+    (T_ROB, "Rounded Rectangle 26", "Distância em log, região anterior e cada degrau separado; bootstrap para poucos "
+     "grupos: p 0,011.", "Variantes: mesmo efeito. Bootstrap: p 0,011."),
+    (T_ROB, "Rounded Rectangle 30", "Só vagas perto do corte: menos dados, IC contém 1 (inconclusivo).",
+     "Perto do corte: IC contém 1 (inconclusivo)."),
+    (T_ROB, "Rounded Rectangle 32", "com todos os dados e sempre na mesma UF, o efeito fica entre ×1,41 e ×1,52 em toda "
+     "variante. Onde a informação é menor — perto do corte e nos ciclos 1 e 3 —, o IC contém 1.",
+     "com todos os dados, ×1,41 a ×1,52. Com menos dados, o IC contém 1."),
+    (T_CON, "Texto Resposta", "Entre vagas da mesma UF, R$ 5 mil a mais multiplicam por 1,47 a chance de a vaga ser a 1ª "
+     "opção (IC 95%: 1,15 a 1,89).", "IC 95%: 1,15 a 1,89; exploratório."),
+    (T_CON, "Número Força", "2º ciclo, vagas da mesma UF", "2º ciclo"),
+    (T_CON, "Texto Força", "No 2º ciclo, IC 95% de 1,30 a 2,78. Nos ciclos 1 e 3, ×1,15 e ×1,25, com IC que contém 1.",
+     "Ciclos 1 e 3: IC contém 1."),
+    (T_CON, "Texto Teoria", "Os dados sugerem: R$ 5 mil a mais pesam o mesmo que uma vaga 75 km mais perto (IC 95%: 28 "
+     "a 122 km).", "Os dados sugerem (IC 95%: 28 a 122 km)."),
+    (T_CON, "Text 21", "a bolsa maior reordena a escolha entre vagas da mesma UF; não mostramos que leve mais médicos ao "
+     "município.", "reordena a 1ª opção na inscrição; não mostra mais médicos no município."),
+    (T_LIM, "Problema 1", "A comparação só entre vagas da mesma UF (×1,47) foi escolhida depois de vermos os dados.",
+     "Par de UFs escolhido depois de ver os dados."),
+    (T_LIM, "Implicação 1", "É exploratório: sugere o efeito, não o confirma.", "Exploratório: sugere, não confirma."),
+    (T_LIM, "Problema 2", "Na especificação pré-registrada, que compara vagas de todas as UFs: ×1,25 (IC 95%: 0,98 a 1,61).",
+     "Pré-registrada: ×1,25 (IC 95%: 0,98 a 1,61)."),
+    (T_LIM, "Implicação 2", "Não dá para descartar efeito nulo nessa versão.", "Efeito nulo não descartado."),
+    (T_LIM, "Problema 3", "Observamos a vaga que o médico pôs em 1º lugar, não se ele foi trabalhar no município.",
+     "Vemos a vaga marcada, não a ida ao município."),
+    (T_LIM, "Implicação 3", "Escolher não é ir: não mostra mais médicos chegando.", "Escolher não é ir."),
+    (T_LIM, "Problema 4", "Quando o município passa do corte de IVS, outras regras federais mudam junto com a bolsa.",
+     "Outras regras federais mudam no mesmo corte."),
+    (T_LIM, "Implicação 4", "Medimos o pacote: o efeito do dinheiro não sai isolado.", "O dinheiro não sai isolado."),
+    (T_LIM, "Problema 5", "No 2º ciclo, ×1,90; no 1º (×1,15) e no 3º (×1,25), o IC contém 1.", "Ciclos 1 e 3: IC contém 1."),
+    (T_LIM, "Implicação 5", "Não dá para generalizar para outros ciclos.", "Não generaliza para outros ciclos."),
+    (T_LIM, "Problema 6", "É onde o médico tinha vínculo antes da inscrição, não onde mora; só define o par de UFs fixado.",
+     "Vínculo antes da inscrição, não a residência."),
+    (T_LIM, "Implicação 6", "É pareamento, não resultado nem causa.", "É pareamento, não resultado."),
+)
+# Grupos que saem inteiros (título do slide, texto de uma forma do grupo): números em destaque que repetem as manchetes
+REMOVER_GRUPOS = ((T_BOL, "+86"), (T_BOL, "6"))
+
+
+def _runs_da_forma(sh):
+    if sh.has_table:
+        for row in sh.table.rows:
+            for cell in row.cells:
+                for par in cell.text_frame.paragraphs:
+                    for r in par.runs:
+                        yield par, r, cell.text_frame
+    elif sh.has_text_frame:
+        for par in sh.text_frame.paragraphs:
+            for r in par.runs:
+                yield par, r, sh.text_frame
+
+
+def enxugar(prs) -> list[str]:
+    for titulo, nome, trecho, novo in TROCAS_ENXUGAR:
+        sl = slide_por_titulo(prs, titulo)
+        achados = [(par, r, tf) for sh in formas(sl.shapes) if sh.name == nome for par, r, tf in _runs_da_forma(sh)
+                   if trecho in r.text]
+        if not achados:  # trecho quebrado em vários runs: procura no parágrafo inteiro
+            pars = {id(par): (par, par.runs[0], tf) for sh in formas(sl.shapes) if sh.name == nome
+                    for par, _, tf in _runs_da_forma(sh) if trecho in par.text}
+            achados = list(pars.values())
+            inteiro = True
+        else:
+            inteiro = False
+        if len(achados) != 1:
+            raise SystemExit(f"ERRO: {titulo!r}, {nome!r}: o trecho {trecho!r} está em {len(achados)} lugares")
+        par, r, tf = achados[0]
+        if novo is None:
+            if len(tf.paragraphs) > 1:
+                par._p.getparent().remove(par._p)
+            else:
+                for rr in par.runs:
+                    rr.text = ""
+        elif inteiro:
+            texto = par.text.replace(trecho, novo)
+            for rr in par.runs[1:]:
+                rr._r.getparent().remove(rr._r)
+            r.text = texto
+        else:
+            r.text = r.text.replace(trecho, novo)
+    for titulo, texto in REMOVER_GRUPOS:
+        sl = slide_por_titulo(prs, titulo)
+        grupos = [g for g in sl.shapes if g.shape_type == 6
+                  and any(x.has_text_frame and x.text_frame.text.strip() == texto for x in formas(g.shapes))]
+        if len(grupos) != 1:
+            raise SystemExit(f"ERRO: {titulo!r}: esperava 1 grupo com {texto!r}; achei {len(grupos)}")
+        remover(grupos[0])
+    return [f"enxugamento: {len(TROCAS_ENXUGAR)} trocas de texto e {len(REMOVER_GRUPOS)} grupos removidos "
+            "(doc 02, §0.2)"]
+
+
 def slide_por_titulo(prs, titulo: str):
     achados = [s for s in prs.slides if any(x.has_text_frame and " ".join(x.text_frame.text.split()) == titulo
                                             for x in s.shapes)]
@@ -885,6 +1106,10 @@ def construir(saida: Path) -> dict:
         lista.append(ids_grupo[n - 1] if o == "G" else ids_novos[(o, n)])
     for n in FORA_G:
         prs.part.drop_rel(ids_grupo[n - 1].get(QN_RID))
+    feitas += enxugar(prs)
+    # notas do divisor "Apêndice": tinham uma resposta de chat colada, vinda do deck do grupo
+    notas(prs.slides[ORDEM.index(("G", 32, None))], "")
+    feitas.append("notas do divisor 'Apêndice' limpas (resposta de chat colada no deck do grupo)")
     ordem_saida = []
     for pos, (o, n, secao) in enumerate(ORDEM, start=1):
         sl = prs.slides[pos - 1]

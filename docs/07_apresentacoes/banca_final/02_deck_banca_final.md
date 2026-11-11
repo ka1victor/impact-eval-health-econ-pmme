@@ -32,7 +32,7 @@ pelo script (`slides_metodo`):
 | Slide | Título | Na tela |
 |---|---|---|
 | novo 1 | "Método passo a passo: logit condicional" | no estilo do grupo, quase sem frase: "I. Como o modelo lê cada escolha" (McFadden, 1974, Nobel de 2000; o mesmo modelo de Bobba et al.) com quatro linhas — 1 Cardápio (todas as vagas do curso no ciclo, ≈ 107), 2 Escolha (1ª opção = 1; as outras = 0), 3 Pontuação (β·bolsa + γ·distância + par de UFs), 4 Chance (e^pontuação ÷ soma do cardápio); "II. O que sai": caixa escura "β = 0,077 por R$ 1 mil/mês" e "Condicional: só compara vagas do mesmo médico". O resto da explicação vai para as notas de fala |
-| novo 2 | "Exemplo: um candidato, três vagas" | "I. Mesmo curso, mesma UF (MG)", com o rótulo "ilustrativo: vagas inventadas, pesos estimados no VL-1"; tabela A (R$ 10 mil, 50 km, 28,8%), B (R$ 15 mil, 50 km, 42,4%), C (R$ 15 mil, 125 km, 28,8%); "II. O que o exemplo mostra": caixas "B contra A ×1,47" (o resultado) e "C contra A 75 km" (a distância come os R$ 5 mil) |
+| novo 2 | "Exemplo: um candidato, três vagas" | "I. Mesmo curso, mesma UF (MG)", com o rótulo "ilustrativo: vagas inventadas, pesos estimados"; tabela A (R$ 10 mil, 50 km, 28,8%), B (R$ 15 mil, 50 km, 42,4%), C (R$ 15 mil, 125 km, 28,8%); "II. O que o exemplo mostra": caixas "B contra A ×1,47" (o resultado) e "C contra A 75 km" (a distância come os R$ 5 mil) |
 
 Os pesos, o 1,47, os 75 km e as chances do exemplo são calculados pelo gerador a partir de
 `output/rdd_bolsa/VL_estimativas.csv` (o gerador para se e^(5β) não reproduzir a razão de chances gravada) e ficam no
@@ -61,8 +61,7 @@ referência de Burdett, Shi & Wright (2001) entrou no `modelo_micro.md`, §5.
 
 **Decisões do autor (11/11/2026):**
 1. O choque ε **não** entra na equação teórica.
-2. Testamos o **elo da remuneração**: a nota do diagrama da teoria diz isso na tela ("Testamos o elo da remuneração: a
-   bolsa eleva o valor da vaga e muda a 1ª opção; o resto da cadeia não é estimado"), e a nota do slide da agregação
+2. Testamos o **elo da remuneração**: a nota do diagrama da teoria diz isso na tela ("Diagrama teórico: testamos só o elo da remuneração (bolsa → valor da vaga → 1ª opção)."), e a nota do slide da agregação
    também ("Testamos só o elo da remuneração: B ↑ → V ↑ → π ↑ (a 1ª opção)").
 3. O altruísmo **não aparece mais como equação**: Choné & Ma fica U = R − C(q; L, K); sai o chip "B(q): benefício ao
    paciente" (entra "L, K: equipe e capital") e a frase do altruísmo (α). Com isso, α fica só para o par de UFs. A
@@ -73,6 +72,34 @@ referência de Burdett, Shi & Wright (2001) entrou no `modelo_micro.md`, §5.
 
 Segue em aberto: a colisão de β (bolsa × parcela da moradia 1 − β em Redding & Rossi-Hansberg); atualizar o doc 01 e
 o gerador do diagrama para "distância de casa".
+
+## 0.2 Enxugamento do texto (11/11/2026)
+
+Pedido do autor: "texto demais"; um agente revisor escreveu a mensagem de cada slide e propôs cortes. As trocas estão no
+gerador (`TROCAS_ENXUGAR`, `REMOVER_GRUPOS`), cada uma conferindo o trecho antigo; o detalhe cortado fica nas notas de
+fala. As cautelas obrigatórias ficam (exploratório; pacote do corte; vaga marcada, não ida ao município; forte só no
+ciclo 2; sem o par de UFs, IC contém 1; local de trabalho anterior = vínculo no CNES). No diagrama da teoria, saem as
+linhas descritivas dos nós e a faixa "elos da política" vira "Cadeia do programa: não estimada aqui". Nas Limitações,
+o texto de cada cartão foi encurtado, sem apagar cartão. As notas do divisor "Apêndice" estavam com uma resposta de
+chat colada (do deck do grupo) e foram limpas. O slide da equação continua no corpo (a banca pediu a especificação),
+enxugado.
+
+| # | Slide | Mensagem |
+|:---:|---|---|
+| 2 | Escassez | faltam especialistas, de forma desigual entre UFs; o PMM-E abriu vagas nas cinco regiões |
+| 3 | A bolsa e a regra | a bolsa sai de uma regra (R$ 10, 15 ou 20 mil pelo IVS); a pergunta: a bolsa maior faz a vaga ser a 1ª opção? |
+| 4 | Teoria da mudança | a bolsa eleva o valor da vaga contra o custo do lugar; testamos só o elo da remuneração |
+| 5 | Hipótese | entre duas vagas do mesmo curso e da mesma UF, a de R$ 5 mil a mais tem mais chance de ser a 1ª opção (exploratória) |
+| 6 | Base | uma linha por candidato × vaga possível: 5.417 candidatos, 578.998 linhas |
+| 7 | Descritiva | 79% escolhem na UF onde já trabalhavam; por isso o modelo compara só vagas da mesma UF |
+| 8–9 | Método e exemplo | cardápio, escolha, pontuação, chance; +R$ 5 mil = ×1,47 = 75 km |
+| 10 | Modelo | a bolsa é testada; o par de UFs é pareamento; IVS contínuo e distância são controles |
+| 11 | Bobba et al. | a referência forte usa o mesmo desenho |
+| 12 | Identificação | o β aprende só com vagas do mesmo par de UFs com bolsas diferentes; mede o pacote do corte |
+| 13 | Resultado | +R$ 5 mil multiplicam por 1,47 a chance da 1ª opção (IC 1,15 a 1,89); exploratório |
+| 14 | Robustez | ×1,41 a ×1,52 com todos os dados; com menos dados, o IC contém 1 |
+| 15 | Conclusão | sim, ×1,47; forte só no ciclo 2; reordena a 1ª opção, não mostra mais médicos no município |
+| 16 | Limitações | as seis cautelas e o que cada uma implica |
 
 ## 1. O feedback de 04/11 aplicado à parte da banca 1
 
@@ -125,7 +152,7 @@ junto.
 | Slide | Antes | Depois |
 |:---:|---|---|
 | 1 | "Remuneração como incentivo limitado: um modelo de escolha racional para o Programa Mais Médicos Especialistas" | "A bolsa maior atrai a 1ª opção?" / "Um modelo de escolha para o" / "Programa Mais Médicos Especialistas" |
-| 2 | gráfico de 16 UFs (sem fonte reproduzível, P6) | figura `especialistas_por_uf_extremos.png`, subtítulo "Especialistas por 100 mil habitantes, as duas maiores e as duas menores UFs – dez/2024" |
+| 2 | gráfico de 16 UFs (sem fonte reproduzível, P6) | figura `especialistas_por_uf_extremos.png`, subtítulo "Especialistas por 100 mil hab., as duas maiores e as duas menores UFs, dez/2024" |
 | 2 | "II. Serviços especializados exigem longos deslocamentos", gráfico de deslocamento (P7) | "II. O ciclo 1 do PMM-E abriu vagas nas cinco regiões"; "Células estabelecimento × curso e vagas imediatas, ciclo 1, 1ª chamada"; figura `vagas_ciclo1_por_regiao.png` |
 | 2 | fontes com REGIC 2018 | "Fontes: Medicina S/A; Amado Mundo; Agência Câmara; Scheffer et al., Demografia Médica no Brasil 2025 (FMUSP/AMB), só as UFs com valor citado; quadro de vagas do Edital SGTES/MS nº 3/2025." |
 | 4 | "Moradia, deslocamento, amenidades e distância da origem." | "Moradia, deslocamento, amenidades e distância de casa." |
