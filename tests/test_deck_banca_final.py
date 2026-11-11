@@ -70,7 +70,7 @@ class TestDeckBancaFinal(unittest.TestCase):
     def test_textos_novos_na_tela_e_no_doc(self):
         doc = norm(DOC.read_text(encoding="utf-8"))
         tudo = " ".join(" ".join(t) for t in self.textos)
-        novos = [*G.TITULO_CAPA, G.A_NOTA_DIAGRAMA,
+        novos = [*G.TITULO_CAPA, G.A_NOTA_DIAGRAMA, G.SUB2_UF, G.SUB_VAGAS, G.SUB2_VAGAS, G.FONTES_ESCASSEZ,
                  G.CTEXT_UTILIDADE, G.ROTULO_CADEIA, G.ADICOES]
         for t in novos:
             self.assertIn(norm(t), tudo, t)
@@ -136,14 +136,13 @@ class TestDeckBancaFinal(unittest.TestCase):
 
     def test_slides_do_metodo(self):
         pos = [k for k, (o, _, _) in enumerate(G.ORDEM) if o == "M"]
-        self.assertEqual(len(pos), 2)
+        self.assertEqual(len(pos), 1)
         prox = G.ORDEM[pos[-1] + 1]
-        self.assertEqual(prox[:2], ("PB", 8), "depois do método vem a identificação (a equação foi para o apêndice)")
+        self.assertEqual(prox[:2], ("PB", 6), "depois do método vem a equação do modelo")
         v = G.pesos_vl1()
-        t1, t2 = " ".join(self.textos[pos[0]]), " ".join(self.textos[pos[1]])
+        t1 = t2 = " ".join(self.textos[pos[0]])
         self.assertIn(G.TITULO_M1, t1)
         self.assertIn("McFadden", t1)
-        self.assertIn(G.TITULO_M2, t2)
         rc = G._virgula(v["rc"], 2)
         self.assertEqual(rc, "1,47")
         self.assertEqual(round(v["km"]), 75)

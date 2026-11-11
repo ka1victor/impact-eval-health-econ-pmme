@@ -72,13 +72,15 @@ SECOES = ("Motivação", "Literatura", "Hipótese", "Dados", "Análise Descritiv
           "Resultados", "Robustez", "Discussão")
 ORDEM = [
     ("G", 1, None),                  # capa, com o título da pergunta
+    ("G", 3, "Motivação"),           # escassez de especialistas (figuras do pipeline)
     ("PB", 2, "Motivação"),          # a bolsa por faixa de IVS e a pergunta
     ("D", N_DIAG_SLIDE, "Literatura"),  # diagrama A: teoria da mudança
     ("PB", 3, "Hipótese"),
     ("PB", 4, "Dados"),
     ("PB", 5, "Análise Descritiva"),
-    ("M", 1, "Metodologia"),         # novo: o método passo a passo
-    ("M", 2, "Metodologia"),         # novo: exemplo com três vagas e os pesos do VL-1
+    ("M", 1, "Metodologia"),         # novo: o método passo a passo e o exemplo, num slide só
+    ("PB", 6, "Metodologia"),
+    ("PB", 7, "Metodologia"),
     ("PB", 8, "Identificação"),
     ("PB", 9, "Resultados"),
     ("PB", 10, "Robustez"),
@@ -87,10 +89,9 @@ ORDEM = [
     ("G", 31, None),                 # Q&A
     ("G", 32, None),                 # divisor Apêndice
     ("PB", 14, None),                # A1: a bolsa segue exatamente o IVS
-    ("PB", 6, None),                 # equação do modelo (sai do corpo: o passo a passo e o exemplo explicam)
-    ("PB", 7, None),                 # Bobba et al. (reserva para pergunta da banca)
     ("G", 16, None),                 # três elementos da teoria
     ("G", 17, None),                 # escolha locacional maximiza a utilidade
+    ("G", 19, None),                 # renda real líquida
     ("G", 20, None),                 # custo geográfico e laboral
     ("G", 18, None),                 # da escolha individual ao agregado
     ("G", 35, None),                 # o IVS
@@ -98,9 +99,6 @@ ORDEM = [
 SUMARIO = "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica"
 # Slides do deck do grupo que saem, com o motivo (vão para o manifesto e para o doc 02)
 FORA_G = {
-    3: "escassez de especialistas: a motivação fica no slide da bolsa (notícias, regra e pergunta); pedido do autor de "
-       "11/11/2026, 'slides demais'",
-    19: "renda real líquida: repete o slide da utilidade (mesma equação); pedido do autor de 11/11/2026",
     2: SUMARIO, 12: SUMARIO, 15: SUMARIO, 22: SUMARIO, 24: SUMARIO, 26: SUMARIO, 28: SUMARIO,
     4: "oculto; figura de UF do grupo sem fonte reproduzível (P6)",
     5: "animação parcial do slide 7",
@@ -165,8 +163,7 @@ CAIXA_M1 = ("PESO DA BOLSA", "β = {b}", "por R$ 1 mil/mês")
 CONDICIONAL_M1 = ("Condicional:", "só compara vagas do mesmo médico")
 FONTES_M1 = ("Fontes: McFadden (1974); Bobba et al. (NBER WP 29068, rev. jan. 2026); "
              "output/rdd_bolsa/VL_estimativas.csv (VL-1, adendo 52e): {cand} candidatos, {linhas} linhas.")
-TITULO_M2 = "Exemplo: um candidato, três vagas"
-SUB_M2 = ("I. Mesmo curso, mesma UF (MG)", "ilustrativo: vagas inventadas, pesos estimados")
+SUB_M2 = ("II. Exemplo: um candidato, três vagas em MG", "ilustrativo: vagas inventadas; pesos estimados no VL-1")
 VAGAS_M2 = (("A", 10, 50), ("B", 15, 50), ("C", 15, 125))  # ilustrativo: bolsa (R$ mil/mês) e distância (km)
 SUB2_M2 = ("II. O que o exemplo mostra", "B e C pagam R$ 5 mil a mais que A")
 CAIXAS_M2 = (("B CONTRA A", "×{rc}", "mesma distância: é o resultado"),
@@ -447,6 +444,11 @@ def adaptar_teoria(prs) -> list[str]:
 DIR_EQ = SAIDA / "equacoes"
 FALLBACKS = (
     # (slide do grupo, nome da forma, arquivo, tipo, conteúdo)
+    (19, "TextBox 1", "renda_real_liquida.png", "eq",
+     r"$\mathbf{arg\,max}_{\mathbfit{m}\in \mathbfit{I}}\ \sum_{\mathbfit{t}}\ \mathbfit{\delta}^{\mathbfit{t}}\left["
+     r"\frac{\mathbb{E}(\mathbfit{w}_{\mathbfit{mt(s)}})}{\mathbfit{p}_{\mathbfit{mt}}} - \mathbfit{c}_{\mathbfit{mt(s)}}\right]$"),
+    (19, "Retângulo: Cantos Arredondados 38", "gera_m.png", "caixa",
+     (r"Gera $\mathit{m}^{*}$:", ("a localidade que maximiza a renda real líquida", "esperada ao longo da carreira"))),
     (20, "TextBox 2", "chone_ma.png", "eq",
      r"$\mathbfit{U} = \mathbfit{R} - \mathbfit{C}(\mathbfit{q};\,\mathbfit{L},\mathbfit{K})$"),
     (20, "TextBox 4", "redding_rossi_hansberg.png", "eq",
@@ -749,6 +751,20 @@ def _linha(sl, x, y, w, h, rotulo: str, texto: str, num: int) -> None:
     sep.name = "Separador"
 
 
+def _linha_compacta(sl, x, y, w, h, rotulo: str, texto: str, num: int) -> None:
+    barra = sl.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(x), Inches(y + 0.12), Inches(0.07), Inches(h - 0.24))
+    barra.fill.solid()
+    barra.fill.fore_color.rgb = RGBColor.from_string(VERDE)
+    barra.line.fill.background()
+    barra.name = "Barra"
+    _caixa(sl, x + 0.15, y, w - 0.15, h, [[(f"{num}  ", 16, True, "A8C8A3"), (rotulo, 16, True, TEXTO)],
+                                          [(texto, 14, False, TEXTO)]],
+           forma=MSO_SHAPE.RECTANGLE, nome=f"Passo {num}")
+    sep = sl.shapes.add_connector(1, Inches(x), Inches(y + h), Inches(x + w), Inches(y + h))
+    sep.line.color.rgb = RGBColor.from_string(BORDA)
+    sep.name = "Separador"
+
+
 def _numero(sl, x, y, w, h, rotulo: str, grande: str, texto: str, nome: str, fill=VERDE) -> None:
     """Caixa escura com número grande, como a "Amostra do modelo" do grupo."""
     _caixa(sl, x, y, w, h, [[(rotulo, 11, True, "A8C8A3")], [(grande, 36, True, BRANCO)], [(texto, 13, False, BRANCO)]],
@@ -756,50 +772,43 @@ def _numero(sl, x, y, w, h, rotulo: str, grande: str, texto: str, nome: str, fil
 
 
 def slides_metodo(prs, layout, modelo_rodape) -> list:
+    """Um slide: à esquerda, o método em quatro passos; à direita, o exemplo com três vagas e os pesos do VL-1."""
     v = pesos_vl1()
     car = str(v["cardapio"])
-    # ---- 1: o método em quatro passos
     s1 = _slide_base(prs, layout, TITULO_M1, modelo_rodape)
-    _cabecalho(s1, 0.3, 0.95, 7.4, *SUB_M1)
+    # I. passos
+    _cabecalho(s1, 0.3, 0.92, 6.2, *SUB_M1)
     for k, (rot, txt) in enumerate(PASSOS_M1):
-        _linha(s1, 0.3, 1.75 + k * 1.05, 7.4, 1.05, rot, txt.format(cardapio=car), k + 1)
-    _cabecalho(s1, 8.25, 0.95, 4.8, *SUB2_M1)
-    r, g, tx = CAIXA_M1
-    _numero(s1, 8.25, 1.75, 4.8, 2.3, r, g.format(b=_virgula(v["b"], 3)), tx, "Peso da bolsa")
+        _linha_compacta(s1, 0.3, 1.62 + k * 0.92, 6.2, 0.92, rot, txt.format(cardapio=car), k + 1)
     c1, c2 = CONDICIONAL_M1
-    _caixa(s1, 8.25, 4.25, 4.8, 1.7, [[(c1 + " ", 15, True, VERDE), (c2, 15, False, TEXTO)]],
-           fill=CLARO, forma=MSO_SHAPE.RECTANGLE, nome="Condicional")
-    _fontes(s1, FONTES_M1.format(cand=f"{v['n_cand']:,}".replace(",", "."), linhas=f"{v['n_lin']:,}".replace(",", ".")))
-    notas(s1, NOTAS_M[1])
-    # ---- 2: exemplo com três vagas
-    s2 = _slide_base(prs, layout, TITULO_M2, modelo_rodape)
-    _cabecalho(s2, 0.3, 0.95, 7.4, *SUB_M2)
-    tab = s2.shapes.add_table(len(VAGAS_M2) + 1, 4, Inches(0.3), Inches(1.75), Inches(7.4), Inches(3.4)).table
-    cab = ("Vaga", "Bolsa", "Distância", "Chance de ser a 1ª opção")
-    for j, wj in enumerate((1.1, 1.7, 1.7, 2.9)):
+    _caixa(s1, 0.3, 5.45, 6.2, 1.05, [[(c1 + " ", 15, True, BRANCO), (c2 + "; o que é dele se cancela.", 15, False, BRANCO)]],
+           fill=VERDE, forma=MSO_SHAPE.RECTANGLE, nome="Condicional")
+    # II. exemplo
+    _cabecalho(s1, 6.85, 0.92, 6.2, *SUB_M2)
+    tab = s1.shapes.add_table(len(VAGAS_M2) + 1, 4, Inches(6.85), Inches(1.62), Inches(6.2), Inches(2.4)).table
+    for j, wj in enumerate((0.8, 1.55, 1.55, 2.3)):
         tab.columns[j].width = Inches(wj)
     corpo = [[n, f"R$ {bolsa} mil", f"{km} km", _virgula(100 * pr, 1) + "%"]
              for (n, bolsa, km), pr in zip(VAGAS_M2, v["prob"])]
-    for i_, linha in enumerate([cab] + corpo):
+    for i_, linha in enumerate([("Vaga", "Bolsa", "Distância", "Chance (1ª opção)")] + corpo):
         for j, txt in enumerate(linha):
             c = tab.cell(i_, j)
             c.fill.solid()
             c.fill.fore_color.rgb = RGBColor.from_string(VERDE if i_ == 0 else (CLARO if i_ % 2 else BRANCO))
             c.text = txt
             rr = c.text_frame.paragraphs[0].runs[0]
-            rr.font.size = Pt(14 if i_ == 0 else 20)
+            rr.font.size = Pt(13 if i_ == 0 else 17)
             rr.font.bold = i_ == 0 or j in (0, 3)
             rr.font.name = "Montserrat"
             rr.font.color.rgb = RGBColor.from_string(BRANCO if i_ == 0 else (VERDE if j == 3 else TEXTO))
             c.text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
             c.vertical_anchor = MSO_ANCHOR.MIDDLE
-    _cabecalho(s2, 8.25, 0.95, 4.8, *SUB2_M2)
     rc, km = _virgula(v["rc"], 2), str(round(v["km"]))
     for k, (rot, grande, txt) in enumerate(CAIXAS_M2):
-        _numero(s2, 8.25, 1.75 + k * 1.8, 4.8, 1.62, rot, grande.format(rc=rc, km=km), txt, rot.title())
-    _fontes(s2, FONTES_M2)
-    notas(s2, NOTAS_M[2])
-    return [s1, s2], v
+        _numero(s1, 6.85 + k * 3.2, 4.2, 3.0, 2.3, rot, grande.format(rc=rc, km=km), txt, rot.title())
+    _fontes(s1, FONTES_M1.format(cand=f"{v['n_cand']:,}".replace(",", "."), linhas=f"{v['n_lin']:,}".replace(",", ".")))
+    notas(s1, NOTAS_M[1] + "\n\n" + NOTAS_M[2])
+    return [s1], v
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -821,6 +830,8 @@ T_ROB = "Robustez: sempre comparando vagas da mesma UF"
 T_CON = "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
 T_LIM = "Limitações e o que cada uma implica"
 TROCAS_ENXUGAR = (
+    (T_ESC, "Text Placeholder 7", "I. Escassez de especialistas é concentrada territorialmente",
+     "I. A escassez é desigual entre UFs"),
     (T_BOL, "Manchete", "Do total de profissionais, 72% serão destinados", None),
     (T_BOL, "Manchete", "1.480 especialistas do PMM-E em atividade hoje", None),
     (T_BOL, "TextBox 44", "I. A regra: a bolsa mensal cresce com o IVS do município da vaga", "I. A regra da bolsa"),
@@ -1033,17 +1044,29 @@ REMOVER_FORMAS = (
 LINHAS_CONTROLE = ("Mesma região de saúde", "Mesmo município", "log(população 2022)", "Capital")
 
 
+def _tamanho(sh, por_paragrafo: dict) -> None:
+    """Fonte maior por parágrafo (para ocupar o espaço que sobrou depois dos cortes)."""
+    for k, tam in por_paragrafo.items():
+        if k < len(sh.text_frame.paragraphs):
+            for r in sh.text_frame.paragraphs[k].runs:
+                r.font.size = Pt(tam)
+
+
 def redesenhar(prs) -> list[str]:
     for titulo, nome in REMOVER_FORMAS:
         remover(por_nome(slide_por_titulo(prs, titulo), nome))
     # hipótese: a frase em destaque maior, os três cartões e a cautela sobem
     sl = slide_por_titulo(prs, T_HIP)
     caixa = por_nome(sl, "Rounded Rectangle 45")
-    caixa.height = Inches(1.75)
+    caixa.height = Inches(2.1)
+    _tamanho(caixa, {0: 14, 1: 26})
     for nome in ("Rounded Rectangle 54", "Rounded Rectangle 55", "Rounded Rectangle 56"):
         sh = por_nome(sl, nome)
-        sh.top, sh.height = Inches(3.0), Inches(1.6)
-    por_nome(sl, "Rectangle 57").top = Inches(4.85)
+        sh.top, sh.height = Inches(3.3), Inches(2.3)
+        _tamanho(sh, {0: 22, 1: 18})
+    cautela = por_nome(sl, "Rectangle 57")
+    cautela.top, cautela.height = Inches(5.85), Inches(0.75)
+    _tamanho(cautela, {0: 16})
     # base: a tabela de variáveis ocupa a largura toda
     sl = slide_por_titulo(prs, T_BAS)
     tab = por_nome(sl, "Table 46")
@@ -1062,9 +1085,20 @@ def redesenhar(prs) -> list[str]:
     if len(tbl.tr_lst) != 3:
         raise SystemExit(f"ERRO: a tabela do resultado devia ficar com 3 linhas; ficou com {len(tbl.tr_lst)}")
     for tr in tbl.tr_lst:
-        tr.h = Inches(0.8)
-    tab.height = Inches(2.4)
-    por_nome(sl, "TextBox 47").top = Inches(3.8)
+        tr.h = Inches(1.3)
+    tab.height = Inches(3.9)
+    for row in tab.table.rows:
+        for cell in row.cells:
+            for par in cell.text_frame.paragraphs:
+                for r in par.runs:
+                    r.font.size = Pt(20 if r.font.size is None or r.font.size >= Pt(11) else 18)
+    nota = por_nome(sl, "TextBox 47")
+    nota.top = Inches(5.3)
+    _tamanho(nota, {0: 13})
+    for k, nome in enumerate(("Rounded Rectangle 49", "Rounded Rectangle 50", "Rounded Rectangle 51")):
+        sh = por_nome(sl, nome)
+        sh.top, sh.height = Inches(1.25 + k * 1.65), Inches(1.5)
+        _tamanho(sh, {0: 22, 1: 15})
     return [f"redesenho: {len(REMOVER_FORMAS)} formas fora (exemplo da hipótese, formato longo da base, ciclo 2 do "
             f"resultado) e {len(LINHAS_CONTROLE)} linhas de controle fora da tabela do resultado"]
 
@@ -1140,7 +1174,7 @@ def construir(saida: Path) -> dict:
     novos_m, pesos = slides_metodo(prs, layout, modelo_rodape)
     for k in range(len(novos_m)):
         ids_novos[("M", k + 1)] = prs.slides._sldIdLst[len(prs.slides._sldIdLst) - len(novos_m) + k]
-    feitas.append("slides novos do método passo a passo (4 passos; exemplo com três vagas e os pesos do VL-1)")
+    feitas.append("slide novo do método: 4 passos e o exemplo com três vagas e os pesos do VL-1, num slide só")
     lista = prs.slides._sldIdLst
     for el in list(lista):
         lista.remove(el)

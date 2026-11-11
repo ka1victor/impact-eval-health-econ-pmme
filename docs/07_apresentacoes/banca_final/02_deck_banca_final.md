@@ -24,15 +24,16 @@
 > `FORA_G`) e no manifesto. Em andamento: dois slides novos com o método passo a passo e a revisão do modelo teórico.
 
 > [!IMPORTANT]
-> **Versão de 11/11/2026: 23 slides, 13 no corpo** (pedido do autor: "ainda tem slides demais e conteúdo demais por
-> slide"). Corpo: capa; a bolsa e a pergunta; teoria da mudança; hipótese; base; descritiva; método passo a passo;
-> exemplo; identificação; resultado; robustez; conclusão; limitações. Apêndice: Q&A, divisor, A1 (regra), **a equação do
-> modelo e Bobba et al. (saíram do corpo, ficam de reserva para pergunta da banca)**, os slides de teoria e o IVS. Saíram
-> de vez o slide da escassez de especialistas (a motivação fica no slide da bolsa) e o da renda real líquida (repetia o
-> da utilidade). Redesenho (`REMOVER_FORMAS`, `redesenhar`): a hipótese perdeu o exemplo das vagas A e B (repetia o
-> exemplo do método); a base perdeu o "formato longo" (repetia o passo a passo) e a tabela de variáveis ocupa a largura
-> toda; o resultado ficou só com bolsa e distância na tabela (os controles não são interpretados) e sem a caixa do
-> ciclo 2 (já está na robustez, na conclusão e nas limitações). As seções 1 a 3 abaixo descrevem versões anteriores; a
+> **Versão de 11/11/2026 (tarde): 24 slides, 15 no corpo.** Pedido do autor: "coloca de volta e não tira os que foram
+> colocados pelo meu grupo; ao invés disso, condensa os seus, inclusive para deixar menos espaços em branco". Voltaram
+> a escassez de especialistas (corpo) e a renda real líquida (apêndice), slides do grupo; a equação do modelo e Bobba
+> et al. voltaram ao corpo (Metodologia). Os slides novos do método viraram **um só**: à esquerda, os quatro passos;
+> à direita, o exemplo das três vagas com o ×1,47 e os 75 km. Redesenho (`REMOVER_FORMAS`, `redesenhar`): a hipótese
+> sem o exemplo A/B (está no slide do método), com a frase e os cartões maiores; a base sem o "formato longo", com a
+> tabela na largura toda; o resultado só com bolsa e distância, tabela e caixas maiores e sem a caixa do ciclo 2. Do
+> deck do grupo continuam fora só os slides com erro (o "piso" do IVS com a grade do FAQ, números que não se
+> reproduzem, a hipótese antiga, o slide de dados com números sobrepostos), os marcadores "X", os "EXEMPLO" de outro
+> trabalho, as versões ocultas e os sumários (a decidir). As seções 1 a 3 abaixo descrevem versões anteriores; a
 > ordem vigente está no gerador (`ORDEM`) e no manifesto.
 
 ## 0. O método passo a passo (pedido do autor de 09/11/2026)
