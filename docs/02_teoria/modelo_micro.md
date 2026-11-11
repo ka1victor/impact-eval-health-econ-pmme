@@ -296,6 +296,7 @@ A transposição dessas hipóteses para especificações, variáveis e bases est
 
 ## 5. Referências teóricas
 
+- Burdett, K.; Shi, S.; Wright, R. (2001). *Pricing and Matching with Frictions*. **Journal of Political Economy**, 109(5), 1060--1085. [agregação da escolha individual em preenchimento: urnas e bolas; usada no deck da banca 1 e no diagrama da banca final].
 - Choné, P.; Ma, C.-T. A. (2011). [*Optimal Health Care Contract under Physician Agency*](https://people.bu.edu/ma/CHONE-MA_Annals2011.pdf). **Annals of Economics and Statistics**, 101/102, 229--256. [p. 232, eq. 1].
 - Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020). [*Medical Education Reforms and the Origins of the Rural Physician Shortage*](https://doi.org/10.1007/s11698-019-00187-w). **Cliometrica**, 14, 181--225. [p. 184, eq. 1].
 - Redding, S. J.; Rossi-Hansberg, E. (2017). [*Quantitative Spatial Economics*](https://doi.org/10.1146/annurev-economics-063016-103713). **Annual Review of Economics**, 9, 21--58. [p. 28, eq. 24].

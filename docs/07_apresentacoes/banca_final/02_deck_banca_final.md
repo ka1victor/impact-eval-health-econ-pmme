@@ -31,13 +31,37 @@ pelo script (`slides_metodo`):
 
 | Slide | Título | Na tela |
 |---|---|---|
-| novo 1 | "Método passo a passo: logit condicional" | no estilo do grupo, quase sem frase: "I. Como o modelo lê cada escolha" (McFadden, 1974, Nobel de 2000; o mesmo modelo de Bobba et al.) com quatro linhas — 1 Cardápio (todas as vagas do curso no ciclo, ≈ 107), 2 Escolha (1ª opção = 1; as outras = 0), 3 Pontuação (β·bolsa + δ·distância + par de UFs), 4 Chance (e^pontuação ÷ soma do cardápio); "II. O que sai": caixa escura "β = 0,077 por R$ 1 mil/mês" e "Condicional: só compara vagas do mesmo médico". O resto da explicação vai para as notas de fala |
+| novo 1 | "Método passo a passo: logit condicional" | no estilo do grupo, quase sem frase: "I. Como o modelo lê cada escolha" (McFadden, 1974, Nobel de 2000; o mesmo modelo de Bobba et al.) com quatro linhas — 1 Cardápio (todas as vagas do curso no ciclo, ≈ 107), 2 Escolha (1ª opção = 1; as outras = 0), 3 Pontuação (β·bolsa + γ·distância + par de UFs), 4 Chance (e^pontuação ÷ soma do cardápio); "II. O que sai": caixa escura "β = 0,077 por R$ 1 mil/mês" e "Condicional: só compara vagas do mesmo médico". O resto da explicação vai para as notas de fala |
 | novo 2 | "Exemplo: um candidato, três vagas" | "I. Mesmo curso, mesma UF (MG)", com o rótulo "ilustrativo: vagas inventadas, pesos estimados no VL-1"; tabela A (R$ 10 mil, 50 km, 28,8%), B (R$ 15 mil, 50 km, 42,4%), C (R$ 15 mil, 125 km, 28,8%); "II. O que o exemplo mostra": caixas "B contra A ×1,47" (o resultado) e "C contra A 75 km" (a distância come os R$ 5 mil) |
 
 Os pesos, o 1,47, os 75 km e as chances do exemplo são calculados pelo gerador a partir de
 `output/rdd_bolsa/VL_estimativas.csv` (o gerador para se e^(5β) não reproduzir a razão de chances gravada) e ficam no
 manifesto (`exemplo_metodo`, rotulado ILUSTRATIVO: as vagas são inventadas; os pesos são os estimados). O deck passa
 a ter 25 slides, 16 no corpo.
+
+## 0.1 Revisão do modelo teórico (11/11/2026)
+
+Revisão dos slides de teoria contra [`modelo_micro.md`](../../02_teoria/modelo_micro.md) (§1, §2.1, §2.4, §3.2) e o doc
+[01](01_diagrama_teoria_mudanca.md). As trocas estão no gerador (`TROCAS_TEORIA`, `TROCAS_OMML`), cada uma conferindo
+o texto antigo:
+
+| Erro (a banca pegaria) | Correção |
+|---|---|
+| "REDDING & ROSSI, 2017" | "REDDING & ROSSI-HANSBERG, 2017" |
+| Equação de Redding & Rossi-Hansberg com Z, W e k, enquanto os rótulos usam w e κ | z, w e κ, como no `modelo_micro` §3.2 |
+| Papel de p e de c trocado: amenidades e segurança no cartão do deflator; c era "viver ali" num slide e "exercer ali" no outro; R&RH "gera só p" | p = custo de vida ("Moradia e custo de vida", "Nível de preços da cidade"); c = custo não pecuniário de viver **e** trabalhar ali; R&RH gera p e a parte geográfica de c; Choné & Ma, a parte laboral |
+| "max" no lugar de "arg max"; i = localidade, mas i = candidato no modelo empírico | arg max e m para a localidade (equação, rótulos e "Gera m*") |
+| "MOEHLING et al. (2020), EQ. 1" sobre uma equação adaptada (com B, r, I_r) | "ADAPTADO DE MOEHLING et al. (2020), EQ. 1, P. 184" |
+| δ = desconto na teoria e δ = distância no modelo empírico | distância vira γ no slide do método e no do modelo |
+
+Também: legenda da equação liga m*_r à 1ª opção e I_r ao cardápio; "Curso" no lugar de "Especialidade"; "distância de
+casa"; "o saldo" (E/p − c não é soma); "E(w | B)". As equações em OMML têm uma imagem de reserva (que o LibreOffice e o
+PDF mostram); as três que mudaram foram redesenhadas pelo gerador em `output/apresentacao_banca_final/equacoes/`. A
+referência de Burdett, Shi & Wright (2001) entrou no `modelo_micro.md`, §5.
+
+Fica para o autor: pôr o choque ε na tela (é ele que liga a teoria ao logit); marcar na tela o elo testado (diagrama e
+cadeia do modelo); as colisões α (par de UFs × altruísmo) e β (bolsa × parcela da moradia); a ressalva de que a 1ª
+opção só é o argmax se a lista for sincera; atualizar o doc 01 e o gerador do diagrama para "distância de casa".
 
 ## 1. O feedback de 04/11 aplicado à parte da banca 1
 
@@ -94,7 +118,7 @@ junto.
 | 2 | "II. Serviços especializados exigem longos deslocamentos", gráfico de deslocamento (P7) | "II. O ciclo 1 do PMM-E abriu vagas nas cinco regiões"; "Células estabelecimento × curso e vagas imediatas, ciclo 1, 1ª chamada"; figura `vagas_ciclo1_por_regiao.png` |
 | 2 | fontes com REGIC 2018 | "Fontes: Medicina S/A; Amado Mundo; Agência Câmara; Scheffer et al., Demografia Médica no Brasil 2025 (FMUSP/AMB), só as UFs com valor citado; quadro de vagas do Edital SGTES/MS nº 3/2025." |
 | 4 | "Moradia, deslocamento, amenidades e distância da origem." | "Moradia, deslocamento, amenidades e distância de casa." |
-| 19 | "… é a soma das três variáveis que determina se a vaga é preenchida." | "A política mexe em apenas uma variável: eleva E(w\|B) pela bolsa (B). Preços e custo do local continuam contra, e é a soma das três variáveis que decide qual vaga o médico escolhe." |
+| 19 | "… é a soma das três variáveis que determina se a vaga é preenchida." | "A política mexe em apenas uma variável: eleva E(w\|B) pela bolsa (B). Preços e custo do local continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe." |
 | 21 | "Adições ao modelo do slide 11:" | "Adições ao modelo do slide anterior:" |
 | 22 | rótulo "HIPÓTESE" na cadeia B ↑ → V ↑ → π ↑ → Pr(Y = 1) ↑ | "CADEIA DO MODELO" |
 | 23 | "trasnporte" | "transporte" (errata E8) |

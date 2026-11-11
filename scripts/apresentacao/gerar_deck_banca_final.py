@@ -140,7 +140,7 @@ FONTES_ESCASSEZ = ("Fontes: Medicina S/A; Amado Mundo; Agência Câmara; Scheffe
                    "2025 (FMUSP/AMB), só as UFs com valor citado; quadro de vagas do Edital SGTES/MS nº 3/2025.")
 A4_DIAGRAMA = "Moradia, deslocamento, amenidades e distância de casa."
 CTEXT_UTILIDADE = ("A política mexe em apenas uma variável: eleva E(w|B) pela bolsa (B). Preços e custo do local "
-                   "continuam contra, e é a soma das três variáveis que decide qual vaga o médico escolhe.")
+                   "continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe.")
 ROTULO_CADEIA = "CADEIA DO MODELO"
 ADICOES = "Adições ao modelo do slide anterior:"
 
@@ -151,7 +151,7 @@ SUB_M1 = ("I. Como o modelo lê cada escolha", "McFadden (1974), Nobel de 2000; 
 PASSOS_M1 = (
     ("Cardápio", "todas as vagas do curso no ciclo (≈ {cardapio})"),
     ("Escolha", "1ª opção = 1; as outras = 0"),
-    ("Pontuação", "β·bolsa + δ·distância + par de UFs"),
+    ("Pontuação", "β·bolsa + γ·distância + par de UFs"),
     ("Chance", "e^pontuação ÷ soma do cardápio"),
 )
 SUB2_M1 = ("II. O que sai", "os pesos que melhor explicam as escolhas observadas")
@@ -307,6 +307,10 @@ def numerar(slide, n: int) -> None:
         if (sh.has_text_frame and sh.text_frame.text.strip().isdigit() and sh.left is not None
                 and sh.left > Inches(12) and sh.top > Inches(6.8)):
             trocar_paragrafo(sh, str(n), 0)
+            if sh.width < Inches(0.5):
+                direita = sh.left + sh.width
+                sh.width = Inches(0.5)
+                sh.left = direita - sh.width
 
 
 def notas(slide, texto: str) -> None:
@@ -314,6 +318,179 @@ def notas(slide, texto: str) -> None:
 
 
 # --------------------------------------------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------------------------------------------
+# Correções do modelo teórico (revisão de 11/11/2026 contra docs/02_teoria/modelo_micro.md; doc 02, §3.1)
+# --------------------------------------------------------------------------------------------------------------
+QN_MT = "{http://schemas.openxmlformats.org/officeDocument/2006/math}t"
+
+# (slide do grupo, nome da forma, texto inteiro da forma, parágrafo, run, texto antigo do run, texto novo do run)
+TROCAS_TEORIA = (
+    (16, "txt219", None, 0, 2,
+     "composto pela desutilidade do atendimento (equipe e do capital instalado) e pela desutilidade da vida no local "
+     "(amenidades, segurança e distância da família)",
+     "composto pela desutilidade do atendimento (equipe e capital instalado) e pela desutilidade da vida no local "
+     "(amenidades, segurança e distância de casa)"),
+    (17, "eqlab", None, 0, 0, "MOEHLING et al. (2020), EQ. 1, P. 184", "ADAPTADO DE MOEHLING et al. (2020), EQ. 1, P. 184"),
+    (17, "eqleg", None, 0, 3, ": Local escolhido por r  ·  ", ": vaga escolhida por r (a 1ª opção)  ·  "),
+    (17, "eqleg", None, 0, 6, ": ofertas disponíveis a r  ·  ", ": ofertas disponíveis a r (o cardápio)  ·  "),
+    (17, "dvar0", "Salário : E(wmt)", 0, 3, ")", " | B)"),
+    (17, "deqbox0", "Segurança, deslocamento etc Nível de amenidades da cidade", 0, 0, "Segurança, deslocamento ",
+     "Moradia e custo de vida"),
+    (17, "deqbox0", "Moradia e custo de vidaetc Nível de amenidades da cidade", 0, 1, "etc", ""),
+    (17, "deqbox0", "Moradia e custo de vida Nível de amenidades da cidade", 1, 0, "Nível de amenidades da cidade",
+     "Nível de preços da cidade"),
+    (17, "dvar0", "Custo laboral : crmt(s)", 0, 0, "Custo laboral : ", "Custo não pecuniário : "),
+    (17, "deqbox0", "Esforço para atender Aumenta com equipe e equipamentos ruins", 0, 0, "Esforço para atender",
+     "Esforço e vida no local"),
+    (17, "deqbox0", "Esforço e vida no local Aumenta com equipe e equipamentos ruins", 1, 0,
+     "Aumenta com equipe e equipamentos ruins", "Equipe ruim, poucas amenidades, longe de casa"),
+    (17, "dtxt0", "Custo não monetário de exercer ali; o altruísmo do médico (α) compensa em parte.", 0, 0,
+     "Custo não monetário de exercer ali; o altruísmo do médico (α) compensa em parte.",
+     "Custo não monetário de viver e exercer ali; o altruísmo (α) compensa em parte."),
+    (17, "dsrc0", "CHONÉ & MA (2011)", 0, 0, "CHONÉ & MA (2011)", "CHONÉ & MA (2011) · R&RH (2017)"),
+    (18, "rd1", None, 0, 0, "Especialidade, vínculos e preferências variam: π", "Curso, vínculos e preferências variam: π"),
+    (18, "rd0", None, 0, 5, ".", ": na inscrição, a 1ª opção."),
+    (19, "chip0_0", "i: localidades candidatas", 0, 0, "i", "m"),
+    (19, "chip0_0", "𝔼 (wit(s)): salário esperado em i, no ano t, na especialidade s", 0, 2, "it", "mt"),
+    (19, "chip0_0", "𝔼 (wmt(s)): salário esperado em i, no ano t, na especialidade s", 0, 6,
+     "salário esperado em i, no ano t, na especialidade s", "salário esperado em m, no ano t, na especialidade s"),
+    (19, "chip0_0", "Pit: nível de preços da localidade (deflator)", 0, 0, "P", "p"),
+    (19, "chip0_0", "pit: nível de preços da localidade (deflator)", 0, 1, "it", "mt"),
+    (19, "chip0_0", "cit(s): custo não pecuniário de viver ali", 0, 1, "it", "mt"),
+    (19, "chip0_0", "cmt(s): custo não pecuniário de viver ali", 0, 5, "custo não pecuniário de viver ali",
+     "custo não pecuniário de viver e trabalhar ali"),
+    (19, "col2", None, 0, 0,
+     "O médico ganha com o salário esperado na localidade, ajustado pelo custo de vida. Perde com o custo não "
+     "pecuniário de exercer a profissão naquele local",
+     "O médico ganha com o salário esperado na localidade, ajustado pelo custo de vida. Perde com o custo não "
+     "pecuniário de viver e exercer a profissão naquele local"),
+    (19, "col2", None, 0, 3, "A escolha recai sobre aquela que oferece o maior valor presente da renda real líquida",
+     "A escolha recai sobre aquela que oferece o maior valor presente da renda real líquida."),
+    (20, "pill0", None, 0, 1, "REDDING & ROSSI, 2017)", "REDDING & ROSSI-HANSBERG, 2017)"),
+    (20, "impact0", None, 0, 2, "it", "mt"),
+    (20, "impact0", None, 0, 4, " o deflator da localidade",
+     " o deflator (moradia) e a parte geográfica de c (amenidades, distância)"),
+    (20, "impact1", None, 0, 2, "it", "mt"),
+    (20, "impact1", None, 0, 4, "o custo não pecuniário de exercer ali", "a parte laboral de c: o custo de exercer ali"),
+    (20, "chip1_1", None, 0, 0, "Q ", "q "),
+)
+# Equações em OMML: (slide do grupo, nome da forma, sequência antiga de m:t, sequência nova)
+TROCAS_OMML = (
+    (19, "TextBox 1",
+     ["𝐦𝐚𝐱", "𝒊", "∈", "𝑰", "𝒕", "𝜹", "𝒕", "𝔼", "𝒘", "𝒊𝒕", "𝒔", "𝒑", "𝒊𝒕", "−\xa0", "𝒄", "𝒊𝒕", "𝒔"],
+     ["𝐚𝐫𝐠\xa0𝐦𝐚𝐱", "𝒎", "∈", "𝑰", "𝒕", "𝜹", "𝒕", "𝔼", "𝒘", "𝒎𝒕", "𝒔", "𝒑", "𝒎𝒕", "−\xa0", "𝒄", "𝒎𝒕", "𝒔"]),
+    (19, "Retângulo: Cantos Arredondados 38", ["𝒊", "∗"], ["𝒎", "∗"]),
+    (20, "TextBox 4",
+     ["𝒖", "𝒏𝒊𝒐", "=", "𝒁", "𝒏𝒊𝒐", "𝑩", "𝒏", "𝑾", "𝒊", "𝒌", "𝒏𝒊", "𝑸", "𝒏", "𝟏", "−", "𝜷"],
+     ["𝒖", "𝒏𝒊𝒐", "=", "𝒛", "𝒏𝒊𝒐", "𝑩", "𝒏", "𝒘", "𝒊", "𝜿", "𝒏𝒊", "𝑸", "𝒏", "𝟏", "−", "𝜷"]),
+)
+
+
+def _forma_unica(slide, nome: str, texto: str | None):
+    achadas = [sh for sh in formas(slide.shapes) if sh.name == nome and sh.has_text_frame
+               and (texto is None or " ".join(sh.text_frame.text.split()) == " ".join(texto.split()))]
+    if len(achadas) != 1:
+        raise SystemExit(f"ERRO: esperava 1 forma {nome!r} com o texto {texto!r}; achei {len(achadas)}")
+    return achadas[0]
+
+
+def _formas_xml(slide, nome: str):
+    """Formas pelo nome no XML (inclui as que estão dentro de mc:AlternateContent, que o python-pptx não vê)."""
+    return [sp for sp in slide._element.iter("{%s}sp" % NS["p"])
+            if sp.find(".//p:cNvPr", NS) is not None and sp.find(".//p:cNvPr", NS).get("name") == nome]
+
+
+def adaptar_teoria(prs) -> list[str]:
+    feitas = []
+    for n, nome, texto, par, run, antigo, novo in TROCAS_TEORIA:
+        sh = _forma_unica(prs.slides[n - 1], nome, texto)
+        r = sh.text_frame.paragraphs[par].runs[run]
+        if r.text != antigo:
+            raise SystemExit(f"ERRO: slide {n}, {nome}: run {par}.{run} é {r.text!r}, esperava {antigo!r}")
+        r.text = novo
+    feitas.append(f"modelo teórico: {len(TROCAS_TEORIA)} trocas de texto (p é o custo de vida; c tem parte "
+                  "geográfica e laboral; Rossi-Hansberg; 'curso'; a 1ª opção como o argmax do cardápio)")
+    for n, nome, antigo, novo in TROCAS_OMML:
+        sps = _formas_xml(prs.slides[n - 1], nome)
+        alvo = [sp for sp in sps if [t.text for t in sp.iter(QN_MT)] == antigo]
+        if len(alvo) != 1:
+            raise SystemExit(f"ERRO: slide {n}, equação {nome!r}: esperava 1 com {antigo}; achei {len(alvo)}")
+        for t_el, txt in zip(list(alvo[0].iter(QN_MT)), novo):
+            t_el.text = txt
+    feitas.append("equações: arg max e m (localidade) no slide da renda real líquida; z, w e κ em Redding & "
+                  "Rossi-Hansberg, como no modelo_micro")
+    return feitas
+
+
+
+# Imagens de reserva das equações (mc:Fallback). O PowerPoint mostra o OMML corrigido; o LibreOffice (e o PDF)
+# mostra a imagem de reserva, que vinha com a equação antiga. As novas são desenhadas aqui e gravadas em output/.
+DIR_EQ = SAIDA / "equacoes"
+FALLBACKS = (
+    # (slide do grupo, nome da forma, arquivo, tipo, conteúdo)
+    (19, "TextBox 1", "renda_real_liquida.png", "eq",
+     r"$\mathbf{arg\,max}_{\mathbfit{m}\in \mathbfit{I}}\ \sum_{\mathbfit{t}}\ \mathbfit{\delta}^{\mathbfit{t}}\left["
+     r"\frac{\mathbb{E}(\mathbfit{w}_{\mathbfit{mt(s)}})}{\mathbfit{p}_{\mathbfit{mt}}} - \mathbfit{c}_{\mathbfit{mt(s)}}\right]$"),
+    (19, "Retângulo: Cantos Arredondados 38", "gera_m.png", "caixa",
+     (r"Gera $\mathit{m}^{*}$:", ("a localidade que maximiza a renda real líquida", "esperada ao longo da carreira"))),
+    (20, "TextBox 4", "redding_rossi_hansberg.png", "eq",
+     r"$\mathbfit{u}_{\mathbfit{nio}} = \frac{\mathbfit{z}_{\mathbfit{nio}}\,\mathbfit{B}_{\mathbfit{n}}\,\mathbfit{w}_{\mathbfit{i}}}"
+     r"{\mathbfit{\kappa}_{\mathbfit{ni}}\,\mathbfit{Q}_{\mathbfit{n}}^{\mathbf{1}-\mathbfit{\beta}}}$"),
+)
+
+
+def desenhar_fallback(arquivo: str, tipo: str, conteudo, cx: int, cy: int) -> Path:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import FancyBboxPatch
+    matplotlib.rcParams.update({"mathtext.fontset": "stix", "font.family": "DejaVu Sans", "svg.hashsalt": "pmme",
+                                "pdf.fonttype": 42})
+    dpi = 200
+    w_in, h_in = cx / 914400, cy / 914400
+    fig = plt.figure(figsize=(w_in, h_in), dpi=dpi)
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_axis_off()
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    if tipo == "eq":
+        ax.text(0.5, 0.5, conteudo, ha="center", va="center", fontsize=h_in * 72 * 0.36, color="black")
+    else:
+        raio = 0.1 * h_in  # cantos arredondados como os do grupo, em polegadas
+        ax.set_xlim(0, w_in)
+        ax.set_ylim(0, h_in)
+        ax.add_patch(FancyBboxPatch((0.02, 0.02), w_in - 0.04, h_in - 0.04,
+                                    boxstyle=f"round,pad=0,rounding_size={raio}", facecolor="#056429",
+                                    edgecolor="none"))
+        rot, linhas = conteudo
+        tam = h_in * 72 * 0.2
+        ax.text(w_in / 2, h_in * 0.64, rot + " " + linhas[0], ha="center", va="center", fontsize=tam, color="white")
+        ax.text(w_in / 2, h_in * 0.32, linhas[1], ha="center", va="center", fontsize=tam, color="white")
+    DIR_EQ.mkdir(parents=True, exist_ok=True)
+    destino = DIR_EQ / arquivo
+    fig.savefig(destino, dpi=dpi, transparent=True, metadata={"Software": None})
+    plt.close(fig)
+    return destino
+
+
+def trocar_fallbacks(prs) -> list[str]:
+    feitas = []
+    for n, nome, arquivo, tipo, conteudo in FALLBACKS:
+        slide = prs.slides[n - 1]
+        fb = [f for f in slide._element.iter("{http://schemas.openxmlformats.org/markup-compatibility/2006}Fallback")
+              if f.find(".//p:cNvPr", NS) is not None and f.find(".//p:cNvPr", NS).get("name") == nome]
+        if len(fb) != 1:
+            raise SystemExit(f"ERRO: slide {n}: esperava 1 imagem de reserva para {nome!r}; achei {len(fb)}")
+        blip = fb[0].find(".//a:blip", NS)
+        ext = fb[0].find(".//a:xfrm/a:ext", NS)
+        img = desenhar_fallback(arquivo, tipo, conteudo, int(ext.get("cx")), int(ext.get("cy")))
+        _, rid = slide.part.get_or_add_image_part(str(img))
+        blip.set(QN_EMBED, rid)
+        feitas.append(f"slide {n}: imagem de reserva de {nome!r} redesenhada ({img.relative_to(ROOT).as_posix()})")
+    return feitas
+
+
 def adaptar_grupo(prs) -> list[str]:
     s = prs.slides
     feitas = []
@@ -619,7 +796,7 @@ def construir(saida: Path) -> dict:
         raise SystemExit(f"ERRO: ORDEM e FORA_G precisam cobrir os {N_GRUPO} slides do grupo, sem repetição")
     if usados_pb | set(FORA_PB) != set(range(1, 15)) or usados_pb & set(FORA_PB):
         raise SystemExit("ERRO: ORDEM e FORA_PB precisam cobrir os 14 slides do pós-banca, sem repetição")
-    feitas = adaptar_grupo(prs)
+    feitas = adaptar_grupo(prs) + adaptar_teoria(prs) + trocar_fallbacks(prs)
     # Diagrama da teoria da mudança: "origem" sai da tela (doc 12, §1.2); a nota diz qual elo a hipótese testa
     sd = diag.slides[N_DIAG_SLIDE - 1]
     trocar_paragrafo(por_nome(sd, "A_no_A4"), A4_DIAGRAMA, 2,
@@ -636,6 +813,22 @@ def construir(saida: Path) -> dict:
     for n in sorted(usados_pb):
         copiar_slide(pb.slides[n - 1], prs, layout, f"pb{n}")
         ids_novos[("PB", n)] = prs.slides._sldIdLst[-1]
+    # δ é o desconto nas equações da teoria; no modelo empírico, a distância passa a ser γ (como no doc 11)
+    for nome in ("TextBox 47", "TextBox 63"):
+        modelo = [s for s in prs.slides if any(x.has_text_frame and x.text_frame.text.strip()
+                                                == "Modelo: logit condicional da 1ª opção" for x in s.shapes)]
+        if len(modelo) != 1:
+            raise SystemExit("ERRO: slide do modelo não encontrado")
+        sh = por_nome(modelo[0], nome)
+        trocados = 0
+        for par in sh.text_frame.paragraphs:
+            for r in par.runs:
+                if "δ" in r.text:
+                    r.text = r.text.replace("δ", "γ")
+                    trocados += 1
+        if trocados != 1:
+            raise SystemExit(f"ERRO: esperava 1 'δ' em {nome} do slide do modelo; achei {trocados}")
+    feitas.append("slide do modelo: γ para a distância (δ é o desconto da teoria)")
     modelo_rodape = next(sh for sh in prs.slides[2].shapes if sh.has_text_frame
                          and sh.text_frame.text.startswith("Motivação") and "|" in sh.text_frame.text)
     novos_m, pesos = slides_metodo(prs, layout, modelo_rodape)
@@ -691,6 +884,8 @@ def main(argv=None) -> int:
                 for p in (ENT_GRUPO, ENT_DIAG, ENT_PB, FIG_UF, FIG_VAGAS)]
     saidas = [{"caminho": (SAIDA / n).relative_to(ROOT).as_posix(), "sha256": sha256(SAIDA / n)}
               for n in (ARQ_DECK, ARQ_PDF) if (SAIDA / n).exists() and (n != ARQ_PDF or com_pdf)]
+    saidas += [{"caminho": (DIR_EQ / f[2]).relative_to(ROOT).as_posix(), "sha256": sha256(DIR_EQ / f[2])}
+               for f in FALLBACKS]
     man = {
         "script": "scripts/apresentacao/gerar_deck_banca_final.py",
         "conteudo_canonico": DOC,

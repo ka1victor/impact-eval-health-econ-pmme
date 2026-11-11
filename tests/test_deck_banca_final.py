@@ -22,7 +22,10 @@ _spec.loader.exec_module(G)
 # "origem" (doc 12 da banca 2, §1.2) e referência à numeração da banca 1
 PROIBIDAS = ("piso", "renumeração", "trasnporte", "buito", "PMEE", "EXEMPLO", "indícios de efetividade",
              "Viabilidade Empírica", "BOLSA → PREENCHIMENTO", "maior probabilidade de preenchimento de vagas",
-             "Municípios com maior remuneração", "REGIC", "incentivo limitado", "origem", "slide 11", "Sumário")
+             "Municípios com maior remuneração", "REGIC", "incentivo limitado", "origem", "slide 11", "Sumário",
+             # revisão do modelo de 11/11/2026: sobrenome, papel de p e de c, notação
+             "ROSSI, 2017", "Nível de amenidades da cidade", "Custo laboral :", "δ·dist", "δ · distância",
+             "Especialidade, vínculos")
 
 
 def sha256(p: Path) -> str:
@@ -83,6 +86,8 @@ class TestDeckBancaFinal(unittest.TestCase):
                 return [t for t in ts if not eh_rodape(t) and not t.isdigit()]
             antes = filtrar([norm(sh.text_frame.text) for sh in G.formas(pb.slides[n - 1].shapes)
                              if sh.has_text_frame])
+            if n == 6:  # única troca no pós-banca: a distância vira γ (δ é o desconto da teoria)
+                antes = [a.replace("δ", "γ") for a in antes]
             self.assertEqual(antes, filtrar(self.textos[pos]), f"pós-banca, slide {n}")
             if pb.slides[n - 1].has_notes_slide:
                 self.assertEqual(norm(pb.slides[n - 1].notes_slide.notes_text_frame.text),
@@ -127,6 +132,17 @@ class TestDeckBancaFinal(unittest.TestCase):
         self.assertAlmostEqual(pc / pa, 1, places=2)          # 75 km a mais comem os R$ 5 mil
         ex = self.man["exemplo_metodo"]
         self.assertAlmostEqual(ex["e_5beta"], v["rc"], places=12)
+
+    def test_equacoes_corrigidas(self):
+        import zipfile
+        with zipfile.ZipFile(DECK) as z:
+            xml = "".join(z.read(n).decode("utf-8") for n in z.namelist()
+                          if n.startswith("ppt/slides/slide") and n.endswith(".xml"))
+        self.assertIn("𝐚𝐫𝐠", xml)
+        self.assertIn("𝜿", xml)
+        self.assertNotIn("𝑾", xml)
+        for f in G.FALLBACKS:
+            self.assertTrue((G.DIR_EQ / f[2]).exists(), f[2])
 
     def test_ordem_e_fora_cobrem_as_entradas(self):
         g = [n for o, n, _ in G.ORDEM if o == "G"]
