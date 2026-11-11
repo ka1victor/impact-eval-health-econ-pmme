@@ -70,7 +70,7 @@ class TestDeckBancaFinal(unittest.TestCase):
     def test_textos_novos_na_tela_e_no_doc(self):
         doc = norm(DOC.read_text(encoding="utf-8"))
         tudo = " ".join(" ".join(t) for t in self.textos)
-        novos = [*G.TITULO_CAPA, G.SUB2_UF, G.SUB_VAGAS, G.SUB2_VAGAS, G.FONTES_ESCASSEZ, G.A_NOTA_DIAGRAMA,
+        novos = [*G.TITULO_CAPA, G.A_NOTA_DIAGRAMA,
                  G.CTEXT_UTILIDADE, G.ROTULO_CADEIA, G.ADICOES]
         for t in novos:
             self.assertIn(norm(t), tudo, t)
@@ -89,9 +89,12 @@ class TestDeckBancaFinal(unittest.TestCase):
                          if gr.shape_type == 6 and any(y.has_text_frame and y.text_frame.text.strip() == txt
                                                        for y in G.formas(gr.shapes))
                          for x in G.formas(gr.shapes) if x.has_text_frame}
+            titulo_pb = next((sh.text_frame.text for sh in pb.slides[n - 1].shapes if sh.has_text_frame
+                              and sh.is_placeholder and "TITLE" in str(sh.placeholder_format.type)), "")
+            fora = {nome for tit, nome in G.REMOVER_FORMAS if tit == " ".join(titulo_pb.split())}
             brutos = []
             for sh in G.formas(pb.slides[n - 1].shapes):
-                if not sh.has_text_frame or (sh.name, sh.text_frame.text) in removidos:
+                if not sh.has_text_frame or (sh.name, sh.text_frame.text) in removidos or sh.name in fora:
                     continue
                 tx = sh.text_frame.text
                 for _, nome, trecho, novo in G.TROCAS_ENXUGAR:  # o enxugamento de 11/11/2026 (doc 02, §0.2)
@@ -135,7 +138,7 @@ class TestDeckBancaFinal(unittest.TestCase):
         pos = [k for k, (o, _, _) in enumerate(G.ORDEM) if o == "M"]
         self.assertEqual(len(pos), 2)
         prox = G.ORDEM[pos[-1] + 1]
-        self.assertEqual(prox[:2], ("PB", 6), "os slides do método vêm antes da equação do modelo")
+        self.assertEqual(prox[:2], ("PB", 8), "depois do método vem a identificação (a equação foi para o apêndice)")
         v = G.pesos_vl1()
         t1, t2 = " ".join(self.textos[pos[0]]), " ".join(self.textos[pos[1]])
         self.assertIn(G.TITULO_M1, t1)
@@ -158,7 +161,6 @@ class TestDeckBancaFinal(unittest.TestCase):
         with zipfile.ZipFile(DECK) as z:
             xml = "".join(z.read(n).decode("utf-8") for n in z.namelist()
                           if n.startswith("ppt/slides/slide") and n.endswith(".xml"))
-        self.assertIn("𝐚𝐫𝐠", xml)
         self.assertIn("𝜿", xml)
         self.assertNotIn("𝑾", xml)
         for f in G.FALLBACKS:

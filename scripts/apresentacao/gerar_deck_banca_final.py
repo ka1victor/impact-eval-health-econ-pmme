@@ -72,7 +72,6 @@ SECOES = ("Motivação", "Literatura", "Hipótese", "Dados", "Análise Descritiv
           "Resultados", "Robustez", "Discussão")
 ORDEM = [
     ("G", 1, None),                  # capa, com o título da pergunta
-    ("G", 3, "Motivação"),           # escassez de especialistas (figuras do pipeline)
     ("PB", 2, "Motivação"),          # a bolsa por faixa de IVS e a pergunta
     ("D", N_DIAG_SLIDE, "Literatura"),  # diagrama A: teoria da mudança
     ("PB", 3, "Hipótese"),
@@ -80,8 +79,6 @@ ORDEM = [
     ("PB", 5, "Análise Descritiva"),
     ("M", 1, "Metodologia"),         # novo: o método passo a passo
     ("M", 2, "Metodologia"),         # novo: exemplo com três vagas e os pesos do VL-1
-    ("PB", 6, "Metodologia"),
-    ("PB", 7, "Metodologia"),
     ("PB", 8, "Identificação"),
     ("PB", 9, "Resultados"),
     ("PB", 10, "Robustez"),
@@ -90,9 +87,10 @@ ORDEM = [
     ("G", 31, None),                 # Q&A
     ("G", 32, None),                 # divisor Apêndice
     ("PB", 14, None),                # A1: a bolsa segue exatamente o IVS
+    ("PB", 6, None),                 # equação do modelo (sai do corpo: o passo a passo e o exemplo explicam)
+    ("PB", 7, None),                 # Bobba et al. (reserva para pergunta da banca)
     ("G", 16, None),                 # três elementos da teoria
     ("G", 17, None),                 # escolha locacional maximiza a utilidade
-    ("G", 19, None),                 # renda real líquida
     ("G", 20, None),                 # custo geográfico e laboral
     ("G", 18, None),                 # da escolha individual ao agregado
     ("G", 35, None),                 # o IVS
@@ -100,6 +98,9 @@ ORDEM = [
 SUMARIO = "sumário do grupo: sai pelo pedido 'menos slides' (doc 12 da banca 2, §1.2); a navegação do rodapé fica"
 # Slides do deck do grupo que saem, com o motivo (vão para o manifesto e para o doc 02)
 FORA_G = {
+    3: "escassez de especialistas: a motivação fica no slide da bolsa (notícias, regra e pergunta); pedido do autor de "
+       "11/11/2026, 'slides demais'",
+    19: "renda real líquida: repete o slide da utilidade (mesma equação); pedido do autor de 11/11/2026",
     2: SUMARIO, 12: SUMARIO, 15: SUMARIO, 22: SUMARIO, 24: SUMARIO, 26: SUMARIO, 28: SUMARIO,
     4: "oculto; figura de UF do grupo sem fonte reproduzível (P6)",
     5: "animação parcial do slide 7",
@@ -446,11 +447,6 @@ def adaptar_teoria(prs) -> list[str]:
 DIR_EQ = SAIDA / "equacoes"
 FALLBACKS = (
     # (slide do grupo, nome da forma, arquivo, tipo, conteúdo)
-    (19, "TextBox 1", "renda_real_liquida.png", "eq",
-     r"$\mathbf{arg\,max}_{\mathbfit{m}\in \mathbfit{I}}\ \sum_{\mathbfit{t}}\ \mathbfit{\delta}^{\mathbfit{t}}\left["
-     r"\frac{\mathbb{E}(\mathbfit{w}_{\mathbfit{mt(s)}})}{\mathbfit{p}_{\mathbfit{mt}}} - \mathbfit{c}_{\mathbfit{mt(s)}}\right]$"),
-    (19, "Retângulo: Cantos Arredondados 38", "gera_m.png", "caixa",
-     (r"Gera $\mathit{m}^{*}$:", ("a localidade que maximiza a renda real líquida", "esperada ao longo da carreira"))),
     (20, "TextBox 2", "chone_ma.png", "eq",
      r"$\mathbfit{U} = \mathbfit{R} - \mathbfit{C}(\mathbfit{q};\,\mathbfit{L},\mathbfit{K})$"),
     (20, "TextBox 4", "redding_rossi_hansberg.png", "eq",
@@ -825,8 +821,6 @@ T_ROB = "Robustez: sempre comparando vagas da mesma UF"
 T_CON = "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
 T_LIM = "Limitações e o que cada uma implica"
 TROCAS_ENXUGAR = (
-    (T_ESC, "Text Placeholder 7", "I. Escassez de especialistas é concentrada territorialmente",
-     "I. A escassez é desigual entre UFs"),
     (T_BOL, "Manchete", "Do total de profissionais, 72% serão destinados", None),
     (T_BOL, "Manchete", "1.480 especialistas do PMM-E em atividade hoje", None),
     (T_BOL, "TextBox 44", "I. A regra: a bolsa mensal cresce com o IVS do município da vaga", "I. A regra da bolsa"),
@@ -848,10 +842,6 @@ TROCAS_ENXUGAR = (
     (T_DIA, "A_no_A10", "Consultas, exames e cirurgias.", None),
     (T_DIA, "A_no_A11", "Espera e internações dos moradores.", None),
     (T_DIA, "A_grupo_G2", "ELOS DA POLÍTICA: DO PROVIMENTO À SAÚDE", "CADEIA DO PROGRAMA: NÃO ESTIMADA AQUI"),
-    (T_HIP, "TextBox 46", "I. Exemplo: o que a hipótese compara", "I. O que a hipótese compara"),
-    (T_HIP, "Rounded Rectangle 48", "cardiologista que trabalhava em Minas Gerais", "trabalhava em MG"),
-    (T_HIP, "Rounded Rectangle 53", "mesmo curso, mesma UF e o resto igual: distância, porte, IVS em curva contínua",
-     "resto igual: distância, porte, IVS"),
     (T_HIP, "Rounded Rectangle 54", "vagas diferentes, para o mesmo médico, num mesmo momento",
      "duas vagas, o mesmo médico"),
     (T_HIP, "Rounded Rectangle 55", "razão de chances da 1ª opção por +R$ 5 mil: hipótese > 1", "razão de chances > 1"),
@@ -869,8 +859,6 @@ TROCAS_ENXUGAR = (
     (T_BAS, "Table 46", "curva do IVS; mesma região de saúde; mesmo município; porte; capital; vaga imediata",
      "IVS contínuo, região, porte, capital"),
     (T_BAS, "Table 46", "Ipea; TabNet; IBGE; quadros", "Ipea; IBGE"),
-    (T_BAS, "TextBox 48", "linhas ilustrativas, não dados reais", "ilustrativo"),
-    (T_BAS, "TextBox 50", "Cada candidato vê todas as vagas do seu curso e ciclo; y = 1 numa só.", ""),
     (T_BAS, "TextBox 57", "linhas candidato × vaga (≈ 107 por candidato)", "linhas (≈ 107 vagas por candidato)"),
     (T_DES, "Text 18", "I. Onde fica a 1ª opção, em relação ao local de trabalho anterior", "I. Onde fica a 1ª opção"),
     (T_DES, "Text 19", "% dos 5.425 candidatos com 1ª opção e local de trabalho anterior identificado",
@@ -1027,6 +1015,60 @@ def enxugar(prs) -> list[str]:
             "(doc 02, §0.2)"]
 
 
+
+# --------------------------------------------------------------------------------------------------------------
+# Redesenho (pedido do autor de 11/11/2026: "ainda tem slides demais e conteúdo demais por slide")
+# (título do slide, nome da forma) que saem; o resto sobe ou se alarga em redesenhar()
+# --------------------------------------------------------------------------------------------------------------
+REMOVER_FORMAS = (
+    # hipótese: o exemplo das vagas A e B repete o slide do exemplo do método
+    (T_HIP, "TextBox 46"), (T_HIP, "TextBox 47"), (T_HIP, "Rounded Rectangle 48"), (T_HIP, "Rounded Rectangle 49"),
+    (T_HIP, "Rounded Rectangle 50"), (T_HIP, "TextBox 51"), (T_HIP, "TextBox 52"), (T_HIP, "Rounded Rectangle 53"),
+    # base: o formato longo repete os passos 1 e 2 do método
+    (T_BAS, "TextBox 47"), (T_BAS, "TextBox 48"), (T_BAS, "Table 49"), (T_BAS, "TextBox 50"),
+    # resultado: o ciclo 2 já está na robustez, na conclusão e nas limitações
+    (T_RES, "Rounded Rectangle 52"),
+)
+# resultado: linhas de controle (não interpretadas) que saem da tabela de coeficientes
+LINHAS_CONTROLE = ("Mesma região de saúde", "Mesmo município", "log(população 2022)", "Capital")
+
+
+def redesenhar(prs) -> list[str]:
+    for titulo, nome in REMOVER_FORMAS:
+        remover(por_nome(slide_por_titulo(prs, titulo), nome))
+    # hipótese: a frase em destaque maior, os três cartões e a cautela sobem
+    sl = slide_por_titulo(prs, T_HIP)
+    caixa = por_nome(sl, "Rounded Rectangle 45")
+    caixa.height = Inches(1.75)
+    for nome in ("Rounded Rectangle 54", "Rounded Rectangle 55", "Rounded Rectangle 56"):
+        sh = por_nome(sl, nome)
+        sh.top, sh.height = Inches(3.0), Inches(1.6)
+    por_nome(sl, "Rectangle 57").top = Inches(4.85)
+    # base: a tabela de variáveis ocupa a largura toda
+    sl = slide_por_titulo(prs, T_BAS)
+    tab = por_nome(sl, "Table 46")
+    fator = Inches(12.85) / tab.width
+    for col in tab.table.columns:
+        col.width = int(col.width * fator)
+    tab.width = Inches(12.85)
+    # resultado: só a bolsa e a distância na tabela; a nota sobe
+    sl = slide_por_titulo(prs, T_RES)
+    tab = por_nome(sl, "Table 46")
+    tbl = tab.table._tbl
+    for tr in list(tbl.tr_lst):
+        primeira = "".join(t_.text or "" for t_ in tr.iter("{%s}t" % NS["a"]))
+        if any(primeira.startswith(x) for x in LINHAS_CONTROLE):
+            tbl.remove(tr)
+    if len(tbl.tr_lst) != 3:
+        raise SystemExit(f"ERRO: a tabela do resultado devia ficar com 3 linhas; ficou com {len(tbl.tr_lst)}")
+    for tr in tbl.tr_lst:
+        tr.h = Inches(0.8)
+    tab.height = Inches(2.4)
+    por_nome(sl, "TextBox 47").top = Inches(3.8)
+    return [f"redesenho: {len(REMOVER_FORMAS)} formas fora (exemplo da hipótese, formato longo da base, ciclo 2 do "
+            f"resultado) e {len(LINHAS_CONTROLE)} linhas de controle fora da tabela do resultado"]
+
+
 def slide_por_titulo(prs, titulo: str):
     achados = [s for s in prs.slides if any(x.has_text_frame and " ".join(x.text_frame.text.split()) == titulo
                                             for x in s.shapes)]
@@ -1107,6 +1149,7 @@ def construir(saida: Path) -> dict:
     for n in FORA_G:
         prs.part.drop_rel(ids_grupo[n - 1].get(QN_RID))
     feitas += enxugar(prs)
+    feitas += redesenhar(prs)
     # notas do divisor "Apêndice": tinham uma resposta de chat colada, vinda do deck do grupo
     notas(prs.slides[ORDEM.index(("G", 32, None))], "")
     feitas.append("notas do divisor 'Apêndice' limpas (resposta de chat colada no deck do grupo)")

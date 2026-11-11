@@ -23,6 +23,18 @@
 > abaixo são os do deck antigo. A correspondência nova (e o motivo de cada slide que sai) está no gerador (`ORDEM`,
 > `FORA_G`) e no manifesto. Em andamento: dois slides novos com o método passo a passo e a revisão do modelo teórico.
 
+> [!IMPORTANT]
+> **Versão de 11/11/2026: 23 slides, 13 no corpo** (pedido do autor: "ainda tem slides demais e conteúdo demais por
+> slide"). Corpo: capa; a bolsa e a pergunta; teoria da mudança; hipótese; base; descritiva; método passo a passo;
+> exemplo; identificação; resultado; robustez; conclusão; limitações. Apêndice: Q&A, divisor, A1 (regra), **a equação do
+> modelo e Bobba et al. (saíram do corpo, ficam de reserva para pergunta da banca)**, os slides de teoria e o IVS. Saíram
+> de vez o slide da escassez de especialistas (a motivação fica no slide da bolsa) e o da renda real líquida (repetia o
+> da utilidade). Redesenho (`REMOVER_FORMAS`, `redesenhar`): a hipótese perdeu o exemplo das vagas A e B (repetia o
+> exemplo do método); a base perdeu o "formato longo" (repetia o passo a passo) e a tabela de variáveis ocupa a largura
+> toda; o resultado ficou só com bolsa e distância na tabela (os controles não são interpretados) e sem a caixa do
+> ciclo 2 (já está na robustez, na conclusão e nas limitações). As seções 1 a 3 abaixo descrevem versões anteriores; a
+> ordem vigente está no gerador (`ORDEM`) e no manifesto.
+
 ## 0. O método passo a passo (pedido do autor de 09/11/2026)
 
 A banca de 04/11 não entendeu o método e disse nunca ter ouvido falar dele. Por isso, a seção de Metodologia abre com
