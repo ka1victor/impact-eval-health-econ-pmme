@@ -30,11 +30,11 @@
   "saidas": [
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pptx",
-      "sha256": "7d8ec3be8335d904bf65d25acbb3354c5d6a8c85ec50431e8144fe5d0223d1d7"
+      "sha256": "46666c6aefe70113c6f7fede9ead37b9154c75f99f07ddddedd7a9026b856b6c"
     },
     {
       "caminho": "output/apresentacao_banca_final/deck_banca_final.pdf",
-      "sha256": "184bcda1a04bde940b042e2364f45944061a6ab33b63c1dd46c161976156cb0e"
+      "sha256": "9025667c525e9155ad680df300bd808c5bd39408f6a2df3aab0a49d6955bb29d"
     },
     {
       "caminho": "output/apresentacao_banca_final/equacoes/renda_real_liquida.png",
@@ -237,7 +237,7 @@
     "slide 18: rótulo 'CADEIA DO MODELO' no lugar de 'HIPÓTESE'",
     "slide 20: 'Adições ao modelo do slide anterior' (a numeração mudou)",
     "slide 35: 'transporte' (errata E8)",
-    "modelo teórico: 35 trocas de texto (p é o custo de vida; c tem parte geográfica e laboral; Rossi-Hansberg; 'curso'; a 1ª opção como o argmax do cardápio)",
+    "modelo teórico: 37 trocas de texto (p é o custo de vida; c tem parte geográfica e laboral; Rossi-Hansberg; 'curso'; a 1ª opção como o argmax do cardápio)",
     "equações: arg max e m (localidade) no slide da renda real líquida; z, w e κ em Redding & Rossi-Hansberg, como no modelo_micro",
     "slide 19: imagem de reserva de 'TextBox 1' redesenhada (output/apresentacao_banca_final/equacoes/renda_real_liquida.png)",
     "slide 19: imagem de reserva de 'Retângulo: Cantos Arredondados 38' redesenhada (output/apresentacao_banca_final/equacoes/gera_m.png)",
@@ -248,7 +248,7 @@
     "slide do modelo: γ para a distância (δ é o desconto da teoria)",
     "identificação: 'listou sem estratégia' na premissa do conjunto de escolha; nota nas limitações",
     "slide novo do método: 4 passos e o exemplo com três vagas e os pesos do VL-1, num slide só",
-    "enxugamento: 95 trocas de texto e 2 grupos removidos (doc 02, §0.2)",
+    "enxugamento: 97 trocas de texto e 2 grupos removidos (doc 02, §0.2)",
     "redesenho: 13 formas fora (exemplo da hipótese, formato longo da base, ciclo 2 do resultado) e 4 linhas de controle fora da tabela do resultado",
     "notas do divisor 'Apêndice' limpas (resposta de chat colada no deck do grupo)"
   ],

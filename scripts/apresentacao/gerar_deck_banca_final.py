@@ -335,8 +335,8 @@ TROCAS_TEORIA = (
      "composto pela desutilidade do atendimento (equipe e capital instalado) e pela desutilidade da vida no local "
      "(amenidades, segurança e distância de casa)"),
     (17, "eqlab", None, 0, 0, "MOEHLING et al. (2020), EQ. 1, P. 184", "ADAPTADO DE MOEHLING et al. (2020), EQ. 1, P. 184"),
-    (17, "eqleg", None, 0, 3, ": Local escolhido por r  ·  ", ": vaga escolhida por r (a 1ª opção)  ·  "),
-    (17, "eqleg", None, 0, 6, ": ofertas disponíveis a r  ·  ", ": ofertas disponíveis a r (o cardápio)  ·  "),
+    (17, "eqleg", None, 0, 3, ": Local escolhido por r  ·  ", ": 1ª opção de r  ·  "),
+    (17, "eqleg", None, 0, 6, ": ofertas disponíveis a r  ·  ", ": cardápio de r  ·  "),
     (17, "dvar0", "Salário : E(wmt)", 0, 3, ")", " | B)"),
     (17, "deqbox0", "Segurança, deslocamento etc Nível de amenidades da cidade", 0, 0, "Segurança, deslocamento ",
      "Moradia e custo de vida"),
@@ -347,7 +347,7 @@ TROCAS_TEORIA = (
     (17, "deqbox0", "Esforço para atender Aumenta com equipe e equipamentos ruins", 0, 0, "Esforço para atender",
      "Esforço e vida no local"),
     (17, "deqbox0", "Esforço e vida no local Aumenta com equipe e equipamentos ruins", 1, 0,
-     "Aumenta com equipe e equipamentos ruins", "Equipe ruim, poucas amenidades, longe de casa"),
+     "Aumenta com equipe e equipamentos ruins", "Equipe ruim, longe de casa"),
     (17, "dtxt0", "Custo não monetário de exercer ali; o altruísmo do médico (α) compensa em parte.", 0, 0,
      "Custo não monetário de exercer ali; o altruísmo do médico (α) compensa em parte.",
      "Custo não monetário de viver e exercer ali."),
@@ -371,6 +371,8 @@ TROCAS_TEORIA = (
     (19, "col2", None, 0, 3, "A escolha recai sobre aquela que oferece o maior valor presente da renda real líquida",
      "A escolha recai sobre aquela que oferece o maior valor presente da renda real líquida."),
     (20, "pill0", None, 0, 1, "REDDING & ROSSI, 2017)", "REDDING & ROSSI-HANSBERG, 2017)"),
+    (20, "pill0", None, 0, 0, "CUSTO GEOGRÁFICO (", "GEOGRÁFICO ("),
+    (20, "pill1", None, 0, 0, "CUSTO LABORAL (CHONÉ & MA, 2011)", "LABORAL (CHONÉ & MA, 2011)"),
     (20, "impact0", None, 0, 2, "it", "mt"),
     (20, "impact0", None, 0, 4, " o deflator da localidade",
      " o deflator (moradia) e a parte geográfica de c (amenidades, distância)"),
@@ -830,6 +832,10 @@ T_ROB = "Robustez: sempre comparando vagas da mesma UF"
 T_CON = "Conclusão: a bolsa maior aumenta a 1ª opção? Sim"
 T_LIM = "Limitações e o que cada uma implica"
 TROCAS_ENXUGAR = (
+    # revisão de 11/11/2026: a faixa do meio começa em 0,301 (0,300 fica em R$ 10 mil), como no diagrama da teoria
+    (T_BOL, "Rounded Rectangle 47", "IVS de 0,300 a 0,400", "IVS de 0,301 a 0,400"),
+    # o item 11.1.4 do edital é a cláusula da grade do FAQ, que não é a aplicada (errata E10)
+    ("O IVS mede a vulnerabilidade social dos territórios brasileiros", "Text 34", " (item 11.1.4)", ""),
     (T_ESC, "Text Placeholder 7", "I. Escassez de especialistas é concentrada territorialmente",
      "I. A escassez é desigual entre UFs"),
     (T_BOL, "Manchete", "Do total de profissionais, 72% serão destinados", None),
@@ -1074,6 +1080,11 @@ def redesenhar(prs) -> list[str]:
     for col in tab.table.columns:
         col.width = int(col.width * fator)
     tab.width = Inches(12.85)
+    for i_, row in enumerate(tab.table.rows):
+        for cell in row.cells:
+            for par in cell.text_frame.paragraphs:
+                for r in par.runs:
+                    r.font.size = Pt(14 if i_ == 0 else 15)
     # resultado: só a bolsa e a distância na tabela; a nota sobe
     sl = slide_por_titulo(prs, T_RES)
     tab = por_nome(sl, "Table 46")

@@ -36,6 +36,15 @@
 > trabalho, as versões ocultas e os sumários (a decidir). As seções 1 a 3 abaixo descrevem versões anteriores; a
 > ordem vigente está no gerador (`ORDEM`) e no manifesto.
 
+> [!NOTE]
+> **Revisão de 11/11/2026 (versão de 24 slides).** Corrigido: a faixa do meio da regra no slide da bolsa dizia
+> "0,300 a 0,400" e o diagrama dizia "0,301 a 0,400" (o certo é 0,301: 0,300 fica em R$ 10 mil); a tabela de variáveis
+> da base, alargada, tinha letra de ~9 pt (agora 15 pt); no apêndice, a legenda da equação da utilidade e o cartão do
+> custo não pecuniário estouravam a caixa; o rótulo "CUSTO GEOGRÁFICO (REDDING & ROSSI-HANSBERG, 2017)" quebrava em
+> duas linhas (agora "GEOGRÁFICO (…)" e "LABORAL (…)"); a fonte do slide do IVS citava o item 11.1.4 do edital, que é a
+> grade do FAQ (errata E10). Conferido: números da tela contra `output/`, cautelas obrigatórias, navegação, número de
+> página e notas de fala ("origem" só nas notas, onde o termo técnico é permitido).
+
 ## 0. O método passo a passo (pedido do autor de 09/11/2026)
 
 A banca de 04/11 não entendeu o método e disse nunca ter ouvido falar dele. Por isso, a seção de Metodologia abre com
