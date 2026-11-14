@@ -91,178 +91,178 @@
     },
     {
       "posicao": 11,
-      "origem": "grupo 14/11",
-      "slide_origem": 11,
-      "secao": "Literatura",
-      "titulo": "Modelo combina dois elementos da teoria"
-    },
-    {
-      "posicao": 12,
       "origem": "novo",
       "slide_origem": "cadeia1",
       "secao": "Literatura",
       "titulo": "Cadeia causal: da bolsa aos desfechos na saúde"
     },
     {
-      "posicao": 13,
+      "posicao": 12,
       "origem": "novo",
       "slide_origem": "cadeia2",
       "secao": "Literatura",
       "titulo": "Cadeia causal: da bolsa aos desfechos na saúde"
     },
     {
-      "posicao": 14,
+      "posicao": 13,
       "origem": "grupo 14/11",
       "slide_origem": 13,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 15,
+      "posicao": 14,
       "origem": "novo",
       "slide_origem": "hipotese",
       "secao": "Hipótese",
       "titulo": "Maior remuneração, maior chance de ser escolhida"
     },
     {
-      "posicao": 16,
+      "posicao": 15,
       "origem": "grupo 14/11",
       "slide_origem": 15,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 17,
+      "posicao": 16,
       "origem": "grupo 14/11",
       "slide_origem": 16,
       "secao": "Base de Dados",
       "titulo": "Dados ligam os editais do PMM-E ao CNES"
     },
     {
-      "posicao": 18,
+      "posicao": 17,
       "origem": "novo",
       "slide_origem": "linhas",
       "secao": "Base de Dados",
       "titulo": "Cada candidato vira uma linha por vaga possível"
     },
     {
-      "posicao": 19,
+      "posicao": 18,
       "origem": "grupo 14/11",
       "slide_origem": 17,
       "secao": "Análise Descritiva",
       "titulo": "Candidatos escolhem perto de onde trabalham"
     },
     {
-      "posicao": 20,
+      "posicao": 19,
       "origem": "grupo 14/11",
       "slide_origem": 18,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 21,
+      "posicao": 20,
       "origem": "novo",
       "slide_origem": "intuicao",
       "secao": "Metodologia",
       "titulo": "Cada médico escolhe a vaga que mais vale a pena"
     },
     {
-      "posicao": 22,
+      "posicao": 21,
       "origem": "novo",
       "slide_origem": "modelo",
       "secao": "Metodologia",
       "titulo": "Modelo: logit condicional da 1ª opção"
     },
     {
-      "posicao": 23,
+      "posicao": 22,
       "origem": "novo",
       "slide_origem": "passos",
       "secao": "Metodologia",
       "titulo": "Método passo a passo: da escolha à razão de chances"
     },
     {
-      "posicao": 24,
-      "origem": "novo",
-      "slide_origem": "estimacao",
-      "secao": "Metodologia",
-      "titulo": "Estimação: de onde vem o β"
-    },
-    {
-      "posicao": 25,
+      "posicao": 23,
       "origem": "novo",
       "slide_origem": "identificacao",
       "secao": "Identificação",
       "titulo": "Identificação: as premissas do logit condicional"
     },
     {
-      "posicao": 26,
+      "posicao": 24,
       "origem": "grupo 14/11",
       "slide_origem": 23,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 27,
+      "posicao": 25,
       "origem": "novo",
       "slide_origem": "resultados",
       "secao": "Resultados",
       "titulo": "Ficar perto de onde trabalha pesa mais que a bolsa"
     },
     {
-      "posicao": 28,
+      "posicao": 26,
       "origem": "novo",
       "slide_origem": "robustez",
       "secao": "Robustez",
       "titulo": "Robustez: ×1,47 se mantém com mais dados"
     },
     {
-      "posicao": 29,
+      "posicao": 27,
       "origem": "novo",
       "slide_origem": "limitacoes",
       "secao": "Discussão",
       "titulo": "Limitações"
     },
     {
-      "posicao": 30,
+      "posicao": 28,
       "origem": "novo",
       "slide_origem": "conclusao",
       "secao": "Discussão",
       "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
     },
     {
-      "posicao": 31,
+      "posicao": 29,
       "origem": "grupo 14/11",
       "slide_origem": 31,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 32,
+      "posicao": 30,
+      "origem": "grupo 14/11",
+      "slide_origem": 11,
+      "secao": null,
+      "titulo": "Anexo 1: modelo combina dois elementos da teoria"
+    },
+    {
+      "posicao": 31,
       "origem": "grupo 14/11",
       "slide_origem": 32,
       "secao": null,
-      "titulo": "Anexo 1: Literatura Teórica - Equação"
+      "titulo": "Anexo 2: literatura teórica, a equação"
     },
     {
-      "posicao": 33,
+      "posicao": 32,
       "origem": "grupo 14/11",
       "slide_origem": 33,
       "secao": null,
-      "titulo": "Anexo 2: bolsa segue exatamente o IVS do município"
+      "titulo": "Anexo 3: bolsa segue exatamente o IVS do município"
+    },
+    {
+      "posicao": 33,
+      "origem": "novo",
+      "slide_origem": "estimacao",
+      "secao": null,
+      "titulo": "Anexo 4: estimação, de onde vem o β"
     },
     {
       "posicao": 34,
       "origem": "novo",
       "slide_origem": "formal",
       "secao": null,
-      "titulo": "Anexo 3: o modelo formal, do valor à escolha"
+      "titulo": "Anexo 5: o modelo formal, do valor à escolha"
     },
     {
       "posicao": 35,
       "origem": "novo",
       "slide_origem": "alternativas",
       "secao": null,
-      "titulo": "Anexo 4: por que este modelo e não outro"
+      "titulo": "Anexo 6: por que este modelo e não outro"
     }
   ],
   "fora_do_deck": {
@@ -327,9 +327,10 @@
     "slide 32 do grupo: '; o altruísmo do médico (α) compensa em parte.' → '.'",
     "slide 32 do grupo: ') por (B)' → ') pela bolsa (B)'",
     "slide 3 do grupo: 'A escassez de especialistas já é tratada como urgência sanitária' → 'Escassez de especialistas já é tratada como urgência sanitária'",
-    "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Modelo combina dois elementos da teoria'",
+    "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Anexo 1: modelo combina dois elementos da teoria'",
+    "slide 32 do grupo: 'Anexo 1: Literatura Teórica - Equação' → 'Anexo 2: literatura teórica, a equação'",
     "slide 16 do grupo: 'Os dados ligam os editais do PMM-E ao CNES' → 'Dados ligam os editais do PMM-E ao CNES'",
-    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Anexo 2: bolsa segue exatamente o IVS do município'",
+    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Anexo 3: bolsa segue exatamente o IVS do município'",
     "slide 4 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 5 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 6 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
@@ -344,7 +345,7 @@
     "slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pptx": "a88b0445314b942b64b5a0c3bb5d422662e7d8a244ef93b1cba28e04340964ae",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pptx": "59887e6aebfa9c84e64fe0eb4ea7f71b17d95f9b91fa6a0b2ffde506ad9238fe",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pdf": "gerado (PDF não é determinístico)"
   }
 }

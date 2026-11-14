@@ -41,24 +41,31 @@
 | 4–6 | grupo 4–6 | Motivação | Vulnerabilidade social define o valor da bolsa do PMM-E |
 | 7 | grupo 7 | Motivação | Política direciona incentivos aos territórios mais vulneráveis |
 | 8–10 | grupo 8–10 | — | sumário; pergunta; sumário |
-| 11 | grupo 11 | Literatura | Modelo combina dois elementos da teoria |
-| 12–13 | novos | Literatura | Cadeia causal: da bolsa aos desfechos na saúde |
-| 14 | grupo 13 | — | sumário |
-| 15 | novo | Hipótese | Maior remuneração, maior chance de ser escolhida |
-| 16–17 | grupo 15–16 | Base de Dados | sumário; Dados ligam os editais do PMM-E ao CNES |
-| 18 | novo | Base de Dados | Cada candidato vira uma linha por vaga possível |
-| 19 | grupo 17 | Análise Descritiva | Candidatos escolhem perto de onde trabalham |
-| 20 | grupo 18 | — | sumário |
-| 21 | novo | Metodologia | Modelo: logit condicional da 1ª opção |
-| 22 | novo | Metodologia | Método passo a passo: da escolha à razão de chances |
-| 23 | novo | Metodologia | Estimação: de onde vem o β |
-| 24 | novo | Identificação | Identificação: as premissas do logit condicional |
-| 25 | grupo 23 | — | sumário |
-| 26 | novo | Resultados | Resultados: +R$ 5 mil multiplicam a chance por 1,47 |
-| 27 | novo | Robustez | Robustez: ×1,47 se mantém com mais dados |
-| 28 | novo | Discussão | Limitações |
-| 29 | novo | Discussão | Conclusão: bolsa pesa na escolha, mas pouco (com quem ocupa a vaga) |
-| 30–32 | grupo 31–33 | — | Q&A; anexo 1; anexo 2: bolsa segue exatamente o IVS do município |
+| 11–12 | novos | Literatura | Cadeia causal: da bolsa aos desfechos na saúde |
+| 13 | grupo 13 | — | sumário |
+| 14 | novo | Hipótese | Maior remuneração, maior chance de ser escolhida |
+| 15–16 | grupo 15–16 | Base de Dados | sumário; Dados ligam os editais do PMM-E ao CNES |
+| 17 | novo | Base de Dados | Cada candidato vira uma linha por vaga possível |
+| 18 | grupo 17 | Análise Descritiva | Candidatos escolhem perto de onde trabalham |
+| 19 | grupo 18 | — | sumário |
+| 20 | novo | Metodologia | Modelo: logit condicional da 1ª opção |
+| 21 | novo | Metodologia | Método passo a passo: da escolha à razão de chances |
+| 22 | novo | Identificação | Identificação: as premissas do logit condicional |
+| 23 | grupo 23 | — | sumário |
+| 24 | novo | Resultados | Resultados: +R$ 5 mil multiplicam a chance por 1,47 |
+| 25 | novo | Robustez | Robustez: ×1,47 se mantém com mais dados |
+| 26 | novo | Discussão | Limitações |
+| 27 | novo | Discussão | Conclusão: bolsa pesa na escolha, mas pouco (com quem ocupa a vaga) |
+| 28 | grupo 31 | — | Q&A |
+| 29 | grupo 11 | — | Anexo 1: modelo combina dois elementos da teoria (literatura) |
+| 30 | grupo 32 | — | Anexo 2: literatura teórica, a equação |
+| 31 | grupo 33 | — | Anexo 3: bolsa segue exatamente o IVS do município |
+| 32 | novo | — | Anexo 4: estimação, de onde vem o β |
+
+**Rodada 10 (14/11), para encurtar a fala:** Literatura e Estimação saem do corpo e vão para o anexo (a cadeia causal
+já mostra as três forças com os mesmos autores; o modelo e a identificação já dizem o que a estimação diz). Na versão
+conciliada, os anexos 5 (modelo formal) e 6 (por que não outro método) vêm depois. Roteiro de fala no
+[doc 05](05_roteiro_fala.md).
 
 **Ideias do deck v4.1 de um colega, desligadas** (`COM_IDEIAS_COLEGA = False` no gerador): o slide "Cada médico
 escolhe a vaga que mais vale a pena" (antes do modelo) e os anexos 3 (modelo formal) e 4 (por que não outro método),
@@ -310,6 +317,6 @@ Prevalece sobre o texto acima onde houver conflito.
 
 ## 5. Para o grupo decidir
 
-1. **Slide 23 (estimação):** fica no corpo ou vai para o apêndice? Com ele, a Metodologia tem três slides (21–23).
+1. **Estimação:** decidido em 14/11 (rodada 10): vai para o anexo 4.
 2. **Ideias do colega (v4.1):** juntar na conciliação (ligar `COM_IDEIAS_COLEGA`).
 3. **Roteiro de fala:** em [05](05_roteiro_fala.md), para ≈ 15 min; ajustar quando o tempo da banca for informado.

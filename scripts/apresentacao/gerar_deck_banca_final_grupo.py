@@ -82,15 +82,17 @@ IDEIAS_COLEGA = {"intuicao", "formal", "alternativas"}
 ORDEM = [
     ("G", 1, None), ("G", 2, None), ("G", 3, "Motivação"), ("G", 4, "Motivação"), ("G", 5, "Motivação"),
     ("G", 6, "Motivação"), ("G", 7, "Motivação"), ("G", 8, None), ("G", 9, None), ("G", 10, None),
-    ("G", 11, "Literatura"), ("N", "cadeia1", "Literatura"), ("N", "cadeia2", "Literatura"),
+    ("N", "cadeia1", "Literatura"), ("N", "cadeia2", "Literatura"),
     ("G", 13, None), ("N", "hipotese", "Hipótese"),
     ("G", 15, None), ("G", 16, "Base de Dados"), ("N", "linhas", "Base de Dados"),
     ("G", 17, "Análise Descritiva"),
     ("G", 18, None), ("N", "intuicao", "Metodologia"), ("N", "modelo", "Metodologia"), ("N", "passos", "Metodologia"),
-    ("N", "estimacao", "Metodologia"), ("N", "identificacao", "Identificação"),
+    ("N", "identificacao", "Identificação"),
     ("G", 23, None), ("N", "resultados", "Resultados"), ("N", "robustez", "Robustez"),
     ("N", "limitacoes", "Discussão"), ("N", "conclusao", "Discussão"),
-    ("G", 31, None), ("G", 32, None), ("G", 33, None), ("N", "formal", None), ("N", "alternativas", None),
+    # anexos (rodada 10, 14/11): Literatura e Estimação saem do corpo para encurtar a fala
+    ("G", 31, None), ("G", 11, None), ("G", 32, None), ("G", 33, None), ("N", "estimacao", None),
+    ("N", "formal", None), ("N", "alternativas", None),
 ]
 
 FORA = {
@@ -158,9 +160,10 @@ CORRECOES = [(n, a, b) for n in (4, 5, 6) for a, b in _FAIXAS] + [
     # títulos sem artigo no começo (pedido do autor de 14/11)
     (3, "A escassez de especialistas já é tratada como urgência sanitária",
      "Escassez de especialistas já é tratada como urgência sanitária", "exato"),
-    (11, "O modelo combina dois elementos da teoria", "Modelo combina dois elementos da teoria", "exato"),
+    (11, "O modelo combina dois elementos da teoria", "Anexo 1: modelo combina dois elementos da teoria", "exato"),
+    (32, "Anexo 1: Literatura Teórica - Equação", "Anexo 2: literatura teórica, a equação", "exato"),
     (16, "Os dados ligam os editais do PMM-E ao CNES", "Dados ligam os editais do PMM-E ao CNES", "exato"),
-    (33, "A bolsa segue exatamente o IVS do município", "Anexo 2: bolsa segue exatamente o IVS do município", "exato"),
+    (33, "A bolsa segue exatamente o IVS do município", "Anexo 3: bolsa segue exatamente o IVS do município", "exato"),
 ] + [(n, "A vulnerabilidade social define o valor da bolsa do PMM-E",
       "Vulnerabilidade social define o valor da bolsa do PMM-E", "exato") for n in (4, 5, 6)] + [
     (32, "Preços e custo do local continuam contra e é a soma das três variáveis que determina se a vaga é preenchida.",
@@ -763,7 +766,7 @@ def s_modelo(M, prs, n):
             ("mesmo", 13, True, TEXTO),
             (" médico: o que é dele (nota, idade) é igual em todas e sai da conta.", 13, False, TEXTO)],
            [("A bolsa vem de uma regra; por isso a versão mais simples do modelo basta" +
-             (" (outros métodos: anexo 4)." if COM_IDEIAS_COLEGA else "."), 13, False, TEXTO)],
+             (" (outros métodos: anexo 6)." if COM_IDEIAS_COLEGA else "."), 13, False, TEXTO)],
            [("Em saúde: ", 13, True, VERDE),
             ("Costa, Nunes e Sanches (2024) usam um modelo da mesma família para estudar onde os médicos escolhem "
              "trabalhar no Brasil.", 13, False, TEXTO)]],
@@ -869,7 +872,7 @@ def s_passos(M, prs, n):
 
 def s_estimacao(M, prs, n):
     """De onde vem o β e o que comparamos; a incerteza fica nas notas e no slide de resultados (pedido de 14/11)."""
-    sl = M.novo(prs, "Estimação: de onde vem o β")
+    sl = M.novo(prs, "Anexo 4: estimação, de onde vem o β")
     topo, alto = 0.9, 4.0
 
     def cartao(x, w, rotulo):
@@ -1222,7 +1225,7 @@ def s_intuicao(M, prs, n):
 
 def s_formal(M, prs, n):
     vs = abc(n)
-    sl = M.novo(prs, "Anexo 3: o modelo formal, do valor à escolha")
+    sl = M.novo(prs, "Anexo 5: o modelo formal, do valor à escolha")
     cards = (("1 · UTILIDADE (NÃO OBSERVADA)", "U_{iv} = β·x_{iv} + ε_{iv}",
               "β·x: bolsa, distância, IVS, X e par de UFs, com os pesos. ε: o que não vemos (família, gosto)."),
              ("2 · ESCOLHA OBSERVADA (0 OU 1)", "y_{iv} = 1  se  U_{iv} > U_{ik}",
@@ -1295,7 +1298,7 @@ def s_formal(M, prs, n):
 
 
 def s_alternativas(M, prs, n):
-    sl = M.novo(prs, "Anexo 4: por que este modelo e não outro")
+    sl = M.novo(prs, "Anexo 6: por que este modelo e não outro")
     caixa(sl, 0.25, 0.88, 12.83, 0.5,
           [[("Havia outros jeitos de medir o peso da bolsa. Em cada linha: o que o método faz e por que não é o "
              "principal.", 14, True, VERDE)]], fill=CLARO, nome="Faixa", margem=0.25)

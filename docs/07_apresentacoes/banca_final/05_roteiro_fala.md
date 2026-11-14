@@ -1,11 +1,13 @@
 # 05. Roteiro de fala da banca final, em bullets
 
-> **Para quê:** o que falar em cada slide da nossa versão final
-> (`output/apresentacao_banca_final/deck_banca_final_grupo.pptx`, 32 slides; conteúdo no
-> [doc 03](03_deck_banca_final_grupo.md)). É a versão curta das notas do apresentador: as notas do deck continuam
-> com o detalhe e as respostas de reserva; as perguntas prováveis estão no [doc 04](04_perguntas_provaveis_logit.md).<br>
-> **Tempo:** o tempo da banca ainda não foi informado. Os tempos abaixo somam cerca de 15 min. Se faltar tempo,
-> encurtar primeiro os slides marcados **(encurtável)**.<br>
+> **Para quê:** o que falar em cada slide. A parte principal segue a nossa versão
+> (`output/apresentacao_banca_final/deck_banca_final_grupo.pptx`, 32 slides); a última seção diz o que muda na
+> versão conciliada com as ideias do colega (`deck_banca_final_grupo_conciliado.pptx`, 35 slides). Conteúdo dos
+> slides no [doc 03](03_deck_banca_final_grupo.md). É a versão curta das notas do apresentador; as notas continuam
+> com o detalhe e as respostas de reserva, e as perguntas prováveis estão no [doc 04](04_perguntas_provaveis_logit.md).<br>
+> **Tempo:** o tempo da banca ainda não foi informado. Os tempos abaixo somam cerca de 13 min (a conciliada, cerca de
+> 13 min 30 s). Literatura e Estimação foram para o anexo (rodada 10, 14/11) para encurtar a fala. Se ainda faltar
+> tempo, encurtar primeiro os slides marcados **(encurtável)**.<br>
 > **Regra de fala:** é a escolha da 1ª opção de quem se inscreveu, não a chegada do médico ao município; o efeito é o
 > do conjunto de regras que muda no corte do IVS, não só do dinheiro. Resultado descritivo é chamado de descritivo.
 
@@ -31,7 +33,7 @@
 - O programa alocou mais especialistas onde havia menos e paga mais nas regiões mais vulneráveis.
 - Pergunta natural: essa bolsa maior de fato atrai os médicos?
 
-## Pergunta, literatura e hipótese (≈ 2 min 30 s)
+## Pergunta, teoria e hipótese (≈ 2 min)
 
 **8. Sumário** (5 s): passar.
 
@@ -40,22 +42,17 @@
 
 **10. Sumário** (5 s): passar.
 
-**11. Modelo combina dois elementos da teoria** (40 s) **(encurtável)**
-- Moehling et al. (2020): o médico escolhe o local que maximiza o valor do rendimento menos um custo de estar ali.
-- Esse custo tem duas partes: trabalhar ali (equipe, equipamento; Choné e Ma) e viver ali (amenidades, distância;
-  Redding e Rossi-Hansberg).
-
-**12–13. Cadeia causal: da bolsa aos desfechos na saúde** (50 s, os dois juntos)
+**11–12. Cadeia causal: da bolsa aos desfechos na saúde** (60 s, os dois juntos)
 - Regra: IVS do município → bolsa.
-- A bolsa aumenta o valor da vaga; os custos de viver e de trabalhar ali reduzem. Não vemos esse valor; vemos só a 1ª
-  opção.
+- A bolsa aumenta o valor da vaga (Moehling et al.); o custo de viver ali (Redding e Rossi-Hansberg) e o de trabalhar
+  ali (Choné e Ma) reduzem. Não vemos esse valor; vemos só a 1ª opção.
 - O que estimamos: o peso da remuneração na chance de a vaga ser a 1ª opção.
-- (13) Da vaga à saúde fica fora do que estimamos: quantos médicos escolhem a vaga, se ela é ocupada, vínculos e
+- (12) Da vaga à saúde fica fora do que estimamos: quantos médicos escolhem a vaga, se ela é ocupada, vínculos e
   horas no CNES, consultas e exames, e por fim espera e internações.
 
-**14. Sumário** (5 s): passar.
+**13. Sumário** (5 s): passar.
 
-**15. Maior remuneração, maior chance de ser escolhida** (40 s)
+**14. Maior remuneração, maior chance de ser escolhida** (40 s)
 - Hipótese: entre vagas do mesmo curso, na mesma UF e iguais no resto, a que paga mais tem mais chance de ser a 1ª
   opção.
 - Exemplo real (MG, ciclo 2): Araçuaí e Itamarandiba têm IVS e distância quase iguais, mas a segunda paga R$ 5 mil a
@@ -64,82 +61,103 @@
 
 ## Dados e descritiva (≈ 2 min 30 s)
 
-**16. Sumário** (5 s): passar.
+**15. Sumário** (5 s): passar.
 
-**17. Dados ligam os editais do PMM-E ao CNES** (40 s)
+**16. Dados ligam os editais do PMM-E ao CNES** (40 s)
 - Editais e quadros de vagas (1ª opção, bolsa), CNES (onde o médico trabalhava antes), Ipea (IVS) e IBGE (distância,
   porte, capital).
 - Três ciclos; 5.417 candidatos no modelo principal.
 
-**18. Cada candidato vira uma linha por vaga possível** (50 s)
+**17. Cada candidato vira uma linha por vaga possível** (50 s)
 - Para cada candidato, uma linha por vaga que ele podia escolher; y = 1 só na vaga posta em 1º.
 - Exemplo: o médico de MG tinha 222 vagas; escolheu Brasília de Minas.
 - 5.417 candidatos × ≈ 107 vagas = 578.998 linhas.
 
-**19. Candidatos escolhem perto de onde trabalham** (50 s)
+**18. Candidatos escolhem perto de onde trabalham** (50 s)
 - Como montamos: 5.425 candidatos; distância do município onde trabalhavam até o da vaga posta em 1º.
 - Metade escolhe a até 51 km; 79% ficam na mesma UF; 36% no próprio município.
 - É descritivo: mostra onde escolhem, não por quê. Por isso o modelo compara vagas da mesma UF.
 
-## Metodologia e identificação (≈ 4 min)
+## Metodologia e identificação (≈ 3 min)
 
-**20. Sumário** (5 s): passar.
+**19. Sumário** (5 s): passar.
 
-**21. Modelo: logit condicional da 1ª opção** (70 s)
+**20. Modelo: logit condicional da 1ª opção** (70 s)
 - Cada vaga tem uma utilidade para o médico: bolsa, distância, IVS, controles e o par de UFs, mais um erro ε (o que
   não vemos, como família e gosto).
 - Vemos só qual vaga tem a maior utilidade: a 1ª opção. Com ε de valor extremo, a chance de cada vaga é a fórmula ①.
-- O coeficiente testado é o da bolsa; o resto são controles. O par de UFs faz comparar vagas dentro da mesma UF.
+- O coeficiente testado é o da bolsa; o resto são controles. O par de UFs faz comparar vagas dentro da mesma UF, e a
+  bolsa vem de regra com o IVS no modelo (detalhe no anexo 4, se perguntarem).
 - Por que este modelo: é o padrão para escolher uma opção entre várias (McFadden, Nobel de 2000). Compara as vagas do
   mesmo médico, então o que é dele sai da conta. Em saúde, Costa, Nunes e Sanches usam a mesma família.
 
-**22. Método passo a passo: da escolha à razão de chances** (60 s)
+**21. Método passo a passo: da escolha à razão de chances** (60 s)
 - 1–2: monta a base (uma linha por vaga; y = 1 na escolhida). 3–5: estima os pesos que melhor explicam as escolhas.
   6: lê o resultado como razão de chances.
 - Passo 4: a chance de cada vaga é exp(U sem ε) dela dividido pela soma disso em todas as vagas do médico.
 - Passo 6: a métrica é a chance da vaga que paga mais dividida pela chance da outra; as outras vagas se cancelam.
 - No exemplo: Itamarandiba 3,62% ÷ Araçuaí 2,53% = 1,43, e quase tudo vem da bolsa (×1,47).
 
-**23. Estimação: de onde vem o β** (50 s) **(encurtável)**
-- A bolsa é fixada por regra e o IVS está no modelo: o β não mistura bolsa com vulnerabilidade.
-- Comparamos vagas do mesmo candidato, na mesma UF; dentro do município não dá, porque a bolsa é a mesma no município
-  inteiro.
-
-**24. Identificação: as premissas do logit condicional** (60 s)
+**22. Identificação: as premissas do logit condicional** (60 s)
 - Escolha sincera e conjunto de escolha conhecido: suposições.
 - Exogeneidade da bolsa: vale em parte; a bolsa segue a regra, mas outras regras federais mudam nos mesmos cortes.
 - IIA: testada; com um logit aninhado, o peso da bolsa quase não muda.
 
-## Resultados e discussão (≈ 3 min)
+## Resultados e discussão (≈ 2 min 30 s)
 
-**25. Sumário** (5 s): passar.
+**23. Sumário** (5 s): passar.
 
-**26. Resultados: +R$ 5 mil multiplicam a chance por 1,47** (60 s)
+**24. Resultados: +R$ 5 mil multiplicam a chance por 1,47** (60 s)
 - Na mesma UF, +R$ 5 mil multiplicam por 1,47 a chance de a vaga ser a 1ª opção (IC 1,15 a 1,89).
 - Em distância: R$ 5 mil valem o mesmo que a vaga ficar ≈ 75 km mais perto.
 - Mas a proximidade pesa mais: na mesma região de saúde de onde já trabalhava, ×3,01. Por isso, incentivo limitado.
 
-**27. Robustez: ×1,47 se mantém com mais dados** (40 s)
-- Com outras medidas e todos os dados, de ×1,45 a ×1,49.
-- Com só parte dos dados (perto do corte; ciclos 1 e 3), o intervalo inclui 1: inconclusivo, não contrário. O ciclo 2
-  é o mais forte (×1,90).
+**25. Robustez: ×1,47 se mantém com mais dados** (20 s) **(encurtável)**
+- Uma frase: com outras medidas, o ×1,47 se mantém (×1,45 a ×1,49); com só parte dos dados fica inconclusivo, e o
+  ciclo 2 é o mais forte (×1,90).
 
-**28. Limitações** (30 s, passar rápido)
+**26. Limitações** (30 s, passar rápido)
 - Medimos a escolha, não a chegada; no corte mudam outras regras; o local anterior é o do CNES, não a residência.
 - Fixar a UF foi decidido depois de ver os dados: o resultado é exploratório; confirmar exige dados novos (o ciclo 3
   maduro). **Falar isso antes de a banca perguntar.**
 - Significativo só no ciclo 2; a escolha sincera não dá para testar.
 
-**29. Conclusão: bolsa pesa na escolha, mas pouco** (50 s)
+**27. Conclusão: bolsa pesa na escolha, mas pouco** (50 s)
 - Fecha a apresentação. Resposta: sim, a vaga de bolsa maior é mais escolhida (×1,47; ≈ 75 km).
 - Descritivo: 51% de quem ocupa a vaga já tinha vínculo no município; o cadastro sobe +6,6 h/sem num programa de 20 h.
 - Não dá para afirmar que leva mais médicos ao município, que o efeito é só da bolsa, nem que vale em todo ciclo.
 - Para a política: pagar mais muda a escolha entre vagas próximas; não mostramos que atraia médicos de longe.
 
-**30. Q&A**: abrir para perguntas (respostas no [doc 04](04_perguntas_provaveis_logit.md)).
+**28. Q&A**: abrir para perguntas (respostas no [doc 04](04_perguntas_provaveis_logit.md)).
 
 ## Anexos (só se perguntarem)
 
-- **31. Anexo 1, a equação da teoria:** de onde vem cada termo (salário, custo de trabalhar, custo de viver).
-- **32. Anexo 2, a regra da bolsa:** o IVS reproduz a faixa de 368 de 368 municípios no ciclo 1 e de 454 de 454 no
+- **29. Anexo 1, literatura:** Moehling et al. dão a escolha do local (rendimento menos custo de estar ali); Choné e
+  Ma, Reinhardt e Redding e Rossi-Hansberg dão os dois custos, de trabalhar e de viver ali.
+- **30. Anexo 2, a equação da teoria:** de onde vem cada termo (salário, custo de trabalhar, custo de viver).
+- **31. Anexo 3, a regra da bolsa:** o IVS reproduz a faixa de 368 de 368 municípios no ciclo 1 e de 454 de 454 no
   ciclo 2; o município não escolhe a bolsa.
+- **32. Anexo 4, estimação:** a bolsa é fixada por regra e o IVS está no modelo; comparamos vagas do mesmo candidato,
+  na mesma UF (260 pares de UFs, 5.345 candidatos); dentro do município não dá, porque a bolsa é igual no município
+  inteiro.
+
+## Versão conciliada (35 slides): o que muda
+
+Até o slide 19 é igual. Depois, os números sobem um, e mudam dois slides:
+
+**20. Cada médico escolhe a vaga que mais vale a pena** (45 s, entra antes do modelo)
+- Não vemos o que o médico pensa, só a vaga que ele pôs em 1º lugar.
+- Cada médico tem uma lista de vagas, cada vaga tem prós e contras, e há coisas que não vemos (família, gosto); por
+  isso o modelo dá a chance de cada vaga: A 29%, B 42%, C 29%.
+- B paga mais e fica perto; C paga como B, mas fica 75 km mais longe, e isso anula a bolsa extra.
+- Nossa pergunta: quanto a bolsa pesa? Se vagas iguais com bolsas diferentes fossem escolhidas meio a meio, ela não
+  pesaria nada.
+
+**25. Ficar perto de onde trabalha pesa mais que a bolsa** (60 s, no lugar do slide de resultados)
+- O gráfico mostra quanto cada fator multiplica a chance: mesma região de saúde ×3,01; mesmo município ×1,80; +R$ 5
+  mil de bolsa ×1,47; população em dobro ×1,10; capital ×0,73 (o intervalo inclui 1); +100 km ×0,60.
+- As três contas: 5 × 0,077 = 0,385; exp(0,385) = ×1,47 (47% mais chance); 0,385 ÷ 0,514 × 100 = 75 km.
+- Leitura: a bolsa conta, mas estar na mesma região de saúde de onde já trabalha pesa mais.
+
+Os anexos da conciliada são os mesmos 1 a 4 (slides 30 a 33), mais o anexo 5, o modelo formal (y é o resultado, U é
+o mecanismo), e o anexo 6, por que este modelo e não outro (RDD por vaga, MQO, Poisson, versões mais ricas).
