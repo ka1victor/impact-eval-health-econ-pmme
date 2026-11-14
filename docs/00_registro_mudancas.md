@@ -8,6 +8,21 @@
 
 ---
 
+## 14/11/2026 — Banca final: entrada do grupo de 14/11 e preparo da defesa do logit
+
+Motivo: o grupo atualizou o `PEE - BANCA FINAL` (data dos sumários) e o autor pediu para explicar melhor como o logit
+condicional foi feito. O deck passa a ler a cópia de 14/11 e ganha um documento de perguntas prováveis. O slide
+"metade de quem ocupa a vaga" foi fundido na conclusão (32 slides).
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1411.pptx` | cópia sem alteração do deck do grupo de 14/11/2026 (SHA-256 `f051366b…64843`); entrada do gerador |
+| [`07_apresentacoes/banca_final/04_perguntas_provaveis_logit.md`](07_apresentacoes/banca_final/04_perguntas_provaveis_logit.md) | 17 perguntas prováveis da banca sobre o logit condicional, com respostas e números de `output/` |
+
+---
+
 ## 11/11/2026 — Banca final sobre a versão do grupo de 11/11
 
 Motivo: o autor pediu para comunicar melhor o trabalho a partir do deck atual do grupo (`PEE - BANCA FINAL`, 11/11),

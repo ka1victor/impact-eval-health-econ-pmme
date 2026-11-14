@@ -12,9 +12,10 @@
     "output\\rdd_bolsa\\P1_estimativas.csv": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
     "output\\rdd_bolsa\\S57_resumo.json": "67801270c9d4c1313554dfe007f207b1b444440d46b8721fc60971c3a7a43389",
     "output\\rdd_bolsa\\portao_r1_ivs_oficial.json": "cdf4579ff9897e98f27aaa393ab05318e2398ff43f779dc2df0d5eb66fe750f0",
+    "output\\apresentacao_banca2\\numeros_banca2.json": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00",
     "output\\apresentacao_banca_final\\exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
-    "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1.png": "a56834c7f359e21cd87884cd0fa0cbc746fd138ea653310eb471a43d69fc5bf8",
-    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "936161a11b27d9b0085b7050f250edfc93a72668bbcab37ed5b0cf92d04851f7"
+    "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1.png": "7d8c5035e97b3f410a76797893ea9097918d1e21931c5fab11a368864348226a",
+    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "96db5c9fcf3b471487686bd9d59c07a559750f6b24be656887cb9c4c509c8e43"
   },
   "slides": [
     {
@@ -176,7 +177,7 @@
       "origem": "novo",
       "slide_origem": "estimacao",
       "secao": "Metodologia",
-      "titulo": "Estimação: de onde vem o β e quão confiável ele é"
+      "titulo": "Estimação: de onde vem o β"
     },
     {
       "posicao": 24,
@@ -209,40 +210,33 @@
     {
       "posicao": 28,
       "origem": "novo",
-      "slide_origem": "metade",
-      "secao": "Discussão",
-      "titulo": "Metade de quem ocupa a vaga já trabalhava ali"
-    },
-    {
-      "posicao": 29,
-      "origem": "novo",
       "slide_origem": "conclusao",
       "secao": "Discussão",
       "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
     },
     {
-      "posicao": 30,
+      "posicao": 29,
       "origem": "novo",
       "slide_origem": "limitacoes",
       "secao": "Discussão",
       "titulo": "Limitações"
     },
     {
-      "posicao": 31,
+      "posicao": 30,
       "origem": "grupo 14/11",
       "slide_origem": 31,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 32,
+      "posicao": 31,
       "origem": "grupo 14/11",
       "slide_origem": 32,
       "secao": null,
       "titulo": "Anexo 1: Literatura Teórica - Equação"
     },
     {
-      "posicao": 33,
+      "posicao": 32,
       "origem": "grupo 14/11",
       "slide_origem": 33,
       "secao": null,
@@ -307,7 +301,6 @@
     "slide 16 do grupo: 'Com origem identificada' → 'Com local anterior e região'",
     "slide 16 do grupo: '5.421' → '5.417'",
     "slide 16 do grupo: 'candidatos com 1ª opção e município de origem identificado nos três ciclos.' → 'candidatos no modelo principal, nos três ciclos (o funil está no slide seguinte).'",
-    "slide 17 do grupo: 'I. Candidatos escolhem 1ª opção\\xa0no local de\\xa0origem' → 'I. A 1ª opção fica perto do local anterior'",
     "slide 17 do grupo: 'A origem é o vínculo médico anterior no CNES, não a residência.' → 'O local anterior é o vínculo médico no CNES antes da inscrição, não a residência.'",
     "slide 32 do grupo: '; o altruísmo do médico (α) compensa em parte.' → '.'",
     "slide 32 do grupo: ') por (B)' → ') pela bolsa (B)'",
@@ -318,24 +311,17 @@
     "slide 4 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 5 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 6 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
-    "slide 17 do grupo: '3 em 4' → 'No modelo'",
-    "slide 17 do grupo: 'escolhem uma vaga a até 189 km de onde trabalhavam' → 'controlamos a distância e comparamos vagas da mesma UF'",
-    "slide 17 do grupo: '79%' → '3 em 4'",
-    "slide 17 do grupo: 'põem a 1ª opção na UF onde já trabalhavam' → 'escolhem uma vaga a até 189 km de onde trabalhavam'",
-    "slide 17 do grupo: '51 km' → '79%'",
-    "slide 17 do grupo: 'é a distância mediana entre a origem e a 1ª opção' → 'escolhem uma vaga na UF onde já trabalhavam'",
-    "slide 17 do grupo: '5.425' → 'Metade'",
-    "slide 17 do grupo: 'candidatos com 1ª opção e município de origem identificado' → 'escolhe uma vaga a até 51 km de onde trabalhava'",
     "slide 32 do grupo: 'Preços e custo do local continuam contra e é a soma das três variáveis que determina se a vaga é preenchida.' → 'Preços e custo do local continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe.'",
     "slide 32 do grupo: índice da soma i → t (OMML e imagem de reserva)",
     "slide 21 do grupo: 'Esse tá ruim, não dá pra entender oque estamos falando'",
     "slide 24 do grupo: 'Esse tá ruim (estética) e modo de passar a mensagem'",
     "slide 25 do grupo: 'Escolha das palavras está ruim, não dá pra entender oque o s'",
     "slide 27 do grupo: 'Estética ruim'",
-    "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'"
+    "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'",
+    "slide 17 do grupo: cartões em números na ordem dos gráficos; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "6b39c612d182979e1b469b93f2f79553a97ca409bb0f5e88b93d1f3b6215729d",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "2c7df96fd14bdcc9b1906ce7bd9f4506f3ee5df8c525eeaee682f42f0526f97a",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

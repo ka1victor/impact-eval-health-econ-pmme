@@ -17,8 +17,8 @@ EXEMPLO = OUT / "exemplo_logit_real.json"
 DOC = ROOT / "docs/07_apresentacoes/banca_final/03_deck_banca_final_grupo.md"
 
 # Não pode aparecer na tela: erros de digitação e faixas do FAQ do grupo, a equação antiga da utilidade, anotações
-PROIBIDAS = ("buito", "renumeração", "11.1.4", "Vulnerabilidade: Alta", "Vulnerabilidade: Muito alta", "+ ε",
-             "U_iv", "piso da bolsa", "preenchimento das vagas", "altruísmo", "vaga é preenchida", "Hips de", "medicos",
+PROIBIDAS = ("buito", "renumeração", "11.1.4", "Vulnerabilidade: Alta", "Vulnerabilidade: Muito alta",
+             "piso da bolsa", "preenchimento das vagas", "altruísmo", "vaga é preenchida", "Hips de", "medicos",
              "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela", "cardápio",
              # nada de arquivo interno na tela (pedido do autor de 14/11): fontes só públicas
              ".json", ".csv", ".py", "output/", "scripts/", "adendo 5", "auditoria")
@@ -53,7 +53,7 @@ class TestDeck(unittest.TestCase):
         cls.man = json.loads(MANIF.read_text(encoding="utf-8"))
 
     def test_tamanho_e_ocultos(self):
-        self.assertEqual(len(self.prs.slides), 33)
+        self.assertEqual(len(self.prs.slides), 32)
         self.assertFalse(any(s._element.get("show") == "0" for s in self.prs.slides))
 
     def test_manifesto_bate(self):
@@ -98,10 +98,12 @@ class TestDeck(unittest.TestCase):
         c = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "coeficiente") & (d.termo == "bolsa_mil")].iloc[0]
         r = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "razao_chances_por_5mil")].iloc[0]
         t = self.txt[22]
+        notas = self.prs.slides[22].notes_slide.notes_text_frame.text
         self.assertIn("Estimação: de onde vem o β", t)
-        self.assertIn(f"({int(c.n_conjuntos)} grupos)", t)
-        self.assertIn(f"p = {r.p_score_rademacher:.3f}".replace(".", ","), t)
-        self.assertIn(f"p = {r.p_holm:.3f}".replace(".", ","), t)
+        # a incerteza saiu da tela (pedido de 14/11) e fica nas notas, para as perguntas
+        self.assertIn(f"({int(c.n_conjuntos)} grupos", notas)
+        self.assertIn(f"p = {r.p_score_rademacher:.3f}".replace(".", ","), notas)
+        self.assertIn(f"p = {r.p_holm:.3f}".replace(".", ","), notas)
         for termo in ("Vagas do mesmo candidato", "Vagas da mesma UF", "Não dentro do município", "exploratório"):
             self.assertIn(termo, t)
 
@@ -112,13 +114,25 @@ class TestDeck(unittest.TestCase):
     def test_funil_das_alternativas(self):
         self.assertIn("932.577 → 578.998 linhas", self.prs.slides[17].notes_slide.notes_text_frame.text)
 
+    def test_equacao_com_erro_e_chance_sobre_v(self):
+        t = self.txt[20]
+        self.assertIn("ε", t)
+        self.assertIn("exp(V", t)
+        self.assertNotIn("exp(U", t)
+
+    def test_descritiva_em_numeros_sem_modelo(self):
+        t = self.txt[18]
+        for x in ("50%", "75%", "79%", "36%", "I. A que distância fica a 1ª opção", "II. Onde fica a 1ª opção"):
+            self.assertIn(x, t)
+        self.assertNotIn("modelo", t)
+
     def test_pergunta_nova(self):
         self.assertIn("Uma bolsa maior aumenta a chance de uma vaga ser a 1ª opção do médico?", self.txt[8])
 
     def test_doc_cita_o_deck(self):
         doc = DOC.read_text(encoding="utf-8")
         self.assertIn("deck_banca_final_grupo.pptx", doc)
-        self.assertIn("33 slides", doc)
+        self.assertIn("32 slides", doc)
 
 
 @unittest.skipUnless(EXEMPLO.exists(), "exemplo não gerado")

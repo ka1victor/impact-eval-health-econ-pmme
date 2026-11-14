@@ -43,15 +43,20 @@ COEFS = (
 )
 # (arquivo, chave_modelo, rótulo, principal?)
 ROBUSTEZ = (
-    ("VL", "VL1_emp", "Principal: ciclos 1–3", True),
+    ("VL", "VL1_emp", "Mesma UF, ciclos 1–3", True),
     ("VL", "VL1log_emp", "Distância em log", True),
     ("VL", "VL3_VL1_emp", "Região anterior × UF da vaga", True),
-    ("VL", "VL2_emp", "Só vagas perto do corte (±0,050)", True),
+    ("VL", "VL2_emp", "Perto do corte (±0,05)", True),
     ("VG", "VG1", "Só o ciclo 1", True),
     ("VG", "VL1_c2", "Só o ciclo 2", True),
     ("VG", "VG3", "Só o ciclo 3", True),
-    ("VL", "M1_emp", "Pré-registrado: sem fixar a UF", False),
+    ("VL", "M1_emp", "Sem fixar a UF (pré-registrado)", False),
 )
+# grupos da figura (versão de 14/11): título e as linhas de cada um, na ordem da leitura
+GRUPOS_ROB = (("Principal", ("VL1_emp",)),
+              ("Outras medidas", ("VL1log_emp", "VL3_VL1_emp")),
+              ("Só parte dos dados", ("VL2_emp", "VG1", "VL1_c2", "VG3")),
+              ("Plano original", ("M1_emp",)))
 
 
 def sha256(p: Path) -> str:
@@ -80,26 +85,28 @@ def figura_coeficientes() -> dict:
         b, lo, hi = (float(c.loc[termo, x]) * k for x in ("estimativa", "ic95_inf", "ic95_sup"))
         linhas.append({"termo": termo, "multiplo": k, "rotulo": rot.replace("\n", " "), "coef": b,
                        "x": math.exp(b), "x_inf": math.exp(lo), "x_sup": math.exp(hi)})
-    fig, ax = plt.subplots(figsize=(7.4, 4.5), dpi=200)
+    # versão de 14/11: maior, letra maior e menos branco (o slide usa a figura em 8,3 × 4,1 polegadas)
+    fig, ax = plt.subplots(figsize=(8.3, 4.1), dpi=200)
     estilo(ax)
+    ax.tick_params(axis="y", labelsize=15)
+    ax.tick_params(axis="x", labelsize=12)
     ys = list(range(len(linhas)))[::-1]
-    for y, l, (_, _, rot) in zip(ys, linhas, COEFS):
+    for y, l in zip(ys, linhas):
         cor = VERDE_ESC if l["termo"] == "bolsa_mil" else VERDE
-        ax.plot([l["x_inf"], l["x_sup"]], [y, y], color=cor, lw=3, solid_capstyle="round")
-        ax.plot(l["x"], y, "o", ms=10, color=cor, mec="white", mew=2)
-        coef_txt = (f"β × 5 = {virgula(l['coef'], 3)}" if l["termo"] == "bolsa_mil"
-                    else f"coef. = {virgula(l['coef'], 3)}")
-        ax.text(5.3, y + 0.12, f"×{virgula(l['x'])}", va="center", ha="left", fontsize=14, fontweight="bold",
-                color=TEXTO)
-        ax.text(5.3, y - 0.22, coef_txt, va="center", ha="left", fontsize=9.5, color="#5E6660")
+        ax.plot([l["x_inf"], l["x_sup"]], [y, y], color=cor, lw=4, solid_capstyle="round")
+        ax.plot(l["x"], y, "o", ms=13, color=cor, mec="white", mew=2)
+        ax.text(4.6, y, f"×{virgula(l['x'])}", va="center", ha="left", fontsize=19, fontweight="bold",
+                color=VERDE_ESC if l["termo"] == "bolsa_mil" else TEXTO)
     ax.set_yticks(ys, [r for _, _, r in COEFS])
-    ax.set_xlim(0.45, 5.0)
-    ax.set_ylim(-0.6, len(linhas) - 0.4)
+    for tl in ax.get_yticklabels():
+        if tl.get_text().startswith("+R$"):
+            tl.set_fontweight("bold")
+    ax.set_xlim(0.45, 4.4)
+    ax.set_ylim(-0.5, len(linhas) - 0.5)
     ax.set_xticks([0.5, 1, 2, 4], ["×0,5", "×1", "×2", "×4"])
     ax.minorticks_off()
-    ax.set_xlabel("quantas vezes a chance de uma vaga é multiplicada, contra outra igual no resto (escala log)",
-                  fontsize=9.5, color="#5E6660")
-    fig.subplots_adjust(left=0.36, right=0.79, top=0.97, bottom=0.17)
+    ax.set_xlabel("quantas vezes a chance da vaga é multiplicada (escala log)", fontsize=12, color="#5E6660")
+    fig.subplots_adjust(left=0.37, right=0.84, top=0.98, bottom=0.15)
     saida = DIR / "coeficientes_vl1.png"
     fig.savefig(saida, facecolor="white")
     plt.close(fig)
@@ -117,28 +124,47 @@ def figura_robustez() -> dict:
         r = r.iloc[0]
         linhas.append({"fonte": arq, "chave": chave, "rotulo": rot, "na_mesma_uf": princ, "rc": float(r.estimativa),
                        "inf": float(r.ic95_inf), "sup": float(r.ic95_sup), "exclui_1": bool(r.ic95_inf > 1)})
-    fig, ax = plt.subplots(figsize=(7.6, 5.3), dpi=200)
+    # versão de 14/11: grupos com título, letra maior, menos branco
+    por_chave = {l["chave"]: l for l in linhas}
+    pos, y, titulos = {}, 0.0, []
+    for tit, chaves in GRUPOS_ROB:
+        titulos.append((y, tit))
+        y += 0.75
+        for ch in chaves:
+            pos[ch] = y
+            y += 1.0
+        y += 0.35
+    alto = y
+    fig, ax = plt.subplots(figsize=(8.1, 5.6), dpi=200)
     estilo(ax)
-    ys = [7.6, 6.6, 5.6, 4.6, 3.3, 2.3, 1.3, 0.0]
-    for y, l in zip(ys, linhas):
+    ax.tick_params(axis="y", labelsize=13)
+    ax.tick_params(axis="x", labelsize=11)
+    for ch, yy in pos.items():
+        l = por_chave[ch]
         cor = VERDE if (l["exclui_1"] and l["na_mesma_uf"]) else CINZA
-        ax.plot([l["inf"], l["sup"]], [y, y], color=cor, lw=3, solid_capstyle="round")
-        ax.plot(l["rc"], y, "o", ms=9, color=VERDE_ESC if l["chave"] == "VL1_emp" else cor, mec="white", mew=2)
-        ax.text(3.45, y, f"×{virgula(l['rc'])}  [{virgula(l['inf'])}; {virgula(l['sup'])}]", va="center", ha="left",
-                fontsize=11, color=TEXTO, fontweight="bold" if l["chave"] == "VL1_emp" else "normal")
-    ax.set_yticks(ys, [l["rotulo"] for l in linhas])
-    for t in ax.get_yticklabels():
-        if t.get_text().startswith("Principal"):
-            t.set_fontweight("bold")
-    ax.axhline(3.95, color=GRADE, lw=1)
-    ax.axhline(0.65, color=GRADE, lw=1)
-    ax.set_xlim(0.6, 3.3)
-    ax.set_ylim(-0.6, 8.2)
+        ax.plot([l["inf"], l["sup"]], [yy, yy], color=cor, lw=4, solid_capstyle="round")
+        ax.plot(l["rc"], yy, "o", ms=11, color=VERDE_ESC if ch == "VL1_emp" else cor, mec="white", mew=2)
+        tr = ax.get_yaxis_transform()  # x em fração do eixo, y em dados
+        ax.text(1.04, yy, f"×{virgula(l['rc'])}", transform=tr, va="center", ha="left", fontsize=15, color=TEXTO,
+                fontweight="bold")
+        ax.text(1.38, yy, f"[{virgula(l['inf'])}; {virgula(l['sup'])}]", transform=tr, va="center", ha="left",
+                fontsize=11, color="#5E6660")
+    for yy, tit in titulos:
+        ax.text(-0.02, yy, tit.upper(), transform=ax.get_yaxis_transform(), ha="right", va="center", fontsize=10.5,
+                fontweight="bold", color=VERDE_ESC)
+        if yy > 0:
+            ax.axhline(yy - 0.45, color=GRADE, lw=1)
+    ax.set_yticks(list(pos.values()), [por_chave[ch]["rotulo"] for ch in pos])
+    for tl in ax.get_yticklabels():
+        if tl.get_text().startswith("Mesma UF"):
+            tl.set_fontweight("bold")
+    ax.set_xlim(0.6, 3.2)
+    ax.set_ylim(alto - 0.2, -0.5)
     ax.set_xticks([0.75, 1, 1.5, 2, 3], ["0,75", "1", "1,5", "2", "3"])
     ax.minorticks_off()
-    ax.set_xlabel("razão de chances por +R$ 5 mil (escala log); 1 = a bolsa não muda a escolha", fontsize=9.5,
+    ax.set_xlabel("razão de chances por +R$ 5 mil (escala log); 1 = a bolsa não muda a escolha", fontsize=11,
                   color="#5E6660")
-    fig.subplots_adjust(left=0.42, right=0.69, top=0.98, bottom=0.13)
+    fig.subplots_adjust(left=0.36, right=0.66, top=0.99, bottom=0.11)
     saida = DIR / "robustez_vl1.png"
     fig.savefig(saida, facecolor="white")
     plt.close(fig)
