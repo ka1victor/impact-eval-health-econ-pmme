@@ -1121,7 +1121,8 @@ def s_limitacoes(M, prs, n):
                f"depois de ver os primeiros resultados. Por isso o ×{v(n['rc'])} é exploratório. Exploratório não quer dizer 'não causal': o desenho (salto da bolsa no "
                "corte, dentro da mesma UF) é o mesmo; quer dizer que não foi o teste planejado (adendo 52e, "
                "pós-resultado). Para virar confirmatório, seria preciso repetir o teste em dados novos, por exemplo o "
-               "ciclo 3 quando estiver maduro. Dizer isso antes da banca perguntar. Heterogeneidade: ciclo 1 ×{v(n['rc_c1'])} e ciclo 3 ×{v(n['rc_c3'])}, com IC que contém 1. A "
+               "ciclo 3 quando estiver maduro. Dizer isso antes da banca perguntar. Heterogeneidade: ciclo 1 "
+               f"×{v(n['rc_c1'])} e ciclo 3 ×{v(n['rc_c3'])}, com IC que contém 1. A "
                "escolha sincera é premissa e não dá para testar com estes dados."))
     return sl
 
@@ -1490,6 +1491,15 @@ def tirar_anotacoes(prs) -> list[str]:
             if sh.has_text_frame and sh.text_frame.text.strip().startswith(ANOTACOES):
                 tiradas.append(f"slide {i} do grupo: {sh.text_frame.text.strip()[:60]!r}")
                 remover(sh)
+    # rodada 8 (14/11): o plano original sai da apresentação inteira, também das notas do anexo da regra do IVS
+    s = prs.slides[32]
+    tf = s.notes_slide.notes_text_frame if s.has_notes_slide else None
+    if tf is not None and "Pós-resultado:" in tf.text:
+        t = tf.text
+        i0 = t.index("Pós-resultado:")
+        i1 = t.index("Tudo é condicional", i0)
+        tf.text = t[:i0] + t[i1:]
+        tiradas.append("slide 33 do grupo: frase sobre o plano pré-registrado retirada das notas")
     return tiradas
 
 

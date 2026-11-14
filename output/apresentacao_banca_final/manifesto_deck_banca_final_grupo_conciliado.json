@@ -340,10 +340,11 @@
     "slide 25 do grupo: 'Escolha das palavras está ruim, não dá pra entender oque o s'",
     "slide 27 do grupo: 'Estética ruim'",
     "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'",
+    "slide 33 do grupo: frase sobre o plano pré-registrado retirada das notas",
     "slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pptx": "0938eadb480b43b6d57bea7d2be7a173a7ceaac5e94eee6f4bf9296db1de434b",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pptx": "afb42c10d2e47f7b6b1c94248e6a62857beba0310a4417889f1e2e1051c79a24",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pdf": "gerado (PDF não é determinístico)"
   }
 }

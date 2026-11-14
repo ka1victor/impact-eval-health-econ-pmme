@@ -298,4 +298,4 @@ Prevalece sobre o texto acima onde houver conflito.
 
 1. **Slide 23 (estimação):** fica no corpo ou vai para o apêndice? Com ele, a Metodologia tem três slides (21–23).
 2. **Ideias do colega (v4.1):** juntar na conciliação (ligar `COM_IDEIAS_COLEGA`).
-3. **Roteiro de fala:** depende do tempo da banca final, ainda não informado.
+3. **Roteiro de fala:** em [05](05_roteiro_fala.md), para ≈ 15 min; ajustar quando o tempo da banca for informado.
