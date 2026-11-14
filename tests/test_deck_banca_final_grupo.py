@@ -53,7 +53,7 @@ class TestDeck(unittest.TestCase):
         cls.man = json.loads(MANIF.read_text(encoding="utf-8"))
 
     def test_tamanho_e_ocultos(self):
-        self.assertEqual(len(self.prs.slides), 32)
+        self.assertEqual(len(self.prs.slides), 35)
         self.assertFalse(any(s._element.get("show") == "0" for s in self.prs.slides))
 
     def test_manifesto_bate(self):
@@ -87,7 +87,7 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(tits.count("Cadeia causal: da bolsa aos desfechos na saúde"), 2)
 
     def test_logit_condicional_na_tela(self):
-        t = self.txt[20]
+        t = self.txt[21]
         self.assertIn("P(i escolhe v) =", t)
         self.assertIn("exp(V", t)
         self.assertIn("todas as vagas k de i", t)
@@ -97,25 +97,27 @@ class TestDeck(unittest.TestCase):
         d = pd.read_csv(ROOT / "output/rdd_bolsa/VL_estimativas.csv")
         c = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "coeficiente") & (d.termo == "bolsa_mil")].iloc[0]
         r = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "razao_chances_por_5mil")].iloc[0]
-        t = self.txt[22]
-        notas = self.prs.slides[22].notes_slide.notes_text_frame.text
+        t = self.txt[23]
+        notas = self.prs.slides[23].notes_slide.notes_text_frame.text
         self.assertIn("Estimação: de onde vem o β", t)
         # a incerteza saiu da tela (pedido de 14/11) e fica nas notas, para as perguntas
         self.assertIn(f"({int(c.n_conjuntos)} grupos", notas)
         self.assertIn(f"p = {r.p_score_rademacher:.3f}".replace(".", ","), notas)
         self.assertIn(f"p = {r.p_holm:.3f}".replace(".", ","), notas)
-        for termo in ("Vagas do mesmo candidato", "Vagas da mesma UF", "Não dentro do município", "exploratório"):
+        for termo in ("Vagas do mesmo candidato", "Vagas da mesma UF", "Não dentro do município"):
             self.assertIn(termo, t)
+        # a ressalva "exploratório" fica em Limitações, não no corpo do método (pedido do autor de 14/11)
+        self.assertNotIn("exploratório", t)
 
     def test_aninhado_no_modelo_base(self):
-        self.assertIn("testado no modelo base", self.txt[23])
-        self.assertIn("rodado no modelo base sem o par de UFs", self.prs.slides[23].notes_slide.notes_text_frame.text)
+        self.assertIn("testado no modelo base", self.txt[24])
+        self.assertIn("rodado no modelo base sem o par de UFs", self.prs.slides[24].notes_slide.notes_text_frame.text)
 
     def test_funil_das_alternativas(self):
         self.assertIn("932.577 → 578.998 linhas", self.prs.slides[17].notes_slide.notes_text_frame.text)
 
     def test_equacao_com_erro_e_chance_sobre_v(self):
-        t = self.txt[20]
+        t = self.txt[21]
         self.assertIn("ε", t)
         self.assertIn("exp(V", t)
         self.assertNotIn("exp(U", t)
@@ -126,13 +128,47 @@ class TestDeck(unittest.TestCase):
             self.assertIn(x, t)
         self.assertNotIn("modelo", t)
 
+    def test_exploratorio_so_em_limitacoes(self):
+        """Pedido do autor de 14/11: a ressalva sai do corpo do método e vai para Limitações."""
+        tits = [x["titulo"] for x in self.man["slides"]]
+        lim = tits.index("Limitações")
+        self.assertIn("exploratório", self.txt[lim])
+        self.assertIn("confirmar exige dados novos", self.txt[lim])
+        notas = self.prs.slides[lim].notes_slide.notes_text_frame.text
+        self.assertIn("não quer dizer 'não causal'", notas)
+        for i, t in enumerate(self.txt[:lim]):
+            self.assertNotIn("exploratório", t, f"slide {i + 1}")
+
+    def test_intuicao_e_anexos_do_logit(self):
+        """Ideias do deck v4.1 de um colega (14/11): vagas A, B e C antes do modelo; anexos com y e U e com as
+        alternativas. As chances saem dos pesos do VL-1."""
+        d = pd.read_csv(ROOT / "output/rdd_bolsa/VL_estimativas.csv")
+        c = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "coeficiente")].set_index("termo")
+        b, g = float(c.loc["bolsa_mil", "estimativa"]), float(c.loc["distancia_100km", "estimativa"])
+        km_c = 50 + round(5 * b / -g * 100)
+        ev = [1.0, math.exp(5 * b), math.exp(5 * b + g * (km_c - 50) / 100)]
+        pb = ev[1] / sum(ev)
+        tits = [x["titulo"] for x in self.man["slides"]]
+        i = tits.index("Cada médico escolhe a vaga que mais vale a pena")
+        self.assertEqual(tits[i + 1], "Modelo: logit condicional da 1ª opção")
+        self.assertIn(f"{100 * pb:.0f}%", self.txt[i])
+        j = tits.index("Anexo 3: o modelo formal, do valor à escolha")
+        self.assertIn(f"{100 * pb:.1f}%".replace(".", ","), self.txt[j])
+        self.assertIn("y é o resultado.", self.txt[j])
+        self.assertIn("U é o mecanismo.", self.txt[j])
+        k = tits.index("Anexo 4: por que este modelo e não outro")
+        for x in ("RDD por vaga", "Poisson", "Guimarães, Figueiredo e Woodward", "logit condicional"):
+            self.assertIn(x, self.txt[k])
+        self.assertEqual(tits[-2:], ["Anexo 3: o modelo formal, do valor à escolha",
+                                     "Anexo 4: por que este modelo e não outro"])
+
     def test_pergunta_nova(self):
         self.assertIn("Uma bolsa maior aumenta a chance de uma vaga ser a 1ª opção do médico?", self.txt[8])
 
     def test_doc_cita_o_deck(self):
         doc = DOC.read_text(encoding="utf-8")
         self.assertIn("deck_banca_final_grupo.pptx", doc)
-        self.assertIn("32 slides", doc)
+        self.assertIn("35 slides", doc)
 
 
 @unittest.skipUnless(EXEMPLO.exists(), "exemplo não gerado")

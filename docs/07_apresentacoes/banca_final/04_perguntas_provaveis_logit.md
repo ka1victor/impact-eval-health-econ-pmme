@@ -1,6 +1,6 @@
 # 04. Perguntas prováveis da banca sobre o logit condicional, com respostas
 
-> **Para quê:** preparar a defesa do método (slides 18 e 21–24 do deck de [03](03_deck_banca_final_grupo.md)).
+> **Para quê:** preparar a defesa do método (slides 18, 21–25 e anexos 3 e 4 do deck de [03](03_deck_banca_final_grupo.md)).
 > Pedido do autor de 14/11/2026: explicar melhor como o logit condicional foi feito.<br>
 > **Estatuto:** apresentação. Nenhuma estimativa nova. Cada número vem de `output/rdd_bolsa/VL_estimativas.csv`,
 > `VL_resumo.json`, `P1_estimativas.csv`, `portao_r1_ivs_oficial.json` ou dos docs citados; o deck lê os mesmos
@@ -12,11 +12,12 @@
 ## Modelo
 
 **1. Por que logit condicional, e não uma regressão linear?**
-Cada médico escolhe **uma** vaga entre as do seu cardápio (≈ 107 em média; mediana 82). O logit condicional
+Cada médico escolhe **uma** vaga entre as que podia escolher (≈ 107 em média; mediana 82). O logit condicional
 (McFadden, 1974) modela exatamente isso: dá uma chance a cada vaga, as chances das vagas de cada candidato somam 1, e tudo o que é do
 médico (nota, idade, de onde vem) é igual em todas as vagas dele e sai da conta. Uma regressão linear por vaga não
 respeita a soma 1 nem compara vagas do mesmo médico. É o desenho usado na literatura de escolha de vaga com bônus
-que salta em cortes (Bobba et al., 2026) e de escolha de local por médicos no Brasil (Costa, Nunes & Sanches, 2024).
+que salta em cortes (Bobba et al., 2026) e de escolha de local por médicos no Brasil (Costa, Nunes & Sanches, 2024),
+que usam versões mais ricas da mesma família. As alternativas (RDD por vaga, MQO, Poisson) estão no anexo 4.
 
 **2. Vocês estão estimando a utilidade?**
 Só os pesos da parte observável do valor (V), numa escala normalizada. O nível do valor e a unidade não são
@@ -25,7 +26,7 @@ chances entre duas vagas: P(A) ÷ P(B) = exp(V_A − V_B), em que o denominador 
 
 **3. O que é o 1,47?**
 β = 0,077 por R$ 1 mil. Entre duas vagas iguais no resto, a que paga R$ 5 mil a mais tem chance e^(5 × 0,077) =
-e^0,385 = **1,47** vez maior de ser a 1ª opção (IC 95%: 1,15 a 1,89). Exemplo real do slide 22: Araçuaí 2,53% e
+e^0,385 = **1,47** vez maior de ser a 1ª opção (IC 95%: 1,15 a 1,89). Exemplo real dos slides 15 e 23: Araçuaí 2,53% e
 Itamarandiba 3,62%; a razão 1,43 = ×1,47 (bolsa) × 0,97 (6 km a mais) × 1,00 (o resto).
 
 **4. E os 75 km?**
@@ -35,7 +36,7 @@ VL-4). Mais R$ 5 mil compensam, na escolha, uma vaga 75 km mais longe do local d
 ## Identificação
 
 **5. De onde vem a variação que identifica o β?**
-Três coisas juntas (slide 23):
+Três coisas juntas (slide 24):
 1. a bolsa é função em degraus do IVS 2010: salta em 0,300 e 0,400 (a regra reproduz 368 de 368 municípios no
    ciclo 1 e 454 de 454 no ciclo 2);
 2. o IVS entra como reta com dobras nesses cortes, **sem salto**; o que muda de repente no corte é só a bolsa, e é esse
@@ -47,10 +48,11 @@ A bolsa é a mesma no município inteiro: um efeito fixo de município absorveri
 fica fixo é o candidato (implícito no logit condicional) e o par de UFs (254 colunas 0/1).
 
 **7. Por que fixar o par de UFs? Isso não foi escolhido depois de ver o resultado?**
-Foi, e dizemos isso na tela (slides 23 e 30). O plano pré-registrado, sem o par, dá ×1,25 (IC 0,98 a 1,61): o IC
+Foi, e dizemos isso na tela, em Limitações (slide 30). O plano pré-registrado, sem o par, dá ×1,25 (IC 0,98 a 1,61): o IC
 contém 1. O par tira tudo o que é comum à UF (salário de mercado, conselho regional, família, distância média entre
 UFs). Dentro da UF, a distância pesa mais (×0,60 contra ×0,83 por 100 km) e a bolsa também. Por isso chamamos o
-resultado de exploratório: sugere, não confirma.
+resultado de exploratório: o desenho é o mesmo, mas não foi o teste planejado; não quer dizer "não causal".
+Confirmar exigiria repetir o teste em dados novos (o ciclo 3 maduro).
 
 **8. E perto do corte, que seria a comparação mais limpa?**
 Só com vagas a ±0,050 de um corte: ×1,28 (IC 0,95 a 1,72). Mesma direção, mas com menos dados o IC contém 1:
@@ -67,7 +69,7 @@ rodado no modelo base (sem o par de UFs), não no principal. O logit misto (M8) 
 candidatos: o β é uma média.
 
 **11. E a escolha sincera? O médico não evita vaga concorrida?**
-É premissa (SUPOSTO no slide 24): supomos que ninguém deixa de pôr em 1º a vaga preferida por medo de não passar na
+É premissa (SUPOSIÇÃO no slide 25): supomos que ninguém deixa de pôr em 1º a vaga preferida por medo de não passar na
 nota. Não dá para testar com estes dados.
 
 ## Estimação e incerteza

@@ -161,86 +161,107 @@
     {
       "posicao": 21,
       "origem": "novo",
+      "slide_origem": "intuicao",
+      "secao": "Metodologia",
+      "titulo": "Cada médico escolhe a vaga que mais vale a pena"
+    },
+    {
+      "posicao": 22,
+      "origem": "novo",
       "slide_origem": "modelo",
       "secao": "Metodologia",
       "titulo": "Modelo: logit condicional da 1ª opção"
     },
     {
-      "posicao": 22,
+      "posicao": 23,
       "origem": "novo",
       "slide_origem": "passos",
       "secao": "Metodologia",
       "titulo": "Método passo a passo: da escolha à razão de chances"
     },
     {
-      "posicao": 23,
+      "posicao": 24,
       "origem": "novo",
       "slide_origem": "estimacao",
       "secao": "Metodologia",
       "titulo": "Estimação: de onde vem o β"
     },
     {
-      "posicao": 24,
+      "posicao": 25,
       "origem": "novo",
       "slide_origem": "identificacao",
       "secao": "Identificação",
       "titulo": "Identificação: as premissas do logit condicional"
     },
     {
-      "posicao": 25,
+      "posicao": 26,
       "origem": "grupo 14/11",
       "slide_origem": 23,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 26,
+      "posicao": 27,
       "origem": "novo",
       "slide_origem": "resultados",
       "secao": "Resultados",
       "titulo": "Resultados: +R$ 5 mil multiplicam a chance por 1,47"
     },
     {
-      "posicao": 27,
+      "posicao": 28,
       "origem": "novo",
       "slide_origem": "robustez",
       "secao": "Robustez",
       "titulo": "Robustez: ×1,47 se mantém com mais dados"
     },
     {
-      "posicao": 28,
+      "posicao": 29,
       "origem": "novo",
       "slide_origem": "conclusao",
       "secao": "Discussão",
       "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
     },
     {
-      "posicao": 29,
+      "posicao": 30,
       "origem": "novo",
       "slide_origem": "limitacoes",
       "secao": "Discussão",
       "titulo": "Limitações"
     },
     {
-      "posicao": 30,
+      "posicao": 31,
       "origem": "grupo 14/11",
       "slide_origem": 31,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 31,
+      "posicao": 32,
       "origem": "grupo 14/11",
       "slide_origem": 32,
       "secao": null,
       "titulo": "Anexo 1: Literatura Teórica - Equação"
     },
     {
-      "posicao": 32,
+      "posicao": 33,
       "origem": "grupo 14/11",
       "slide_origem": 33,
       "secao": null,
-      "titulo": "Bolsa segue exatamente o IVS do município"
+      "titulo": "Anexo 2: bolsa segue exatamente o IVS do município"
+    },
+    {
+      "posicao": 34,
+      "origem": "novo",
+      "slide_origem": "formal",
+      "secao": null,
+      "titulo": "Anexo 3: o modelo formal, do valor à escolha"
+    },
+    {
+      "posicao": 35,
+      "origem": "novo",
+      "slide_origem": "alternativas",
+      "secao": null,
+      "titulo": "Anexo 4: por que este modelo e não outro"
     }
   ],
   "fora_do_deck": {
@@ -307,7 +328,7 @@
     "slide 3 do grupo: 'A escassez de especialistas já é tratada como urgência sanitária' → 'Escassez de especialistas já é tratada como urgência sanitária'",
     "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Modelo combina dois elementos da teoria'",
     "slide 16 do grupo: 'Os dados ligam os editais do PMM-E ao CNES' → 'Dados ligam os editais do PMM-E ao CNES'",
-    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Bolsa segue exatamente o IVS do município'",
+    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Anexo 2: bolsa segue exatamente o IVS do município'",
     "slide 4 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 5 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 6 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
@@ -321,7 +342,7 @@
     "slide 17 do grupo: cartões em números na ordem dos gráficos; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "2c7df96fd14bdcc9b1906ce7bd9f4506f3ee5df8c525eeaee682f42f0526f97a",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "842ce79fc18d1ffe61f7faad85d14ca8200743760db49beb44d2e60956642d42",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

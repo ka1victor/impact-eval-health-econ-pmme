@@ -1,6 +1,6 @@
 # Banca final — conteúdo canônico
 
-> **Estado (14/11/2026, fim do dia):** 32 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
+> **Estado (14/11/2026, fim do dia):** 35 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
 > públicas na tela, âmbar para o que estimamos e observamos, equações sem itálico e com ε, resultados e robustez
 > refeitos, "metade" fundido na conclusão.<br>
 > **Antes (14/11/2026):** mesmo deck, agora sobre a entrada do grupo de 14/11, com 33 slides: slide novo de
@@ -29,7 +29,7 @@
 | Documento | Função |
 |---|---|
 | [`01_diagrama_teoria_mudanca.md`](01_diagrama_teoria_mudanca.md) | **fonte de verdade**: cada caixa e seta do diagrama, a literatura de cada elo, a ligação com as equações do apêndice e a nova ordem dos slides de teoria |
-| [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo de 11/11**: o que estimamos e por que a razão de chances (§1), ordem dos 32 slides, texto de cada slide novo, o que o grupo decide |
+| [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo de 11/11**: o que estimamos e por que a razão de chances (§1), ordem dos 35 slides, texto de cada slide novo, o que o grupo decide |
 | [`04_perguntas_provaveis_logit.md`](04_perguntas_provaveis_logit.md) | **preparo da defesa**: 17 perguntas prováveis sobre o logit condicional (modelo, identificação, estimação, dados), com respostas e números de `output/` |
 | [`02_deck_banca_final.md`](02_deck_banca_final.md) | **fonte de verdade do deck final**: ordem dos slides (25 na versão vigente), o feedback de 04/11 aplicado à parte da banca 1, cada texto novo e o que fica para o autor decidir |
 
