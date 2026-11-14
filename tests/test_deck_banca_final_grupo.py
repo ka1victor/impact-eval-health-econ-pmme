@@ -106,10 +106,10 @@ class TestDeck(unittest.TestCase):
         d = pd.read_csv(ROOT / "output/rdd_bolsa/VL_estimativas.csv")
         c = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "coeficiente") & (d.termo == "bolsa_mil")].iloc[0]
         r = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "razao_chances_por_5mil")].iloc[0]
-        i = self.pos("Anexo 4: estimação")
+        i = self.pos("Anexo 1: estimação")
         t = self.txt[i]
         notas = self.prs.slides[i].notes_slide.notes_text_frame.text
-        self.assertIn("Anexo 4: estimação, de onde vem o β", t)
+        self.assertIn("Anexo 1: estimação, de onde vem o β", t)
         # a incerteza saiu da tela (pedido de 14/11) e fica nas notas, para as perguntas
         self.assertIn(f"({int(c.n_conjuntos)} grupos", notas)
         self.assertIn(f"p = {r.p_score_rademacher:.3f}".replace(".", ","), notas)
@@ -170,24 +170,27 @@ class TestDeck(unittest.TestCase):
         i = tits.index("Cada médico escolhe a vaga que mais vale a pena")
         self.assertEqual(tits[i + 1], "Modelo: logit condicional da 1ª opção")
         self.assertIn(f"{100 * pb:.0f}%", self.txt[i])
-        j = tits.index("Anexo 5: o modelo formal, do valor à escolha")
+        j = tits.index("Anexo 3: o modelo formal, do valor à escolha")
         self.assertIn(f"{100 * pb:.1f}%".replace(".", ","), self.txt[j])
         self.assertIn("y é o resultado.", self.txt[j])
         self.assertIn("U é o mecanismo.", self.txt[j])
-        k = tits.index("Anexo 6: por que este modelo e não outro")
+        k = tits.index("Anexo 2: por que este modelo e não outro")
         for x in ("RDD por vaga", "Poisson", "Guimarães, Figueiredo e Woodward", "logit condicional"):
             self.assertIn(x, self.txt[k])
-        self.assertEqual(tits[-2:], ["Anexo 5: o modelo formal, do valor à escolha",
-                                     "Anexo 6: por que este modelo e não outro"])
+        self.assertEqual(tits.index("Anexo 2: por que este modelo e não outro") + 1,
+                         tits.index("Anexo 3: o modelo formal, do valor à escolha"))
 
     def test_literatura_e_estimacao_no_anexo(self):
         """Rodada 10 (14/11): para encurtar a fala, Literatura e Estimação vão para depois do Q&A."""
-        qa = self.pos("Q&A") if any(x["titulo"].startswith("Q&A") for x in self.man["slides"]) else None
-        lit, est = self.pos("Anexo 1: modelo combina"), self.pos("Anexo 4: estimação")
-        self.assertEqual(self.pos("Conclusão:"), lit - 2)  # conclusão, Q&A, anexos
-        self.assertLess(lit, est)
+        lit, est = self.pos("Anexo 4: modelo combina"), self.pos("Anexo 1: estimação")
+        self.assertEqual(self.pos("Conclusão:"), est - 2)  # conclusão, Q&A, anexos
+        # rodada 12: anexos do mais ao menos provável de ser cobrado, com a seção no rodapé
+        self.assertLess(est, lit)
+        secoes = {x["titulo"].split(":")[0]: x["secao"] for x in self.man["slides"] if x["titulo"].startswith("Anexo")}
+        self.assertEqual(secoes, {"Anexo 1": "Metodologia", "Anexo 2": "Identificação", "Anexo 3": "Literatura",
+                                  "Anexo 4": "Literatura"})
         self.assertLess(self.pos("Limitações"), self.pos("Conclusão:"))
-        for t in ("Anexo 2: literatura teórica, a equação", "Anexo 3: bolsa segue exatamente o IVS do município"):
+        for t in ("Anexo 3: literatura teórica, a equação", "Anexo 2: bolsa segue exatamente o IVS do município"):
             self.assertTrue(any(x["titulo"] == t for x in self.man["slides"]), t)
 
     def test_pergunta_nova(self):

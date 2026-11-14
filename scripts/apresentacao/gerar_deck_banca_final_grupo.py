@@ -90,9 +90,11 @@ ORDEM = [
     ("N", "identificacao", "Identificação"),
     ("G", 23, None), ("N", "resultados", "Resultados"), ("N", "robustez", "Robustez"),
     ("N", "limitacoes", "Discussão"), ("N", "conclusao", "Discussão"),
-    # anexos (rodada 10, 14/11): Literatura e Estimação saem do corpo para encurtar a fala
-    ("G", 31, None), ("G", 11, None), ("G", 32, None), ("G", 33, None), ("N", "estimacao", None),
-    ("N", "formal", None), ("N", "alternativas", None),
+    ("G", 31, None),
+    # anexos (rodada 10, 14/11): Literatura e Estimação saem do corpo para encurtar a fala. Rodada 12: do mais ao
+    # menos provável de ser cobrado, com a seção a que se referem no rodapé; o número ("Anexo k") é dado na montagem
+    ("N", "estimacao", "Metodologia"), ("N", "alternativas", "Metodologia"), ("N", "formal", "Metodologia"),
+    ("G", 33, "Identificação"), ("G", 32, "Literatura"), ("G", 11, "Literatura"),
 ]
 
 FORA = {
@@ -160,10 +162,10 @@ CORRECOES = [(n, a, b) for n in (4, 5, 6) for a, b in _FAIXAS] + [
     # títulos sem artigo no começo (pedido do autor de 14/11)
     (3, "A escassez de especialistas já é tratada como urgência sanitária",
      "Escassez de especialistas já é tratada como urgência sanitária", "exato"),
-    (11, "O modelo combina dois elementos da teoria", "Anexo 1: modelo combina dois elementos da teoria", "exato"),
-    (32, "Anexo 1: Literatura Teórica - Equação", "Anexo 2: literatura teórica, a equação", "exato"),
+    (11, "O modelo combina dois elementos da teoria", "Anexo: modelo combina dois elementos da teoria", "exato"),
+    (32, "Anexo 1: Literatura Teórica - Equação", "Anexo: literatura teórica, a equação", "exato"),
     (16, "Os dados ligam os editais do PMM-E ao CNES", "Dados ligam os editais do PMM-E ao CNES", "exato"),
-    (33, "A bolsa segue exatamente o IVS do município", "Anexo 3: bolsa segue exatamente o IVS do município", "exato"),
+    (33, "A bolsa segue exatamente o IVS do município", "Anexo: bolsa segue exatamente o IVS do município", "exato"),
 ] + [(n, "A vulnerabilidade social define o valor da bolsa do PMM-E",
       "Vulnerabilidade social define o valor da bolsa do PMM-E", "exato") for n in (4, 5, 6)] + [
     (32, "Preços e custo do local continuam contra e é a soma das três variáveis que determina se a vaga é preenchida.",
@@ -871,7 +873,7 @@ def s_passos(M, prs, n):
 
 def s_estimacao(M, prs, n):
     """De onde vem o β e o que comparamos; a incerteza fica nas notas e no slide de resultados (pedido de 14/11)."""
-    sl = M.novo(prs, "Anexo 4: estimação, de onde vem o β")
+    sl = M.novo(prs, "Anexo: estimação, de onde vem o β")
     topo, alto = 0.9, 4.0
 
     def cartao(x, w, rotulo):
@@ -1224,7 +1226,7 @@ def s_intuicao(M, prs, n):
 
 def s_formal(M, prs, n):
     vs = abc(n)
-    sl = M.novo(prs, "Anexo 5: o modelo formal, do valor à escolha")
+    sl = M.novo(prs, "Anexo: o modelo formal, do valor à escolha")
     cards = (("1 · UTILIDADE (NÃO OBSERVADA)", "U_{iv} = β·x_{iv} + ε_{iv}",
               "β·x: bolsa, distância, IVS, X e par de UFs, com os pesos. ε: o que não vemos (família, gosto)."),
              ("2 · ESCOLHA OBSERVADA (0 OU 1)", "y_{iv} = 1  se  U_{iv} > U_{ik}",
@@ -1297,7 +1299,7 @@ def s_formal(M, prs, n):
 
 
 def s_alternativas(M, prs, n):
-    sl = M.novo(prs, "Anexo 6: por que este modelo e não outro")
+    sl = M.novo(prs, "Anexo: por que este modelo e não outro")
     caixa(sl, 0.25, 0.88, 12.83, 0.5,
           [[("Havia outros jeitos de medir o peso da bolsa. Em cada linha: o que o método faz e por que não é o "
              "principal.", 14, True, VERDE)]], fill=CLARO, nome="Faixa", margem=0.25)
@@ -1517,6 +1519,18 @@ def tirar_anotacoes(prs) -> list[str]:
     return tiradas
 
 
+def numerar_anexo(slide, k: int) -> int:
+    """'Anexo: …' vira 'Anexo k: …' (a ordem dos anexos muda entre a nossa versão e a conciliada)."""
+    for sh in slide.shapes:
+        if not (sh.has_text_frame and sh.top is not None and sh.top < Inches(0.05)):
+            continue
+        for r in (r for par in sh.text_frame.paragraphs for r in par.runs):
+            if r.text.startswith("Anexo:"):
+                r.text = r.text.replace("Anexo:", f"Anexo {k}:", 1)
+                return 1
+    return 0
+
+
 def construir() -> dict:
     if sha256(ENT) != SHA_ENT:
         raise SystemExit("ERRO: o deck do grupo de 14/11 mudou (hash diferente)")
@@ -1549,7 +1563,12 @@ def construir() -> dict:
             if rel.target_part is s.part:
                 prs.part.drop_rel(rid)
     manifesto = []
+    n_anexo = 0
     for pos, (s, _, t, k, secao) in enumerate(sequencia, 1):
+        n_anexo += numerar_anexo(s, n_anexo + 1)
+        if secao and not any(sh.has_text_frame and sh.text_frame.text.strip().startswith("Motivação") and
+                             "|" in sh.text_frame.text for sh in formas(s.shapes)):
+            s.shapes._spTree.append(copy.deepcopy(M.rodape._element))  # anexo do grupo sem rodapé (rodada 12)
         rodape(s, secao)
         numerar(s, pos)
         alinhar_titulo(s)

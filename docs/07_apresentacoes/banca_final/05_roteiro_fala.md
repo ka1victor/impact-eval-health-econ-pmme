@@ -89,7 +89,7 @@
   não vemos, como família e gosto).
 - Vemos só qual vaga tem a maior utilidade: a 1ª opção. Com ε de valor extremo, a chance de cada vaga é a fórmula ①.
 - O coeficiente testado é o da bolsa; o resto são controles. O par de UFs faz comparar vagas dentro da mesma UF, e a
-  bolsa vem de regra com o IVS no modelo (detalhe no anexo 4, se perguntarem).
+  bolsa vem de regra com o IVS no modelo (detalhe no anexo 1, se perguntarem).
 - Por que este modelo: logit condicional de McFadden (1974), que lhe rendeu o Nobel de Economia de 2000. Compara as
   vagas do mesmo médico, então o que é dele sai da conta. Referência de uso em economia da saúde: Costa, Nunes e
   Sanches (2024), sobre onde os médicos escolhem trabalhar no Brasil.
@@ -133,16 +133,19 @@
 
 **28. Q&A**: abrir para perguntas (respostas no [doc 04](04_perguntas_provaveis_logit.md)).
 
-## Anexos (só se perguntarem)
+## Anexos (só se perguntarem; do mais ao menos provável de ser cobrado)
 
-- **29. Anexo 1, literatura:** Moehling et al. dão a escolha do local (rendimento menos custo de estar ali); Choné e
-  Ma, Reinhardt e Redding e Rossi-Hansberg dão os dois custos, de trabalhar e de viver ali.
-- **30. Anexo 2, a equação da teoria:** de onde vem cada termo (salário, custo de trabalhar, custo de viver).
-- **31. Anexo 3, a regra da bolsa:** o IVS reproduz a faixa de 368 de 368 municípios no ciclo 1 e de 454 de 454 no
-  ciclo 2; o município não escolhe a bolsa.
-- **32. Anexo 4, estimação:** a bolsa é fixada por regra e o IVS está no modelo; comparamos vagas do mesmo candidato,
-  na mesma UF (260 pares de UFs, 5.345 candidatos); dentro do município não dá, porque a bolsa é igual no município
-  inteiro.
+O rodapé de cada anexo marca a seção a que ele se refere.
+
+- **29. Anexo 1, estimação (Metodologia):** a bolsa é fixada por regra e o IVS está no modelo; comparamos vagas do
+  mesmo candidato, na mesma UF (260 pares de UFs, 5.345 candidatos); dentro do município não dá, porque a bolsa é
+  igual no município inteiro.
+- **30. Anexo 2, a regra da bolsa (Identificação):** o IVS reproduz a faixa de 368 de 368 municípios no ciclo 1 e de
+  454 de 454 no ciclo 2; o município não escolhe a bolsa.
+- **31. Anexo 3, a equação da teoria (Literatura):** de onde vem cada termo (salário, custo de trabalhar, custo de
+  viver).
+- **32. Anexo 4, literatura (Literatura):** Moehling et al. dão a escolha do local (rendimento menos custo de estar
+  ali); Choné e Ma, Reinhardt e Redding e Rossi-Hansberg dão os dois custos, de trabalhar e de viver ali.
 
 ## Versão conciliada (35 slides): o que muda
 
@@ -162,5 +165,6 @@ Até o slide 19 é igual. Depois, os números sobem um, e mudam dois slides:
 - As três contas: 5 × 0,077 = 0,385; exp(0,385) = ×1,47 (47% mais chance); 0,385 ÷ 0,514 × 100 = 75 km.
 - Leitura: a bolsa conta, mas estar na mesma região de saúde de onde já trabalha pesa mais.
 
-Os anexos da conciliada são os mesmos 1 a 4 (slides 30 a 33), mais o anexo 5, o modelo formal (y é o resultado, U é
-o mecanismo), e o anexo 6, por que este modelo e não outro (RDD por vaga, MQO, Poisson, versões mais ricas).
+Na conciliada, os anexos são seis (slides 30 a 35), na mesma lógica: 1, estimação; 2, por que este modelo e não
+outro (RDD por vaga, MQO, Poisson, versões mais ricas); 3, o modelo formal (y é o resultado, U é o mecanismo); 4, a
+regra da bolsa; 5, a equação da teoria; 6, literatura.

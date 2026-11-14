@@ -216,31 +216,31 @@
     },
     {
       "posicao": 29,
-      "origem": "grupo 14/11",
-      "slide_origem": 11,
-      "secao": null,
-      "titulo": "Anexo 1: modelo combina dois elementos da teoria"
+      "origem": "novo",
+      "slide_origem": "estimacao",
+      "secao": "Metodologia",
+      "titulo": "Anexo 1: estimação, de onde vem o β"
     },
     {
       "posicao": 30,
       "origem": "grupo 14/11",
-      "slide_origem": 32,
-      "secao": null,
-      "titulo": "Anexo 2: literatura teórica, a equação"
+      "slide_origem": 33,
+      "secao": "Identificação",
+      "titulo": "Anexo 2: bolsa segue exatamente o IVS do município"
     },
     {
       "posicao": 31,
       "origem": "grupo 14/11",
-      "slide_origem": 33,
-      "secao": null,
-      "titulo": "Anexo 3: bolsa segue exatamente o IVS do município"
+      "slide_origem": 32,
+      "secao": "Literatura",
+      "titulo": "Anexo 3: literatura teórica, a equação"
     },
     {
       "posicao": 32,
-      "origem": "novo",
-      "slide_origem": "estimacao",
-      "secao": null,
-      "titulo": "Anexo 4: estimação, de onde vem o β"
+      "origem": "grupo 14/11",
+      "slide_origem": 11,
+      "secao": "Literatura",
+      "titulo": "Anexo 4: modelo combina dois elementos da teoria"
     }
   ],
   "fora_do_deck": {
@@ -305,10 +305,10 @@
     "slide 32 do grupo: '; o altruísmo do médico (α) compensa em parte.' → '.'",
     "slide 32 do grupo: ') por (B)' → ') pela bolsa (B)'",
     "slide 3 do grupo: 'A escassez de especialistas já é tratada como urgência sanitária' → 'Escassez de especialistas já é tratada como urgência sanitária'",
-    "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Anexo 1: modelo combina dois elementos da teoria'",
-    "slide 32 do grupo: 'Anexo 1: Literatura Teórica - Equação' → 'Anexo 2: literatura teórica, a equação'",
+    "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Anexo: modelo combina dois elementos da teoria'",
+    "slide 32 do grupo: 'Anexo 1: Literatura Teórica - Equação' → 'Anexo: literatura teórica, a equação'",
     "slide 16 do grupo: 'Os dados ligam os editais do PMM-E ao CNES' → 'Dados ligam os editais do PMM-E ao CNES'",
-    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Anexo 3: bolsa segue exatamente o IVS do município'",
+    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Anexo: bolsa segue exatamente o IVS do município'",
     "slide 4 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 5 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 6 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
@@ -323,7 +323,7 @@
     "slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "df942a828cd5bc5f49b2714230f358667cf210ffe15041792743e8ef149547ea",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "54c7cba90df43b83fe1b2504360dc990f6c33f23f54ec75156112d3d4c402d7b",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

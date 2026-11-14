@@ -224,45 +224,45 @@
     },
     {
       "posicao": 30,
-      "origem": "grupo 14/11",
-      "slide_origem": 11,
-      "secao": null,
-      "titulo": "Anexo 1: modelo combina dois elementos da teoria"
+      "origem": "novo",
+      "slide_origem": "estimacao",
+      "secao": "Metodologia",
+      "titulo": "Anexo 1: estimação, de onde vem o β"
     },
     {
       "posicao": 31,
-      "origem": "grupo 14/11",
-      "slide_origem": 32,
-      "secao": null,
-      "titulo": "Anexo 2: literatura teórica, a equação"
+      "origem": "novo",
+      "slide_origem": "alternativas",
+      "secao": "Metodologia",
+      "titulo": "Anexo 2: por que este modelo e não outro"
     },
     {
       "posicao": 32,
-      "origem": "grupo 14/11",
-      "slide_origem": 33,
-      "secao": null,
-      "titulo": "Anexo 3: bolsa segue exatamente o IVS do município"
+      "origem": "novo",
+      "slide_origem": "formal",
+      "secao": "Metodologia",
+      "titulo": "Anexo 3: o modelo formal, do valor à escolha"
     },
     {
       "posicao": 33,
-      "origem": "novo",
-      "slide_origem": "estimacao",
-      "secao": null,
-      "titulo": "Anexo 4: estimação, de onde vem o β"
+      "origem": "grupo 14/11",
+      "slide_origem": 33,
+      "secao": "Identificação",
+      "titulo": "Anexo 4: bolsa segue exatamente o IVS do município"
     },
     {
       "posicao": 34,
-      "origem": "novo",
-      "slide_origem": "formal",
-      "secao": null,
-      "titulo": "Anexo 5: o modelo formal, do valor à escolha"
+      "origem": "grupo 14/11",
+      "slide_origem": 32,
+      "secao": "Literatura",
+      "titulo": "Anexo 5: literatura teórica, a equação"
     },
     {
       "posicao": 35,
-      "origem": "novo",
-      "slide_origem": "alternativas",
-      "secao": null,
-      "titulo": "Anexo 6: por que este modelo e não outro"
+      "origem": "grupo 14/11",
+      "slide_origem": 11,
+      "secao": "Literatura",
+      "titulo": "Anexo 6: modelo combina dois elementos da teoria"
     }
   ],
   "fora_do_deck": {
@@ -327,10 +327,10 @@
     "slide 32 do grupo: '; o altruísmo do médico (α) compensa em parte.' → '.'",
     "slide 32 do grupo: ') por (B)' → ') pela bolsa (B)'",
     "slide 3 do grupo: 'A escassez de especialistas já é tratada como urgência sanitária' → 'Escassez de especialistas já é tratada como urgência sanitária'",
-    "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Anexo 1: modelo combina dois elementos da teoria'",
-    "slide 32 do grupo: 'Anexo 1: Literatura Teórica - Equação' → 'Anexo 2: literatura teórica, a equação'",
+    "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Anexo: modelo combina dois elementos da teoria'",
+    "slide 32 do grupo: 'Anexo 1: Literatura Teórica - Equação' → 'Anexo: literatura teórica, a equação'",
     "slide 16 do grupo: 'Os dados ligam os editais do PMM-E ao CNES' → 'Dados ligam os editais do PMM-E ao CNES'",
-    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Anexo 3: bolsa segue exatamente o IVS do município'",
+    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Anexo: bolsa segue exatamente o IVS do município'",
     "slide 4 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 5 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
     "slide 6 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
@@ -345,7 +345,7 @@
     "slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pptx": "6483bd8074b49b10c76dd15c3f4e010bd6b9b16309d481713755efeccb50c75f",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pptx": "842a251c117856c096fa21f288b2511bab62683f260e830e2648d99f88a5e959",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo_conciliado.pdf": "gerado (PDF não é determinístico)"
   }
 }

@@ -1,6 +1,6 @@
 # 04. Perguntas prováveis da banca sobre o logit condicional, com respostas
 
-> **Para quê:** preparar a defesa do método (slides 17 e 20–22 e anexo 4 do deck de [03](03_deck_banca_final_grupo.md)).
+> **Para quê:** preparar a defesa do método (slides 17 e 20–22 e anexo 1 do deck de [03](03_deck_banca_final_grupo.md)).
 > Pedido do autor de 14/11/2026: explicar melhor como o logit condicional foi feito.<br>
 > **Estatuto:** apresentação. Nenhuma estimativa nova. Cada número vem de `output/rdd_bolsa/VL_estimativas.csv`,
 > `VL_resumo.json`, `P1_estimativas.csv`, `portao_r1_ivs_oficial.json` ou dos docs citados; o deck lê os mesmos
@@ -36,7 +36,7 @@ VL-4). Mais R$ 5 mil compensam, na escolha, uma vaga 75 km mais longe do local d
 ## Identificação
 
 **5. De onde vem a variação que identifica o β?**
-Três coisas juntas (anexo 4):
+Três coisas juntas (anexo 1):
 1. a bolsa é função em degraus do IVS 2010: salta em 0,300 e 0,400 (a regra reproduz 368 de 368 municípios no
    ciclo 1 e 454 de 454 no ciclo 2);
 2. o IVS entra como reta com dobras nesses cortes, **sem salto**; o que muda de repente no corte é só a bolsa, e é esse
