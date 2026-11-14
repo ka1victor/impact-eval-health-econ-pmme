@@ -12,6 +12,17 @@
 > acento na manchete (7 e 9); "Hips de Identificação" → "Modelo e identificação" nos sumários; número da página do
 > slide 11 sem quebra; Limitações com letra maior. As trocas que cabem num só trecho de texto mantêm a formatação do
 > grupo.
+>
+> **Terceira rodada de 14/11 (pedido do autor: "mais fácil de entender, com menos conteúdo e menos palavras"):**
+> os 13 slides gerados (12–13, 15, 18, 21–24, 26–30) passam de 2.491 para 1.449 palavras na tela (−42%). Regra:
+> título com a mensagem; corpo curto, letra maior; detalhe, fórmula e número de apoio vão para as notas do
+> apresentador; as cautelas ficam na tela em forma curta (exploratório, pacote do corte, escolher não é ir,
+> inconclusivo perto do corte, só o ciclo 2 forte). O que saiu da tela e foi para as notas: a linha de termos da
+> cadeia causal e os subtítulos da etapa 3; o porte das vagas e o bloco "o que comparamos" da hipótese; a frase sob a
+> tabela e a nota do CNES do slide 18; a equação da razão P(A) ÷ P(B) e Scott/Kolstad do slide 21; os cartões "por que
+> razão" do 22 e "por que o ×" do 27; o caso "perto do corte" do 23 (continua na figura de robustez); a faixa "de
+> onde vem o β" do 24 (está no 23); a fórmula dos 75 km e o p de Holm do 26 (o Holm está no 23). Onde as seções 3.x
+> abaixo descrevem um desses elementos, ele está nas notas do slide, não na tela.
 
 > **Pedido do autor (11/11/2026, noite):** partir do deck atual do grupo (`PEE - BANCA FINAL`, 33 slides, 1 oculto) e
 > comunicar melhor o trabalho com o que foi feito no deck da banca final ([02](02_deck_banca_final.md)), seção por seção.<br>
