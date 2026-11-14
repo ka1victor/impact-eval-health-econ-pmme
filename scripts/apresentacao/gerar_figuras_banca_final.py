@@ -4,7 +4,7 @@ Gera, lendo só `output/`:
 - `output/apresentacao_banca_final/figuras/coeficientes_vl1.png`: o que cada coeficiente do VL-1 (ciclos 1–3) faz
   com a chance de uma vaga contra outra, em escala multiplicativa (×), com IC 95%.
 - `output/apresentacao_banca_final/figuras/robustez_vl1.png`: razão de chances por +R$ 5 mil nas variantes que
-  comparam vagas da mesma UF (VL e VG), mais o modelo pré-registrado (M1) como referência cinza.
+  comparam vagas da mesma UF (VL e VG). O modelo sem o par de UFs (M1) saiu da figura (pedido do autor de 14/11).
 - `output/apresentacao_banca_final/figuras/manifesto_figuras.json`: entradas com hash e os números de cada linha.
 
 Natureza: EMPIRICO. Nada simulado.
@@ -50,13 +50,11 @@ ROBUSTEZ = (
     ("VG", "VG1", "Só o ciclo 1", True),
     ("VG", "VL1_c2", "Só o ciclo 2", True),
     ("VG", "VG3", "Só o ciclo 3", True),
-    ("VL", "M1_emp", "Sem fixar a UF (pré-registrado)", False),
 )
 # grupos da figura (versão de 14/11): título e as linhas de cada um, na ordem da leitura
 GRUPOS_ROB = (("Principal", ("VL1_emp",)),
               ("Outras medidas", ("VL1log_emp", "VL3_VL1_emp")),
-              ("Só parte dos dados", ("VL2_emp", "VG1", "VL1_c2", "VG3")),
-              ("Plano original", ("M1_emp",)))
+              ("Só parte dos dados", ("VL2_emp", "VG1", "VL1_c2", "VG3")))
 
 
 def sha256(p: Path) -> str:

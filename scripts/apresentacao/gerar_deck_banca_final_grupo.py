@@ -71,6 +71,11 @@ PILL = {"reduz": ("F5B5B0", "7A1C17"), "eleva": ("B9E4B1", VERDE), "testado": (M
         "parte": ("F6DDB0", "6B4A0B"), "nao": ("F5B5B0", "7A1C17"), "obs": ("B9E4B1", VERDE),
         "naoobs": ("DDE3DE", "39413B"), "estima": ("FFD98A", "8A5A00")}
 
+# Ideias do deck v4.1 de um colega (slide das vagas A, B e C; anexos 3 e 4). Desligadas a pedido do autor (14/11): a
+# nossa versão vai para o colega conciliar com a dele; para juntar depois, basta ligar.
+COM_IDEIAS_COLEGA = False
+IDEIAS_COLEGA = {"intuicao", "formal", "alternativas"}
+
 # ("G", n): slide n do deck do grupo (ordem de apresentação); ("N", nome): slide novo. Seção do rodapé.
 ORDEM = [
     ("G", 1, None), ("G", 2, None), ("G", 3, "Motivação"), ("G", 4, "Motivação"), ("G", 5, "Motivação"),
@@ -85,6 +90,8 @@ ORDEM = [
     ("N", "conclusao", "Discussão"), ("N", "limitacoes", "Discussão"),
     ("G", 31, None), ("G", 32, None), ("G", 33, None), ("N", "formal", None), ("N", "alternativas", None),
 ]
+if not COM_IDEIAS_COLEGA:
+    ORDEM = [x for x in ORDEM if not (x[0] == "N" and x[1] in IDEIAS_COLEGA)]
 FORA = {
     12: "rascunho em branco do grupo (só o título)",
     14: "hipótese em sobreposição: trocada pelo slide novo de hipótese (pedido de 11/11)",
@@ -209,7 +216,7 @@ def numeros() -> dict:
     ex = json.loads(F_EX.read_text(encoding="utf-8"))
     nb2 = json.loads(F_NB2.read_text(encoding="utf-8"))["numeros"]
     esc = {k: str(nb2[c]["valor"]) for k, c in (("uf", "ESC_UF"), ("mun", "ESC_MUN"), ("p50", "ESC_DIST_P50"),
-                                                ("p75", "ESC_DIST_P75"))}
+                                                ("p75", "ESC_DIST_P75"), ("n", "ESC_N"))}
     n = {
         "b": b, "dist": dist, "b5": 5 * b,
         "rc": float(rc.loc["VL1_emp", "estimativa"]), "rc_inf": float(rc.loc["VL1_emp", "ic95_inf"]),
@@ -682,8 +689,7 @@ def s_linhas(M, prs, n):
     caixa(sl, 0.25, 5.5, 12.83, 0.95,
           [[("Assim, para cada candidato temos ", 15, False, BRANCO), ("todas as vagas que ele podia escolher", 15, True,
                                                                         BRANCO),
-            (" e ", 15, False, BRANCO), ("qual ele escolheu", 15, True, BRANCO),
-            (". A seguir: onde ficam essas escolhas.", 15, False, BRANCO)]],
+            (" e ", 15, False, BRANCO), ("qual ele escolheu", 15, True, BRANCO), (".", 15, False, BRANCO)]],
           fill=VERDE, nome="Ideia", margem=0.3, align=PP_ALIGN.CENTER)
     fontes(sl, FONTE_PUBLICA)
     notas(sl, (f"Mesmo candidato em todas as linhas (CRM ilustrativo; a base não guarda nome, CPF nem CRM). "
@@ -704,22 +710,22 @@ def s_modelo(M, prs, n):
     # ① a chance
     texto(sl, 0.45, 0.97, 8.2, 0.3, [[("①  Chance de a vaga v ser a 1ª opção do candidato i", 12, True, VERDE2)]])
     texto(sl, 0.45, 1.45, 2.75, 0.45, [eq("P(i escolhe v) =", 18)], align=PP_ALIGN.RIGHT)
-    texto(sl, 3.3, 1.22, 5.3, 0.4, [eq("exp(V_{iv})", 18)], align=PP_ALIGN.CENTER)
+    texto(sl, 3.3, 1.22, 5.3, 0.4, [eq("exp(β·x_{iv})", 18)], align=PP_ALIGN.CENTER)
     linha(sl, 3.45, 1.67, 8.45, 1.67, larg=1.25)
-    texto(sl, 3.3, 1.71, 5.3, 0.42, [eq("soma de exp(V_{ik}) em todas as vagas k de i", 15)], align=PP_ALIGN.CENTER)
+    texto(sl, 3.3, 1.71, 5.3, 0.42, [eq("soma de exp(β·x_{ik}) em todas as vagas k de i", 15)], align=PP_ALIGN.CENTER)
     linha(sl, 0.45, 2.2, 8.6, 2.2, cor=BORDA, larg=1.0)
     # ② o valor
-    texto(sl, 0.45, 2.25, 8.2, 0.3, [[("②  Valor da vaga v para o candidato i", 12, True, VERDE2)]])
+    texto(sl, 0.45, 2.25, 8.2, 0.3, [[("②  Utilidade da vaga v para o candidato i", 12, True, VERDE2)]])
     texto(sl, 0.45, 2.55, 8.2, 0.42,
-          [eq("U_{iv} = V_{iv} + ε_{iv},   com   V_{iv} = β_{1}·bolsa_{v} + β_{2}·dist_{iv} + β_{3}·IVS_{v} + "
-              "β_{4}·X_{iv} + α_{UF(i),UF(v)}", 13.5)], align=PP_ALIGN.CENTER)
-    texto(sl, 0.45, 2.95, 8.2, 0.28, [[("V: a parte que observamos  ·  ε: a que não observamos", 10.5, False, CINZA)]],
-          align=PP_ALIGN.CENTER)
+          [eq("U_{iv} = β_{1}·bolsa_{v} + β_{2}·dist_{iv} + β_{3}·IVS_{v} + β_{4}·X_{iv} + α_{UF(i),UF(v)} + ε_{iv}",
+              14.5)], align=PP_ALIGN.CENTER)
+    texto(sl, 0.45, 2.95, 8.2, 0.28, [eq("β·x_{iv}: tudo menos o ε, a parte de U que observamos  ·  ε_{iv}: a que não "
+                                         "observamos", 10.5, CINZA)], align=PP_ALIGN.CENTER)
     # a ligação, abaixo de ②, em destaque
     caixa(sl, 0.35, 3.3, 8.35, 0.56,
           [[("Ligação: ", 13, True, ACENTO_ESCURO),
             ("vemos só qual vaga tem o maior U (a 1ª opção). Supondo ε de valor extremo, a chance disso é ①, "
-             "calculada com o V de ②.", 12, False, ACENTO_ESCURO)]],
+             "que depende só da parte observada de ②.", 12, False, ACENTO_ESCURO)]],
           fill=ACENTO_CLARO, line=ACENTO, nome="Ligação", margem=0.15)
     # O que cada termo faz (foco no regressor)
     texto(sl, 0.25, 4.05, 8.55, 0.32, [[("O que cada termo faz", 14, True, TEXTO)]])
@@ -727,7 +733,7 @@ def s_modelo(M, prs, n):
               ("distância", "β_{2}", "controle", "CONTROLE", "do local de trabalho anterior até a vaga"),
               ("IVS", "β_{3}", "controle", "CONTROLE", "vulnerabilidade do município, sem salto no corte"),
               ("X", "β_{4}", "controle", "CONTROLE", "região, município, porte, capital, vaga imediata"),
-              ("par de UFs", "α", "pareamento", "FIXO", "compara vagas dentro da mesma UF"))
+              ("par de UFs", "α", "pareamento", "FIXO", "254 efeitos fixos, um por par: compara vagas na mesma UF"))
     for k, (reg, par, tp, rot, leitura) in enumerate(termos):
         y = 4.42 + k * 0.46
         texto(sl, 0.35, y, 1.75, 0.42, [[(reg, 14, True, TEXTO), ("  ", 10, False, TEXTO)] + eq(par, 12, CINZA)])
@@ -738,35 +744,31 @@ def s_modelo(M, prs, n):
     # O que se estima (pequeno)
     caixa(sl, 9.0, 0.9, 4.08, 0.95,
           [[("O QUE SE ESTIMA: ", 10.5, True, "B9E4B1"),
-            ("os pesos β₁ a β₄ (e α) que melhor explicam as 1ªs opções", 12, True, BRANCO)]],
+            ("os pesos β₁ a β₄ e os efeitos fixos α que melhor explicam as 1ªs opções", 12, True, BRANCO)]],
           fill=VERDE, nome="O que se estima", margem=0.2)
     # Por que este modelo (grande): o método e a lógica; depois, onde a família é usada
-    caixa(sl, 9.0, 2.0, 4.08, 4.7, [], fill=CLARO, line=BORDA, nome="Por que este modelo")
-    texto(sl, 9.2, 2.08, 3.75, 0.3, [[("POR QUE ESTE MODELO", 10.5, True, VERDE2)]])
-    texto(sl, 9.2, 2.4, 3.72, 2.35,
-          [[("Logit condicional", 12, True, VERDE), (" (McFadden, 1974; Nobel de Economia de 2000).", 11, False,
+    # pedido de 14/11 (rodada 7): o quadro inteiro explica o modelo, com letra maior; só o exemplo de saúde
+    caixa(sl, 9.0, 2.0, 4.08, 4.7,
+          [[("POR QUE ESTE MODELO", 11, True, VERDE2)],
+           [("Logit condicional", 14, True, VERDE), (" (McFadden, 1974; Nobel de Economia de 2000).", 13, False,
                                                       TEXTO)],
-           [("Cada médico escolhe uma vaga entre várias. O modelo compara as vagas do ", 11, False, TEXTO),
-            ("mesmo", 11, True, TEXTO),
-            (" médico: o que é dele (nota, idade) é igual em todas e sai da conta; sobra o que muda entre as vagas.",
-             11, False, TEXTO)],
-           [("Como a bolsa vem de uma regra com corte, a forma mais simples do modelo basta (outros métodos: "
-             "anexo 4).", 11, False, TEXTO)]],
-          anchor=MSO_ANCHOR.TOP, esp=5)
-    linha(sl, 9.2, 4.85, 12.9, 4.85, cor=BORDA, larg=0.75)
-    texto(sl, 9.2, 4.92, 3.75, 0.28, [[("ONDE A MESMA FAMÍLIA É USADA", 9.5, True, VERDE2)]])
-    texto(sl, 9.2, 5.2, 3.72, 1.45,
-          [[("Bobba et al. (2026): ", 10.5, True, VERDE),
-            ("professores no Peru; bônus que salta em cortes (logit multinomial)", 10.5, False, TEXTO)],
-           [("Costa, Nunes & Sanches (2024): ", 10.5, True, VERDE),
-            ("médicos no Brasil (logit com coeficientes aleatórios)", 10.5, False, TEXTO)]],
-          anchor=MSO_ANCHOR.TOP, esp=4)
-    fontes(sl, "Fontes: McFadden (1974); Bobba et al. (2026), NBER WP 29068; Costa, Nunes & Sanches (2024), The Review "
-               "of Economics and Statistics.")
-    notas(sl, ("Duas equações. ② é o valor da vaga: U = V + ε; V é a parte observável, com os pesos; ε é o que não "
-               "observamos. ① é a chance de cada vaga ser a 1ª opção. A ligação: se cada ε segue uma distribuição de "
-               "valor extremo (Gumbel), a chance de a vaga ter o maior U é exatamente exp(V) ÷ soma de exp(V) nas vagas "
-               "do candidato. Os pesos saem por máxima verossimilhança. O nível do valor não é identificado (só "
+           [("Cada médico escolhe uma vaga entre várias. O modelo compara as vagas do ", 13, False, TEXTO),
+            ("mesmo", 13, True, TEXTO),
+            (" médico: o que é dele (nota, idade) é igual em todas e sai da conta.", 13, False, TEXTO)],
+           [("A bolsa vem de uma regra; por isso a versão mais simples do modelo basta" +
+             (" (outros métodos: anexo 4)." if COM_IDEIAS_COLEGA else "."), 13, False, TEXTO)],
+           [("Em saúde: ", 13, True, VERDE),
+            ("Costa, Nunes e Sanches (2024) usam um modelo da mesma família para estudar onde os médicos escolhem "
+             "trabalhar no Brasil.", 13, False, TEXTO)]],
+          fill=CLARO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome="Por que este modelo", margem=0.25, esp=9)
+    fontes(sl, "Fontes: McFadden (1974); Costa, Nunes e Sanches (2024), The Review of Economics and Statistics. "
+               "Elaboração própria.")
+    notas(sl, ("Duas equações. ② é a utilidade da vaga: U = β·x + ε, com o erro no fim; β·x (bolsa, distância, IVS, "
+               "controles e o efeito fixo do par) é a parte observável; ε é o que não observamos. ① é a chance de cada "
+               "vaga ser a 1ª opção. A ligação: se cada ε segue uma distribuição de valor extremo (Gumbel), a chance de "
+               "a vaga ter o maior U é exatamente exp(β·x) ÷ soma de exp(β·x) nas vagas do candidato; a chance não se "
+               "escreve sobre U inteiro, porque o ε não é observado. α são 254 parâmetros, um efeito fixo por par UF de "
+               "trabalho × UF da vaga (por isso α, a letra usual para efeito fixo, e não um β₅ único). Os pesos saem por máxima verossimilhança. O nível do valor não é identificado (só "
                "diferenças entre vagas, numa escala normalizada); por isso cada coeficiente se lê pela razão de "
                "chances entre duas vagas: P(A) ÷ P(B) = exp[β₁·(bolsa_A − bolsa_B) + …]. β₃·IVS: na estimação, o IVS "
                "entra como reta com dobras nos cortes 0,300 e 0,400 (spline linear contínuo, sem salto), para que só a "
@@ -776,7 +778,7 @@ def s_modelo(M, prs, n):
                "endógeno). No PMM-E a bolsa é fixada por regra com corte e a lista é feita na inscrição: o logit "
                "condicional, o mais simples da família, basta (doc 11 da banca 2). McFadden recebeu o Nobel de 2000 "
                "pela teoria e pelos métodos de escolha discreta. Ligação com o y: o que observamos é y = 1 na vaga "
-               "posta em 1º, isto é, a de maior U; a versão formal, com o exemplo A, B e C, está no anexo 3."))
+               "posta em 1º, isto é, a de maior U."))
     return sl
 
 
@@ -788,8 +790,8 @@ def s_passos(M, prs, n):
               "met": (VERDE, BRANCO, BRANCO, None)}
     passos = (("1", "Vagas", "uma linha por vaga possível", "base"),
               ("2", "Escolha", "y = 1 na vaga posta em 1º", "base"),
-              ("3", "Valor", "V = pesos × características", "est"),
-              ("4", "Chance", "exp(V) ÷ soma das vagas dele", "est"),
+              ("3", "Utilidade", "U = pesos × características + ε", "est"),
+              ("4", "Chance", "exp(U sem ε) ÷ soma das vagas dele", "est"),
               ("5", "Pesos", "os que melhor explicam as escolhas", "est"),
               ("6", "Métrica", "chance (A) ÷ chance (B)", "met"))
     w, gap = 1.95, 0.226
@@ -834,7 +836,7 @@ def s_passos(M, prs, n):
         texto(sl, 6.9, 4.58 + k * 0.52, 3.75, 0.5,
               [[(x_, 18, True, "B9E4B1" if k == 0 else BRANCO), (f"  {rot}", 13.5, False, BRANCO)]])
     caixa(sl, 10.9, 3.38, 2.18, 2.95,
-          [[("Só as duas na mesa:", 12, True, VERDE2)],
+          [[("Se fossem as únicas duas vagas:", 12, True, VERDE2)],
            [(f"{round(100 * c['chance_b_entre_as_duas'])}%", 26, True, TEXTO)],
            [("contra", 12, False, CINZA)],
            [(f"{100 - round(100 * c['chance_b_entre_as_duas'])}%", 26, True, TEXTO)]],
@@ -862,11 +864,11 @@ def s_estimacao(M, prs, n):
         texto(sl, x + 0.25, topo + 0.15, w - 0.4, 0.32, [[(rotulo, 12.5, True, VERDE2)]])
 
     x1, w1 = 0.25, 6.3
-    cartao(x1, w1, "I. A VARIAÇÃO QUE USAMOS")
-    itens = (("1", "A bolsa **salta** nos cortes de IVS 0,300 e 0,400."),
-             ("2", "O IVS entra **sem salto**: no corte, só a bolsa muda."),
-             ("3", f"A comparação é **dentro da mesma UF**: {n['pares_var']} pares de UFs, {mil(n['cand_var'])} "
-                   "candidatos com bolsas diferentes no seu leque."))
+    cartao(x1, w1, "I. DE ONDE VEM A VARIAÇÃO DA BOLSA")
+    itens = (("1", "A bolsa é **fixada por regra**: R$ 10, 15 ou 20 mil, pela faixa de IVS do município."),
+             ("2", "O **IVS também está no modelo**: o β não mistura bolsa com vulnerabilidade."),
+             ("3", f"Comparamos **vagas da mesma UF** com bolsas diferentes: {n['pares_var']} pares de UFs, "
+                   f"{mil(n['cand_var'])} candidatos."))
     for k, (num, t) in enumerate(itens):
         y = topo + 0.7 + k * 1.05
         caixa(sl, x1 + 0.25, y + 0.02, 0.44, 0.44, [[(num, 14, True, BRANCO)]], fill=VERDE, forma=MSO_SHAPE.OVAL,
@@ -887,10 +889,9 @@ def s_estimacao(M, prs, n):
     # 14/11, 3ª rodada: a ressalva "exploratório" saiu daqui e foi para Limitações (pedido do autor); no lugar, a
     # síntese do slide e a ponte para o seguinte
     caixa(sl, 0.25, 5.1, 12.83, 1.45,
-          [[("Em resumo: ", 15, True, "B9E4B1"),
-            ("o β mede quanto a chance muda quando só a bolsa salta, comparando vagas do mesmo candidato na mesma UF.",
-             15, False, BRANCO)],
-           [("A seguir: o que precisamos supor para ler isso como efeito da bolsa.", 14, True, BRANCO)]],
+          [[("Em resumo: ", 16, True, "B9E4B1"),
+            ("o β mede quanto a chance de uma vaga muda com a bolsa, comparando vagas do mesmo candidato, na mesma "
+             "UF, com o IVS controlado.", 16, False, BRANCO)]],
           fill=VERDE, nome="Em resumo", margem=0.3, esp=6)
     fontes(sl, FONTE_PUBLICA)
     notas(sl, (f"(I) A bolsa é função em degraus do IVS (a regra reproduz {n['r1_c1']}/{n['n_c1']} e "
@@ -912,25 +913,27 @@ def s_estimacao(M, prs, n):
 def s_identificacao(M, prs, n):
     sl = M.novo(prs, "Identificação: as premissas do logit condicional")
     linhas_ = (
-        ("Escolha sincera", "SUPOSIÇÃO", "suposto",
-         "Cada médico pôs em 1º a vaga que de fato prefere, sem desistir de uma vaga por achar que não passaria na "
-         "nota."),
-        ("Todas as vagas conhecidas", "SUPOSIÇÃO", "suposto",
-         "O médico considerou todas as vagas do seu curso e ciclo; o edital publica a lista inteira."),
-        ("Bolsa sem relação com o que não medimos", "EM PARTE", "parte",
-         "A bolsa segue exatamente a regra do IVS, e o IVS está no modelo. Mas nos mesmos cortes mudam outras regras "
-         "federais: medimos o efeito do pacote, não só do dinheiro."),
-        ("Vagas próximas como substitutas", "β ESTÁVEL", "obs",
-         "Vagas da mesma região concorrem mais entre si do que o modelo supõe. Num modelo que permite isso (testado "
-         "no modelo base), o peso da bolsa quase não muda."),
+        ("Escolha sincera", "o médico lista a vaga que prefere", "SUPOSIÇÃO", "suposto",
+         "Ninguém deixa de pôr em 1º a vaga preferida por achar que não passaria na nota."),
+        ("Conjunto de escolha conhecido", "o médico vê todas as vagas", "SUPOSIÇÃO", "suposto",
+         "Ele considerou todas as vagas do seu curso e ciclo; o edital publica a lista inteira."),
+        ("Exogeneidade da bolsa", "a bolsa não depende do que não medimos", "VALE EM PARTE", "parte",
+         "A bolsa segue a regra do IVS, e o IVS está no modelo. Mas outras regras federais mudam nos mesmos cortes: "
+         "medimos o efeito do conjunto."),
+        ("Independência de alternativas (IIA)", "vagas parecidas não se substituem a mais", "TESTADA", "obs",
+         "Vagas da mesma região concorrem mais entre si. Num logit aninhado, testado no modelo base, o peso da bolsa "
+         "quase não muda."),
     )
-    for k, (tit, rot, tp, expl) in enumerate(linhas_):
-        y = 0.95 + k * 1.42
-        texto(sl, 0.25, y, 10.4, 0.42, [[(tit, 17, True, TEXTO)]])
-        pill(sl, 11.0, y + 0.04, 2.08, rot, tp, h=0.36, tam=10)
-        texto(sl, 0.25, y + 0.46, 12.83, 0.8, [[(expl, 14, False, TEXTO)]], anchor=MSO_ANCHOR.TOP)
-        if k < 3:
-            linha(sl, 0.25, y + 1.3, 13.08, y + 1.3, cor=BORDA, larg=0.75)
+    for k, (tit, sub, rot, tp, expl) in enumerate(linhas_):
+        x, y = 0.25 + (k % 2) * 6.53, 0.95 + (k // 2) * 2.92
+        caixa(sl, x, y, 6.3, 2.72, [], fill=CLARO, line=BORDA, nome=f"Premissa {k + 1}")
+        caixa(sl, x + 0.25, y + 0.22, 0.46, 0.46, [[(str(k + 1), 15, True, BRANCO)]], fill=VERDE,
+              forma=MSO_SHAPE.OVAL, align=PP_ALIGN.CENTER, margem=0)
+        texto(sl, x + 0.85, y + 0.18, 3.55, 0.56, [[(tit, 16, True, TEXTO)]])
+        pill(sl, x + 4.45, y + 0.27, 1.65, rot, tp, h=0.36, tam=10)
+        texto(sl, x + 0.85, y + 0.78, 5.25, 0.32, [[(sub, 12.5, True, VERDE2)]])
+        linha(sl, x + 0.25, y + 1.18, x + 6.05, y + 1.18, cor=BORDA, larg=0.75)
+        texto(sl, x + 0.25, y + 1.3, 5.8, 1.3, [[(expl, 14, False, TEXTO)]], anchor=MSO_ANCHOR.TOP)
     fontes(sl, "Fontes: Ipea, IVS 2010; editais e quadros de vagas do PMM-E (SGTES/MS), ciclos 1–3; CNES/DATASUS. "
                "Elaboração própria.")
     notas(sl, (f"Premissas do logit condicional. Escolha sincera: não dá para testar com estes dados (premissa do autor, "
@@ -982,20 +985,19 @@ def s_robustez(M, prs, n):
     blocos = (("OUTRAS MEDIDAS", f"Com todos os dados, de ×{v(lo)} a ×{v(hi)}: o resultado se mantém.", VERDE, BRANCO,
                "B9E4B1"),
               ("SÓ PARTE DOS DADOS", f"Perto do corte e nos ciclos 1 e 3, o IC inclui 1: inconclusivo, não contrário. O "
-                                     f"ciclo 2 é o mais forte (×{v(n['rc_c2'])}).", CLARO, TEXTO, VERDE2),
-              ("PLANO ORIGINAL", f"Sem fixar a UF: ×{v(n['rc_m1'])}, com IC que inclui 1.", CLARO, TEXTO, VERDE2))
-    y = 0.95
+                                     f"ciclo 2 é o mais forte (×{v(n['rc_c2'])}).", CLARO, TEXTO, VERDE2))
+    y = 1.1
     for k, (tit, corpo, fill, cor, cor_t) in enumerate(blocos):
-        h = 1.75 if k == 0 else (1.75 if k == 1 else 1.25)
-        caixa(sl, 8.55, y, 4.53, h, [[(tit, 11, True, cor_t)], [(corpo, 14 if k == 0 else 13, k == 0, cor)]],
+        h = 2.1
+        caixa(sl, 8.55, y, 4.53, h, [[(tit, 12, True, cor_t)], [(corpo, 15, k == 0, cor)]],
               fill=fill, line=None if fill == VERDE else BORDA, nome=f"Robustez {k}", margem=0.25, esp=4)
         y += h + 0.15
     texto(sl, 8.55, y + 0.05, 4.53, 0.35, [[("Verde: ", 12, True, MEDIO), ("IC exclui 1.   ", 12, False, TEXTO),
                                             ("Cinza: ", 12, True, CINZA), ("IC inclui 1.", 12, False, TEXTO)]])
     fontes(sl, FONTE_PUBLICA)
     notas(sl, (f"Grupos na ordem da leitura: principal; outras medidas com todos os dados (distância em log; região "
-               f"anterior × UF da vaga); só parte dos dados (perto do corte; cada ciclo); plano original pré-registrado "
-               f"(sem fixar a UF). Por que o × e não o coeficiente: é o mesmo número, ln({v(n['rc'])}) = "
+               f"anterior × UF da vaga); só parte dos dados (perto do corte; cada ciclo). Por que o × e não o "
+               f"coeficiente: é o mesmo número, ln({v(n['rc'])}) = "
                f"{v(n['b5'], 3)} = 5 × β₁; o × diz quantas vezes a chance muda; o teste (IC exclui 1) é o mesmo do β "
                "(IC exclui 0)."))
     return sl
@@ -1026,7 +1028,7 @@ def s_conclusao(M, prs, n):
                                       f"O peso é moderado: R$ 5 mil ≈ {round(n['km'])} km",
                                       "Metade de quem ocupa a vaga já estava no município")),
               ("✗  Não dá para afirmar", ("Que leva mais médicos ao município",
-                                          "Que é só o dinheiro (é um pacote)",
+                                          "Que o efeito é só da bolsa",
                                           "Que vale em todo ciclo")))
     for k, (tit, itens) in enumerate(blocos):
         x = 4.6 + k * 4.3
@@ -1034,9 +1036,9 @@ def s_conclusao(M, prs, n):
               [[("•  " + it, 13.5, False, TEXTO)] for it in itens],
               fill=CLARO if k == 0 else BRANCO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome=tit, margem=0.25, esp=8)
     caixa(sl, 4.6, 5.45, 8.48, 1.12,
-          [[("Para a política: ", 14, True, "B9E4B1"),
-            ("pagar mais muda a escolha entre vagas próximas; não mostramos que atraia médicos de longe.", 14, False,
-             BRANCO)]],
+          [[("Para a política: ", 14.5, True, "B9E4B1"),
+            ("pagar mais muda a escolha entre vagas próximas.", 14.5, False, BRANCO)],
+           [("Não mostramos que atraia médicos de longe.", 14.5, False, BRANCO)]],
           fill=VERDE, nome="Política", margem=0.25)
     fontes(sl, FONTE_PUBLICA)
     notas(sl, ("Conclusão e discussão num slide (pedido de 14/11): a resposta, quem ocupa a vaga, dá / não dá para "
@@ -1051,15 +1053,15 @@ def s_conclusao(M, prs, n):
 
 def s_limitacoes(M, prs, n):
     sl = M.novo(prs, "Limitações")
-    caixas = (("O que o resultado não mostra",
-               (("Escolher não é ir", "não mostra mais médicos chegando"),
-                ("Pacote, não só dinheiro", "outras regras mudam no mesmo corte"),
-                ("Local anterior pelo CNES", "é onde trabalhava, não onde mora"))),
-              ("Quão firme é o resultado",
-               (("Mesma UF: decidido depois dos dados",
-                 "exploratório: o desenho é o mesmo, mas não foi o teste planejado; confirmar exige dados novos"),
-                (f"Plano original, sem fixar a UF: ×{v(n['rc_m1'])}", "IC contém 1: não descarta efeito nulo"),
-                ("Só o ciclo 2 é forte", "não generaliza para outros ciclos"))))
+    caixas = (("O que o resultado não mede",
+               (("Escolha, não alocação", "medimos a 1ª opção, não a chegada ao município"),
+                ("Tratamento composto", "outras regras mudam no mesmo corte de IVS"),
+                ("Origem pelo CNES", "local de trabalho anterior, não residência"))),
+              ("Quão forte é o resultado",
+               (("Especificação escolhida após os dados",
+                 "resultado exploratório; confirmar exige dados novos"),
+                ("Heterogeneidade entre ciclos", "significativo só no ciclo 2: validade externa limitada"),
+                ("Escolha sincera", "premissa não testável com estes dados"))))
     for k, (tit, itens) in enumerate(caixas):
         x = 0.25 + k * 6.5
         pars = [[(tit, 21, True, VERDE)]]
@@ -1071,17 +1073,15 @@ def s_limitacoes(M, prs, n):
         for j, par in enumerate(cx.text_frame.paragraphs):  # item colado à sua consequência; espaço entre itens
             par.space_after = Pt(16 if j == 0 else (2 if j % 2 == 1 else 20))
     fontes(sl, FONTE_PUBLICA)
-    notas(sl, ("Seis limitações em duas caixas. Escolher não é ir: vemos a 1ª opção na inscrição, não a chegada ao "
-               "município. Pacote: no corte de IVS outras regras mudam junto com a bolsa; o efeito do dinheiro não sai "
-               "isolado. Local anterior pelo CNES: é onde o médico trabalhava, não onde mora; explica a escolha, não a "
-               "causa. Mesma UF decidida depois dos dados: comparar só vagas da mesma UF (o par de UFs) foi decidido "
-               "depois de ver o primeiro modelo, o do plano pré-registrado, que não fixava a UF: "
-               f"×{v(n['rc_m1'])} (IC {v(n['rc_m1_inf'])} a {v(n['rc_m1_sup'])}, contém 1). Por isso o "
-               f"×{v(n['rc'])} é exploratório. Exploratório não quer dizer 'não causal': o desenho (salto da bolsa no "
+    notas(sl, ("Seis limitações em duas caixas. Escolha, não alocação: vemos a 1ª opção na inscrição, não a chegada "
+               "ao município. Tratamento composto: no corte de IVS outras regras mudam junto com a bolsa; o efeito do "
+               "dinheiro não sai isolado. Origem pelo CNES: é onde o médico trabalhava, não onde mora. Especificação "
+               "escolhida após os dados: comparar só vagas da mesma UF (o efeito fixo do par de UFs) foi decidido "
+               f"depois de ver os primeiros resultados. Por isso o ×{v(n['rc'])} é exploratório. Exploratório não quer dizer 'não causal': o desenho (salto da bolsa no "
                "corte, dentro da mesma UF) é o mesmo; quer dizer que não foi o teste planejado (adendo 52e, "
                "pós-resultado). Para virar confirmatório, seria preciso repetir o teste em dados novos, por exemplo o "
-               "ciclo 3 quando estiver maduro. Dizer isso antes da banca perguntar. Ciclo 1 ×{v(n['rc_c1'])} e ciclo 3 ×{v(n['rc_c3'])}, com IC que contém 1. A "
-               "escolha sincera é premissa (slide de identificação)."))
+               "ciclo 3 quando estiver maduro. Dizer isso antes da banca perguntar. Heterogeneidade: ciclo 1 ×{v(n['rc_c1'])} e ciclo 3 ×{v(n['rc_c3'])}, com IC que contém 1. A "
+               "escolha sincera é premissa e não dá para testar com estes dados."))
     return sl
 
 
@@ -1181,11 +1181,11 @@ def s_intuicao(M, prs, n):
 def s_formal(M, prs, n):
     vs = abc(n)
     sl = M.novo(prs, "Anexo 3: o modelo formal, do valor à escolha")
-    cards = (("1 · VALOR (NÃO OBSERVADO)", "U_{iv} = V_{iv} + ε_{iv}",
-              "V: bolsa, distância, IVS, X e par de UFs, com os pesos β. ε: o que não vemos (família, gosto)."),
+    cards = (("1 · UTILIDADE (NÃO OBSERVADA)", "U_{iv} = β·x_{iv} + ε_{iv}",
+              "β·x: bolsa, distância, IVS, X e par de UFs, com os pesos. ε: o que não vemos (família, gosto)."),
              ("2 · ESCOLHA OBSERVADA (0 OU 1)", "y_{iv} = 1  se  U_{iv} > U_{ik}",
               "para toda outra vaga k do candidato: y = 1 na vaga posta em 1º; 0 nas demais."),
-             ("3 · CHANCE", ("P(y_{iv} = 1) =", "exp(V_{iv}) ÷ soma de exp(V_{ik})"),
+             ("3 · CHANCE", ("P(y_{iv} = 1) =", "exp(β·x_{iv}) ÷ soma de exp(β·x_{ik})"),
               "Vale se ε é de valor extremo. Os pesos saem por máxima verossimilhança."),
              ("4 · RAZÃO DE CHANCES", ("P(B) ÷ P(A) = exp(5β_{1})", f"= exp(5 × {v(n['b'], 3)}) = {v(n['rc'])}"),
               "B paga +R$ 5 mil, o resto igual: o que é do médico e o denominador se cancelam."))
@@ -1204,7 +1204,7 @@ def s_formal(M, prs, n):
             seta(sl, x + w + 0.03, 2.0, x + w + gap - 0.03, 2.0, larg=2.0)
     # tabela A, B, C
     subtitulo(sl, 0.25, 3.28, 7.9, "Exemplo: as vagas A, B e C, com os pesos estimados")
-    cols = (("Vaga", 0.7), ("Bolsa", 1.1), ("Distância", 1.1), ("V (sem ε)", 1.1), ("P(y = 1)", 1.05), ("y", 0.5),
+    cols = (("Vaga", 0.7), ("Bolsa", 1.1), ("Distância", 1.1), ("β·x (sem ε)", 1.1), ("P(y = 1)", 1.05), ("y", 0.5),
             ("Razão vs. A", 2.2))
     y0, h = 3.7, 0.42
     x = 0.25
@@ -1226,7 +1226,7 @@ def s_formal(M, prs, n):
             x += cw
     texto(sl, 0.25, y0 + 4 * h + 0.1, 7.75, 0.85,
           [[("Ilustrativo: ", 10.5, True, CINZA),
-            (f"vagas inventadas. Só as diferenças de V importam, por isso V(A) = 0. B: +R$ 5 mil somam "
+            (f"vagas inventadas. Só as diferenças de β·x importam, por isso β·x(A) = 0. B: +R$ 5 mil somam "
              f"5 × {v(n['b'], 3)} ≈ {v(vs[1]['V'])}. C: os {vs[2]['km'] - 50} km a mais tiram o mesmo. Com ≈ 107 vagas "
              "por candidato, cada chance fica perto de 1%, mas a razão entre duas vagas é a mesma.", 10.5, False, CINZA)]],
           anchor=MSO_ANCHOR.TOP)
@@ -1243,11 +1243,11 @@ def s_formal(M, prs, n):
                "principal (ciclos 1–3). Elaboração própria.")
     notas(sl, ("Use se a banca pedir a forma do modelo. Não observamos quanto cada vaga vale para o médico (U); "
                "observamos só qual ele pôs em 1º lugar (y). O modelo supõe que ele lista em 1º a vaga de maior U, com "
-               "uma parte que medimos (V: bolsa, distância, IVS, controles, par de UFs) e uma que não medimos (ε). Se "
-               "ε é i.i.d. de valor extremo (Gumbel), a chance de a vaga v ter o maior U é exp(V_v) ÷ soma de exp(V_k) "
+               "uma parte que medimos (β·x: bolsa, distância, IVS, controles, par de UFs) e uma que não medimos (ε). Se "
+               "ε é i.i.d. de valor extremo (Gumbel), a chance de a vaga v ter o maior U é exp(β·x_v) ÷ soma de exp(β·x_k) "
                "nas vagas do candidato. Os pesos saem por máxima verossimilhança (Newton–Raphson): os que tornam as 1ªs "
                "opções observadas as mais prováveis. A razão de chances entre duas vagas do mesmo candidato é "
-               "exp(V_B − V_A): o denominador e tudo o que é do médico se cancelam. No exemplo, A, B e C são "
+               "exp(β·x_B − β·x_A): o denominador e tudo o que é do médico se cancelam. No exemplo, A, B e C são "
                "inventadas e os pesos são os estimados."))
     return sl
 
@@ -1309,6 +1309,8 @@ NOVOS = {"cadeia1": lambda M, p, n: s_cadeia(M, p, n, 2), "cadeia2": lambda M, p
          "estimacao": s_estimacao, "identificacao": s_identificacao, "resultados": s_resultados,
          "robustez": s_robustez, "conclusao": s_conclusao, "limitacoes": s_limitacoes, "formal": s_formal,
          "alternativas": s_alternativas}
+if not COM_IDEIAS_COLEGA:
+    NOVOS = {k: f for k, f in NOVOS.items() if k not in IDEIAS_COLEGA}
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -1345,13 +1347,29 @@ def refazer_descritiva(prs, n) -> list[str]:
              "Text 19": "% de candidatos com a 1ª opção na mesma UF, região ou município"}
     for nome, novo in novos.items():
         trocar(nome, novo)
+    # rodada 7 (14/11): os cartões repetiam os gráficos; no lugar, como a análise foi montada
+    for nome in ("Shape 2", "Text 3", "Shape 4", "Text 5", "Shape 6", "Text 7", "Shape 8", "Text 9", "Shape 10",
+                 "Text 11", "Shape 12", "Text 13", "Shape 14", "Text 15", "Shape 16", "Text 17"):
+        remover(sh[nome])
+    caixa(s, 0.25, 0.92, 12.83, 1.45, [], fill=CLARO, line=BORDA, nome="Como montamos")
+    texto(s, 0.5, 0.98, 6.0, 0.3, [[("COMO MONTAMOS ESTA ANÁLISE", 10.5, True, VERDE2)]])
+    passos_ = (("Quem", f"{e['n']} candidatos com 1ª opção nos ciclos 1–3 e local de trabalho anterior conhecido"),
+               ("Distância", "do município onde trabalhava (vínculo no CNES antes da inscrição) ao da vaga posta em 1º"),
+               ("Onde", "se essa vaga fica na mesma UF, na mesma região de saúde ou no mesmo município"))
+    for k, (rot, t) in enumerate(passos_):
+        x = 0.5 + k * 4.2
+        caixa(s, x, 1.38, 0.4, 0.4, [[(str(k + 1), 12, True, BRANCO)]], fill=VERDE, forma=MSO_SHAPE.OVAL,
+              align=PP_ALIGN.CENTER, margem=0)
+        texto(s, x + 0.5, 1.32, 3.55, 0.98, [[(rot + ": ", 13, True, VERDE), (t, 12.5, False, TEXTO)]],
+              anchor=MSO_ANCHOR.TOP)
     # troca de lado: o histograma (direita) vem para a esquerda, as barras vão para a direita
     desloc = sh["Text 20"].left - sh["Text 18"].left
     for nome in ("Text 18", "Text 19", "Chart 0"):
         sh[nome].left = sh[nome].left + desloc
     for nome in ("Text 20", "Text 21", "Image 0", "Text 22"):
         sh[nome].left = sh[nome].left - desloc
-    return ["slide 17 do grupo: cartões em números na ordem dos gráficos; histograma primeiro; títulos descritivos"]
+    return ["slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos "
+            "descritivos"]
 
 
 def corrigir(prs) -> list[str]:

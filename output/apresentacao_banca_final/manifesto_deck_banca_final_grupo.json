@@ -15,7 +15,7 @@
     "output\\apresentacao_banca2\\numeros_banca2.json": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00",
     "output\\apresentacao_banca_final\\exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
     "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1.png": "7d8c5035e97b3f410a76797893ea9097918d1e21931c5fab11a368864348226a",
-    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "96db5c9fcf3b471487686bd9d59c07a559750f6b24be656887cb9c4c509c8e43"
+    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "095cf544fd5764bd6517baa7383bd9a478ff349c85c59804e6b73822efadb780"
   },
   "slides": [
     {
@@ -161,107 +161,86 @@
     {
       "posicao": 21,
       "origem": "novo",
-      "slide_origem": "intuicao",
-      "secao": "Metodologia",
-      "titulo": "Cada médico escolhe a vaga que mais vale a pena"
-    },
-    {
-      "posicao": 22,
-      "origem": "novo",
       "slide_origem": "modelo",
       "secao": "Metodologia",
       "titulo": "Modelo: logit condicional da 1ª opção"
     },
     {
-      "posicao": 23,
+      "posicao": 22,
       "origem": "novo",
       "slide_origem": "passos",
       "secao": "Metodologia",
       "titulo": "Método passo a passo: da escolha à razão de chances"
     },
     {
-      "posicao": 24,
+      "posicao": 23,
       "origem": "novo",
       "slide_origem": "estimacao",
       "secao": "Metodologia",
       "titulo": "Estimação: de onde vem o β"
     },
     {
-      "posicao": 25,
+      "posicao": 24,
       "origem": "novo",
       "slide_origem": "identificacao",
       "secao": "Identificação",
       "titulo": "Identificação: as premissas do logit condicional"
     },
     {
-      "posicao": 26,
+      "posicao": 25,
       "origem": "grupo 14/11",
       "slide_origem": 23,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 27,
+      "posicao": 26,
       "origem": "novo",
       "slide_origem": "resultados",
       "secao": "Resultados",
       "titulo": "Resultados: +R$ 5 mil multiplicam a chance por 1,47"
     },
     {
-      "posicao": 28,
+      "posicao": 27,
       "origem": "novo",
       "slide_origem": "robustez",
       "secao": "Robustez",
       "titulo": "Robustez: ×1,47 se mantém com mais dados"
     },
     {
-      "posicao": 29,
+      "posicao": 28,
       "origem": "novo",
       "slide_origem": "conclusao",
       "secao": "Discussão",
       "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
     },
     {
-      "posicao": 30,
+      "posicao": 29,
       "origem": "novo",
       "slide_origem": "limitacoes",
       "secao": "Discussão",
       "titulo": "Limitações"
     },
     {
-      "posicao": 31,
+      "posicao": 30,
       "origem": "grupo 14/11",
       "slide_origem": 31,
       "secao": null,
       "titulo": ""
     },
     {
-      "posicao": 32,
+      "posicao": 31,
       "origem": "grupo 14/11",
       "slide_origem": 32,
       "secao": null,
       "titulo": "Anexo 1: Literatura Teórica - Equação"
     },
     {
-      "posicao": 33,
+      "posicao": 32,
       "origem": "grupo 14/11",
       "slide_origem": 33,
       "secao": null,
       "titulo": "Anexo 2: bolsa segue exatamente o IVS do município"
-    },
-    {
-      "posicao": 34,
-      "origem": "novo",
-      "slide_origem": "formal",
-      "secao": null,
-      "titulo": "Anexo 3: o modelo formal, do valor à escolha"
-    },
-    {
-      "posicao": 35,
-      "origem": "novo",
-      "slide_origem": "alternativas",
-      "secao": null,
-      "titulo": "Anexo 4: por que este modelo e não outro"
     }
   ],
   "fora_do_deck": {
@@ -339,10 +318,10 @@
     "slide 25 do grupo: 'Escolha das palavras está ruim, não dá pra entender oque o s'",
     "slide 27 do grupo: 'Estética ruim'",
     "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'",
-    "slide 17 do grupo: cartões em números na ordem dos gráficos; histograma primeiro; títulos descritivos"
+    "slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "842ce79fc18d1ffe61f7faad85d14ca8200743760db49beb44d2e60956642d42",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "a17b82daf246c7799cc9a71c88911b60c19f5efedb893c777193d0c25b1ae651",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

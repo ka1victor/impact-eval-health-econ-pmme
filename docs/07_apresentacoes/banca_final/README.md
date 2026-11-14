@@ -1,6 +1,6 @@
 # Banca final — conteúdo canônico
 
-> **Estado (14/11/2026, fim do dia):** 35 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
+> **Estado (14/11/2026, fim do dia):** 32 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
 > públicas na tela, âmbar para o que estimamos e observamos, equações sem itálico e com ε, resultados e robustez
 > refeitos, "metade" fundido na conclusão.<br>
 > **Antes (14/11/2026):** mesmo deck, agora sobre a entrada do grupo de 14/11, com 33 slides: slide novo de

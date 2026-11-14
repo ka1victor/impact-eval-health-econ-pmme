@@ -119,21 +119,11 @@
         "inf": 0.9003040255,
         "sup": 1.729452268,
         "exclui_1": false
-      },
-      {
-        "fonte": "VL",
-        "chave": "M1_emp",
-        "rotulo": "Sem fixar a UF (pré-registrado)",
-        "na_mesma_uf": false,
-        "rc": 1.254150653,
-        "inf": 0.9796381653,
-        "sup": 1.605586549,
-        "exclui_1": false
       }
     ]
   },
   "saidas": {
     "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1.png": "7d8c5035e97b3f410a76797893ea9097918d1e21931c5fab11a368864348226a",
-    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "96db5c9fcf3b471487686bd9d59c07a559750f6b24be656887cb9c4c509c8e43"
+    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "095cf544fd5764bd6517baa7383bd9a478ff349c85c59804e6b73822efadb780"
   }
 }

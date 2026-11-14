@@ -21,7 +21,9 @@ PROIBIDAS = ("buito", "renumeração", "11.1.4", "Vulnerabilidade: Alta", "Vulne
              "piso da bolsa", "preenchimento das vagas", "altruísmo", "vaga é preenchida", "Hips de", "medicos",
              "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela", "cardápio",
              # nada de arquivo interno na tela (pedido do autor de 14/11): fontes só públicas
-             ".json", ".csv", ".py", "output/", "scripts/", "adendo 5", "auditoria")
+             ".json", ".csv", ".py", "output/", "scripts/", "adendo 5", "auditoria",
+             # rodada 7 (14/11): sem o plano original na tela, sem "A seguir", "forte" e não "firme"
+             "Plano original", "PLANO ORIGINAL", "pré-registrado", "A seguir", "firme", "Só as duas")
 
 
 def sha256(p: Path) -> str:
@@ -53,7 +55,7 @@ class TestDeck(unittest.TestCase):
         cls.man = json.loads(MANIF.read_text(encoding="utf-8"))
 
     def test_tamanho_e_ocultos(self):
-        self.assertEqual(len(self.prs.slides), 35)
+        self.assertEqual(len(self.prs.slides), 32)
         self.assertFalse(any(s._element.get("show") == "0" for s in self.prs.slides))
 
     def test_manifesto_bate(self):
@@ -87,9 +89,9 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(tits.count("Cadeia causal: da bolsa aos desfechos na saúde"), 2)
 
     def test_logit_condicional_na_tela(self):
-        t = self.txt[21]
+        t = self.txt[20]
         self.assertIn("P(i escolhe v) =", t)
-        self.assertIn("exp(V", t)
+        self.assertIn("exp(β·x", t)
         self.assertIn("todas as vagas k de i", t)
 
     def test_estimacao_explica_como_foi_feito(self):
@@ -97,8 +99,8 @@ class TestDeck(unittest.TestCase):
         d = pd.read_csv(ROOT / "output/rdd_bolsa/VL_estimativas.csv")
         c = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "coeficiente") & (d.termo == "bolsa_mil")].iloc[0]
         r = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "razao_chances_por_5mil")].iloc[0]
-        t = self.txt[23]
-        notas = self.prs.slides[23].notes_slide.notes_text_frame.text
+        t = self.txt[22]
+        notas = self.prs.slides[22].notes_slide.notes_text_frame.text
         self.assertIn("Estimação: de onde vem o β", t)
         # a incerteza saiu da tela (pedido de 14/11) e fica nas notas, para as perguntas
         self.assertIn(f"({int(c.n_conjuntos)} grupos", notas)
@@ -110,21 +112,27 @@ class TestDeck(unittest.TestCase):
         self.assertNotIn("exploratório", t)
 
     def test_aninhado_no_modelo_base(self):
-        self.assertIn("testado no modelo base", self.txt[24])
-        self.assertIn("rodado no modelo base sem o par de UFs", self.prs.slides[24].notes_slide.notes_text_frame.text)
+        self.assertIn("testado no modelo base", self.txt[23])
+        self.assertIn("rodado no modelo base sem o par de UFs", self.prs.slides[23].notes_slide.notes_text_frame.text)
 
     def test_funil_das_alternativas(self):
         self.assertIn("932.577 → 578.998 linhas", self.prs.slides[17].notes_slide.notes_text_frame.text)
 
-    def test_equacao_com_erro_e_chance_sobre_v(self):
-        t = self.txt[21]
+    def test_equacao_com_erro_e_chance_sobre_parte_observada(self):
+        """Rodada 7 (14/11): U com o erro no fim; a chance usa só a parte observada (β·x), nunca U inteiro."""
+        t = self.txt[20]
         self.assertIn("ε", t)
-        self.assertIn("exp(V", t)
+        self.assertIn("exp(β·x", t)
         self.assertNotIn("exp(U", t)
+        for x in ("Viv", "Vik", "U = V"):
+            self.assertNotIn(x, t)
+        self.assertIn("254 efeitos fixos", t)
 
     def test_descritiva_em_numeros_sem_modelo(self):
         t = self.txt[18]
-        for x in ("50%", "75%", "79%", "36%", "I. A que distância fica a 1ª opção", "II. Onde fica a 1ª opção"):
+        # rodada 7 (14/11): os cartões repetidos saíram; no lugar, como a análise foi montada
+        for x in ("COMO MONTAMOS ESTA ANÁLISE", "5.425 candidatos", "I. A que distância fica a 1ª opção",
+                  "II. Onde fica a 1ª opção"):
             self.assertIn(x, t)
         self.assertNotIn("modelo", t)
 
@@ -139,6 +147,7 @@ class TestDeck(unittest.TestCase):
         for i, t in enumerate(self.txt[:lim]):
             self.assertNotIn("exploratório", t, f"slide {i + 1}")
 
+    @unittest.skip("ideias do colega desligadas (COM_IDEIAS_COLEGA = False)")
     def test_intuicao_e_anexos_do_logit(self):
         """Ideias do deck v4.1 de um colega (14/11): vagas A, B e C antes do modelo; anexos com y e U e com as
         alternativas. As chances saem dos pesos do VL-1."""
@@ -168,7 +177,7 @@ class TestDeck(unittest.TestCase):
     def test_doc_cita_o_deck(self):
         doc = DOC.read_text(encoding="utf-8")
         self.assertIn("deck_banca_final_grupo.pptx", doc)
-        self.assertIn("35 slides", doc)
+        self.assertIn("32 slides", doc)
 
 
 @unittest.skipUnless(EXEMPLO.exists(), "exemplo não gerado")
