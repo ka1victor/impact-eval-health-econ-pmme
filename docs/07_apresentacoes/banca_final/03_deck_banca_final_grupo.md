@@ -23,6 +23,22 @@
 > razão" do 22 e "por que o ×" do 27; o caso "perto do corte" do 23 (continua na figura de robustez); a faixa "de
 > onde vem o β" do 24 (está no 23); a fórmula dos 75 km e o p de Holm do 26 (o Holm está no 23). Onde as seções 3.x
 > abaixo descrevem um desses elementos, ele está nas notas do slide, não na tela.
+>
+> **Quarta rodada de 14/11 (comentários do autor, slide a slide):** títulos sem artigo no começo ("Escassez…",
+> "Vulnerabilidade…", "Dados…", "Modelo combina…", "Bolsa segue…", "Candidatos…"; depois dos dois-pontos também) e
+> títulos do grupo centrados na faixa verde (vinham colados no topo); **fontes só públicas** (nenhum arquivo interno na
+> tela; os caminhos ficam nas notas e neste doc); "cardápio" sai da tela. Slide 12–13: sem o ×1,47 antes dos
+> resultados (a faixa só define chance) e a remuneração antes do que reduz o valor. Slide 15: hipótese numa linha;
+> "chance (…)" com espaço; "Observação: medimos a escolha de quem se inscreveu, não a chegada de médicos ao
+> município". Slide 18: o mesmo candidato em todas as linhas (CRM ilustrativo 000000/MG; a base não guarda
+> identificação), "mais 219 vagas não escolhidas por ele", a base como 5.417 × ≈ 107 = 578.998 e a faixa "o modelo
+> compara a vaga escolhida com as que deixou de lado" no lugar da "medida"; o funil vai para as notas. Slide 19:
+> cartões do mais perto ao mais longe (metade a até 51 km; 3 em 4 a até 189 km; 79% na mesma UF) e a ligação com o
+> modelo. Slide 21: equações sem itálico (Montserrat), as duas numeradas e explicadas (① a chance, ② o valor) com a
+> ligação entre elas; o IVS como termo comum (φ·IVS; o spline fica nas notas); "o que se estima" menor e "por que
+> este modelo" maior, com o que tiramos de cada trabalho. Slide 22: cores por grupo de passos (base, estimação,
+> métrica). Slide 23: em linguagem simples ("o que comparamos" e "quão confiável"). Slide 24: menos texto; a IIA
+> vira "vagas próximas como substitutas", com β estável no teste (no modelo base), e o detalhe técnico nas notas.
 
 > **Pedido do autor (11/11/2026, noite):** partir do deck atual do grupo (`PEE - BANCA FINAL`, 33 slides, 1 oculto) e
 > comunicar melhor o trabalho com o que foi feito no deck da banca final ([02](02_deck_banca_final.md)), seção por seção.<br>

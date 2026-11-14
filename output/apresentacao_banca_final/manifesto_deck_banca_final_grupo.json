@@ -36,28 +36,28 @@
       "origem": "grupo 14/11",
       "slide_origem": 3,
       "secao": "Motivação",
-      "titulo": "A escassez de especialistas já é tratada como urgência sanitária"
+      "titulo": "Escassez de especialistas já é tratada como urgência sanitária"
     },
     {
       "posicao": 4,
       "origem": "grupo 14/11",
       "slide_origem": 4,
       "secao": "Motivação",
-      "titulo": "A vulnerabilidade social define o valor da bolsa do PMM-E"
+      "titulo": "Vulnerabilidade social define o valor da bolsa do PMM-E"
     },
     {
       "posicao": 5,
       "origem": "grupo 14/11",
       "slide_origem": 5,
       "secao": "Motivação",
-      "titulo": "A vulnerabilidade social define o valor da bolsa do PMM-E"
+      "titulo": "Vulnerabilidade social define o valor da bolsa do PMM-E"
     },
     {
       "posicao": 6,
       "origem": "grupo 14/11",
       "slide_origem": 6,
       "secao": "Motivação",
-      "titulo": "A vulnerabilidade social define o valor da bolsa do PMM-E"
+      "titulo": "Vulnerabilidade social define o valor da bolsa do PMM-E"
     },
     {
       "posicao": 7,
@@ -92,7 +92,7 @@
       "origem": "grupo 14/11",
       "slide_origem": 11,
       "secao": "Literatura",
-      "titulo": "O modelo combina dois elementos da teoria"
+      "titulo": "Modelo combina dois elementos da teoria"
     },
     {
       "posicao": 12,
@@ -134,21 +134,21 @@
       "origem": "grupo 14/11",
       "slide_origem": 16,
       "secao": "Base de Dados",
-      "titulo": "Os dados ligam os editais do PMM-E ao CNES"
+      "titulo": "Dados ligam os editais do PMM-E ao CNES"
     },
     {
       "posicao": 18,
       "origem": "novo",
       "slide_origem": "linhas",
       "secao": "Base de Dados",
-      "titulo": "Cada candidato vira uma linha por vaga do cardápio"
+      "titulo": "Cada candidato vira uma linha por vaga possível"
     },
     {
       "posicao": 19,
       "origem": "grupo 14/11",
       "slide_origem": 17,
       "secao": "Análise Descritiva",
-      "titulo": "Os candidatos escolhem perto de onde trabalham"
+      "titulo": "Candidatos escolhem perto de onde trabalham"
     },
     {
       "posicao": 20,
@@ -176,7 +176,7 @@
       "origem": "novo",
       "slide_origem": "estimacao",
       "secao": "Metodologia",
-      "titulo": "Estimação: de onde vem o β e quão preciso ele é"
+      "titulo": "Estimação: de onde vem o β e quão confiável ele é"
     },
     {
       "posicao": 24,
@@ -204,7 +204,7 @@
       "origem": "novo",
       "slide_origem": "robustez",
       "secao": "Robustez",
-      "titulo": "Robustez: o ×1,47 se mantém com mais dados"
+      "titulo": "Robustez: ×1,47 se mantém com mais dados"
     },
     {
       "posicao": 28,
@@ -218,7 +218,7 @@
       "origem": "novo",
       "slide_origem": "conclusao",
       "secao": "Discussão",
-      "titulo": "Conclusão: a bolsa pesa na escolha, mas pouco"
+      "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
     },
     {
       "posicao": 30,
@@ -246,7 +246,7 @@
       "origem": "grupo 14/11",
       "slide_origem": 33,
       "secao": null,
-      "titulo": "A bolsa segue exatamente o IVS do município"
+      "titulo": "Bolsa segue exatamente o IVS do município"
     }
   ],
   "fora_do_deck": {
@@ -292,7 +292,7 @@
     "slide 4 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
     "slide 5 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
     "slide 6 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
-    "slide 17 do grupo: 'Os médicos escolhem vagas perto de onde já trabalham' → 'Os candidatos escolhem perto de onde trabalham'",
+    "slide 17 do grupo: 'Os médicos escolhem vagas perto de onde já trabalham' → 'Candidatos escolhem perto de onde trabalham'",
     "slide 9 do grupo: 'Um aumento na remuneração\\xa0do PMM-E eleva a probabilidade de preenchimento das vagas em municípios mais vulneráveis?' → 'Uma bolsa maior aumenta a chance de uma vaga\\nser a 1ª opção do médico?'",
     "slide 7 do grupo: 'permanência de medicos' → 'permanência de médicos'",
     "slide 9 do grupo: 'permanência de medicos' → 'permanência de médicos'",
@@ -307,12 +307,25 @@
     "slide 16 do grupo: 'Com origem identificada' → 'Com local anterior e região'",
     "slide 16 do grupo: '5.421' → '5.417'",
     "slide 16 do grupo: 'candidatos com 1ª opção e município de origem identificado nos três ciclos.' → 'candidatos no modelo principal, nos três ciclos (o funil está no slide seguinte).'",
-    "slide 17 do grupo: 'candidatos com 1ª opção e município de origem identificado' → 'candidatos com 1ª opção e local de trabalho anterior identificado'",
-    "slide 17 do grupo: 'é a distância mediana entre a origem e a 1ª opção' → 'é a distância mediana entre o local anterior e a 1ª opção'",
     "slide 17 do grupo: 'I. Candidatos escolhem 1ª opção\\xa0no local de\\xa0origem' → 'I. A 1ª opção fica perto do local anterior'",
     "slide 17 do grupo: 'A origem é o vínculo médico anterior no CNES, não a residência.' → 'O local anterior é o vínculo médico no CNES antes da inscrição, não a residência.'",
     "slide 32 do grupo: '; o altruísmo do médico (α) compensa em parte.' → '.'",
     "slide 32 do grupo: ') por (B)' → ') pela bolsa (B)'",
+    "slide 3 do grupo: 'A escassez de especialistas já é tratada como urgência sanitária' → 'Escassez de especialistas já é tratada como urgência sanitária'",
+    "slide 11 do grupo: 'O modelo combina dois elementos da teoria' → 'Modelo combina dois elementos da teoria'",
+    "slide 16 do grupo: 'Os dados ligam os editais do PMM-E ao CNES' → 'Dados ligam os editais do PMM-E ao CNES'",
+    "slide 33 do grupo: 'A bolsa segue exatamente o IVS do município' → 'Bolsa segue exatamente o IVS do município'",
+    "slide 4 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
+    "slide 5 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
+    "slide 6 do grupo: 'A vulnerabilidade social define o valor da bolsa do PMM-E' → 'Vulnerabilidade social define o valor da bolsa do PMM-E'",
+    "slide 17 do grupo: '3 em 4' → 'No modelo'",
+    "slide 17 do grupo: 'escolhem uma vaga a até 189 km de onde trabalhavam' → 'controlamos a distância e comparamos vagas da mesma UF'",
+    "slide 17 do grupo: '79%' → '3 em 4'",
+    "slide 17 do grupo: 'põem a 1ª opção na UF onde já trabalhavam' → 'escolhem uma vaga a até 189 km de onde trabalhavam'",
+    "slide 17 do grupo: '51 km' → '79%'",
+    "slide 17 do grupo: 'é a distância mediana entre a origem e a 1ª opção' → 'escolhem uma vaga na UF onde já trabalhavam'",
+    "slide 17 do grupo: '5.425' → 'Metade'",
+    "slide 17 do grupo: 'candidatos com 1ª opção e município de origem identificado' → 'escolhe uma vaga a até 51 km de onde trabalhava'",
     "slide 32 do grupo: 'Preços e custo do local continuam contra e é a soma das três variáveis que determina se a vaga é preenchida.' → 'Preços e custo do local continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe.'",
     "slide 32 do grupo: índice da soma i → t (OMML e imagem de reserva)",
     "slide 21 do grupo: 'Esse tá ruim, não dá pra entender oque estamos falando'",
@@ -322,7 +335,7 @@
     "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "12c6ae6cfcf3f4186a0640a2cd980c0c5ed8b17e4f9cbd008172adbfdd149936",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "6b39c612d182979e1b469b93f2f79553a97ca409bb0f5e88b93d1f3b6215729d",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

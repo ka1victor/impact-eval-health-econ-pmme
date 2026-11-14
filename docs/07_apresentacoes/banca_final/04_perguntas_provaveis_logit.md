@@ -13,14 +13,14 @@
 
 **1. Por que logit condicional, e não uma regressão linear?**
 Cada médico escolhe **uma** vaga entre as do seu cardápio (≈ 107 em média; mediana 82). O logit condicional
-(McFadden, 1974) modela exatamente isso: dá uma chance a cada vaga, as chances do cardápio somam 1, e tudo o que é do
+(McFadden, 1974) modela exatamente isso: dá uma chance a cada vaga, as chances das vagas de cada candidato somam 1, e tudo o que é do
 médico (nota, idade, de onde vem) é igual em todas as vagas dele e sai da conta. Uma regressão linear por vaga não
 respeita a soma 1 nem compara vagas do mesmo médico. É o desenho usado na literatura de escolha de vaga com bônus
 que salta em cortes (Bobba et al., 2026) e de escolha de local por médicos no Brasil (Costa, Nunes & Sanches, 2024).
 
 **2. Vocês estão estimando a utilidade?**
 Só os pesos da parte observável do valor (V), numa escala normalizada. O nível do valor e a unidade não são
-identificados: só diferenças entre vagas do mesmo cardápio importam. Por isso lemos cada coeficiente pela razão de
+identificados: só diferenças entre vagas do mesmo candidato importam. Por isso lemos cada coeficiente pela razão de
 chances entre duas vagas: P(A) ÷ P(B) = exp(V_A − V_B), em que o denominador se cancela.
 
 **3. O que é o 1,47?**
@@ -96,6 +96,6 @@ Do local de trabalho anterior: o município do vínculo médico no CNES antes da
 candidatos com 1ª opção, 5.425 têm esse local; 5.421 têm região de saúde; 5.417 entram no modelo principal.
 
 **17. Por que 578.998 linhas?**
-Uma linha por candidato × vaga do cardápio. O desenho tinha 932.577; saem as vagas de pares de UFs que nenhum médico
+Uma linha por candidato × vaga que ele podia escolher. O desenho tinha 932.577; saem as vagas de pares de UFs que nenhum médico
 daquela UF escolheu (não informam o peso da bolsa: o efeito fixo do par iria a menos infinito) e 4 candidatos que
 ficaram com uma só vaga possível.

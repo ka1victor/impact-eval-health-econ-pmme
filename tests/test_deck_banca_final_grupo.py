@@ -19,7 +19,9 @@ DOC = ROOT / "docs/07_apresentacoes/banca_final/03_deck_banca_final_grupo.md"
 # Não pode aparecer na tela: erros de digitação e faixas do FAQ do grupo, a equação antiga da utilidade, anotações
 PROIBIDAS = ("buito", "renumeração", "11.1.4", "Vulnerabilidade: Alta", "Vulnerabilidade: Muito alta", "+ ε",
              "U_iv", "piso da bolsa", "preenchimento das vagas", "altruísmo", "vaga é preenchida", "Hips de", "medicos",
-             "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela")
+             "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela", "cardápio",
+             # nada de arquivo interno na tela (pedido do autor de 14/11): fontes só públicas
+             ".json", ".csv", ".py", "output/", "scripts/", "adendo 5", "auditoria")
 
 
 def sha256(p: Path) -> str:
@@ -79,7 +81,7 @@ class TestDeck(unittest.TestCase):
     def test_slides_novos_e_titulos(self):
         tits = [s["titulo"] for s in self.man["slides"]]
         for t in ("Cadeia causal: da bolsa aos desfechos na saúde", "Maior remuneração, maior chance de ser escolhida",
-                  "Modelo: logit condicional da 1ª opção", "Os candidatos escolhem perto de onde trabalham",
+                  "Modelo: logit condicional da 1ª opção", "Candidatos escolhem perto de onde trabalham",
                   "Limitações"):
             self.assertIn(t, tits)
         self.assertEqual(tits.count("Cadeia causal: da bolsa aos desfechos na saúde"), 2)
@@ -88,7 +90,7 @@ class TestDeck(unittest.TestCase):
         t = self.txt[20]
         self.assertIn("P(i escolhe v) =", t)
         self.assertIn("exp(V", t)
-        self.assertIn("cardápio de i", t)
+        self.assertIn("todas as vagas k de i", t)
 
     def test_estimacao_explica_como_foi_feito(self):
         """Slide 23 (14/11): variação que identifica o β, o que fica fixo e a inferência, com números de output/."""
@@ -100,14 +102,15 @@ class TestDeck(unittest.TestCase):
         self.assertIn(f"({int(c.n_conjuntos)} grupos)", t)
         self.assertIn(f"p = {r.p_score_rademacher:.3f}".replace(".", ","), t)
         self.assertIn(f"p = {r.p_holm:.3f}".replace(".", ","), t)
-        for termo in ("Candidato", "UF de trabalho × UF da vaga", "Município ou vaga", "FIXO", "NÃO", "exploratório"):
+        for termo in ("Vagas do mesmo candidato", "Vagas da mesma UF", "Não dentro do município", "exploratório"):
             self.assertIn(termo, t)
 
     def test_aninhado_no_modelo_base(self):
-        self.assertIn("rodado no modelo base, sem o par de UFs", self.txt[23])
+        self.assertIn("testado no modelo base", self.txt[23])
+        self.assertIn("rodado no modelo base sem o par de UFs", self.prs.slides[23].notes_slide.notes_text_frame.text)
 
     def test_funil_das_alternativas(self):
-        self.assertIn("932.577 → 578.998 linhas", self.txt[17])
+        self.assertIn("932.577 → 578.998 linhas", self.prs.slides[17].notes_slide.notes_text_frame.text)
 
     def test_pergunta_nova(self):
         self.assertIn("Uma bolsa maior aumenta a chance de uma vaga ser a 1ª opção do médico?", self.txt[8])
