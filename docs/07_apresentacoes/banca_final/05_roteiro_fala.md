@@ -5,6 +5,8 @@
 > versão conciliada com as ideias do colega (`deck_banca_final_grupo_conciliado.pptx`, 35 slides). Conteúdo dos
 > slides no [doc 03](03_deck_banca_final_grupo.md). É a versão curta das notas do apresentador; as notas continuam
 > com o detalhe e as respostas de reserva, e as perguntas prováveis estão no [doc 04](04_perguntas_provaveis_logit.md).<br>
+> **Em Word:** `output/apresentacao_banca_final/roteiro_fala_banca_final.docx`, gerado deste arquivo por
+> `scripts/apresentacao/gerar_roteiro_docx.py` (editar aqui e gerar de novo).<br>
 > **Tempo:** o tempo da banca ainda não foi informado. Os tempos abaixo somam cerca de 13 min (a conciliada, cerca de
 > 13 min 30 s). Literatura e Estimação foram para o anexo (rodada 10, 14/11) para encurtar a fala. Se ainda faltar
 > tempo, encurtar primeiro os slides marcados **(encurtável)**.<br>

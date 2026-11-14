@@ -21,6 +21,7 @@ condicional foi feito. O deck passa a ler a cópia de 14/11 e ganha um documento
 | `07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1411.pptx` | cópia sem alteração do deck do grupo de 14/11/2026 (SHA-256 `f051366b…64843`); entrada do gerador |
 | [`07_apresentacoes/banca_final/04_perguntas_provaveis_logit.md`](07_apresentacoes/banca_final/04_perguntas_provaveis_logit.md) | 17 perguntas prováveis da banca sobre o logit condicional, com respostas e números de `output/` |
 | [`07_apresentacoes/banca_final/05_roteiro_fala.md`](07_apresentacoes/banca_final/05_roteiro_fala.md) | roteiro de fala em bullets, slide a slide, da nossa versão final (32 slides): versão curta das notas do apresentador, com tempo estimado |
+| `output/apresentacao_banca_final/roteiro_fala_banca_final.docx` | o roteiro do doc 05 em Word (pedido do autor), gerado por `scripts/apresentacao/gerar_roteiro_docx.py` |
 | `output/apresentacao_banca_final/deck_banca_final_grupo_conciliado.pptx` (e `.pdf`, manifesto) | versão conciliada com as ideias do deck de um colega (35 slides), gerada com `--com-colega`; a nossa versão final continua em `deck_banca_final_grupo.pptx` |
 
 ---
