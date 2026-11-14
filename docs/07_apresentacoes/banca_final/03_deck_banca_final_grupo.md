@@ -5,6 +5,13 @@
 > com a data dos sumários em 14/11/2026). Um slide novo de estimação (23, §3.6a); funil das alternativas no slide 18;
 > leitura de f(IVS) e do par de UFs no slide 21; o logit aninhado do slide 24 identificado como do modelo base; três
 > títulos encurtados (18, 27, 28), que quebravam em duas linhas no PowerPoint. Deck com 33 slides.
+>
+> **Segunda rodada de 14/11 (revisão do deck inteiro renderizado no PowerPoint):** anexo sem o altruísmo e sem
+> "preenchida" (decisões do autor do doc 02 que faltavam aqui); "origem" → "local de trabalho anterior" nos slides
+> 17 e 19 (pedido da banca de 04/11); amostra 5.417 no slide 17; título do 19 sem repetir o cartão; "médicos" com
+> acento na manchete (7 e 9); "Hips de Identificação" → "Modelo e identificação" nos sumários; número da página do
+> slide 11 sem quebra; Limitações com letra maior. As trocas que cabem num só trecho de texto mantêm a formatação do
+> grupo.
 
 > **Pedido do autor (11/11/2026, noite):** partir do deck atual do grupo (`PEE - BANCA FINAL`, 33 slides, 1 oculto) e
 > comunicar melhor o trabalho com o que foi feito no deck da banca final ([02](02_deck_banca_final.md)), seção por seção.<br>
@@ -57,9 +64,9 @@ observado**, a 1ª opção como **observada**, e a métrica (×1,47 ≈ 75 km) a
 | 12–13 | novos | Literatura | cadeia causal (etapas 1–2; depois 1–3) | §3.2 |
 | 14 | grupo 13 | — | sumário | nada |
 | 15 | novo | Hipótese | maior remuneração, maior chance de ser escolhida | §3.3 |
-| 16–17 | grupo 15–16 | Base de Dados | sumário; dados ligam editais ao CNES | nada |
+| 16–17 | grupo 15–16 | Base de Dados | sumário; dados ligam editais ao CNES | 14/11: "local de trabalho anterior" no lugar de "origem"; amostra do modelo 5.417 (era 5.421, a do modelo base); linha da tabela "com local anterior e região" |
 | 18 | novo | Base de Dados | cada candidato vira uma linha por vaga do cardápio | §3.4 |
-| 19 | grupo 17 | Análise Descritiva | 3 em 4 escolhem uma vaga a até 189 km | só o título |
+| 19 | grupo 17 | Análise Descritiva | os candidatos escolhem perto de onde trabalham | título (14/11: sem repetir o cartão "3 em 4"); "local anterior" no lugar de "origem"; números conferidos com `numeros_banca2.json` (ESC_*) |
 | 20 | grupo 18 | — | sumário | nada |
 | 21 | novo | Metodologia | modelo: logit condicional da 1ª opção | §3.5 |
 | 22 | novo | Metodologia | método passo a passo, com exemplo real | §3.6 |
@@ -71,7 +78,7 @@ observado**, a 1ª opção como **observada**, e a métrica (×1,47 ≈ 75 km) a
 | 28 | novo | Discussão | metade de quem ocupa a vaga já trabalhava ali | §3.10 |
 | 29 | novo | Discussão | conclusão: a bolsa pesa na escolha, mas pouco | §3.11 |
 | 30 | novo | Discussão | limitações (duas caixas) | §3.12 |
-| 31–33 | grupo 31–33 | — | Q&A; anexo 1; a bolsa segue o IVS | anexo: índice da soma t = 0 (era i = 0, com δ^t) |
+| 31–33 | grupo 31–33 | — | Q&A; anexo 1; a bolsa segue o IVS | anexo: índice da soma t = 0 (era i = 0, com δ^t); 14/11: sem o altruísmo (α), "pela bolsa (B)" e "decide qual vaga o médico escolhe" (decisões do doc 02, itens 3 e 19) |
 
 **Fora** (slides do grupo): 12 (rascunho em branco), 14 (hipótese em sobreposição), 19–20 (equação da utilidade e
 duplicata), 21 (oculto), 22 (identificação), 24–26 (resultados, "incentivo limitado", tabela), 27 (metade, refeito),
@@ -206,5 +213,7 @@ resultado" (comparação pós-resultado; sem fixar a UF ×1,25; só o ciclo 2 fo
 ## 4. Para o grupo decidir
 
 1. ~~Pergunta (slide 9)~~: trocada em 11/11 (§3.1a).
-2. **Descritiva (slide 19):** o cartão "3 em 4…" repete o novo título; pode virar outro número.
-3. **Slide 17:** "Amostra do modelo: 5.421" é a do modelo base; o principal tem 5.417 (explicado no slide 18).
+2. ~~Descritiva (slide 19)~~: título trocado em 14/11 ("Os candidatos escolhem perto de onde trabalham").
+3. ~~Slide 17~~: amostra do modelo trocada para 5.417 em 14/11.
+4. **Slide 23 (estimação, novo em 14/11):** fica no corpo ou vai para o apêndice? Com ele, a Metodologia tem três
+   slides (21–23).

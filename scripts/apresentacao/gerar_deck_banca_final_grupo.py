@@ -117,10 +117,38 @@ CORRECOES = [(n, a, b) for n in (4, 5, 6) for a, b in _FAIXAS] + [
     # a bolsa não é piso: é o valor fixado pela faixa (errata da banca 1)
     (n, "define o piso da bolsa", "define o valor da bolsa") for n in (4, 5, 6)
 ] + [
-    (17, "Os médicos escolhem vagas perto de onde já trabalham", "3 em 4 escolhem uma vaga a até 189 km"),
+    # descritiva: título com a mensagem, sem repetir o cartão "3 em 4" (revisão de 14/11); "candidatos", não "médicos"
+    (17, "Os médicos escolhem vagas perto de onde já trabalham", "Os candidatos escolhem perto de onde trabalham"),
     # pergunta alinhada ao que testamos (escolha da 1ª opção, efeito da bolsa isolado); decisão do autor de 11/11
     (9, "Um aumento na remuneração\xa0do PMM-E eleva a probabilidade de preenchimento das vagas em municípios mais "
         "vulneráveis?", "Uma bolsa maior aumenta a chance de uma vaga\nser a 1ª opção do médico?"),
+] + [
+    # revisão de 14/11 -------------------------------------------------------------------------------------------
+    # manchete do gov.br: acento
+    (n, "permanência de medicos", "permanência de médicos") for n in (7, 9)
+] + [
+    # sumários: "Hips de Identificação" era abreviação de rascunho
+    (n, "Hips de Identificação", "Modelo e identificação") for n in (2, 8, 10, 13, 15, 18, 23)
+] + [
+    # "origem" vira "local de trabalho anterior" (pedido da banca de 04/11, doc 12 da banca 2, §1.2)
+    (16, "Origem do médico", "Local de trabalho anterior"),
+    (16, "Com origem identificada", "Com local anterior e região"),
+    # o modelo principal (VL-1) tem 5.417 candidatos; 5.421 é o modelo base (funil no slide 18)
+    (16, "5.421", "5.417"),
+    (16, "candidatos com 1ª opção e município de origem identificado nos três ciclos.",
+     "candidatos no modelo principal, nos três ciclos (o funil está no slide seguinte)."),
+    (17, "candidatos com 1ª opção e município de origem identificado",
+     "candidatos com 1ª opção e local de trabalho anterior identificado"),
+    (17, "é a distância mediana entre a origem e a 1ª opção", "é a distância mediana entre o local anterior e a 1ª opção"),
+    (17, "I. Candidatos escolhem 1ª opção\xa0no local de\xa0origem", "I. A 1ª opção fica perto do local anterior"),
+    (17, "A origem é o vínculo médico anterior no CNES, não a residência.",
+     "O local anterior é o vínculo médico no CNES antes da inscrição, não a residência."),
+    # anexo: decisões do autor de 11/11 (doc 02, §1, itens 3 e 19): sem altruísmo (α fica só para o par de UFs) e a
+    # política decide a escolha, não o preenchimento
+    (32, "; o altruísmo do médico (α) compensa em parte.", "."),
+    (32, ") por (B)", ") pela bolsa (B)"),  # o "E(w|B)" vem em runs separados
+    (32, "Preços e custo do local continuam contra e é a soma das três variáveis que determina se a vaga é preenchida.",
+     "Preços e custo do local continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe."),
 ]
 
 
@@ -408,6 +436,12 @@ def numerar(slide, n: int) -> None:
         if not sh.has_text_frame or sh.left is None or sh.top is None:
             continue
         if sh.text_frame.text.strip().isdigit() and sh.left > Inches(11.3) and sh.top > Inches(6.8):
+            # caixa estreita do grupo: "11" quebrava em duas linhas no PowerPoint; alarga para a esquerda, sem quebra
+            if sh.width < Inches(0.6):
+                sh.left, sh.width = sh.left - (Inches(0.6) - sh.width), Inches(0.6)
+                for p_ in sh.text_frame.paragraphs:
+                    p_.alignment = PP_ALIGN.RIGHT
+            sh.text_frame.word_wrap = False
             for t in sh._element.iter("{%s}t" % NS["a"]):
                 if t.text and t.text.strip().isdigit():
                     t.text = str(n)
@@ -1043,12 +1077,12 @@ def s_limitacoes(M, prs, n):
                  "não dá para generalizar para outros ciclos"))))
     for k, (tit, itens) in enumerate(caixas):
         x = 0.25 + k * 6.5
-        pars = [[(tit, 19, True, VERDE)]]
+        pars = [[(tit, 21, True, VERDE)]]
         for t, d, imp in itens:
-            pars.append([(t + ": ", 15, True, TEXTO), (d, 15, False, TEXTO)])
-            pars.append([("→ " + imp, 13, True, MEDIO)])
+            pars.append([(t + ": ", 16, True, TEXTO), (d, 16, False, TEXTO)])
+            pars.append([("→ " + imp, 14, True, MEDIO)])
         caixa(sl, x, 0.95, 6.33, 5.6, pars, fill=CLARO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome=tit, margem=0.35,
-              esp=9)
+              esp=16)
     fontes(sl, "Fontes: VL_estimativas.csv (VL-1 e M1); VG_estimativas.csv (adendo 52g); auditorias 18 e 48; portão G1.")
     notas(sl, "Seis limitações do grupo agrupadas em duas caixas, sem repetição: o que o resultado não mostra e quão "
               "firme ele é.")
@@ -1076,6 +1110,11 @@ def corrigir(prs) -> list[str]:
                 runs = par.runs
                 inteiro = "".join(r.text for r in runs)
                 if antigo not in inteiro:
+                    continue
+                dentro = [r for r in runs if antigo in r.text]
+                if len(dentro) == 1 and "\n" not in novo:  # cabe num run só: troca ali e mantém a formatação dos outros
+                    dentro[0].text = dentro[0].text.replace(antigo, novo)
+                    achou += 1
                     continue
                 runs[0].text = inteiro.replace(antigo, novo)
                 for r in runs[1:]:

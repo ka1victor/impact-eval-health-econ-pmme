@@ -148,7 +148,7 @@
       "origem": "grupo 14/11",
       "slide_origem": 17,
       "secao": "Análise Descritiva",
-      "titulo": "3 em 4 escolhem uma vaga a até 189 km"
+      "titulo": "Os candidatos escolhem perto de onde trabalham"
     },
     {
       "posicao": 20,
@@ -292,8 +292,28 @@
     "slide 4 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
     "slide 5 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
     "slide 6 do grupo: 'define o piso da bolsa' → 'define o valor da bolsa'",
-    "slide 17 do grupo: 'Os médicos escolhem vagas perto de onde já trabalham' → '3 em 4 escolhem uma vaga a até 189 km'",
+    "slide 17 do grupo: 'Os médicos escolhem vagas perto de onde já trabalham' → 'Os candidatos escolhem perto de onde trabalham'",
     "slide 9 do grupo: 'Um aumento na remuneração\\xa0do PMM-E eleva a probabilidade de preenchimento das vagas em municípios mais vulneráveis?' → 'Uma bolsa maior aumenta a chance de uma vaga\\nser a 1ª opção do médico?'",
+    "slide 7 do grupo: 'permanência de medicos' → 'permanência de médicos'",
+    "slide 9 do grupo: 'permanência de medicos' → 'permanência de médicos'",
+    "slide 2 do grupo: 'Hips de Identificação' → 'Modelo e identificação'",
+    "slide 8 do grupo: 'Hips de Identificação' → 'Modelo e identificação'",
+    "slide 10 do grupo: 'Hips de Identificação' → 'Modelo e identificação'",
+    "slide 13 do grupo: 'Hips de Identificação' → 'Modelo e identificação'",
+    "slide 15 do grupo: 'Hips de Identificação' → 'Modelo e identificação'",
+    "slide 18 do grupo: 'Hips de Identificação' → 'Modelo e identificação'",
+    "slide 23 do grupo: 'Hips de Identificação' → 'Modelo e identificação'",
+    "slide 16 do grupo: 'Origem do médico' → 'Local de trabalho anterior'",
+    "slide 16 do grupo: 'Com origem identificada' → 'Com local anterior e região'",
+    "slide 16 do grupo: '5.421' → '5.417'",
+    "slide 16 do grupo: 'candidatos com 1ª opção e município de origem identificado nos três ciclos.' → 'candidatos no modelo principal, nos três ciclos (o funil está no slide seguinte).'",
+    "slide 17 do grupo: 'candidatos com 1ª opção e município de origem identificado' → 'candidatos com 1ª opção e local de trabalho anterior identificado'",
+    "slide 17 do grupo: 'é a distância mediana entre a origem e a 1ª opção' → 'é a distância mediana entre o local anterior e a 1ª opção'",
+    "slide 17 do grupo: 'I. Candidatos escolhem 1ª opção\\xa0no local de\\xa0origem' → 'I. A 1ª opção fica perto do local anterior'",
+    "slide 17 do grupo: 'A origem é o vínculo médico anterior no CNES, não a residência.' → 'O local anterior é o vínculo médico no CNES antes da inscrição, não a residência.'",
+    "slide 32 do grupo: '; o altruísmo do médico (α) compensa em parte.' → '.'",
+    "slide 32 do grupo: ') por (B)' → ') pela bolsa (B)'",
+    "slide 32 do grupo: 'Preços e custo do local continuam contra e é a soma das três variáveis que determina se a vaga é preenchida.' → 'Preços e custo do local continuam contra, e é o saldo das três variáveis que decide qual vaga o médico escolhe.'",
     "slide 32 do grupo: índice da soma i → t (OMML e imagem de reserva)",
     "slide 21 do grupo: 'Esse tá ruim, não dá pra entender oque estamos falando'",
     "slide 24 do grupo: 'Esse tá ruim (estética) e modo de passar a mensagem'",
@@ -302,7 +322,7 @@
     "slide 28 do grupo: 'Evidenciarqal a conclusão trazida pela analise, como e porqu'"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "9bcc5d0917420b1669e9f8d69cd83d1b82b0eb81db71d80a324c972713a9ef0d",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "2863755175d1704c7571b164ac97d3071d6e1210180fe77d4864e2a49090d3c4",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

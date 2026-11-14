@@ -18,7 +18,8 @@ DOC = ROOT / "docs/07_apresentacoes/banca_final/03_deck_banca_final_grupo.md"
 
 # Não pode aparecer na tela: erros de digitação e faixas do FAQ do grupo, a equação antiga da utilidade, anotações
 PROIBIDAS = ("buito", "renumeração", "11.1.4", "Vulnerabilidade: Alta", "Vulnerabilidade: Muito alta", "+ ε",
-             "U_iv", "piso da bolsa", "preenchimento das vagas", "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela")
+             "U_iv", "piso da bolsa", "preenchimento das vagas", "altruísmo", "vaga é preenchida", "Hips de", "medicos",
+             "Esse tá ruim", "Estética ruim", "Evidenciarqal", "Escolha das palavras", "Cautela")
 
 
 def sha256(p: Path) -> str:
@@ -78,7 +79,8 @@ class TestDeck(unittest.TestCase):
     def test_slides_novos_e_titulos(self):
         tits = [s["titulo"] for s in self.man["slides"]]
         for t in ("Cadeia causal: da bolsa aos desfechos na saúde", "Maior remuneração, maior chance de ser escolhida",
-                  "Modelo: logit condicional da 1ª opção", "3 em 4 escolhem uma vaga a até 189 km", "Limitações"):
+                  "Modelo: logit condicional da 1ª opção", "Os candidatos escolhem perto de onde trabalham",
+                  "Limitações"):
             self.assertIn(t, tits)
         self.assertEqual(tits.count("Cadeia causal: da bolsa aos desfechos na saúde"), 2)
 
