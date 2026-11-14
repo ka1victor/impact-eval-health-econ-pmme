@@ -760,14 +760,13 @@ def s_modelo(M, prs, n):
     # pedido de 14/11 (rodada 7): o quadro inteiro explica o modelo, com letra maior; só o exemplo de saúde
     caixa(sl, 9.0, 2.0, 4.08, 4.7,
           [[("POR QUE ESTE MODELO", 11, True, VERDE2)],
-           [("Logit condicional", 14, True, VERDE), (" (McFadden, 1974; Nobel de Economia de 2000).", 13, False,
-                                                      TEXTO)],
+           # rodada 11 (14/11): texto do autor; sai a frase da regra
+           [("Logit condicional", 14, True, VERDE),
+            (" de McFadden (1974), que lhe rendeu o Nobel de Economia de 2000.", 13, False, TEXTO)],
            [("Cada médico escolhe uma vaga entre várias. O modelo compara as vagas do ", 13, False, TEXTO),
             ("mesmo", 13, True, TEXTO),
             (" médico: o que é dele (nota, idade) é igual em todas e sai da conta.", 13, False, TEXTO)],
-           [("A bolsa vem de uma regra; por isso a versão mais simples do modelo basta" +
-             (" (outros métodos: anexo 6)." if COM_IDEIAS_COLEGA else "."), 13, False, TEXTO)],
-           [("Em saúde: ", 13, True, VERDE),
+           [("Referência de uso em economia da saúde: ", 13, True, VERDE),
             ("Costa, Nunes e Sanches (2024) usam um modelo da mesma família para estudar onde os médicos escolhem "
              "trabalhar no Brasil.", 13, False, TEXTO)]],
           fill=CLARO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome="Por que este modelo", margem=0.25, esp=9)

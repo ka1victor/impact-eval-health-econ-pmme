@@ -291,6 +291,12 @@ Prevalece sobre o texto acima onde houver conflito.
   rápido.
 - **Conclusão:** "Dá / Não dá para afirmar" alinhados em cima e embaixo com os cartões de "quem ocupa a vaga".
 
+### 3.18 Rodada 11 (14/11): quadro "Por que este modelo" (slide 20; 21 na conciliada)
+
+Texto do autor: "Logit condicional de McFadden (1974), que lhe rendeu o Nobel de Economia de 2000."; a explicação de
+que o modelo compara as vagas do mesmo médico; "Referência de uso em economia da saúde: Costa, Nunes e Sanches (2024)…".
+Sai a frase "A bolsa vem de uma regra; por isso a versão mais simples do modelo basta".
+
 ## 4. Histórico de revisões
 
 - **11/11:** deck sobre a versão do grupo (32 slides); pergunta nova; "valor da bolsa"; anexo com t = 0.

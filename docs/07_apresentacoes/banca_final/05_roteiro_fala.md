@@ -88,8 +88,9 @@
 - Vemos só qual vaga tem a maior utilidade: a 1ª opção. Com ε de valor extremo, a chance de cada vaga é a fórmula ①.
 - O coeficiente testado é o da bolsa; o resto são controles. O par de UFs faz comparar vagas dentro da mesma UF, e a
   bolsa vem de regra com o IVS no modelo (detalhe no anexo 4, se perguntarem).
-- Por que este modelo: é o padrão para escolher uma opção entre várias (McFadden, Nobel de 2000). Compara as vagas do
-  mesmo médico, então o que é dele sai da conta. Em saúde, Costa, Nunes e Sanches usam a mesma família.
+- Por que este modelo: logit condicional de McFadden (1974), que lhe rendeu o Nobel de Economia de 2000. Compara as
+  vagas do mesmo médico, então o que é dele sai da conta. Referência de uso em economia da saúde: Costa, Nunes e
+  Sanches (2024), sobre onde os médicos escolhem trabalhar no Brasil.
 
 **21. Método passo a passo: da escolha à razão de chances** (60 s)
 - 1–2: monta a base (uma linha por vaga; y = 1 na escolhida). 3–5: estima os pesos que melhor explicam as escolhas.
