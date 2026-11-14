@@ -42,8 +42,9 @@ from pptx.oxml import parse_xml
 from pptx.util import Inches, Pt
 
 ROOT = Path(__file__).resolve().parents[2]
-ENT = ROOT / "docs/07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1111.pptx"
-SHA_ENT = "4f645142053adb33cbac43173b291cff2af94ac86bcd1a161b1bed53e9044cd5"
+# Deck do grupo de 14/11/2026: o mesmo de 11/11 com a data dos sumários trocada (11/11/2026 → 14/11/2026)
+ENT = ROOT / "docs/07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1411.pptx"
+SHA_ENT = "f051366bbcb76ea5767f9390d2bfa9c6f7fcbd323fc65c4a96da895902d64843"
 N_ENT = 33
 OUT = ROOT / "output/apresentacao_banca_final"
 ARQ = "deck_banca_final_grupo"
@@ -76,7 +77,7 @@ ORDEM = [
     ("G", 15, None), ("G", 16, "Base de Dados"), ("N", "linhas", "Base de Dados"),
     ("G", 17, "Análise Descritiva"),
     ("G", 18, None), ("N", "modelo", "Metodologia"), ("N", "passos", "Metodologia"),
-    ("N", "identificacao", "Identificação"),
+    ("N", "estimacao", "Metodologia"), ("N", "identificacao", "Identificação"),
     ("G", 23, None), ("N", "resultados", "Resultados"), ("N", "robustez", "Robustez"),
     ("N", "metade", "Discussão"), ("N", "conclusao", "Discussão"), ("N", "limitacoes", "Discussão"),
     ("G", 31, None), ("G", 32, None), ("G", 33, None),
@@ -181,6 +182,14 @@ def numeros() -> dict:
         "rc_m1_sup": float(rc.loc["M1_emp", "ic95_sup"]),
         "rc_log": float(rc.loc["VL1log_emp", "estimativa"]), "rc_vl3": float(rc.loc["VL3_VL1_emp", "estimativa"]),
         "rc_vl2": float(rc.loc["VL2_emp", "estimativa"]),
+        "rc_vl2_inf": float(rc.loc["VL2_emp", "ic95_inf"]), "rc_vl2_sup": float(rc.loc["VL2_emp", "ic95_sup"]),
+        # inferência do VL-1 (slide de estimação)
+        "g_conj": int(c.loc["bolsa_mil", "n_conjuntos"]), "ep_cl": float(c.loc["bolsa_mil", "ep_cluster_conjunto"]),
+        "ep_mle": float(c.loc["bolsa_mil", "ep_mle"]), "p_score": float(rc.loc["VL1_emp", "p_score_rademacher"]),
+        "x_dist_m1": math.exp(float(d[(d.chave_modelo == "M1_emp") & (d.tipo_linha == "coeficiente") &
+                                      (d.termo == "distancia_100km")].estimativa.iloc[0])),
+        "alt_desenho": idt["alternativas_no_desenho"], "alt_ret": idt["alternativas_retiradas"],
+        "col_ef": idt["colunas_de_efeito_fixo"],
         "km": 5 * b / -dist * 100, "km_c2": float(vlr["leitura"]["VL4"]["VL1_c2"]["km"]),
         "x_dist": math.exp(dist), "x_reg": math.exp(float(c.loc["mesma_regiao_saude", "estimativa"])),
         "x_mun": math.exp(float(c.loc["mesmo_municipio", "estimativa"])),
@@ -210,6 +219,8 @@ def numeros() -> dict:
     n["lin_min"], n["lin_max"] = linhas["linhas_por_candidato"]["minimo"], linhas["linhas_por_candidato"]["maximo"]
     if linhas["linhas_modelo"] != n["n_lin"]:
         raise SystemExit("ERRO: linhas do exemplo diferentes das do VL-1")
+    if n["alt_desenho"] - n["alt_ret"] != n["n_lin"]:
+        raise SystemExit("ERRO: alternativas do desenho menos as retiradas não dão as linhas do VL-1")
     return n
 
 
@@ -555,7 +566,7 @@ def s_hipotese(M, prs, n):
 
 def s_linhas(M, prs, n):
     ex = n["ex"]
-    sl = M.novo(prs, "Cada candidato vira uma linha por vaga que podia escolher")
+    sl = M.novo(prs, "Cada candidato vira uma linha por vaga do cardápio")
     subtitulo(sl, 0.25, 0.85, 7.3, "I. Formato longo: o mesmo médico do exemplo",
               f"{ex['candidato']['vagas_no_cardapio']} linhas, uma por vaga do seu cardápio; y = 1 na vaga listada em 1º")
     vagas = [(ex["vaga_escolhida"], 1), (ex["vaga_b"], 0), (ex["vaga_a"], 0)]
@@ -603,10 +614,12 @@ def s_linhas(M, prs, n):
         caixa(sl, 7.9, y, 1.05, 0.4, [[(num, 13, True, BRANCO)]], fill=VERDE if k == 3 else MEDIO,
               align=PP_ALIGN.CENTER, margem=0.02)
         texto(sl, 9.05, y, 4.03, 0.4, [[(rot, 10.5, k == 3, TEXTO)]])
-    texto(sl, 7.9, 4.83, 5.18, 0.45,
-          [[("CNES: ", 10, True, CINZA), ("o local de trabalho anterior dá o ponto de partida da distância. "
-                                         f"No modelo principal, {n['ret_uma']} saem por ficar com uma só vaga "
-                                         "possível.", 10, False, CINZA)]],
+    texto(sl, 7.9, 4.8, 5.18, 0.6,
+          [[("CNES: ", 9.5, True, CINZA), ("o local de trabalho anterior dá o ponto de partida da distância. ",
+                                          9.5, False, CINZA),
+            ("No modelo principal: ", 9.5, True, CINZA),
+            (f"saem as vagas de pares de UFs sem nenhuma 1ª opção ({mil(n['alt_desenho'])} → {mil(n['n_lin'])} "
+             f"linhas) e {n['ret_uma']} candidatos com uma só vaga possível.", 9.5, False, CINZA)]],
           anchor=MSO_ANCHOR.TOP)
     caixa(sl, 0.25, 5.45, 12.83, 1.1,
           [[("MEDIDA", 11, True, "B9E4B1")],
@@ -654,8 +667,8 @@ def s_modelo(M, prs, n):
           fill=CLARO, align=PP_ALIGN.CENTER, nome="Razão")
     termos = (("β · bolsa", "testado", "TESTADO", "+R$ 5 mil multiplicam a chance da vaga, contra outra igual, por e^(5β)"),
               ("γ · distância", "controle", "CONTROLE", "quanto cada 100 km a mais de onde trabalhava multiplica a chance"),
-              ("f(IVS)", "controle", "CONTROLE", "curva contínua do IVS: a bolsa salta no corte; a vulnerabilidade, não"),
-              ("α · par de UFs", "pareamento", "PAREAMENTO", "compara só vagas da mesma UF, vistas por médicos da mesma UF"),
+              ("f(IVS)", "controle", "CONTROLE", "reta do IVS com dobras nos cortes, sem salto: no corte, só a bolsa salta"),
+              ("α · par de UFs", "pareamento", "PAREAMENTO", "UF de trabalho × UF da vaga: a bolsa é comparada dentro da UF"),
               ("θ · X", "controle", "CONTROLE", "mesma região de saúde, mesmo município, porte, capital, vaga imediata"))
     for k, (t, tp, rot, leitura) in enumerate(termos):
         y = 4.55 + k * 0.47
@@ -765,6 +778,89 @@ def s_passos(M, prs, n):
     return sl
 
 
+def s_estimacao(M, prs, n):
+    """Como chegamos ao ×1,47: de onde vem a variação, o que fica fixo, a estimação e a incerteza (pedido de 14/11)."""
+    sl = M.novo(prs, "Estimação: de onde vem o β e quão preciso ele é")
+    topo, alto = 0.9, 4.72
+
+    def cartao(x, w, rotulo):
+        caixa(sl, x, topo, w, alto, [], fill=BRANCO, line=BORDA, nome=f"Cartão {rotulo}")
+        texto(sl, x + 0.18, topo + 0.1, w - 0.3, 0.3, [[(rotulo, 11, True, VERDE2)]])
+
+    # I. De onde vem a variação da bolsa
+    x1, w1 = 0.25, 4.15
+    cartao(x1, w1, "I. DE ONDE VEM O β")
+    itens = (("1", f"A bolsa **salta** nos cortes de IVS 0,300 e 0,400 (a regra reproduz {n['r1_c1']}/{n['n_c1']} e "
+                   f"{n['r1_c2']}/{n['n_c2']} municípios)."),
+             ("2", "O IVS entra como **reta com dobras** nos cortes, **sem salto**: o que muda de repente no corte é "
+                   "só a bolsa. Esse salto informa o β (a lógica de Bobba et al.)."),
+             ("3", f"Só **dentro do par de UFs**: {n['pares_var']} pares com bolsas diferentes, "
+                   f"{mil(n['cand_var'])} candidatos."))
+    for k, (num, t) in enumerate(itens):
+        y = topo + 0.5 + k * 1.08
+        caixa(sl, x1 + 0.18, y + 0.02, 0.36, 0.36, [[(num, 12, True, BRANCO)]], fill=VERDE, forma=MSO_SHAPE.OVAL,
+              align=PP_ALIGN.CENTER, margem=0)
+        texto(sl, x1 + 0.66, y, w1 - 0.82, 1.0, [negrito(t, 11, TEXTO)], anchor=MSO_ANCHOR.TOP)
+    caixa(sl, x1 + 0.15, topo + alto - 0.98, w1 - 0.3, 0.86,
+          [[("Só perto do corte ", 10, True, "6B4A0B"), ("(IVS ±0,05): ", 10, False, "6B4A0B"),
+            (f"×{v(n['rc_vl2'])} (IC {v(n['rc_vl2_inf'])}–{v(n['rc_vl2_sup'])}). Mesma direção, com menos dados: "
+             "inconclusivo.", 10, False, "6B4A0B")]],
+          fill="F6DDB0", anchor=MSO_ANCHOR.MIDDLE, nome="Perto do corte", margem=0.12)
+
+    # II. O que o modelo mantém fixo
+    x2, w2 = 4.55, 4.15
+    cartao(x2, w2, "II. O QUE O MODELO MANTÉM FIXO")
+    fixos = (("Candidato", "nota, idade, de onde vem: igual em todas as vagas dele, sai da conta", "FIXO", "pareamento"),
+             ("UF de trabalho × UF da vaga", f"{n['col_ef']} colunas 0/1: salário de mercado, CRM, família na UF",
+              "FIXO", "pareamento"),
+             ("Município ou vaga", "a bolsa é a mesma no município: fixá-lo apagaria a bolsa", "NÃO", "nao"),
+             ("Distância, região, porte, capital, vaga imediata", "entram como colunas do V", "CONTROLE", "controle"))
+    for k, (tit, sub, rot, tp) in enumerate(fixos):
+        y = topo + 0.5 + k * 1.03
+        texto(sl, x2 + 0.18, y, 2.6, 0.95, [[(tit, 11, True, TEXTO)], [(sub, 9.5, False, CINZA)]],
+              anchor=MSO_ANCHOR.TOP)
+        pill(sl, x2 + w2 - 1.25, y + 0.05, 1.1, rot, tp, h=0.3, tam=9)
+        if k < 3:
+            linha(sl, x2 + 0.18, y + 0.97, x2 + w2 - 0.15, y + 0.97, cor=BORDA, larg=0.75)
+
+    # III. Estimação e incerteza
+    x3, w3 = 8.85, 4.23
+    cartao(x3, w3, "III. COMO ESTIMAMOS E A INCERTEZA")
+    passos = (("Máxima verossimilhança", "(Newton–Raphson), em código próprio; antes, o código reproduz as estimativas "
+                                         "já gravadas (diferença ≤ 10⁻⁸)."),
+              ("Erro-padrão agrupado", f"por curso × ciclo ({n['g_conj']} grupos): escolhas do mesmo edital não são "
+                                       f"independentes. EP do β = {v(n['ep_cl'], 3)}, o dobro do ingênuo "
+                                       f"({v(n['ep_mle'], 3)})."),
+              ("Poucos grupos", f"→ score bootstrap (Kline & Santos, 2012): p = {v(n['p_score'], 3)}."),
+              ("Três testes principais", f"(ciclos 1–3, ciclo 2, perto do corte) → correção de Holm: "
+                                         f"p = {v(n['p_holm'], 3)}."))
+    for k, (a, b) in enumerate(passos):
+        y = topo + 0.5 + k * 1.03
+        texto(sl, x3 + 0.18, y, w3 - 0.33, 0.97, [[(a, 11, True, VERDE), (f" {b}", 10.5, False, TEXTO)]],
+              anchor=MSO_ANCHOR.TOP)
+
+    # Faixa: por que fixar a UF muda o número
+    caixa(sl, 0.25, 5.78, 12.83, 1.02,
+          [[("Por que fixar a UF muda o número: ", 12, True, BRANCO),
+            (f"o par tira tudo o que é comum à UF. Dentro dela, a distância pesa mais (×{v(n['x_dist'])} contra "
+             f"×{v(n['x_dist_m1'])} por 100 km) e a bolsa também: ×{v(n['rc'])}, contra ×{v(n['rc_m1'])} sem o par "
+             f"(IC {v(n['rc_m1_inf'])}–{v(n['rc_m1_sup'])}). Fixar a UF foi decidido depois de ver o modelo base: "
+             "é exploratório.", 11.5, False, BRANCO)]],
+          fill=VERDE, nome="Por que a UF", margem=0.25)
+    fontes(sl, "Fontes: VL_estimativas.csv e VL_resumo.json (VL-1, VL-2 e M1; adendo 52e; doc 57x; auditoria 48); "
+               "portao_r1_ivs_oficial.json; scripts/rdd_bolsa/25_escolha_dap.py e 50_escolha_localizacao_par.py.")
+    notas(sl, ("Pedido de 14/11: explicar como o logit foi feito, além da equação. (I) A bolsa é função em degraus do "
+               "IVS e o IVS entra como spline linear contínuo com nós nos cortes; por isso o β vem dos saltos, como na "
+               "nota 13 de Bobba et al. A versão local (VL-2, ±0,05 do corte) vai na mesma direção, mas o IC contém 1. "
+               "(II) O que fica fixo responde à pergunta da banca de 04/11: o candidato se cancela no denominador; o par "
+               "de UFs entra como colunas 0/1; não há fixo de município, porque a bolsa é constante no município. "
+               "(III) Newton–Raphson no script 25; EP sanduíche CR1 por conjunto de escolha (curso × ciclo); score "
+               "bootstrap de Kline–Santos com Rademacher; Holm entre VL-1 ciclos 1–3, VL-1 ciclo 2 e VL-2. A faixa: "
+               "a diferença de log RC entre VL-1 e M1 tem IC que exclui 0 (doc 57x); a especificação com o par veio "
+               "depois do M1 (adendo 52e, pós-resultado)."))
+    return sl
+
+
 def s_identificacao(M, prs, n):
     sl = M.novo(prs, "Identificação: as premissas do logit condicional")
     cab = (("Premissa", 0.25, 4.1), ("Como atendemos", 4.45, 6.6), ("Situação", 11.15, 1.93))
@@ -781,8 +877,9 @@ def s_identificacao(M, prs, n):
          f"A bolsa segue a regra do IVS ({n['r1_c1']}/{n['n_c1']} e {n['r1_c2']}/{n['n_c2']} municípios); curva do IVS "
          "e par de UFs no modelo. Mas no corte mudam outras regras junto: medimos um pacote.", "EM PARTE", "parte"),
         ("Alternativas independentes", "a razão entre duas vagas não depende das outras",
-         f"Não vale por inteiro: vagas da mesma região se substituem mais (logit aninhado: λ = {v(n['lambda'])}). "
-         f"Mas o peso da bolsa quase não muda ({v(n['b_m9'], 3)} contra {v(n['b_m1'], 3)}, modelo base).",
+         f"Não vale por inteiro: vagas da mesma região se substituem mais (logit aninhado, rodado no modelo base, "
+         f"sem o par de UFs: λ = {v(n['lambda'])}). Nele, o peso da bolsa quase não muda ({v(n['b_m9'], 3)} contra "
+         f"{v(n['b_m1'], 3)}).",
          "NÃO VALE; β ESTÁVEL", "nao"),
     )
     for k, (tit, sub, como, rot, tp) in enumerate(linhas_):
@@ -836,7 +933,7 @@ def s_resultados(M, prs, n):
 
 
 def s_robustez(M, prs, n):
-    sl = M.novo(prs, "Robustez: o ×1,47 se mantém nas variantes com mais dados".replace("1,47", v(n["rc"])))
+    sl = M.novo(prs, "Robustez: o ×1,47 se mantém com mais dados".replace("1,47", v(n["rc"])))
     sl.shapes.add_picture(str(FIG_ROB), Inches(0.15), Inches(0.92), width=Inches(8.1))
     lo, hi = min(n["rc"], n["rc_log"], n["rc_vl3"]), max(n["rc"], n["rc_log"], n["rc_vl3"])
     caixa(sl, 8.4, 0.95, 4.68, 2.3,
@@ -864,7 +961,7 @@ def s_robustez(M, prs, n):
 
 
 def s_metade(M, prs, n):
-    sl = M.novo(prs, "Metade de quem ocupa a vaga já trabalhava no município")
+    sl = M.novo(prs, "Metade de quem ocupa a vaga já trabalhava ali")
     kpis = ((f"{round(n['origem'])}%", "já tinham vínculo no município do posto antes de entrar",
              f"IC 95%: {round(n['origem_lo'])}% a {round(n['origem_hi'])}%"),
             (f"+{v(n['horas'], 1)} h/sem", "a mais de horas cadastradas no CNES depois da entrada, num programa de 20 h",
@@ -959,7 +1056,7 @@ def s_limitacoes(M, prs, n):
 
 
 NOVOS = {"cadeia1": lambda M, p, n: s_cadeia(M, p, n, 2), "cadeia2": lambda M, p, n: s_cadeia(M, p, n, 3),
-         "hipotese": s_hipotese, "linhas": s_linhas, "modelo": s_modelo, "passos": s_passos,
+         "hipotese": s_hipotese, "linhas": s_linhas, "modelo": s_modelo, "passos": s_passos, "estimacao": s_estimacao,
          "identificacao": s_identificacao, "resultados": s_resultados, "robustez": s_robustez, "metade": s_metade,
          "conclusao": s_conclusao, "limitacoes": s_limitacoes}
 
@@ -1055,7 +1152,7 @@ def tirar_anotacoes(prs) -> list[str]:
 
 def construir() -> dict:
     if sha256(ENT) != SHA_ENT:
-        raise SystemExit("ERRO: o deck do grupo de 11/11 mudou (hash diferente)")
+        raise SystemExit("ERRO: o deck do grupo de 14/11 mudou (hash diferente)")
     prs = Presentation(str(ENT))
     if len(prs.slides) != N_ENT:
         raise SystemExit(f"ERRO: esperava {N_ENT} slides no deck do grupo")
@@ -1091,7 +1188,7 @@ def construir() -> dict:
             raise SystemExit(f"ERRO: slide oculto mantido ({k})")
         tits = [sh for sh in s.shapes if sh.is_placeholder and "TITLE" in str(sh.placeholder_format.type)]
         titulo = tits[0].text_frame.text if tits else ""
-        manifesto.append({"posicao": pos, "origem": "grupo 11/11" if t == "G" else "novo", "slide_origem": k,
+        manifesto.append({"posicao": pos, "origem": "grupo 14/11" if t == "G" else "novo", "slide_origem": k,
                           "secao": secao, "titulo": " ".join(titulo.split())})
     OUT.mkdir(parents=True, exist_ok=True)
     pptx = OUT / f"{ARQ}.pptx"
@@ -1100,10 +1197,20 @@ def construir() -> dict:
 
 
 def converter_pdf(pptx: Path, pdf: Path) -> bool:
+    """LibreOffice (soffice); sem ele, no Windows, o PowerPoint instalado (COM)."""
     with tempfile.TemporaryDirectory() as tmp:
-        r = subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", tmp, str(pptx)],
-                           capture_output=True, text=True, timeout=600)
         gerado = Path(tmp) / (pptx.stem + ".pdf")
+        try:
+            r = subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", tmp, str(pptx)],
+                               capture_output=True, text=True, timeout=600)
+        except FileNotFoundError:
+            if sys.platform != "win32":
+                return False
+            ps = ("$pp = New-Object -ComObject PowerPoint.Application; "
+                  f"$d = $pp.Presentations.Open('{pptx.resolve()}', $true, $false, $false); "
+                  f"$d.SaveAs('{gerado}', 32); $d.Close(); $pp.Quit()")
+            r = subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True,
+                               timeout=600)
         if r.returncode != 0 or not gerado.exists():
             return False
         shutil.copy(gerado, pdf)

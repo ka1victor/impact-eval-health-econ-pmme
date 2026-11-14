@@ -1,6 +1,9 @@
 # Banca final — conteúdo canônico
 
-> **Estado (11/11/2026, noite):** deck sobre a versão do grupo de 11/11 (`PEE - BANCA FINAL`), 32 slides, com
+> **Estado (14/11/2026):** mesmo deck, agora sobre a entrada do grupo de 14/11, com 33 slides: slide novo de
+> estimação (de onde vem o β, o que fica fixo, erro-padrão agrupado, score bootstrap, Holm) e correções nos slides 18,
+> 21 e 24 ([03](03_deck_banca_final_grupo.md), nota do topo).<br>
+> **Antes (11/11/2026, noite):** deck sobre a versão do grupo de 11/11 (`PEE - BANCA FINAL`), 32 slides, com
 > cadeia causal, logit condicional corrigido, método passo a passo com exemplo real e resultados em gráfico
 > ([03](03_deck_banca_final_grupo.md); `output/apresentacao_banca_final/deck_banca_final_grupo.pptx` e `.pdf`).<br>
 > **Antes (11/11/2026):** deck da banca final de volta à versão de 09/11 (25 slides, 16 no corpo,
@@ -23,7 +26,7 @@
 | Documento | Função |
 |---|---|
 | [`01_diagrama_teoria_mudanca.md`](01_diagrama_teoria_mudanca.md) | **fonte de verdade**: cada caixa e seta do diagrama, a literatura de cada elo, a ligação com as equações do apêndice e a nova ordem dos slides de teoria |
-| [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo de 11/11**: o que estimamos e por que a razão de chances (§1), ordem dos 32 slides, texto de cada slide novo, o que o grupo decide |
+| [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo de 11/11**: o que estimamos e por que a razão de chances (§1), ordem dos 33 slides, texto de cada slide novo, o que o grupo decide |
 | [`02_deck_banca_final.md`](02_deck_banca_final.md) | **fonte de verdade do deck final**: ordem dos slides (25 na versão vigente), o feedback de 04/11 aplicado à parte da banca 1, cada texto novo e o que fica para o autor decidir |
 
 ## Derivados (o deck é derivado deste conteúdo)

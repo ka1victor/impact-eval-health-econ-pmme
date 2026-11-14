@@ -1,10 +1,17 @@
-# 03. Deck da banca final sobre a versão do grupo de 11/11/2026
+# 03. Deck da banca final sobre a versão do grupo de 11/11/2026 (entrada de 14/11)
+
+> **Revisão de 14/11/2026 (pedido do autor: explicar melhor como o logit condicional foi feito):** entrada trocada
+> pelo deck do grupo de 14/11 (`grupo/deck_grupo_banca_final_1411.pptx`, SHA-256 `f051366b…64843`; o mesmo de 11/11
+> com a data dos sumários em 14/11/2026). Um slide novo de estimação (23, §3.6a); funil das alternativas no slide 18;
+> leitura de f(IVS) e do par de UFs no slide 21; o logit aninhado do slide 24 identificado como do modelo base; três
+> títulos encurtados (18, 27, 28), que quebravam em duas linhas no PowerPoint. Deck com 33 slides.
 
 > **Pedido do autor (11/11/2026, noite):** partir do deck atual do grupo (`PEE - BANCA FINAL`, 33 slides, 1 oculto) e
 > comunicar melhor o trabalho com o que foi feito no deck da banca final ([02](02_deck_banca_final.md)), seção por seção.<br>
-> **Derivado:** `output/apresentacao_banca_final/deck_banca_final_grupo.pptx` e `.pdf` (32 slides), gerado por
+> **Derivado:** `output/apresentacao_banca_final/deck_banca_final_grupo.pptx` e `.pdf` (33 slides), gerado por
 > `scripts/apresentacao/gerar_deck_banca_final_grupo.py`. O deck é derivado deste documento: divergência é erro do deck.<br>
-> **Entrada:** `grupo/deck_grupo_banca_final_1111.pptx` (cópia sem alteração; SHA-256 `4f645142…44cd5`).<br>
+> **Entrada:** `grupo/deck_grupo_banca_final_1411.pptx` (cópia sem alteração; SHA-256 `f051366b…64843`); antes,
+> `grupo/deck_grupo_banca_final_1111.pptx` (SHA-256 `4f645142…44cd5`).<br>
 > **Números:** todos lidos de `output/` (VL, VG, P1, S57, portão R1, `exemplo_logit_real.json`); nenhum digitado.<br>
 > **Convive com o doc 02:** o deck de 25 slides do doc 02 continua gerado pelo seu script; este é outro arquivo.
 
@@ -37,7 +44,7 @@ mais intuitiva para a política é a equivalência em km (75 km). O deck mostra 
 **Consequência para a cadeia causal:** o "valor da vaga para o médico" (utilidade) entra no diagrama como **não
 observado**, a 1ª opção como **observada**, e a métrica (×1,47 ≈ 75 km) aparece numa faixa de destaque entre as duas.
 
-## 2. Ordem dos slides (32)
+## 2. Ordem dos slides (33)
 
 | # | Origem | Seção | Slide | O que mudou |
 |---|---|---|---|---|
@@ -51,19 +58,20 @@ observado**, a 1ª opção como **observada**, e a métrica (×1,47 ≈ 75 km) a
 | 14 | grupo 13 | — | sumário | nada |
 | 15 | novo | Hipótese | maior remuneração, maior chance de ser escolhida | §3.3 |
 | 16–17 | grupo 15–16 | Base de Dados | sumário; dados ligam editais ao CNES | nada |
-| 18 | novo | Base de Dados | cada candidato vira uma linha por vaga | §3.4 |
+| 18 | novo | Base de Dados | cada candidato vira uma linha por vaga do cardápio | §3.4 |
 | 19 | grupo 17 | Análise Descritiva | 3 em 4 escolhem uma vaga a até 189 km | só o título |
 | 20 | grupo 18 | — | sumário | nada |
 | 21 | novo | Metodologia | modelo: logit condicional da 1ª opção | §3.5 |
 | 22 | novo | Metodologia | método passo a passo, com exemplo real | §3.6 |
-| 23 | novo | Identificação | as premissas do logit condicional | §3.7 |
-| 24 | grupo 23 | — | sumário | nada |
-| 25 | novo | Resultados | +R$ 5 mil multiplicam a chance por 1,47 | §3.8 |
-| 26 | novo | Robustez | o ×1,47 se mantém nas variantes com mais dados | §3.9 |
-| 27 | novo | Discussão | metade de quem ocupa a vaga já trabalhava no município | §3.10 |
-| 28 | novo | Discussão | conclusão: a bolsa pesa na escolha, mas pouco | §3.11 |
-| 29 | novo | Discussão | limitações (duas caixas) | §3.12 |
-| 30–32 | grupo 31–33 | — | Q&A; anexo 1; a bolsa segue o IVS | anexo: índice da soma t = 0 (era i = 0, com δ^t) |
+| 23 | novo | Metodologia | estimação: de onde vem o β e quão preciso ele é | §3.6a |
+| 24 | novo | Identificação | as premissas do logit condicional | §3.7 |
+| 25 | grupo 23 | — | sumário | nada |
+| 26 | novo | Resultados | +R$ 5 mil multiplicam a chance por 1,47 | §3.8 |
+| 27 | novo | Robustez | o ×1,47 se mantém com mais dados | §3.9 |
+| 28 | novo | Discussão | metade de quem ocupa a vaga já trabalhava ali | §3.10 |
+| 29 | novo | Discussão | conclusão: a bolsa pesa na escolha, mas pouco | §3.11 |
+| 30 | novo | Discussão | limitações (duas caixas) | §3.12 |
+| 31–33 | grupo 31–33 | — | Q&A; anexo 1; a bolsa segue o IVS | anexo: índice da soma t = 0 (era i = 0, com δ^t) |
 
 **Fora** (slides do grupo): 12 (rascunho em branco), 14 (hipótese em sobreposição), 19–20 (equação da utilidade e
 duplicata), 21 (oculto), 22 (identificação), 24–26 (resultados, "incentivo limitado", tabela), 27 (metade, refeito),
@@ -115,14 +123,17 @@ principal: 578.998 linhas, 5.417 candidatos, ≈ 107 vagas por candidato (median
 5.714 com 1ª opção → 5.425 com local de trabalho anterior no CNES → 5.421 com região de saúde → 5.417 no modelo
 principal (4 ficaram com uma só vaga possível depois de fixar o par de UFs). "CNES → modelo principal": o CNES dá o
 ponto de partida da distância; quem não tinha vínculo médico anterior fica fora; no modelo principal saem também as
-vagas de UFs que nenhum médico da mesma UF escolheu (não informam o peso da bolsa). Faixa "Medida": razão de chances
+vagas de UFs que nenhum médico da mesma UF escolheu (não informam o peso da bolsa): 932.577 → 578.998 linhas, dito
+no slide desde 14/11. Faixa "Medida": razão de chances
 da 1ª opção por +R$ 5 mil; hipótese: maior que 1.
 
 ### 3.5 Modelo (21)
 
 Equação do logit condicional, no estilo do grupo (Cambria Math): P(i escolhe v) = exp(V_iv) / Σ_{k ∈ cardápio de i}
 exp(V_ik), com V_iv = β·bolsa_v + γ·dist_iv + f(IVS_v) + α_{UF(i),UF(v)} + θ·X_iv. "O que se estima": os pesos que
-tornam as 1ªs opções observadas as mais prováveis. "Como ler cada coeficiente": P(A) ÷ P(B) = exp[β·(bolsa_A −
+tornam as 1ªs opções observadas as mais prováveis. "Como ler cada coeficiente" (desde 14/11: f(IVS) = "reta do IVS
+com dobras nos cortes, sem salto: no corte, só a bolsa salta"; α = "UF de trabalho × UF da vaga: a bolsa é comparada
+dentro da UF"): P(A) ÷ P(B) = exp[β·(bolsa_A −
 bolsa_B) + γ·(dist_A − dist_B) + …] e uma linha por termo (β testado; γ, f(IVS) e θ·X controles; α pareamento).
 Anexo pequeno "Por que este modelo": intuição (escolha de uma entre ≈ 107; o que é do médico se cancela) e
 referências — McFadden (1974; Nobel de 2000), Bobba et al. (2026), Costa, Nunes & Sanches (2024), Holmes (2005),
@@ -140,36 +151,54 @@ candidato trabalhava com bolsas que diferem em R$ 5 mil, o par mais parecido no 
 vaga imediata, porte, capital, estratos, mesma região, mesmo município). Script:
 `scripts/apresentacao/gerar_exemplo_logit_real.py`; saída sem município de origem nem identificador do candidato.
 
-### 3.7 Identificação (23)
+### 3.6a Estimação (23; novo em 14/11)
+
+Três cartões e uma faixa, todos os números de `VL_estimativas.csv`, `VL_resumo.json` e do portão R1:
+
+1. **De onde vem o β:** (1) a bolsa salta nos cortes 0,300 e 0,400 (regra 368/368 e 454/454); (2) o IVS entra como
+   reta com dobras nos cortes, sem salto, então o que muda de repente no corte é só a bolsa: o salto informa o β (nota 13
+   de Bobba et al.); (3) só dentro do par de UFs (260 pares, 5.345 candidatos). Caixa: perto do corte (±0,05),
+   ×1,28 (IC 0,95–1,72), inconclusivo.
+2. **O que o modelo mantém fixo** (pergunta da banca de 04/11, doc 12 da banca 2, §1.1): candidato (fixo, se cancela);
+   UF de trabalho × UF da vaga (fixo, 254 colunas); município ou vaga (não: apagaria a bolsa); distância, região,
+   porte, capital, vaga imediata (controle).
+3. **Como estimamos e a incerteza:** máxima verossimilhança por Newton–Raphson em código próprio (scripts 25 e 50),
+   com o portão de reprodução (≤ 10⁻⁸); EP agrupado por curso × ciclo (55 grupos), 0,025 contra 0,013 do ingênuo;
+   score bootstrap de Kline–Santos (p = 0,011); Holm nas três principais (p = 0,005).
+4. **Faixa:** por que fixar a UF muda o número (distância ×0,60 contra ×0,83 por 100 km; bolsa ×1,47 contra ×1,25,
+   IC 0,98–1,61) e que a escolha do par veio depois do modelo base (exploratório).
+
+### 3.7 Identificação (24)
 
 Só as premissas do logit condicional e como atendemos: escolha sincera (SUPOSTO); cardápio conhecido (SUPOSTO);
 bolsa sem relação com o que não medimos (EM PARTE: regra do IVS 368/368 e 454/454, mas pacote no corte);
-alternativas independentes (NÃO VALE, β ESTÁVEL: aninhado λ = 0,45; β 0,043 contra 0,042 no modelo base). Faixa: o
+alternativas independentes (NÃO VALE, β ESTÁVEL: aninhado λ = 0,45; β 0,043 contra 0,042; desde 14/11 o slide diz
+que o aninhado foi rodado no modelo base, sem o par de UFs, e não no VL-1). Faixa: o
 β vem de 260 pares de UFs e 5.345 candidatos com variação de bolsa.
 
-### 3.8 Resultados (25)
+### 3.8 Resultados (26)
 
 Gráfico no lugar da tabela: cada coeficiente como "×" com IC (bolsa +R$ 5 mil ×1,47; +100 km ×0,60; mesma região
 ×3,01; mesmo município ×1,80), com o coeficiente escrito. Três cartões: ×1,47 (IC 1,15–1,89; Holm 0,005); 75 km;
 ×1,90 só no ciclo 2. Sem cautela.
 
-### 3.9 Robustez (26)
+### 3.9 Robustez (27)
 
 Gráfico das variantes (VL-1, log da distância, região anterior × UF, perto do corte, por ciclo, pré-registrado).
 Conclusão explícita (anotação do grupo): com todos os dados e sempre na mesma UF, ×1,45 a ×1,49; onde há menos
 informação, o IC contém 1 (inconclusivo, não contrário). "Por que o × e não o coeficiente" (§1).
 
-### 3.10 Metade de quem ocupa a vaga (27)
+### 3.10 Metade de quem ocupa a vaga (28)
 
 51% já tinham vínculo no município (IC 48%–54%); +6,6 h/sem cadastradas (IC +5,4 a +7,8). Três leituras e a nota de
 descritivo. Fonte: S57_resumo.json (P4).
 
-### 3.11 Conclusão (28)
+### 3.11 Conclusão (29)
 
 Resposta (×1,47 ≈ 75 km; forte só no ciclo 2), "Dá para afirmar" e "Não dá para afirmar" (três itens cada) e a
 leitura para a política. Funde os slides 25 e 29 do grupo.
 
-### 3.12 Limitações (29)
+### 3.12 Limitações (30)
 
 Duas caixas: "O que o resultado não mostra" (escolher não é ir; pacote; local anterior pelo CNES) e "Quão firme é o
 resultado" (comparação pós-resultado; sem fixar a UF ×1,25; só o ciclo 2 forte), cada item com o que implica.

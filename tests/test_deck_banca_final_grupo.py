@@ -50,7 +50,7 @@ class TestDeck(unittest.TestCase):
         cls.man = json.loads(MANIF.read_text(encoding="utf-8"))
 
     def test_tamanho_e_ocultos(self):
-        self.assertEqual(len(self.prs.slides), 32)
+        self.assertEqual(len(self.prs.slides), 33)
         self.assertFalse(any(s._element.get("show") == "0" for s in self.prs.slides))
 
     def test_manifesto_bate(self):
@@ -88,13 +88,32 @@ class TestDeck(unittest.TestCase):
         self.assertIn("exp(V", t)
         self.assertIn("cardápio de i", t)
 
+    def test_estimacao_explica_como_foi_feito(self):
+        """Slide 23 (14/11): variação que identifica o β, o que fica fixo e a inferência, com números de output/."""
+        d = pd.read_csv(ROOT / "output/rdd_bolsa/VL_estimativas.csv")
+        c = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "coeficiente") & (d.termo == "bolsa_mil")].iloc[0]
+        r = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "razao_chances_por_5mil")].iloc[0]
+        t = self.txt[22]
+        self.assertIn("Estimação: de onde vem o β", t)
+        self.assertIn(f"({int(c.n_conjuntos)} grupos)", t)
+        self.assertIn(f"p = {r.p_score_rademacher:.3f}".replace(".", ","), t)
+        self.assertIn(f"p = {r.p_holm:.3f}".replace(".", ","), t)
+        for termo in ("Candidato", "UF de trabalho × UF da vaga", "Município ou vaga", "FIXO", "NÃO", "exploratório"):
+            self.assertIn(termo, t)
+
+    def test_aninhado_no_modelo_base(self):
+        self.assertIn("rodado no modelo base, sem o par de UFs", self.txt[23])
+
+    def test_funil_das_alternativas(self):
+        self.assertIn("932.577 → 578.998 linhas", self.txt[17])
+
     def test_pergunta_nova(self):
         self.assertIn("Uma bolsa maior aumenta a chance de uma vaga ser a 1ª opção do médico?", self.txt[8])
 
     def test_doc_cita_o_deck(self):
         doc = DOC.read_text(encoding="utf-8")
         self.assertIn("deck_banca_final_grupo.pptx", doc)
-        self.assertIn("32 slides", doc)
+        self.assertIn("33 slides", doc)
 
 
 @unittest.skipUnless(EXEMPLO.exists(), "exemplo não gerado")
