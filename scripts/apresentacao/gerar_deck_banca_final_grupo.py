@@ -89,7 +89,7 @@ ORDEM = [
     ("G", 18, None), ("N", "intuicao", "Metodologia"), ("N", "modelo", "Metodologia"), ("N", "passos", "Metodologia"),
     ("N", "estimacao", "Metodologia"), ("N", "identificacao", "Identificação"),
     ("G", 23, None), ("N", "resultados", "Resultados"), ("N", "robustez", "Robustez"),
-    ("N", "conclusao", "Discussão"), ("N", "limitacoes", "Discussão"),
+    ("N", "limitacoes", "Discussão"), ("N", "conclusao", "Discussão"),
     ("G", 31, None), ("G", 32, None), ("G", 33, None), ("N", "formal", None), ("N", "alternativas", None),
 ]
 
@@ -560,14 +560,20 @@ def s_cadeia(M, prs, n, etapa: int):
            [("chance = probabilidade de o médico pôr a vaga em 1º lugar", 12.5, False, "DDEBDD")]],
           fill=VERDE, nome="Métrica", margem=0.25)
     # 3. Da vaga à saúde
-    rotulo(5.92, 3, "DA VAGA À SAÚDE", apagado=ap, sub="fora do que estimamos")
-    elos = ("Quantos médicos a escolhem", "Vaga ocupada", "Capacidade", "Produção e acesso", "Saúde")
-    for k, tit in enumerate(elos):
+    rotulo(5.86, 3, "DA VAGA À SAÚDE", apagado=ap, sub="fora do que estimamos")
+    # rodada 9 (14/11): uma explicação curta em cada bloco
+    elos = (("Quantos médicos a escolhem", "candidatos de 1ª opção por vaga"),
+            ("Vaga ocupada", "médico homologado e em atividade"),
+            ("Capacidade", "vínculos e horas do especialista no CNES"),
+            ("Produção e acesso", "consultas, exames e cirurgias feitos"),
+            ("Saúde", "menos espera e internações evitáveis"))
+    for k, (tit, ex_) in enumerate(elos):
         x = 2.2 + k * 2.22
-        caixa(sl, x, 5.92, 2.0, 0.78, [[(tit, 13, True, APAGADO if ap else VERDE)]],
-              fill=FUNDO_AP if ap else CLARO, line=None if ap else BORDA, nome=f"Elo {tit}")
+        caixa(sl, x, 5.84, 2.0, 1.0, [[(tit, 12, True, APAGADO if ap else VERDE)],
+                                      [(ex_, 10, False, APAGADO if ap else CINZA)]],
+              fill=FUNDO_AP if ap else CLARO, line=None if ap else BORDA, nome=f"Elo {tit}", margem=0.1, esp=2)
         if k < 4:
-            seta(sl, x + 2.01, 6.31, x + 2.21, 6.31, cor=APAGADO if ap else VERDE, larg=1.5)
+            seta(sl, x + 2.01, 6.34, x + 2.21, 6.34, cor=APAGADO if ap else VERDE, larg=1.5)
     fontes(sl, "Fontes: Moehling et al. (2020); Choné & Ma (2011); Redding & Rossi-Hansberg (2017); Burdett, Shi & "
                "Wright (2001); edital SGTES/MS nº 3/2025; Ipea, IVS 2010.")
     notas(sl, ("Cadeia causal, etapa por etapa. Em âmbar, o que o trabalho estima (o peso da remuneração) e o que "
@@ -792,51 +798,57 @@ def s_passos(M, prs, n):
     passos = (("1", "Vagas", "uma linha por vaga possível", "base"),
               ("2", "Escolha", "y = 1 na vaga posta em 1º", "base"),
               ("3", "Utilidade", "U = pesos × características + ε", "est"),
-              ("4", "Chance", "exp(U sem ε) ÷ soma das vagas dele", "est"),
+              ("4", "Chance", "exp(U sem ε) da vaga ÷ a soma disso em todas as vagas dele", "est"),
               ("5", "Pesos", "os que melhor explicam as escolhas", "est"),
-              ("6", "Métrica", "chance (A) ÷ chance (B)", "met"))
+              ("6", "Métrica", "chance da vaga que paga mais ÷ chance da outra", "met"))
+    # rodada 9 (14/11): denominador explícito nos passos 4 e 6; exemplo mais abaixo
     w, gap = 1.95, 0.226
     for k, (num, tit, corpo, g) in enumerate(passos):
         x = 0.25 + k * (w + gap)
         fill, ct, cc, ln = grupos[g]
-        caixa(sl, x, 0.88, w, 1.38, [], fill=fill, line=ln, nome=f"Passo {num}")
+        caixa(sl, x, 0.88, w, 1.62, [], fill=fill, line=ln, nome=f"Passo {num}")
         caixa(sl, x + 0.1, 0.96, 0.4, 0.4, [[(num, 13, True, fill if g != "base" else BRANCO)]],
               fill=BRANCO if g != "base" else VERDE, forma=MSO_SHAPE.OVAL, align=PP_ALIGN.CENTER, margem=0)
         texto(sl, x + 0.57, 0.96, w - 0.62, 0.4, [[(tit, 16, True, ct)]])
-        texto(sl, x + 0.1, 1.42, w - 0.18, 0.82, [[(corpo, 13.5, False, cc)]], anchor=MSO_ANCHOR.TOP)
+        texto(sl, x + 0.1, 1.42, w - 0.18, 1.05, [[(corpo, 13, False, cc)]], anchor=MSO_ANCHOR.TOP)
         if k < 5:
-            seta(sl, x + w + 0.01, 1.57, x + w + gap - 0.01, 1.57, larg=1.75)
+            seta(sl, x + w + 0.01, 1.69, x + w + gap - 0.01, 1.69, larg=1.75)
     for k, (g, rot) in enumerate((("base", "1–2: a base de dados"), ("est", "3–5: a estimação"),
                                   ("met", "6: a métrica"))):
         fill, ct, _, ln = grupos[g]
-        caixa(sl, 2.3 + k * 3.0, 2.36, 2.75, 0.34, [[(rot, 11.5, True, ct)]], fill=fill, line=ln,
+        caixa(sl, 2.3 + k * 3.0, 2.62, 2.75, 0.34, [[(rot, 11.5, True, ct)]], fill=fill, line=ln,
               align=PP_ALIGN.CENTER, margem=0.05, nome=f"Legenda {g}")
     # Exemplo real
-    subtitulo(sl, 0.25, 2.88, 12.8, f"Exemplo real: o médico de {ex['candidato']['uf_de_trabalho_anterior']} do slide "
-                                    "de hipótese")
+    subtitulo(sl, 0.25, 3.2, 12.8, f"Exemplo real: o médico de {ex['candidato']['uf_de_trabalho_anterior']} do slide "
+                                   "de hipótese")
+    y0, h = 3.7, 1.3
     for k, vg in enumerate((a, b)):
-        y = 3.38 + k * 1.55
-        caixa(sl, 0.25, y, 3.8, 1.4,
+        y = y0 + k * (h + 0.15)
+        caixa(sl, 0.25, y, 3.8, h,
               [[(vg["municipio"], 17, True, TEXTO)],
                [(f"R$ {int(vg['bolsa_mil'])} mil  ·  {round(vg['km'])} km", 13.5, False, CINZA)]],
               fill=CLARO, line=BORDA, nome=f"Vaga ex {k}", margem=0.25)
-        caixa(sl, 4.15, y, 1.95, 1.4, [[("chance (passo 4)", 10.5, False, CINZA)],
-                                       [(f"{v(100 * vg['chance_modelo'])}%", 27, True, MEDIO)]],
+        caixa(sl, 4.15, y, 1.95, h, [[("chance (passo 4)", 10.5, False, CINZA)],
+                                     [(f"{v(100 * vg['chance_modelo'])}%", 27, True, MEDIO)]],
               fill=BRANCO, line=MEDIO, align=PP_ALIGN.CENTER, margem=0.04, nome=f"Chance ex {k}")
-    seta(sl, 6.2, 4.85, 6.6, 4.85, larg=2.5)
+    alto = 2 * h + 0.15
+    seta(sl, 6.2, y0 + alto / 2, 6.6, y0 + alto / 2, larg=2.5)
     rz = c["razao_por_termo"]
-    caixa(sl, 6.7, 3.38, 4.05, 2.95, [], fill=VERDE, nome="Razão do exemplo")
-    texto(sl, 6.9, 3.48, 3.75, 0.3, [[("PASSO 6: A RAZÃO", 11, True, "B9E4B1")]])
-    texto(sl, 6.9, 3.82, 3.75, 0.6,
+    caixa(sl, 6.7, y0, 4.05, alto, [], fill=VERDE, nome="Razão do exemplo")
+    texto(sl, 6.9, y0 + 0.1, 3.75, 0.3, [[("PASSO 6: A RAZÃO", 11, True, "B9E4B1")]])
+    texto(sl, 6.9, y0 + 0.4, 3.75, 0.5,
           [[(f"{v(100 * b['chance_modelo'])}% ÷ {v(100 * a['chance_modelo'])}% = {v(c['razao_total'])}", 23, True,
              BRANCO)]])
+    texto(sl, 6.9, y0 + 0.9, 3.75, 0.32,
+          [[(f"{b['municipio'].split(' (')[0]} (paga mais) ÷ {a['municipio'].split(' (')[0]}", 11.5, False,
+             "DDEBDD")]])
     fat = ((f"×{v(rz['bolsa_mil'])}", "a bolsa: +R$ 5 mil"),
            (f"×{v(rz['distancia_100km'])}", f"a distância: {round(b['km'] - a['km'])} km a mais"),
            (f"×{v(rz['ivs'] * rz['log_populacao_2022'] * rz['outros'])}", "o resto"))
     for k, (x_, rot) in enumerate(fat):
-        texto(sl, 6.9, 4.58 + k * 0.52, 3.75, 0.5,
-              [[(x_, 18, True, "B9E4B1" if k == 0 else BRANCO), (f"  {rot}", 13.5, False, BRANCO)]])
-    caixa(sl, 10.9, 3.38, 2.18, 2.95,
+        texto(sl, 6.9, y0 + 1.3 + k * 0.42, 3.75, 0.42,
+              [[(x_, 17, True, "B9E4B1" if k == 0 else BRANCO), (f"  {rot}", 13, False, BRANCO)]])
+    caixa(sl, 10.9, y0, 2.18, alto,
           [[("Se fossem as únicas duas vagas:", 12, True, VERDE2)],
            [(f"{round(100 * c['chance_b_entre_as_duas'])}%", 26, True, TEXTO)],
            [("contra", 12, False, CINZA)],
@@ -1072,7 +1084,7 @@ def s_conclusao(M, prs, n):
                                           "Que vale em **todo ciclo**")))
     for k, (tit, itens) in enumerate(blocos):
         x = 4.6 + k * 4.3
-        caixa(sl, x, 2.35, 4.18, 3.07, [[(tit, 16, True, VERDE if k == 0 else "7A1C17")]] +
+        caixa(sl, x, 2.7, 4.18, 2.72, [[(tit, 16, True, VERDE if k == 0 else "7A1C17")]] +
               [[("•  ", 13.5, False, TEXTO)] + negrito(it, 13.5, TEXTO) for it in itens],
               fill=CLARO if k == 0 else BRANCO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome=tit, margem=0.25, esp=8)
     # rodada 8: "Para a política" maior, na largura toda

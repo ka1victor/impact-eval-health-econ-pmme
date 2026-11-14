@@ -50,7 +50,8 @@
 - A bolsa aumenta o valor da vaga; os custos de viver e de trabalhar ali reduzem. Não vemos esse valor; vemos só a 1ª
   opção.
 - O que estimamos: o peso da remuneração na chance de a vaga ser a 1ª opção.
-- (13) Da vaga à saúde (ocupação, acesso, saúde) fica fora do que estimamos.
+- (13) Da vaga à saúde fica fora do que estimamos: quantos médicos escolhem a vaga, se ela é ocupada, vínculos e
+  horas no CNES, consultas e exames, e por fim espera e internações.
 
 **14. Sumário** (5 s): passar.
 
@@ -95,7 +96,9 @@
 **22. Método passo a passo: da escolha à razão de chances** (60 s)
 - 1–2: monta a base (uma linha por vaga; y = 1 na escolhida). 3–5: estima os pesos que melhor explicam as escolhas.
   6: lê o resultado como razão de chances.
-- No exemplo: Araçuaí 2,53%, Itamarandiba 3,62%; a razão é 1,43, e quase tudo vem da bolsa (×1,47).
+- Passo 4: a chance de cada vaga é exp(U sem ε) dela dividido pela soma disso em todas as vagas do médico.
+- Passo 6: a métrica é a chance da vaga que paga mais dividida pela chance da outra; as outras vagas se cancelam.
+- No exemplo: Itamarandiba 3,62% ÷ Araçuaí 2,53% = 1,43, e quase tudo vem da bolsa (×1,47).
 
 **23. Estimação: de onde vem o β** (50 s) **(encurtável)**
 - A bolsa é fixada por regra e o IVS está no modelo: o β não mistura bolsa com vulnerabilidade.
@@ -121,17 +124,17 @@
 - Com só parte dos dados (perto do corte; ciclos 1 e 3), o intervalo inclui 1: inconclusivo, não contrário. O ciclo 2
   é o mais forte (×1,90).
 
-**28. Conclusão: bolsa pesa na escolha, mas pouco** (50 s)
-- Resposta: sim, a vaga de bolsa maior é mais escolhida (×1,47; ≈ 75 km).
-- Descritivo: 51% de quem ocupa a vaga já tinha vínculo no município; o cadastro sobe +6,6 h/sem num programa de 20 h.
-- Não dá para afirmar que leva mais médicos ao município, que o efeito é só da bolsa, nem que vale em todo ciclo.
-- Para a política: pagar mais muda a escolha entre vagas próximas; não mostramos que atraia médicos de longe.
-
-**29. Limitações** (40 s)
+**28. Limitações** (30 s, passar rápido)
 - Medimos a escolha, não a chegada; no corte mudam outras regras; o local anterior é o do CNES, não a residência.
 - Fixar a UF foi decidido depois de ver os dados: o resultado é exploratório; confirmar exige dados novos (o ciclo 3
   maduro). **Falar isso antes de a banca perguntar.**
 - Significativo só no ciclo 2; a escolha sincera não dá para testar.
+
+**29. Conclusão: bolsa pesa na escolha, mas pouco** (50 s)
+- Fecha a apresentação. Resposta: sim, a vaga de bolsa maior é mais escolhida (×1,47; ≈ 75 km).
+- Descritivo: 51% de quem ocupa a vaga já tinha vínculo no município; o cadastro sobe +6,6 h/sem num programa de 20 h.
+- Não dá para afirmar que leva mais médicos ao município, que o efeito é só da bolsa, nem que vale em todo ciclo.
+- Para a política: pagar mais muda a escolha entre vagas próximas; não mostramos que atraia médicos de longe.
 
 **30. Q&A**: abrir para perguntas (respostas no [doc 04](04_perguntas_provaveis_logit.md)).
 

@@ -56,8 +56,8 @@
 | 25 | grupo 23 | — | sumário |
 | 26 | novo | Resultados | Resultados: +R$ 5 mil multiplicam a chance por 1,47 |
 | 27 | novo | Robustez | Robustez: ×1,47 se mantém com mais dados |
-| 28 | novo | Discussão | Conclusão: bolsa pesa na escolha, mas pouco (com quem ocupa a vaga) |
-| 29 | novo | Discussão | Limitações |
+| 28 | novo | Discussão | Limitações |
+| 29 | novo | Discussão | Conclusão: bolsa pesa na escolha, mas pouco (com quem ocupa a vaga) |
 | 30–32 | grupo 31–33 | — | Q&A; anexo 1; anexo 2: bolsa segue exatamente o IVS do município |
 
 **Ideias do deck v4.1 de um colega, desligadas** (`COM_IDEIAS_COLEGA = False` no gerador): o slide "Cada médico
@@ -272,6 +272,18 @@ Prevalece sobre o texto acima onde houver conflito.
   ×1,47; 0,385 ÷ 0,514 × 100 = 75 km) e a leitura. (c) Os anexos 3 e 4. A nossa versão (32 slides, sem as ideias do
   colega) continua em `deck_banca_final_grupo.pptx`.
 
+### 3.17 Rodada 9 (14/11)
+
+- **Cadeia causal (12–13):** cada bloco da etapa 3 ganha um exemplo curto: candidatos de 1ª opção por vaga; médico
+  homologado e em atividade; vínculos e horas do especialista no CNES; consultas, exames e cirurgias feitos; menos
+  espera e internações evitáveis.
+- **Passo a passo (22):** denominador explícito. Passo 4: "exp(U sem ε) da vaga ÷ a soma disso em todas as vagas
+  dele"; passo 6: "chance da vaga que paga mais ÷ chance da outra"; no exemplo, "Itamarandiba (paga mais) ÷ Araçuaí".
+  O exemplo real desce (passos mais altos, mais espaço).
+- **Ordem:** Limitações (28) antes da Conclusão (29): a conclusão fecha a apresentação e as limitações passam mais
+  rápido.
+- **Conclusão:** "Dá / Não dá para afirmar" alinhados em cima e embaixo com os cartões de "quem ocupa a vaga".
+
 ## 4. Histórico de revisões
 
 - **11/11:** deck sobre a versão do grupo (32 slides); pergunta nova; "valor da bolsa"; anexo com t = 0.
@@ -293,6 +305,8 @@ Prevalece sobre o texto acima onde houver conflito.
   identificação em grade; limitações em termos usuais; 32 slides.
 - **14/11, rodada 8:** conclusão com "Para a política" maior e termos-chave em negrito; versão conciliada separada
   (`--com-colega`), com o slide de resultado do colega e o slide A, B e C enxuto (§3.16).
+- **14/11, rodada 9:** exemplos nos blocos de saúde da cadeia; denominador explícito no passo a passo; Limitações
+  antes da Conclusão; conclusão alinhada (§3.17). Nenhum slide cortado (o autor preferiu manter).
 
 ## 5. Para o grupo decidir
 

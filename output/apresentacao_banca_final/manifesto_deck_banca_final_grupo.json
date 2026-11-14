@@ -210,16 +210,16 @@
     {
       "posicao": 28,
       "origem": "novo",
-      "slide_origem": "conclusao",
+      "slide_origem": "limitacoes",
       "secao": "Discussão",
-      "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
+      "titulo": "Limitações"
     },
     {
       "posicao": 29,
       "origem": "novo",
-      "slide_origem": "limitacoes",
+      "slide_origem": "conclusao",
       "secao": "Discussão",
-      "titulo": "Limitações"
+      "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
     },
     {
       "posicao": 30,
@@ -322,7 +322,7 @@
     "slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "2289c98bbb16f0a98cd1bd5f25c510bb03d492953294994bed8639e220907d26",
+    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "9df5a6b2be188ccbe2cb0dca19f0d37e8b50b8c7951ba63eb64b4ad2cc25cf02",
     "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }
