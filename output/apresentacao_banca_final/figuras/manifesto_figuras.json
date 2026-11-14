@@ -122,8 +122,74 @@
       }
     ]
   },
+  "coeficientes_vl1_seis": {
+    "arquivo": "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1_seis.png",
+    "linhas": [
+      {
+        "termo": "mesma_regiao_saude",
+        "multiplo": 1,
+        "rotulo": "Vaga na mesma região de saúde",
+        "coef": 1.103023378,
+        "x": 3.0132624975215254,
+        "x_inf": 2.3287270723263545,
+        "x_sup": 3.8990189062950433,
+        "inclui_1": false
+      },
+      {
+        "termo": "mesmo_municipio",
+        "multiplo": 1,
+        "rotulo": "Mesmo município (além da região)",
+        "coef": 0.5870628101,
+        "x": 1.798697532811621,
+        "x_inf": 1.368758810969574,
+        "x_sup": 2.3636836443455262,
+        "inclui_1": false
+      },
+      {
+        "termo": "bolsa_mil",
+        "multiplo": 5,
+        "rotulo": "+R$ 5 mil de bolsa",
+        "coef": 0.38540337995,
+        "x": 1.470207253973154,
+        "x_inf": 1.1455231849124543,
+        "x_sup": 1.8869189185098618,
+        "inclui_1": false
+      },
+      {
+        "termo": "log_populacao_2022",
+        "multiplo": 0.6931471805599453,
+        "rotulo": "Cidade com o dobro da população",
+        "coef": 0.09669957326119151,
+        "x": 1.1015293950222413,
+        "x_inf": 1.058063853350533,
+        "x_sup": 1.146780512613648,
+        "inclui_1": false
+      },
+      {
+        "termo": "capital",
+        "multiplo": 1,
+        "rotulo": "Vaga em capital",
+        "coef": -0.3131584037,
+        "x": 0.7311340890507855,
+        "x_inf": 0.5198763456561011,
+        "x_sup": 1.0282388507164975,
+        "inclui_1": true
+      },
+      {
+        "termo": "distancia_100km",
+        "multiplo": 1,
+        "rotulo": "+100 km de distância",
+        "coef": -0.5144819814,
+        "x": 0.597810191221237,
+        "x_inf": 0.5741828770343419,
+        "x_sup": 0.6224097565188443,
+        "inclui_1": false
+      }
+    ]
+  },
   "saidas": {
     "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1.png": "7d8c5035e97b3f410a76797893ea9097918d1e21931c5fab11a368864348226a",
-    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "095cf544fd5764bd6517baa7383bd9a478ff349c85c59804e6b73822efadb780"
+    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "095cf544fd5764bd6517baa7383bd9a478ff349c85c59804e6b73822efadb780",
+    "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1_seis.png": "5c8742a1921d9ac545b8ddbafc9d877516590560dd47fb2472d58066c0420a0c"
   }
 }

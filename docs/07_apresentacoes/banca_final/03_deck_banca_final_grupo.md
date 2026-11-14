@@ -257,6 +257,21 @@ Prevalece sobre o texto acima onde houver conflito.
   exploratório, confirmar exige dados novos; heterogeneidade entre ciclos → significativo só no ciclo 2, validade
   externa limitada; escolha sincera → premissa não testável.
 
+### 3.16 Rodada 8 (14/11): conclusão e versão conciliada
+
+- **28 (conclusão, nossa versão):** "Para a política" na largura toda, letra 17, em duas linhas; em "Dá para afirmar" e
+  "Não dá para afirmar", os termos-chave em negrito (bolsa maior é preferida; peso é moderado; metade… já estava no
+  município; mais médicos ao município; só da bolsa; todo ciclo).
+- **Versão conciliada** (`python scripts/apresentacao/gerar_deck_banca_final_grupo.py --com-colega`, saída
+  `deck_banca_final_grupo_conciliado.pptx` e `.pdf`, 35 slides): liga as ideias do deck do colega. (a) O slide das vagas
+  A, B e C fica enxuto: faixa "Não vemos o que o médico pensa, só a vaga que ele pôs em 1º lugar."; três cartões (lista
+  de vagas; prós e contras; a chance de cada vaga: 29%, 42%, 29%) e "Nossa pergunta: quanto a bolsa pesa?". (b) O slide
+  de resultado é o do colega: "Ficar perto de onde trabalha pesa mais que a bolsa", com a figura de seis fatores
+  (`figuras/coeficientes_vl1_seis.png`: mesma região ×3,01; mesmo município ×1,80; bolsa ×1,47; população em dobro
+  ×1,10; capital ×0,73, IC inclui 1; +100 km ×0,60; todos do VL-1), as três contas (5 × 0,077 = 0,385; exp(0,385) =
+  ×1,47; 0,385 ÷ 0,514 × 100 = 75 km) e a leitura. (c) Os anexos 3 e 4. A nossa versão (32 slides, sem as ideias do
+  colega) continua em `deck_banca_final_grupo.pptx`.
+
 ## 4. Histórico de revisões
 
 - **11/11:** deck sobre a versão do grupo (32 slides); pergunta nova; "valor da bolsa"; anexo com t = 0.
@@ -276,6 +291,8 @@ Prevalece sobre o texto acima onde houver conflito.
 - **14/11, rodada 7 (comentários do autor sobre a versão de 32 slides):** §3.15. As ideias do colega ficam desligadas
   (esta versão vai para ele conciliar); "exploratório" só em Limitações; plano original fora; U com erro no fim;
   identificação em grade; limitações em termos usuais; 32 slides.
+- **14/11, rodada 8:** conclusão com "Para a política" maior e termos-chave em negrito; versão conciliada separada
+  (`--com-colega`), com o slide de resultado do colega e o slide A, B e C enxuto (§3.16).
 
 ## 5. Para o grupo decidir
 

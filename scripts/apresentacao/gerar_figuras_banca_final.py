@@ -111,6 +111,56 @@ def figura_coeficientes() -> dict:
     return {"arquivo": str(saida.relative_to(ROOT)), "linhas": linhas}
 
 
+# Versão do slide de resultado do colega (14/11): seis fatores, do que mais aumenta ao que mais reduz a chance.
+# (termo, multiplicador, rótulo); log_populacao_2022 × ln 2 = população em dobro.
+COEFS_SEIS = (
+    ("mesma_regiao_saude", 1, "Vaga na mesma região de saúde"),
+    ("mesmo_municipio", 1, "Mesmo município (além da região)"),
+    ("bolsa_mil", 5, "+R$ 5 mil de bolsa"),
+    ("log_populacao_2022", math.log(2), "Cidade com o dobro da população"),
+    ("capital", 1, "Vaga em capital"),
+    ("distancia_100km", 1, "+100 km de distância"),
+)
+
+
+def figura_seis_fatores() -> dict:
+    d = pd.read_csv(VL)
+    c = d[(d.chave_modelo == "VL1_emp") & (d.tipo_linha == "coeficiente")].set_index("termo")
+    linhas = []
+    for termo, k, rot in COEFS_SEIS:
+        b, lo, hi = (float(c.loc[termo, x]) * k for x in ("estimativa", "ic95_inf", "ic95_sup"))
+        linhas.append({"termo": termo, "multiplo": k, "rotulo": rot, "coef": b, "x": math.exp(b),
+                       "x_inf": math.exp(lo), "x_sup": math.exp(hi), "inclui_1": lo <= 0 <= hi})
+    fig, ax = plt.subplots(figsize=(7.6, 4.2), dpi=200)
+    estilo(ax)
+    ax.tick_params(axis="y", labelsize=12.5)
+    ax.tick_params(axis="x", labelsize=10)
+    ys = list(range(len(linhas)))[::-1]
+    for y, l in zip(ys, linhas):
+        bolsa = l["termo"] == "bolsa_mil"
+        if bolsa:
+            ax.axhspan(y - 0.42, y + 0.42, color="#E6EEE7", zorder=0)
+        cor = CINZA if l["inclui_1"] else (VERDE_ESC if bolsa else VERDE)
+        ax.plot([l["x_inf"], l["x_sup"]], [y, y], color=cor, lw=4, solid_capstyle="round", zorder=2)
+        ax.plot(l["x"], y, "o", ms=11, color=cor, mec="white", mew=1.5, zorder=3)
+        rot = f"×{virgula(l['x'])}" + ("  (inclui 1)" if l["inclui_1"] else "")
+        ax.text(1.03, y, rot, transform=ax.get_yaxis_transform(), va="center", ha="left", fontsize=12.5,
+                fontweight="bold" if bolsa else "normal", color=TEXTO)
+    ax.set_yticks(ys, [l["rotulo"] for l in linhas])
+    for tl in ax.get_yticklabels():
+        if tl.get_text().startswith("+R$"):
+            tl.set_fontweight("bold")
+    ax.set_xlim(0.45, 4.4)
+    ax.set_ylim(-0.6, len(linhas) - 0.4)
+    ax.set_xticks([0.5, 1, 2, 4], ["×0,5", "×1", "×2", "×4"])
+    ax.minorticks_off()
+    fig.subplots_adjust(left=0.45, right=0.76, top=0.98, bottom=0.08)
+    saida = DIR / "coeficientes_vl1_seis.png"
+    fig.savefig(saida, facecolor="white")
+    plt.close(fig)
+    return {"arquivo": str(saida.relative_to(ROOT)), "linhas": linhas}
+
+
 def figura_robustez() -> dict:
     tabs = {"VL": pd.read_csv(VL), "VG": pd.read_csv(VG)}
     linhas = []
@@ -172,12 +222,12 @@ def figura_robustez() -> dict:
 def main() -> int:
     DIR.mkdir(parents=True, exist_ok=True)
     plt.rcParams["font.family"] = "DejaVu Sans"
-    coef, rob = figura_coeficientes(), figura_robustez()
+    coef, rob, seis = figura_coeficientes(), figura_robustez(), figura_seis_fatores()
     man = {"etapa": "figuras_banca_final", "natureza_dos_dados": "EMPIRICO",
            "script": str(Path(__file__).resolve().relative_to(ROOT)),
            "entradas": {str(p.relative_to(ROOT)): sha256(p) for p in (VL, VG)},
-           "coeficientes_vl1": coef, "robustez_vl1": rob,
-           "saidas": {f: sha256(ROOT / f) for f in (coef["arquivo"], rob["arquivo"])}}
+           "coeficientes_vl1": coef, "robustez_vl1": rob, "coeficientes_vl1_seis": seis,
+           "saidas": {f: sha256(ROOT / f) for f in (coef["arquivo"], rob["arquivo"], seis["arquivo"])}}
     (DIR / "manifesto_figuras.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"coef": [(l["rotulo"], round(l["x"], 3)) for l in coef["linhas"]],
                       "rob": [(l["rotulo"], round(l["rc"], 3)) for l in rob["linhas"]]}, ensure_ascii=False))

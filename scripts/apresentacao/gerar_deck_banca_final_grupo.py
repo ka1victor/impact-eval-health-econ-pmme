@@ -55,6 +55,7 @@ F_R1 = RD / "portao_r1_ivs_oficial.json"
 F_NB2 = ROOT / "output/apresentacao_banca2/numeros_banca2.json"  # ESC_*: descritiva da escolha
 F_EX = OUT / "exemplo_logit_real.json"
 FIG_COEF, FIG_ROB = OUT / "figuras/coeficientes_vl1.png", OUT / "figuras/robustez_vl1.png"
+FIG_SEIS = OUT / "figuras/coeficientes_vl1_seis.png"  # slide de resultado do colega (versão conciliada)
 DOC = "docs/07_apresentacoes/banca_final/03_deck_banca_final_grupo.md"
 
 NS = {"a": "http://schemas.openxmlformats.org/drawingml/2006/main",
@@ -71,8 +72,9 @@ PILL = {"reduz": ("F5B5B0", "7A1C17"), "eleva": ("B9E4B1", VERDE), "testado": (M
         "parte": ("F6DDB0", "6B4A0B"), "nao": ("F5B5B0", "7A1C17"), "obs": ("B9E4B1", VERDE),
         "naoobs": ("DDE3DE", "39413B"), "estima": ("FFD98A", "8A5A00")}
 
-# Ideias do deck v4.1 de um colega (slide das vagas A, B e C; anexos 3 e 4). Desligadas a pedido do autor (14/11): a
-# nossa versão vai para o colega conciliar com a dele; para juntar depois, basta ligar.
+# Ideias do deck de um colega (slide das vagas A, B e C; anexos 3 e 4; o slide de resultado). A nossa versão, sem
+# elas, foi para o colega conciliar (pedido do autor de 14/11); com --com-colega sai a versão conciliada, em
+# deck_banca_final_grupo_conciliado.pptx.
 COM_IDEIAS_COLEGA = False
 IDEIAS_COLEGA = {"intuicao", "formal", "alternativas"}
 
@@ -90,8 +92,7 @@ ORDEM = [
     ("N", "conclusao", "Discussão"), ("N", "limitacoes", "Discussão"),
     ("G", 31, None), ("G", 32, None), ("G", 33, None), ("N", "formal", None), ("N", "alternativas", None),
 ]
-if not COM_IDEIAS_COLEGA:
-    ORDEM = [x for x in ORDEM if not (x[0] == "N" and x[1] in IDEIAS_COLEGA)]
+
 FORA = {
     12: "rascunho em branco do grupo (só o título)",
     14: "hipótese em sobreposição: trocada pelo slide novo de hipótese (pedido de 11/11)",
@@ -978,6 +979,44 @@ def s_resultados(M, prs, n):
     return sl
 
 
+def s_resultados_colega(M, prs, n):
+    """Slide de resultado do deck do colega (14/11, rodada 8): seis fatores, as três contas e a leitura."""
+    sl = M.novo(prs, "Ficar perto de onde trabalha pesa mais que a bolsa")
+    subtitulo(sl, 0.25, 0.9, 7.7, "Quanto cada fator multiplica a chance da vaga",
+              "Acima de 1: a vaga atrai mais. Abaixo: atrai menos. Barra = intervalo de 95%.")
+    sl.shapes.add_picture(str(FIG_SEIS), Inches(0.15), Inches(1.6), width=Inches(7.75))
+    subtitulo(sl, 8.2, 0.9, 4.9, f"O {v(n['b'], 3)} do modelo vira ×{v(n['rc'])} e {round(n['km'])} km",
+              "três contas, da estimativa à leitura")
+    contas = (("Por R$ 5 mil: ", f"5 × {v(n['b'], 3)} = {v(n['b5'], 3)}",
+               "o modelo dá o peso por R$ 1 mil; a bolsa sobe de 5 em 5 mil"),
+              ("Em chance: ", f"exp({v(n['b5'], 3)}) = ×{v(n['rc'])}",
+               f"a vaga com +R$ 5 mil tem {round(100 * (n['rc'] - 1))}% mais chance (IC {v(n['rc_inf'])} a "
+               f"{v(n['rc_sup'])})"),
+              ("Em distância: ", f"{v(n['b5'], 3)} ÷ {v(-n['dist'], 3)} × 100 = {round(n['km'])} km",
+               f"a distância pesa {v(n['dist'], 3)} por 100 km"))
+    for k, (rot, conta, sub) in enumerate(contas):
+        y = 1.6 + k * 1.37
+        caixa(sl, 8.2, y, 4.88, 1.22, [], fill=CLARO, nome=f"Conta {k + 1}")
+        caixa(sl, 8.4, y + 0.36, 0.5, 0.5, [[(str(k + 1), 15, True, BRANCO)]], fill=VERDE, forma=MSO_SHAPE.OVAL,
+              align=PP_ALIGN.CENTER, margem=0)
+        texto(sl, 9.05, y + 0.12, 3.95, 1.0, [[(rot, 12.5, True, VERDE), (conta, 13, True, TEXTO)],
+                                             [(sub, 11, False, CINZA)]], esp=3)
+    x_reg = v(n["x_reg"])
+    caixa(sl, 0.25, 5.85, 12.83, 0.8,
+          [[("Leitura: ", 15, True, "B9E4B1"),
+            (f"a bolsa conta (×{v(n['rc'])}), mas estar na mesma região de saúde de onde já trabalha pesa mais "
+             f"(×{x_reg}).", 15, False, BRANCO)]],
+          fill=VERDE, nome="Leitura", margem=0.35)
+    fontes(sl, FONTE_PUBLICA)
+    notas(sl, (f"Cada × é e^coeficiente do modelo principal (VL-1, ciclos 1–3). Bolsa: β₁ = {v(n['b'], 3)} por R$ 1 "
+               f"mil; 5β₁ = {v(n['b5'], 3)}; e^{v(n['b5'], 3)} = {v(n['rc'])}; p de Holm {v(n['p_holm'], 3)}; score "
+               f"bootstrap p = {v(n['p_score'], 3)}. Km equivalentes: 5β₁ ÷ |β₂| × 100 = {round(n['km'])} km. "
+               "Mesma região de saúde e mesmo município são controles (relação com o local de trabalho anterior), mas "
+               "dão a escala: estar perto pesa mais que a bolsa extra. População em dobro: e^(β·ln 2). Capital: o "
+               f"intervalo inclui 1. Ciclo 2 sozinho: ×{v(n['rc_c2'])} (slide de robustez)."))
+    return sl
+
+
 def s_robustez(M, prs, n):
     sl = M.novo(prs, "Robustez: ×1,47 se mantém com mais dados".replace("1,47", v(n["rc"])))
     sl.shapes.add_picture(str(FIG_ROB), Inches(0.15), Inches(0.88), width=Inches(8.25))
@@ -1021,25 +1060,27 @@ def s_conclusao(M, prs, n):
              f"IC 95%: +{v(n['horas_lo'], 1)} a +{v(n['horas_hi'], 1)}"))
     texto(sl, 0.25, 2.35, 4.2, 0.3, [[("QUEM OCUPA A VAGA (DESCRITIVO)", 10.5, True, VERDE2)]])
     for k, (num, rot, ic) in enumerate(kpis):
-        caixa(sl, 0.25, 2.7 + k * 1.55, 4.2, 1.42, [[(num, 28, True, VERDE)], [(rot, 12, True, TEXTO)],
-                                                    [(ic, 10, False, CINZA)]],
+        caixa(sl, 0.25, 2.7 + k * 1.42, 4.2, 1.3, [[(num, 28, True, VERDE)], [(rot, 12, True, TEXTO)],
+                                                   [(ic, 10, False, CINZA)]],
               fill=CLARO, line=BORDA, nome=f"KPI {k}", margem=0.22)
-    blocos = (("✓  Dá para afirmar", (f"A bolsa maior é preferida (×{v(n['rc'])})",
-                                      f"O peso é moderado: R$ 5 mil ≈ {round(n['km'])} km",
-                                      "Metade de quem ocupa a vaga já estava no município")),
-              ("✗  Não dá para afirmar", ("Que leva mais médicos ao município",
-                                          "Que o efeito é só da bolsa",
-                                          "Que vale em todo ciclo")))
+    # rodada 8 (14/11): termos-chave em negrito
+    blocos = (("✓  Dá para afirmar", (f"A **bolsa maior é preferida** (×{v(n['rc'])})",
+                                      f"O **peso é moderado**: R$ 5 mil ≈ {round(n['km'])} km",
+                                      "**Metade** de quem ocupa a vaga **já estava no município**")),
+              ("✗  Não dá para afirmar", ("Que leva **mais médicos ao município**",
+                                          "Que o efeito é **só da bolsa**",
+                                          "Que vale em **todo ciclo**")))
     for k, (tit, itens) in enumerate(blocos):
         x = 4.6 + k * 4.3
-        caixa(sl, x, 2.35, 4.18, 2.97, [[(tit, 16, True, VERDE if k == 0 else "7A1C17")]] +
-              [[("•  " + it, 13.5, False, TEXTO)] for it in itens],
+        caixa(sl, x, 2.35, 4.18, 3.07, [[(tit, 16, True, VERDE if k == 0 else "7A1C17")]] +
+              [[("•  ", 13.5, False, TEXTO)] + negrito(it, 13.5, TEXTO) for it in itens],
               fill=CLARO if k == 0 else BRANCO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome=tit, margem=0.25, esp=8)
-    caixa(sl, 4.6, 5.45, 8.48, 1.12,
-          [[("Para a política: ", 14.5, True, "B9E4B1"),
-            ("pagar mais muda a escolha entre vagas próximas.", 14.5, False, BRANCO)],
-           [("Não mostramos que atraia médicos de longe.", 14.5, False, BRANCO)]],
-          fill=VERDE, nome="Política", margem=0.25)
+    # rodada 8: "Para a política" maior, na largura toda
+    caixa(sl, 0.25, 5.62, 12.83, 1.1,
+          [[("Para a política: ", 17, True, "B9E4B1"),
+            ("pagar mais muda a escolha entre vagas próximas.", 17, False, BRANCO)],
+           [("Não mostramos que atraia médicos de longe.", 17, False, BRANCO)]],
+          fill=VERDE, nome="Política", margem=0.4, esp=2)
     fontes(sl, FONTE_PUBLICA)
     notas(sl, ("Conclusão e discussão num slide (pedido de 14/11): a resposta, quem ocupa a vaga, dá / não dá para "
                "afirmar e a leitura para a política. Quem ocupa a vaga: números do P4 (trajetória no CNES), "
@@ -1106,75 +1147,63 @@ def abc(n) -> list[dict]:
 
 
 def s_intuicao(M, prs, n):
+    """Versão enxuta (pedido de 14/11, rodada 8): a estrutura do slide do colega, com menos texto."""
     vs = abc(n)
     sl = M.novo(prs, "Cada médico escolhe a vaga que mais vale a pena")
-    caixa(sl, 0.25, 0.88, 12.83, 0.55,
-          [[("Não sabemos o que o médico pensa. Vemos só a vaga que ele pôs em 1º lugar.", 15, True, VERDE)]],
-          fill=CLARO, nome="Faixa", margem=0.25)
-    topo, alto, w, gap = 1.6, 3.12, 4.0, 0.415
-    titulos = ("Vê a lista de vagas do seu curso", "Pesa o que conta a favor e contra", "Escolhe a que mais vale a pena")
+    caixa(sl, 0.25, 0.88, 12.83, 0.62,
+          [[("Não vemos o que o médico pensa, só a vaga que ele pôs em 1º lugar.", 17, True, VERDE)]],
+          fill=CLARO, nome="Faixa", margem=0.3)
+    topo, alto, w, gap = 1.75, 3.2, 4.0, 0.415
+    titulos = ("Cada médico tem uma lista de vagas", "Cada vaga tem prós e contras", "O modelo dá a chance de cada vaga")
     for k, tit in enumerate(titulos):
         x = 0.25 + k * (w + gap)
         caixa(sl, x, topo, w, alto, [], fill=CLARO, line=BORDA, nome=f"Etapa {k + 1}")
-        caixa(sl, x + 0.18, topo + 0.15, 0.46, 0.46, [[(str(k + 1), 15, True, BRANCO)]], fill=VERDE,
+        caixa(sl, x + 0.2, topo + 0.2, 0.5, 0.5, [[(str(k + 1), 16, True, BRANCO)]], fill=VERDE,
               forma=MSO_SHAPE.OVAL, align=PP_ALIGN.CENTER, margem=0)
-        texto(sl, x + 0.75, topo + 0.12, w - 0.9, 0.52, [[(tit, 14.5, True, TEXTO)]])
+        texto(sl, x + 0.85, topo + 0.17, w - 1.0, 0.56, [[(tit, 15.5, True, TEXTO)]])
         if k < 2:
             seta(sl, x + w + 0.06, topo + alto / 2, x + w + gap - 0.06, topo + alto / 2, larg=2.5)
-    # 1: as três vagas
-    x = 0.25
+    # 1: as três vagas, uma linha cada
     for j, vg in enumerate(vs):
-        caixa(sl, x + 0.18, topo + 0.8 + j * 0.74, w - 0.36, 0.64,
-              [[(f"Vaga {vg['nome']}   ", 14, True, TEXTO), (f"R$ {vg['bolsa']} mil", 14, True, ACENTO_ESCURO)],
-               [(f"{vg['km']} km de onde trabalha", 11.5, False, CINZA)]],
-              fill=BRANCO, line=BORDA, nome=f"Vaga {vg['nome']}", margem=0.18)
-    # 2: a favor, contra, o que não vemos
+        caixa(sl, 0.45, topo + 0.95 + j * 0.72, w - 0.4, 0.6,
+              [[(f"Vaga {vg['nome']}    ", 15, True, TEXTO), (f"R$ {vg['bolsa']} mil", 15, True, ACENTO_ESCURO),
+                (f"   {vg['km']} km", 14, False, CINZA)]],
+              fill=BRANCO, line=BORDA, nome=f"Vaga {vg['nome']}", margem=0.2)
+    # 2: a favor e contra
     x = 0.25 + (w + gap)
-    pesos = (("A favor: ", "bolsa maior, perto de onde já trabalha", "DCEFD9", VERDE),
-             ("Contra: ", "longe, município sem estrutura", "F8E0DD", "7A1C17"),
-             ("O que não vemos: ", "família, amigos, gosto pelo lugar", BRANCO, CINZA))
-    for j, (rot, t, fill, cor) in enumerate(pesos):
-        caixa(sl, x + 0.18, topo + 0.8 + j * 0.74, w - 0.36, 0.64, [[(rot, 12.5, True, cor), (t, 12.5, False, TEXTO)]],
-              fill=fill, line=BORDA if fill == BRANCO else None, nome=f"Peso {j}", margem=0.18)
-    # 3: chance de cada vaga, calculada com os pesos estimados
+    for j, (rot, t, fill, cor) in enumerate((("A favor: ", "bolsa maior, perto", "DCEFD9", VERDE),
+                                              ("Contra: ", "longe, sem estrutura", "F8E0DD", "7A1C17"),
+                                              ("Não vemos: ", "família, gosto pelo lugar", BRANCO, CINZA))):
+        caixa(sl, x + 0.2, topo + 0.95 + j * 0.72, w - 0.4, 0.6, [[(rot, 14, True, cor), (t, 14, False, TEXTO)]],
+              fill=fill, line=BORDA if fill == BRANCO else None, nome=f"Peso {j}", margem=0.2)
+    # 3: chances, calculadas com os pesos estimados
     x = 0.25 + 2 * (w + gap)
-    texto(sl, x + 0.2, topo + 0.72, w - 0.4, 0.3, [[("Chance de cada vaga ser a 1ª opção", 11.5, True, VERDE2)]])
     pmax = max(vg["P"] for vg in vs)
     for j, vg in enumerate(vs):
-        y = topo + 1.08 + j * 0.42
-        texto(sl, x + 0.2, y, 0.3, 0.34, [[(vg["nome"], 13, True, TEXTO)]])
-        larg = 2.35 * vg["P"] / pmax
-        caixa(sl, x + 0.5, y + 0.05, larg, 0.26, [], fill=VERDE if vg["nome"] == "B" else APAGADO,
+        y = topo + 1.0 + j * 0.55
+        texto(sl, x + 0.25, y, 0.35, 0.4, [[(vg["nome"], 15, True, TEXTO)]])
+        larg = 2.3 * vg["P"] / pmax
+        caixa(sl, x + 0.6, y + 0.06, larg, 0.3, [], fill=VERDE if vg["nome"] == "B" else APAGADO,
               forma=MSO_SHAPE.RECTANGLE, nome=f"Barra {vg['nome']}")
-        texto(sl, x + 0.58 + larg, y, 0.8, 0.34, [[(f"{v(100 * vg['P'], 0)}%", 13, True,
-                                                    VERDE if vg["nome"] == "B" else CINZA)]])
-    texto(sl, x + 0.2, topo + 2.38, w - 0.4, 0.7,
-          [[("B ganha de A pela bolsa. ", 11.5, True, TEXTO),
-            (f"C paga como B, mas fica {vs[2]['km'] - 50} km mais longe: a distância anula a bolsa extra.", 11.5,
-             False, TEXTO)]], anchor=MSO_ANCHOR.TOP)
-    # embaixo: analogia e a pergunta
-    caixa(sl, 0.25, 4.9, 6.3, 1.75,
-          [[("PARECIDO COM ESCOLHER UM APARTAMENTO", 11, True, VERDE2)],
-           [("Pesamos aluguel, distância do trabalho e bairro. Ninguém sabe tudo o que cada pessoa pensa, mas, olhando "
-             "muitas escolhas, dá para ver quanto cada fator pesa.", 14, False, TEXTO)]],
-          fill=BRANCO, line=BORDA, nome="Apartamento", margem=0.3, esp=6)
-    caixa(sl, 6.78, 4.9, 6.3, 1.75,
-          [[("O QUE QUEREMOS DESCOBRIR", 11, True, "B9E4B1")],
-           [("Quanto a bolsa pesa nessa escolha. ", 14, True, BRANCO),
-            ("Se ela não importasse, vagas iguais com bolsas diferentes seriam escolhidas na mesma proporção.", 14,
+        texto(sl, x + 0.68 + larg, y, 0.8, 0.4, [[(f"{v(100 * vg['P'], 0)}%", 15, True,
+                                                   VERDE if vg["nome"] == "B" else CINZA)]])
+    texto(sl, x + 0.25, topo + 2.7, w - 0.45, 0.4, [[("B paga mais e fica perto.", 14, True, TEXTO)]])
+    caixa(sl, 0.25, 5.2, 12.83, 1.35,
+          [[("Nossa pergunta: quanto a bolsa pesa? ", 17, True, BRANCO),
+            ("Se vagas iguais, com bolsas diferentes, fossem escolhidas meio a meio, a bolsa não pesaria nada.", 16,
              False, BRANCO)]],
-          fill=VERDE, nome="Pergunta do método", margem=0.3, esp=6)
+          fill=VERDE, nome="Pergunta do método", margem=0.4)
     fontes(sl, "Fontes: McFadden (1974); Train (2009), Discrete Choice Methods with Simulation. Vagas A, B e C "
                "ilustrativas; chances calculadas com os pesos estimados do modelo principal. Elaboração própria.")
     notas(sl, ("Fala (≈ 1 min). Não temos como perguntar a cada médico o que ele pensa; temos a lista de vagas que ele "
-               "podia escolher e a vaga que pôs em 1º lugar. A ideia do modelo: ele olha a lista, pesa o que conta a "
-               "favor (bolsa maior, ficar perto de onde já trabalha) e contra (longe, município sem estrutura) e "
-               "escolhe a que mais vale a pena. Há coisas que não vemos, como família e gosto pelo lugar; por isso o "
-               "modelo não diz qual vaga cada médico escolhe, e sim a chance de cada uma. No exemplo, B ganha de A "
-               f"porque paga R$ 5 mil a mais (chance ×{v(n['rc'])}); C paga como B, mas fica {vs[2]['km'] - 50} km "
-               f"mais longe, e isso anula a bolsa extra: A e C ficam com {v(100 * vs[0]['P'], 1)}% e B com "
+               "podia escolher e a vaga que pôs em 1º lugar. Cada vaga tem prós (bolsa maior, ficar perto de onde já "
+               "trabalha) e contras (longe, município sem estrutura), e coisas que não vemos, como família e gosto pelo "
+               "lugar; por isso o modelo dá a chance de cada vaga, não uma certeza. No exemplo, B ganha de A porque "
+               f"paga R$ 5 mil a mais (chance ×{v(n['rc'])}); C paga como B, mas fica {vs[2]['km'] - 50} km mais "
+               f"longe, e isso anula a bolsa extra: A e C ficam com {v(100 * vs[0]['P'], 1)}% e B com "
                f"{v(100 * vs[1]['P'], 1)}%. As vagas são inventadas; os pesos são os estimados (β₁ = {v(n['b'], 3)} por "
-               f"R$ 1 mil, β₂ = {v(n['dist'], 3)} por 100 km). Próximo slide: a forma do modelo."))
+               f"R$ 1 mil, β₂ = {v(n['dist'], 3)} por 100 km). A pergunta: se a bolsa não pesasse, vagas iguais com "
+               "bolsas diferentes seriam escolhidas meio a meio. Próximo slide: a forma do modelo."))
     return sl
 
 
@@ -1306,11 +1335,11 @@ def s_alternativas(M, prs, n):
 
 NOVOS = {"cadeia1": lambda M, p, n: s_cadeia(M, p, n, 2), "cadeia2": lambda M, p, n: s_cadeia(M, p, n, 3),
          "hipotese": s_hipotese, "linhas": s_linhas, "intuicao": s_intuicao, "modelo": s_modelo, "passos": s_passos,
-         "estimacao": s_estimacao, "identificacao": s_identificacao, "resultados": s_resultados,
+         "estimacao": s_estimacao, "identificacao": s_identificacao,
+         "resultados": lambda M, p, n: (s_resultados_colega if COM_IDEIAS_COLEGA else s_resultados)(M, p, n),
          "robustez": s_robustez, "conclusao": s_conclusao, "limitacoes": s_limitacoes, "formal": s_formal,
          "alternativas": s_alternativas}
-if not COM_IDEIAS_COLEGA:
-    NOVOS = {k: f for k, f in NOVOS.items() if k not in IDEIAS_COLEGA}
+
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -1474,14 +1503,15 @@ def construir() -> dict:
     feitas = corrigir(prs) + corrigir_anexo(prs) + tirar_anotacoes(prs) + refazer_descritiva(prs, n)
     grupo = list(prs.slides)
     M = Modelo(prs)
-    novos = {nome: f(M, prs, n) for nome, f in NOVOS.items()}
-    usados = {k for t, k, _ in ORDEM if t == "G"}
+    ordem = [x for x in ORDEM if COM_IDEIAS_COLEGA or not (x[0] == "N" and x[1] in IDEIAS_COLEGA)]
+    novos = {nome: f(M, prs, n) for nome, f in NOVOS.items() if COM_IDEIAS_COLEGA or nome not in IDEIAS_COLEGA}
+    usados = {k for t, k, _ in ordem if t == "G"}
     if usados | set(FORA) != set(range(1, N_ENT + 1)) or usados & set(FORA):
         raise SystemExit("ERRO: cada slide do grupo tem de estar na ORDEM ou em FORA")
     lista = prs.slides._sldIdLst
     ids = {id(s): el for s, el in zip(prs.slides, list(lista))}
     sequencia = []
-    for t, k, secao in ORDEM:
+    for t, k, secao in ordem:
         s = grupo[k - 1] if t == "G" else novos[k]
         sequencia.append((s, ids[id(s)], t, k, secao))
     for el in list(lista):
@@ -1506,7 +1536,7 @@ def construir() -> dict:
         manifesto.append({"posicao": pos, "origem": "grupo 14/11" if t == "G" else "novo", "slide_origem": k,
                           "secao": secao, "titulo": " ".join(titulo.split())})
     OUT.mkdir(parents=True, exist_ok=True)
-    pptx = OUT / f"{ARQ}.pptx"
+    pptx = OUT / f"{arquivo()}.pptx"
     prs.save(str(pptx))
     return {"n": n, "feitas": feitas, "manifesto": manifesto, "pptx": pptx}
 
@@ -1532,11 +1562,19 @@ def converter_pdf(pptx: Path, pdf: Path) -> bool:
     return True
 
 
+def arquivo() -> str:
+    """A nossa versão (a que foi para o colega) e a conciliada, com as ideias dele, saem em arquivos separados."""
+    return ARQ + ("_conciliado" if COM_IDEIAS_COLEGA else "")
+
+
 def main(argv=None) -> int:
+    global COM_IDEIAS_COLEGA
+    COM_IDEIAS_COLEGA = "--com-colega" in (sys.argv[1:] if argv is None else argv)
     res = construir()
-    pdf = OUT / f"{ARQ}.pdf"
+    pdf = OUT / f"{arquivo()}.pdf"
     ok_pdf = converter_pdf(res["pptx"], pdf)
-    entradas = [ENT, F_VL, F_VLR, F_VG, F_P1R, F_P1E, F_S57, F_R1, F_NB2, F_EX, FIG_COEF, FIG_ROB]
+    entradas = [ENT, F_VL, F_VLR, F_VG, F_P1R, F_P1E, F_S57, F_R1, F_NB2, F_EX, FIG_COEF, FIG_ROB] + (
+        [FIG_SEIS] if COM_IDEIAS_COLEGA else [])
     man = {"etapa": "deck_banca_final_grupo", "natureza_dos_dados": "EMPIRICO",
            "script": str(Path(__file__).resolve().relative_to(ROOT)), "doc_conteudo": DOC,
            "entradas": {str(p.relative_to(ROOT)): sha256(p) for p in entradas},
@@ -1544,7 +1582,7 @@ def main(argv=None) -> int:
            "correcoes_e_retiradas": res["feitas"],
            "saidas": {str(res["pptx"].relative_to(ROOT)): sha256(res["pptx"]),
                       **({str(pdf.relative_to(ROOT)): "gerado (PDF não é determinístico)"} if ok_pdf else {})}}
-    (OUT / f"manifesto_{ARQ}.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (OUT / f"manifesto_{arquivo()}.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"{len(res['manifesto'])} slides; PDF {'ok' if ok_pdf else 'FALHOU'}")
     return 0 if ok_pdf else 1
 
