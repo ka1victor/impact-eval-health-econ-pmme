@@ -13,6 +13,14 @@ O que muda (só conteúdo dos slides que a rodada 13 pediu; o resto do deck fica
   mudanças da rodada 13. Ficam o título, o rodapé de seções, o número da página e os retângulos de foco do Bernardo
   (postos de novo por cima).
 
+Correções pedidas pelo autor em 15/11 (a hipótese fica como o Bernardo escreveu):
+- 20: títulos dos gráficos com números certos ("Metade escolhe a até 51 km…"; "79% escolhem…na UF onde trabalham");
+  "não se desloca" era falso (só 36% ficam no próprio município) e "origem" é termo que a banca pediu para trocar;
+- número no canto: um por slide lógico (os passos de foco repetem o número), em sequência, também nos sumários e
+  anexos; o anexo sem número ganha um;
+- 11–13 (cadeia): sai o rótulo "DA VAGA À SAÚDE" repetido; fica "fora do que estimamos";
+- 40 (anexo 7): sem "(próximo slide)", que apontava para nada, e só fontes públicas.
+
 Números: os mesmos do gerador (lidos de `output/`). Saídas em `output/apresentacao_banca_final/`:
 `deck_banca_final_bernardo_r13.pptx` (e `.pdf`) e `manifesto_deck_banca_final_bernardo_r13.json`.
 
@@ -21,6 +29,7 @@ Uso:
 """
 from __future__ import annotations
 
+import copy
 import hashlib
 import importlib.util
 import json
@@ -67,6 +76,8 @@ REDESENHO = {
     30: ("Limitações", G.s_limitacoes),
 }
 DESCRITIVA = 20
+# passos de foco do Bernardo: o mesmo slide lógico, um número só
+GRUPOS_FOCO = ((4, 5, 6), (11, 12, 13), (15, 16), (23, 24), (31, 32))
 
 
 def sha256(p: Path) -> str:
@@ -145,6 +156,91 @@ def refazer_descritiva(slide, n) -> None:
                 anchor=MSO_ANCHOR.TOP)
 
 
+def trocar_texto(sh, novo: str) -> None:
+    """Põe `novo` no 1º run do 1º parágrafo, mantendo a formatação dele."""
+    tf = sh.text_frame
+    for par in tf.paragraphs[1:]:
+        par._p.getparent().remove(par._p)
+    runs = tf.paragraphs[0].runs
+    runs[0].text = novo
+    for r in runs[1:]:
+        r._r.getparent().remove(r._r)
+
+
+def titulos_descritiva(slide, n) -> None:
+    sh = {x.name: x for x in slide.shapes}
+    e = n["esc"]
+    trocar_texto(sh["Text 20"], f"I. Metade escolhe a até {e['p50']} km de onde trabalha")
+    trocar_texto(sh["Text 18"], f"II. {e['uf']}% escolhem a 1ª opção na UF onde trabalham")
+
+
+def numero_da_pagina(slide):
+    for sh in slide.shapes:
+        if sh.has_text_frame and sh.text_frame.text.strip().isdigit() and sh.top is not None and sh.top > Inches(6.8):
+            return sh
+    return None
+
+
+def renumerar(prs) -> list[str]:
+    """Número lógico: os passos de foco repetem o número; capa sem número."""
+    foco = {k: g[0] for g in GRUPOS_FOCO for k in g}
+    feitas, n_log, modelo = [], 0, None
+    for i, s in enumerate(prs.slides, 1):
+        if foco.get(i, i) == i:
+            n_log += 1
+        if i == 1:
+            continue
+        sh = numero_da_pagina(s)
+        if sh is None and modelo is not None:
+            el = copy.deepcopy(modelo._element)
+            s.shapes._spTree.append(el)
+            sh = numero_da_pagina(s)
+            feitas.append(f"{i}: número da página criado")
+        if sh is None:
+            raise SystemExit(f"ERRO: slide {i} sem número da página")
+        modelo = sh
+        a = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
+        for fld in list(sh._element.iter(a + "fld")):  # campo de número automático: vira texto fixo
+            r = etree.Element(a + "r")
+            for filho in fld:
+                if filho.tag in (a + "rPr", a + "t"):
+                    r.append(copy.deepcopy(filho))
+            fld.addprevious(r)
+            fld.getparent().remove(fld)
+        for t in sh._element.iter("{http://schemas.openxmlformats.org/drawingml/2006/main}t"):
+            if t.text and t.text.strip().isdigit():
+                if t.text.strip() != str(n_log):
+                    feitas.append(f"{i}: número {t.text.strip()} → {n_log}")
+                t.text = str(n_log)
+    return feitas
+
+
+def cadeia_sem_rotulo_repetido(slide) -> bool:
+    for sh in slide.shapes:
+        if sh.has_text_frame and sh.text_frame.text.startswith("DA VAGA À SAÚDE\nfora do que estimamos"):
+            ps = sh.text_frame.paragraphs
+            ps[0]._p.getparent().remove(ps[0]._p)
+            sh.top = Inches(6.3)
+            return True
+    return False
+
+
+def anexo7(slide) -> int:
+    k = 0
+    for sh in slide.shapes:
+        if not sh.has_text_frame:
+            continue
+        for par in sh.text_frame.paragraphs:
+            for r in par.runs:
+                if " (próximo slide)." in r.text:
+                    r.text = r.text.replace(" (próximo slide).", ".")
+                    k += 1
+                if "; VL_estimativas.csv (VL-1)" in r.text:
+                    r.text = r.text.replace("; VL_estimativas.csv (VL-1)", "")
+                    k += 1
+    return k
+
+
 def main() -> int:
     if sha256(ENT) != SHA_ENT:
         raise SystemExit("ERRO: o deck do Bernardo mudou (hash diferente)")
@@ -157,7 +253,8 @@ def main() -> int:
     if not titulo(s).startswith("Candidatos escolhem perto"):
         raise SystemExit(f"ERRO: slide {DESCRITIVA} não é a descritiva: {titulo(s)!r}")
     refazer_descritiva(s, n)
-    feitas.append(f"{DESCRITIVA}: descritiva com a explicação embaixo dos gráficos, sem título")
+    titulos_descritiva(s, n)
+    feitas.append(f"{DESCRITIVA}: descritiva com a explicação embaixo dos gráficos, sem título; títulos com números")
     for num, (inicio, funcao) in REDESENHO.items():
         s = prs.slides[num - 1]
         t = titulo(s)
@@ -166,6 +263,14 @@ def main() -> int:
         funcao(Reuso(s), prs, n)
         k = focos_por_cima(s)
         feitas.append(f"{num}: {t} (miolo redesenhado; {k} retângulo(s) de foco mantido(s))")
+    for i in (11, 12, 13):
+        if not cadeia_sem_rotulo_repetido(prs.slides[i - 1]):
+            raise SystemExit(f"ERRO: slide {i}: rótulo repetido da cadeia não encontrado")
+    feitas.append("11–13: rótulo 'DA VAGA À SAÚDE' repetido retirado")
+    if not titulo(prs.slides[39]).startswith("Anexo 7") or anexo7(prs.slides[39]) != 2:
+        raise SystemExit("ERRO: anexo 7: esperava as duas trocas")
+    feitas.append("40: sem '(próximo slide)' e só fontes públicas")
+    feitas += renumerar(prs)
     OUT.mkdir(parents=True, exist_ok=True)
     pptx = OUT / f"{ARQ}.pptx"
     prs.save(str(pptx))

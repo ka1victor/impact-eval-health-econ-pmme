@@ -2,7 +2,7 @@
 
 > **Para quê:** o que falar em cada slide do deck do Bernardo com a rodada 13
 > (`output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx`, 40 slides). Os números são a posição do
-> slide no arquivo; o número impresso no canto do slide é outro (ver o fim). Slides marcados **(clique)** são passos de
+> slide no arquivo; o número impresso no canto conta cada slide uma vez (ver o fim). Slides marcados **(clique)** são passos de
 > foco: o mesmo slide com parte apagada, e o clique seguinte mostra o resto. Conteúdo dos slides no
 > [doc 03](03_deck_banca_final_grupo.md); perguntas prováveis no [doc 04](04_perguntas_provaveis_logit.md).<br>
 > **Em Word:** `output/apresentacao_banca_final/roteiro_fala_banca_final.docx`, gerado deste arquivo por
@@ -54,8 +54,9 @@
 **14. Sumário** (5 s): passar.
 
 **15–16. Maior remuneração, maior chance de ser escolhida** (40 s, os dois juntos)
-- (15, clique) Hipótese: uma bolsa maior aumenta a chance de uma vaga ser escolhida como 1ª opção. Dizer junto: entre
-  vagas do mesmo curso, na mesma UF e iguais no resto (é isso que o modelo compara).
+- (15, clique) Hipótese, como está no slide: um aumento na remuneração da bolsa eleva a probabilidade de uma vaga
+  ser escolhida como 1ª opção. O detalhe (vagas do mesmo curso, na mesma UF, iguais no resto) vem no exemplo e no
+  modelo.
 - (16) Exemplo real (MG, ciclo 2): Araçuaí e Itamarandiba têm IVS e distância quase iguais, mas a segunda paga R$ 5
   mil a mais. A hipótese diz: chance de Itamarandiba > chance de Araçuaí. Medimos a escolha de quem se inscreveu, não
   a chegada de médicos ao município.
@@ -75,10 +76,10 @@
 - 5.417 candidatos × ≈ 107 vagas = 578.998 linhas.
 
 **20. Candidatos escolhem perto de onde trabalham** (50 s)
-- Metade escolhe a até 51 km de onde trabalhava; 79% ficam na mesma UF; 36% no próprio município.
+- Os dois títulos dizem o principal: metade escolhe a até 51 km de onde trabalha; 79% escolhem a 1ª opção na UF
+  onde trabalham. Só 36% ficam no próprio município.
 - Embaixo, como montamos: 5.425 candidatos; distância do município onde trabalhavam até o da vaga posta em 1º.
 - É descritivo: mostra onde escolhem, não por quê. Por isso o modelo compara vagas da mesma UF.
-- Cuidado na fala: não dizer que a maior parte "não se desloca"; só 36% ficam no próprio município.
 
 ## Metodologia e identificação (≈ 4 min)
 
@@ -169,6 +170,6 @@
 
 ## Número impresso no canto do slide
 
-O deck do Bernardo imprime no canto um número que não é a posição no arquivo: os passos de foco repetem o número
-(4–6 mostram 4; 11–13, 9; 15–16, 11; 23–24, 18; 31–32, 25), e os sumários mostram a própria posição (8, 10, 14, 17,
-21, 27). Por isso a sequência no canto pula (…5, 8, 7, 10, 9…). Este roteiro usa a posição no arquivo.
+O número no canto conta cada slide uma vez: os passos de foco repetem o número (4–6 mostram 4; 11–13, 9; 15–16, 11;
+23–24, 18; 31–32, 25), e a sequência vai de 2 (sumário) a 33 (anexo 7), sem pular. Este roteiro usa a posição no
+arquivo (1 a 40).

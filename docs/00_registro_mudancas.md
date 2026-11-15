@@ -19,7 +19,7 @@ ela, mantendo formatação e estrutura.
 | Arquivo | O que é |
 |---|---|
 | `07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1511_bernardo.pptx` | cópia sem alteração do deck do Bernardo de 15/11/2026 (SHA-256 `9bb32765…7f8fb4cb`); entrada do script abaixo |
-| `output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx` (e `.pdf`, manifesto) | o deck do Bernardo com a rodada 13 (slides 20, 22–25, 28–30), gerado por `scripts/apresentacao/aplicar_rodada13_deck_bernardo.py` |
+| `output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx` (e `.pdf`, manifesto) | o deck do Bernardo com a rodada 13 (slides 20, 22–25, 28–30) e as correções de 15/11 (títulos da descritiva, número no canto em sequência, rótulo repetido da cadeia, anexo 7; a hipótese fica como ele escreveu), gerado por `scripts/apresentacao/aplicar_rodada13_deck_bernardo.py` |
 
 ---
 

@@ -13,14 +13,31 @@
     "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "eba6be9114be1a41a91c5180f8d5d06101fd2a0e2771174b1324a87560c99dc5"
   },
   "alteracoes": [
-    "20: descritiva com a explicação embaixo dos gráficos, sem título",
+    "20: descritiva com a explicação embaixo dos gráficos, sem título; títulos com números",
     "22: Cada médico escolhe a vaga que mais vale a pena (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "23: Modelo: logit condicional da 1ª opção (miolo redesenhado; 1 retângulo(s) de foco mantido(s))",
     "24: Modelo: logit condicional da 1ª opção (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "25: Método passo a passo: da escolha à razão de chances (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "28: Ficar perto de onde trabalha pesa mais que a bolsa (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "29: Robustez: ×1,47 se mantém com mais dados (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
-    "30: Limitações (miolo redesenhado; 0 retângulo(s) de foco mantido(s))"
+    "30: Limitações (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "11–13: rótulo 'DA VAGA À SAÚDE' repetido retirado",
+    "40: sem '(próximo slide)' e só fontes públicas",
+    "8: número 8 → 6",
+    "10: número 10 → 8",
+    "14: número 14 → 10",
+    "17: número 17 → 12",
+    "21: número 21 → 16",
+    "27: número 27 → 21",
+    "33: número 33 → 26",
+    "34: número 34 → 27",
+    "35: número 35 → 28",
+    "36: número da página criado",
+    "36: número 28 → 29",
+    "37: número 37 → 30",
+    "38: número 38 → 31",
+    "39: número 39 → 32",
+    "40: número 40 → 33"
   ],
   "slides": [
     {
@@ -185,7 +202,7 @@
     }
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pptx": "6109cf82f7b9945b390f922e765fbd46ce54975baf9071694351d6b9fd7ec7e8",
+    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pptx": "8d452dfa9ef24c04a728ae67a4c435dece1f21041c46d5f07330a32af8d78934",
     "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pdf": "gerado (PDF não é determinístico)"
   }
 }
