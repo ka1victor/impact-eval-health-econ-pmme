@@ -31,7 +31,7 @@
 | [`01_diagrama_teoria_mudanca.md`](01_diagrama_teoria_mudanca.md) | **fonte de verdade**: cada caixa e seta do diagrama, a literatura de cada elo, a ligação com as equações do apêndice e a nova ordem dos slides de teoria |
 | [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo de 11/11**: o que estimamos e por que a razão de chances (§1), ordem dos 35 slides, texto de cada slide novo, o que o grupo decide |
 | [`04_perguntas_provaveis_logit.md`](04_perguntas_provaveis_logit.md) | **preparo da defesa**: 17 perguntas prováveis sobre o logit condicional (modelo, identificação, estimação, dados), com respostas e números de `output/` |
-| [`05_roteiro_fala.md`](05_roteiro_fala.md) | **roteiro de fala** em bullets, slide a slide, da versão conciliada (35 slides, com o que muda na nossa de 32), com tempo estimado (≈ 13 min 30 s) e o que encurtar; em Word: `output/apresentacao_banca_final/roteiro_fala_banca_final.docx` (`gerar_roteiro_docx.py`) |
+| [`05_roteiro_fala.md`](05_roteiro_fala.md) | **roteiro de fala** em bullets, slide a slide, do deck do Bernardo com a rodada 13 (`deck_banca_final_bernardo_r13.pptx`, 40 slides), com tempo estimado (≈ 13 min 30 s) e o que encurtar; em Word: `output/apresentacao_banca_final/roteiro_fala_banca_final.docx` (`gerar_roteiro_docx.py`) |
 | [`02_deck_banca_final.md`](02_deck_banca_final.md) | **fonte de verdade do deck final**: ordem dos slides (25 na versão vigente), o feedback de 04/11 aplicado à parte da banca 1, cada texto novo e o que fica para o autor decidir |
 
 ## Derivados (o deck é derivado deste conteúdo)
