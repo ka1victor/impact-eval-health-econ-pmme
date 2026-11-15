@@ -1,0 +1,191 @@
+{
+  "etapa": "deck_banca_final_bernardo_r13",
+  "natureza_dos_dados": "EMPIRICO",
+  "script": "scripts\\apresentacao\\aplicar_rodada13_deck_bernardo.py",
+  "entradas": {
+    "docs\\07_apresentacoes\\banca_final\\grupo\\deck_grupo_banca_final_1511_bernardo.pptx": "9bb32765eabeda33692f406ca0fb444af58310d074fc2a5bfaf7eb777f8fb4cb",
+    "output\\rdd_bolsa\\VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output\\rdd_bolsa\\VL_resumo.json": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
+    "output\\rdd_bolsa\\VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636",
+    "output\\apresentacao_banca_final\\exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
+    "output\\apresentacao_banca2\\numeros_banca2.json": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00",
+    "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1_seis.png": "5c8742a1921d9ac545b8ddbafc9d877516590560dd47fb2472d58066c0420a0c",
+    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "eba6be9114be1a41a91c5180f8d5d06101fd2a0e2771174b1324a87560c99dc5"
+  },
+  "alteracoes": [
+    "20: descritiva com a explicação embaixo dos gráficos, sem título",
+    "22: Cada médico escolhe a vaga que mais vale a pena (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "23: Modelo: logit condicional da 1ª opção (miolo redesenhado; 1 retângulo(s) de foco mantido(s))",
+    "24: Modelo: logit condicional da 1ª opção (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "25: Método passo a passo: da escolha à razão de chances (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "28: Ficar perto de onde trabalha pesa mais que a bolsa (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "29: Robustez: ×1,47 se mantém com mais dados (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "30: Limitações (miolo redesenhado; 0 retângulo(s) de foco mantido(s))"
+  ],
+  "slides": [
+    {
+      "posicao": 1,
+      "titulo": ""
+    },
+    {
+      "posicao": 2,
+      "titulo": ""
+    },
+    {
+      "posicao": 3,
+      "titulo": "Escassez de especialistas já é tratada como urgência sanitária"
+    },
+    {
+      "posicao": 4,
+      "titulo": "Vulnerabilidade social define o valor da bolsa do PMM-E"
+    },
+    {
+      "posicao": 5,
+      "titulo": "Vulnerabilidade social define o valor da bolsa do PMM-E"
+    },
+    {
+      "posicao": 6,
+      "titulo": "Vulnerabilidade social define o valor da bolsa do PMM-E"
+    },
+    {
+      "posicao": 7,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "posicao": 8,
+      "titulo": ""
+    },
+    {
+      "posicao": 9,
+      "titulo": "Política direciona incentivos aos territórios mais vulneráveis"
+    },
+    {
+      "posicao": 10,
+      "titulo": ""
+    },
+    {
+      "posicao": 11,
+      "titulo": "Cadeia causal: da bolsa aos desfechos na saúde"
+    },
+    {
+      "posicao": 12,
+      "titulo": "Cadeia causal: da bolsa aos desfechos na saúde"
+    },
+    {
+      "posicao": 13,
+      "titulo": "Cadeia causal: da bolsa aos desfechos na saúde"
+    },
+    {
+      "posicao": 14,
+      "titulo": ""
+    },
+    {
+      "posicao": 15,
+      "titulo": "Maior remuneração, maior chance de ser escolhida"
+    },
+    {
+      "posicao": 16,
+      "titulo": "Maior remuneração, maior chance de ser escolhida"
+    },
+    {
+      "posicao": 17,
+      "titulo": ""
+    },
+    {
+      "posicao": 18,
+      "titulo": "Dados ligam os editais do PMM-E ao CNES"
+    },
+    {
+      "posicao": 19,
+      "titulo": "Cada candidato vira uma linha por vaga possível"
+    },
+    {
+      "posicao": 20,
+      "titulo": "Candidatos escolhem perto de onde trabalham"
+    },
+    {
+      "posicao": 21,
+      "titulo": ""
+    },
+    {
+      "posicao": 22,
+      "titulo": "Cada médico escolhe a vaga que mais vale a pena"
+    },
+    {
+      "posicao": 23,
+      "titulo": "Modelo: logit condicional da 1ª opção"
+    },
+    {
+      "posicao": 24,
+      "titulo": "Modelo: logit condicional da 1ª opção"
+    },
+    {
+      "posicao": 25,
+      "titulo": "Método passo a passo: da escolha à razão de chances"
+    },
+    {
+      "posicao": 26,
+      "titulo": "Identificação: as premissas do logit condicional"
+    },
+    {
+      "posicao": 27,
+      "titulo": ""
+    },
+    {
+      "posicao": 28,
+      "titulo": "Ficar perto de onde trabalha pesa mais que a bolsa"
+    },
+    {
+      "posicao": 29,
+      "titulo": "Robustez: ×1,47 se mantém com mais dados"
+    },
+    {
+      "posicao": 30,
+      "titulo": "Limitações"
+    },
+    {
+      "posicao": 31,
+      "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
+    },
+    {
+      "posicao": 32,
+      "titulo": "Conclusão: bolsa pesa na escolha, mas pouco"
+    },
+    {
+      "posicao": 33,
+      "titulo": ""
+    },
+    {
+      "posicao": 34,
+      "titulo": "Anexo 1: bolsa segue exatamente o IVS do município"
+    },
+    {
+      "posicao": 35,
+      "titulo": "Anexo 2: modelo combina dois elementos da teoria"
+    },
+    {
+      "posicao": 36,
+      "titulo": "Anexo 3: literatura teórica, a equação"
+    },
+    {
+      "posicao": 37,
+      "titulo": "Anexo 4: por que este modelo e não outro"
+    },
+    {
+      "posicao": 38,
+      "titulo": "Anexo 5: estimação, de onde vem o β"
+    },
+    {
+      "posicao": 39,
+      "titulo": "Anexo 6: o modelo formal, do valor à escolha"
+    },
+    {
+      "posicao": 40,
+      "titulo": "Anexo 7: O modelo ajusta os pesos até explicar as escolhas"
+    }
+  ],
+  "saidas": {
+    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pptx": "6109cf82f7b9945b390f922e765fbd46ce54975baf9071694351d6b9fd7ec7e8",
+    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pdf": "gerado (PDF não é determinístico)"
+  }
+}

@@ -8,6 +8,21 @@
 
 ---
 
+## 15/11/2026 — Banca final: deck do Bernardo com a rodada 13
+
+Motivo: o Bernardo mandou ao grupo uma versão própria (`Banca Final.pptx`, 40 slides: slides de foco com retângulo
+semitransparente, anexos reordenados e um anexo 7 novo) e pediu que as mudanças de conteúdo fossem aplicadas sobre
+ela, mantendo formatação e estrutura.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1511_bernardo.pptx` | cópia sem alteração do deck do Bernardo de 15/11/2026 (SHA-256 `9bb32765…7f8fb4cb`); entrada do script abaixo |
+| `output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx` (e `.pdf`, manifesto) | o deck do Bernardo com a rodada 13 (slides 20, 22–25, 28–30), gerado por `scripts/apresentacao/aplicar_rodada13_deck_bernardo.py` |
+
+---
+
 ## 14/11/2026 — Banca final: entrada do grupo de 14/11 e preparo da defesa do logit
 
 Motivo: o grupo atualizou o `PEE - BANCA FINAL` (data dos sumários) e o autor pediu para explicar melhor como o logit
