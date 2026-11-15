@@ -76,8 +76,8 @@
 - 5.417 candidatos × ≈ 107 vagas = 578.998 linhas.
 
 **18. Candidatos escolhem perto de onde trabalham** (50 s)
-- Como montamos: 5.425 candidatos; distância do município onde trabalhavam até o da vaga posta em 1º.
 - Metade escolhe a até 51 km; 79% ficam na mesma UF; 36% no próprio município.
+- Embaixo, como montamos: 5.425 candidatos; distância do município onde trabalhavam até o da vaga posta em 1º.
 - É descritivo: mostra onde escolhem, não por quê. Por isso o modelo compara vagas da mesma UF.
 
 ## Metodologia e identificação (≈ 4 min)
@@ -86,28 +86,31 @@
 
 **20. Cada médico escolhe a vaga que mais vale a pena** (45 s)
 - Não vemos o que o médico pensa, só a vaga que ele pôs em 1º lugar.
-- Cada médico tem uma lista de vagas, cada vaga tem prós e contras, e há coisas que não vemos (família, gosto); por
-  isso o modelo dá a chance de cada vaga: A 29%, B 42%, C 29%.
+- Cada médico tem uma lista de vagas, e cada vaga tem prós e contras; o modelo dá a chance de cada vaga: A 29%, B 42%,
+  C 29%.
 - B paga mais e fica perto; C paga como B, mas fica 75 km mais longe, e isso anula a bolsa extra.
-- Nossa pergunta: quanto a bolsa pesa? Se vagas iguais com bolsas diferentes fossem escolhidas meio a meio, ela não
-  pesaria nada.
+- Nossa pergunta: quanto a bolsa pesa na escolha? Se não pesasse, A e B seriam escolhidas meio a meio.
 
 **21. Modelo: logit condicional da 1ª opção** (60 s)
-- É a mesma ideia do slide anterior, em fórmula. Cada vaga tem uma utilidade para o médico: bolsa, distância, IVS,
-  controles e o par de UFs, mais um erro ε (o que não vemos).
-- Vemos só qual vaga tem a maior utilidade: a 1ª opção. Com ε de valor extremo, a chance de cada vaga é a fórmula ①.
+- É a mesma ideia do slide anterior, em fórmula. ② é a utilidade: quanto a vaga vale para o médico. Tem uma parte que
+  vemos (β·x: bolsa, distância, IVS e controles, cada um com seu peso) e uma que não vemos (ε: família, gosto pelo
+  lugar).
+- Ligação: o médico põe em 1º a vaga de maior U. Como não vemos o ε, calculamos a chance de cada vaga ter o maior U;
+  supondo ε de valor extremo, essa chance é a fórmula ①: exp(β·x) da vaga dividido pela soma de exp(β·x) de todas as
+  vagas.
 - O coeficiente testado é o da bolsa; o resto são controles. O par de UFs faz comparar vagas dentro da mesma UF, e a
   bolsa vem de regra com o IVS no modelo (detalhe no anexo 1, se perguntarem).
-- Por que este modelo: logit condicional de McFadden (1974), que lhe rendeu o Nobel de Economia de 2000. Compara as
-  vagas do mesmo médico, então o que é dele sai da conta. Referência de uso em economia da saúde: Costa, Nunes e
-  Sanches (2024), sobre onde os médicos escolhem trabalhar no Brasil.
+- Por que este modelo: logit condicional conforme McFadden (1974), Nobel de Economia de 2000. Compara as vagas do
+  mesmo médico, então o que é dele sai da conta. Referência em economia da saúde: Costa, Nunes e Sanches (2024) usam
+  um modelo análogo para estudar onde os médicos escolhem trabalhar no Brasil.
 
 **22. Método passo a passo: da escolha à razão de chances** (60 s)
 - 1–2: monta a base (uma linha por vaga; y = 1 na escolhida). 3–5: estima os pesos que melhor explicam as escolhas.
   6: lê o resultado como razão de chances.
 - Passo 4: a chance de cada vaga é exp(U sem ε) dela dividido pela soma disso em todas as vagas do médico.
 - Passo 6: a métrica é a chance da vaga que paga mais dividida pela chance da outra; as outras vagas se cancelam.
-- No exemplo: Itamarandiba 3,62% ÷ Araçuaí 2,53% = 1,43, e quase tudo vem da bolsa (×1,47).
+- No exemplo, um médico de MG decidindo entre duas cidades: Itamarandiba (em cima) 3,62% ÷ Araçuaí 2,53% = 1,43,
+  e quase tudo vem da bolsa (×1,47).
 
 **23. Identificação: as premissas do logit condicional** (60 s)
 - Escolha sincera e conjunto de escolha conhecido: suposições.
@@ -121,17 +124,18 @@
 **25. Ficar perto de onde trabalha pesa mais que a bolsa** (60 s)
 - O gráfico mostra quanto cada fator multiplica a chance da vaga: mesma região de saúde ×3,01; mesmo município ×1,80;
   +R$ 5 mil de bolsa ×1,47; população em dobro ×1,10; capital ×0,73 (o intervalo inclui 1); +100 km ×0,60.
-- As três contas: 5 × 0,077 = 0,385; exp(0,385) = ×1,47, ou seja, 47% mais chance (IC 1,15 a 1,89); 0,385 ÷ 0,514 ×
-  100 = 75 km.
+- À direita, como ler a bolsa: o peso no modelo é 0,077 por R$ 1 mil; em chance, +R$ 5 mil dão ×1,47, ou seja, 47%
+  mais chance (IC 1,15 a 1,89); em distância, isso compensa 75 km.
 - Leitura: a bolsa conta, mas estar na mesma região de saúde de onde já trabalha pesa mais. Por isso, incentivo
   limitado.
 
 **26. Robustez: ×1,47 se mantém com mais dados** (20 s) **(encurtável)**
-- Uma frase: com outras medidas, o ×1,47 se mantém (×1,45 a ×1,49); com só parte dos dados fica inconclusivo, e o
-  ciclo 2 é o mais forte (×1,90).
+- Uma frase: com só parte dos dados fica inconclusivo, e o ciclo 2 é o mais forte (×1,90); com outras medidas e todos
+  os dados, o ×1,47 se mantém (×1,45 a ×1,49).
 
 **27. Limitações** (30 s, passar rápido)
-- Medimos a escolha, não a chegada; no corte mudam outras regras; o local anterior é o do CNES, não a residência.
+- Medimos a escolha, não a chegada; só a 1ª opção (o candidato podia listar duas); no corte mudam outras regras; o
+  local anterior é o do CNES, não a residência.
 - Fixar a UF foi decidido depois de ver os dados: o resultado é exploratório; confirmar exige dados novos (o ciclo 3
   maduro). **Falar isso antes de a banca perguntar.**
 - Significativo só no ciclo 2; a escolha sincera não dá para testar.

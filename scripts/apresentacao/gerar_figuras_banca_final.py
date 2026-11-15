@@ -52,9 +52,10 @@ ROBUSTEZ = (
     ("VG", "VG3", "Só o ciclo 3", True),
 )
 # grupos da figura (versão de 14/11): título e as linhas de cada um, na ordem da leitura
+# rodada 13 (15/11): "só parte dos dados" antes de "outras medidas" (pedido do autor)
 GRUPOS_ROB = (("Principal", ("VL1_emp",)),
-              ("Outras medidas", ("VL1log_emp", "VL3_VL1_emp")),
-              ("Só parte dos dados", ("VL2_emp", "VG1", "VL1_c2", "VG3")))
+              ("Só parte dos dados", ("VL2_emp", "VG1", "VL1_c2", "VG3")),
+              ("Outras medidas", ("VL1log_emp", "VL3_VL1_emp")))
 
 
 def sha256(p: Path) -> str:

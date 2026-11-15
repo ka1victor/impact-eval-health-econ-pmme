@@ -99,7 +99,7 @@ class TestDeck(unittest.TestCase):
         t = self.txt[self.pos("Modelo: logit condicional")]
         self.assertIn("P(i escolhe v) =", t)
         self.assertIn("exp(β·x", t)
-        self.assertIn("todas as vagas k de i", t)
+        self.assertIn("de todas as vagas k", t)
 
     def test_estimacao_explica_como_foi_feito(self):
         """Slide 23 (14/11): variação que identifica o β, o que fica fixo e a inferência, com números de output/."""
@@ -140,7 +140,9 @@ class TestDeck(unittest.TestCase):
     def test_descritiva_em_numeros_sem_modelo(self):
         t = self.txt[self.pos("Candidatos escolhem perto")]
         # rodada 7 (14/11): os cartões repetidos saíram; no lugar, como a análise foi montada
-        for x in ("COMO MONTAMOS ESTA ANÁLISE", "5.425 candidatos", "I. A que distância fica a 1ª opção",
+        # rodada 13 (15/11): sem o título "como montamos"; a explicação fica embaixo dos gráficos
+        self.assertNotIn("COMO MONTAMOS", t)
+        for x in ("Quem: 5.425 candidatos", "Distância:", "Onde:", "I. A que distância fica a 1ª opção",
                   "II. Onde fica a 1ª opção"):
             self.assertIn(x, t)
         self.assertNotIn("modelo", t)

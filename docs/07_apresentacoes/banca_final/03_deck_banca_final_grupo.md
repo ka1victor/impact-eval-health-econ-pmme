@@ -304,6 +304,26 @@ Texto do autor: "Logit condicional de McFadden (1974), que lhe rendeu o Nobel de
 que o modelo compara as vagas do mesmo médico; "Referência de uso em economia da saúde: Costa, Nunes e Sanches (2024)…".
 Sai a frase "A bolsa vem de uma regra; por isso a versão mais simples do modelo basta".
 
+### 3.19 Rodada 13 (15/11): comentários do autor sobre a versão conciliada
+
+Valem para as duas versões, salvo o que só existe na conciliada.
+- **Descritiva (18):** a explicação de como a análise foi montada (quem, distância, onde) fica sem título, embaixo dos
+  gráficos; os gráficos sobem.
+- **Vagas A, B e C (20, só conciliada):** sai o "não vemos"; a frase final vira "Nossa pergunta: quanto a bolsa pesa
+  na escolha? Se não pesasse, A e B seriam escolhidas meio a meio."
+- **Modelo (21):** ② explicada em duas linhas (parte que vemos, β·x; parte que não vemos, ε); "Ligação entre ② e ①"
+  por extenso; denominador "soma de exp(β·x_ik) de todas as vagas k"; "O que se estima: os pesos β₁ a β₄ e α que
+  melhor explicam as escolhas de 1ª opção"; "Logit condicional conforme McFadden (1974), Nobel de Economia de 2000";
+  "Referência em economia da saúde: … um modelo análogo …"; letra maior na equação ② e em "o que cada termo faz".
+- **Passo a passo (22):** "Exemplo: um médico de MG decidindo entre duas cidades"; Itamarandiba em cima, como no
+  numerador da razão; mais espaço na cadeia do exemplo.
+- **Resultado do colega (25):** o lado direito vira "Como ler a bolsa": 0,077 (peso por R$ 1 mil) → ×1,47 (chance,
+  47% maior) → 75 km (o que +R$ 5 mil compensam), cada um com a conta em letra pequena.
+- **Robustez (26):** "Só parte dos dados" antes de "Outras medidas", na figura e nos cartões.
+- **Limitações (27):** um cartão com ícone por limitação, em duas colunas; entra "Só a 1ª opção: o candidato podia
+  listar duas opções; por simplicidade, usamos só a 1ª" (edital: até duas opções; o logit explodido com a 2ª ficou
+  como sensibilidade no modelo base).
+
 ## 4. Histórico de revisões
 
 - **11/11:** deck sobre a versão do grupo (32 slides); pergunta nova; "valor da bolsa"; anexo com t = 0.
