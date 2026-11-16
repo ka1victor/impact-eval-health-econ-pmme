@@ -1007,24 +1007,21 @@ def s_resultados_colega(M, prs, n):
               "Acima de 1: a vaga atrai mais. Abaixo: atrai menos. Barra = intervalo de 95%.")
     sl.shapes.add_picture(str(FIG_SEIS), Inches(0.15), Inches(1.6), width=Inches(7.75))
     # rodada 13 (15/11): lado direito mais legível: o número grande e, ao lado, o que ele quer dizer
-    subtitulo(sl, 8.2, 0.9, 4.9, "Como ler a bolsa", "do peso do modelo à chance e à distância")
-    contas = ((v(n["b"], 3), "peso da bolsa no modelo, por R$ 1 mil",
-               f"por R$ 5 mil: 5 × {v(n['b'], 3)} = {v(n['b5'], 3)}"),
-              (f"×{v(n['rc'])}", f"chance da vaga com +R$ 5 mil: {round(100 * (n['rc'] - 1))}% maior",
-               f"exp({v(n['b5'], 3)}) = {v(n['rc'])}  (IC {v(n['rc_inf'])} a {v(n['rc_sup'])})"),
+    # rodada 14 (15/11): sem o 0,077 (peso por R$ 1 mil); só as duas leituras usadas no deck
+    subtitulo(sl, 8.2, 0.9, 4.9, "Como ler a bolsa", "+R$ 5 mil de bolsa, na chance e em distância")
+    contas = ((f"×{v(n['rc'])}", f"chance da vaga com +R$ 5 mil: {round(100 * (n['rc'] - 1))}% maior",
+               f"IC 95%: {v(n['rc_inf'])} a {v(n['rc_sup'])}"),
               (f"{round(n['km'])} km", "é o que +R$ 5 mil compensam em distância",
-               f"{v(n['b5'], 3)} ÷ {v(-n['dist'], 3)} (peso de 100 km) × 100"))
+               f"vale o mesmo que a vaga ficar {round(n['km'])} km mais perto"))
     for k, (num, leitura, conta) in enumerate(contas):
-        y = 1.6 + k * 1.37
-        destaque = k == 1
-        caixa(sl, 8.2, y, 4.88, 1.22, [], fill=VERDE if destaque else CLARO, line=None if destaque else BORDA,
+        y = 1.6 + k * 2.08
+        destaque = k == 0
+        caixa(sl, 8.2, y, 4.88, 1.93, [], fill=VERDE if destaque else CLARO, line=None if destaque else BORDA,
               nome=f"Conta {k + 1}")
-        texto(sl, 8.35, y + 0.1, 1.6, 1.02, [[(num, 24, True, BRANCO if destaque else VERDE)]],
+        texto(sl, 8.35, y + 0.15, 1.75, 1.63, [[(num, 28, True, BRANCO if destaque else VERDE)]],
               align=PP_ALIGN.CENTER)
-        texto(sl, 10.0, y + 0.12, 2.95, 1.0, [[(leitura, 13, True, BRANCO if destaque else TEXTO)],
-                                              [(conta, 10.5, False, "DDEBDD" if destaque else CINZA)]], esp=4)
-        if k < 2:
-            seta(sl, 9.15, y + 1.22, 9.15, y + 1.37, cor=MEDIO, larg=1.5)
+        texto(sl, 10.15, y + 0.15, 2.8, 1.63, [[(leitura, 14.5, True, BRANCO if destaque else TEXTO)],
+                                               [(conta, 12, False, "DDEBDD" if destaque else CINZA)]], esp=6)
     x_reg = v(n["x_reg"])
     caixa(sl, 0.25, 5.85, 12.83, 0.8,
           [[("Leitura: ", 15, True, "B9E4B1"),
@@ -1248,7 +1245,7 @@ def s_formal(M, prs, n):
               "para toda outra vaga k do candidato: y = 1 na vaga posta em 1º; 0 nas demais."),
              ("3 · CHANCE", ("P(y_{iv} = 1) =", "exp(β·x_{iv}) ÷ soma de exp(β·x_{ik})"),
               "Vale se ε é de valor extremo. Os pesos saem por máxima verossimilhança."),
-             ("4 · RAZÃO DE CHANCES", ("P(B) ÷ P(A) = exp(5β_{1})", f"= exp(5 × {v(n['b'], 3)}) = {v(n['rc'])}"),
+             ("4 · RAZÃO DE CHANCES", ("P(B) ÷ P(A)", f"= exp(5β_{{1}}) = {v(n['rc'])}"),
               "B paga +R$ 5 mil, o resto igual: o que é do médico e o denominador se cancelam."))
     w, gap = 3.0, 0.277
     for k, (rot, f, expl) in enumerate(cards):
@@ -1288,7 +1285,7 @@ def s_formal(M, prs, n):
     texto(sl, 0.25, y0 + 4 * h + 0.1, 7.75, 0.85,
           [[("Ilustrativo: ", 10.5, True, CINZA),
             (f"vagas inventadas. Só as diferenças de β·x importam, por isso β·x(A) = 0. B: +R$ 5 mil somam "
-             f"5 × {v(n['b'], 3)} ≈ {v(vs[1]['V'])}. C: os {vs[2]['km'] - 50} km a mais tiram o mesmo. Com ≈ 107 vagas "
+             f"{v(vs[1]['V'])}. C: os {vs[2]['km'] - 50} km a mais tiram o mesmo. Com ≈ 107 vagas "
              "por candidato, cada chance fica perto de 1%, mas a razão entre duas vagas é a mesma.", 10.5, False, CINZA)]],
           anchor=MSO_ANCHOR.TOP)
     caixa(sl, 8.45, 3.3, 4.63, 3.35,

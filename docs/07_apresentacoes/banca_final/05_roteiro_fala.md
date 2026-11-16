@@ -125,8 +125,8 @@
 **28. Ficar perto de onde trabalha pesa mais que a bolsa** (60 s)
 - O gráfico mostra quanto cada fator multiplica a chance da vaga: mesma região de saúde ×3,01; mesmo município ×1,80;
   +R$ 5 mil de bolsa ×1,47; população em dobro ×1,10; capital ×0,73 (o intervalo inclui 1); +100 km ×0,60.
-- À direita, como ler a bolsa: o peso no modelo é 0,077 por R$ 1 mil; em chance, +R$ 5 mil dão ×1,47, ou seja, 47%
-  mais chance (IC 1,15 a 1,89); em distância, isso compensa 75 km.
+- À direita, como ler a bolsa: +R$ 5 mil dão ×1,47 na chance, ou seja, 47% mais chance (IC 1,15 a 1,89); em
+  distância, valem o mesmo que a vaga ficar 75 km mais perto.
 - Leitura: a bolsa conta, mas estar na mesma região de saúde de onde já trabalha pesa mais. Por isso, incentivo
   limitado.
 
@@ -162,11 +162,11 @@
 - **38. Anexo 5, estimação:** a bolsa é fixada por regra e o IVS está no modelo; comparamos vagas do mesmo candidato,
   na mesma UF (260 pares de UFs, 5.345 candidatos); dentro do município não dá, porque a bolsa é igual no município
   inteiro.
-- **39. Anexo 6, o modelo formal:** U = β·x + ε; y = 1 na vaga de maior U; a chance usa só β·x; a razão de chances é
-  exp(5β) = 1,47. "y é o resultado, U é o mecanismo."
+- **39. Anexo 6, o modelo formal:** U = β·x + ε; y = 1 na vaga de maior U; a chance usa só β·x; a razão de chances
+  entre B e A é ×1,47. "y é o resultado, U é o mecanismo."
 - **40. Anexo 7, ajuste dos pesos:** o modelo dá uma nota a cada vaga, transforma notas em chances, confere com as
-  escolhas reais e ajusta os pesos até não melhorar (máxima verossimilhança). Saem 0,077 por R$ 1 mil de bolsa e
-  −0,514 por 100 km.
+  escolhas reais e ajusta os pesos até não melhorar (máxima verossimilhança). Dos pesos estimados saem o ×1,47 e
+  os 75 km.
 
 ## Número impresso no canto do slide
 

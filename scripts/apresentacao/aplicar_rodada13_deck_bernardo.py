@@ -74,6 +74,7 @@ REDESENHO = {
     28: ("Ficar perto de onde trabalha", G.s_resultados_colega),
     29: ("Robustez:", G.s_robustez),
     30: ("Limitações", G.s_limitacoes),
+    39: ("Anexo 6", G.s_formal),  # rodada 14: sem o 0,077 na tela
 }
 DESCRITIVA = 20
 # passos de foco do Bernardo: o mesmo slide lógico, um número só
@@ -100,6 +101,8 @@ def eh_foco(sh) -> bool:
 def fica(sh) -> bool:
     if sh.is_placeholder:
         return True
+    if sh.top is not None and sh.top < Inches(0.6):
+        return True  # faixa do título (no anexo 6 do Bernardo o título visível é uma cópia fora do placeholder)
     if sh.has_text_frame and sh.text_frame.text.strip().startswith("Motivação") and "|" in sh.text_frame.text:
         return True  # rodapé de seções
     if sh.has_text_frame and sh.text_frame.text.strip().isdigit() and sh.top > Inches(6.8):
@@ -225,8 +228,26 @@ def cadeia_sem_rotulo_repetido(slide) -> bool:
     return False
 
 
+# rodada 14 (15/11): sem o 0,077 (e o −0,514) na tela; o painel "Sai" mostra as leituras usadas no deck
+SAI_ANEXO7 = [["×1,47"], ["chance da vaga com ", "+R$ 5 mil", " de bolsa"], ["75 km"],
+              ["é o que ", "+R$ 5 mil", " compensam em distância"],
+              ["Saem dos pesos estimados. O passo 4 é a ", "máxima verossimilhança", "."]]
+
+
 def anexo7(slide) -> int:
     k = 0
+    for sh in slide.shapes:
+        if sh.has_text_frame and sh.text_frame.text.strip() == "Sai: o peso de cada fator":
+            sh.text_frame.paragraphs[0].runs[0].text = "Sai: quanto a bolsa pesa"
+            k += 1
+        if sh.has_text_frame and sh.text_frame.text.startswith("0,077"):
+            pars = sh.text_frame.paragraphs
+            if [len(p_.runs) for p_ in pars] != [len(x) for x in SAI_ANEXO7]:
+                raise SystemExit("ERRO: anexo 7: painel 'Sai' com outra estrutura")
+            for p_, textos in zip(pars, SAI_ANEXO7):
+                for r, t in zip(p_.runs, textos):
+                    r.text = t
+            k += 1
     for sh in slide.shapes:
         if not sh.has_text_frame:
             continue
@@ -267,9 +288,9 @@ def main() -> int:
         if not cadeia_sem_rotulo_repetido(prs.slides[i - 1]):
             raise SystemExit(f"ERRO: slide {i}: rótulo repetido da cadeia não encontrado")
     feitas.append("11–13: rótulo 'DA VAGA À SAÚDE' repetido retirado")
-    if not titulo(prs.slides[39]).startswith("Anexo 7") or anexo7(prs.slides[39]) != 2:
-        raise SystemExit("ERRO: anexo 7: esperava as duas trocas")
-    feitas.append("40: sem '(próximo slide)' e só fontes públicas")
+    if not titulo(prs.slides[39]).startswith("Anexo 7") or anexo7(prs.slides[39]) != 3:
+        raise SystemExit("ERRO: anexo 7: esperava as trocas do painel 'Sai' e da fonte")
+    feitas.append("40: painel 'Sai' com ×1,47 e 75 km (sem 0,077 e −0,514), sem '(próximo slide)', fontes públicas")
     feitas += renumerar(prs)
     OUT.mkdir(parents=True, exist_ok=True)
     pptx = OUT / f"{ARQ}.pptx"

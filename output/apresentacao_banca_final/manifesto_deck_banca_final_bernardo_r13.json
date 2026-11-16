@@ -21,8 +21,9 @@
     "28: Ficar perto de onde trabalha pesa mais que a bolsa (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "29: Robustez: ×1,47 se mantém com mais dados (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "30: Limitações (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "39: Anexo 6: o modelo formal, do valor à escolha (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "11–13: rótulo 'DA VAGA À SAÚDE' repetido retirado",
-    "40: sem '(próximo slide)' e só fontes públicas",
+    "40: painel 'Sai' com ×1,47 e 75 km (sem 0,077 e −0,514), sem '(próximo slide)', fontes públicas",
     "8: número 8 → 6",
     "10: número 10 → 8",
     "14: número 14 → 10",
@@ -202,7 +203,7 @@
     }
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pptx": "8d452dfa9ef24c04a728ae67a4c435dece1f21041c46d5f07330a32af8d78934",
+    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pptx": "8fefbc4c195a60754d0f3e5188947f5d64392ee16340672fe482d4344199fdee",
     "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pdf": "gerado (PDF não é determinístico)"
   }
 }
