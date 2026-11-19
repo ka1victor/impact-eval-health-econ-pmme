@@ -1,16 +1,25 @@
 # Próximas etapas
 
-> **Núcleo causal vigente: A8 — cutoff de escore de seleção.** O ciclo 1
-> permanece como análise associativa de implementação: A4 é motivação
-> descritiva do gradiente territorial e A5 é evidência associativa de apêndice.
-> ~~A RDD da bolsa pelo IVS está arquivada por ausência de primeiro estágio~~
-> **A RDD da bolsa foi reaberta em 14/10/2026.** Com o IVS 2010 oficial, a
-> regra é sharp, e o E3 é inconclusivo
-> (`docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`). O pedido
-> administrativo foi cancelado sem envio, porque o escore é público. O ciclo 3
-> continua congelado até maturidade. Decisão canônica em
-> `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões
-> executados em `docs/06_execucao/33_status_execucao_plano_causal.md`.
+> **Estado em 18/11/2026.** O resultado apresentado na banca final é o logit condicional da escolha da 1ª opção com
+> vagas da mesma UF (VL-1): ×1,47 por +R$ 5 mil nos ciclos 1–3, exploratório (docs `06_execucao/57x` e `66`). A RDD
+> da bolsa é inconclusiva (docs `44` e `57`); o A8 segue como núcleo causal dos dois artigos; A4 e A5 são
+> associativos; o ciclo 3 continua congelado até maturidade. Resumo no [`README.md`](README.md).<br>
+> **Antes (19/10/2026):** núcleo causal A8; RDD da bolsa reaberta em 14/10/2026 com o IVS 2010 oficial, regra sharp,
+> E3 inconclusivo (`docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`); pedido administrativo cancelado sem
+> envio, porque o escore é público. Decisão canônica em
+> `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões em
+> `docs/06_execucao/33_status_execucao_plano_causal.md`.
+
+## Banca final (estado em 18/11/2026)
+
+Detalhe em [`docs/07_apresentacoes/banca_final/`](docs/07_apresentacoes/banca_final/README.md).
+
+- [x] Deck do grupo sobre a versão do Bernardo, com a rodada 13 e as correções de 15/11
+  (`output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx`, 40 slides).
+- [x] Roteiro de fala em Markdown (doc 05) e em Word (`roteiro_fala_banca_final.docx`).
+- [x] Perguntas prováveis sobre o logit condicional (doc 04).
+- [ ] **Grupo:** ensaiar com cronômetro; o roteiro estima ≈ 13 min 30 s, e o doc 05 diz o que encurtar.
+- [ ] **Grupo:** os anexos do deck do Bernardo ficam sem navbar, por escolha dele; decidir se fica assim.
 
 ## Fila imediata — RDD da bolsa (estado em 19/10/2026)
 
@@ -193,8 +202,8 @@ de início e encerramento.
 
 ## O que continua com o autor (19/09/2026)
 
-- [ ] **D-3** — decidir se envia o pedido do escore administrativo de IVS. Pacote
-  pronto em `output/rdd_bolsa/`; é o único caminho para o efeito da bolsa.
+- [x] **D-3** — pedido do escore administrativo de IVS: cancelado sem envio, porque o escore é público
+  (IVS 2010 oficial do Ipea, igual ao do MS em 404/404).
 - [ ] **D-2** — repetir C3-02B de um ambiente com acesso ao FTP do DATASUS;
   C3-05 só com `202703` madura; C3-06 em setembro/2027.
 - [ ] **D-4** — painel mensal e microdados do CNES; ao reexecutar A5, retirar a

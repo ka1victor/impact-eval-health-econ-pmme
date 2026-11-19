@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teoria Micro do PMM-E — Por que médicos escolhem onde atuar?</title>
+<link rel="stylesheet" href="katex/katex/katex.min.css">
+<style>
+  :root{
+    --violet:#6D28D9; --violet-bg:#EDE9FE;
+    --dark:#111827; --gray:#374755; --muted:#6B7280;
+    --bg:#FFFFFF; --panel:#F3F4F6; --line:#E5E7EB;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#0f1420;color:var(--dark);
+    font-family:"Segoe UI",Calibri,Arial,sans-serif;}
+  header.bar{position:fixed;top:0;left:0;right:0;z-index:10;
+    background:#0f1420;color:#fff;padding:.45rem 1.2rem;font-size:.8rem;
+    display:flex;justify-content:space-between;align-items:center}
+  header.bar a{color:#c4b5fd;text-decoration:none}
+  main{padding:3rem 0 4rem;display:flex;flex-direction:column;gap:2rem;align-items:center}
+  section.slide{background:var(--bg);width:min(1180px,94vw);aspect-ratio:16/9;
+    border-radius:10px;overflow:hidden;position:relative;display:none;
+    padding:2.6rem 3rem 2rem;box-shadow:0 10px 40px rgba(0,0,0,.45)}
+  section.slide.active{display:block}
+  section.slide::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;
+    background:var(--violet)}
+  section.slide.dark{background:var(--dark);color:#fff}
+  .kicker{color:var(--violet);font-weight:700;font-size:.8rem;letter-spacing:.12em;
+    text-transform:uppercase;margin-bottom:.3rem}
+  .dark .kicker{color:#c4b5fd}
+  h1{font-size:2.5rem;line-height:1.1;margin:.2rem 0 .6rem}
+  h2{font-size:1.9rem;margin:.2rem 0 .4rem}
+  .sub{color:var(--muted);font-size:1.05rem;margin:0 0 1rem}
+  .dark .sub{color:#D1D5DB}
+  .eq{background:var(--panel);border-left:6px solid var(--violet);
+    padding:.8rem 1.2rem;margin:1rem 0;font-size:1.12rem;overflow-x:auto}
+  .cols{display:flex;gap:1.6rem}
+  .cols>div{flex:1}
+  ul{line-height:1.55;margin:.4rem 0}
+  li{margin:.28rem 0}
+  .cards{display:flex;gap:1rem;margin-top:1rem}
+  .card{flex:1;background:var(--violet-bg);border-radius:8px;padding:.8rem 1rem}
+  .card.gray{background:var(--panel)}
+  .card b{color:var(--violet);font-size:.78rem;letter-spacing:.08em}
+  table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.95rem}
+  th,td{border-bottom:1px solid var(--line);padding:.45rem .6rem;text-align:left}
+  th{color:var(--violet)}
+  .alert{background:#FEF2F2;border-left:6px solid #DC2626;padding:.6rem 1rem;margin-top:.8rem}
+  .foot{position:absolute;bottom:.7rem;left:3rem;right:3rem;font-size:.72rem;color:var(--muted);
+    display:flex;justify-content:space-between}
+  nav.ctrl{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:10;
+    display:flex;gap:.6rem;align-items:center;background:#0f1420;color:#fff;
+    padding:.4rem .9rem;border-radius:999px;font-size:.85rem}
+  nav.ctrl button{background:var(--violet);color:#fff;border:0;border-radius:999px;
+    padding:.3rem .9rem;cursor:pointer;font-size:.85rem}
+  img.fig{width:100%;border:1px solid var(--line);border-radius:6px}
+  .refs{font-size:.8rem;color:var(--muted);line-height:1.5}
+  @media print{
+    @page{size:13.33in 7.5in;margin:0}
+    header.bar,nav.ctrl{display:none}
+    main{padding:0;display:block}
+    section.slide{display:block;width:13.33in;height:7.5in;aspect-ratio:auto;
+      border-radius:0;box-shadow:none;page-break-after:always;margin:0}
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <span>PMM-E · Teoria Micro da Escolha Locacional · Insper</span>
+  <span><a href="slides_teoria_micro_beamer.tex">fonte Beamer (.tex)</a></span>
+</header>
+<main>
+
+<!-- 1 CAPA -->
+<section class="slide dark active" id="s1">
+  <div class="kicker">PMM-E · Lei 15.233/2025 · Teoria micro</div>
+  <h1>Por que médicos<br>escolhem onde atuar?</h1>
+  <p class="sub">Escolha locacional, custo não-pecuniário e o desenho da bolsa por IVS</p>
+  <div class="cards">
+    <div class="card" style="background:#1F2937"><b>MODELO CANÔNICO</b><br>Moehling et al. (2020) + Choné &amp; Ma (2011) + Reinhardt (1975)</div>
+    <div class="card" style="background:#1F2937"><b>EQUAÇÃO</b><br>\(U = \mathbb{E}[w]/p - c(\text{geo, laboral}, K, L)\)</div>
+    <div class="card" style="background:#1F2937"><b>DADO CENTRAL</b><br>Bolsa \(B_m(\text{IVS}_m)\): R$ 10k / 15k / 20k · IVS 2010 (IPEA)</div>
+  </div>
+  <div class="foot"><span>Template acadêmico · KaTeX local (offline)</span><span>1 / 10</span></div>
+</section>
+
+<!-- 2 PUZZLE -->
+<section class="slide" id="s2">
+  <div class="kicker">01 · O puzzle</div>
+  <h2>Escassez rural de especialistas não é só salário</h2>
+  <p class="sub">O PMM-E compensa com bolsa, mas o custo de ir para o interior é multidimensional</p>
+  <div class="eq">Fato: vagas de alto IVS seguem ociosas · Pergunta: que custo latente \(\Delta c_0\) a bolsa \(\Delta B\) precisa superar?</div>
+  <div class="cols">
+    <div><ul>
+      <li>Distância da família e amenidades (Moehling, p.184)</li>
+      <li>Cansaço clínico vs. satisfação moral — curva em U (Choné &amp; Ma)</li>
+      <li>Falta de \(K\) (leitos, centro cirúrgico) e \(L\) (equipe) esvazia a resolutividade</li>
+    </ul></div>
+    <div><ul>
+      <li>Capital: \(w = B + w^{\text{priv}}\) → complementa renda em 20h</li>
+      <li>Interior isolado: \(w = B\) → subalocação, colapsa no piso</li>
+      <li>\(\Rightarrow B_{\text{interior}} (20\text{k}) &gt; B_{\text{capital}} (10\text{k})\) pode dar \(w_{\text{total}}\) menor!</li>
+    </ul></div>
+  </div>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>2 / 10</span></div>
+</section>
+
+<!-- 3 MOEHLING -->
+<section class="slide" id="s3">
+  <div class="kicker">02 · Núcleo canônico</div>
+  <h2>Moehling et al. (2020, eq. 1, p. 184)</h2>
+  <p class="sub">Maximização intertemporal dos retornos líquidos entre localidades</p>
+  <div class="eq">$$\arg\max_{i \in I}\; U(\omega_i) = \arg\max_{i \in I}\; \Biggl\{ \sum_{t} \delta^{t} \left[ \frac{\mathbb{E}\!\left(w_{it}^{(s)}\right)}{p_{it}} - c_{it}^{(s)} \right] \Biggr\}$$</div>
+  <div class="cols">
+    <div><ul><li>\(i \in I\): município</li><li>\(\delta \in (0,1)\): ficar vs. migrar</li><li>\(s\): especialidade</li></ul></div>
+    <div><ul><li>\(w\): rendimento nominal esperado</li><li>\(p\): custo de vida local</li><li>\(c\): custo não-pecuniário líquido</li></ul></div>
+    <div><b style="color:var(--violet)">Adaptação PMM-E:</b><br>\(V_{im} = \sum_t \delta^t\left[\frac{\mathbb{E}(w \mid B_m)}{p} - c_0(\text{IVS}_m)\right] + \varepsilon_{im}\)<br>\(B_m\) pré-fixada compõe \(w\).</div>
+  </div>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>3 / 10</span></div>
+</section>
+
+<!-- 4 GEO -->
+<section class="slide" id="s4">
+  <div class="kicker">03 · Custo geográfico</div>
+  <h2>Distância dói, amenidade atrai</h2>
+  <p class="sub">Redding &amp; Rossi-Hansberg (2017, eq. 24) microfundamenta o \(c^{\text{geo}}\)</p>
+  <div class="eq">$$c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}, \qquad \frac{\partial c^{\text{geo}}}{\partial \text{dist}_{im}} = \phi' &gt; 0,\;\; \frac{\partial c^{\text{geo}}}{\partial A_m} = -\gamma &lt; 0$$</div>
+  <ul>
+    <li>\(\text{dist}\): distância à família real (não à faculdade) · \(A_m\): saneamento, segurança, qualidade urbana · \(\theta^{\text{rural}}\): gosto idiossincrático</li>
+    <li>Forma espacial: \(c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln B_m\) ⇒ \(\partial c / \partial Q_m = (1-\beta)/Q_m &gt; 0\), \(\partial c / \partial B_m = -1/B_m &lt; 0\)</li>
+    <li><b>Limite CNES:</b> sem residência (sigilo fiscal) ⇒ município do estabelecimento</li>
+  </ul>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>4 / 10</span></div>
+</section>
+
+<!-- 5 LABORAL -->
+<section class="slide" id="s5">
+  <div class="kicker">04 · Custo laboral</div>
+  <h2>Cansaço × satisfação: a curva em U</h2>
+  <p class="sub">Choné &amp; Ma (2011, eq. 1, p. 232): \(c(q) = C(q) - \alpha B(q)\)</p>
+  <div class="cols">
+    <div><ul>
+      <li>\(C(q)\): cansaço, \(C'&gt;0\), \(C''&gt;0\)</li>
+      <li>\(B(q)\): benefício, \(B'&gt;0\), \(B''&lt;0\)</li>
+      <li>\(\alpha \ge 0\): altruísmo / dever cumprido</li>
+      <li>\(c''(q) = C'' - \alpha B'' \gg 0\) ⇒ U estrito</li>
+      <li>\(q_{c_{\max}}\): \(C' = \alpha B'\) (mínimo) · \(q_{c=0}\): \(C = \alpha B\) (neutro)</li>
+    </ul></div>
+    <div><img class="fig" src="figuras/curva_custo_laboral_burnout.png" alt="Curva de custo laboral em U"></div>
+  </div>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>5 / 10</span></div>
+</section>
+
+<!-- 6 K L -->
+<section class="slide" id="s6">
+  <div class="kicker">05 · Infraestrutura e equipe</div>
+  <h2>K e L têm efeito duplo (Reinhardt, 1975)</h2>
+  <p class="sub">Reduzem o cansaço e multiplicam o benefício — cirurgiões sofrem mais sem K</p>
+  <div class="eq">$$\frac{\partial c^{\text{laboral}}}{\partial K} = \frac{\partial C}{\partial K} - \alpha\frac{\partial B}{\partial K} &lt; 0, \qquad \frac{\partial c^{\text{laboral}}}{\partial L} = \frac{\partial C}{\partial L} - \alpha\frac{\partial B}{\partial L} &lt; 0$$</div>
+  <div class="cols">
+    <div><ul><li>\(K\): leitos, centro cirúrgico, UTI, equipamento</li><li>Sem \(K\): resolutividade → 0</li><li>Cirúrgico exige \(K\); clínico tolera posto simples</li></ul></div>
+    <div><ul><li>\(L\): enfermagem, retaguarda p/ 2ª opinião</li><li>\(L\) reduz penosidade e erro ⇒ \(C \downarrow, B \uparrow\)</li><li>CNES: leitos_exist + equipamentos + estoque_pré/10k</li></ul></div>
+  </div>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>6 / 10</span></div>
+</section>
+
+<!-- 7 INTEGRADO -->
+<section class="slide" id="s7">
+  <div class="kicker">06 · Modelo integrado</div>
+  <h2>A equação-mestra do PMM-E</h2>
+  <div class="eq">$$\arg\max_{m \in M}\; U_i = \arg\max_{m \in M}\; \sum_t \delta^t \left[ \frac{\mathbb{E}\!\left(w_{mt}^{(s)}\right)}{p_{mt}} - c_{im}^{(s)} \right]$$</div>
+  <div class="eq">$$c_{im}^{(s)} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{geográfico}} + \underbrace{C(q_{im}; L_m, K_m, s) - \alpha_i B(q_{im}; L_m, K_m)}_{\text{laboral líquido}}$$</div>
+  <div class="cards">
+    <div class="card"><b>SALÁRIO REAL</b><br>\(\mathbb{E}[w \mid B_m]/p\) — \(B\) pré-fixada + \(w^{\text{priv}}\) se houver mercado</div>
+    <div class="card"><b>CUSTO GEO</b><br>\(\phi(\text{dist}) - \gamma A + \theta\) — IVS-infra capta desamenidade</div>
+    <div class="card"><b>CUSTO CLÍNICO</b><br>\(C(q;K,L) - \alpha B(q)\) — \(K,L \downarrow \Rightarrow c \uparrow\) (cirúrgico)</div>
+  </div>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>7 / 10</span></div>
+</section>
+
+<!-- 8 IVS -->
+<section class="slide" id="s8">
+  <div class="kicker">07 · Do latente ao observável</div>
+  <h2>IVS 2010 (IPEA) como síntese — running variable canônica</h2>
+  <p class="sub">Não observamos dist, Q, q — observamos \(B_m(\text{IVS})\) e IVS p/ 100% dos municípios</p>
+  <div class="eq">$$c_m = c_0(\text{IVS}_m), \qquad V_{im}^{(s)} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_0(\text{IVS}_m) \right] + \varepsilon_{im}$$</div>
+  <table><tr><th>Subíndice</th><th>Capta</th><th>Efeito em \(c\)</th></tr>
+  <tr><td>Infra. Urbana</td><td>esgoto, lixo, desloc. &gt; 1h</td><td>\(c \uparrow\) (desamenidade pura)</td></tr>
+  <tr><td>Capital Humano</td><td>mort. infantil, analfabetismo</td><td>\(B' \uparrow\) (vocação) mas \(K \downarrow\) (\(C \uparrow\))</td></tr>
+  <tr><td>Renda/Trabalho</td><td>pobreza, informalidade</td><td>\(w = B\) (sem mercado privado)</td></tr></table>
+  <div class="alert">⚠ Forças opostas ⇒ <b>NÃO</b> assumir \(c_0'(\text{IVS}) &gt; 0\) a priori. Decompor nos 3 subíndices.</div>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>8 / 10</span></div>
+</section>
+
+<!-- 9 HIPÓTESES -->
+<section class="slide" id="s9">
+  <div class="kicker">08 · Ponte empírica</div>
+  <h2>4 hipóteses de trabalho</h2>
+  <p class="sub">Sketch orientador (<tt>hipoteses_e_viabilidade_empirica.md</tt>), não axiomas congelados</p>
+  <div class="cards" style="flex-direction:column">
+    <div class="card"><b>H1 · COMPENSAÇÃO</b> — \(\Delta B_m / p_m &gt; \Delta c_0\) na cutoff? Vacância na Faixa-1 (20k) ⇒ custo latente &gt; R$ 5k.</div>
+    <div class="card gray"><b style="color:var(--gray)">H2 · SUBALOCAÇÃO</b> — isolado (\(w = B\)) &lt; polo (\(w &gt; B\)) em ocupação e persistência CNES 6/12m.</div>
+    <div class="card gray"><b style="color:var(--gray)">H3 · CIRÚRGICO × CLÍNICO</b> — \(\left.\frac{\partial \Pr}{\partial \text{IVS}}\right|_{\text{cir.}} \ll \left.\frac{\partial \Pr}{\partial \text{IVS}}\right|_{\text{clín.}}\)</div>
+    <div class="card gray"><b style="color:var(--gray)">H4 · DESAMEN. × URGÊNCIA</b> — IVS-infra ↓ fixação (\(c \uparrow\)); IVS-cap. hum. atenuado/positivo (\(B' \uparrow\)).</div>
+  </div>
+  <div class="foot"><span>PMM-E · Teoria Micro</span><span>9 / 10</span></div>
+</section>
+
+<!-- 10 TAKEAWAY -->
+<section class="slide dark" id="s10">
+  <div class="kicker">09 · Takeaway</div>
+  <h1>Bolsa compensa,<br>mas não resolve K, L e isolamento.</h1>
+  <ul>
+    <li>Preencher vaga exige \(\Delta B / p &gt; \Delta c_0\) — testar na descontinuidade.</li>
+    <li>Interior sem mercado privado e sem \(K\) afasta cirurgiões primeiro.</li>
+    <li>Decompor o IVS evita anulação de efeitos opostos.</li>
+  </ul>
+  <p class="refs">Refs: Moehling et al. (2020, <i>Cliometrica</i>) · Choné &amp; Ma (2011, <i>Ann. Econ. Stat.</i>) · Redding &amp; Rossi-Hansberg (2017, <i>Ann. Rev. Econ.</i>) · Reinhardt (1975) · IPEA (2015) · Costa–Nunes–Sanches (2024).</p>
+  <div class="foot"><span style="color:#9CA3AF">docs/02_teoria/modelo_micro.md</span><span style="color:#9CA3AF">10 / 10</span></div>
+</section>
+
+</main>
+<nav class="ctrl">
+  <button onclick="nav(-1)">←</button>
+  <span id="pos">1 / 10</span>
+  <button onclick="nav(1)">→</button>
+</nav>
+<script src="katex/katex/katex.min.js"></script>
+<script src="katex/katex/contrib/auto-render.min.js"></script>
+<script>
+  // KaTeX: só \(...\) inline e $$...$$ / \[...\] display.
+  // (Sem delimitador $ simples de propósito: "R$ 10k" não pode virar math.)
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "\\[", right: "\\]", display: true},
+      {left: "\\(", right: "\\)", display: false}
+    ],
+    throwOnError: false
+  });
+  let cur = 1; const N = 10;
+  function show(i){
+    cur = Math.min(N, Math.max(1, i));
+    document.querySelectorAll("section.slide").forEach(s => s.classList.remove("active"));
+    document.getElementById("s"+cur).classList.add("active");
+    document.getElementById("pos").textContent = cur + " / " + N;
+    location.hash = "s"+cur;
+  }
+  function nav(d){ show(cur+d); }
+  document.addEventListener("keydown", e => {
+    if(e.key === "ArrowRight" || e.key === " ") nav(1);
+    if(e.key === "ArrowLeft") nav(-1);
+  });
+  const h = parseInt((location.hash||"").replace("#s",""));
+  if(h >= 1 && h <= N) show(h);
+</script>
+</body>
+</html>

@@ -1,264 +1,107 @@
-# Avaliação do Mais Médicos Especialistas
+# Avaliação do Mais Médicos Especialistas (PMM-E)
 
-Este repositório organiza uma avaliação do Programa Mais Médicos Especialistas
-(PMM-E). A comparação pública já executada e o novo desenho causal são
-deliberadamente separados.
+Avaliação de impacto do Programa Mais Médicos Especialistas (Lei nº 15.233/2025) com dados públicos: editais e
+resultados do programa, CNES, SIA, SIH, TISS e o IVS 2010 do Ipea. Todo número sai de um script versionado, é
+gravado em `output/` com manifesto e hash, e é conferido por teste.
 
-Há quatro camadas separadas no repositório:
+O repositório serve para duas coisas: guardar a evidência do trabalho (bancas 1, 2 e final, artigos) e servir de
+base para outras perguntas sobre o PMM-E ou sobre força de trabalho médica no SUS. Veja
+[Reaproveitar o repositório](#reaproveitar-o-repositório).
 
-1. **Resultado principal:** quais características territoriais estão associadas
-   à atração administrativa no primeiro ciclo?
-2. **Resultado causal principal:** ganhar marginalmente a vaga de primeira
-   opção aumenta a homologação e a presença posterior do especialista naquele
-   curso–CNES?
-3. **Pergunta causal arquivada:** R$ 5 mil adicionais de bolsa aumentam a
-   procura e o preenchimento junto aos limiares administrativos do IVS?
-4. **Resultado secundário:** células município–curso com atração administrativa
-   apresentaram evolução distinta da oferta médica cadastrada no CNES?
+## Estado em 18/11/2026
 
-## Decisão atual
+**Pergunta da banca final:** a bolsa maior (+R$ 5 mil/mês nas faixas de IVS do edital) muda qual vaga o médico
+escolhe como 1ª opção?
 
-> **Resultado vigente:** o A8 é o núcleo causal do trabalho curto. Em 36 pares
-> de candidatos de ampla concorrência, sem empates e separados por exatamente
-> um ponto no cutoff da mesma primeira opção, ganhar a vaga elevou a
-> homologação no mesmo curso–CNES em **63,9 p.p.** e a presença ativa posterior
-> em **33,3 p.p.** A interpretação é causal local sob comparabilidade dos pares,
-> com rigor moderado. A4 e A5 permanecem associativos.
+| Resultado | Leitura | Onde está |
+|---|---|---|
+| **Logit condicional, vagas da mesma UF (VL-1).** +R$ 5 mil multiplicam a chance de a vaga ser a 1ª opção por **×1,47** [1,15; 1,89] nos ciclos 1–3 (p de Holm 0,005) e por ×1,90 [1,30; 2,78] no ciclo 2. Em distância, +R$ 5 mil valem o mesmo que a vaga ficar **75 km** mais perto [28; 122] | resultado da banca final. **Exploratório:** a especificação foi escolhida depois de ver os dados (adendo 52e). Na especificação pré-registrada (M1), o peso da bolsa não passa no Holm | [57x](docs/06_execucao/57x_resultados_escolha_localizacao_par.md), [66](docs/06_execucao/66_analise_completa_H2.md) |
+| **Onde o médico escolhe (descritivo).** Entre 5.425 candidatos com origem conhecida, 79% põem a 1ª opção na UF onde já trabalham e 36% no mesmo município; distância mediana de 51 km | descritivo | [66](docs/06_execucao/66_analise_completa_H2.md) |
+| **RDD da bolsa** nos cortes 0,300 e 0,400 do IVS 2010 oficial (preenchimento, funil, CNES, produção) | nenhuma primária rejeita zero depois do Holm: inconclusivo, não evidência de ineficácia. Nos mesmos cortes mudam outras regras federais: a RDD mede um pacote. A running variable é o IVS 2010 oficial do Ipea; `data/ivs_ipea_2010_municipios.csv` **não** é o IVS do município | [44](docs/06_execucao/44_sintese_rdd_bolsa_multioutcome.md), [57](docs/06_execucao/57_sintese_perguntas_reformuladas.md), [auditoria 16](docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md) |
+| **Corte de seleção (A8).** Em 36 pares separados por um ponto, ganhar a vaga eleva a homologação em 63,9 p.p. e a presença ativa posterior em 33,3 p.p. | causal local, rigor moderado; núcleo dos dois artigos | [17](docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md), [33](docs/06_execucao/33_status_execucao_plano_causal.md) |
+| **Atração territorial (A4) e oferta no CNES (A5)**, ciclo 1 | associativos | [35](docs/06_execucao/35_plano_correcoes_pos_auditoria.md) |
+| **Ciclo 3** | congelado até a competência `202703` do CNES estar publicada e madura | [12](docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md), [13](docs/05_identificacao/13_plano_pre_analise_ciclo3.md) |
 
-Há dois textos. O artigo de trabalho, `paper_pmme_submission.tex`, com o A8
-no corpo e A4 e A5 em apêndice; e o **artigo curto**, `paper_pmme_curto.tex`,
-que organiza a mesma evidência em três camadas — causal, descritiva e
-associativa — em sete páginas. Cada cifra dos dois é conferida contra `output/`
-por `scripts/tema_trabalho/10_conferir_numeros_artigo.py` e
-`11_conferir_numeros_artigo_curto.py`, que fazem parte do `run_all.py`.
+O README anterior, com o histórico do estado em camadas, está em
+[`docs/90_arquivo_historico/README_raiz_ate_18nov2026.md`](docs/90_arquivo_historico/README_raiz_ate_18nov2026.md).
 
-A decisão consolidada, todos os achados e a sequência de avanço estão em
-[`docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`](docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md).
-O estado efetivamente executado dos portões está em
-[`docs/06_execucao/33_status_execucao_plano_causal.md`](docs/06_execucao/33_status_execucao_plano_causal.md):
-A8 concluído, RDD-IVS arquivada e pedido administrativo cancelado sem envio.
+## Comece aqui
 
-O plano anterior do cutoff está preservado em
-[`docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md`](docs/05_identificacao/15_cutoff_selecao_atracao_retencao.md).
-O plano territorial da bolsa está em
-[`docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md`](docs/05_identificacao/14_plano_implementacao_rdd_bolsa.md).
-O tema, os outcomes e o veredito de viabilidade estão em
-[`docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md`](docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md).
-Uma auditoria reproduzível confirmou 350 municípios fora das capitais, 593 das
-678 vagas imediatas nesse grupo e 26 competências CNES. Também encontrou que
-211 das 468 confirmações públicas pertencem a células originalmente apenas de
-reserva. A1 concluiu a reconciliação como `APROVADO_CELULA`: a análise usará
-alguma confirmação/homologação por célula e não taxa de preenchimento por vaga.
-A2 concluiu a tipologia como `APROVADO_4_ESTRATOS` (540/540 municípios A1 em
-capital/metropolitano/interior próximo/remoto via REGIC 2018 + RM/RIDE 2022).
-As sessões do núcleo estão organizadas em
-[`prompts/avaliacao_atracao_interior/`](prompts/avaliacao_atracao_interior/README.md).
-A RDD da bolsa foi **reaberta e estimada em 14/10/2026**. A faixa é atribuída
-pelo IVS 2010 oficial do Ipea com cortes em `0,300` e `0,400`, que reproduzem
-100% das faixas dos ciclos 1 e 2. A RDD sharp não detecta efeito do anúncio de
-+R$ 5 mil, com intervalos largos. O arquivo `data/ivs_ipea_2010_municipios.csv`,
-usado antes como IVS 2010, é a linha errada da base do Ipea (uma linha de
-subgrupo, sobretudo mulheres negras em área urbana, e não a do município): foi ele que fez a regra parecer
-irreproduzível. Ver
-[`docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md`](docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)
-e [`docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md`](docs/auditorias/16_ivs_2010_oficial_e_arquivo_local.md).
-A inferência alternativa, exploratória
-([`39`](docs/06_execucao/39_inferencia_alternativa_rdd_bolsa.md)), não muda a
-leitura: o resultado é inconclusivo, e não evidência de ineficácia. O estado e
-as decisões em aberto estão em
-[`38`](docs/06_execucao/38_estado_e_pendencias_rdd_bolsa.md); o relatório com
-as figuras é `output/rdd_bolsa/relatorio_resultados_rdd_bolsa.pdf`
-(`python run_all.py --rdd-bolsa`).
-A rodada multi-outcome (protocolo 40: funil dos ciclos 1–3, escolha dos candidatos e DiRD no CNES nacional) terminou em 19/10/2026: nenhuma das duas primárias é rejeitada depois do Holm, e a síntese, com a proposta de revisão da hipótese para decisão do autor, está em [`44`](docs/06_execucao/44_sintese_rdd_bolsa_multioutcome.md).
+| Quero… | Onde |
+|---|---|
+| apresentar a banca final | deck `output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx` e roteiro `roteiro_fala_banca_final.docx` (mesma pasta); conteúdo e perguntas prováveis em [`docs/07_apresentacoes/banca_final/`](docs/07_apresentacoes/banca_final/README.md) |
+| entender a pergunta e a teoria | [pergunta do artigo](docs/01_pergunta_escopo/15_incentivos_ivs_provimento_duradouro.md), [modelo microeconômico](docs/02_teoria/modelo_micro.md) |
+| saber de onde vem cada número | o doc de resultado em [`docs/06_execucao/`](docs/06_execucao/) (cada um diz o script e a saída) e a auditoria correspondente em [`docs/auditorias/`](docs/auditorias/) |
+| navegar pela documentação | [`docs/README.md`](docs/README.md) |
+| ler os artigos | `paper_pmme_submission.tex` (completo) e `paper_pmme_curto.tex` (sete páginas); cada cifra é conferida contra `output/` pelo `run_all.py` |
+| ver o que falta | [`TODO.md`](TODO.md) |
+| saber as regras de trabalho | [`CLAUDE.md`](CLAUDE.md) (regras do projeto) e [`AGENTS.md`](AGENTS.md) |
 
-O diagnóstico histórico imediata versus reserva usa `município–curso–mês` no ciclo 1 e o CNES mensal de
-junho de 2024 a julho de 2026:
+## Reaproveitar o repositório
 
-- 2024-06 a 2025-06: pré-tratamento;
-- 2025-07: transição;
-- 2025-08 a 2026-07: trajetória pós disponível.
+Blocos que funcionam fora da pergunta da bolsa:
 
-Nele foi executada uma DDD com efeitos fixos de município–curso, município–mês e
-curso–mês, acompanhada por estudo de evento. O plano completo está em
-[`docs/06_execucao/05_roadmap_execucao.md`](docs/06_execucao/05_roadmap_execucao.md), e a auditoria do
-pipeline e dos resultados está em
-[`docs/auditorias/04_auditoria_pipeline_agregado.md`](docs/auditorias/04_auditoria_pipeline_agregado.md).
+| Bloco | O que faz | Onde |
+|---|---|---|
+| Aquisição de dados públicos de saúde | CNES mensal e nacional, CNES profissional, SIA e SIH pelo TabNet (por local de atendimento e por residência), TISS/ANS, SIGTAP, IVS 2010 oficial, Censo 2022, editais e resultados do PMM-E, normas federais. Os scripts de aquisição gravam manifesto com SHA-256, e os de bases grandes (a09 em diante) têm `--etapa verificar`, que confere o que está versionado sem rede | [`scripts/aquisicao/`](scripts/aquisicao/), saídas em [`output/aquisicao/`](output/aquisicao/) |
+| Leitura de arquivos do DATASUS | download, descompressão e conversão de `.dbc` para DataFrame ou Parquet | [`scripts/utils/datasus_dbc.py`](scripts/utils/datasus_dbc.py) |
+| Referência sobre as bases | o que cada sistema mede, unidade, acesso e limites | [inventário por outcome](docs/04_dados/02_inventario_dados_por_outcome.md), [dossiê das bases de saúde](docs/04_dados/20_dossie_bases_dados_saude_brasil_pmme.md) |
+| Estimadores | RDD (`rdd_lib.py`), logit condicional de escolha (`16_estimar_E9_escolha.py`, `50_escolha_localizacao_par.py`), sensibilidade de Rambachan–Roth (`honestdid_lib.py`), DiRD, Holm e BKY | [`scripts/rdd_bolsa/`](scripts/rdd_bolsa/) |
+| Ambiente reprodutível | confere Python, numpy e pandas antes de rodar | [`scripts/utils/ambiente.py`](scripts/utils/ambiente.py) |
+| Decks e roteiros gerados por script | python-pptx sobre o deck do grupo, figuras de `output/`, roteiro em Word | [`scripts/apresentacao/`](scripts/apresentacao/) |
 
-## Interpretação correta do diagnóstico histórico
+**Para abrir uma pergunta nova**, siga o caminho que as anteriores seguiram:
 
-"Vaga imediata" e "cadastro de reserva" são o contraste empírico, não o tema do
-trabalho. O contraste mede a diferença ajustada após disponibilizar inicialmente
-uma vaga para preenchimento imediato, em vez de mantê-la apenas em reserva,
-entre municípios–especialidades incluídos no mesmo processo.
+1. Protocolo em `docs/06_execucao/` (próximo número livre), congelado antes de olhar o resultado; o que vier
+   depois de ver dados é rotulado como pós-resultado ou exploratório.
+2. Script em `scripts/<área>/`, com caminhos relativos à raiz, lendo `data/` ou `output/` e gravando só em `output/`.
+3. Teste em `tests/` que confere esquema, cobertura, hashes e, quando houver, o doc gerado.
+4. Doc de resultado em `docs/06_execucao/` e, se o arquivo for novo, entrada em
+   [`docs/00_registro_mudancas.md`](docs/00_registro_mudancas.md).
 
-Cadastro de reserva não é ausência permanente do programa e pode receber
-exposição posterior. A classificação também não foi aleatória. A leitura causal
-exigiria relevância administrativa, suporte e tendências paralelas. O portão de
-relevância falhou e o resultado foi encerrado como comparação ajustada.
+As regras que valem para tudo isso (nunca alterar `data/`, proveniência, linguagem causal só com identificação)
+estão no [`CLAUDE.md`](CLAUDE.md).
 
-O estudo mede oferta médica cadastral total no município, não identifica
-individualmente bolsistas e não demonstra, por si só, horas trabalhadas,
-produção, redução de espera ou melhora de saúde.
-
-## Estado dos dados e da evidência
-
-- O quadro de oferta do ciclo 1 está preservado e auditado: 1.295 células
-  CNES–curso, das quais 503 apenas imediatas, 782 apenas em reserva e 10 mistas.
-- As 26 competências do CNES foram processadas, de 2024-06 a 2026-07, usando
-  todos os estabelecimentos dos 368 municípios do quadro.
-- O painel municipal deduplica `CO_PROFISSIONAL_SUS`; não soma a lista nominal,
-  não presume 40 horas e censura margens sem seguimento.
-- A ponte curso–CBO é operacional, não uma crosswalk oficial. Dez cursos sem
-  CBO compartilhado formam a amostra confirmatória.
-- A4 é o resultado principal: atração em 30,3% das células do quadro da primeira
-  chamada; metropolitano +27,9pp versus interior remoto, preservado em
-  confirmação (+27,0pp), homologação (+23,8pp) e unidade município–curso
-  (+31,6pp). Os valores são os da especificação primária vigente, com as oito
-  unidades da federação de menos de cinco municípios colapsadas em macrorregião
-  de saúde conforme o protocolo congelado — a correção C1 de
-  [`35_plano_correcoes_pos_auditoria.md`](docs/06_execucao/35_plano_correcoes_pos_auditoria.md).
-  A série anterior, de +29,4pp, vinha do balde único e não é mais a primária.
-- A5 usa como principal 587 células município–curso em 295 municípios, referência
-  limpa 202506 e follow-up 202603. O estudo dinâmico, na escala proporcional que
-  é a primária, encontra +0,068 log-ponto em março de 2026 (EP 0,018), com
-  `q = 0,0034` na família de 25 coeficientes; a escala em nível dá +0,50
-  profissional (EP 0,23), mas é frágil à composição de cursos e não sobrevive
-  ao FDR (`q = 0,364`). Linguagem estritamente associativa; a mediana é 1 e o
-  máximo 211 no grupo com atração. Em 16/09/2026 foram acrescentados, sob
-  protocolo congelado, um placebo (células sem atração em municípios com
-  atração: nulo), a pré-tendência por curso (rejeita nos cursos 2 e 16) e dois
-  testes de deslocamento dentro da região de saúde (sem perda nos vizinhos do
-  quadro; oferta região–curso positiva). A5 é reestimável a partir de
-  `A5_painel_T0.parquet` com hash conferido contra o A6, sem o painel mensal.
-- A7 identifica 423 pares adjacentes de seleção em quatro publicações. O A8
-  restringe o núcleo a 36 pares de 2025 em ampla concorrência, primeira opção,
-  sem empate e com gap exato de um ponto. O efeito local condicional é +63,9
-  p.p. em homologação e +33,3 p.p. em presença ativa no mesmo curso–CNES; o
-  placebo abaixo é nulo e a replicação de 2026 tem direção consistente.
-- No grão e na amostra da DDD, imediata versus reserva não prediz alocação:
-  +2,79 p.p., erro-padrão 6,89 p.p., `p=0,6871`. O portão causal não foi
-  aprovado.
-- A antiga diferença imediata versus reserva de −0,446 especialista é mantida
-  apenas como diagnóstico histórico de outro estimando, não como resultado
-  principal do artigo.
-
-O antigo portão A06 permanece apenas como registro do desenho individual
-anterior. O A8 não depende de entrega administrativa e não persiste
-identificadores pessoais nos artefatos analíticos.
-
-## Avaliação prospectiva do ciclo 3
-
-O ciclo 3 permanece uma replicação prospectiva, mas não é a fila imediata.
-Nenhum efeito pode ser estimado antes da competência `202703` madura. O plano
-congelado prevê:
-
-- estudo principal: oferta imediata pura versus proposta não priorizada pura de
-  anestesiologia sobre o estoque no CNES ofertante aos seis e doze meses, com
-  estoque municipal como teste obrigatório de oferta líquida;
-- desfecho clínico-chave condicional: cirurgias eletivas no SIH;
-- generalização secundária: oncologia clínica e medicina intensiva, com efeitos
-  separados; cirurgia geral/CBO 225225 apenas como sensibilidade;
-- alternativa somente se o pré-período justificar: ecocardiografia no SIA;
-- RDD do IVS: reaberta e estimada nos ciclos 1 e 2 em 14/10/2026, com o IVS
-  2010 oficial
-  ([`docs/06_execucao/37`](docs/06_execucao/37_resultados_rdd_bolsa_ivs_oficial.md)).
-  No ciclo 3, ela só entra depois da maturidade, como os demais desenhos.
-
-A Nota Técnica nº 59/2026 criou uma assinatura cadastral potencialmente
-observável dos participantes no CNES. O C3-01 já corrigiu a ponte do Anexo I: os
-únicos cursos com suporte comparativo e ponte integral sem sobreposição são 1,
-12 e 24. O C3-02B tentou os 675 pares de 27 UFs × 25 competências: 673 foram
-processados, mas `RDAC2606.dbc` e `RDRR2606.dbc` não existiam no FTP oficial em
-31/08/2026. As 25 versões SIGTAP foram historicizadas. Conforme a regra
-*fail-closed*, as ausências não viraram zeros e os painéis preliminares do
-C3-02 não foram promovidos. Esse bloqueio foi separado do CNES: o C3-03 de
-força de trabalho foi executado apenas com o pré e congelou o plano em
-[`docs/05_identificacao/13_plano_pre_analise_ciclo3.md`](docs/05_identificacao/13_plano_pre_analise_ciclo3.md).
-Anestesiologia ficou como associação ajustada: suporte aprovado, mas
-equivalência e potência para um especialista insuficientes. C3-02B ainda deve
-ser repetido quando os dois arquivos aparecerem, exclusivamente para liberar o
-módulo clínico.
-
-A estratégia e seus limites estão em
-[`docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md`](docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md).
-Os prompts ordenados para sessões futuras estão em
-[`prompts/avaliacao_ciclo3/`](prompts/avaliacao_ciclo3/README.md). Nenhum efeito
-do ciclo 3 foi estimado. Qualquer estimação aguarda a competência `202703`
-madura e seguirá a especificação congelada, sem redesenho pelo resultado.
-
-## Escopo e bloqueios
-
-O portão A1 foi concluído como `APROVADO_CELULA`; A2–A8 foram executados e
-auditados. O A8 é o resultado causal principal. R1 não reproduziu a regra da
-bolsa, portanto a RDD-IVS está arquivada. A DDD imediata versus reserva
-permanece como diagnóstico histórico, separado da A4, da A5 e do A8.
-
-Permanecem fora do núcleo: estimação do ciclo 3 antes da maturidade; efeito da
-dose recebida sem pagamentos; SIA/SUS, SIH/SUS, fila, saúde e custos; retenção
-contínua sem log de eventos; empates dependentes de UF/idade; e qualquer RDD do
-IVS público sem primeiro estágio. Métodos sintéticos não serão usados para
-reparar retrospectivamente a DDD anterior.
-
-## Executar o estado validado
+## Executar
 
 ### Ambiente
 
-O `requirements.txt` fixa `numpy==2.5.2` e `pandas==3.0.5`, que exigem **Python
-3.12 ou superior**. Em versões anteriores a instalação falha e a suíte coleta
-apenas parte dos módulos, com erro de importação em vez de falha explícita.
+O `requirements.txt` fixa `numpy==2.5.2` e `pandas==3.0.5`, que exigem **Python 3.12 ou superior**.
 
 ```bash
 python3.13 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 ```
 
-Use o interpretador do ambiente virtual nos comandos abaixo.
+O ambiente é obrigatório, não recomendado. Com versões próximas (por exemplo numpy 2.4.6), os scripts rodam e os
+testes passam, mas as saídas mudam a partir da 14ª casa decimal. Como a proveniência é ancorada em SHA-256 de
+arquivo, isso reescreve artefatos e quebra a cadeia de hashes sem aviso. Por isso o `run_all.py`, que grava,
+**aborta** diante de divergência; o `run_tests.py`, que só lê, **avisa** e segue
+([`scripts/utils/ambiente.py`](scripts/utils/ambiente.py); erratas em
+[`docs/auditorias/14_erratas_artefatos_congelados.md`](docs/auditorias/14_erratas_artefatos_congelados.md)).
 
-**Por que o ambiente é obrigatório, e não recomendado.** Instalar versões
-próximas das fixadas — por exemplo numpy 2.4.6 em vez de 2.5.2 — não produz
-erro. Os scripts terminam com sucesso e a suíte passa. O que muda são as saídas,
-a partir da 14ª casa decimal. Como a proveniência do projeto é ancorada em
-SHA-256 de arquivo, rodar o pipeline sob outro ambiente reescreve artefatos e
-quebra a cadeia de hashes sem que nada avise. Verificado em 14/09/2026: sob o
-ambiente documentado, `05_estimar_atracao.py` reexecuta sem alterar um byte;
-sob Python 3.11 com numpy 2.4.6, reescreve doze arquivos.
+### Pipeline e testes
 
-Por isso os dois pontos de entrada verificam o ambiente antes de rodar, via
-[`scripts/utils/ambiente.py`](scripts/utils/ambiente.py). O `run_all.py`, que
-grava artefato, **aborta** diante de divergência. O `run_tests.py`, que apenas
-lê, **avisa** e segue.
-
-**Reprodução byte a byte.** Sob o ambiente documentado, A1, A4, A5 (no modo de
-reestimação) e, desde 16/09/2026, A8 reexecutam sem alterar um byte. Os
-artefatos de A8 tinham sido gravados em outra plataforma, com caminhos do
-Windows, e foram regravados aqui por decisão delegada pelo autor; só o 15º
-dígito dos intervalos convencionais, o PNG e os caminhos mudaram, e o conferidor
-segue aprovando. O registro está em
-[`docs/auditorias/14_erratas_artefatos_congelados.md`](docs/auditorias/14_erratas_artefatos_congelados.md).
-
-### Pipeline completo de replicação
 ```bash
-python run_all.py
+python run_all.py              # pipeline completo; exige os 26 arquivos mensais do CNES do manifesto
+python run_all.py --rdd-bolsa  # só a cadeia da RDD da bolsa
+python run_tests.py            # suíte de testes (98 arquivos em tests/)
 ```
-O comando exige que os 26 arquivos mensais listados no manifesto CNES já estejam disponíveis localmente. Ele reproduz a integração, a comparação histórica e as etapas A1–A8, incluindo tabelas, figuras, red team, cutoff estrito, manifestos e os dois conferidores de artigo. Sem o painel mensal do CNES, `06_avaliar_provimento_cnes.py` e `06b_ameacas_a5_placebo_pretendencia_deslocamento.py` rodam sozinhos a partir de `A5_painel_T0.parquet`, com o hash conferido contra o A6.
 
-### Suíte de testes automatizados (183 testes)
-```bash
-python run_tests.py
-```
-Executa a validação formal de integridade dos dados, invariantes de painel, pre-analysis conformity, estimadores LPM/Logit e rastreabilidade documental.
+A ordem dos passos é a lista `STEPS` do `run_all.py`, descrita em [`scripts/README.md`](scripts/README.md).
+As rodadas exploratórias e os decks rodam fora do pipeline, com o comando registrado no doc de cada uma.
 
----
+## Estrutura
 
-## Estrutura do Repositório
-
-Cada diretório principal possui documentação autônoma orientando seu conteúdo, regras e padrões de reprodutibilidade:
-
-| Diretório | Documentação | Função e Conteúdo |
-|---|---|---|
-| [`data/`](data/README.md) | [Guia de Dados](data/README.md) | Bases observadas brutas, editais e microdados preservados (leitura estrita) |
-| [`docs/`](docs/README.md) | [Mapa Canônico](docs/README.md) | Pergunta, modelo microeconômico, literatura empírica, identificação e auditorias |
-| [`output/`](output/README.md) | [Guia de Artefatos](output/README.md) | Painéis analíticos, estimativas, tabelas, figuras e manifestos reproduzíveis |
-| [`prompts/`](prompts/README.md) | [Fila e Histórico](prompts/README.md) | Sessões executadas, cadernos de prompts e especificações de pesquisa |
-| [`scripts/`](scripts/README.md) | [Guia de Scripts](scripts/README.md) | Rotinas modulares de aquisição, estimação, avaliação de impacto e utilitários |
-| [`tests/`](tests/README.md) | [Guia de Testes](tests/README.md) | 183 testes automatizados garantindo integridade econométrica e invariantes |
+| Caminho | O que guarda |
+|---|---|
+| [`data/`](data/README.md) | bases observadas e brutos; **só leitura** |
+| [`docs/`](docs/README.md) | pergunta, teoria, literatura, dados, identificação, execução, apresentações, auditorias; [registro de mudanças](docs/00_registro_mudancas.md) |
+| [`output/`](output/README.md) | painéis, estimativas, figuras, decks e manifestos, todos gerados por script |
+| [`scripts/`](scripts/README.md) | aquisição, estimação, apresentação e utilitários |
+| [`tests/`](tests/README.md) | testes de integridade, de estimadores e de documentos gerados |
+| [`prompts/`](prompts/README.md) | sessões de trabalho já executadas e filas congeladas (ciclo 3) |
+| `run_all.py`, `run_tests.py` | pontos de entrada do pipeline e da suíte |
+| `paper_pmme_submission.tex`, `paper_pmme_curto.tex` | artigos |
+| `TODO.md` | pendências |
+| `CLAUDE.md`, `AGENTS.md` | regras de trabalho para pessoas e agentes |

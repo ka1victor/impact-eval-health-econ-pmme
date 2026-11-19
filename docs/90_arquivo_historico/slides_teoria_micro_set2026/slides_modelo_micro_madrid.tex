@@ -1,0 +1,330 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% ==============================================================================
+% TEMA E CONFIGURAÇÃO VISUAL (Madrid + Cores Sóbrias)
+% ==============================================================================
+\usetheme{Madrid}
+\usecolortheme{dolphin} % Azul marinho clássico e equilibrado
+
+% Remove os botões de navegação pequenos no canto inferior direito
+\setbeamertemplate{navigation symbols}{}
+
+% Configuração do Rodapé com "Slide X / Y" limpo e institucional
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.30\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.45\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+% ==============================================================================
+% ROADMAP AUTOMÁTICO (SLIDES DE TRANSIÇÃO ENTRE SEÇÕES)
+% ==============================================================================
+\AtBeginSection[]
+{
+  \begin{frame}{Roteiro}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+% ==============================================================================
+% PACOTES ESSENCIAIS
+% ==============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{appendixnumberbeamer} % Não conta slides de backup no denominador
+
+% ==============================================================================
+% INFORMAÇÕES DA APRESENTAÇÃO
+% ==============================================================================
+\title[Modelo Microeconômico Locacional]{Modelo Microeconômico da Escolha Locacional Médica}
+\subtitle{Fundamentação Teórica Canônica e Aplicação ao PMM-E (Lei 15.233/2025)}
+\author[Economia da Saúde]{Seu Nome}
+\institute[Insper]{Insper Instituto de Ensino e Pesquisa}
+\date{\today}
+
+% ==============================================================================
+% INÍCIO DOS SLIDES
+% ==============================================================================
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% Slide de Título
+% ------------------------------------------------------------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Sumário Inicial
+% ------------------------------------------------------------------------------
+\begin{frame}{Visão Geral}
+  \tableofcontents
+\end{frame}
+
+% ==============================================================================
+% SEÇÃO 1: MODELO CANÔNICO
+% ==============================================================================
+\section{O Modelo Canônico de Escolha Locacional}
+
+\begin{frame}{Decisão Intertemporal de Localização}
+  \framesubtitle{Formulação canônica de Moehling et al. (2020, p. 184)}
+  
+  A distribuição espacial de médicos é modelada pela \textbf{maximização intertemporal dos retornos líquidos esperados} entre localidades $m \in M$:
+
+  \begin{equation}
+    \arg\max_{m \in M}\; U_i(\omega_m) = \arg\max_{m \in M} \left\{ \sum_{t} \delta^t \left[ \frac{\mathbb{E}\!\left(w_{mt}^{(s)}\right)}{p_{mt}} - c_{im}^{(s)} \right] \right\}
+  \end{equation}
+
+  \vspace{0.3cm}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Componentes Pecuniários:}
+      \begin{itemize}
+        \item $w_{mt}^{(s)}$: rendimento nominal auferido no município $m$.
+        \item $p_{mt}$: nível de preços local (deflator do custo de vida).
+        \item $\mathbb{E}(w)/p$: \textbf{salário real esperado}.
+      \end{itemize}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \textbf{Estrutura de Decisão:}
+      \begin{itemize}
+        \item $\delta \in (0,1)$: fator de desconto intertemporal (ficar vs. migrar).
+        \item $s$: especialidade ou qualificação médica.
+        \item $c_{im}^{(s)}$: \textbf{custo locacional líquido não pecuniário}.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Propriedades Estruturais e Heterogeneidade}
+  \begin{block}{1. Horizonte Intertemporal ($\sum_t \delta^t$)}
+    Modela escolhas dinâmicas de carreira ao longo do ciclo de vida, capturando a decisão crítica entre fixar-se definitivamente no município ou retornar/migrar após o vínculo temporário.
+  \end{block}
+
+  \vspace{0.2cm}
+  \begin{block}{2. Heterogeneidade por Especialidade ($s$)}
+    \begin{itemize}
+      \item \textbf{Generalistas / Atenção Básica:} Praticam em postos com menor exigência de capital fixo.
+      \item \textbf{Especialistas Focais / Cirúrgicos:} Dependem de infraestrutura hospitalar complexa (centro cirúrgico, leitos de UTI) e abrem mão de retornos privados elevados em polos urbanos.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% ==============================================================================
+% SEÇÃO 2: MICROFUNDAMENTAÇÃO DOS CUSTOS
+% ==============================================================================
+\section{Microfundamentação dos Custos Não Pecuniários}
+
+\begin{frame}{Custo Geográfico: Distância e Amenidades}
+  \framesubtitle{Redding \& Rossi-Hansberg (2017) e Moehling et al. (2020)}
+
+  O custo locacional não pecuniário geográfico é decomposto em:
+  \begin{equation}
+    c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}
+  \end{equation}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Variáveis Explicativas:}
+      \begin{itemize}
+        \item $\text{dist}_{im} = d(\text{família}_i, m)$: distância física à cidade onde residem os familiares de fato.
+        \item $A_m$: amenidades urbanas locais (qualidade urbana, saneamento e segurança).
+        \item $\theta_i^{\text{rural}}$: preferência individual por vivência rural vs. urbana.
+      \end{itemize}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \textbf{Derivadas Parciais:}
+      \begin{itemize}
+        \item $\displaystyle \frac{\partial c^{\text{geo}}}{\partial \text{dist}_{im}} = \phi' > 0$ \\
+        \emph{Afastamento familiar impõe desutilidade logística e afetiva crescente.}
+        \item $\displaystyle \frac{\partial c^{\text{geo}}}{\partial A_m} = -\gamma < 0$ \\
+        \emph{Amenidades urbanas superiores tornam o município mais atraente.}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Custo Laboral: Cansaço vs. Vocação ($q$)}
+  \framesubtitle{Fundamentação em Choné \& Ma (2011, p. 232)}
+
+  A desutilidade clínica líquida de atender um volume $q$ de pacientes é expressa por:
+  \begin{equation}
+    c^{\text{laboral}}(q) = C(q) - \alpha B(q)
+  \end{equation}
+
+  \begin{itemize}
+    \item $C(q)$: \textbf{cansaço e exaustão física/mental} ($C' > 0$, com $C'' > 0$ por desgaste biológico e cognitivo crescente).
+    \item $B(q)$: \textbf{benefício efetivo de saúde gerado} ($B' > 0$, com $B'' < 0$ por priorização na triagem).
+    \item $\alpha \ge 0$: \textbf{satisfação moral e senso de dever cumprido} (altruísmo profissional).
+  \end{itemize}
+
+  \vspace{0.2cm}
+  \begin{alertblock}{Convexidade Estrita ($c''(q) \gg 0$)}
+    A derivada de segunda ordem é inequivocamente positiva:
+    \begin{equation}
+      c''(q) = C''(q) - \alpha B''(q) \gg 0
+    \end{equation}
+    Essa propriedade garante uma curva de custo não pecuniário em \textbf{formato de U}.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{A Curva de Custo Laboral e Regimes de Atendimento}
+  \begin{columns}[c]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\linewidth]{figuras/curva_custo_laboral_burnout.png}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \small
+      \textbf{Zonas e Pontos Notáveis:}
+      \begin{enumerate}
+        \item \textbf{Zona 1 ($q < q_{c_{\max}}$):} Satisfação supera cansaço marginal ($\alpha B' > C'$). Atender pacientes adicionais reduz o custo líquido.
+        \item \textbf{Ponto Ótimo ($q = q_{c_{\max}}$):} $C' = \alpha B'$. \textbf{Satisfação líquida máxima} (custo mínimo).
+        \item \textbf{Zona 2 ($q_{c_{\max}} < q < q_{c=0}$):} Cansaço marginal supera satisfação ($C' > \alpha B'$), mas saldo acumulado ainda é positivo ($\alpha B > C$).
+        \item \textbf{Custo Neutro ($q = q_{c=0}$):} $C(q) = \alpha B(q)$ ($c = 0$).
+        \item \textbf{Zona 3 ($q > q_{c=0}$):} Desutilidade clínica líquida e sobrecarga estrita ($c > 0$).
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Infraestrutura ($K$) e Pessoal de Apoio ($L$)}
+  \framesubtitle{Função de produção médica (Reinhardt, 1975)}
+
+  A infraestrutura instalada ($K$) e a equipe de enfermagem/apoio ($L$) exercem um \textbf{efeito duplo}:
+  \begin{equation}
+    \frac{\partial c^{\text{laboral}}}{\partial K} = \frac{\partial C}{\partial K} - \alpha \frac{\partial B}{\partial K} < 0,
+    \qquad
+    \frac{\partial c^{\text{laboral}}}{\partial L} = \frac{\partial C}{\partial L} - \alpha \frac{\partial B}{\partial L} < 0
+  \end{equation}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{1. Redução da Penosidade ($\partial C / \partial \cdot < 0$)}
+        Apoio técnico e retaguarda para segunda opinião diminuem a exaustão cognitiva e a sobrecarga física.
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{block}{2. Multiplicação do Benefício ($\partial B / \partial \cdot > 0$)}
+        Insumos, medicamentos e equipamentos aumentam a capacidade resolutiva curativa do atendimento.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ==============================================================================
+% SEÇÃO 3: MODELO INTEGRADO E PMM-E
+% ==============================================================================
+\section{Modelo Integrado e Aplicação ao PMM-E}
+
+\begin{frame}{O Modelo Teórico Integrado Completo}
+  Consolidando os blocos teóricos, a decisão locacional intertemporal do médico especialista é:
+
+  \begin{equation}
+    \arg\max_{m \in M}\; U_i(\omega_m) = \arg\max_{m \in M} \left\{ \sum_{t} \delta^t \left[ \frac{\mathbb{E}\!\left(w_{mt}^{(s)}\right)}{p_{mt}} - c_{im}^{(s)} \right] \right\}
+  \end{equation}
+
+  \vspace{-0.1cm}
+  \begin{equation}
+    c_{im}^{(s)} = \underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{Custo Geográfico e Amenidades}} \;+\; \underbrace{C(q_{im}; L_m, K_m, s) - \alpha_i B(q_{im}; L_m, K_m)}_{\text{Custo Laboral Líquido de Realização}}
+  \end{equation}
+
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{exampleblock}{Retorno Pecuniário}
+        $\mathbb{E}(w_{mt}^{(s)}) / p_{mt}$ inclui o valor da bolsa $B_m$ do edital PMM-E.
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{exampleblock}{Desutilidade Espacial}
+        Isolamento geográfico e carência de amenidades urbanas.
+      \end{exampleblock}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{exampleblock}{Desutilidade Clínica}
+        Sobrecarga ($q$) atenuada por infraestrutura ($K$) e equipe ($L$).
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Ponte com a Política Pública (PMM-E / Lei 15.233/2025)}
+  \begin{block}{Condição de Atração e Preenchimento da Vaga}
+    A bolsa adicional $\Delta B_m$ só atrai o especialista se superar a desutilidade líquida latente:
+    \begin{equation}
+      \frac{\Delta B_m}{p_m} > \Delta c_{im}^{(s)}
+    \end{equation}
+  \end{block}
+
+  \vspace{0.2cm}
+  \begin{itemize}
+    \item \textbf{O Puzzle da Vacância em Alto IVS:} Municípios prioritários oferecem bolsas maiores (Faixa 1: R\$ 20k), mas a ausência severa de $K$ e $L$ gera um custo latente $\Delta c_0$ maior que a bolsa.
+    \item \textbf{Running Variable Canônica:} \textbf{IVS 2010 (IPEA)}. O Índice de Vulnerabilidade Social opera como proxy multidimensional do custo não pecuniário local.
+  \end{itemize}
+\end{frame}
+
+% ==============================================================================
+% SEÇÃO 4: CONCLUSÃO
+% ==============================================================================
+\section{Conclusões}
+
+\begin{frame}{Conclusões Teóricas e Direcionamento Empírico}
+  \begin{enumerate}
+    \item \textbf{A bolsa compensa, mas não substitui $K$ e $L$:} Políticas puramente financeiras encontram retornos marginais decrescentes sem investimentos em infraestrutura hospitalar e pessoal de apoio.
+    \item \textbf{Heterogeneidade por especialidade:} Médicos cirúrgicos ou de alta densidade diagnóstica sofrem maior desutilidade na ausência de $K$ e têm maior custo de oportunidade no setor privado.
+    \item \textbf{Desenho de Identificação Causal:} A descontinuidade nos critérios de elegibilidade por IVS permite testar formalmente o equilíbrio entre o incentivo financeiro e os custos não pecuniários.
+  \end{enumerate}
+\end{frame}
+
+% ==============================================================================
+% SLIDES DE BACKUP / SUPORTE PARA A BANCA
+% ==============================================================================
+\appendix
+
+\begin{frame}{Backup: Decomposição dos Subíndices do IVS 2010}
+  O IVS municipal é composto por 3 dimensões com impactos teoricamente divergentes sobre $c_{im}$:
+
+  \vspace{0.3cm}
+  \begin{table}[h]
+    \centering
+    \small
+    \begin{tabular}{lp{5.6cm}l}
+      \toprule
+      \textbf{Subíndice} & \textbf{O que capta} & \textbf{Efeito teórico sobre $c_{im}$} \\
+      \midrule
+      \textbf{Infraestrutura Urbana} & Falta de esgoto, coleta de lixo, mobilidade deficiente & $\uparrow c^{\text{geo}}$ (desamenidade pura) \\
+      \textbf{Capital Humano} & Mortalidade infantil, analfabetismo, vulnerabilidade & $\uparrow B'$ (vocação) \emph{mas} $\downarrow K$ ($\uparrow C$) \\
+      \textbf{Renda e Trabalho} & Extrema pobreza, baixa renda per capita, desocupação & Reduz mercado privado complementar \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Backup: Referências Teóricas}
+  \begin{itemize}
+    \item \textbf{Choné, P.; Ma, C.-T. A. (2011).} \emph{Optimal Health Care Contract under Physician Agency}. Annals of Economics and Statistics, 101/102, 229--256.
+    \item \textbf{Moehling, C. M.; Niemesh, G. T.; Thomasson, M. A.; Treber, J. (2020).} \emph{Medical Education Reforms and the Origins of the Rural Physician Shortage}. Cliometrica, 14, 181--225.
+    \item \textbf{Redding, S. J.; Rossi-Hansberg, E. (2017).} \emph{Quantitative Spatial Economics}. Annual Review of Economics, 9, 21--58.
+    \item \textbf{Reinhardt, U. E. (1975).} \emph{Physician Productivity and the Demand for Health Manpower: An Economic Analysis}. Ballinger Publishing Company.
+  \end{itemize}
+\end{frame}
+
+\end{document}

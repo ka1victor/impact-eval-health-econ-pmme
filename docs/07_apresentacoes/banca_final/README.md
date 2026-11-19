@@ -1,6 +1,9 @@
 # Banca final — conteúdo canônico
 
-> **Estado (14/11/2026, fim do dia):** 32 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
+> **Estado (18/11/2026):** o deck que o grupo usa é o do Bernardo com a rodada 13 (40 slides,
+> `output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx`, gerado por
+> `scripts/apresentacao/aplicar_rodada13_deck_bernardo.py`), com o roteiro de fala (doc 05, também em Word).<br>
+> **Antes (14/11/2026, fim do dia):** 32 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
 > públicas na tela, âmbar para o que estimamos e observamos, equações sem itálico e com ε, resultados e robustez
 > refeitos, "metade" fundido na conclusão.<br>
 > **Antes (14/11/2026):** mesmo deck, agora sobre a entrada do grupo de 14/11, com 33 slides: slide novo de
@@ -29,7 +32,7 @@
 | Documento | Função |
 |---|---|
 | [`01_diagrama_teoria_mudanca.md`](01_diagrama_teoria_mudanca.md) | **fonte de verdade**: cada caixa e seta do diagrama, a literatura de cada elo, a ligação com as equações do apêndice e a nova ordem dos slides de teoria |
-| [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo de 11/11**: o que estimamos e por que a razão de chances (§1), ordem dos 35 slides, texto de cada slide novo, o que o grupo decide |
+| [`03_deck_banca_final_grupo.md`](03_deck_banca_final_grupo.md) | **fonte de verdade do deck sobre a versão do grupo**: o que estimamos e por que a razão de chances (§1), ordem dos slides, rodadas de comentários, texto de cada slide novo, o que o grupo decide |
 | [`04_perguntas_provaveis_logit.md`](04_perguntas_provaveis_logit.md) | **preparo da defesa**: 17 perguntas prováveis sobre o logit condicional (modelo, identificação, estimação, dados), com respostas e números de `output/` |
 | [`05_roteiro_fala.md`](05_roteiro_fala.md) | **roteiro de fala** em bullets, slide a slide, do deck do Bernardo com a rodada 13 (`deck_banca_final_bernardo_r13.pptx`, 40 slides), com tempo estimado (≈ 13 min 30 s) e o que encurtar; em Word: `output/apresentacao_banca_final/roteiro_fala_banca_final.docx` (`gerar_roteiro_docx.py`) |
 | [`02_deck_banca_final.md`](02_deck_banca_final.md) | **fonte de verdade do deck final**: ordem dos slides (25 na versão vigente), o feedback de 04/11 aplicado à parte da banca 1, cada texto novo e o que fica para o autor decidir |
@@ -47,6 +50,9 @@ em [`output/apresentacao_banca_final/`](../../../output/apresentacao_banca_final
 | `manifesto_diagrama.json` | SHA-256 do deck de entrada e das saídas, ordem dos slides |
 | `qa_render/` | imagens dos 2 slides novos, só para conferência visual |
 | `deck_banca_final_grupo.pptx` e `.pdf` | **deck sobre a versão do grupo de 11/11** (doc 03), gerado por `scripts/apresentacao/gerar_deck_banca_final_grupo.py` a partir de `grupo/deck_grupo_banca_final_1111.pptx`; usa `exemplo_logit_real.json` e `figuras/` (scripts `gerar_exemplo_logit_real.py` e `gerar_figuras_banca_final.py`); manifesto em `manifesto_deck_banca_final_grupo.json` |
+| `deck_banca_final_bernardo_r13.pptx` e `.pdf` | **o deck que o grupo usa**: o deck do Bernardo de 15/11 (`grupo/deck_grupo_banca_final_1511_bernardo.pptx`) com a rodada 13 e as correções de 15/11, gerado por `scripts/apresentacao/aplicar_rodada13_deck_bernardo.py`; manifesto em `manifesto_deck_banca_final_bernardo_r13.json` |
+| `deck_banca_final_grupo_conciliado.pptx` e `.pdf` | a versão "nossa" com as ideias do colega (35 slides), registro; `gerar_deck_banca_final_grupo.py --com-colega` |
+| `roteiro_fala_banca_final.docx` | o roteiro de fala (doc 05) em Word, gerado por `scripts/apresentacao/gerar_roteiro_docx.py` |
 | `deck_banca_final.pptx` e `.pdf` | **o deck da banca final** (doc 02), gerado por `scripts/apresentacao/gerar_deck_banca_final.py` a partir do `deck_proposta_reorganizada.pptx` e do deck pós-banca da banca 2; manifesto em `manifesto_deck_banca_final.json` |
 
 O diagrama é teoria e hipótese. Não traz número de resultado nem diz que a bolsa
@@ -74,4 +80,11 @@ python3 scripts/apresentacao/gerar_exemplo_logit_real.py      # ≈ 30 s: reesti
 python3 scripts/apresentacao/gerar_figuras_banca_final.py
 python3 scripts/apresentacao/gerar_deck_banca_final_grupo.py
 python3 -m unittest tests.test_deck_banca_final_grupo
+```
+
+Deck do Bernardo com a rodada 13 e roteiro em Word (o deck usa funções do gerador acima):
+
+```bash
+python3 scripts/apresentacao/aplicar_rodada13_deck_bernardo.py
+python3 scripts/apresentacao/gerar_roteiro_docx.py
 ```
