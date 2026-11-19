@@ -5,7 +5,7 @@
   "entradas": [
     {
       "caminho": "output/rdd_bolsa/E8_resumo.json",
-      "sha256": "2a5a3eb7fc42eaa37b67e7f38e64fc589f6b2d9d465d41ff520738672b951d2e",
+      "sha256": "3d14340fe0fd68c7e05478dcfad0a589989ba4db6a697f3c95e57f440de7980b",
       "papel": "síntese E8 (Holm, descarte, E9, E7, seleção, famílias, degrau)",
       "data_referencia": "2026-10-19",
       "cobertura": "RDD da bolsa, ciclos 1-3 e CNES 2022-01..2026-08",
@@ -95,7 +95,7 @@
     },
     {
       "caminho": "output/rdd_bolsa/S57_resumo.json",
-      "sha256": "67801270c9d4c1313554dfe007f207b1b444440d46b8721fc60971c3a7a43389",
+      "sha256": "55801f3439ac1c795cab3dee84d057d35903dac5a8b1ab3f62a4d7636d550463",
       "papel": "síntese vigente (doc 57): valores com arquivo e seletor de origem (chave v)",
       "data_referencia": "2026-10-24",
       "cobertura": "P1 a P6, realocação; ciclos 1–3",

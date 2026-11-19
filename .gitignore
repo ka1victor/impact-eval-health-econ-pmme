@@ -103,3 +103,6 @@ docs/**/*.out
 
 # KaTeX copiado localmente para o rascunho HTML de 04/09/2026 (biblioteca de terceiros, 4 MB; ver README da pasta)
 docs/90_arquivo_historico/slides_teoria_micro_set2026/katex/
+
+# Log local de comandos gravado pelo hook do plugin causal-inference-harness (dados da sessão, não do projeto)
+registro-sombra.jsonl

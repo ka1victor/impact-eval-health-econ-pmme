@@ -431,3 +431,35 @@ todas as tabelas de A5 já versionadas, a maior divergência numérica é
 **1,5e-11**, em colunas de intervalo de confiança e de valor `p`; nenhum
 coeficiente, contagem, amostra ou desfecho muda, e os 23 alvos congelados de A5
 continuam conferindo. As figuras PNG foram regravadas pela própria reexecução.
+
+---
+
+## E-9 · Hash do E8 desatualizado em dois manifestos, e CRLF na ponte curso–CBO (18/11/2026)
+
+**O que estava errado.** O commit `44c2eaf` (09/11/2026) regravou `output/rdd_bolsa/E8_resumo.json` depois de uma
+edição de texto no doc 20 da literatura: mudaram só a data de execução e o hash desse doc, nenhum número. Dois
+consumidores do E8 continuaram com o hash antigo (`2a5a3eb7…`; o atual é `3d14340f…`), e dois testes falhavam:
+`test_sintese_perguntas` (`S57_resumo.json`) e `test_conteudo_banca2.test_manifesto_com_hashes_atuais`
+(`output/apresentacao_banca2/manifesto_figuras.json`). Um terceiro, `test_pipeline_rdd_bolsa` (verificação do a09),
+falhava só nesta máquina: `01_congelar_ponte_cbo.py` gravava `ponte_curso_cbo_oficial.json` com CRLF no Windows, o
+Git via o arquivo como inalterado, mas o SHA-256 que o a09 confere mudava.
+
+**O que foi feito.**
+
+- `S57_resumo.json` e o doc 57: refeitos pelo próprio `scripts/rdd_bolsa/33_sintese_perguntas.py`. O diff é uma
+  linha em cada, o hash do E8; Holm e BKY sem divergência.
+- Os dois arquivos acima são entrada de outros. Busca de hash a partir deles: o doc 57 é lido por
+  `EQ_resumo.json` e pelo doc 57j; o `S57_resumo.json`, pelo `manifesto_figuras.json` da banca 2 e pelos manifestos
+  `manifesto_deck_banca_final_grupo.json` e `..._conciliado.json`. A cadeia termina aí: nenhum outro arquivo de
+  `output/`, `docs/`, `tests/` ou `scripts/` guarda o hash destes.
+- Nesses consumidores, **só os hashes foram trocados à mão** (E8, S57 e doc 57, completos e no prefixo de 16
+  caracteres). Regerar pelos scripts (`gerar_figuras_banca2.py`, `36_equivalencia_H1.py`) neste ambiente (Python
+  3.12.10, numpy 1.26.4, pandas 2.3.3, matplotlib 3.8.3, fora das versões fixadas) regravava os PNG; os números
+  (`numeros_banca2.json`, `EQ_estimativas.csv`, doc 03 da banca 2) saíam iguais, a menos do fim de linha. A
+  regeneração foi descartada para não trocar figuras já apresentadas por diferença de ambiente.
+- `01_congelar_ponte_cbo.py` grava com `newline="\n"` e, no Windows, reproduz o arquivo versionado byte a byte
+  (`ed8c2a9a…`).
+- `15_sintese_E8.py` grava caminhos com `/` também no Windows (`as_posix`). Antes, `test_e8_sintese`, que roda o
+  script em memória e compara com a saída versionada, falhava no Windows por `\` nos caminhos.
+
+Nenhum número, amostra ou figura mudou.

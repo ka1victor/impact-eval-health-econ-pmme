@@ -251,7 +251,7 @@ reescritos; os pedidos externos e o ciclo 3 seguem como estão.
 |---|---|---|
 | `output/rdd_bolsa/E6_estimativas.csv` | `223b4c77326b8399…` | E6: P1 (primária do protocolo 40), F1.1 e F1.3 empilhados; BKY de F0, F1, F2 e F4 |
 | `output/rdd_bolsa/E7_estimativas.csv` | `f6acdd7062cd0dad…` | E7: P2 (primária do protocolo 40), F3.1 por DiRD; BKY de F3 |
-| `output/rdd_bolsa/E8_resumo.json` | `2a5a3eb7fc42eaa3…` | E8: p de Holm gravados de P1 e P2 (protocolo 40) |
+| `output/rdd_bolsa/E8_resumo.json` | `3d14340fe0fd68c7…` | E8: p de Holm gravados de P1 e P2 (protocolo 40) |
 | `output/rdd_bolsa/E9_efeitos_marginais.csv` | `812ac52a25cb2b86…` | E9: razão de chances por +R$ 5 mil no ciclo 2 |
 | `output/rdd_bolsa/P1_estimativas.csv` | `8c4ca2e98b671709…` | P1 (protocolo 52): M1, M5, Holm de P1a e BKY de P1d–P1f |
 | `output/rdd_bolsa/P1_resumo.json` | `bddaf9ef03a4374b…` | P1: estatuto |

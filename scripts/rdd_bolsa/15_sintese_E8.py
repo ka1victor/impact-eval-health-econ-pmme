@@ -136,9 +136,9 @@ def sha256(path: Path) -> str:
 def rotulo(path: Path) -> str:
     p = Path(path).resolve()
     try:
-        return str(p.relative_to(ROOT))
+        return p.relative_to(ROOT).as_posix()  # "/" também no Windows, como nas saídas versionadas
     except ValueError:
-        return str(p)
+        return p.as_posix()
 
 
 class FalhaFechada(RuntimeError):

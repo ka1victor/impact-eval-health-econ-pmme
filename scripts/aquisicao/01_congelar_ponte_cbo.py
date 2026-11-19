@@ -303,7 +303,8 @@ def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ponte = construir_dicionario_cbo()
 
-    with OUTPUT_FILE.open("w", encoding="utf-8") as handle:
+    # newline="\n": no Windows, o padrão grava CRLF e muda o SHA-256 que o a09 confere (registro de 18/11/2026)
+    with OUTPUT_FILE.open("w", encoding="utf-8", newline="\n") as handle:
         json.dump(ponte, handle, ensure_ascii=False, indent=2)
         handle.write("\n")
 

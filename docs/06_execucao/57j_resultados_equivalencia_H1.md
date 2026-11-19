@@ -155,7 +155,7 @@ Pela leitura pré-registrada do protocolo 60.
 | `docs/06_execucao/40_protocolo_multioutcome_rdd_bolsa.md` | referências de magnitude (§7) | `85f11f309e033516…` |
 | `output/rdd_bolsa/NA_estimativas.csv` | A3 (script 24, adendo §7 do protocolo 48) | `9f737d4c2a2850dd…` |
 | `output/rdd_bolsa/N_estimativas.csv` | N1 S-a e IC honesto (script 23) | `3490d69c568ed13e…` |
-| `docs/06_execucao/57_sintese_perguntas_reformuladas.md` | conferência dos números citados (§4.1 e §4.2) | `7597de65704e52e0…` |
+| `docs/06_execucao/57_sintese_perguntas_reformuladas.md` | conferência dos números citados (§4.1 e §4.2) | `2e780d3a04912126…` |
 
 Protocolo: SHA-256 do texto atual `4c7cb1d096805a01…`; do texto congelado (commit `f47624f`) `4c7cb1d096805a01…`.
 <!-- EQ:proveniencia:fim -->
