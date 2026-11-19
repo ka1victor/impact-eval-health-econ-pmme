@@ -66,7 +66,7 @@ class TestDeck(unittest.TestCase):
         self.assertFalse(any(s._element.get("show") == "0" for s in self.prs.slides))
 
     def test_manifesto_bate(self):
-        self.assertEqual(self.man["saidas"][str(DECK.relative_to(ROOT))], sha256(DECK))
+        self.assertEqual(self.man["saidas"][DECK.relative_to(ROOT).as_posix()], sha256(DECK))
         for arq, h in self.man["entradas"].items():
             self.assertEqual(sha256(ROOT / arq), h, arq)
 
@@ -97,8 +97,8 @@ class TestDeck(unittest.TestCase):
 
     def test_logit_condicional_na_tela(self):
         t = self.txt[self.pos("Modelo: logit condicional")]
-        self.assertIn("P(i escolhe v) =", t)
-        self.assertIn("exp(β·x", t)
+        self.assertIn("P̂(i escolhe v) =", t)
+        self.assertIn("exp(Û", t)
         self.assertIn("de todas as vagas k", t)
 
     def test_estimacao_explica_como_foi_feito(self):
@@ -121,17 +121,22 @@ class TestDeck(unittest.TestCase):
 
     def test_aninhado_no_modelo_base(self):
         i = self.pos("Identificação:")
-        self.assertIn("testado no modelo base", self.txt[i])
+        # 19/11: a IIA é rejeitada no aninhado; a etiqueta não pode dizer que a premissa passou
+        self.assertNotIn("TESTADA", self.txt[i])
+        self.assertIn("VALE EM PARTE", self.txt[i])
         self.assertIn("rodado no modelo base sem o par de UFs", self.prs.slides[i].notes_slide.notes_text_frame.text)
 
     def test_funil_das_alternativas(self):
         self.assertIn("932.577 → 578.998 linhas", self.prs.slides[self.pos("Cada candidato vira")].notes_slide.notes_text_frame.text)
 
     def test_equacao_com_erro_e_chance_sobre_parte_observada(self):
-        """Rodada 7 (14/11): U com o erro no fim; a chance usa só a parte observada (β·x), nunca U inteiro."""
+        """Rodada 7 (14/11): U com o erro no fim; a chance usa só a parte sem o erro, nunca U inteiro.
+        19/11: a parte estimada sem o erro é Û (U-chapéu), definida na tela; sem β·x solto, que não aparece na ②."""
         t = self.txt[self.pos("Modelo: logit condicional")]
         self.assertIn("ε", t)
-        self.assertIn("exp(β·x", t)
+        self.assertIn("exp(Û", t)
+        self.assertIn("Parte estimada (Û", t)
+        self.assertNotIn("β·x", t)
         self.assertNotIn("exp(U", t)
         for x in ("Viv", "Vik", "U = V"):
             self.assertNotIn(x, t)

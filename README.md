@@ -22,6 +22,25 @@ escolhe como 1ª opção?
 | **Atração territorial (A4) e oferta no CNES (A5)**, ciclo 1 | associativos | [35](docs/06_execucao/35_plano_correcoes_pos_auditoria.md) |
 | **Ciclo 3** | congelado até a competência `202703` do CNES estar publicada e madura | [12](docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md), [13](docs/05_identificacao/13_plano_pre_analise_ciclo3.md) |
 
+**Versão final por ora (19/11/2026).** O trabalho da banca final está fechado (PR #6). A próxima agenda é outra
+pergunta, mais ampla, descrita logo abaixo.
+
+## Próxima agenda: o mercado de médicos especialistas no Brasil
+
+Proposta de 19/11/2026, sem protocolo nem execução, e independente dos resultados do PMM-E. A pergunta é onde os
+médicos especialistas trabalham, como se movem entre municípios e o que pesa na escolha do local. O ponto de partida é
+uma **reprodução parcial, com o CNES, de Costa, Nunes e Sanches (2024)**, *REStat* 106(1), 36–52: um logit de
+coeficientes aleatórios da escolha de local de generalistas recém-formados, com dados do CFM, da RAIS e do CNES, que
+acha oferta pouco elástica ao salário (≈ 0,4 nas metrópoles e ≈ 0,7 no interior).
+
+Etapas: (1) estoque de especialistas, descritivo; (2) fluxos entre municípios; (3) logit condicional da escolha de
+local na versão mais simples do artigo; (4) só depois, remuneração, coeficientes aleatórios e contrafactuais. A
+pergunta, os estimandos, o que o CNES dá e não dá, o que o repositório já tem (a09 nacional agregado; a16 individual,
+mas só PMM-E) e os cuidados estão em
+[`docs/01_pergunta_escopo/16`](docs/01_pergunta_escopo/16_agenda_mercado_especialistas.md). Entre os cuidados está a
+trava do ciclo 3: nenhuma competência ≥ `202609` antes da hora. O primeiro passo é um protocolo em `docs/06_execucao/`,
+congelado antes de olhar resultados.
+
 O README anterior, com o histórico do estado em camadas, está em
 [`docs/90_arquivo_historico/README_raiz_ate_18nov2026.md`](docs/90_arquivo_historico/README_raiz_ate_18nov2026.md).
 
@@ -34,6 +53,7 @@ O README anterior, com o histórico do estado em camadas, está em
 | saber de onde vem cada número | o doc de resultado em [`docs/06_execucao/`](docs/06_execucao/) (cada um diz o script e a saída) e a auditoria correspondente em [`docs/auditorias/`](docs/auditorias/) |
 | navegar pela documentação | [`docs/README.md`](docs/README.md) |
 | ler os artigos | `paper_pmme_submission.tex` (completo) e `paper_pmme_curto.tex` (sete páginas); cada cifra é conferida contra `output/` pelo `run_all.py` |
+| ver a próxima agenda | [Próxima agenda: o mercado de médicos especialistas](#próxima-agenda-o-mercado-de-médicos-especialistas-no-brasil) |
 | ver o que falta | [`TODO.md`](TODO.md) |
 | saber as regras de trabalho | [`CLAUDE.md`](CLAUDE.md) (regras do projeto) e [`AGENTS.md`](AGENTS.md) |
 

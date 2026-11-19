@@ -1,8 +1,11 @@
 # Banca final — conteúdo canônico
 
-> **Estado (18/11/2026):** o deck que o grupo usa é o do Bernardo com a rodada 13 (40 slides,
-> `output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx`, gerado por
-> `scripts/apresentacao/aplicar_rodada13_deck_bernardo.py`), com o roteiro de fala (doc 05, também em Word).<br>
+> **Estado (19/11/2026), versão final por ora:** o deck que o grupo usa é o do Bernardo com a rodada 13 (40
+> slides, `output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx`, gerado por
+> `scripts/apresentacao/aplicar_rodada13_deck_bernardo.py`), com o roteiro de fala (doc 05, também em Word). Em
+> 19/11: notação Û (U-chapéu) para a parte estimada da utilidade, sem o erro, nos slides do modelo, do passo a passo
+> e do anexo formal; slide de identificação mais limpo, com a IIA "vale em parte"; docs 03 (§3.20), 04 e 05
+> atualizados.<br>
 > **Antes (14/11/2026, fim do dia):** 32 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
 > públicas na tela, âmbar para o que estimamos e observamos, equações sem itálico e com ε, resultados e robustez
 > refeitos, "metade" fundido na conclusão.<br>

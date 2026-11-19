@@ -8,6 +8,42 @@
 
 ---
 
+## 19/11/2026 — PRs abertos resolvidos; próxima agenda em documento próprio
+
+**Motivo:** o autor pediu para resolver todos os PRs abertos, com cuidado especial com o #6. O #6 propõe a próxima
+agenda: uma extensão de Costa, Nunes e Sanches (2024) para a distribuição de especialistas no CNES.
+
+| PR | Destino |
+|---|---|
+| #6, banca final, versão final por ora | **integrado.** Conflitos no `TODO.md` e nos dois manifestos do deck do grupo. Nos manifestos ficou a versão do PR (caminhos com "/"), com o hash do `S57_resumo.json` atualizado (errata E-9 da auditoria 14) |
+| #5, A5 e a ameaça do PMAE (habilitação `3801` do CNES-HB) | **integrado sem mudança.** O hash do `A5_painel_T0.parquet` que ele registra é o da `main`. Fica fora do `run_all.py` e sem teste, como o PR diz |
+| #4, integração das rodadas de outubro (rascunho) | **fechado sem merge.** Foi superado pela rodada de 14/10 (IVS 2010 oficial, auditoria 16) e pelos protocolos 40 em diante. O diagnóstico dos cursos 2 e 16 (`e5a1872`) fica no branch, e o item do `TODO.md` aponta para ele |
+| #2, proposta de ajuste estrutural | **fechado sem merge.** A onda 1 já tinha entrado em 17/09. O documento vai para o arquivo histórico, porque o registro o cita |
+| #1, deck da banca 1 em `.pptx` por script | **fechado sem merge.** O grupo apresentou o próprio PowerPoint em 05/10 (`07_apresentacoes/banca1/04_versao_apresentada.md`) |
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| [`01_pergunta_escopo/16_agenda_mercado_especialistas.md`](01_pergunta_escopo/16_agenda_mercado_especialistas.md) | a próxima agenda, que saiu do `README.md` do PR #6 e ganhou documento próprio. Tem pergunta e estimandos, o artigo de partida e o que muda, o que o CNES dá e não dá, o que o repositório tem, as etapas e os cuidados |
+| [`90_arquivo_historico/proposta_ajuste_estrutural_16set2026.md`](90_arquivo_historico/proposta_ajuste_estrutural_16set2026.md) | a proposta do PR #2, que era `06_execucao/37_proposta_ajuste_estrutural.md` no branch dele, com nota de arquivo. O link da entrada de 17/09 passa a apontar para cá |
+
+### Corrigido na agenda do PR #6, antes de entrar
+
+- O prefixo de CBO 2251 inclui os generalistas `225125`, `225142` e `225170`, e "especialista = 2251/2252/2253"
+  contaria esses médicos. A definição passa a ser a do a09.
+- O a16 cobre só os médicos do PMM-E e não é um painel nacional. O painel nacional profissional × mês é o que falta,
+  e tem portão próprio.
+- Faltava a **trava do ciclo 3**. O a09 e o a16 não leem competência ≥ `202609`, e um painel nacional depois dessa
+  data mostraria os desfechos do ciclo 3 antes da hora. A agenda segue o mesmo limite.
+- Entraram também a regravação em lote dos arquivos antigos do CNES (achado do PR #5) e a IIA rejeitada na banca
+  final.
+
+O `README.md` fica com um resumo e o link. O `TODO.md` ganha a agenda em dois passos (protocolo da etapa 1 e portão
+do painel nacional) e os itens do A5 que vieram dos PRs #4 e #5. `README.md` e índice de `docs/` atualizados.
+
+---
+
 ## 18/11/2026 — Organização do repositório como base para outros trabalhos
 
 Motivo: o autor pediu para pôr tudo na main e organizar o repositório para servir de base a outras coisas. O README
@@ -2941,7 +2977,7 @@ hash. A pendência 1 mudou de conteúdo por isso: era de forma, virou de cobertu
 ### O que veio do PR de ajuste estrutural
 
 Dos nove itens de
-[`06_execucao/37_proposta_ajuste_estrutural.md`](06_execucao/37_proposta_ajuste_estrutural.md),
+[`90_arquivo_historico/proposta_ajuste_estrutural_16set2026.md`](90_arquivo_historico/proposta_ajuste_estrutural_16set2026.md),
 entram só os de **rótulo e texto**, que é a onda 1 da sequência que o próprio PR
 propõe. **D1**: "1.295 vagas" vira "1.295 **células** estabelecimento–curso", com
 as 678 vagas imediatas ditas na tela, nos slides 5 e 6. **F2**: o pacote

@@ -1,6 +1,7 @@
 # 04. Perguntas prováveis da banca sobre o logit condicional, com respostas
 
-> **Para quê:** preparar a defesa do método (slides 17 e 20–22 e anexo 1 do deck de [03](03_deck_banca_final_grupo.md)).
+> **Para quê:** preparar a defesa do método (slides "Cada candidato vira uma linha por vaga", "Modelo", "Método passo a passo", "Identificação" e anexos de
+> estimação e do modelo formal; conteúdo no [03](03_deck_banca_final_grupo.md), fala no [05](05_roteiro_fala.md)).
 > Pedido do autor de 14/11/2026: explicar melhor como o logit condicional foi feito.<br>
 > **Estatuto:** apresentação. Nenhuma estimativa nova. Cada número vem de `output/rdd_bolsa/VL_estimativas.csv`,
 > `VL_resumo.json`, `P1_estimativas.csv`, `portao_r1_ivs_oficial.json` ou dos docs citados; o deck lê os mesmos
@@ -20,14 +21,29 @@ que salta em cortes (Bobba et al., 2026) e de escolha de local por médicos no B
 que usam versões mais ricas da mesma família. Na tela fica só o exemplo de saúde (Costa, Nunes e Sanches).
 
 **2. Vocês estão estimando a utilidade?**
-Só os pesos da parte observável do valor (V), numa escala normalizada. O nível do valor e a unidade não são
-identificados: só diferenças entre vagas do mesmo candidato importam. Por isso lemos cada coeficiente pela razão de
-chances entre duas vagas: P(A) ÷ P(B) = exp(V_A − V_B), em que o denominador se cancela.
+A parte dela sem o erro. Na tela, Û_iv ("U-chapéu") é a ② sem o ε, calculada com os pesos estimados:
+Û_iv = β̂₁·bolsa_v + β̂₂·dist_iv + β̂₃·IVS_v + β̂₄·X_iv + α̂_UF(i),UF(v), a notação usual de valor ajustado. O U
+inteiro não é estimado (o ε não é observado), e Û tem nível e unidade arbitrários: somar uma constante a todas as
+vagas de um candidato não muda nenhuma chance, e a escala é fixada pela variância do ε (o que se estima é β/σ). Só
+diferenças entre vagas do mesmo candidato têm leitura. Por isso lemos cada coeficiente pela razão de chances entre
+duas vagas: P̂(A) ÷ P̂(B) = exp(Û_A − Û_B), em que o denominador se cancela, ou pela razão entre pesos (75 km).
+
+**2a. Quais contas o logit faz, exatamente?**
+1. Base: uma linha por candidato × vaga que ele podia escolher (578.998 linhas, 5.417 candidatos), com y = 1 na 1ª
+   opção.
+2. Com pesos de tentativa, calcula em cada linha a parte de U sem o ε: β₁·bolsa + β₂·dist + β₃·IVS + β₄·X + α.
+3. Dentro de cada candidato, transforma em chances: exp(da linha) ÷ soma de exp(de todas as vagas dele) (fórmula ①).
+4. Soma, entre candidatos, o log da chance que o modelo deu à vaga que ele de fato escolheu (log-verossimilhança).
+5. Newton–Raphson muda os pesos e repete 2 a 4 até a soma não subir. Os pesos finais são os β̂ e α̂; com eles, a
+   conta do passo 2 é o Û e a do passo 3 é o P̂.
+6. Leitura: razão entre as chances de duas vagas do mesmo candidato, exp(Û_B − Û_A).
+Nenhum passo calcula U nem ε: U = Û + ε é a hipótese que justifica a fórmula do passo 3.
 
 **3. O que é o 1,47?**
 β = 0,077 por R$ 1 mil. Entre duas vagas iguais no resto, a que paga R$ 5 mil a mais tem chance e^(5 × 0,077) =
-e^0,385 = **1,47** vez maior de ser a 1ª opção (IC 95%: 1,15 a 1,89). Exemplo real dos slides 14 e 21: Araçuaí 2,53% e
-Itamarandiba 3,62%; a razão 1,43 = ×1,47 (bolsa) × 0,97 (6 km a mais) × 1,00 (o resto).
+e^0,385 = **1,47** vez maior de ser a 1ª opção (IC 95%: 1,15 a 1,89). Exemplo real do slide "Método passo a passo": Araçuaí 2,53% e
+Itamarandiba 3,62%; a razão 1,43 = exp(Û_Itamarandiba − Û_Araçuaí) = exp(0,357) = ×1,47 (bolsa) × 0,97 (6 km a
+mais) × 1,00 (o resto).
 
 **4. E os 75 km?**
 É a razão entre dois coeficientes: 5β ÷ |γ| × 100 = 0,385 ÷ 0,514 × 100 = 75 km (IC delta 28 a 122 km; doc 57x,
@@ -48,7 +64,7 @@ A bolsa é a mesma no município inteiro: um efeito fixo de município absorveri
 fica fixo é o candidato (implícito no logit condicional) e o par de UFs (254 colunas 0/1).
 
 **7. Por que fixar o par de UFs? Isso não foi escolhido depois de ver o resultado?**
-Foi, e dizemos isso na tela, em Limitações (slide 26). O plano original saiu da apresentação; esta é a resposta se
+Foi, e dizemos isso na tela, em Limitações. O plano original saiu da apresentação; esta é a resposta se
 perguntarem. O plano pré-registrado, sem o par, dá ×1,25 (IC 0,98 a 1,61): o IC
 contém 1. O par tira tudo o que é comum à UF (salário de mercado, conselho regional, família, distância média entre
 UFs). Dentro da UF, a distância pesa mais (×0,60 contra ×0,83 por 100 km) e a bolsa também. Por isso chamamos o
@@ -70,7 +86,7 @@ rodado no modelo base (sem o par de UFs), não no principal. O logit misto (M8) 
 candidatos: o β é uma média.
 
 **11. E a escolha sincera? O médico não evita vaga concorrida?**
-É premissa (SUPOSIÇÃO no slide 22): supomos que ninguém deixa de pôr em 1º a vaga preferida por medo de não passar na
+É premissa (SUPOSIÇÃO no slide de identificação): supomos que ninguém deixa de pôr em 1º a vaga preferida por medo de não passar na
 nota. Não dá para testar com estes dados.
 
 ## Estimação e incerteza

@@ -71,6 +71,7 @@ REDESENHO = {
     23: ("Modelo: logit condicional", G.s_modelo),
     24: ("Modelo: logit condicional", G.s_modelo),
     25: ("Método passo a passo", G.s_passos),
+    26: ("Identificação:", G.s_identificacao),  # 19/11: mais limpo; IIA "vale em parte", não "testada"
     28: ("Ficar perto de onde trabalha", G.s_resultados_colega),
     29: ("Robustez:", G.s_robustez),
     30: ("Limitações", G.s_limitacoes),
@@ -202,6 +203,7 @@ def renumerar(prs) -> list[str]:
         if sh is None:
             raise SystemExit(f"ERRO: slide {i} sem número da página")
         modelo = sh
+        sh.text_frame.word_wrap = False  # 19/11: dois dígitos não quebram em duas linhas (LibreOffice quebrava)
         a = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
         for fld in list(sh._element.iter(a + "fld")):  # campo de número automático: vira texto fixo
             r = etree.Element(a + "r")
@@ -262,6 +264,23 @@ def anexo7(slide) -> int:
     return k
 
 
+NOTA_ANEXO7_ANTES = "que explicamos no próximo slide."
+NOTA_ANEXO7_DEPOIS = ("que está no anexo 6, o modelo formal. A nota do passo 1, com os pesos finais, é o Û do modelo "
+                      "(U-chapéu: a utilidade sem o ε, calculada com os pesos estimados); a chance do passo 2 é exp(Û) "
+                      "÷ soma de exp(Û) nas vagas do médico.")
+
+
+def notas_anexo7(slide) -> bool:
+    """19/11: as notas apontavam para um 'próximo slide' que não existe (o anexo 7 é o último); a nota é o Û."""
+    tf = slide.notes_slide.notes_text_frame
+    for par in tf.paragraphs:
+        for r in par.runs:
+            if NOTA_ANEXO7_ANTES in r.text:
+                r.text = r.text.replace(NOTA_ANEXO7_ANTES, NOTA_ANEXO7_DEPOIS)
+                return True
+    return False
+
+
 def main() -> int:
     if sha256(ENT) != SHA_ENT:
         raise SystemExit("ERRO: o deck do Bernardo mudou (hash diferente)")
@@ -291,6 +310,9 @@ def main() -> int:
     if not titulo(prs.slides[39]).startswith("Anexo 7") or anexo7(prs.slides[39]) != 3:
         raise SystemExit("ERRO: anexo 7: esperava as trocas do painel 'Sai' e da fonte")
     feitas.append("40: painel 'Sai' com ×1,47 e 75 km (sem 0,077 e −0,514), sem '(próximo slide)', fontes públicas")
+    if not notas_anexo7(prs.slides[39]):
+        raise SystemExit("ERRO: anexo 7: trecho das notas sobre o 'próximo slide' não encontrado")
+    feitas.append("40: notas sem o 'próximo slide' inexistente; a nota do passo 1 é o Û")
     feitas += renumerar(prs)
     OUT.mkdir(parents=True, exist_ok=True)
     pptx = OUT / f"{ARQ}.pptx"

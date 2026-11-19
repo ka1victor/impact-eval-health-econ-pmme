@@ -16,6 +16,15 @@
 > [`docs/90_arquivo_historico/TODO_concluido_ate_18nov2026.md`](docs/90_arquivo_historico/TODO_concluido_ate_18nov2026.md).
 > Aqui ficam só as seções com algo em aberto.
 
+## Próxima agenda (proposta de 19/11/2026)
+
+- [ ] **Mercado de médicos especialistas no Brasil**, para além do PMM-E, a partir de uma reprodução parcial de Costa,
+  Nunes e Sanches (2024) com o CNES. Pergunta, estimandos, etapas e cuidados em
+  [`docs/01_pergunta_escopo/16`](docs/01_pergunta_escopo/16_agenda_mercado_especialistas.md).
+  - [ ] Protocolo da etapa 1 (estoque, descritivo) em `docs/06_execucao/`, antes de olhar resultados.
+  - [ ] Portão de viabilidade do painel nacional profissional × mês (o a16 com todos os médicos): volume, chave e
+    data de gravação das competências, sem passar de `202608` enquanto o ciclo 3 estiver congelado.
+
 ## Banca final (estado em 18/11/2026)
 
 Detalhe em [`docs/07_apresentacoes/banca_final/`](docs/07_apresentacoes/banca_final/README.md).
@@ -123,6 +132,12 @@ de início e encerramento.
   coluna `uf_fe` do painel congelado.
 - [ ] **C-4 + E-3** — corrigir juntos na primeira reexecução legítima de A1→A3.
 - [ ] Diagnóstico dos cursos 2 e 16 na pré-tendência, sem reescolher amostra.
+  Protocolo (doc 36) e script prontos no PR #4, fechado sem merge (commit `e5a1872` do branch
+  `claude/gallant-carson-11uzic`), mas a tabela 13 que o diagnóstico reproduz foi regravada em 18/10; rodar de novo
+  sobre a tabela atual antes de usar.
+- [ ] **A5 e o PMAE:** a habilitação `3801` do CNES-HB quase dobrou na janela do A5. A diferença de exposição ajustada
+  é pequena (+3 a +5 p.p., não distinguível de zero), mas não nula (`output/tema_trabalho/A5_ameaca_pmae.json`, PR #5).
+  Se o A5 for reexecutado, escolher antes a robustez: efeito fixo estrato × mês ou controle de entrada do PMAE.
 
 ## Atualização prospectiva e infraestrutura paralela
 

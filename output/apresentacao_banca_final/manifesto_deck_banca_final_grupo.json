@@ -1,21 +1,21 @@
 {
   "etapa": "deck_banca_final_grupo",
   "natureza_dos_dados": "EMPIRICO",
-  "script": "scripts\\apresentacao\\gerar_deck_banca_final_grupo.py",
+  "script": "scripts/apresentacao/gerar_deck_banca_final_grupo.py",
   "doc_conteudo": "docs/07_apresentacoes/banca_final/03_deck_banca_final_grupo.md",
   "entradas": {
-    "docs\\07_apresentacoes\\banca_final\\grupo\\deck_grupo_banca_final_1411.pptx": "f051366bbcb76ea5767f9390d2bfa9c6f7fcbd323fc65c4a96da895902d64843",
-    "output\\rdd_bolsa\\VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
-    "output\\rdd_bolsa\\VL_resumo.json": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
-    "output\\rdd_bolsa\\VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636",
-    "output\\rdd_bolsa\\P1_resumo.json": "bddaf9ef03a4374b751f49655757d8b813d096d6af9ac219337df27273790d7d",
-    "output\\rdd_bolsa\\P1_estimativas.csv": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
-    "output\\rdd_bolsa\\S57_resumo.json": "55801f3439ac1c795cab3dee84d057d35903dac5a8b1ab3f62a4d7636d550463",
-    "output\\rdd_bolsa\\portao_r1_ivs_oficial.json": "cdf4579ff9897e98f27aaa393ab05318e2398ff43f779dc2df0d5eb66fe750f0",
-    "output\\apresentacao_banca2\\numeros_banca2.json": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00",
-    "output\\apresentacao_banca_final\\exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
-    "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1.png": "7d8c5035e97b3f410a76797893ea9097918d1e21931c5fab11a368864348226a",
-    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "eba6be9114be1a41a91c5180f8d5d06101fd2a0e2771174b1324a87560c99dc5"
+    "docs/07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1411.pptx": "f051366bbcb76ea5767f9390d2bfa9c6f7fcbd323fc65c4a96da895902d64843",
+    "output/rdd_bolsa/VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output/rdd_bolsa/VL_resumo.json": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
+    "output/rdd_bolsa/VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636",
+    "output/rdd_bolsa/P1_resumo.json": "bddaf9ef03a4374b751f49655757d8b813d096d6af9ac219337df27273790d7d",
+    "output/rdd_bolsa/P1_estimativas.csv": "8c4ca2e98b671709ec208526ff4e58a8060d5643d8ce37776f1b7c1f4fcc1f24",
+    "output/rdd_bolsa/S57_resumo.json": "55801f3439ac1c795cab3dee84d057d35903dac5a8b1ab3f62a4d7636d550463",
+    "output/rdd_bolsa/portao_r1_ivs_oficial.json": "cdf4579ff9897e98f27aaa393ab05318e2398ff43f779dc2df0d5eb66fe750f0",
+    "output/apresentacao_banca2/numeros_banca2.json": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00",
+    "output/apresentacao_banca_final/exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
+    "output/apresentacao_banca_final/figuras/coeficientes_vl1.png": "7d8c5035e97b3f410a76797893ea9097918d1e21931c5fab11a368864348226a",
+    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "eba6be9114be1a41a91c5180f8d5d06101fd2a0e2771174b1324a87560c99dc5"
   },
   "slides": [
     {
@@ -323,7 +323,7 @@
     "slide 17 do grupo: cartões trocados por 'como montamos esta análise'; histograma primeiro; títulos descritivos"
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pptx": "7a9d79a76015e8e4bc64ca9c235c923bafd9560695cafa29b67124139633a56b",
-    "output\\apresentacao_banca_final\\deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
+    "output/apresentacao_banca_final/deck_banca_final_grupo.pptx": "1d9733e5c0b1eb73e809e477eb73ae79b884912e3729fdfae24bdf1a9427b740",
+    "output/apresentacao_banca_final/deck_banca_final_grupo.pdf": "gerado (PDF não é determinístico)"
   }
 }

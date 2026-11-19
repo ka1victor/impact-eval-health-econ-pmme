@@ -1,16 +1,16 @@
 {
   "etapa": "deck_banca_final_bernardo_r13",
   "natureza_dos_dados": "EMPIRICO",
-  "script": "scripts\\apresentacao\\aplicar_rodada13_deck_bernardo.py",
+  "script": "scripts/apresentacao/aplicar_rodada13_deck_bernardo.py",
   "entradas": {
-    "docs\\07_apresentacoes\\banca_final\\grupo\\deck_grupo_banca_final_1511_bernardo.pptx": "9bb32765eabeda33692f406ca0fb444af58310d074fc2a5bfaf7eb777f8fb4cb",
-    "output\\rdd_bolsa\\VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
-    "output\\rdd_bolsa\\VL_resumo.json": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
-    "output\\rdd_bolsa\\VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636",
-    "output\\apresentacao_banca_final\\exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
-    "output\\apresentacao_banca2\\numeros_banca2.json": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00",
-    "output\\apresentacao_banca_final\\figuras\\coeficientes_vl1_seis.png": "5c8742a1921d9ac545b8ddbafc9d877516590560dd47fb2472d58066c0420a0c",
-    "output\\apresentacao_banca_final\\figuras\\robustez_vl1.png": "eba6be9114be1a41a91c5180f8d5d06101fd2a0e2771174b1324a87560c99dc5"
+    "docs/07_apresentacoes/banca_final/grupo/deck_grupo_banca_final_1511_bernardo.pptx": "9bb32765eabeda33692f406ca0fb444af58310d074fc2a5bfaf7eb777f8fb4cb",
+    "output/rdd_bolsa/VL_estimativas.csv": "9c99bdd080db7bf20d4e529b2acb6d4bf9591b2e2d99651dff3f21514045a2a8",
+    "output/rdd_bolsa/VL_resumo.json": "eb4f4881420f0a7d9a2a556ca1057a41032106044f2c9bdba05b6f8f95c402bf",
+    "output/rdd_bolsa/VG_estimativas.csv": "e719a294c31651ef0c3444b30fb6f0b43792cad3da6c007d1d7a5378678c6636",
+    "output/apresentacao_banca_final/exemplo_logit_real.json": "ce1aa5a5ecdaa4d5de5df926e78edce94de10029b016012a163733fa1dba2448",
+    "output/apresentacao_banca2/numeros_banca2.json": "078236a6de6c17c0f809a6cd27ac3a0a6e54e24a9aa4fa6b9f1d66a107b64c00",
+    "output/apresentacao_banca_final/figuras/coeficientes_vl1_seis.png": "5c8742a1921d9ac545b8ddbafc9d877516590560dd47fb2472d58066c0420a0c",
+    "output/apresentacao_banca_final/figuras/robustez_vl1.png": "eba6be9114be1a41a91c5180f8d5d06101fd2a0e2771174b1324a87560c99dc5"
   },
   "alteracoes": [
     "20: descritiva com a explicação embaixo dos gráficos, sem título; títulos com números",
@@ -18,12 +18,14 @@
     "23: Modelo: logit condicional da 1ª opção (miolo redesenhado; 1 retângulo(s) de foco mantido(s))",
     "24: Modelo: logit condicional da 1ª opção (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "25: Método passo a passo: da escolha à razão de chances (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "26: Identificação: as premissas do logit condicional (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "28: Ficar perto de onde trabalha pesa mais que a bolsa (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "29: Robustez: ×1,47 se mantém com mais dados (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "30: Limitações (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "39: Anexo 6: o modelo formal, do valor à escolha (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "11–13: rótulo 'DA VAGA À SAÚDE' repetido retirado",
     "40: painel 'Sai' com ×1,47 e 75 km (sem 0,077 e −0,514), sem '(próximo slide)', fontes públicas",
+    "40: notas sem o 'próximo slide' inexistente; a nota do passo 1 é o Û",
     "8: número 8 → 6",
     "10: número 10 → 8",
     "14: número 14 → 10",
@@ -203,7 +205,7 @@
     }
   ],
   "saidas": {
-    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pptx": "8fefbc4c195a60754d0f3e5188947f5d64392ee16340672fe482d4344199fdee",
-    "output\\apresentacao_banca_final\\deck_banca_final_bernardo_r13.pdf": "gerado (PDF não é determinístico)"
+    "output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx": "5430274dfac1bb39090cca8a44b02d71496c8f8ea440120b4cee7ac2bbb798e5",
+    "output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pdf": "gerado (PDF não é determinístico)"
   }
 }
