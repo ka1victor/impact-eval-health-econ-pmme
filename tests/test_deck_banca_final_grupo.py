@@ -97,8 +97,8 @@ class TestDeck(unittest.TestCase):
 
     def test_logit_condicional_na_tela(self):
         t = self.txt[self.pos("Modelo: logit condicional")]
-        self.assertIn("P(i escolhe v) =", t)
-        self.assertIn("exp(β·x", t)
+        self.assertIn("P̂(i escolhe v) =", t)
+        self.assertIn("exp(Û", t)
         self.assertIn("de todas as vagas k", t)
 
     def test_estimacao_explica_como_foi_feito(self):
@@ -128,10 +128,13 @@ class TestDeck(unittest.TestCase):
         self.assertIn("932.577 → 578.998 linhas", self.prs.slides[self.pos("Cada candidato vira")].notes_slide.notes_text_frame.text)
 
     def test_equacao_com_erro_e_chance_sobre_parte_observada(self):
-        """Rodada 7 (14/11): U com o erro no fim; a chance usa só a parte observada (β·x), nunca U inteiro."""
+        """Rodada 7 (14/11): U com o erro no fim; a chance usa só a parte sem o erro, nunca U inteiro.
+        19/11: a parte estimada sem o erro é Û (U-chapéu), definida na tela; sem β·x solto, que não aparece na ②."""
         t = self.txt[self.pos("Modelo: logit condicional")]
         self.assertIn("ε", t)
-        self.assertIn("exp(β·x", t)
+        self.assertIn("exp(Û", t)
+        self.assertIn("Parte estimada (Û", t)
+        self.assertNotIn("β·x", t)
         self.assertNotIn("exp(U", t)
         for x in ("Viv", "Vik", "U = V"):
             self.assertNotIn(x, t)

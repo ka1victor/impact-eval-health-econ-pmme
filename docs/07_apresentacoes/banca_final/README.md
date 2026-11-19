@@ -1,5 +1,7 @@
 # Banca final — conteúdo canônico
 
+> **19/11/2026:** notação Û (U-chapéu) para a parte estimada da utilidade, sem o erro, nos slides do modelo, do
+> passo a passo e do anexo formal dos três decks; docs 03 (§3.20), 04 e 05 atualizados.<br>
 > **Estado (14/11/2026, fim do dia):** 32 slides, depois das rodadas de comentários do autor (doc 03, §4): fontes só
 > públicas na tela, âmbar para o que estimamos e observamos, equações sem itálico e com ε, resultados e robustez
 > refeitos, "metade" fundido na conclusão.<br>

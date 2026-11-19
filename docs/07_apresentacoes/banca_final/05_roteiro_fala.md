@@ -94,11 +94,13 @@
 
 **23–24. Modelo: logit condicional da 1ª opção** (60 s, os dois juntos)
 - (23, clique) É a mesma ideia do slide anterior, em fórmula. ② é a utilidade: quanto a vaga vale para o médico. Tem
-  uma parte que vemos (β·x: bolsa, distância, IVS e controles, cada um com seu peso) e uma que não vemos (ε: família,
-  gosto pelo lugar).
+  uma parte que medimos (bolsa, distância, IVS e controles, cada um com seu peso) e uma que não vemos (ε: família,
+  gosto pelo lugar). Û, "U-chapéu", é a ② sem o ε, calculada com os pesos estimados: a parte estimada da utilidade.
 - Ligação: o médico põe em 1º a vaga de maior U. Como não vemos o ε, calculamos a chance de cada vaga ter o maior U;
-  supondo ε de valor extremo, essa chance é a fórmula ①: exp(β·x) da vaga dividido pela soma de exp(β·x) de todas as
-  vagas.
+  supondo ε de valor extremo, essa chance é a fórmula ①: exp(Û) da vaga dividido pela soma de exp(Û) de todas as
+  vagas dele.
+- Se perguntarem se Û é a utilidade: é a parte estimada, sem o ε, e só as diferenças entre vagas do mesmo médico têm
+  leitura (nível e unidade são arbitrários). Por isso lemos razões de chances (×1,47) e km (75).
 - O coeficiente testado é o da bolsa; o resto são controles. O par de UFs faz comparar vagas dentro da mesma UF, e a
   bolsa vem de regra com o IVS no modelo (detalhe no anexo 5, se perguntarem).
 - (24) O que se estima e por que este modelo: logit condicional conforme McFadden (1974), Nobel de Economia de 2000.
@@ -108,7 +110,8 @@
 **25. Método passo a passo: da escolha à razão de chances** (60 s)
 - 1–2: monta a base (uma linha por vaga; y = 1 na escolhida). 3–5: estima os pesos que melhor explicam as escolhas.
   6: lê o resultado como razão de chances.
-- Passo 4: a chance de cada vaga é exp(U sem ε) dela dividido pela soma disso em todas as vagas do médico.
+- Passo 3: U sem o ε, com os pesos, é o Û. Passo 4: a chance de cada vaga é exp(Û) dela dividido pela soma de exp(Û)
+  em todas as vagas do médico.
 - Passo 6: a métrica é a chance da vaga que paga mais dividida pela chance da outra; as outras vagas se cancelam.
 - No exemplo, um médico de MG decidindo entre duas cidades: Itamarandiba (em cima) 3,62% ÷ Araçuaí 2,53% = 1,43,
   e quase tudo vem da bolsa (×1,47).
@@ -162,11 +165,12 @@
 - **38. Anexo 5, estimação:** a bolsa é fixada por regra e o IVS está no modelo; comparamos vagas do mesmo candidato,
   na mesma UF (260 pares de UFs, 5.345 candidatos); dentro do município não dá, porque a bolsa é igual no município
   inteiro.
-- **39. Anexo 6, o modelo formal:** U = β·x + ε; y = 1 na vaga de maior U; a chance usa só β·x; a razão de chances
-  entre B e A é ×1,47. "y é o resultado, U é o mecanismo."
+- **39. Anexo 6, o modelo formal:** U = β·x + ε, com β·x = β₁·bolsa + β₂·dist + β₃·IVS + β₄·X + α; y = 1 na vaga de
+  maior U; com os pesos estimados, β·x vira Û e a chance é exp(Û) ÷ soma de exp(Û); a razão de chances entre B e A é
+  exp(Û_B − Û_A) = ×1,47. "y é o resultado, U é o mecanismo."
 - **40. Anexo 7, ajuste dos pesos:** o modelo dá uma nota a cada vaga, transforma notas em chances, confere com as
-  escolhas reais e ajusta os pesos até não melhorar (máxima verossimilhança). Dos pesos estimados saem o ×1,47 e
-  os 75 km.
+  escolhas reais e ajusta os pesos até não melhorar (máxima verossimilhança). Com os pesos finais, a nota é o Û.
+  Dos pesos estimados saem o ×1,47 e os 75 km.
 
 ## Número impresso no canto do slide
 

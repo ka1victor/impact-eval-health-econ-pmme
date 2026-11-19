@@ -16,18 +16,21 @@
 
 1. O modelo (McFadden, 1974) supõe que o médico dá uma utilidade a cada vaga, U_iv = β₁·bolsa + β₂·distância +
    β₃·IVS + β₄·X + α(par de UFs) + ε_iv (o erro no fim, como na forma usual), e lista em 1º a de maior utilidade.
-   **Não observamos U**; observamos só qual vaga foi a 1ª opção. β·x (tudo menos o ε) é a parte que observamos; ε, a
-   que não.
+   **Não observamos U**; observamos só qual vaga foi a 1ª opção. A soma β₁·bolsa + … + α (a ② sem o ε) é a parte que
+   medimos; ε, a que não. Calculada com os pesos estimados, essa parte é **Û_iv ("U-chapéu")**, a notação usual de
+   valor ajustado: Û_iv = β̂₁·bolsa_v + β̂₂·dist_iv + β̂₃·IVS_v + β̂₄·X_iv + α̂_UF(i),UF(v). Na tela não aparece "β·x"
+   solto, que não está escrito na ② (pedido do autor de 19/11).
 2. Se o ε de cada vaga é independente, com distribuição de valor extremo, a chance de a vaga v ser a 1ª opção é
-   P(v) = exp(β·x_v) ÷ soma de exp(β·x_k) nas vagas do candidato. É a equação que estimamos. A probabilidade é escrita
-   sobre a parte observada, não sobre U inteiro (o erro da banca 2 foi escrevê-la sobre U). α são 254 parâmetros, um
+   exp(parte sem ε da vaga v) ÷ soma de exp(parte sem ε) nas vagas do candidato. Com os pesos estimados:
+   P̂(v) = exp(Û_v) ÷ soma de exp(Û_k). É a equação que estimamos. A probabilidade é escrita sobre a parte sem o ε,
+   não sobre U inteiro (o erro da banca 2 foi escrevê-la sobre U). α são 254 parâmetros, um
    efeito fixo por par UF de trabalho × UF da vaga: por isso α (a letra usual de efeito fixo), e não um β₅ único.
 3. Por máxima verossimilhança, os pesos que melhor explicam
    as 1ªs opções observadas. **Os pesos saem das escolhas** (preferência revelada). Na estimação, o IVS entra como reta
    com dobras nos cortes 0,300 e 0,400 (spline linear contínuo, sem salto); no slide aparece como β₃·IVS.
-4. O que **não** sai: o nível do valor (só diferenças entre vagas do mesmo candidato importam) nem a sua unidade (a
-   escala é fixada pela variância do ε). Por isso β₁ = 0,077 sozinho não tem leitura em reais nem em "utilidade".
-5. O que tem leitura: a **razão de chances entre duas vagas**, P(A) ÷ P(B) = exp(β·x_A − β·x_B), em que o denominador se
+4. O que **não** sai: o U inteiro (o ε não é estimado), o nível de Û (só diferenças entre vagas do mesmo candidato
+   importam) nem a sua unidade (a escala é fixada pela variância do ε). Por isso β₁ = 0,077 sozinho não tem leitura em reais nem em "utilidade".
+5. O que tem leitura: a **razão de chances entre duas vagas**, P̂(A) ÷ P̂(B) = exp(Û_A − Û_B), em que o denominador se
    cancela. Duas vagas iguais exceto +R$ 5 mil: e^(5β₁) = e^0,385 = **1,47**. E 5β₁ ÷ |β₂| × 100 = **75 km**.
 
 **Métrica final:** a razão de chances por +R$ 5 mil (×1,47); a tradução para a política é a equivalência em km (75 km).
@@ -147,7 +150,8 @@ A e C diferirem mais de 0,5 p.p.
 
 ### 3.5 Modelo (21)
 
-Equações sem itálico (Montserrat). ① "Chance de a vaga v ser a 1ª opção do candidato i": P = exp(V_iv) ÷ soma de
+**Vigente: §3.20 (Û, 19/11).** Texto original, substituído: equações sem itálico (Montserrat). ① "Chance de a vaga v
+ser a 1ª opção do candidato i": P = exp(V_iv) ÷ soma de
 exp(V_ik) em todas as vagas k de i. ② "Valor da vaga v para o candidato i": U_iv = V_iv + ε_iv, com V_iv = β₁·bolsa +
 β₂·dist + β₃·IVS + β₄·X + α_UF(i),UF(v) ("V: a parte que observamos · ε: a que não observamos"). Abaixo de ②, em
 âmbar: "Ligação: vemos só qual vaga tem o maior U (a 1ª opção). Supondo ε de valor extremo, a chance disso é ①,
@@ -223,6 +227,7 @@ perguntar.
 
 ### 3.13 Anexo 3: o modelo formal (desligado)
 
+**Vigente: §3.20 (Û, 19/11).** Texto original:
 Quatro cartões em sequência: (1) valor não observado, U_iv = V_iv + ε_iv; (2) escolha observada, y_iv = 1 se U_iv >
 U_ik para toda outra vaga k; (3) chance, P(y_iv = 1) = exp(V_iv) ÷ soma de exp(V_ik), se ε é de valor extremo, pesos
 por máxima verossimilhança; (4) razão de chances, P(B) ÷ P(A) = exp(5β₁) = exp(5 × 0,077) = 1,47. Tabela com as vagas
@@ -324,6 +329,30 @@ Valem para as duas versões, salvo o que só existe na conciliada.
   listar duas opções; por simplicidade, usamos só a 1ª" (edital: até duas opções; o logit explodido com a 2ª ficou
   como sensibilidade no modelo base).
 
+### 3.20 Rodada 15 (19/11): notação Û para a parte estimada sem o erro
+
+Pedido do autor (19/11): "β·x_iv" não aparece na ②, e a banca pode tropeçar nisso; usar Û_iv, a notação usual de
+econometria para o valor ajustado. Prevalece sobre §3.5, §3.6, §3.13, §3.15 e §3.19 onde houver conflito. Vale para a
+nossa versão, a conciliada e o deck do Bernardo (rodada 13), que usam as mesmas funções.
+
+- **Modelo:** ① "Chance estimada de a vaga v ser a 1ª opção do candidato i": P̂(i escolhe v) = exp(Û_iv) ÷ soma de
+  exp(Û_ik) de todas as vagas k. ② sem mudança (U_iv = β₁·bolsa_v + … + α_UF(i),UF(v) + ε_iv). Legenda: "Parte
+  estimada (Û_iv): U sem o ε, com os pesos estimados de bolsa, distância, IVS e controles." / "Parte que não vemos
+  (ε_iv): …". Ligação termina em "…essa chance é a fórmula ①, que só usa Û (U sem o ε)." Notas:
+  Û = β̂₁·bolsa + β̂₂·dist + β̂₃·IVS + β̂₄·X + α̂; razão de chances exp(Û_A − Û_B); nível e unidade de Û arbitrários.
+  Sai a frase repetida sobre α nas notas.
+- **Passo a passo:** 3 "U = pesos × características + ε; sem o ε, é o Û"; 4 "exp(Û) da vaga ÷ soma de exp(Û) das
+  vagas dele". Notas: o que os passos 3 a 5 calculam com pesos de tentativa; a razão do exemplo é exp(Û_B − Û_A).
+- **Anexo do modelo formal:** cartão 1 mantém U_iv = β·x_iv + ε_iv, agora com a definição na tela
+  (β·x = β₁·bolsa + β₂·dist + β₃·IVS + β₄·X + α, a ② sem o ε); cartão 3, P̂(y_iv = 1) = exp(Û_iv) ÷ soma de
+  exp(Û_ik), "Û: β·x com os pesos estimados"; cartão 4, P̂(B) ÷ P̂(A) = exp(Û_B − Û_A) = exp(5β̂₁) = 1,47; tabela
+  com as colunas "Û (U sem ε)" e "P̂(y = 1)"; nota "Só as diferenças de Û importam, por isso Û(A) = 0".
+- **Anexo 7 do Bernardo (notas):** "explicamos no próximo slide" apontava para um slide que não existe (é o último);
+  passa a "está no anexo 6, o modelo formal", e a nota do passo 1, com os pesos finais, é o Û.
+- **Conferido sem mudança:** vagas A, B e C (28,8%, 42,4%, 28,8%; B ÷ A = e^(5β₁) = 1,47; C fica a 50 + 75 km);
+  exemplo real (2,53% e 3,62%; 1,43 = 1,47 × 0,97 × 1,0008; 59% contra 41%); 75 km = 0,385 ÷ 0,514 × 100; resultados,
+  robustez, identificação e limitações contra `VL_estimativas.csv` e `exemplo_logit_real.json`.
+
 ## 4. Histórico de revisões
 
 - **11/11:** deck sobre a versão do grupo (32 slides); pergunta nova; "valor da bolsa"; anexo com t = 0.
@@ -347,6 +376,8 @@ Valem para as duas versões, salvo o que só existe na conciliada.
   (`--com-colega`), com o slide de resultado do colega e o slide A, B e C enxuto (§3.16).
 - **14/11, rodada 9:** exemplos nos blocos de saúde da cadeia; denominador explícito no passo a passo; Limitações
   antes da Conclusão; conclusão alinhada (§3.17). Nenhum slide cortado (o autor preferiu manter).
+- **19/11, rodada 15:** notação Û (U-chapéu) para a parte estimada sem o erro, no modelo, no passo a passo e no anexo
+  formal; P̂ para a chance estimada; notas do anexo 7 do Bernardo corrigidas (§3.20).
 
 ## 5. Para o grupo decidir
 

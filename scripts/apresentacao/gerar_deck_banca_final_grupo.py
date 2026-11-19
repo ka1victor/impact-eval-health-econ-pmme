@@ -721,11 +721,11 @@ def s_modelo(M, prs, n):
     # rodada 13 (15/11): parte 2 e ligação explicadas; denominador por extenso; letra maior
     caixa(sl, 0.25, 0.88, 8.55, 3.62, [], fill=BRANCO, line=BORDA, nome="Cartão das equações")
     # ① a chance
-    texto(sl, 0.45, 0.94, 8.2, 0.3, [[("①  Chance de a vaga v ser a 1ª opção do candidato i", 12.5, True, VERDE2)]])
-    texto(sl, 0.45, 1.43, 2.75, 0.45, [eq("P(i escolhe v) =", 19)], align=PP_ALIGN.RIGHT)
-    texto(sl, 3.3, 1.2, 5.3, 0.42, [eq("exp(β·x_{iv})", 19)], align=PP_ALIGN.CENTER)
+    texto(sl, 0.45, 0.94, 8.2, 0.3, [[("①  Chance estimada de a vaga v ser a 1ª opção do candidato i", 12.5, True, VERDE2)]])
+    texto(sl, 0.45, 1.43, 2.75, 0.45, [eq("P̂(i escolhe v) =", 19)], align=PP_ALIGN.RIGHT)
+    texto(sl, 3.3, 1.2, 5.3, 0.42, [eq("exp(Û_{iv})", 19)], align=PP_ALIGN.CENTER)
     linha(sl, 3.45, 1.66, 8.45, 1.66, larg=1.25)
-    texto(sl, 3.3, 1.7, 5.3, 0.42, [eq("soma de exp(β·x_{ik}) de todas as vagas k", 16)], align=PP_ALIGN.CENTER)
+    texto(sl, 3.3, 1.7, 5.3, 0.42, [eq("soma de exp(Û_{ik}) de todas as vagas k", 16)], align=PP_ALIGN.CENTER)
     linha(sl, 0.45, 2.18, 8.6, 2.18, cor=BORDA, larg=1.0)
     # ② a utilidade, com cada parte explicada
     texto(sl, 0.45, 2.23, 8.2, 0.3, [[("②  Utilidade: quanto a vaga v vale para o candidato i", 12.5, True, VERDE2)]])
@@ -733,8 +733,8 @@ def s_modelo(M, prs, n):
           [eq("U_{iv} = β_{1}·bolsa_{v} + β_{2}·dist_{iv} + β_{3}·IVS_{v} + β_{4}·X_{iv} + α_{UF(i),UF(v)} + ε_{iv}",
               16.5)], align=PP_ALIGN.CENTER)
     texto(sl, 0.6, 3.0, 8.0, 0.55,
-          [[("Parte que vemos ", 12, True, TEXTO)] + eq("(β·x_{iv})", 12, TEXTO) +
-           [(": bolsa, distância, IVS e controles da vaga, cada um com seu peso β.", 12, False, TEXTO)],
+          [[("Parte estimada ", 12, True, TEXTO)] + eq("(Û_{iv})", 12, TEXTO) +
+           [(": U sem o ε, com os pesos estimados de bolsa, distância, IVS e controles.", 12, False, TEXTO)],
            [("Parte que não vemos ", 12, True, TEXTO)] + eq("(ε_{iv})", 12, TEXTO) +
            [(": o que o médico sabe e nós não, como família e gosto pelo lugar.", 12, False, TEXTO)]],
           anchor=MSO_ANCHOR.TOP)
@@ -742,8 +742,8 @@ def s_modelo(M, prs, n):
     caixa(sl, 0.35, 3.6, 8.35, 0.8,
           [[("Ligação entre ② e ①: ", 12.5, True, ACENTO_ESCURO),
             ("o médico põe em 1º a vaga de maior U. Como não vemos o ε, calculamos a chance de cada vaga ter o maior "
-             "U. Supondo que o ε segue uma distribuição de valor extremo, essa chance é exatamente a fórmula ①, que só "
-             "usa a parte que vemos.", 12, False, ACENTO_ESCURO)]],
+             "U. Supondo que o ε segue uma distribuição de valor extremo, essa chance é a fórmula ①, que só usa Û (U "
+             "sem o ε).", 12, False, ACENTO_ESCURO)]],
           fill=ACENTO_CLARO, line=ACENTO, nome="Ligação", margem=0.15)
     # O que cada termo faz (foco no regressor)
     texto(sl, 0.25, 4.6, 8.55, 0.32, [[("O que cada termo faz", 15, True, TEXTO)]])
@@ -778,16 +778,19 @@ def s_modelo(M, prs, n):
           fill=CLARO, line=BORDA, anchor=MSO_ANCHOR.MIDDLE, nome="Por que este modelo", margem=0.25, esp=10)
     fontes(sl, "Fontes: McFadden (1974); Costa, Nunes e Sanches (2024), The Review of Economics and Statistics. "
                "Elaboração própria.")
-    notas(sl, ("Duas equações. ② é a utilidade da vaga: U = β·x + ε, com o erro no fim; β·x (bolsa, distância, IVS, "
-               "controles e o efeito fixo do par) é a parte observável; ε é o que não observamos. ① é a chance de cada "
-               "vaga ser a 1ª opção. A ligação: se cada ε segue uma distribuição de valor extremo (Gumbel), a chance de "
-               "a vaga ter o maior U é exatamente exp(β·x) ÷ soma de exp(β·x) nas vagas do candidato; a chance não se "
-               "escreve sobre U inteiro, porque o ε não é observado. α são 254 parâmetros, um efeito fixo por par UF de "
-               "trabalho × UF da vaga (por isso α, a letra usual para efeito fixo, e não um β₅ único). Os pesos saem por máxima verossimilhança. O nível do valor não é identificado (só "
-               "diferenças entre vagas, numa escala normalizada); por isso cada coeficiente se lê pela razão de "
-               "chances entre duas vagas: P(A) ÷ P(B) = exp[β₁·(bolsa_A − bolsa_B) + …]. β₃·IVS: na estimação, o IVS "
-               "entra como reta com dobras nos cortes 0,300 e 0,400 (spline linear contínuo, sem salto), para que só a "
-               "bolsa salte no corte. α é o efeito fixo do par UF de trabalho × UF da vaga. Literatura: Bobba et al. "
+    notas(sl, ("Duas equações. ② é a utilidade da vaga, com o erro no fim. Û (U-chapéu) é ② sem o ε, calculada com "
+               "os pesos estimados: Û_iv = β̂₁·bolsa + β̂₂·dist + β̂₃·IVS + β̂₄·X + α̂, a notação usual para o valor "
+               "ajustado. ε é o que não observamos. ① é a chance estimada de cada vaga ser a 1ª opção. A ligação: o médico "
+               "põe em 1º a vaga de maior U; se cada ε segue uma distribuição de valor extremo (Gumbel), a chance de a "
+               "vaga ter o maior U é exatamente exp(parte sem ε) ÷ soma de exp(parte sem ε) nas vagas do candidato; com "
+               "os pesos estimados, exp(Û) ÷ soma de exp(Û). A chance não se escreve sobre U inteiro, porque o ε não é "
+               "observado. α são 254 parâmetros, um efeito fixo por par UF de trabalho × UF da vaga (por isso α, a letra "
+               "usual para efeito fixo, e não um β₅ único). Os pesos saem por máxima verossimilhança: os que tornam as "
+               "1ªs opções observadas as mais prováveis. Û tem nível e unidade arbitrários (só diferenças entre vagas do "
+               "mesmo candidato importam, numa escala fixada pela variância do ε); por isso cada coeficiente se lê pela "
+               "razão de chances entre duas vagas: P̂(A) ÷ P̂(B) = exp(Û_A − Û_B) = exp[β̂₁·(bolsa_A − bolsa_B) + …]. "
+               "β₃·IVS: na estimação, o IVS entra como reta com dobras nos cortes 0,300 e 0,400 (spline linear "
+               "contínuo, sem salto), para que só a bolsa salte no corte. Literatura: Bobba et al. "
                "usam logit multinomial com cardápio personalizado (o professor escolhe na sua vez e pode recusar); "
                "Costa, Nunes & Sanches usam logit de coeficientes aleatórios com instrumento (o salário de mercado é "
                "endógeno). No PMM-E a bolsa é fixada por regra com corte e a lista é feita na inscrição: o logit "
@@ -805,8 +808,8 @@ def s_passos(M, prs, n):
               "met": (VERDE, BRANCO, BRANCO, None)}
     passos = (("1", "Vagas", "uma linha por vaga possível", "base"),
               ("2", "Escolha", "y = 1 na vaga posta em 1º", "base"),
-              ("3", "Utilidade", "U = pesos × características + ε", "est"),
-              ("4", "Chance", "exp(U sem ε) da vaga ÷ a soma disso em todas as vagas dele", "est"),
+              ("3", "Utilidade", "U = pesos × características + ε; sem o ε, é o Û", "est"),
+              ("4", "Chance", "exp(Û) da vaga ÷ soma de exp(Û) das vagas dele", "est"),
               ("5", "Pesos", "os que melhor explicam as escolhas", "est"),
               ("6", "Métrica", "chance da vaga que paga mais ÷ chance da outra", "met"))
     # rodada 9 (14/11): denominador explícito nos passos 4 e 6; exemplo mais abaixo
@@ -865,9 +868,12 @@ def s_passos(M, prs, n):
           fill=CLARO, line=BORDA, nome="Entre as duas", align=PP_ALIGN.CENTER)
     fontes(sl, FONTE_PUBLICA)
     notas(sl, (f"Passo a passo da estimação e da métrica, com um caso real ({ex['candidato']['vagas_no_cardapio']} vagas "
-               f"possíveis; IVS {v(a['ivs'], 3)} e {v(b['ivs'], 3)}). Cores: base de dados, estimação, métrica. As "
+               f"possíveis; IVS {v(a['ivs'], 3)} e {v(b['ivs'], 3)}). Cores: base de dados, estimação, métrica. Passos "
+               "3 a 5: com pesos de tentativa, calcula a parte de U sem o ε em cada vaga, transforma em chances e "
+               "confere com as 1ªs opções; repete até a verossimilhança não subir. Com os pesos finais, essa parte é o "
+               "Û (U-chapéu) e as chances do passo 4 são exp(Û) ÷ soma de exp(Û). As "
                "chances são as do modelo estimado (efeitos fixos incluídos); na razão entre as duas vagas o efeito fixo "
-               f"do par de UFs é o mesmo e se cancela, como o denominador. ×{v(rz['bolsa_mil'])} = e^(5 × β₁), com β₁ = "
+               f"do par de UFs é o mesmo e se cancela, como o denominador: a razão é exp(Û_B − Û_A). ×{v(rz['bolsa_mil'])} = e^(5 × β₁), com β₁ = "
                f"{v(n['b'], 3)} por R$ 1 mil; β₂ = {v(n['dist'], 3)} por 100 km. A razão do exemplo "
                f"({v(c['razao_total'])}) não é exatamente {v(n['rc'])} porque as vagas diferem um pouco em distância, "
                "IVS e porte. Por que razão, e não diferença: com centenas de vagas cada chance é pequena; a razão não "
@@ -1240,12 +1246,12 @@ def s_formal(M, prs, n):
     vs = abc(n)
     sl = M.novo(prs, "Anexo: o modelo formal, do valor à escolha")
     cards = (("1 · UTILIDADE (NÃO OBSERVADA)", "U_{iv} = β·x_{iv} + ε_{iv}",
-              "β·x: bolsa, distância, IVS, X e par de UFs, com os pesos. ε: o que não vemos (família, gosto)."),
+              "β·x = β₁·bolsa + β₂·dist + β₃·IVS + β₄·X + α (a ② do modelo sem o ε). ε: o que não vemos."),
              ("2 · ESCOLHA OBSERVADA (0 OU 1)", "y_{iv} = 1  se  U_{iv} > U_{ik}",
               "para toda outra vaga k do candidato: y = 1 na vaga posta em 1º; 0 nas demais."),
-             ("3 · CHANCE", ("P(y_{iv} = 1) =", "exp(β·x_{iv}) ÷ soma de exp(β·x_{ik})"),
-              "Vale se ε é de valor extremo. Os pesos saem por máxima verossimilhança."),
-             ("4 · RAZÃO DE CHANCES", ("P(B) ÷ P(A)", f"= exp(5β_{{1}}) = {v(n['rc'])}"),
+             ("3 · CHANCE", ("P̂(y_{iv} = 1) =", "exp(Û_{iv}) ÷ soma de exp(Û_{ik})"),
+              "Vale se ε é de valor extremo. Û: β·x com os pesos estimados (máxima verossimilhança)."),
+             ("4 · RAZÃO DE CHANCES", ("P̂(B) ÷ P̂(A) = exp(Û_{B} − Û_{A})", f"= exp(5β̂_{{1}}) = {v(n['rc'])}"),
               "B paga +R$ 5 mil, o resto igual: o que é do médico e o denominador se cancelam."))
     w, gap = 3.0, 0.277
     for k, (rot, f, expl) in enumerate(cards):
@@ -1262,7 +1268,7 @@ def s_formal(M, prs, n):
             seta(sl, x + w + 0.03, 2.0, x + w + gap - 0.03, 2.0, larg=2.0)
     # tabela A, B, C
     subtitulo(sl, 0.25, 3.28, 7.9, "Exemplo: as vagas A, B e C, com os pesos estimados")
-    cols = (("Vaga", 0.7), ("Bolsa", 1.1), ("Distância", 1.1), ("β·x (sem ε)", 1.1), ("P(y = 1)", 1.05), ("y", 0.5),
+    cols = (("Vaga", 0.7), ("Bolsa", 1.1), ("Distância", 1.1), ("Û (U sem ε)", 1.1), ("P̂(y = 1)", 1.05), ("y", 0.5),
             ("Razão vs. A", 2.2))
     y0, h = 3.7, 0.42
     x = 0.25
@@ -1284,7 +1290,7 @@ def s_formal(M, prs, n):
             x += cw
     texto(sl, 0.25, y0 + 4 * h + 0.1, 7.75, 0.85,
           [[("Ilustrativo: ", 10.5, True, CINZA),
-            (f"vagas inventadas. Só as diferenças de β·x importam, por isso β·x(A) = 0. B: +R$ 5 mil somam "
+            (f"vagas inventadas. Só as diferenças de Û importam, por isso Û(A) = 0. B: +R$ 5 mil somam "
              f"{v(vs[1]['V'])}. C: os {vs[2]['km'] - 50} km a mais tiram o mesmo. Com ≈ 107 vagas "
              "por candidato, cada chance fica perto de 1%, mas a razão entre duas vagas é a mesma.", 10.5, False, CINZA)]],
           anchor=MSO_ANCHOR.TOP)
@@ -1301,12 +1307,14 @@ def s_formal(M, prs, n):
                "principal (ciclos 1–3). Elaboração própria.")
     notas(sl, ("Use se a banca pedir a forma do modelo. Não observamos quanto cada vaga vale para o médico (U); "
                "observamos só qual ele pôs em 1º lugar (y). O modelo supõe que ele lista em 1º a vaga de maior U, com "
-               "uma parte que medimos (β·x: bolsa, distância, IVS, controles, par de UFs) e uma que não medimos (ε). Se "
-               "ε é i.i.d. de valor extremo (Gumbel), a chance de a vaga v ter o maior U é exp(β·x_v) ÷ soma de exp(β·x_k) "
-               "nas vagas do candidato. Os pesos saem por máxima verossimilhança (Newton–Raphson): os que tornam as 1ªs "
-               "opções observadas as mais prováveis. A razão de chances entre duas vagas do mesmo candidato é "
-               "exp(β·x_B − β·x_A): o denominador e tudo o que é do médico se cancelam. No exemplo, A, B e C são "
-               "inventadas e os pesos são os estimados."))
+               "uma parte que medimos (β·x = β₁·bolsa + β₂·dist + β₃·IVS + β₄·X + α) e uma que não medimos (ε). Se "
+               "ε é i.i.d. de valor extremo (Gumbel), a chance de a vaga v ter o maior U é exp(β·x_v) ÷ soma de "
+               "exp(β·x_k) nas vagas do candidato. Os pesos saem por máxima verossimilhança (Newton–Raphson): os que "
+               "tornam as 1ªs opções observadas as mais prováveis. Com os pesos estimados, β·x vira Û (U-chapéu: U sem "
+               "o ε, valor ajustado) e a chance vira P̂ = exp(Û) ÷ soma de exp(Û). A razão de chances entre duas vagas "
+               "do mesmo candidato é exp(Û_B − Û_A): o denominador e tudo o que é do médico se cancelam. Û não tem "
+               "nível nem unidade próprios; só diferenças entre vagas do mesmo candidato têm leitura. No exemplo, A, B "
+               "e C são inventadas e os pesos são os estimados."))
     return sl
 
 
