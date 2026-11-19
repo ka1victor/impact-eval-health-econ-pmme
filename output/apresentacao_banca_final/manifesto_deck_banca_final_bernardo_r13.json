@@ -18,6 +18,7 @@
     "23: Modelo: logit condicional da 1ª opção (miolo redesenhado; 1 retângulo(s) de foco mantido(s))",
     "24: Modelo: logit condicional da 1ª opção (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "25: Método passo a passo: da escolha à razão de chances (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
+    "26: Identificação: as premissas do logit condicional (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "28: Ficar perto de onde trabalha pesa mais que a bolsa (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "29: Robustez: ×1,47 se mantém com mais dados (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
     "30: Limitações (miolo redesenhado; 0 retângulo(s) de foco mantido(s))",
@@ -204,7 +205,7 @@
     }
   ],
   "saidas": {
-    "output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx": "61bd4337cafce07c67e9fe505acd6f96769f795f4407cde27ff19d862981f285",
+    "output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pptx": "5430274dfac1bb39090cca8a44b02d71496c8f8ea440120b4cee7ac2bbb798e5",
     "output/apresentacao_banca_final/deck_banca_final_bernardo_r13.pdf": "gerado (PDF não é determinístico)"
   }
 }

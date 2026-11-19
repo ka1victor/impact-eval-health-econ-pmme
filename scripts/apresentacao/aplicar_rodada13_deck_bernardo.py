@@ -71,6 +71,7 @@ REDESENHO = {
     23: ("Modelo: logit condicional", G.s_modelo),
     24: ("Modelo: logit condicional", G.s_modelo),
     25: ("Método passo a passo", G.s_passos),
+    26: ("Identificação:", G.s_identificacao),  # 19/11: mais limpo; IIA "vale em parte", não "testada"
     28: ("Ficar perto de onde trabalha", G.s_resultados_colega),
     29: ("Robustez:", G.s_robustez),
     30: ("Limitações", G.s_limitacoes),
@@ -202,6 +203,7 @@ def renumerar(prs) -> list[str]:
         if sh is None:
             raise SystemExit(f"ERRO: slide {i} sem número da página")
         modelo = sh
+        sh.text_frame.word_wrap = False  # 19/11: dois dígitos não quebram em duas linhas (LibreOffice quebrava)
         a = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
         for fld in list(sh._element.iter(a + "fld")):  # campo de número automático: vira texto fixo
             r = etree.Element(a + "r")

@@ -121,7 +121,9 @@ class TestDeck(unittest.TestCase):
 
     def test_aninhado_no_modelo_base(self):
         i = self.pos("Identificação:")
-        self.assertIn("testado no modelo base", self.txt[i])
+        # 19/11: a IIA é rejeitada no aninhado; a etiqueta não pode dizer que a premissa passou
+        self.assertNotIn("TESTADA", self.txt[i])
+        self.assertIn("VALE EM PARTE", self.txt[i])
         self.assertIn("rodado no modelo base sem o par de UFs", self.prs.slides[i].notes_slide.notes_text_frame.text)
 
     def test_funil_das_alternativas(self):

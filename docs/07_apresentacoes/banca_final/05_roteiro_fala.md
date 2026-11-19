@@ -119,7 +119,8 @@
 **26. Identificação: as premissas do logit condicional** (60 s)
 - Escolha sincera e conjunto de escolha conhecido: suposições.
 - Exogeneidade da bolsa: vale em parte; a bolsa segue a regra, mas outras regras federais mudam nos mesmos cortes.
-- IIA: testada; com um logit aninhado, o peso da bolsa quase não muda.
+- IIA: vale em parte. Vagas da mesma região concorrem mais entre si (o teste rejeita a premissa), mas o peso da
+  bolsa quase não muda.
 
 ## Resultados e discussão (≈ 2 min 30 s)
 

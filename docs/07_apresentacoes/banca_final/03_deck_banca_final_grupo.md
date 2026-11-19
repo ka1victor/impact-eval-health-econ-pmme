@@ -349,6 +349,15 @@ nossa versão, a conciliada e o deck do Bernardo (rodada 13), que usam as mesmas
   com as colunas "Û (U sem ε)" e "P̂(y = 1)"; nota "Só as diferenças de Û importam, por isso Û(A) = 0".
 - **Anexo 7 do Bernardo (notas):** "explicamos no próximo slide" apontava para um slide que não existe (é o último);
   passa a "está no anexo 6, o modelo formal", e a nota do passo 1, com os pesos finais, é o Û.
+- **Identificação (pedido do autor de 19/11: tirar complexidade, não pôr):** cada cartão fica com o nome usual, a
+  etiqueta e uma frase, em letra 17; sai o subtítulo verde. Duas etiquetas só: SUPOSIÇÃO (escolha sincera; conjunto de
+  escolha conhecido) e VALE EM PARTE (exogeneidade da bolsa; IIA). A IIA deixa de ser "TESTADA", que parecia dizer
+  que a premissa passou: o aninhado rejeita λ = 1 (λ = 0,45), e o que fica estável é o peso da bolsa. Frases: "O
+  médico põe em 1º a vaga que prefere, sem medo de não passar na nota."; "Ele vê todas as vagas do seu curso: o edital
+  publica a lista inteira."; "A bolsa segue a regra do IVS, mas outras regras mudam nos mesmos cortes."; "Vagas da
+  mesma região concorrem mais entre si, mas o peso da bolsa quase não muda." O detalhe (modelo base, 0,043 contra
+  0,042) fica nas notas. No deck do Bernardo, o slide 26 passa a ser redesenhado pela mesma função; o número do canto
+  não quebra mais em duas linhas no PDF.
 - **Conferido sem mudança:** vagas A, B e C (28,8%, 42,4%, 28,8%; B ÷ A = e^(5β₁) = 1,47; C fica a 50 + 75 km);
   exemplo real (2,53% e 3,62%; 1,43 = 1,47 × 0,97 × 1,0008; 59% contra 41%); 75 km = 0,385 ÷ 0,514 × 100; resultados,
   robustez, identificação e limitações contra `VL_estimativas.csv` e `exemplo_logit_real.json`.
@@ -377,7 +386,8 @@ nossa versão, a conciliada e o deck do Bernardo (rodada 13), que usam as mesmas
 - **14/11, rodada 9:** exemplos nos blocos de saúde da cadeia; denominador explícito no passo a passo; Limitações
   antes da Conclusão; conclusão alinhada (§3.17). Nenhum slide cortado (o autor preferiu manter).
 - **19/11, rodada 15:** notação Û (U-chapéu) para a parte estimada sem o erro, no modelo, no passo a passo e no anexo
-  formal; P̂ para a chance estimada; notas do anexo 7 do Bernardo corrigidas (§3.20).
+  formal; P̂ para a chance estimada; notas do anexo 7 do Bernardo corrigidas; identificação mais limpa, IIA "vale
+  em parte" (§3.20).
 
 ## 5. Para o grupo decidir
 

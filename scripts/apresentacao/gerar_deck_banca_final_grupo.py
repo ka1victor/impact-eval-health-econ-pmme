@@ -939,29 +939,28 @@ def s_estimacao(M, prs, n):
 
 
 def s_identificacao(M, prs, n):
+    """19/11 (pedido do autor): mais limpo. Cada cartão: nome usual, etiqueta e uma frase. Duas etiquetas só:
+    SUPOSIÇÃO (não dá para testar) e VALE EM PARTE (exogeneidade: pacote no corte; IIA: rejeitada no aninhado, mas o
+    peso da bolsa quase não muda). "TESTADA" saía como se a premissa tivesse passado."""
     sl = M.novo(prs, "Identificação: as premissas do logit condicional")
     linhas_ = (
-        ("Escolha sincera", "o médico lista a vaga que prefere", "SUPOSIÇÃO", "suposto",
-         "Ninguém deixa de pôr em 1º a vaga preferida por achar que não passaria na nota."),
-        ("Conjunto de escolha conhecido", "o médico vê todas as vagas", "SUPOSIÇÃO", "suposto",
-         "Ele considerou todas as vagas do seu curso e ciclo; o edital publica a lista inteira."),
-        ("Exogeneidade da bolsa", "a bolsa não depende do que não medimos", "VALE EM PARTE", "parte",
-         "A bolsa segue a regra do IVS, e o IVS está no modelo. Mas outras regras federais mudam nos mesmos cortes: "
-         "medimos o efeito do conjunto."),
-        ("Independência de alternativas (IIA)", "vagas parecidas não se substituem a mais", "TESTADA", "obs",
-         "Vagas da mesma região concorrem mais entre si. Num logit aninhado, testado no modelo base, o peso da bolsa "
-         "quase não muda."),
+        ("Escolha sincera", "SUPOSIÇÃO", "suposto",
+         "O médico põe em 1º a vaga que prefere, sem medo de não passar na nota."),
+        ("Conjunto de escolha conhecido", "SUPOSIÇÃO", "suposto",
+         "Ele vê todas as vagas do seu curso: o edital publica a lista inteira."),
+        ("Exogeneidade da bolsa", "VALE EM PARTE", "parte",
+         "A bolsa segue a regra do IVS, mas outras regras mudam nos mesmos cortes."),
+        ("Independência de alternativas (IIA)", "VALE EM PARTE", "parte",
+         "Vagas da mesma região concorrem mais entre si, mas o peso da bolsa quase não muda."),
     )
-    for k, (tit, sub, rot, tp, expl) in enumerate(linhas_):
+    for k, (tit, rot, tp, expl) in enumerate(linhas_):
         x, y = 0.25 + (k % 2) * 6.53, 0.95 + (k // 2) * 2.92
         caixa(sl, x, y, 6.3, 2.72, [], fill=CLARO, line=BORDA, nome=f"Premissa {k + 1}")
-        caixa(sl, x + 0.25, y + 0.22, 0.46, 0.46, [[(str(k + 1), 15, True, BRANCO)]], fill=VERDE,
+        caixa(sl, x + 0.25, y + 0.3, 0.46, 0.46, [[(str(k + 1), 15, True, BRANCO)]], fill=VERDE,
               forma=MSO_SHAPE.OVAL, align=PP_ALIGN.CENTER, margem=0)
-        texto(sl, x + 0.85, y + 0.18, 3.55, 0.56, [[(tit, 16, True, TEXTO)]])
-        pill(sl, x + 4.45, y + 0.27, 1.65, rot, tp, h=0.36, tam=10)
-        texto(sl, x + 0.85, y + 0.78, 5.25, 0.32, [[(sub, 12.5, True, VERDE2)]])
-        linha(sl, x + 0.25, y + 1.18, x + 6.05, y + 1.18, cor=BORDA, larg=0.75)
-        texto(sl, x + 0.25, y + 1.3, 5.8, 1.3, [[(expl, 14, False, TEXTO)]], anchor=MSO_ANCHOR.TOP)
+        texto(sl, x + 0.85, y + 0.26, 3.55, 0.56, [[(tit, 17, True, TEXTO)]])
+        pill(sl, x + 4.45, y + 0.35, 1.65, rot, tp, h=0.36, tam=10)
+        texto(sl, x + 0.85, y + 1.05, 5.2, 1.4, [[(expl, 17, False, TEXTO)]], anchor=MSO_ANCHOR.TOP)
     fontes(sl, "Fontes: Ipea, IVS 2010; editais e quadros de vagas do PMM-E (SGTES/MS), ciclos 1–3; CNES/DATASUS. "
                "Elaboração própria.")
     notas(sl, (f"Premissas do logit condicional. Escolha sincera: não dá para testar com estes dados (premissa do autor, "
@@ -971,7 +970,8 @@ def s_identificacao(M, prs, n):
                "independentes, IIA): no logit aninhado por região de saúde, rodado no modelo base sem o par de UFs, "
                f"λ = {v(n['lambda'])} (λ = 1 seria o logit condicional; rejeita-se λ = 1); o peso da bolsa fica "
                f"{v(n['b_m9'], 3)} contra {v(n['b_m1'], 3)}. Se perguntarem: a IIA não vale por inteiro, mas o β quase "
-               "não muda. O logit misto (M8) mostra que o peso varia entre candidatos: o β é uma média."))
+               "não muda. Por isso a etiqueta é VALE EM PARTE, não TESTADA (19/11): o teste rejeita a IIA; o que fica estável "
+               "é o peso da bolsa. O logit misto (M8) mostra que o peso varia entre candidatos: o β é uma média."))
     return sl
 
 
