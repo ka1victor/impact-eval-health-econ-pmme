@@ -1,0 +1,65 @@
+{
+ "protocolo": "A5_AMEACA_PMAE",
+ "linguagem": "associativa; exposicao a ato administrativo concorrente",
+ "nacional": {
+  "estabelecimentos_3801_vigentes_ref": 1919,
+  "estabelecimentos_3801_vigentes_follow": 3717,
+  "municipios_3801_ref": 769,
+  "municipios_3801_follow": 1424,
+  "municipios_com_3801_novo_na_janela": 761,
+  "cmpt_ini_dos_novos_por_mes": {
+   "202507": 312,
+   "202508": 171,
+   "202509": 325,
+   "202510": 245,
+   "202511": 136,
+   "202512": 104,
+   "202601": 120,
+   "202602": 68,
+   "202603": 115
+  }
+ },
+ "amostra_a5_confirmatoria": {
+  "com_atracao": {
+   "celulas": 215,
+   "municipios": 147,
+   "pmae_vigente_ref": 0.49767441860465117,
+   "pmae_novo_janela": 0.5534883720930233,
+   "pmae_entrada_janela": 0.31627906976744186
+  },
+  "sem_atracao": {
+   "celulas": 372,
+   "municipios": 231,
+   "pmae_vigente_ref": 0.4946236559139785,
+   "pmae_novo_janela": 0.3870967741935484,
+   "pmae_entrada_janela": 0.23655913978494625
+  },
+  "diferenca_pmae_vigente_ref": 0.0030507626906726704,
+  "diferenca_pmae_novo_janela": 0.16639159789947489,
+  "diferenca_pmae_entrada_janela": 0.07971992998249561,
+  "permutacao": {
+   "pmae_novo_janela": {
+    "diferenca": 0.16639159789947489,
+    "p_bicaudal_permutacao_dentro_de_uf": 0.1104
+   },
+   "pmae_entrada_janela": {
+    "diferenca": 0.07971992998249561,
+    "p_bicaudal_permutacao_dentro_de_uf": 0.2196
+   }
+  },
+  "ajustado_estrato_porte_uf": {
+   "pmae_novo_janela": {
+    "coef_atracao": 0.030934631578851207,
+    "ep": 0.03591820505367791,
+    "p": 0.3890991795444817,
+    "n": 587
+   },
+   "pmae_entrada_janela": {
+    "coef_atracao": 0.050124660619508044,
+    "ep": 0.03512145073501418,
+    "p": 0.15352778345483567,
+    "n": 587
+   }
+  }
+ }
+}
