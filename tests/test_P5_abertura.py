@@ -498,7 +498,7 @@ class TestRecalculoIndependenteAuditoria23(unittest.TestCase):
         pri = ad.set_index(["co_cnes_7d", "cod_curso"])["priorizadas"].reindex(k).to_numpy() > 0
         np.testing.assert_array_equal(cel["priorizada"].to_numpy(), np.where(tem, pri.astype(float), np.nan))
         ponte = {int(c["cod_curso"]): c["cbos_elegiveis"] for c in
-                 json.loads((ROOT / "output/aquisicao/ponte_curso_cbo_oficial.json").read_text())["catalogo_cursos"]}
+                 json.loads((ROOT / "output/aquisicao/ponte_curso_cbo_oficial.json").read_text(encoding="utf-8"))["catalogo_cursos"]}
         t = pq.read_table(ROOT / "output/aquisicao/cnes_nacional/painel_municipio_cbo_mes.parquet",
                           columns=["co_ibge", "competencia", "grupo", "n_vinculos"],
                           filters=[("competencia", ">=", "202406"), ("competencia", "<=", "202506")]).to_pandas()

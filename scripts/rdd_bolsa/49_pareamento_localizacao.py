@@ -163,7 +163,8 @@ class FalhaValidacao(RuntimeError):
 
 
 sha256 = CL.sha256
-rotulo = CL.rotulo
+def rotulo(p) -> str:  # caminhos com "/" também no Windows, como nas saídas versionadas
+    return CL.rotulo(p).replace("\\", "/")
 _f = CL._f
 _juntar = CL._juntar
 fn, fp, fv, fic, fint = CL.fn, CL.fp, CL.fv, CL.fic, CL.fint

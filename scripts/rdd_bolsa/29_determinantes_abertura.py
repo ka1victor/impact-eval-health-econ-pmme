@@ -139,7 +139,11 @@ class FalhaValidacao(RuntimeError):
     """Conferência de integridade que falhou: o script para sem gravar."""
 
 
-sha256, rotulo = T23.sha256, T23.rotulo
+sha256 = T23.sha256
+
+
+def rotulo(p) -> str:  # caminhos com "/" também no Windows, como nas saídas versionadas
+    return T23.rotulo(p).replace("\\", "/")
 
 # ---------------------------------------------------------------------------
 # Covariáveis (§2): especificação fixada antes de ler outcomes

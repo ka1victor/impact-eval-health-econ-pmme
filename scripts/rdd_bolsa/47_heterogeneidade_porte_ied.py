@@ -154,7 +154,8 @@ class FalhaValidacao(RuntimeError):
 
 
 sha256 = T23.sha256
-rotulo = T23.rotulo
+def rotulo(p) -> str:  # caminhos com "/" também no Windows, como nas saídas versionadas
+    return T23.rotulo(p).replace("\\", "/")
 
 
 def _nan_none(o):

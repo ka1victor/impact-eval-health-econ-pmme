@@ -195,13 +195,13 @@ class TestIdentificacaoReal(unittest.TestCase):
 
     def test_fontes_conferem(self) -> None:
         fontes = self.ident["fontes"]
-        self.assertEqual(fontes[str(R.LOCAL.relative_to(ROOT))], sha256(R.LOCAL))
+        self.assertEqual(fontes[R.LOCAL.relative_to(ROOT).as_posix()], sha256(R.LOCAL))
         manifesto = json.loads(MANIFESTO_A08.read_text(encoding="utf-8"))
-        self.assertEqual(fontes[str(R.XLSX.relative_to(ROOT))], manifesto["fonte"]["sha256_xlsx"])
+        self.assertEqual(fontes[R.XLSX.relative_to(ROOT).as_posix()], manifesto["fonte"]["sha256_xlsx"])
 
     @unittest.skipUnless(R.XLSX.exists(), "planilha do Ipea fora do Git; rode scripts/aquisicao/a08_*")
     def test_planilha_preservada_e_a_do_json(self) -> None:
-        self.assertEqual(sha256(R.XLSX), self.ident["fontes"][str(R.XLSX.relative_to(ROOT))])
+        self.assertEqual(sha256(R.XLSX), self.ident["fontes"][R.XLSX.relative_to(ROOT).as_posix()])
 
 
 if __name__ == "__main__":

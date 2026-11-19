@@ -398,14 +398,14 @@ class TestDoc57za(unittest.TestCase):
         self.assertEqual(len(M.DECISOES), 11)
         self.assertTrue(all(d["data"] == "2026-10-28" for d in M.DECISOES))
         try:
-            h = subprocess.run(["git", "log", "--diff-filter=A", "--format=%H", "--", str(DOC.relative_to(ROOT))],
+            h = subprocess.run(["git", "log", "--diff-filter=A", "--format=%H", "--", DOC.relative_to(ROOT).as_posix()],
                                cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
         except (OSError, subprocess.CalledProcessError):
             self.skipTest("sem git")
         if not h:
             self.skipTest("57za ainda sem commit")
-        antigo = subprocess.run(["git", "show", f"{h[-1]}:{DOC.relative_to(ROOT)}"], cwd=ROOT, capture_output=True,
-                                text=True, check=True).stdout
+        antigo = subprocess.run(["git", "show", f"{h[-1]}:{DOC.relative_to(ROOT).as_posix()}"], cwd=ROOT, capture_output=True,
+                                text=True, encoding="utf-8", check=True).stdout
         a_ini = antigo.index("<!-- VK:decisoes:inicio -->")
         a_fim = antigo.index("<!-- VK:decisoes:fim -->")
         self.assertEqual(antigo[a_ini:a_fim],

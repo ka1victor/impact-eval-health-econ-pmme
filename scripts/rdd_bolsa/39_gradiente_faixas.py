@@ -174,7 +174,11 @@ class FalhaValidacao(RuntimeError):
     """Conferência que falhou: o script para sem gravar."""
 
 
-sha256, rotulo = E6.sha256, E6.rotulo
+sha256 = E6.sha256
+
+
+def rotulo(p) -> str:  # caminhos com "/" também no Windows, como nas saídas versionadas
+    return E6.rotulo(p).replace("\\", "/")
 
 
 def _juntar(*notas) -> str:

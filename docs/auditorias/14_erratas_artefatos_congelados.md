@@ -462,4 +462,8 @@ Git via o arquivo como inalterado, mas o SHA-256 que o a09 confere mudava.
 - `15_sintese_E8.py` grava caminhos com `/` também no Windows (`as_posix`). Antes, `test_e8_sintese`, que roda o
   script em memória e compara com a saída versionada, falhava no Windows por `\` nos caminhos.
 
+- **19/11/2026, mesma causa (Windows):** os scripts 29, 39, 45, 47 e 49 passam a gravar caminhos com `/` (o
+  `rotulo` de origem, no script 07, não foi mexido porque o hash dele está gravado no E3 e no E5); os testes 04b, 04c,
+  a08, VL-1 por ciclo e por corte, 57y e P5 leem caminhos com `/` e texto em UTF-8. No Linux nada muda.
+
 Nenhum número, amostra ou figura mudou.

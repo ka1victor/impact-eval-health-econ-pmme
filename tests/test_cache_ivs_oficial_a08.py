@@ -111,7 +111,7 @@ class TestZipReal(unittest.TestCase):
         self.assertEqual(fonte["sha256_zip"], A08.SHA256_ESPERADO)
         self.assertEqual(fonte["sha256_xlsx"], A08.SHA256_XLSX_ESPERADO)
         self.assertFalse(fonte["no_git"])
-        self.assertEqual(fonte["caminho_zip"], str(A08.ZIP.relative_to(ROOT)))
+        self.assertEqual(fonte["caminho_zip"], A08.ZIP.relative_to(ROOT).as_posix())
 
     @unittest.skipUnless(A08.ZIP.exists(), "zip do Ipea fora do Git; rode scripts/aquisicao/a08_*")
     def test_zip_preservado_e_o_registrado(self) -> None:

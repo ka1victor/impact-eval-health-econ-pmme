@@ -44,6 +44,27 @@ arquivos fora do Git desde 04/09/2026.
 | `TODO.md` | cabeçalho com o estado em 18/11/2026 e seção da banca final; D-3 marcado como concluído (pedido cancelado sem envio) |
 | `README.md` (docs), `07_apresentacoes/README.md`, `07_apresentacoes/banca_final/README.md` | índices passam a apontar banca 2, banca final, o deck vigente, o roteiro, os docs 57, 57x e 66, o dossiê e o arquivo histórico |
 
+**Branches (19/11/2026).** Apagadas no GitHub as 15 branches já contidas na main (todo commit delas está na main;
+para recriar uma: `git push origin <sha>:refs/heads/<nome>`). Ficam as 10 com commits fora da main.
+
+| Branch | SHA |
+|---|---|
+| `ccr-397091af-mfqjkc` | `59ff3e1d699537e445b4ea4f32a10b0e52b2d0ef` |
+| `ccr-ce1a6ad1-ejemgw` | `0bb3886b47654ee7a4b47c4e5b1ebfb5a75437a5` |
+| `claude/banca-1-presentation-update-o19vhi` | `b89d8d88df1dec3051fc495c66b9701b91372dbf` |
+| `claude/banca-slides-parallel-themes-32kcay` | `1bd69c8212334b224f11bfc05aed403a099cc305` |
+| `claude/confident-gauss-sa2ew1` | `d16060c977479aabfa2e157322253113a7df6018` |
+| `claude/dreamy-archimedes-ogx3d6` | `cb4939fd21771531a84c69150899a8d80312a01b` |
+| `claude/latex-template-improvements-h4upeb` | `127e3bedb5ee2e1d15e8f6570dee9889700f8ab5` |
+| `claude/presentation-hypothesis-methodology-xnch9c` | `624357c48ba8443087bc5e86ec151841d10f35d8` |
+| `claude/slides-documentation-adjustments-ftmhpe` | `0b2eb4dbd789e7610fb83cfb3b032a0dd3d866c7` |
+| `claude/status-do-tema-6lwrp0` | `c1478fe2d5ded5f8a84cb81fafc1b1a18e8e01dc` |
+| `claude/sweet-allen-2yibwg` | `2fce2cc87bb038e08c0488afe69e5aa8b349e73a` |
+| `claude/update-banca-slides-2kw0da` | `907eb586e9485cfe18b34176340d1de8ba90b7ca` |
+| `claude/vigilant-mccarthy-dd92mc` | `2fe85cdd023772a351694756cae199434f0bed16` |
+| `claude/zealous-babbage-v5w15x` | `5cf4ed8841d6f793297ea2d4c660447b8432163d` |
+| `feature/ciclo3-congelar-coorte` | `90cebbc55e33cee99fd886d446bf777bb52c0376` |
+
 A cópia local do KaTeX usada pelo rascunho HTML (`slides_teoria_micro_set2026/katex/`, 4 MB, biblioteca de terceiros)
 fica fora do Git. Os worktrees de agentes já integrados à main foram removidos (`git worktree remove` e `prune`).
 

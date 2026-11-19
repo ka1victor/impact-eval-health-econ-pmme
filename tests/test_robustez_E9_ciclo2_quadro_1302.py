@@ -529,7 +529,7 @@ class TestDoc57y(unittest.TestCase):
         self.assertTrue(all(d["data"] == "2026-10-27" for d in M.DECISOES))
         try:
             pre = subprocess.run(["git", "show", f"{COMMIT_PRE_REGISTRO}:docs/06_execucao/{DOC.name}"], cwd=ROOT,
-                                 capture_output=True, text=True, check=True).stdout
+                                 capture_output=True, text=True, encoding="utf-8", check=True).stdout
         except (OSError, subprocess.CalledProcessError):
             self.skipTest("histórico do Git sem o commit de pré-registro")
         self.assertEqual(_bloco(pre, "decisoes"), _bloco(t, "decisoes"))

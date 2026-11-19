@@ -222,7 +222,7 @@ class TestSaidaRealPortaoR1(unittest.TestCase):
         self.assertEqual(V.decidir_r1(conf, pops), self.portao["decisao_r1"])
 
     def test_escore_completo_e_o_ivs_oficial_a_tres_casas(self) -> None:
-        self.assertEqual(self.portao["saida_escore_completo"], str(ESCORE_COMPLETO.relative_to(ROOT)))
+        self.assertEqual(self.portao["saida_escore_completo"], ESCORE_COMPLETO.relative_to(ROOT).as_posix())
         texto = pd.read_csv(ESCORE_COMPLETO, dtype=str)
         self.assertEqual(list(texto.columns), ["co_ibge", "ivs_admin"])
         self.assertTrue(texto["ivs_admin"].str.fullmatch(r"[01]\.\d{3}").all())
