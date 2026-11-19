@@ -20,6 +20,8 @@ arquivos fora do Git desde 04/09/2026.
 |---|---|
 | `90_arquivo_historico/README_raiz_ate_18nov2026.md` | cópia do README da raiz como estava no commit `ba88032`, com os links ajustados para a pasta |
 | `90_arquivo_historico/slides_teoria_micro_set2026/README.md` | o que são os rascunhos abaixo e como recompilar |
+| `06_execucao/README.md` | índice da seção por trilha (gestão, ciclo 1, RDD da bolsa, H1, H2, outras perguntas), com protocolo → resultado. Os arquivos não foram movidos: cerca de 60 saídas de `output/` gravam o caminho e o hash deles |
+| `90_arquivo_historico/TODO_concluido_ate_18nov2026.md` | as nove seções do `TODO.md` sem item em aberto, sem alteração de texto; no `TODO.md` ficam só as seções com algo aberto |
 | `04_dados/20_dossie_bases_dados_saude_brasil_pmme.md` | dossiê das bases de saúde do Brasil (09/2026), que estava fora do Git; entra como referência geral, sem auditoria. Volta o link que a entrada de limpeza tinha removido por arquivo inexistente |
 
 ### Movido
