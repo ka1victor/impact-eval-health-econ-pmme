@@ -22,6 +22,59 @@ escolhe como 1ª opção?
 | **Atração territorial (A4) e oferta no CNES (A5)**, ciclo 1 | associativos | [35](docs/06_execucao/35_plano_correcoes_pos_auditoria.md) |
 | **Ciclo 3** | congelado até a competência `202703` do CNES estar publicada e madura | [12](docs/05_identificacao/12_estrategia_causal_prospectiva_ciclo3.md), [13](docs/05_identificacao/13_plano_pre_analise_ciclo3.md) |
 
+**Versão final por ora (19/11/2026).** O trabalho da banca final está fechado (PR #6). A próxima agenda é outra
+pergunta, mais ampla, descrita logo abaixo.
+
+## Próxima agenda: o mercado de médicos especialistas no Brasil
+
+> **Estatuto:** proposta do autor de 19/11/2026. Ainda não há protocolo nem execução. Não depende do PMM-E nem dos
+> resultados acima: é um trabalho novo, mais completo e geral, que reaproveita a infraestrutura de dados do
+> repositório.
+
+**Pergunta.** Onde os médicos especialistas trabalham no Brasil, como se movem entre municípios e o que pesa na
+escolha do local: remuneração, porte e infraestrutura do lugar, distância de onde já estavam, formação. É a pergunta de
+alocação, que vale fora do contexto de qualquer programa de provimento.
+
+**Ponto de partida: reprodução parcial de Costa, Nunes e Sanches (2024).** *How to Attract Physicians to Underserved
+Areas? Policy Recommendations from a Structural Model*, *The Review of Economics and Statistics* 106(1), 36–52
+([doi:10.1162/rest_a_01155](https://doi.org/10.1162/rest_a_01155); resumo em
+[`docs/03_literatura_empirica/20`](docs/03_literatura_empirica/20_evidencia_empirica_hipotese_remuneracao_preenchimento.md),
+item C1). O artigo estima um logit de coeficientes aleatórios da escolha de local do primeiro emprego de 46.989
+**generalistas** formados entre 2001 e 2013, com 52 alternativas (região metropolitana ou interior de cada UF), dados
+do CFM ligados à RAIS e ao CNES, e salário instrumentado. Conclusão dos autores: a oferta é pouco elástica ao salário
+(≈ 0,4 nas metrópoles, ≈ 0,7 no interior), e a origem do médico pesa mais. Para especialistas, que são o gargalo, não
+há evidência comparável.
+
+**Por que "parcial".** O CNES dá vínculo, CBO (especialidade), estabelecimento, município e carga horária, mês a mês,
+mas não dá salário, local de nascimento nem local de formação, que no artigo vêm do CFM e da RAIS identificada. A
+reprodução começa pelo que o CNES sustenta e trata o resto como extensão, com a fonte a verificar.
+
+**Etapas propostas**
+
+1. **Descritivo do estoque.** Especialistas (CBO 2251, 2252 e 2253) por especialidade × região de saúde × mês:
+   densidade por habitante, concentração, vínculos múltiplos, horas SUS e não SUS. Descritivo, sem linguagem causal.
+2. **Fluxos.** Entradas e saídas de cada município: primeira aparição no CNES, mudança de município, saída do
+   cadastro. Depende da estabilidade da chave profissional, que o a16 já diagnostica.
+3. **Logit condicional da escolha de local**, na versão mais simples do artigo: quem entra num município novo, entre
+   alternativas no estilo do artigo (metrópole ou interior de cada UF, ou região de saúde), com atributos do local
+   (população, estabelecimentos, leitos e equipamentos no CNES, distância do local anterior, residência médica
+   próxima). Conferir se os sinais e as ordens de grandeza batem com os do artigo.
+4. **Extensões**, só depois de 1 a 3: remuneração (por exemplo, médias públicas por CBO e município; fonte e
+   cobertura a verificar), coeficientes aleatórios e instrumento como no artigo, contrafactuais de política.
+
+**Cuidados**
+
+- Abre uma pergunta nova: protocolo em `docs/06_execucao/` congelado antes de olhar resultados (ver
+  [Reaproveitar o repositório](#reaproveitar-o-repositório)).
+- Vínculo cadastrado no CNES não é presença, produção nem retenção. CBO não é título de especialista.
+- A reprodução é parcial e diz o que difere do artigo: população (especialistas, não recém-formados generalistas),
+  período, alternativas e variáveis ausentes.
+
+**De onde partir no repositório:** CNES nacional mensal (`scripts/aquisicao/a09_adquirir_cnes_nacional.py`), painel
+profissional × mês com CBO, município e horas (`scripts/aquisicao/a16_cnes_profissional_mensal.py`), leitura do DATASUS
+(`scripts/utils/datasus_dbc.py`), estimador de logit condicional (`scripts/rdd_bolsa/50_escolha_localizacao_par.py`) e
+o dossiê das bases ([`docs/04_dados/20`](docs/04_dados/20_dossie_bases_dados_saude_brasil_pmme.md)).
+
 O README anterior, com o histórico do estado em camadas, está em
 [`docs/90_arquivo_historico/README_raiz_ate_18nov2026.md`](docs/90_arquivo_historico/README_raiz_ate_18nov2026.md).
 
@@ -34,6 +87,7 @@ O README anterior, com o histórico do estado em camadas, está em
 | saber de onde vem cada número | o doc de resultado em [`docs/06_execucao/`](docs/06_execucao/) (cada um diz o script e a saída) e a auditoria correspondente em [`docs/auditorias/`](docs/auditorias/) |
 | navegar pela documentação | [`docs/README.md`](docs/README.md) |
 | ler os artigos | `paper_pmme_submission.tex` (completo) e `paper_pmme_curto.tex` (sete páginas); cada cifra é conferida contra `output/` pelo `run_all.py` |
+| ver a próxima agenda | [Próxima agenda: o mercado de médicos especialistas](#próxima-agenda-o-mercado-de-médicos-especialistas-no-brasil) |
 | ver o que falta | [`TODO.md`](TODO.md) |
 | saber as regras de trabalho | [`CLAUDE.md`](CLAUDE.md) (regras do projeto) e [`AGENTS.md`](AGENTS.md) |
 

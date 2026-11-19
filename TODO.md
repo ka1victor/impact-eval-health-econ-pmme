@@ -10,6 +10,13 @@
 > `docs/05_identificacao/17_plano_causal_publico_cutoff_escore.md`; portões em
 > `docs/06_execucao/33_status_execucao_plano_causal.md`.
 
+## Próxima agenda (proposta de 19/11/2026)
+
+- [ ] **Mercado de médicos especialistas no Brasil**, para além do PMM-E, a partir de uma reprodução parcial de Costa,
+  Nunes e Sanches (2024) com o CNES. Pergunta, etapas e cuidados no
+  [`README.md`](README.md#próxima-agenda-o-mercado-de-médicos-especialistas-no-brasil). Primeiro passo: protocolo em
+  `docs/06_execucao/`, antes de olhar resultados.
+
 ## Banca final (estado em 18/11/2026)
 
 Detalhe em [`docs/07_apresentacoes/banca_final/`](docs/07_apresentacoes/banca_final/README.md).
