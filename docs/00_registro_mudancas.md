@@ -8,6 +8,45 @@
 
 ---
 
+## 18/11/2026 — Organização do repositório como base para outros trabalhos
+
+Motivo: o autor pediu para pôr tudo na main e organizar o repositório para servir de base a outras coisas. O README
+da raiz acumulava o estado em camadas (A8 como núcleo, RDD da bolsa, ciclo 3) e não falava da banca final; havia
+arquivos fora do Git desde 04/09/2026.
+
+### Criado
+
+| Arquivo | O que é |
+|---|---|
+| `90_arquivo_historico/README_raiz_ate_18nov2026.md` | cópia do README da raiz como estava no commit `ba88032`, com os links ajustados para a pasta |
+| `90_arquivo_historico/slides_teoria_micro_set2026/README.md` | o que são os rascunhos abaixo e como recompilar |
+| `04_dados/20_dossie_bases_dados_saude_brasil_pmme.md` | dossiê das bases de saúde do Brasil (09/2026), que estava fora do Git; entra como referência geral, sem auditoria. Volta o link que a entrada de limpeza tinha removido por arquivo inexistente |
+
+### Movido
+
+| De | Para | Motivo |
+|---|---|---|
+| `02_teoria/slides_*`, `02_teoria/prompt_presenton_teoria_micro.md` (fora do Git) | `90_arquivo_historico/slides_teoria_micro_set2026/` | rascunhos de formato de 04/09/2026, anteriores às revisões do modelo; não concorrem com `02_teoria/modelo_micro.md` nem com os decks das bancas |
+
+### Removido
+
+| Arquivo | Motivo |
+|---|---|
+| `02_teoria/slides_modelo_micro_madrid.{aux,log,nav,out,snm,toc}` (fora do Git) | subprodutos de compilação LaTeX; o `.gitignore` passa a ignorá-los |
+
+### Reescrito
+
+| Arquivo | O que mudou |
+|---|---|
+| `README.md` (raiz) | estado em 18/11/2026 numa tabela, "Comece aqui", "Reaproveitar o repositório" (blocos reutilizáveis e o caminho para abrir uma pergunta nova), execução e estrutura |
+| `TODO.md` | cabeçalho com o estado em 18/11/2026 e seção da banca final; D-3 marcado como concluído (pedido cancelado sem envio) |
+| `README.md` (docs), `07_apresentacoes/README.md`, `07_apresentacoes/banca_final/README.md` | índices passam a apontar banca 2, banca final, o deck vigente, o roteiro, os docs 57, 57x e 66, o dossiê e o arquivo histórico |
+
+A cópia local do KaTeX usada pelo rascunho HTML (`slides_teoria_micro_set2026/katex/`, 4 MB, biblioteca de terceiros)
+fica fora do Git. Os worktrees de agentes já integrados à main foram removidos (`git worktree remove` e `prune`).
+
+---
+
 ## 15/11/2026 — Banca final: deck do Bernardo com a rodada 13
 
 Motivo: o Bernardo mandou ao grupo uma versão própria (`Banca Final.pptx`, 40 slides: slides de foco com retângulo

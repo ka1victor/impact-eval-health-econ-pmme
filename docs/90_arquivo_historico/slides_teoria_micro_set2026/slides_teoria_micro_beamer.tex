@@ -1,0 +1,243 @@
+% Teoria Micro da Escolha Locacional — PMM-E (Lei 15.233/2025)
+% Template acadêmico: Beamer + Metropolis (padrão em seminários de economia)
+% Compilar: pdflatex slides_teoria_micro_beamer.tex (2x)  |  ou abrir no Overleaf
+\documentclass[10pt,aspectratio=169]{beamer}
+
+\usetheme[progressbar=frametitle,numbering=fraction]{metropolis}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools,booktabs,graphicx,hyperref}
+\hypersetup{colorlinks=true,linkcolor=violet,urlcolor=violet}
+
+\title{Por que médicos escolhem onde atuar?}
+\subtitle{Teoria micro da escolha locacional \\ PMM-E \,—\, Lei 15.233/2025}
+\author{Insper \,—\, Economia da Saúde}
+\date{\today}
+\institute{Moehling et al.\ (2020) \;\; Choné \& Ma (2011) \;\; Reinhardt (1975)}
+
+\begin{document}
+
+\maketitle
+
+%----------------------------------------------------------
+\begin{frame}{O puzzle: vagas de alto IVS seguem ociosas}
+\framesubtitle{Que custo latente $\Delta c_0$ a bolsa $\Delta B$ precisa superar?}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\textbf{Custos não-pecuniários}
+\begin{itemize}
+  \item Distância da família e amenidades
+  \item Cansaço clínico \emph{vs.}\ satisfação moral (curva em U)
+  \item Falta de $K$ (centro cirúrgico, UTI) e $L$ (equipe)
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{O mecanismo da subalocação}
+\begin{itemize}
+  \item Capital: $w = B + w^{\text{priv}}$ (complementa em 20h)
+  \item Interior isolado: $w = B$ (colapsa no piso)
+  \item $B_{\text{interior}} = 20\text{k} > B_{\text{capital}} = 10\text{k}$ pode dar $w_{\text{total}}$ \textbf{menor}!
+\end{itemize}
+\end{column}
+\end{columns}
+\vspace{0.4em}
+\begin{block}{Bolsa por IVS (running variable canônica: IVS 2010, IPEA)}
+Faixas de R\$ 10k / 15k / 20k. Preencher a vaga exige $\Delta B / p > \Delta c_0$.
+\end{block}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{Núcleo canônico: Moehling et al.\ (2020, eq.\,1, p.\,184)}
+\framesubtitle{Maximização intertemporal dos retornos líquidos entre localidades}
+\begin{equation*}
+\arg\max_{i \in I}\; U(\omega_i)
+=
+\arg\max_{i \in I}\;
+\Biggl\{
+\sum_{t} \delta^{t}
+\left[
+\frac{\mathbb{E}\!\left(w_{it}^{(s)}\right)}{p_{it}}
+- c_{it}^{(s)}
+\right]
+\Biggr\}
+\end{equation*}
+\begin{columns}[T]
+\begin{column}{0.33\textwidth}
+\begin{itemize}
+  \item $i \in I$: município
+  \item $\delta \in (0,1)$: ficar \emph{vs.}\ migrar
+  \item $s$: especialidade
+\end{itemize}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{itemize}
+  \item $w$: rendimento nominal esperado
+  \item $p$: custo de vida local
+  \item $c$: custo não-pecuniário
+\end{itemize}
+\end{column}
+\begin{column}{0.33\textwidth}
+\textbf{Adaptação PMM-E}
+\begin{equation*}
+V_{im} = \sum_t \delta^t\!\left[\frac{\mathbb{E}(w \mid B_m)}{p} - c_0(\text{IVS}_m)\right] + \varepsilon_{im}
+\end{equation*}
+$B_m$ pré-fixada compõe $w$.
+\end{column}
+\end{columns}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{Custo geográfico: distância dói, amenidade atrai}
+\framesubtitle{Redding \& Rossi-Hansberg (2017, eq.\,24)}
+\begin{equation*}
+c^{\text{geo}}_{im} = \phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}},
+\qquad
+\frac{\partial c^{\text{geo}}}{\partial \text{dist}_{im}} = \phi' > 0,
+\;\;
+\frac{\partial c^{\text{geo}}}{\partial A_m} = -\gamma < 0
+\end{equation*}
+\begin{itemize}
+  \item $\text{dist}$: distância à família real (não à faculdade); $A_m$: saneamento, segurança, qualidade urbana; $\theta^{\text{rural}}$: gosto idiossincrático.
+  \item Forma espacial: $c^{\text{espacial}}_m = (1-\beta)\ln Q_m - \ln B_m$, logo $\partial c / \partial Q_m = (1-\beta)/Q_m > 0$, $\partial c / \partial B_m = -1/B_m < 0$.
+  \item \textbf{Limite CNES:} sem residência (sigilo fiscal) $\Rightarrow$ município do estabelecimento.
+\end{itemize}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{Custo laboral: cansaço $\times$ satisfação — a curva em U}
+\framesubtitle{Choné \& Ma (2011, eq.\,1, p.\,232)}
+\begin{columns}[T]
+\begin{column}{0.42\textwidth}
+\begin{equation*}
+c^{\text{laboral}}(q) = C(q) - \alpha B(q)
+\end{equation*}
+\begin{itemize}
+  \item $C(q)$: cansaço, $C'>0$, $C''>0$
+  \item $B(q)$: benefício, $B'>0$, $B''<0$
+  \item $\alpha \ge 0$: altruísmo
+  \item $c''(q) = C'' - \alpha B'' \gg 0$
+  \item $q_{c_{\max}}$: $C' = \alpha B'$ (mínimo)
+  \item $q_{c=0}$: $C = \alpha B$ (neutro)
+\end{itemize}
+\end{column}
+\begin{column}{0.58\textwidth}
+\includegraphics[width=\linewidth]{figuras/curva_custo_laboral_burnout.png}
+\end{column}
+\end{columns}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{Infraestrutura e equipe têm efeito duplo}
+\framesubtitle{Reinhardt (1975) — cirurgiões sofrem mais sem $K$}
+\begin{equation*}
+\frac{\partial c^{\text{laboral}}}{\partial K}
+= \frac{\partial C}{\partial K} - \alpha\frac{\partial B}{\partial K} < 0,
+\qquad
+\frac{\partial c^{\text{laboral}}}{\partial L}
+= \frac{\partial C}{\partial L} - \alpha\frac{\partial B}{\partial L} < 0
+\end{equation*}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\textbf{Capital $K$}
+\begin{itemize}
+  \item Leitos, centro cirúrgico, UTI
+  \item Equipamento quebrado $\Rightarrow$ resolutividade $\to 0$
+  \item Cirúrgico exige $K$; clínico tolera posto simples
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Equipe $L$}
+\begin{itemize}
+  \item Enfermagem, retaguarda p/ 2ª opinião
+  \item Reduz penosidade e erro: $C \downarrow$, $B \uparrow$
+  \item CNES: \texttt{leitos\_exist}, equipamentos, \texttt{estoque\_pre/10k}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{A equação-mestra do PMM-E}
+\begin{equation*}
+\arg\max_{m \in M}\; U_i
+=
+\arg\max_{m \in M}\;
+\sum_t \delta^t
+\left[
+\frac{\mathbb{E}\!\left(w_{mt}^{(s)}\right)}{p_{mt}}
+- c_{im}^{(s)}
+\right]
+\end{equation*}
+\begin{equation*}
+c_{im}^{(s)} =
+\underbrace{\phi(\text{dist}_{im}) - \gamma A_m + \theta_i^{\text{rural}}}_{\text{geográfico}}
+\;+\;
+\underbrace{C(q_{im}; L_m, K_m, s) - \alpha_i B(q_{im}; L_m, K_m)}_{\text{laboral líquido}}
+\end{equation*}
+\begin{columns}[T]
+\begin{column}{0.33\textwidth}
+\begin{block}{Salário real}$\mathbb{E}[w \mid B_m]/p$\end{block}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{block}{Custo geo}$\phi - \gamma A + \theta$\end{block}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{block}{Custo clínico}$C(q;K,L) - \alpha B(q)$\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{Do latente ao observável: IVS 2010 (IPEA)}
+\framesubtitle{Running variable canônica — observada p/ 100\% dos municípios}
+\begin{equation*}
+c_m = c_0(\text{IVS}_m),
+\qquad
+V_{im}^{(s)} = \sum_t \delta^t \left[ \frac{\mathbb{E}(w_{imt} \mid B_m)}{p_{mt}} - c_0(\text{IVS}_m) \right] + \varepsilon_{im}
+\end{equation*}
+\begin{tabular}{lll}
+\toprule
+Subíndice & Capta & Efeito em $c$ \\
+\midrule
+Infra.\ Urbana & esgoto, lixo, desloc.\ $>1$h & $c \uparrow$ (desamenidade pura) \\
+Capital Humano & mort.\ infantil, analfabetismo & $B' \uparrow$ (vocação) \emph{mas} $K \downarrow$ ($C \uparrow$) \\
+Renda/Trabalho & pobreza, informalidade & $w = B$ (sem mercado privado) \\
+\bottomrule
+\end{tabular}
+\begin{alertblock}{Forças opostas}
+Não assumir $c_0'(\text{IVS}) > 0$ \emph{a priori}. Decompor nos 3 subíndices.
+\end{alertblock}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{Ponte empírica: 4 hipóteses de trabalho}
+\begin{enumerate}
+  \item \textbf{H1 — Compensação:} $\Delta B_m / p_m > \Delta c_0$ na cutoff? Vacância na Faixa-1 (20k) $\Rightarrow$ custo latente $> $ R\$ 5k.
+  \item \textbf{H2 — Subalocação:} isolado ($w = B$) $<$ polo ($w > B$) em ocupação e persistência CNES 6/12m.
+  \item \textbf{H3 — Cirúrgico $\times$ clínico:} $\left.\frac{\partial \Pr}{\partial \text{IVS}}\right|_{\text{cir.}} \ll \left.\frac{\partial \Pr}{\partial \text{IVS}}\right|_{\text{clín.}}$
+  \item \textbf{H4 — Desamenidade $\times$ urgência:} IVS-infra $\downarrow$ fixação ($c \uparrow$); IVS-cap.\,hum.\ atenuado/positivo ($B' \uparrow$).
+\end{enumerate}
+\vspace{0.3em}
+{\small Sketch orientador (ver \texttt{hipoteses\_e\_viabilidade\_empirica.md}), não axiomas congelados.}
+\end{frame}
+
+%----------------------------------------------------------
+\begin{frame}{Takeaway}
+\begin{block}{Mensagem central}
+A bolsa compensa, mas não resolve $K$, $L$ e isolamento.
+\end{block}
+\begin{itemize}
+  \item Preencher vaga exige $\Delta B / p > \Delta c_0$ — testar na descontinuidade.
+  \item Interior sem mercado privado e sem $K$ afasta cirurgiões primeiro.
+  \item Decompor o IVS evita anulação de efeitos opostos.
+\end{itemize}
+\vspace{0.5em}
+{\footnotesize
+\textbf{Refs:} Moehling et al.\ (2020, \emph{Cliometrica}); Choné \& Ma (2011, \emph{Ann.\ Econ.\ Stat.});
+Redding \& Rossi-Hansberg (2017, \emph{Ann.\ Rev.\ Econ.}); Reinhardt (1975);
+IPEA (2015, Atlas da Vulnerabilidade); Costa--Nunes--Sanches (2024).
+}
+\end{frame}
+
+\end{document}

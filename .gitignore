@@ -90,3 +90,16 @@ output/aquisicao/cnes_profissional/cache_privado/
 output/aquisicao/sih_v2/cache_tabnet/
 output/aquisicao/sia_v2/brutos/
 output/aquisicao/sia_forma_curso/brutos/
+
+# Subprodutos de compilação LaTeX (o .tex e o .pdf são versionados; o resto se refaz)
+*.aux
+*.nav
+*.snm
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+docs/**/*.out
+
+# KaTeX copiado localmente para o rascunho HTML de 04/09/2026 (biblioteca de terceiros, 4 MB; ver README da pasta)
+docs/90_arquivo_historico/slides_teoria_micro_set2026/katex/
