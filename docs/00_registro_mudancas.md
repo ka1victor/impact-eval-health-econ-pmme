@@ -39,6 +39,29 @@ agenda: uma extensão de Costa, Nunes e Sanches (2024) para a distribuição de 
 - Entraram também a regravação em lote dos arquivos antigos do CNES (achado do PR #5) e a IIA rejeitada na banca
   final.
 
+### Limpeza de branches e stash (mesmo dia)
+
+Nenhum arquivo da `main` mudou. Para recriar uma branch remota: `git push origin <sha>:refs/heads/<nome>`. As locais
+e o stash nunca foram enviados ao GitHub, então só existem como objetos soltos no clone local, até o próximo
+`git gc`.
+
+| Ref | SHA | Por que saiu |
+|---|---|---|
+| `origin/ccr-88939a7a-o0acdw` | `17d81150` | PR #6, já na `main` |
+| `origin/claude/a5-ameaca-pmae-cnes-hb` | `ead688fa` | PR #5, já na `main` |
+| `origin/claude/admiring-tesla-bduu1t` | `24870995` | contida no branch do PR #4, que fica |
+| `origin/claude/compassionate-feynman-d70ipe` | `62d9e112` | contida no branch do PR #4, que fica |
+| `origin/claude/busy-curie-gbuixt` | `3836e7f4` | série de especialistas no slide 7 dos decks Beamer/Slidev da banca 1, superada pelo deck apresentado em 05/10 |
+| `origin/claude/estudo-empirico-causal-zg5x3v` | `a0e9a5d9` | pedido D-3 autorizado, depois cancelado porque o escore é público |
+| local `execucao-wp0` | `3fc5d289` | WP0/WP1 de 27/08, desenho anterior ao pipeline validado e com o arquivo de IVS errado |
+| local `feature/ciclo3-congelar-coorte` | `79862b7c` | só fim de linha num JSON, depois regravado |
+| locais `subagent-Agente-A01` a `A05` | `5dad2abf`, `2907ee35`, `3f9c9552`, `3216ef7b`, `313cb299` | patches já aplicados na `main` |
+| stash de 14/11/2026 | `c08c75dc` | saídas A4–A7 regravadas fora do ambiente fixado e o hash correspondente no doc 32 |
+
+Ficam as branches dos PRs #1, #2 e #4, que guardam o trabalho deles, e `claude/nice-cray-m8ucx6`. Esta última traz a
+§4.3 do `02_teoria/modelo_micro.md` (agregação do médico ao município, 07/10), que nunca entrou na `main` e conflita com
+ela. Decisão do autor.
+
 O `README.md` fica com um resumo e o link. O `TODO.md` ganha a agenda em dois passos (protocolo da etapa 1 e portão
 do painel nacional) e os itens do A5 que vieram dos PRs #4 e #5. `README.md` e índice de `docs/` atualizados.
 
